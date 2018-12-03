@@ -24,8 +24,28 @@ class ApiClient(
 	private val ordersApiClient: OrdersApiClient = OrdersApiClientImpl(apiClientHelper)
 	private val customerGroupsApiClient: CustomerGroupsApiClient = CustomerGroupsApiClientImpl(apiClientHelper)
 
-	// Orders
+	// Store information
+	// https://developers.ecwid.com/api-documentation/store-information
+	// TODO
 
+	// Products
+	// https://developers.ecwid.com/api-documentation/products
+	// TODO
+
+	// Categories
+	// https://developers.ecwid.com/api-documentation/categories
+	// TODO
+
+	// Product variations
+	// https://developers.ecwid.com/api-documentation/product-variations
+	// TODO
+
+	// Product types
+	// https://developers.ecwid.com/api-documentation/product-types
+	// TODO
+
+	// Orders
+	// https://developers.ecwid.com/api-documentation/orders
 	override fun searchOrders(request: OrdersSearchRequest) = ordersApiClient.searchOrders(request)
 	override fun searchOrdersAsSequence(request: OrdersSearchRequest) = ordersApiClient.searchOrdersAsSequence(request)
 	override fun getOrderDetails(request: OrderDetailsRequest) = ordersApiClient.getOrderDetails(request)
@@ -37,14 +57,38 @@ class ApiClient(
 	override fun deleteOrderItemOptionFile(request: OrderItemOptionFileDeleteRequest) = ordersApiClient.deleteOrderItemOptionFile(request)
 	override fun deleteOrderItemOptionFiles(request: OrderItemOptionFilesDeleteRequest) = ordersApiClient.deleteOrderItemOptionFiles(request)
 
-	// Customer groups 
+	// Carts
+	// https://developers.ecwid.com/api-documentation/carts
+	// TODO
 
+	// Customers
+	// https://developers.ecwid.com/api-documentation/customers
+	// TODO
+
+	// Customer groups
+	// https://developers.ecwid.com/api-documentation/customer-groups
 	override fun searchCustomerGroups(request: CustomerGroupsSearchRequest) = customerGroupsApiClient.searchCustomerGroups(request)
 	override fun searchCustomerGroupsAsSequence(request: CustomerGroupsSearchRequest) = customerGroupsApiClient.searchCustomerGroupsAsSequence(request)
 	override fun getCustomerGroupDetails(request: CustomerGroupDetailsRequest) = customerGroupsApiClient.getCustomerGroupDetails(request)
 	override fun createCustomerGroup(request: CustomerGroupCreateRequest) = customerGroupsApiClient.createCustomerGroup(request)
 	override fun updateCustomerGroup(request: CustomerGroupUpdateRequest) = customerGroupsApiClient.updateCustomerGroup(request)
 	override fun deleteCustomerGroup(request: CustomerGroupDeleteRequest) = customerGroupsApiClient.deleteCustomerGroup(request)
+
+	// Discount coupons
+	// https://developers.ecwid.com/api-documentation/discount-coupons
+	// TODO
+
+	// Application
+	// https://developers.ecwid.com/api-documentation/application
+	// TODO
+
+	// Starter site
+	// https://developers.ecwid.com/api-documentation/starter-site
+	// TODO
+
+	// Static store pages
+	// https://developers.ecwid.com/api-documentation/static-store-pages
+	// TODO
 
 }
 
