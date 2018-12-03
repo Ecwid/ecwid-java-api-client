@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3
 
+import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeDisplayType
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.producttype.request.*
@@ -120,22 +121,6 @@ private fun generateProductAttribute(attributeType: AttributeType): UpdatedProdu
 			name = "Attribute ${attributeType.name}: ${randomAlphanumeric(8)}",
 			type = attributeType,
 			show = randomEnumValue<AttributeDisplayType>()
-	)
-}
-
-private fun FetchedProductType.toUpdated(): UpdatedProductType {
-	return UpdatedProductType(
-			name = name,
-			attributes = attributes?.map(FetchedProductType.Attribute::toUpdated)
-	)
-}
-
-private fun FetchedProductType.Attribute.toUpdated(): UpdatedProductType.Attribute {
-	return UpdatedProductType.Attribute(
-			id = id,
-			name = name,
-			type = type,
-			show = show
 	)
 }
 

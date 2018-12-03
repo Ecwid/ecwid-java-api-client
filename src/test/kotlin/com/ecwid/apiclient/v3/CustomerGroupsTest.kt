@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3
 
+import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.customergroup.request.*
 import com.ecwid.apiclient.v3.dto.customergroup.result.FetchedCustomerGroup
 import com.ecwid.apiclient.v3.exception.EcwidApiException
@@ -100,11 +101,5 @@ class CustomerGroupsTest: BaseEntityTest() {
 private fun generateTestCustomerGroup(): UpdatedCustomerGroup {
 	return UpdatedCustomerGroup(
 			name = "Customer group " + randomAlphanumeric(8)
-	)
-}
-
-private fun FetchedCustomerGroup.toUpdated(): UpdatedCustomerGroup {
-	return UpdatedCustomerGroup(
-			name = name
 	)
 }
