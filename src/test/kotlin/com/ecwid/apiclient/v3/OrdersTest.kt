@@ -31,7 +31,7 @@ class OrdersTest: BaseEntityTest() {
 	}
 
 	@Test
-	fun orderLifecycle() {
+	fun testOrderLifecycle() {
 		// Creating new order
 		val orderCreateRequest = OrderCreateRequest(
 				newOrder = generateTestOrder()
@@ -74,7 +74,7 @@ class OrdersTest: BaseEntityTest() {
 	}
 
 	@Test
-	fun manipulateOrderItemOptionFiles() {
+	fun testManipulateOrderItemOptionFiles() {
 		// Creating order with item with FILES option
 		val filesOptionName = "File option Тест !@#$%^&*()"
 

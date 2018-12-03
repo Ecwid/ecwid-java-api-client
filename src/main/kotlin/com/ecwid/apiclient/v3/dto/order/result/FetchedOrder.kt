@@ -43,7 +43,7 @@ data class FetchedOrder(
 
 		var total: Double? = null,
 		var subtotal: Double? = null,
-		val usdTotal: Double? = null, // TODO Figure out how to test
+		var usdTotal: Double? = null, // TODO Figure out how to test
 
 		var tax: Double? = null,
 		var customerTaxExempt: Boolean? = null,

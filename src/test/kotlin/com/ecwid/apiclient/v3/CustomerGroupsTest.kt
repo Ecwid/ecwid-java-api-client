@@ -21,7 +21,7 @@ class CustomerGroupsTest: BaseEntityTest() {
 	}
 
 	@Test
-	fun customerGroupLifecycle() {
+	fun testCustomerGroupLifecycle() {
 		// Creating new customer group
 		val customerGroupCreateRequest = CustomerGroupCreateRequest(
 				newCustomerGroup = generateTestCustomerGroup()

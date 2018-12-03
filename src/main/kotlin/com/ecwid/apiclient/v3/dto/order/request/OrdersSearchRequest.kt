@@ -5,21 +5,21 @@ import com.ecwid.apiclient.v3.dto.order.enums.OrderPaymentStatus
 import java.util.*
 
 data class OrdersSearchRequest(
-		val keywords: String? = null,
-		val totalFrom: Double? = null,
-		val totalTo: Double? = null,
-		val createdFrom: Date? = null,
-		val createdTo: Date? = null,
-		val updatedFrom: Date? = null,
-		val updatedTo: Date? = null,
-		val couponCode: String? = null,
-		val orderNumber: Int? = null,
-		val vendorOrderNumber: String? = null,
-		val customer: String? = null,
-		val paymentMethod: String? = null,
-		val shippingMethod: String? = null,
-		val paymentStatus: OrderPaymentStatus? = null,
-		val fulfillmentStatus: OrderFulfillmentStatus? = null,
-		val offset: Int = 0,
-		val limit: Int = 100
+		var keywords: String? = null,
+		var totalFrom: Double? = null,
+		var totalTo: Double? = null,
+		var createdFrom: Date? = null,
+		var createdTo: Date? = null,
+		var updatedFrom: Date? = null,
+		var updatedTo: Date? = null,
+		var couponCode: String? = null,
+		var orderNumber: Int? = null,
+		var vendorOrderNumber: String? = null,
+		var customer: String? = null,
+		var paymentMethod: String? = null,
+		var shippingMethod: String? = null,
+		var paymentStatus: OrderPaymentStatus? = null,
+		var fulfillmentStatus: OrderFulfillmentStatus? = null,
+		var offset: Int = 0,
+		var limit: Int = 100
 )

@@ -4,11 +4,11 @@ import java.io.File
 import java.io.InputStream
 
 data class OrderItemOptionFileUploadRequest(
-		val orderNumber: Int = 0,
-		val orderItemId: Int = 0,
-		val optionName: String = "",
-		val fileName: String = "",
-		val fileData: UploadFileData = UploadFileData.ExternalUrlData("")
+		var orderNumber: Int = 0,
+		var orderItemId: Int = 0,
+		var optionName: String = "",
+		var fileName: String = "",
+		var fileData: UploadFileData = UploadFileData.ExternalUrlData("")
 ) {
 
 	sealed class UploadFileData {

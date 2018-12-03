@@ -62,11 +62,12 @@ internal class OrdersApiClientImpl(
 		val commonParams = mapOf(
 				"fileName" to request.fileName
 		)
-		return when (request.fileData) {
+		val fileData = request.fileData
+		return when (fileData) {
 			is UploadFileData.ExternalUrlData -> apiClientHelper.makePostRequest(
 					endpoint = request.toEndpoint(),
 					params = commonParams + mapOf(
-							"externalUrl" to request.fileData.externalUrl
+							"externalUrl" to fileData.externalUrl
 					),
 					httpBody = HttpBody.EmptyBody()
 			)
@@ -74,7 +75,7 @@ internal class OrdersApiClientImpl(
 					endpoint = request.toEndpoint(),
 					params = commonParams,
 					httpBody = HttpBody.ByteArrayBody(
-							bytes = request.fileData.bytes,
+							bytes = fileData.bytes,
 							mimeType = MIME_TYPE_OCTET_STREAM
 					)
 			)
@@ -82,7 +83,7 @@ internal class OrdersApiClientImpl(
 					endpoint = request.toEndpoint(),
 					params = commonParams,
 					httpBody = HttpBody.LocalFileBody(
-							file = request.fileData.file,
+							file = fileData.file,
 							mimeType = MIME_TYPE_OCTET_STREAM
 					)
 			)
@@ -90,7 +91,7 @@ internal class OrdersApiClientImpl(
 					endpoint = request.toEndpoint(),
 					params = commonParams,
 					httpBody = HttpBody.InputStreamBody(
-							stream = request.fileData.stream,
+							stream = fileData.stream,
 							mimeType = MIME_TYPE_OCTET_STREAM
 					)
 			)

@@ -1,8 +1,8 @@
 package com.ecwid.apiclient.v3.dto.order.request
 
 data class OrderItemOptionFileDeleteRequest(
-		val orderNumber: Int = 0,
-		val orderItemId: Int = 0,
-		val optionName: String = "",
-		val fileId: Int = 0
+		var orderNumber: Int = 0,
+		var orderItemId: Int = 0,
+		var optionName: String = "",
+		var fileId: Int = 0
 )

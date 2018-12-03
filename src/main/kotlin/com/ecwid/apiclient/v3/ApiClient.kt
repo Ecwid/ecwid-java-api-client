@@ -9,8 +9,8 @@ import com.ecwid.apiclient.v3.dto.customergroup.result.*
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.*
-import com.ecwid.apiclient.v3.dto.productype.request.ProductTypeCreateRequest
-import com.ecwid.apiclient.v3.dto.productype.result.ProductTypeCreateResult
+import com.ecwid.apiclient.v3.dto.producttype.request.*
+import com.ecwid.apiclient.v3.dto.producttype.result.*
 import com.ecwid.apiclient.v3.impl.ApiClientHelper
 import com.ecwid.apiclient.v3.impl.CustomerGroupsApiClientImpl
 import com.ecwid.apiclient.v3.impl.OrdersApiClientImpl
@@ -46,11 +46,11 @@ class ApiClient(
 
 	// Product types
 	// https://developers.ecwid.com/api-documentation/product-types
-//	fun getAllProductTypes(request: Unit) = Unit
-//	fun getProductTypeDetails(request: Unit) = Unit
-//	fun updateProductType(request: Unit) = Unit
+	override fun getAllProductTypes(request: ProductTypesGetAllRequest) = productTypesApiClient.getAllProductTypes(request)
+	override fun getProductTypeDetails(request: ProductTypeDetailsRequest) = productTypesApiClient.getProductTypeDetails(request)
 	override fun createProductType(request: ProductTypeCreateRequest) = productTypesApiClient.createProductType(request)
-//	fun deleteProductType(request: Unit) = Unit
+	override fun updateProductType(request: ProductTypeUpdateRequest) = productTypesApiClient.updateProductType(request)
+	override fun deleteProductType(request: ProductTypeDeleteRequest) = productTypesApiClient.deleteProductType(request)
 
 	// Orders
 	// https://developers.ecwid.com/api-documentation/orders
@@ -114,7 +114,11 @@ interface OrdersApiClient {
 }
 
 interface ProductTypesApiClient {
+	fun getAllProductTypes(request: ProductTypesGetAllRequest): ProductTypesGetAllResult
+	fun getProductTypeDetails(request: ProductTypeDetailsRequest): FetchedProductType
 	fun createProductType(request: ProductTypeCreateRequest): ProductTypeCreateResult
+	fun updateProductType(request: ProductTypeUpdateRequest): ProductTypeUpdateResult
+	fun deleteProductType(request: ProductTypeDeleteRequest): ProductTypeDeleteResult
 }
 
 interface CustomerGroupsApiClient {

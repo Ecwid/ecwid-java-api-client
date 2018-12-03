@@ -57,6 +57,13 @@ internal inline fun <reified E : Enum<E>> randomEnumValue(vararg exclude: E): E 
 			.first()
 }
 
+internal fun <V> randomOf(vararg options: V): V {
+	return options
+			.toList()
+			.shuffled()
+			.first()
+}
+
 private fun Double.roundDouble(): Double {
 	return toBigDecimal()
 			.setScale(2, RoundingMode.UP)
