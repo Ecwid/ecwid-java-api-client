@@ -3,6 +3,8 @@ package com.ecwid.apiclient.v3
 import com.ecwid.apiclient.v3.config.ApiServerDomain
 import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.LoggingSettings
+import com.ecwid.apiclient.v3.dto.customer.request.*
+import com.ecwid.apiclient.v3.dto.customer.result.*
 import com.ecwid.apiclient.v3.dto.customergroup.result.FetchedCustomerGroup
 import com.ecwid.apiclient.v3.dto.customergroup.request.*
 import com.ecwid.apiclient.v3.dto.customergroup.result.*
@@ -11,21 +13,19 @@ import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
-import com.ecwid.apiclient.v3.impl.ApiClientHelper
-import com.ecwid.apiclient.v3.impl.CustomerGroupsApiClientImpl
-import com.ecwid.apiclient.v3.impl.OrdersApiClientImpl
-import com.ecwid.apiclient.v3.impl.ProductTypesApiClientImpl
+import com.ecwid.apiclient.v3.impl.*
 
 class ApiClient(
 		apiServerDomain: ApiServerDomain,
 		storeCredentials: ApiStoreCredentials,
 		loggingSettings: LoggingSettings = LoggingSettings()
-): OrdersApiClient, ProductTypesApiClient, CustomerGroupsApiClient {
+): OrdersApiClient, ProductTypesApiClient, CustomersApiClient, CustomerGroupsApiClient {
 
 	private val apiClientHelper: ApiClientHelper = ApiClientHelper(apiServerDomain, storeCredentials, loggingSettings)
 
 	private val ordersApiClient: OrdersApiClient = OrdersApiClientImpl(apiClientHelper)
 	private val productTypesApiClient: ProductTypesApiClient = ProductTypesApiClientImpl(apiClientHelper)
+	private val customersApiClient: CustomersApiClient = CustomersApiClientImpl(apiClientHelper)
 	private val customerGroupsApiClient: CustomerGroupsApiClient = CustomerGroupsApiClientImpl(apiClientHelper)
 
 	// Store information
@@ -71,7 +71,12 @@ class ApiClient(
 
 	// Customers
 	// https://developers.ecwid.com/api-documentation/customers
-	// TODO
+	override fun searchCustomers(request: CustomersSearchRequest) = customersApiClient.searchCustomers(request)
+	override fun searchCustomersAsSequence(request: CustomersSearchRequest) = customersApiClient.searchCustomersAsSequence(request)
+	override fun getCustomerDetails(request: CustomerDetailsRequest) = customersApiClient.getCustomerDetails(request)
+	override fun createCustomer(request: CustomerCreateRequest) = customersApiClient.createCustomer(request)
+	override fun updateCustomer(request: CustomerUpdateRequest) = customersApiClient.updateCustomer(request)
+	override fun deleteCustomer(request: CustomerDeleteRequest) = customersApiClient.deleteCustomer(request)
 
 	// Customer groups
 	// https://developers.ecwid.com/api-documentation/customer-groups
@@ -119,6 +124,15 @@ interface ProductTypesApiClient {
 	fun createProductType(request: ProductTypeCreateRequest): ProductTypeCreateResult
 	fun updateProductType(request: ProductTypeUpdateRequest): ProductTypeUpdateResult
 	fun deleteProductType(request: ProductTypeDeleteRequest): ProductTypeDeleteResult
+}
+
+interface CustomersApiClient {
+	fun searchCustomers(request: CustomersSearchRequest): CustomersSearchResult
+	fun searchCustomersAsSequence(request: CustomersSearchRequest): Sequence<FetchedCustomer>
+	fun getCustomerDetails(request: CustomerDetailsRequest): FetchedCustomer
+	fun createCustomer(request: CustomerCreateRequest): CustomerCreateResult
+	fun updateCustomer(request: CustomerUpdateRequest): CustomerUpdateResult
+	fun deleteCustomer(request: CustomerDeleteRequest): CustomerDeleteResult
 }
 
 interface CustomerGroupsApiClient {

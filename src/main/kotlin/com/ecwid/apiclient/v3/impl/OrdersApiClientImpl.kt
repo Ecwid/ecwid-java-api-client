@@ -136,8 +136,8 @@ private fun OrdersSearchRequest.toParams(): Map<String, String> {
 		request.customer?.let { put("customer", it) }
 		request.paymentMethod?.let { put("paymentMethod", it) }
 		request.shippingMethod?.let { put("shippingMethod", it) }
-		request.paymentStatus?.let { put("paymentStatus", it.name ) }
-		request.fulfillmentStatus?.let { put("fulfillmentStatus", it.name ) }
+		request.paymentStatus?.let { put("paymentStatus", it.name) }
+		request.fulfillmentStatus?.let { put("fulfillmentStatus", it.name) }
 		put("offset", request.offset.toString())
 		put("limit", request.limit.toString())
 	}.toMap()

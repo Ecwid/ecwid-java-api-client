@@ -224,13 +224,13 @@ class OrdersTest: BaseEntityTest() {
 
 		// Trying to search by different fields
 
-		assertOrderSearch(
+		assertOrdersSearch(
 				positiveOrderNumber = orderCreateResult.id,
 				positiveSearchRequest = OrdersSearchRequest(keywords = orderCreateRequest.newOrder.orderComments),
 				negativeSearchRequest = OrdersSearchRequest(keywords = orderCreateRequest.newOrder.orderComments + "foo")
 		)
 
-		assertOrderSearch(
+		assertOrdersSearch(
 				positiveOrderNumber = orderCreateResult.id,
 				positiveSearchRequest = OrdersSearchRequest(
 						totalFrom = orderCreateRequest.newOrder.total!! - 10.0,
@@ -242,7 +242,7 @@ class OrdersTest: BaseEntityTest() {
 				)
 		)
 
-		assertOrderSearch(
+		assertOrdersSearch(
 				positiveOrderNumber = orderCreateResult.id,
 				positiveSearchRequest = OrdersSearchRequest(
 						createdFrom = Date.from(Date().toInstant().minusSeconds(60)),
@@ -254,7 +254,7 @@ class OrdersTest: BaseEntityTest() {
 				)
 		)
 
-		assertOrderSearch(
+		assertOrdersSearch(
 				positiveOrderNumber = orderCreateResult.id,
 				positiveSearchRequest = OrdersSearchRequest(
 						updatedFrom = Date.from(Date().toInstant().minusSeconds(60)),
@@ -273,43 +273,43 @@ class OrdersTest: BaseEntityTest() {
 //				negativeSearchRequest = SearchOrdersRequest(couponCode = createOrderRequest.newOrder.discountCoupon?.code + "foo")
 //		)
 
-		assertOrderSearch(
+		assertOrdersSearch(
 				positiveOrderNumber = orderCreateResult.id,
 				positiveSearchRequest = OrdersSearchRequest(orderNumber = orderCreateResult.id),
 				negativeSearchRequest = OrdersSearchRequest(orderNumber = Int.MAX_VALUE)
 		)
 
-		assertOrderSearch(
+		assertOrdersSearch(
 				positiveOrderNumber = orderCreateResult.id,
 				positiveSearchRequest = OrdersSearchRequest(vendorOrderNumber = orderCreateResult.id.toString()),
 				negativeSearchRequest = OrdersSearchRequest(vendorOrderNumber = "foo")
 		)
 
-		assertOrderSearch(
+		assertOrdersSearch(
 				positiveOrderNumber = orderCreateResult.id,
 				positiveSearchRequest = OrdersSearchRequest(customer = orderCreateRequest.newOrder.billingPerson?.name),
 				negativeSearchRequest = OrdersSearchRequest(customer = "foo")
 		)
 
-		assertOrderSearch(
+		assertOrdersSearch(
 				positiveOrderNumber = orderCreateResult.id,
 				positiveSearchRequest = OrdersSearchRequest(paymentMethod = orderCreateRequest.newOrder.paymentMethod),
 				negativeSearchRequest = OrdersSearchRequest(paymentMethod = "foo")
 		)
 
-		assertOrderSearch(
+		assertOrdersSearch(
 				positiveOrderNumber = orderCreateResult.id,
 				positiveSearchRequest = OrdersSearchRequest(shippingMethod = orderCreateRequest.newOrder.shippingOption?.shippingMethodName),
 				negativeSearchRequest = OrdersSearchRequest(shippingMethod = "foo")
 		)
 
-		assertOrderSearch(
+		assertOrdersSearch(
 				positiveOrderNumber = orderCreateResult.id,
 				positiveSearchRequest = OrdersSearchRequest(paymentStatus = OrderPaymentStatus.AWAITING_PAYMENT),
 				negativeSearchRequest = OrdersSearchRequest(paymentStatus = OrderPaymentStatus.PAID)
 		)
 
-		assertOrderSearch(
+		assertOrdersSearch(
 				positiveOrderNumber = orderCreateResult.id,
 				positiveSearchRequest = OrdersSearchRequest(fulfillmentStatus = OrderFulfillmentStatus.AWAITING_PROCESSING),
 				negativeSearchRequest = OrdersSearchRequest(fulfillmentStatus = OrderFulfillmentStatus.SHIPPED)
@@ -356,17 +356,7 @@ class OrdersTest: BaseEntityTest() {
 		assertTrue(invoiceHtml.contains("#${orderCreateResult.id}</span>"))
 	}
 
-	private fun removeAllOrders() {
-		apiClient
-				.searchOrdersAsSequence(OrdersSearchRequest())
-				.map(FetchedOrder::orderNumber)
-				.filterNotNull()
-				.forEach { orderNumber ->
-					apiClient.deleteOrder(OrderDeleteRequest(orderNumber))
-				}
-	}
-
-	private fun assertOrderSearch(positiveOrderNumber: Int, positiveSearchRequest: OrdersSearchRequest, negativeSearchRequest: OrdersSearchRequest) {
+	private fun assertOrdersSearch(positiveOrderNumber: Int, positiveSearchRequest: OrdersSearchRequest, negativeSearchRequest: OrdersSearchRequest) {
 		val positiveOrdersSearchResult = apiClient.searchOrders(positiveSearchRequest)
 		assertEquals(1, positiveOrdersSearchResult.total)
 		assertEquals(positiveOrderNumber, positiveOrdersSearchResult.items[0].orderNumber)

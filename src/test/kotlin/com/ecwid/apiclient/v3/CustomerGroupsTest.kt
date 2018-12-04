@@ -2,7 +2,6 @@ package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.customergroup.request.*
-import com.ecwid.apiclient.v3.dto.customergroup.result.FetchedCustomerGroup
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.randomAlphanumeric
 import org.junit.Assert.assertTrue
@@ -43,7 +42,7 @@ class CustomerGroupsTest: BaseEntityTest() {
 		val customerGroupUpdateResult1 = apiClient.updateCustomerGroup(customerGroupUpdateRequest)
 		assertEquals(1, customerGroupUpdateResult1.updateCount)
 
-		// Checking that ustomer group was successfully updated with necessary parameters
+		// Checking that customer group was successfully updated with necessary parameters
 		val customerGroupDetails2 = apiClient.getCustomerGroupDetails(customerGroupDetailsRequest)
 		assertEquals(customerGroupUpdateRequest.updatedCustomerGroup, customerGroupDetails2.toUpdated())
 
@@ -63,7 +62,7 @@ class CustomerGroupsTest: BaseEntityTest() {
 
 	@Test
 	fun testSearchPaging() {
-		// Create two customer groups additionally to always existing “General” group
+		// Create three customer groups additionally to always existing “General” group
 		for (i in 1..3) {
 			val customerGroupCreateRequest = CustomerGroupCreateRequest(
 					newCustomerGroup = generateTestCustomerGroup()
@@ -83,17 +82,6 @@ class CustomerGroupsTest: BaseEntityTest() {
 		val customerGroupsSearchResult2 = apiClient.searchCustomerGroups(customerGroupsSearchRequest2)
 		assertEquals(1 + 1, customerGroupsSearchResult2.count) // “General” group exists is on every page
 		assertEquals(3, customerGroupsSearchResult2.total)
-	}
-
-	private fun removeAllCustomerGroups() {
-		apiClient
-				.searchCustomerGroupsAsSequence(CustomerGroupsSearchRequest())
-				.map(FetchedCustomerGroup::id)
-				.filterNotNull()
-				.filter { customerGroupId -> customerGroupId > 0} // We cannot delete “General” customer group
-				.forEach { customerGroupId ->
-					apiClient.deleteCustomerGroup(CustomerGroupDeleteRequest(customerGroupId))
-				}
 	}
 
 }

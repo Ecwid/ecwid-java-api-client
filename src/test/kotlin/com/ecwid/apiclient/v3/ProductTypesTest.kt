@@ -86,16 +86,6 @@ class ProductTypesTest: BaseEntityTest() {
 		assertEquals(3 + 1, customerGroupsSearchResult.size) // “General” product type always exists in every store
 	}
 
-	private fun removeAllProductTypes() {
-		apiClient
-				.getAllProductTypes(ProductTypesGetAllRequest())
-				.map(FetchedProductType::id)
-				.filter { productTypeId -> productTypeId > 0 } // We cannot delete “General” product type
-				.forEach { productTypeId ->
-					apiClient.deleteProductType(ProductTypeDeleteRequest(productTypeId))
-				}
-	}
-
 }
 
 private fun generateTestProductTypeForCreate(): UpdatedProductType {
