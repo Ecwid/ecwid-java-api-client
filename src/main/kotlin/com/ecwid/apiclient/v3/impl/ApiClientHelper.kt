@@ -153,7 +153,7 @@ internal class ApiClientHelper(
 				logLevel = Level.INFO,
 				requestId = requestId,
 				sections = mutableListOf<String>().apply {
-					add(httpRequest.uri)
+					add("${httpRequest.method} ${httpRequest.uri}")
 					add(params.dumpToString())
 					if (loggingSettings.logRequestBody) {
 						httpRequest.httpBody.asString()?.let { add(it) }
