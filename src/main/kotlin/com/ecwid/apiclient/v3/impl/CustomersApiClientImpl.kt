@@ -51,6 +51,20 @@ internal data class CustomersApiClientImpl(
 			params = mapOf()
 	)
 
+	override fun searchDeletedCustomers(request: DeletedCustomersSearchRequest) = apiClientHelper.makeGetRequest<DeletedCustomersSearchResult>(
+			endpoint = request.toEndpoint(),
+			params = request.toParams()
+	)
+
+	override fun searchDeletedCustomersAsSequence(request: DeletedCustomersSearchRequest) = sequence {
+		var offsetRequest = request
+		do {
+			val searchResult = searchDeletedCustomers(offsetRequest)
+			yieldAll(searchResult.items)
+			offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
+		} while (searchResult.count >= searchResult.limit);
+	}
+
 }
 
 private fun CustomersSearchRequest.toEndpoint() = "customers"
@@ -58,6 +72,7 @@ private fun CustomerDetailsRequest.toEndpoint() = "customers/$customerId"
 private fun CustomerCreateRequest.toEndpoint() = "customers"
 private fun CustomerUpdateRequest.toEndpoint() = "customers/$customerId"
 private fun CustomerDeleteRequest.toEndpoint() = "customers/$customerId"
+private fun DeletedCustomersSearchRequest.toEndpoint() = "customers/deleted"
 
 private fun CustomersSearchRequest.toParams(): Map<String, String> {
 	val request = this
@@ -73,6 +88,16 @@ private fun CustomersSearchRequest.toParams(): Map<String, String> {
 		request.updatedFrom?.let { put("updatedFrom", (it.time / 1000).toString()) }
 		request.updatedTo?.let { put("updatedTo", (it.time / 1000).toString()) }
 		request.sortBy?.let { put("sortBy", it.name) }
+		put("offset", request.offset.toString())
+		put("limit", request.limit.toString())
+	}.toMap()
+}
+
+private fun DeletedCustomersSearchRequest.toParams(): Map<String, String> {
+	val request = this
+	return mutableMapOf<String, String>().apply {
+		request.deletedFrom?.let { put("from_date", (it.time / 1000).toString()) }
+		request.deletedTo?.let { put("to_date", (it.time / 1000).toString()) }
 		put("offset", request.offset.toString())
 		put("limit", request.limit.toString())
 	}.toMap()

@@ -356,6 +356,36 @@ class OrdersTest: BaseEntityTest() {
 		assertTrue(invoiceHtml.contains("#${orderCreateResult.id}</span>"))
 	}
 
+	@Test
+	fun testDeletedOrders() {
+		// Creating new order
+		val orderCreateRequest = OrderCreateRequest(
+				newOrder = generateTestOrder()
+		)
+		val orderCreateResult = apiClient.createOrder(orderCreateRequest)
+		assertTrue(orderCreateResult.id > 0)
+
+		// Deleting order
+		val orderDeleteRequest = OrderDeleteRequest(orderNumber = orderCreateResult.id)
+		val orderDeleteResult = apiClient.deleteOrder(orderDeleteRequest)
+		assertEquals(1, orderDeleteResult.deleteCount)
+
+		val instant = Date().toInstant()
+		val instantFrom = instant.minusSeconds(10)
+		val instantTo = instant.plusSeconds(10)
+
+		// Checking that just deleted order returned from api
+		val deletedOrdersSearchRequest = DeletedOrdersSearchRequest(
+				deletedFrom = Date.from(instantFrom),
+				deletedTo = Date.from(instantTo)
+		)
+		val deletedOrders = apiClient.searchDeletedOrdersAsSequence(deletedOrdersSearchRequest)
+		val deletedOrder = deletedOrders.firstOrNull { deletedOrder -> deletedOrder.id == orderCreateResult.id }
+		require(deletedOrder != null)
+		assertTrue(instantFrom.isBefore(deletedOrder.date.toInstant()))
+		assertTrue(instantTo.isAfter(deletedOrder.date.toInstant()))
+	}
+
 	private fun assertOrdersSearch(positiveOrderNumber: Int, positiveSearchRequest: OrdersSearchRequest, negativeSearchRequest: OrdersSearchRequest) {
 		val positiveOrdersSearchResult = apiClient.searchOrders(positiveSearchRequest)
 		assertEquals(1, positiveOrdersSearchResult.total)

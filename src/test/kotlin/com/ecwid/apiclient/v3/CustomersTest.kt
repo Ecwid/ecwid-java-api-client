@@ -289,6 +289,38 @@ class CustomersTest: BaseEntityTest() {
 		assertCustomersSortBySearch(customerCreateResult2.id, SortOrder.UPDATED_DATE_DESC)
 	}
 
+	@Test
+	fun testDeletedCustomers() {
+		// Creating new customer
+		val customerCreateRequest = CustomerCreateRequest(
+				newCustomer = UpdatedCustomer(
+						email = randomEmail()
+				)
+		)
+		val customerCreateResult = apiClient.createCustomer(customerCreateRequest)
+		assertTrue(customerCreateResult.id > 0)
+
+		// Deleting customer
+		val customerDeleteRequest = CustomerDeleteRequest(customerId = customerCreateResult.id)
+		val customerDeleteResult = apiClient.deleteCustomer(customerDeleteRequest)
+		assertEquals(1, customerDeleteResult.deleteCount)
+
+		val instant = Date().toInstant()
+		val instantFrom = instant.minusSeconds(10)
+		val instantTo = instant.plusSeconds(10)
+
+		// Checking that just deleted customer returned from api
+		val deletedCustomersSearchRequest = DeletedCustomersSearchRequest(
+				deletedFrom = Date.from(instantFrom),
+				deletedTo = Date.from(instantTo)
+		)
+		val deletedCustomers = apiClient.searchDeletedCustomersAsSequence(deletedCustomersSearchRequest)
+		val deletedCustomer = deletedCustomers.firstOrNull { deletedCustomer -> deletedCustomer.id == customerCreateResult.id }
+		require(deletedCustomer != null)
+		assertTrue(instantFrom.isBefore(deletedCustomer.date.toInstant()))
+		assertTrue(instantTo.isAfter(deletedCustomer.date.toInstant()))
+	}
+
 	private fun assertCustomersSearch(positiveCustomerId: Int, positiveSearchRequest: CustomersSearchRequest, negativeSearchRequest: CustomersSearchRequest) {
 		val positiveCustomersSearchResult = apiClient.searchCustomers(positiveSearchRequest)
 		assertEquals(1, positiveCustomersSearchResult.total)

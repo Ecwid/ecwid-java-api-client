@@ -108,6 +108,20 @@ internal class OrdersApiClientImpl(
 			params = mapOf()
 	)
 
+	override fun searchDeletedOrders(request: DeletedOrdersSearchRequest) = apiClientHelper.makeGetRequest<DeletedOrdersSearchResult>(
+			endpoint = request.toEndpoint(),
+			params = request.toParams()
+	)
+
+	override fun searchDeletedOrdersAsSequence(request: DeletedOrdersSearchRequest) = sequence {
+		var offsetRequest = request
+		do {
+			val searchResult = searchDeletedOrders(offsetRequest)
+			yieldAll(searchResult.items)
+			offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
+		} while (searchResult.count >= searchResult.limit);
+	}
+
 }
 
 private fun OrdersSearchRequest.toEndpoint() = "orders"
@@ -119,6 +133,7 @@ private fun OrderDeleteRequest.toEndpoint() = "orders/$orderNumber"
 private fun OrderItemOptionFileUploadRequest.toEndpoint() = "orders/$orderNumber/items/$orderItemId/options/$optionName"
 private fun OrderItemOptionFilesDeleteRequest.toEndpoint() = "orders/$orderNumber/items/$orderItemId/options/$optionName/files"
 private fun OrderItemOptionFileDeleteRequest.toEndpoint() = "orders/$orderNumber/items/$orderItemId/options/$optionName/files/$fileId"
+private fun DeletedOrdersSearchRequest.toEndpoint() = "orders/deleted"
 
 private fun OrdersSearchRequest.toParams(): Map<String, String> {
 	val request = this
@@ -138,6 +153,16 @@ private fun OrdersSearchRequest.toParams(): Map<String, String> {
 		request.shippingMethod?.let { put("shippingMethod", it) }
 		request.paymentStatus?.let { put("paymentStatus", it.name) }
 		request.fulfillmentStatus?.let { put("fulfillmentStatus", it.name) }
+		put("offset", request.offset.toString())
+		put("limit", request.limit.toString())
+	}.toMap()
+}
+
+private fun DeletedOrdersSearchRequest.toParams(): Map<String, String> {
+	val request = this
+	return mutableMapOf<String, String>().apply {
+		request.deletedFrom?.let { put("from_date", (it.time / 1000).toString()) }
+		request.deletedTo?.let { put("to_date", (it.time / 1000).toString()) }
 		put("offset", request.offset.toString())
 		put("limit", request.limit.toString())
 	}.toMap()

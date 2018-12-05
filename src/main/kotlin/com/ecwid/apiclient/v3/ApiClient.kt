@@ -33,7 +33,7 @@ class ApiClient(
 	// TODO
 
 	// Products
-	// https://developers.ecwid.com/api-documentation/products
+	// https://developers.ecwid.com/api-documentation/products + deleted
 	// TODO
 
 	// Categories
@@ -64,6 +64,8 @@ class ApiClient(
 	override fun uploadOrderItemOptionFile(request: OrderItemOptionFileUploadRequest) = ordersApiClient.uploadOrderItemOptionFile(request)
 	override fun deleteOrderItemOptionFile(request: OrderItemOptionFileDeleteRequest) = ordersApiClient.deleteOrderItemOptionFile(request)
 	override fun deleteOrderItemOptionFiles(request: OrderItemOptionFilesDeleteRequest) = ordersApiClient.deleteOrderItemOptionFiles(request)
+	override fun searchDeletedOrders(request: DeletedOrdersSearchRequest) = ordersApiClient.searchDeletedOrders(request)
+	override fun searchDeletedOrdersAsSequence(request: DeletedOrdersSearchRequest) = ordersApiClient.searchDeletedOrdersAsSequence(request)
 
 	// Carts
 	// https://developers.ecwid.com/api-documentation/carts
@@ -77,6 +79,8 @@ class ApiClient(
 	override fun createCustomer(request: CustomerCreateRequest) = customersApiClient.createCustomer(request)
 	override fun updateCustomer(request: CustomerUpdateRequest) = customersApiClient.updateCustomer(request)
 	override fun deleteCustomer(request: CustomerDeleteRequest) = customersApiClient.deleteCustomer(request)
+	override fun searchDeletedCustomers(request: DeletedCustomersSearchRequest) = customersApiClient.searchDeletedCustomers(request)
+	override fun searchDeletedCustomersAsSequence(request: DeletedCustomersSearchRequest) = customersApiClient.searchDeletedCustomersAsSequence(request)
 
 	// Customer groups
 	// https://developers.ecwid.com/api-documentation/customer-groups
@@ -88,7 +92,7 @@ class ApiClient(
 	override fun deleteCustomerGroup(request: CustomerGroupDeleteRequest) = customerGroupsApiClient.deleteCustomerGroup(request)
 
 	// Discount coupons
-	// https://developers.ecwid.com/api-documentation/discount-coupons
+	// https://developers.ecwid.com/api-documentation/discount-coupons + deleted
 	// TODO
 
 	// Application
@@ -116,6 +120,8 @@ interface OrdersApiClient {
 	fun uploadOrderItemOptionFile(request: OrderItemOptionFileUploadRequest): OrderItemOptionFileUploadResult
 	fun deleteOrderItemOptionFile(request: OrderItemOptionFileDeleteRequest): OrderItemOptionFileDeleteResult
 	fun deleteOrderItemOptionFiles(request: OrderItemOptionFilesDeleteRequest): OrderItemOptionFileDeleteResult
+	fun searchDeletedOrders(request: DeletedOrdersSearchRequest): DeletedOrdersSearchResult
+	fun searchDeletedOrdersAsSequence(request: DeletedOrdersSearchRequest): Sequence<DeletedOrder>
 }
 
 interface ProductTypesApiClient {
@@ -133,6 +139,8 @@ interface CustomersApiClient {
 	fun createCustomer(request: CustomerCreateRequest): CustomerCreateResult
 	fun updateCustomer(request: CustomerUpdateRequest): CustomerUpdateResult
 	fun deleteCustomer(request: CustomerDeleteRequest): CustomerDeleteResult
+	fun searchDeletedCustomers(request: DeletedCustomersSearchRequest): DeletedCustomersSearchResult
+	fun searchDeletedCustomersAsSequence(request: DeletedCustomersSearchRequest): Sequence<DeletedCustomer>
 }
 
 interface CustomerGroupsApiClient {
