@@ -49,8 +49,7 @@ class OrdersTest: BaseEntityTest() {
 		val orderUpdateRequest = OrderUpdateRequest(
 				orderNumber = orderDetails1.orderNumber,
 				updatedOrder = generateTestOrder().copy(
-						customerGroup = null, // TODO Discover why after each update this field resets to null
-						discountCoupon = orderCreateRequest.newOrder.discountCoupon // TODO Discover why we cannot update this field after order creation 
+						customerGroup = null // TODO Discover why after each update this field resets to null
 				)
 		)
 		val orderUpdateResult1 = apiClient.updateOrder(orderUpdateRequest)
@@ -193,10 +192,10 @@ class OrdersTest: BaseEntityTest() {
 				newOrder = UpdatedOrder(
 						email = randomEmail(),
 						total = randomPrice(),
-						discountCoupon = UpdatedOrder.DiscountCouponInfo(
-								name = "Discount coupon " + randomAlphanumeric(16),
-								code = randomAlphanumeric(16)
-						),
+//						discountCoupon = UpdatedOrder.DiscountCouponInfo(
+//								name = "Discount coupon " + randomAlphanumeric(16),
+//								code = randomAlphanumeric(16)
+//						),
 						paymentMethod = "Payment method " + randomAlphanumeric(8),
 						shippingOption = UpdatedOrder.ShippingOption(
 								shippingMethodName = "Method " + randomAlphanumeric(8)
@@ -466,18 +465,20 @@ private fun generateTestOrder(): UpdatedOrder {
 					generateTestOnTotalAndMembershipDiscountInfo(),
 					generateTestCustomDiscountInfo()
 			),
-			discountCoupon = UpdatedOrder.DiscountCouponInfo(
-					name = "Discount coupon " + randomAlphanumeric(8),
-					code = randomAlphanumeric(16),
-					discountType = randomEnumValue<DiscountCouponType>(),
-					status = randomEnumValue<DiscountCouponStatus>(),
-					discount = randomPrice(),
-					launchDate = randomDate(),
-					expirationDate = randomDate(),
-					totalLimit = randomPrice(),
-					usesLimit = randomEnumValue<DiscountCouponUsesLimit>(),
-					repeatCustomerOnly = randomBoolean()
-			),
+
+			// TODO Pass real discount coupon code when API client will support this
+//			discountCoupon = UpdatedOrder.DiscountCouponInfo(
+//					name = "Discount coupon " + randomAlphanumeric(8),
+//					code = randomAlphanumeric(16),
+//					discountType = randomEnumValue<DiscountCouponType>(),
+//					status = randomEnumValue<DiscountCouponStatus>(),
+//					discount = randomPrice(),
+//					launchDate = randomDate(),
+//					expirationDate = randomDate(),
+//					totalLimit = randomPrice(),
+//					usesLimit = randomEnumValue<DiscountCouponUsesLimit>(),
+//					repeatCustomerOnly = randomBoolean()
+//			),
 
 			items = listOf(
 					generateTestOrderItem(),
