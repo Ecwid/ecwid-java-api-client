@@ -16,10 +16,12 @@ internal fun randomBoolean() = Random.nextBoolean()
 
 internal fun randomByte() = Random.nextBytes(1)[0] + 128
 
-internal fun randomId() = Random.nextInt(10000, 1000000)
+internal fun randomId() = randomInt(10000, 1000000)
+
+internal fun <T> randomIndex(collection: Collection<T>) = randomInt(0, collection.size - 1)
 
 internal fun randomPrice() = Random
-		.nextDouble(0.0, 1000.0)
+		.nextDouble(20.0, 1000.0)
 		.roundDouble()
 
 internal fun randomWeight() = Random
@@ -63,6 +65,10 @@ internal fun <V> randomOf(vararg options: V): V {
 			.shuffled()
 			.first()
 }
+
+internal fun randomFileName(prefix: String, extension: String) = "$prefix-${Random.nextInt()}.$extension"
+
+private fun randomInt(min: Int, max: Int) = Random.nextInt(min, max)
 
 private fun Double.roundDouble(): Double {
 	return toBigDecimal()

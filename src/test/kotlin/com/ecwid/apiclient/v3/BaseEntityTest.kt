@@ -12,10 +12,15 @@ import com.ecwid.apiclient.v3.dto.customergroup.result.FetchedCustomerGroup
 import com.ecwid.apiclient.v3.dto.order.request.OrderDeleteRequest
 import com.ecwid.apiclient.v3.dto.order.request.OrdersSearchRequest
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
+import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
+import com.ecwid.apiclient.v3.dto.product.request.ProductDeleteRequest
+import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypeDeleteRequest
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypesGetAllRequest
 import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
 import com.ecwid.apiclient.v3.util.PropertiesLoader
+import java.nio.file.Path
+import java.nio.file.Paths
 
 abstract class BaseEntityTest {
 
@@ -33,6 +38,16 @@ abstract class BaseEntityTest {
 						logSuccessfulResponseBody = true
 				)
 		)
+	}
+
+	protected fun removeAllProducts() {
+		apiClient
+				.searchProductsAsSequence(ProductsSearchRequest.ByFilters())
+				.map(FetchedProduct::id)
+				.filterNotNull()
+				.forEach { productId ->
+					apiClient.deleteProduct(ProductDeleteRequest(productId))
+				}
 	}
 
 	protected fun removeAllOrders() {
@@ -75,5 +90,7 @@ abstract class BaseEntityTest {
 					apiClient.deleteCustomerGroup(CustomerGroupDeleteRequest(customerGroupId))
 				}
 	}
+
+	protected fun getTestPngFilePath(): Path = Paths.get(javaClass.getResource("/logo-ecwid-small.png").toURI())
 
 }

@@ -11,6 +11,8 @@ import com.ecwid.apiclient.v3.dto.customergroup.result.*
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.*
+import com.ecwid.apiclient.v3.dto.product.request.*
+import com.ecwid.apiclient.v3.dto.product.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
 import com.ecwid.apiclient.v3.impl.*
@@ -19,10 +21,11 @@ class ApiClient(
 		apiServerDomain: ApiServerDomain,
 		storeCredentials: ApiStoreCredentials,
 		loggingSettings: LoggingSettings = LoggingSettings()
-): OrdersApiClient, ProductTypesApiClient, CustomersApiClient, CustomerGroupsApiClient {
+): ProductsApiClient, OrdersApiClient, ProductTypesApiClient, CustomersApiClient, CustomerGroupsApiClient {
 
 	private val apiClientHelper: ApiClientHelper = ApiClientHelper(apiServerDomain, storeCredentials, loggingSettings)
 
+	private val productsApiClient: ProductsApiClient = ProductsApiClientImpl(apiClientHelper)
 	private val ordersApiClient: OrdersApiClient = OrdersApiClientImpl(apiClientHelper)
 	private val productTypesApiClient: ProductTypesApiClient = ProductTypesApiClientImpl(apiClientHelper)
 	private val customersApiClient: CustomersApiClient = CustomersApiClientImpl(apiClientHelper)
@@ -33,8 +36,28 @@ class ApiClient(
 	// TODO
 
 	// Products
-	// https://developers.ecwid.com/api-documentation/products + deleted
-	// TODO
+	// https://developers.ecwid.com/api-documentation/products
+	override fun searchProducts(request: ProductsSearchRequest.ByFilters) = productsApiClient.searchProducts(request)
+	override fun searchProducts(request: ProductsSearchRequest.ByIds) = productsApiClient.searchProducts(request)
+	override fun searchProductsAsSequence(request: ProductsSearchRequest.ByFilters) = productsApiClient.searchProductsAsSequence(request)
+	override fun searchProductsAsSequence(request: ProductsSearchRequest.ByIds) = productsApiClient.searchProductsAsSequence(request)
+	override fun getProductDetails(request: ProductDetailsRequest) = productsApiClient.getProductDetails(request)
+	override fun createProduct(request: ProductCreateRequest): ProductCreateResult = productsApiClient.createProduct(request)
+	override fun updateProduct(request: ProductUpdateRequest): ProductUpdateResult = productsApiClient.updateProduct(request)
+	override fun updateProductInventory(request: ProductInventoryUpdateRequest): ProductInventoryUpdateResult = productsApiClient.updateProductInventory(request)
+	override fun deleteProduct(request: ProductDeleteRequest): ProductDeleteResult = productsApiClient.deleteProduct(request)
+	override fun uploadProductImage(request: ProductImageUploadRequest): ProductImageUploadResult = productsApiClient.uploadProductImage(request)
+	override fun deleteProductImage(request: ProductImageDeleteRequest): ProductImageDeleteResult = productsApiClient.deleteProductImage(request)
+	override fun uploadProductGalleryImage(request: ProductGalleryImageUploadRequest): ProductGalleryImageUploadResult = productsApiClient.uploadProductGalleryImage(request)
+	override fun deleteProductGalleryImage(request: ProductGalleryImageDeleteRequest): ProductGalleryImageDeleteResult = productsApiClient.deleteProductGalleryImage(request)
+	override fun deleteProductGalleryImages(request: ProductGalleryImagesDeleteRequest): ProductGalleryImagesDeleteResult = productsApiClient.deleteProductGalleryImages(request)
+	override fun downloadProductFile(request: ProductFileDownloadRequest): ByteArray = productsApiClient.downloadProductFile(request)
+	override fun uploadProductFile(request: ProductFileUploadRequest): ProductFileUploadResult = productsApiClient.uploadProductFile(request)
+	override fun updateProductFile(request: ProductFileUpdateRequest): ProductFileUpdateResult = productsApiClient.updateProductFile(request)
+	override fun deleteProductFile(request: ProductFileDeleteRequest): ProductFileDeleteResult = productsApiClient.deleteProductFile(request)
+	override fun deleteProductFiles(request: ProductFilesDeleteRequest): ProductFilesDeleteResult = productsApiClient.deleteProductFiles(request)
+	override fun searchDeletedProducts(request: DeletedProductsSearchRequest): DeletedProductsSearchResult = productsApiClient.searchDeletedProducts(request)
+	override fun searchDeletedProductsAsSequence(request: DeletedProductsSearchRequest): Sequence<DeletedProduct> = productsApiClient.searchDeletedProductsAsSequence(request)
 
 	// Categories
 	// https://developers.ecwid.com/api-documentation/categories
@@ -107,6 +130,30 @@ class ApiClient(
 	// https://developers.ecwid.com/api-documentation/static-store-pages
 	// TODO
 
+}
+
+interface ProductsApiClient {
+	fun searchProducts(request: ProductsSearchRequest.ByFilters): ProductsSearchResult
+	fun searchProducts(request: ProductsSearchRequest.ByIds): ProductsSearchResult
+	fun searchProductsAsSequence(request: ProductsSearchRequest.ByFilters): Sequence<FetchedProduct>
+	fun searchProductsAsSequence(request: ProductsSearchRequest.ByIds): Sequence<FetchedProduct>
+	fun getProductDetails(request: ProductDetailsRequest): FetchedProduct
+	fun createProduct(request: ProductCreateRequest): ProductCreateResult
+	fun updateProduct(request: ProductUpdateRequest): ProductUpdateResult
+	fun updateProductInventory(request: ProductInventoryUpdateRequest): ProductInventoryUpdateResult
+	fun deleteProduct(request: ProductDeleteRequest): ProductDeleteResult
+	fun uploadProductImage(request: ProductImageUploadRequest): ProductImageUploadResult
+	fun deleteProductImage(request: ProductImageDeleteRequest): ProductImageDeleteResult
+	fun uploadProductGalleryImage(request: ProductGalleryImageUploadRequest): ProductGalleryImageUploadResult
+	fun deleteProductGalleryImage(request: ProductGalleryImageDeleteRequest): ProductGalleryImageDeleteResult
+	fun deleteProductGalleryImages(request: ProductGalleryImagesDeleteRequest): ProductGalleryImagesDeleteResult
+	fun downloadProductFile(request: ProductFileDownloadRequest): ByteArray
+	fun uploadProductFile(request: ProductFileUploadRequest): ProductFileUploadResult
+	fun updateProductFile(request: ProductFileUpdateRequest): ProductFileUpdateResult
+	fun deleteProductFile(request: ProductFileDeleteRequest): ProductFileDeleteResult
+	fun deleteProductFiles(request: ProductFilesDeleteRequest): ProductFilesDeleteResult
+	fun searchDeletedProducts(request: DeletedProductsSearchRequest): DeletedProductsSearchResult
+	fun searchDeletedProductsAsSequence(request: DeletedProductsSearchRequest): Sequence<DeletedProduct>
 }
 
 interface OrdersApiClient {

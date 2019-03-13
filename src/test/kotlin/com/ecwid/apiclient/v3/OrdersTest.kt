@@ -2,9 +2,9 @@ package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.OrderedStringToStringMap
+import com.ecwid.apiclient.v3.dto.UploadFileData
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.*
-import com.ecwid.apiclient.v3.dto.order.request.OrderItemOptionFileUploadRequest.UploadFileData
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.dto.order.result.OrdersSearchResult
 import com.ecwid.apiclient.v3.exception.EcwidApiException
@@ -15,10 +15,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import java.io.FileInputStream
 import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
 import java.util.*
-import kotlin.random.Random
 
 
 class OrdersTest: BaseEntityTest() {
@@ -108,28 +105,28 @@ class OrdersTest: BaseEntityTest() {
 				orderNumber = orderNumber,
 				orderItemId = orderItemId,
 				optionName = filesOptionName,
-				fileName = generateFileName("test", "png"),
+				fileName = randomFileName("test", "png"),
 				fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
 		)
 		val orderItemOptionFileUploadRequest2 = OrderItemOptionFileUploadRequest(
 				orderNumber = orderNumber,
 				orderItemId = orderItemId,
 				optionName = filesOptionName,
-				fileName = generateFileName("test", "png"),
+				fileName = randomFileName("test", "png"),
 				fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
 		)
 		val orderItemOptionFileUploadRequest3 = OrderItemOptionFileUploadRequest(
 				orderNumber = orderNumber,
 				orderItemId = orderItemId,
 				optionName = filesOptionName,
-				fileName = generateFileName("test", "png"),
+				fileName = randomFileName("test", "png"),
 				fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
 		)
 		val orderItemOptionFileUploadRequest4 = OrderItemOptionFileUploadRequest(
 				orderNumber = orderNumber,
 				orderItemId = orderItemId,
 				optionName = filesOptionName,
-				fileName = generateFileName("test", "png"),
+				fileName = randomFileName("test", "png"),
 				fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
 		)
 
@@ -394,8 +391,6 @@ class OrdersTest: BaseEntityTest() {
 		assertEquals(0, negativeOrdersSearchResult.total)
 	}
 
-	private fun getTestPngFilePath(): Path = Paths.get(javaClass.getResource("/logo-ecwid-small.png").toURI())
-
 }
 
 private fun assertFileOption(orderItemProductFile: FetchedOrder.OrderItemProductFile, fileName: String) {
@@ -657,5 +652,3 @@ private fun generatePersonInfo(): UpdatedOrder.PersonInfo {
 			phone = randomAlphanumeric(10)
 	)
 }
-
-private fun generateFileName(prefix: String, extension: String) = "$prefix-${Random.nextInt()}.$extension"

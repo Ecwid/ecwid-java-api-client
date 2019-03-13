@@ -1,10 +1,10 @@
 package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.*
+import com.ecwid.apiclient.v3.dto.UploadFileData
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.httptransport.HttpBody
-import com.ecwid.apiclient.v3.dto.order.request.OrderItemOptionFileUploadRequest.UploadFileData
 import com.ecwid.apiclient.v3.dto.order.result.*
 
 internal class OrdersApiClientImpl(

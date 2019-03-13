@@ -1,0 +1,1123 @@
+package com.ecwid.apiclient.v3
+
+import com.ecwid.apiclient.v3.converter.toUpdated
+import com.ecwid.apiclient.v3.dto.UploadFileData
+import com.ecwid.apiclient.v3.dto.product.request.ProductFilesDeleteRequest
+import com.ecwid.apiclient.v3.dto.product.request.ProductFileDeleteRequest
+import com.ecwid.apiclient.v3.dto.product.request.ProductFileDownloadRequest
+import com.ecwid.apiclient.v3.dto.product.request.ProductFileUpdateRequest
+import com.ecwid.apiclient.v3.dto.product.request.ProductFileUploadRequest
+import com.ecwid.apiclient.v3.dto.product.request.ProductGalleryImagesDeleteRequest
+import com.ecwid.apiclient.v3.dto.product.request.ProductGalleryImageDeleteRequest
+import com.ecwid.apiclient.v3.dto.product.request.ProductGalleryImageUploadRequest
+import com.ecwid.apiclient.v3.dto.product.request.ProductImageDeleteRequest
+import com.ecwid.apiclient.v3.dto.product.request.DeletedProductsSearchRequest
+import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest
+import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest.*
+import com.ecwid.apiclient.v3.dto.product.enums.*
+import com.ecwid.apiclient.v3.dto.product.request.*
+import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest.InventoryAdjustment
+import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct.*
+import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
+import com.ecwid.apiclient.v3.exception.EcwidApiException
+import com.ecwid.apiclient.v3.util.*
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.*
+import java.io.FileInputStream
+import java.nio.file.Files
+import java.util.*
+
+
+class ProductsTest: BaseEntityTest() {
+
+	@BeforeEach
+	override fun beforeEach() {
+		super.beforeEach()
+
+		// We need to start from scratch each time
+		removeAllProducts()
+	}
+
+	@Test
+	fun testSearchByFilters() {
+		// Creating new product
+		val productNameSuffix = randomAlphanumeric(8)
+		val brandName = "Brand " + randomAlphanumeric(8)
+		val upc = "UPC " + randomAlphanumeric(8)
+		val price = randomPrice()
+		val productCreateRequest = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product $productNameSuffix",
+						sku = "testSearchByFilters",
+						price = price,
+						compareToPrice = 2 * price,
+						enabled = true,
+						quantity = 10,
+						attributes = listOf(
+								AttributeValue.createBrandAttributeValue(brandName),
+								AttributeValue.createUpcAttributeValue(upc)
+						),
+						options = listOf(
+								ProductOption.createSelectOption(
+										name = "Color",
+										choices = listOf(
+												ProductOptionChoice("Black"),
+												ProductOptionChoice("White"),
+												ProductOptionChoice("Yellow"),
+												ProductOptionChoice("Red")
+										),
+										defaultChoice = 0,
+										required = true
+								)
+						)
+				)
+		)
+		val productCreateResult = apiClient.createProduct(productCreateRequest)
+		assertTrue(productCreateResult.id > 0)
+
+		// Waiting till product became available for searching
+		waitForProductCount(
+				productsSearchRequest = ProductsSearchRequest.ByFilters(keyword = productCreateRequest.newProduct.sku),
+				desiredProductCount = 1
+		)
+
+		val productDetails = apiClient.getProductDetails(ProductDetailsRequest(productId = productCreateResult.id))
+
+		// Trying to search by different fields
+
+		assertProductsSearch(
+				positiveProductId = productCreateResult.id,
+				positiveSearchRequest = ProductsSearchRequest.ByFilters(keyword = productNameSuffix),
+				negativeSearchRequest = ProductsSearchRequest.ByFilters(keyword = productNameSuffix + "foo")
+		)
+
+		assertProductsSearch(
+				positiveProductId = productCreateResult.id,
+				positiveSearchRequest = ProductsSearchRequest.ByFilters(sku = productCreateRequest.newProduct.sku),
+				negativeSearchRequest = ProductsSearchRequest.ByFilters(sku = productCreateRequest.newProduct.sku + "foo")
+		)
+
+		assertProductsSearch(
+				positiveProductId = productCreateResult.id,
+				positiveSearchRequest = ProductsSearchRequest.ByFilters(
+						priceFrom = productCreateRequest.newProduct.price!! - 10.0,
+						priceTo = productCreateRequest.newProduct.price!! + 10.0
+				),
+				negativeSearchRequest = ProductsSearchRequest.ByFilters(
+						priceFrom = productCreateRequest.newProduct.price!! - 20.0,
+						priceTo = productCreateRequest.newProduct.price!! - 10.0
+				)
+		)
+
+		assertProductsSearch(
+				positiveProductId = productCreateResult.id,
+				positiveSearchRequest = ProductsSearchRequest.ByFilters(
+						createdFrom = Date.from(productDetails.created.toInstant().minusSeconds(1)),
+						createdTo = Date.from(productDetails.created.toInstant().plusSeconds(1))
+				),
+				negativeSearchRequest = ProductsSearchRequest.ByFilters(
+						createdFrom = Date(0),
+						createdTo = Date(0)
+				)
+		)
+
+		assertProductsSearch(
+				positiveProductId = productCreateResult.id,
+				positiveSearchRequest = ProductsSearchRequest.ByFilters(
+						updatedFrom = Date.from(productDetails.updated.toInstant().minusSeconds(1)),
+						updatedTo = Date.from(productDetails.updated.toInstant().plusSeconds(1))
+				),
+				negativeSearchRequest = ProductsSearchRequest.ByFilters(
+						updatedFrom = Date(0),
+						updatedTo = Date(0)
+				)
+		)
+
+		assertProductsSearch(
+				positiveProductId = productCreateResult.id,
+				positiveSearchRequest = ProductsSearchRequest.ByFilters(enabled = true),
+				negativeSearchRequest = ProductsSearchRequest.ByFilters(enabled = false)
+		)
+
+		assertProductsSearch(
+				positiveProductId = productCreateResult.id,
+				positiveSearchRequest = ProductsSearchRequest.ByFilters(inStock = true),
+				negativeSearchRequest = ProductsSearchRequest.ByFilters(inStock = false)
+		)
+
+		assertProductsSearch(
+				positiveProductId = productCreateResult.id,
+				positiveSearchRequest = ProductsSearchRequest.ByFilters(onSale = true),
+				negativeSearchRequest = ProductsSearchRequest.ByFilters(onSale = false)
+		)
+
+		assertProductsSearch(
+				positiveProductId = productCreateResult.id,
+				positiveSearchRequest = ProductsSearchRequest.ByFilters(attributes = ProductSearchAttributes(listOf(
+						ProductSearchAttributes.AttributeValue("Brand", brandName),
+						ProductSearchAttributes.AttributeValue("UPC", upc)
+				))),
+				negativeSearchRequest = ProductsSearchRequest.ByFilters(attributes = ProductSearchAttributes(listOf(
+						ProductSearchAttributes.AttributeValue("Brand", brandName + "foo"),
+						ProductSearchAttributes.AttributeValue("UPC", upc + "foo")
+				)))
+		)
+
+		assertProductsSearch(
+				positiveProductId = productCreateResult.id,
+				positiveSearchRequest = ProductsSearchRequest.ByFilters(options = ProductSearchOptions(listOf(
+						ProductSearchOptions.OptionValue("Color", "Yellow")
+				))),
+				negativeSearchRequest = ProductsSearchRequest.ByFilters(options = ProductSearchOptions(listOf(
+						ProductSearchOptions.OptionValue("Color", "Blue")
+				)))
+		)
+
+		// TODO We should create real categories to make this search works correctly
+		// var categoryId: Int? = null
+		// var withSubcategories: Boolean? = null
+	}
+
+	@Test
+	fun testSearchUrls() {
+		// Create one product
+		val productCreateRequest = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product ${randomAlphanumeric(8)}",
+						sku = "testSearchUrls"
+				)
+		)
+		val productCreateResult = apiClient.createProduct(productCreateRequest)
+		assertTrue(productCreateResult.id > 0)
+
+		// Waiting till product became available for searching
+		waitForProductCount(
+				productsSearchRequest = ProductsSearchRequest.ByFilters(keyword = productCreateRequest.newProduct.sku),
+				desiredProductCount = 1
+		)
+
+		// Searching products with different combinations of baseUrl and cleanUrls parameters
+		assertProductUrlMatchesRegex(
+				productSearchRequest = ProductsSearchRequest.ByFilters(),
+				urlPattern = "https://store.*.ecwid.com/Product-.*-p.*"
+		)
+		assertProductUrlMatchesRegex(
+				productSearchRequest = ProductsSearchRequest.ByFilters(
+						baseUrl = "https://google.com/"
+				),
+				urlPattern = "https://google.com/Product-.*-p.*"
+		)
+		assertProductUrlMatchesRegex(
+				productSearchRequest = ProductsSearchRequest.ByFilters(
+						cleanUrls = false
+				),
+				urlPattern = "https://store.*.ecwid.com/#!/Product-.*/p/.*"
+		)
+		assertProductUrlMatchesRegex(
+				productSearchRequest = ProductsSearchRequest.ByFilters(
+						baseUrl = "https://google.com/",
+						cleanUrls = false
+				),
+				urlPattern = "https://google.com/#!/Product-.*/p/.*"
+		)
+	}
+
+	@Test
+	fun testSearchOrder() {
+		val testName = "testSearchOrder"
+
+		val productSku1 = "${testName}1"
+		val productSku2 = "${testName}2"
+		val productSku3 = "${testName}3"
+
+		// Create three product
+		val productCreateRequest1 = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product $testName A: ${randomAlphanumeric(8)}",
+						sku = productSku1,
+						price = 10.0,
+						description = "Description B B"
+				)
+		)
+		val productCreateRequest2 = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product $testName B: ${randomAlphanumeric(8)}",
+						sku = productSku2,
+						price = 20.0
+				)
+		)
+
+		val productCreateRequest3 = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product $testName C: ${randomAlphanumeric(8)}",
+						sku = productSku3,
+						price = 30.0
+				)
+		)
+
+		val productCreateResult1 = apiClient.createProduct(productCreateRequest1)
+		assertTrue(productCreateResult1.id > 0)
+
+		val productCreateResult2 = apiClient.createProduct(productCreateRequest2)
+		assertTrue(productCreateResult2.id > 0)
+
+		val productCreateResult3 = apiClient.createProduct(productCreateRequest3)
+		assertTrue(productCreateResult3.id > 0)
+
+		// Waiting till product became available for searching
+		waitForProductCount(
+				productsSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName),
+				desiredProductCount = 3
+		)
+
+		// Trying to search with different sort order
+
+		assertProductsSearch(
+				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.ADDED_TIME_ASC),
+				desiredSkus = listOf(productSku1, productSku2, productSku3)
+		)
+		assertProductsSearch(
+				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.ADDED_TIME_DESC),
+				desiredSkus = listOf(productSku3, productSku2, productSku1)
+		)
+
+		assertProductsSearch(
+				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.UPDATED_TIME_ASC),
+				desiredSkus = listOf(productSku1, productSku2, productSku3)
+		)
+		assertProductsSearch(
+				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.UPDATED_TIME_DESC),
+				desiredSkus = listOf(productSku3, productSku2, productSku1)
+		)
+
+		assertProductsSearch(
+				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.NAME_ASC),
+				desiredSkus = listOf(productSku1, productSku2, productSku3)
+		)
+		assertProductsSearch(
+				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.NAME_DESC),
+				desiredSkus = listOf(productSku3, productSku2, productSku1)
+		)
+
+		assertProductsSearch(
+				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.PRICE_ASC),
+				desiredSkus = listOf(productSku1, productSku2, productSku3)
+		)
+		assertProductsSearch(
+				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.PRICE_DESC),
+				desiredSkus = listOf(productSku3, productSku2, productSku1)
+		)
+
+		assertProductsSearch(
+				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = "B", sortBy = SortOrder.RELEVANCE),
+				desiredSkus = listOf(productSku2, productSku1)
+		)
+	}
+
+	@Test
+	fun testSearchPaging() {
+		val testName = "testSearchPaging"
+
+		// Create some products
+		for (i in 1..3) {
+			val productCreateRequest = ProductCreateRequest(newProduct =
+				UpdatedProduct(
+						name = "Product $testName " + randomAlphanumeric(8),
+						sku = "$testName$i"
+				)
+			)
+			val productCreateResult = apiClient.createProduct(productCreateRequest)
+			assertTrue(productCreateResult.id > 0)
+		}
+
+		// Waiting till product became available for searching and trying to request only one page
+		waitForProductCount(
+				productsSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName),
+				desiredProductCount = 3
+		)
+
+		val productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, offset = 2, limit = 2)
+		val productsSearchResult = apiClient.searchProducts(productSearchRequest)
+		assertEquals(1, productsSearchResult.count)
+		assertEquals(3, productsSearchResult.total)
+	}
+
+	@Test
+	fun testProductLifecycle() {
+		// Creating new product
+		val productCreateRequest = ProductCreateRequest(
+				newProduct = generateTestProduct()
+		)
+		val productCreateResult = apiClient.createProduct(productCreateRequest)
+		assertTrue(productCreateResult.id > 0)
+
+		// Checking that product was successfully created with necessary parameters
+		val productDetailsRequest = ProductDetailsRequest(productId = productCreateResult.id)
+		val productDetails1 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(
+				productCreateRequest.newProduct,
+				productDetails1.toUpdated().cleanupForComparison(productCreateRequest)
+		)
+
+		// Completely updating newly created product
+		val productUpdateRequest = ProductUpdateRequest(
+				productId = productDetails1.id,
+				updatedProduct = generateTestProduct().withUnchangedShowOnFrontend(productCreateRequest)
+		)
+		val productUpdateResult1 = apiClient.updateProduct(productUpdateRequest)
+		assertEquals(1, productUpdateResult1.updateCount)
+
+		// Checking that product was successfully updated with necessary parameters
+		val productDetails2 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(
+				productUpdateRequest.updatedProduct,
+				productDetails2.toUpdated().cleanupForComparison(productCreateRequest)
+		)
+
+		// Deleting product
+		val productDeleteRequest = ProductDeleteRequest(productId = productDetails1.id)
+		val productDeleteResult = apiClient.deleteProduct(productDeleteRequest)
+		assertEquals(1, productDeleteResult.deleteCount)
+
+		// Checking that deleted product is not accessible anymore
+		try {
+			apiClient.getProductDetails(productDetailsRequest)
+		} catch (e: EcwidApiException) {
+			assertEquals(404, e.statusCode)
+			assertEquals("Product #${productCreateResult.id} not found", e.message)
+		}
+	}
+
+	@Test
+	fun testSearchByIds() {
+		// Creating three new products
+		val productCreateRequest1 = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product ${randomAlphanumeric(8)}",
+						sku = "testSearchByIds1"
+				)
+		)
+		val productCreateRequest2 = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product ${randomAlphanumeric(8)}",
+						sku = "testSearchByIds2"
+				)
+		)
+		val productCreateRequest3 = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product ${randomAlphanumeric(8)}",
+						sku = "testSearchByIds3"
+				)
+		)
+
+		val productCreateResult1 = apiClient.createProduct(productCreateRequest1)
+		assertTrue(productCreateResult1.id > 0)
+
+		val productCreateResult2 = apiClient.createProduct(productCreateRequest2)
+		assertTrue(productCreateResult2.id > 0)
+
+		val productCreateResult3 = apiClient.createProduct(productCreateRequest3)
+		assertTrue(productCreateResult3.id > 0)
+
+		// Verifying that we will get two products if search request contains two product IDs
+		val productsSearchRequest = ProductsSearchRequest.ByIds(
+				listOf(productCreateResult1.id, productCreateResult2.id)
+		)
+		val productsSearchResult = apiClient.searchProducts(productsSearchRequest)
+		assertEquals(2, productsSearchResult.items.size)
+	}
+
+	@Test
+	fun testUpdateProductInventory() {
+		// Creating new product
+		val productCreateRequest = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product " + randomAlphanumeric(8),
+						sku = "testUpdateProductInventory",
+						quantity = 10
+				)
+		)
+		val productCreateResult = apiClient.createProduct(productCreateRequest)
+		assertTrue(productCreateResult.id > 0)
+
+		// Checking that product was successfully created with necessary quantity
+		val productDetailsRequest = ProductDetailsRequest(productId = productCreateResult.id)
+		val productDetails1 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(10, productDetails1.quantity)
+
+		// Increasing product quantity
+		val productInventoryUpdateRequest1 = ProductInventoryUpdateRequest(
+				productId = productCreateResult.id,
+				inventoryAdjustment = InventoryAdjustment(5)
+		)
+		val productInventoryUpdateResult1 = apiClient.updateProductInventory(productInventoryUpdateRequest1)
+		assertEquals(1, productInventoryUpdateResult1.updateCount)
+
+		// Checking that product quantity was successfully updated
+		val productDetails2 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(15, productDetails2.quantity)
+
+		// Decreasing product quantity
+		val productInventoryUpdateRequest2 = ProductInventoryUpdateRequest(
+				productId = productCreateResult.id,
+				inventoryAdjustment = InventoryAdjustment(-20)
+		)
+		val productInventoryUpdateResult2 = apiClient.updateProductInventory(productInventoryUpdateRequest2)
+		assertEquals(1, productInventoryUpdateResult2.updateCount)
+		assertEquals("Product has negative stock.", productInventoryUpdateResult2.warning)
+
+		// Checking that product quantity was successfully updated
+		val productDetails3 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(-5, productDetails3.quantity)
+	}
+
+	@Test
+	fun testManipulateProductImage() {
+		// Creating new product
+		val productCreateRequest = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product ${randomAlphanumeric(8)}",
+						sku = "testManipulateProductImage"
+				)
+		)
+		val productCreateResult = apiClient.createProduct(productCreateRequest)
+		assertTrue(productCreateResult.id > 0)
+
+		// Upload some images from different sources
+
+		val productImageUploadRequest1 = ProductImageUploadRequest(
+				productId = productCreateResult.id,
+				fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
+		)
+		val productImageUploadResult1 = apiClient.uploadProductImage(productImageUploadRequest1)
+		assertTrue(productImageUploadResult1.id > 0)
+
+		val productImageUploadRequest2 = ProductImageUploadRequest(
+				productId = productCreateResult.id,
+				fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
+		)
+		val productImageUploadResult2 = apiClient.uploadProductImage(productImageUploadRequest2)
+		assertTrue(productImageUploadResult2.id > 0)
+
+		val productImageUploadRequest3 = ProductImageUploadRequest(
+				productId = productCreateResult.id,
+				fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
+		)
+		val productImageUploadResult3 = apiClient.uploadProductImage(productImageUploadRequest3)
+		assertTrue(productImageUploadResult3.id > 0)
+
+		val productImageUploadRequest4 = ProductImageUploadRequest(
+				productId = productCreateResult.id,
+				fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
+		)
+		val productImageUploadResult4 = apiClient.uploadProductImage(productImageUploadRequest4)
+		assertTrue(productImageUploadResult4.id > 0)
+
+		// Checking that product has main image
+		val productDetailsRequest = ProductDetailsRequest(productId = productCreateResult.id)
+		val productDetails1 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(1, productDetails1.media?.images?.size)
+		assertMediaProductImage(
+				expectedId = "0",
+				expectedOrderBy = 0,
+				expectedIsMain = true,
+				expectedPathEnd = "/${productImageUploadResult4.id}.jpg",
+				productImage = productDetails1.media?.images?.get(0)
+		)
+
+		// Now delete product image
+
+		val productImageDeleteRequest = ProductImageDeleteRequest(productId = productCreateResult.id)
+		val productImageDeleteResult = apiClient.deleteProductImage(productImageDeleteRequest)
+		assertTrue(productImageDeleteResult.deleteCount > 0)
+
+		// Check that product has now no main image now
+
+		// Checking that product has main image
+		val productDetails2 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(0, productDetails2.media?.images?.size)
+	}
+
+	@Test
+	fun testManipulateProductGalleryImages() {
+		// Creating new product
+		val productCreateRequest = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product ${randomAlphanumeric(8)}",
+						sku = "testManipulateProductGalleryImages"
+				)
+		)
+		val productCreateResult = apiClient.createProduct(productCreateRequest)
+		assertTrue(productCreateResult.id > 0)
+
+		// Upload gallery images from different sources
+
+		val productGalleryImageUploadRequest1 = ProductGalleryImageUploadRequest(
+				productId = productCreateResult.id,
+				fileName = randomFileName("test", "png"),
+				fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
+		)
+		val productGalleryImageUploadResult1 = apiClient.uploadProductGalleryImage(productGalleryImageUploadRequest1)
+		assertTrue(productGalleryImageUploadResult1.id > 0)
+
+		val productGalleryImageUploadRequest2 = ProductGalleryImageUploadRequest(
+				productId = productCreateResult.id,
+				fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
+		)
+		val productGalleryImageUploadResult2 = apiClient.uploadProductGalleryImage(productGalleryImageUploadRequest2)
+		assertTrue(productGalleryImageUploadResult2.id > 0)
+
+		val productGalleryImageUploadRequest3 = ProductGalleryImageUploadRequest(
+				productId = productCreateResult.id,
+				fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
+		)
+		val productGalleryImageUploadResult3 = apiClient.uploadProductGalleryImage(productGalleryImageUploadRequest3)
+		assertTrue(productGalleryImageUploadResult3.id > 0)
+
+		val productGalleryImageUploadRequest4 = ProductGalleryImageUploadRequest(
+				productId = productCreateResult.id,
+				fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
+		)
+		val productGalleryImageUploadResult4 = apiClient.uploadProductGalleryImage(productGalleryImageUploadRequest4)
+		assertTrue(productGalleryImageUploadResult4.id > 0)
+
+		// Checking that product has gallery images image
+
+		val productDetailsRequest = ProductDetailsRequest(productId = productCreateResult.id)
+		val productDetails1 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(4, productDetails1.media?.images?.size)
+		assertMediaProductImage(
+				expectedId = productGalleryImageUploadResult1.id.toString(),
+				expectedOrderBy = 0,
+				expectedIsMain = false,
+				expectedPathEnd = null,
+				productImage = productDetails1.media?.images?.get(0)
+		)
+		assertMediaProductImage(
+				expectedId = productGalleryImageUploadResult2.id.toString(),
+				expectedOrderBy = 1,
+				expectedIsMain = false,
+				expectedPathEnd = null,
+				productImage = productDetails1.media?.images?.get(1)
+		)
+		assertMediaProductImage(
+				expectedId = productGalleryImageUploadResult3.id.toString(),
+				expectedOrderBy = 2,
+				expectedIsMain = false,
+				expectedPathEnd = null,
+				productImage = productDetails1.media?.images?.get(2)
+		)
+		assertMediaProductImage(
+				expectedId = productGalleryImageUploadResult4.id.toString(),
+				expectedOrderBy = 3,
+				expectedIsMain = false,
+				expectedPathEnd = null,
+				productImage = productDetails1.media?.images?.get(3)
+		)
+
+		// Changing gallery images order
+
+		val newMedia = ProductMedia(
+				images = productDetails1.media?.toUpdated()?.images?.map { productImage ->
+					productImage.copy(
+							orderBy = if (productImage.id == "1") {
+								10
+							} else {
+								productImage.orderBy
+							}
+					)
+				}
+		)
+		val productUpdateRequest1 = ProductUpdateRequest(
+				productId = productCreateResult.id,
+				updatedProduct = UpdatedProduct(
+						media = newMedia
+				)
+		)
+		val productUpdateResult1 = apiClient.updateProduct(productUpdateRequest1)
+		assertTrue(productUpdateResult1.updateCount > 0)
+
+		val productDetails2 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(4, productDetails2.media?.images?.size)
+		assertMediaProductImage(
+				expectedId = "0", // First image became main
+				expectedOrderBy = 0,
+				expectedIsMain = true, // First image became main
+				expectedPathEnd = productDetails1.media?.images?.get(1)?.image1500pxUrl,
+				productImage = productDetails2.media?.images?.get(0)
+		)
+		assertMediaProductImage(
+				expectedId = productGalleryImageUploadResult3.id.toString(),
+				expectedOrderBy = 1,
+				expectedIsMain = false,
+				expectedPathEnd = productDetails1.media?.images?.get(2)?.image1500pxUrl,
+				productImage = productDetails2.media?.images?.get(1)
+		)
+		assertMediaProductImage(
+				expectedId = productGalleryImageUploadResult4.id.toString(),
+				expectedOrderBy = 2,
+				expectedIsMain = false,
+				expectedPathEnd = productDetails1.media?.images?.get(3)?.image1500pxUrl,
+				productImage = productDetails2.media?.images?.get(2)
+		)
+		assertMediaProductImage(
+				expectedId = productGalleryImageUploadResult1.id.toString(), // This is the moved gallery item
+				expectedOrderBy = 3,
+				expectedIsMain = false,
+				expectedPathEnd = productDetails1.media?.images?.get(0)?.image1500pxUrl,
+				productImage = productDetails2.media?.images?.get(3)
+		)
+
+		// Now delete one gallery image
+		val productGalleryImageDeleteRequest = ProductGalleryImageDeleteRequest(
+				productId = productCreateResult.id,
+				fileId = productGalleryImageUploadResult3.id
+		)
+		val productGalleryImageDeleteResult = apiClient.deleteProductGalleryImage(productGalleryImageDeleteRequest)
+		assertTrue(productGalleryImageDeleteResult.deleteCount > 0)
+
+		// Check that product has only three gallery images left
+		val productDetails3 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(3, productDetails3.media?.images?.size)
+
+		// Now delete all other gallery images (not including main image)
+		val productGalleryImagesDeleteRequest = ProductGalleryImagesDeleteRequest(productId = productCreateResult.id)
+		val productGalleryImagesDeleteResult = apiClient.deleteProductGalleryImages(productGalleryImagesDeleteRequest)
+		assertEquals(2, productGalleryImagesDeleteResult.deleteCount)
+
+		// Check that product has no gallery images left (only main image left)
+		val productDetails4 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(1, productDetails4.media?.images?.size)
+	}
+
+	@Test
+	fun testManipulateProductFiles() {
+		// Creating new product
+		val productCreateRequest = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product ${randomAlphanumeric(8)}",
+						sku = "testManipulateProductFiles"
+				)
+		)
+		val productCreateResult = apiClient.createProduct(productCreateRequest)
+		assertTrue(productCreateResult.id > 0)
+
+		// Upload files from different sources
+
+		val productFileUploadRequest1 = ProductFileUploadRequest(
+				productId = productCreateResult.id,
+				fileName = randomFileName("test", "png"),
+				description = "Description ${randomAlphanumeric(32)}",
+				fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
+		)
+		val productFileUploadResult1 = apiClient.uploadProductFile(productFileUploadRequest1)
+		assertTrue(productFileUploadResult1.id > 0)
+
+		val productFileUploadRequest2 = ProductFileUploadRequest(
+				productId = productCreateResult.id,
+				fileName = randomFileName("test", "png"),
+				description = "Description ${randomAlphanumeric(32)}",
+				fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
+		)
+		val productFileUploadResult2 = apiClient.uploadProductFile(productFileUploadRequest2)
+		assertTrue(productFileUploadResult2.id > 0)
+
+		val productFileUploadRequest3 = ProductFileUploadRequest(
+				productId = productCreateResult.id,
+				fileName = randomFileName("test", "png"),
+				description = "Description ${randomAlphanumeric(32)}",
+				fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
+		)
+		val productFileUploadResult3 = apiClient.uploadProductFile(productFileUploadRequest3)
+		assertTrue(productFileUploadResult3.id > 0)
+
+		val productFileUploadRequest4 = ProductFileUploadRequest(
+				productId = productCreateResult.id,
+				fileName = randomFileName("test", "png"),
+				description = "Description ${randomAlphanumeric(32)}",
+				fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
+		)
+		val productFileUploadResult4 = apiClient.uploadProductFile(productFileUploadRequest4)
+		assertTrue(productFileUploadResult4.id > 0)
+
+		// Checking that product has necessary files
+
+		val productDetailsRequest = ProductDetailsRequest(productId = productCreateResult.id)
+		val productDetails1 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(4, productDetails1.files?.size)
+		assertFile(
+				expectedProductId = productFileUploadResult1.id,
+				expectedFileName = productFileUploadRequest1.fileName,
+				expectedDescription = productFileUploadRequest1.description,
+				productFile = productDetails1.files?.get(0)
+		)
+		assertFile(
+				expectedProductId = productFileUploadResult2.id,
+				expectedFileName = productFileUploadRequest2.fileName,
+				expectedDescription = productFileUploadRequest2.description,
+				productFile = productDetails1.files?.get(1)
+		)
+		assertFile(
+				expectedProductId = productFileUploadResult3.id,
+				expectedFileName = productFileUploadRequest3.fileName,
+				expectedDescription = productFileUploadRequest3.description,
+				productFile = productDetails1.files?.get(2)
+		)
+		assertFile(
+				expectedProductId = productFileUploadResult4.id,
+				expectedFileName = productFileUploadRequest4.fileName,
+				expectedDescription = productFileUploadRequest4.description,
+				productFile = productDetails1.files?.get(3)
+		)
+
+		// Update one product file description
+
+		val productFileUpdateRequest = ProductFileUpdateRequest(
+				productId = productCreateResult.id,
+				fileId = productFileUploadResult2.id,
+				updatedProductFile = ProductFileUpdateRequest.UpdatedProductFile(
+						description = "Description ${randomAlphanumeric(32)}"
+				)
+		)
+		val productFileUpdateResult = apiClient.updateProductFile(productFileUpdateRequest)
+		assertTrue(productFileUpdateResult.updateCount > 0)
+
+		// Check that product was updated
+		val productDetails2 = apiClient.getProductDetails(productDetailsRequest)
+		assertFile(
+				expectedProductId = productFileUploadResult2.id,
+				expectedFileName = productFileUploadRequest2.fileName,
+				expectedDescription = productFileUpdateRequest.updatedProductFile.description,
+				productFile = productDetails2.files?.get(1)
+		)
+
+		// Try to download product file and check its size
+		val productFileDownloadRequest = ProductFileDownloadRequest(
+				productId = productCreateResult.id,
+				fileId = productFileUploadResult2.id
+		)
+		val downloadedProductFileBytes = apiClient.downloadProductFile(productFileDownloadRequest)
+		assertEquals(getTestPngFilePath().toFile().length(), downloadedProductFileBytes.size.toLong())
+
+		// Now delete one product file
+		val productFileDeleteRequest = ProductFileDeleteRequest(
+				productId = productCreateResult.id,
+				fileId = productFileUploadResult2.id
+		)
+		val productFileDeleteResult = apiClient.deleteProductFile(productFileDeleteRequest)
+		assertTrue(productFileDeleteResult.deleteCount > 0)
+
+		// Check that product has only three product files left
+		val productDetails3 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(3, productDetails3.files?.size)
+
+		// Now delete all other product files
+		val productFilesDeleteRequest = ProductFilesDeleteRequest(productId = productCreateResult.id)
+		val productFilesDeleteResult = apiClient.deleteProductFiles(productFilesDeleteRequest)
+		assertEquals(3, productFilesDeleteResult.deleteCount)
+
+		// Check that product has no product files left
+		val productDetails4 = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(0, productDetails4.files?.size)
+	}
+
+	@Test
+	fun testDeletedProducts() {
+		// Creating new product
+		val productCreateRequest = ProductCreateRequest(
+				newProduct = generateTestProduct()
+		)
+		val productCreateResult = apiClient.createProduct(productCreateRequest)
+		assertTrue(productCreateResult.id > 0)
+
+		// Deleting product
+		val productDeleteRequest = ProductDeleteRequest(productId = productCreateResult.id)
+		val productDeleteResult = apiClient.deleteProduct(productDeleteRequest)
+		assertEquals(1, productDeleteResult.deleteCount)
+
+		val instant = Date().toInstant()
+		val instantFrom = instant.minusSeconds(10)
+		val instantTo = instant.plusSeconds(10)
+
+		// Checking that just deleted product returned from api
+		val deletedProductsSearchRequest = DeletedProductsSearchRequest(
+				deletedFrom = Date.from(instantFrom),
+				deletedTo = Date.from(instantTo)
+		)
+		val deletedProducts = apiClient.searchDeletedProductsAsSequence(deletedProductsSearchRequest)
+		val deletedProduct = deletedProducts.firstOrNull { deletedProduct -> deletedProduct.id == productCreateResult.id }
+		require(deletedProduct != null)
+		assertTrue(instantFrom.isBefore(deletedProduct.date.toInstant()))
+		assertTrue(instantTo.isAfter(deletedProduct.date.toInstant()))
+	}
+
+	private fun assertProductUrlMatchesRegex(productSearchRequest: ProductsSearchRequest.ByFilters, urlPattern: String) {
+		val searchProducts = apiClient.searchProducts(productSearchRequest)
+		assertEquals(1, searchProducts.total)
+
+		val url = searchProducts.items[0].url ?: ""
+		assertTrue(
+				url.matches(Regex(urlPattern)),
+				"Url '$url' is not matching regex pattern '$urlPattern'"
+		)
+	}
+
+	private fun assertProductsSearch(positiveProductId: Int, positiveSearchRequest: ProductsSearchRequest.ByFilters, negativeSearchRequest: ProductsSearchRequest.ByFilters) {
+		val positiveProductsSearchResult = apiClient.searchProducts(positiveSearchRequest)
+		assertEquals(1, positiveProductsSearchResult.total)
+		assertEquals(positiveProductId, positiveProductsSearchResult.items[0].id)
+
+		val negativeProductsSearchResult = apiClient.searchProducts(negativeSearchRequest)
+		assertEquals(0, negativeProductsSearchResult.total)
+	}
+
+	private fun assertProductsSearch(productSearchRequest: ProductsSearchRequest.ByFilters, desiredSkus: List<String>) {
+		val productsSearchResult = apiClient.searchProducts(productSearchRequest)
+		assertEquals(desiredSkus.size, productsSearchResult.items.size)
+		assertEquals(desiredSkus, productsSearchResult.items.map(FetchedProduct::sku))
+	}
+
+	private fun assertMediaProductImage(expectedId: String, expectedOrderBy: Int, expectedIsMain: Boolean, expectedPathEnd: String?, productImage: FetchedProduct.ProductImage?) {
+		assertAll(
+				{ assertEquals(expectedId, productImage?.id, "id mismatch") },
+				{ assertEquals(expectedOrderBy, productImage?.orderBy, "orderBy mismatch") },
+				{ assertEquals(expectedIsMain, productImage?.isMain, "isMain mismatch") },
+				{
+					if (expectedPathEnd != null) {
+						assertEquals(true, productImage?.image1500pxUrl?.endsWith(expectedPathEnd), "image1500pxUrl mismatch")
+					}
+				}
+		)
+	}
+
+	private fun assertFile(expectedProductId: Int, expectedFileName: String, expectedDescription: String, productFile: FetchedProduct.ProductFile?) {
+		assertAll(
+				{ assertEquals(expectedProductId, productFile?.id, "id mismatch") },
+				{ assertEquals(expectedFileName, productFile?.name, "name mismatch") },
+				{ assertEquals(expectedDescription, productFile?.description, "description mismatch") },
+				{ assertTrue((productFile?.size ?: 0) > 0, "wrong size") }
+		)
+	}
+
+	private fun waitForProductCount(productsSearchRequest: ProductsSearchRequest.ByFilters, desiredProductCount: Int) {
+		var tries = 0
+		var lastProductCount: Int
+		do {
+			val productsSearchResult = apiClient.searchProducts(productsSearchRequest)
+			if (productsSearchResult.total == desiredProductCount) return
+			lastProductCount = productsSearchResult.total
+			tries++
+			Thread.sleep(500L * tries)
+		} while (tries < 10)
+
+		return fail("After $tries tries was $lastProductCount products found instead of $desiredProductCount")
+	}
+
+}
+
+private fun generateTestProduct(): UpdatedProduct {
+	val basePrice = randomPrice()
+	return UpdatedProduct(
+			name = "Product " + randomAlphanumeric(8),
+			sku = "SKU " + randomAlphanumeric(8),
+			quantity = randomByte(),
+			unlimited = false, // To allow set quantity
+			price = basePrice,
+			wholesalePrices = listOf(
+					generateWholesalePrice(basePrice, 2),
+					generateWholesalePrice(basePrice, 3)
+			),
+			compareToPrice = 2 * basePrice,
+//			tax = generateTaxInfo(), // TODO Fill with real tax ids when api client will support it
+			isShippingRequired = true, // To allow set weight field  
+			weight = randomWeight(),
+			productClassId = 0, // TODO Fill with real productClassId when api client will support it
+			enabled = randomBoolean(),
+			options = listOf(
+					generateProductSelectOption(),
+					generateProductRadioOption(),
+					generateProductCheckboxOption(),
+					generateProductTextFieldOption(),
+					generateProductTextAreaOption(),
+					generateProductDateOption(),
+					generateProductFilesOption()
+			),
+			warningLimit = randomByte(),
+			shipping = generateShippingSettings(),
+			description = "Description " + randomAlphanumeric(16),
+			categoryIds = listOf(
+//					randomId(), // TODO Fill with real category ids when api client will support it
+//					randomId(),
+//					randomId()
+			),
+			seoTitle = "SEO Title " + randomAlphanumeric(16),
+			seoDescription = "SEO Description " + randomAlphanumeric(16),
+			defaultCategoryId = 0, // TODO Fill with real category id when api client will support it
+			attributes = listOf(
+					generateBrandAttributeValue(),
+					generateUpcAttributeValue()
+//					generateGeneralAttributeValue(), // TODO Send real product attribute id when api client will support product attribute creation 
+//					generateGeneralAttributeValue()
+			),
+			relatedProducts = generateRelatedProducts(),
+			dimensions = generateDimensions(),
+			showOnFrontpage = randomByte()
+	)
+}
+
+private fun generateProductSelectOption(): UpdatedProduct.ProductOption {
+	val choices = listOf(
+			generateProductOptionChoice(),
+			generateProductOptionChoice(),
+			generateProductOptionChoice()
+	)
+	return ProductOption.createSelectOption(
+			name = "Option " + randomAlphanumeric(8),
+			choices = choices,
+			defaultChoice = randomIndex(choices),
+			required = randomBoolean()
+	)
+}
+
+private fun generateProductRadioOption(): UpdatedProduct.ProductOption {
+	val choices = listOf(
+			generateProductOptionChoice(),
+			generateProductOptionChoice(),
+			generateProductOptionChoice()
+	)
+	return ProductOption.createRadioOption(
+			name = "Option " + randomAlphanumeric(8),
+			choices = choices,
+			defaultChoice = randomIndex(choices),
+			required = randomBoolean()
+	)
+}
+
+private fun generateProductCheckboxOption() = ProductOption.createCheckboxOption(
+		name = "Option " + randomAlphanumeric(8),
+		choices = listOf(
+				generateProductOptionChoice(),
+				generateProductOptionChoice(),
+				generateProductOptionChoice()
+		)
+)
+
+private fun generateProductTextFieldOption() = ProductOption.createTextFieldOption(
+		name = "Option " + randomAlphanumeric(8),
+		required = randomBoolean()
+)
+
+private fun generateProductTextAreaOption() = ProductOption.createTextAreaOption(
+		name = "Option " + randomAlphanumeric(8),
+		required = randomBoolean()
+)
+
+private fun generateProductDateOption() = ProductOption.createDateOption(
+		name = "Option " + randomAlphanumeric(8),
+		required = randomBoolean()
+)
+
+private fun generateProductFilesOption() = ProductOption.createFilesOption(
+		name = "Option " + randomAlphanumeric(8),
+		required = randomBoolean()
+)
+
+private fun generateProductOptionChoice() = ProductOptionChoice(
+		text = "Option choice " + randomAlphanumeric(8),
+		priceModifier = randomModifier(),
+		priceModifierType = randomEnumValue<PriceModifierType>()
+)
+
+fun generateRelatedProducts() = RelatedProducts(
+		productIds = listOf(
+//				randomId(), TODO Send real related product ids
+//				randomId(),
+//				randomId()
+		),
+		relatedCategory = generateRelatedCategory()
+)
+
+fun generateRelatedCategory(): RelatedCategory = RelatedCategory(
+		enabled = randomBoolean(),
+		categoryId = 0, // TODO Send any existing category id when api client will support its creation
+		productCount = randomByte()
+)
+
+private fun generateShippingSettings() = UpdatedProduct.ShippingSettings(
+		type = randomEnumValue<ShippingSettingsType>(),
+		methodMarkup = randomPrice(),
+		flatRate = randomPrice(),
+		disabledMethods = listOf(
+				randomAlphanumeric(8),
+				randomAlphanumeric(8),
+				randomAlphanumeric(8)
+		),
+		enabledMethods = listOf(
+				randomAlphanumeric(8),
+				randomAlphanumeric(8),
+				randomAlphanumeric(8)
+		)
+)
+
+//private fun generateTaxInfo() = UpdatedProduct.TaxInfo(
+//		defaultLocationIncludedTaxRate = randomPrice(),
+//		enabledManualTaxes = listOf(
+//				randomId(),
+//				randomId(),
+//				randomId()
+//		)
+//)
+
+private fun generateWholesalePrice(basePrice: Double, divider: Int) = UpdatedProduct.WholesalePrice(
+		quantity = divider,
+		price = basePrice / divider
+)
+
+private fun generateBrandAttributeValue(): UpdatedProduct.AttributeValue {
+	return UpdatedProduct.AttributeValue.createBrandAttributeValue("Attribute value " + randomAlphanumeric(8))
+}
+
+private fun generateUpcAttributeValue(): UpdatedProduct.AttributeValue {
+	return UpdatedProduct.AttributeValue.createUpcAttributeValue("Attribute value " + randomAlphanumeric(8))
+}
+
+//private fun generateGeneralAttributeValue(productAttributeId: Int): UpdatedProduct.AttributeValue {
+//	return UpdatedProduct.AttributeValue.createAttributeValue(
+//			productAttributeId,
+//			"Attribute value " + randomAlphanumeric(8),
+//			randomEnumValue()
+//	)
+//}
+
+private fun generateDimensions() = UpdatedProduct.ProductDimensions(
+		length = randomDimension(),
+		width = randomDimension(),
+		height = randomDimension()
+)
+
+private fun UpdatedProduct.cleanupForComparison(productCreateRequest: ProductCreateRequest): UpdatedProduct {
+	return copy(
+			// Password is write only field
+			attributes = attributes?.mapIndexed { index, attribute ->
+				val attributeValue = productCreateRequest.newProduct.attributes?.get(index)
+				attribute.cleanupForComparison(attributeValue)
+			},
+			media = if (media?.images?.isEmpty() != false) null else media
+	)
+}
+
+private fun UpdatedProduct.AttributeValue.cleanupForComparison(attributeValue: UpdatedProduct.AttributeValue?): UpdatedProduct.AttributeValue {
+	return copy(
+			// Id is not used for BRAND/UPC attributes and can be used for custom attributes 
+			id = if (attributeValue?.alias != null) attributeValue.id else null,
+			// Alias is write only field
+			alias = attributeValue?.alias
+	)
+}
+
+private fun UpdatedProduct.withUnchangedShowOnFrontend(productCreateRequest: ProductCreateRequest): UpdatedProduct {
+	return copy(
+			// TODO Probably API bug (see https://track.ecwid.com/youtrack/issue/ECWID-53048)
+			showOnFrontpage = productCreateRequest.newProduct.showOnFrontpage
+	)
+}

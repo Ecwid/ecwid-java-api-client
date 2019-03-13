@@ -52,11 +52,11 @@ internal class ApacheCommonsHttpClientTransport : HttpTransport {
 		return try {
 			httpClient.execute(request) { response ->
 				val statusLine = response.statusLine
-				val responseBody = EntityUtils.toString(response.entity, "UTF-8")
+				val responseBytes = EntityUtils.toByteArray(response.entity)
 				if (statusLine.statusCode != HttpStatus.SC_OK) {
-					HttpResponse.Error(statusLine.statusCode, statusLine.reasonPhrase, responseBody)
+					HttpResponse.Error(statusLine.statusCode, statusLine.reasonPhrase, responseBytes)
 				} else {
-					HttpResponse.Success(responseBody)
+					HttpResponse.Success(responseBytes)
 				}
 			}
 		} catch (e: IOException) {

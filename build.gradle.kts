@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	java
-	kotlin("jvm") version "1.3.10"
+	kotlin("jvm") version "1.3.21"
 }
 
 group = "com.ecwid.apiclient"
@@ -18,10 +18,9 @@ dependencies {
 	implementation("com.google.code.gson:gson:2.8.5")
 	implementation("org.apache.httpcomponents:httpclient:4.5.6")
 
-	testImplementation("junit", "junit", "4.12")
-	testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.1")
-	testImplementation("org.junit.jupiter:junit-jupiter-params:5.3.1")
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.3.1")
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.0")
+	testImplementation("org.junit.jupiter:junit-jupiter-params:5.4.0")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.0")
 }
 
 configure<JavaPluginConvention> {

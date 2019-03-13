@@ -91,19 +91,25 @@ internal class ApiClientHelper(
 		val httpResponse = httpTransport.makeHttpRequest(httpRequest)
 
 		val requestTime = Date().time - startTime
-		val responseBody = httpResponse.responseBody
+		val responseBytes = httpResponse.responseBytes
+		val responseBody = lazy { responseBytes.asString() }
 		return when (httpResponse) {
 			is HttpResponse.Success -> {
 				try {
-					logSuccessfulResponseIfNeeded(requestId, requestTime, responseBody)
 					if (clazz.isAssignableFrom(String::class.java)) {
+						logSuccessfulResponseIfNeeded(requestId, requestTime, responseBody.value)
 						@Suppress("UNCHECKED_CAST") // We already checked above that this cast is safe
-						responseBody as V
+						responseBody.value as V
+					} else if (clazz.isAssignableFrom(ByteArray::class.java)) {
+						logSuccessfulResponseIfNeeded(requestId, requestTime, "[Binary data: byte array of size ${responseBytes.size}]")
+						@Suppress("UNCHECKED_CAST") // We already checked above that this cast is safe
+						responseBytes as V
 					} else {
-						jsonTransformer.deserialize(responseBody, clazz)!!
+						logSuccessfulResponseIfNeeded(requestId, requestTime, responseBody.value)
+						jsonTransformer.deserialize(responseBytes.asString(), clazz)!!
 					}
 				} catch (e: JsonDeserializationException) {
-					logCannotParseResponseError(requestId, requestTime, responseBody, e)
+					logCannotParseResponseError(requestId, requestTime, responseBytes.asString(), e)
 					throw EcwidApiException(
 							message = e.message,
 							cause = e
@@ -112,8 +118,8 @@ internal class ApiClientHelper(
 			}
 			is HttpResponse.Error -> {
 				try {
-					logErrorResponseIfNeeded(requestId, requestTime, httpResponse.statusCode, responseBody)
-					val ecwidError = jsonTransformer.deserialize(responseBody, EcwidApiError::class.java)
+					logErrorResponseIfNeeded(requestId, requestTime, httpResponse.statusCode, responseBody.value)
+					val ecwidError = jsonTransformer.deserialize(responseBody.value, EcwidApiError::class.java)
 					throw EcwidApiException(
 							statusCode = httpResponse.statusCode,
 							reasonPhrase = httpResponse.reasonPhrase,
@@ -286,3 +292,4 @@ private fun Map<String, String>.dumpToString(): String {
 			.joinToString(separator = ", ")
 }
 
+private fun ByteArray.asString() = String(this, Charsets.UTF_8)
