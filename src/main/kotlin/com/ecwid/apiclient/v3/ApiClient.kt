@@ -3,6 +3,8 @@ package com.ecwid.apiclient.v3
 import com.ecwid.apiclient.v3.config.ApiServerDomain
 import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.LoggingSettings
+import com.ecwid.apiclient.v3.dto.category.request.*
+import com.ecwid.apiclient.v3.dto.category.result.*
 import com.ecwid.apiclient.v3.dto.customer.request.*
 import com.ecwid.apiclient.v3.dto.customer.result.*
 import com.ecwid.apiclient.v3.dto.customergroup.result.FetchedCustomerGroup
@@ -21,11 +23,12 @@ class ApiClient(
 		apiServerDomain: ApiServerDomain,
 		storeCredentials: ApiStoreCredentials,
 		loggingSettings: LoggingSettings = LoggingSettings()
-): ProductsApiClient, OrdersApiClient, ProductTypesApiClient, CustomersApiClient, CustomerGroupsApiClient {
+): ProductsApiClient, CategoriesApiClient, OrdersApiClient, ProductTypesApiClient, CustomersApiClient, CustomerGroupsApiClient {
 
 	private val apiClientHelper: ApiClientHelper = ApiClientHelper(apiServerDomain, storeCredentials, loggingSettings)
 
 	private val productsApiClient: ProductsApiClient = ProductsApiClientImpl(apiClientHelper)
+	private val categoriesApiClient: CategoriesApiClient = CategoriesApiClientImpl(apiClientHelper)
 	private val ordersApiClient: OrdersApiClient = OrdersApiClientImpl(apiClientHelper)
 	private val productTypesApiClient: ProductTypesApiClient = ProductTypesApiClientImpl(apiClientHelper)
 	private val customersApiClient: CustomersApiClient = CustomersApiClientImpl(apiClientHelper)
@@ -61,7 +64,14 @@ class ApiClient(
 
 	// Categories
 	// https://developers.ecwid.com/api-documentation/categories
-	// TODO
+	override fun searchCategories(request: CategoriesSearchRequest) = categoriesApiClient.searchCategories(request)
+	override fun searchCategoriesAsSequence(request: CategoriesSearchRequest) = categoriesApiClient.searchCategoriesAsSequence(request)
+	override fun getCategoryDetails(request: CategoryDetailsRequest) = categoriesApiClient.getCategoryDetails(request)
+	override fun createCategory(request: CategoryCreateRequest) = categoriesApiClient.createCategory(request)
+	override fun updateCategory(request: CategoryUpdateRequest) = categoriesApiClient.updateCategory(request)
+	override fun deleteCategory(request: CategoryDeleteRequest) = categoriesApiClient.deleteCategory(request)
+	override fun uploadCategoryImage(request: CategoryImageUploadRequest) = categoriesApiClient.uploadCategoryImage(request)
+	override fun deleteCategoryImage(request: CategoryImageDeleteRequest) = categoriesApiClient.deleteCategoryImage(request)
 
 	// Product variations
 	// https://developers.ecwid.com/api-documentation/product-variations
@@ -154,6 +164,17 @@ interface ProductsApiClient {
 	fun deleteProductFiles(request: ProductFilesDeleteRequest): ProductFilesDeleteResult
 	fun searchDeletedProducts(request: DeletedProductsSearchRequest): DeletedProductsSearchResult
 	fun searchDeletedProductsAsSequence(request: DeletedProductsSearchRequest): Sequence<DeletedProduct>
+}
+
+interface CategoriesApiClient {
+	fun searchCategories(request: CategoriesSearchRequest): CategoriesSearchResult
+	fun searchCategoriesAsSequence(request: CategoriesSearchRequest): Sequence<FetchedCategory>
+	fun getCategoryDetails(request: CategoryDetailsRequest): FetchedCategory
+	fun createCategory(request: CategoryCreateRequest): CategoryCreateResult
+	fun updateCategory(request: CategoryUpdateRequest): CategoryUpdateResult
+	fun deleteCategory(request: CategoryDeleteRequest): CategoryDeleteResult
+	fun uploadCategoryImage(request: CategoryImageUploadRequest): CategoryImageUploadResult
+	fun deleteCategoryImage(request: CategoryImageDeleteRequest): CategoryImageDeleteResult
 }
 
 interface OrdersApiClient {

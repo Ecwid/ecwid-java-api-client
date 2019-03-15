@@ -20,7 +20,7 @@ internal data class CustomersApiClientImpl(
 			val searchResult = searchCustomers(offsetRequest)
 			yieldAll(searchResult.items)
 			offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
-		} while (searchResult.count >= searchResult.limit);
+		} while (searchResult.count >= searchResult.limit)
 	}
 
 	override fun getCustomerDetails(request: CustomerDetailsRequest) = apiClientHelper.makeGetRequest<FetchedCustomer>(
@@ -62,7 +62,7 @@ internal data class CustomersApiClientImpl(
 			val searchResult = searchDeletedCustomers(offsetRequest)
 			yieldAll(searchResult.items)
 			offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
-		} while (searchResult.count >= searchResult.limit);
+		} while (searchResult.count >= searchResult.limit)
 	}
 
 }

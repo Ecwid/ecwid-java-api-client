@@ -1,0 +1,5 @@
+package com.ecwid.apiclient.v3.dto.category.request
+
+data class CategoryImageDeleteRequest(
+		val categoryId: Int = 0
+)

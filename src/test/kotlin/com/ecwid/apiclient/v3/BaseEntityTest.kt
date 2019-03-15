@@ -3,6 +3,9 @@ package com.ecwid.apiclient.v3
 import com.ecwid.apiclient.v3.config.ApiServerDomain
 import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.LoggingSettings
+import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest
+import com.ecwid.apiclient.v3.dto.category.request.CategoryDeleteRequest
+import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 import com.ecwid.apiclient.v3.dto.customer.request.CustomerDeleteRequest
 import com.ecwid.apiclient.v3.dto.customer.request.CustomersSearchRequest
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
@@ -12,9 +15,9 @@ import com.ecwid.apiclient.v3.dto.customergroup.result.FetchedCustomerGroup
 import com.ecwid.apiclient.v3.dto.order.request.OrderDeleteRequest
 import com.ecwid.apiclient.v3.dto.order.request.OrdersSearchRequest
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
-import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.dto.product.request.ProductDeleteRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest
+import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypeDeleteRequest
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypesGetAllRequest
 import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
@@ -47,6 +50,16 @@ abstract class BaseEntityTest {
 				.filterNotNull()
 				.forEach { productId ->
 					apiClient.deleteProduct(ProductDeleteRequest(productId))
+				}
+	}
+
+	protected fun removeAllCategories() {
+		apiClient
+				.searchCategoriesAsSequence(CategoriesSearchRequest(hiddenCategories = true))
+				.map(FetchedCategory::id)
+				.filterNotNull()
+				.forEach { categoryId ->
+					apiClient.deleteCategory(CategoryDeleteRequest(categoryId))
 				}
 	}
 

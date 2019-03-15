@@ -532,8 +532,6 @@ class ProductsTest: BaseEntityTest() {
 		assertTrue(productImageDeleteResult.deleteCount > 0)
 
 		// Check that product has now no main image now
-
-		// Checking that product has main image
 		val productDetails2 = apiClient.getProductDetails(productDetailsRequest)
 		assertEquals(0, productDetails2.media?.images?.size)
 	}

@@ -22,7 +22,7 @@ internal class OrdersApiClientImpl(
 			val searchResult = searchOrders(offsetRequest)
 			yieldAll(searchResult.items)
 			offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
-		} while (searchResult.count >= searchResult.limit);
+		} while (searchResult.count >= searchResult.limit)
 	}
 
 	override fun getOrderDetails(request: OrderDetailsRequest) = apiClientHelper.makeGetRequest<FetchedOrder>(
@@ -119,7 +119,7 @@ internal class OrdersApiClientImpl(
 			val searchResult = searchDeletedOrders(offsetRequest)
 			yieldAll(searchResult.items)
 			offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
-		} while (searchResult.count >= searchResult.limit);
+		} while (searchResult.count >= searchResult.limit)
 	}
 
 }

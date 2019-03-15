@@ -20,7 +20,7 @@ internal class CustomerGroupsApiClientImpl(
 			val searchResult = searchCustomerGroups(offsetRequest)
 			yieldAll(searchResult.items)
 			offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
-		} while (searchResult.count >= searchResult.limit);
+		} while (searchResult.count >= searchResult.limit)
 	}
 
 	override fun getCustomerGroupDetails(request: CustomerGroupDetailsRequest) = apiClientHelper.makeGetRequest<FetchedCustomerGroup>(

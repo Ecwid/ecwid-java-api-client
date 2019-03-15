@@ -26,7 +26,7 @@ internal class ProductsApiClientImpl(
 			val searchResult = searchProducts(offsetRequest)
 			yieldAll(searchResult.items)
 			offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
-		} while (searchResult.count >= searchResult.limit);
+		} while (searchResult.count >= searchResult.limit)
 	}
 
 	override fun searchProductsAsSequence(request: ProductsSearchRequest.ByIds): Sequence<FetchedProduct> {
@@ -238,7 +238,7 @@ internal class ProductsApiClientImpl(
 			val searchResult = searchDeletedProducts(offsetRequest)
 			yieldAll(searchResult.items)
 			offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
-		} while (searchResult.count >= searchResult.limit);
+		} while (searchResult.count >= searchResult.limit)
 	}
 
 }
