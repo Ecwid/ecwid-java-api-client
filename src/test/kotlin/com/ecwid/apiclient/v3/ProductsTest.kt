@@ -2,6 +2,8 @@ package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.UploadFileData
+import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
+import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
 import com.ecwid.apiclient.v3.dto.product.request.ProductFilesDeleteRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductFileDeleteRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductFileDownloadRequest
@@ -35,12 +37,26 @@ class ProductsTest: BaseEntityTest() {
 		super.beforeEach()
 
 		// We need to start from scratch each time
+		removeAllCategories()
 		removeAllProducts()
 	}
 
 	@Test
 	fun testSearchByFilters() {
+		// Create some categories
+
+		val categoryCreateRequest1 = CategoryCreateRequest(newCategory = generateTestCategory())
+		val categoryCreateResult1 = apiClient.createCategory(categoryCreateRequest1)
+		assertTrue(categoryCreateResult1.id > 0)
+
+		val categoryCreateRequest2 = CategoryCreateRequest(
+				newCategory = generateTestCategory(parentId = categoryCreateResult1.id)
+		)
+		val categoryCreateResult2 = apiClient.createCategory(categoryCreateRequest2)
+		assertTrue(categoryCreateResult2.id > 0)
+
 		// Creating new product
+
 		val productNameSuffix = randomAlphanumeric(8)
 		val brandName = "Brand " + randomAlphanumeric(8)
 		val upc = "UPC " + randomAlphanumeric(8)
@@ -53,6 +69,7 @@ class ProductsTest: BaseEntityTest() {
 						compareToPrice = 2 * price,
 						enabled = true,
 						quantity = 10,
+						categoryIds = listOf(categoryCreateResult2.id),
 						attributes = listOf(
 								AttributeValue.createBrandAttributeValue(brandName),
 								AttributeValue.createUpcAttributeValue(upc)
@@ -141,8 +158,8 @@ class ProductsTest: BaseEntityTest() {
 
 		assertProductsSearch(
 				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ProductsSearchRequest.ByFilters(inStock = true),
-				negativeSearchRequest = ProductsSearchRequest.ByFilters(inStock = false)
+				positiveSearchRequest = ProductsSearchRequest.ByFilters(inventory = true),
+				negativeSearchRequest = ProductsSearchRequest.ByFilters(inventory = false)
 		)
 
 		assertProductsSearch(
@@ -173,9 +190,19 @@ class ProductsTest: BaseEntityTest() {
 				)))
 		)
 
-		// TODO We should create real categories to make this search works correctly
-		// var categoryId: Int? = null
-		// var withSubcategories: Boolean? = null
+		assertProductsSearch(
+				productSearchRequest = ByFilters(
+						categories = listOf(categoryCreateResult1.id)
+				),
+				desiredSkus = listOf()
+		)
+		assertProductsSearch(
+				productSearchRequest = ByFilters(
+						categories = listOf(categoryCreateResult1.id),
+						includeProductsFromSubcategories = true
+				),
+				desiredSkus = listOf(productDetails.sku)
+		)
 	}
 
 	@Test
@@ -344,9 +371,29 @@ class ProductsTest: BaseEntityTest() {
 
 	@Test
 	fun testProductLifecycle() {
+		// Create some categories
+
+		val categoryCreateRequest1 = CategoryCreateRequest(newCategory = generateTestCategory())
+		val categoryCreateResult1 = apiClient.createCategory(categoryCreateRequest1)
+		assertTrue(categoryCreateResult1.id > 0)
+
+		val categoryCreateRequest2 = CategoryCreateRequest(newCategory = generateTestCategory())
+		val categoryCreateResult2 = apiClient.createCategory(categoryCreateRequest2)
+		assertTrue(categoryCreateResult2.id > 0)
+
+		val categoryCreateRequest3 = CategoryCreateRequest(newCategory = generateTestCategory())
+		val categoryCreateResult3 = apiClient.createCategory(categoryCreateRequest3)
+		assertTrue(categoryCreateResult3.id > 0)
+
+		val categoryIds = listOf(
+				categoryCreateResult1.id,
+				categoryCreateResult2.id,
+				categoryCreateResult3.id
+		)
+
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = generateTestProduct()
+				newProduct = generateTestProduct(categoryIds = categoryIds)
 		)
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
 		assertTrue(productCreateResult.id > 0)
@@ -362,7 +409,7 @@ class ProductsTest: BaseEntityTest() {
 		// Completely updating newly created product
 		val productUpdateRequest = ProductUpdateRequest(
 				productId = productDetails1.id,
-				updatedProduct = generateTestProduct().withUnchangedShowOnFrontend(productCreateRequest)
+				updatedProduct = generateTestProduct(categoryIds = categoryIds).withUnchangedShowOnFrontend(productCreateRequest)
 		)
 		val productUpdateResult1 = apiClient.updateProduct(productUpdateRequest)
 		assertEquals(1, productUpdateResult1.updateCount)
@@ -373,6 +420,10 @@ class ProductsTest: BaseEntityTest() {
 				productUpdateRequest.updatedProduct,
 				productDetails2.toUpdated().cleanupForComparison(productCreateRequest)
 		)
+		assertEquals(3, productDetails2.categories?.size)
+		assertTrue(productDetails2.categories?.contains(FetchedProduct.CategoryInfo(id = categoryCreateResult1.id, enabled = true)) ?: false)
+		assertTrue(productDetails2.categories?.contains(FetchedProduct.CategoryInfo(id = categoryCreateResult2.id, enabled = true)) ?: false)
+		assertTrue(productDetails2.categories?.contains(FetchedProduct.CategoryInfo(id = categoryCreateResult3.id, enabled = true)) ?: false)
 
 		// Deleting product
 		val productDeleteRequest = ProductDeleteRequest(productId = productDetails1.id)
@@ -902,8 +953,8 @@ class ProductsTest: BaseEntityTest() {
 		var lastProductCount: Int
 		do {
 			val productsSearchResult = apiClient.searchProducts(productsSearchRequest)
-			if (productsSearchResult.total == desiredProductCount) return
-			lastProductCount = productsSearchResult.total
+			if (productsSearchResult.items.size == desiredProductCount) return
+			lastProductCount = productsSearchResult.items.size
 			tries++
 			Thread.sleep(500L * tries)
 		} while (tries < 10)
@@ -913,24 +964,54 @@ class ProductsTest: BaseEntityTest() {
 
 }
 
-private fun generateTestProduct(): UpdatedProduct {
+private fun generateTestCategory(parentId: Int? = null): UpdatedCategory {
+	return UpdatedCategory(
+			name = "Category " + randomAlphanumeric(8),
+			description = "Description " + randomAlphanumeric(16),
+			parentId = parentId,
+			enabled = true
+	)
+}
+
+private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProduct {
 	val basePrice = randomPrice()
 	return UpdatedProduct(
 			name = "Product " + randomAlphanumeric(8),
+			description = "Description " + randomAlphanumeric(16),
 			sku = "SKU " + randomAlphanumeric(8),
+
+			enabled = randomBoolean(),
 			quantity = randomByte(),
 			unlimited = false, // To allow set quantity
+			warningLimit = randomByte(),
+
+			categoryIds = categoryIds,
+			defaultCategoryId = categoryIds.firstOrNull(),
+			showOnFrontpage = randomByte(),
+
 			price = basePrice,
 			wholesalePrices = listOf(
 					generateWholesalePrice(basePrice, 2),
 					generateWholesalePrice(basePrice, 3)
 			),
 			compareToPrice = 2 * basePrice,
-//			tax = generateTaxInfo(), // TODO Fill with real tax ids when api client will support it
-			isShippingRequired = true, // To allow set weight field  
-			weight = randomWeight(),
+
 			productClassId = 0, // TODO Fill with real productClassId when api client will support it
-			enabled = randomBoolean(),
+			attributes = listOf(
+					generateBrandAttributeValue(),
+					generateUpcAttributeValue()
+//					generateGeneralAttributeValue(), // TODO Send real product attribute id when api client will support product attribute creation 
+//					generateGeneralAttributeValue()
+			),
+
+			weight = randomWeight(),
+			dimensions = generateDimensions(),
+			shipping = generateShippingSettings(),
+			isShippingRequired = true, // To allow set weight field
+
+			seoTitle = "SEO Title " + randomAlphanumeric(16),
+			seoDescription = "SEO Description " + randomAlphanumeric(16),
+
 			options = listOf(
 					generateProductSelectOption(),
 					generateProductRadioOption(),
@@ -940,26 +1021,8 @@ private fun generateTestProduct(): UpdatedProduct {
 					generateProductDateOption(),
 					generateProductFilesOption()
 			),
-			warningLimit = randomByte(),
-			shipping = generateShippingSettings(),
-			description = "Description " + randomAlphanumeric(16),
-			categoryIds = listOf(
-//					randomId(), // TODO Fill with real category ids when api client will support it
-//					randomId(),
-//					randomId()
-			),
-			seoTitle = "SEO Title " + randomAlphanumeric(16),
-			seoDescription = "SEO Description " + randomAlphanumeric(16),
-			defaultCategoryId = 0, // TODO Fill with real category id when api client will support it
-			attributes = listOf(
-					generateBrandAttributeValue(),
-					generateUpcAttributeValue()
-//					generateGeneralAttributeValue(), // TODO Send real product attribute id when api client will support product attribute creation 
-//					generateGeneralAttributeValue()
-			),
-			relatedProducts = generateRelatedProducts(),
-			dimensions = generateDimensions(),
-			showOnFrontpage = randomByte()
+//			tax = generateTaxInfo(), // TODO Fill with real tax ids when api client will support it
+			relatedProducts = generateRelatedProducts()
 	)
 }
 

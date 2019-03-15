@@ -273,7 +273,7 @@ private fun ProductsSearchRequest.ByFilters.toParams(): Map<String, String> {
 		request.updatedFrom?.let { put("updatedFrom", (it.time / 1000).toString()) }
 		request.updatedTo?.let { put("updatedTo", (it.time / 1000).toString()) }
 		request.enabled?.let { put("enabled", it.toString()) }
-		request.inStock?.let { put("inStock", it.toString()) }
+		request.inventory?.let { put("inventory", if (it) "instock" else "outofstock") }
 		request.onSale?.let { put("onsale", if (it) "onsale" else "notonsale") }
 		request.attributes?.let { attributes ->
 			attributes.attributes.forEach { (attributeName, attributeValue) ->
@@ -285,10 +285,10 @@ private fun ProductsSearchRequest.ByFilters.toParams(): Map<String, String> {
 				put("option_$optionName", optionValue.joinToString(","))
 			}
 		}
+		request.categories?.let { put("categories", it.joinToString(",") ) }
+		request.includeProductsFromSubcategories?.let { put("includeProductsFromSubcategories", it.toString()) }
 		request.baseUrl?.let { put("baseUrl", it) }
 		request.cleanUrls?.let { put("cleanUrls", it.toString()) }
-		// TODO categoryId: Int? = null
-		// TODO withSubcategories: Boolean? = null
 		request.sortBy?.let { put("sortBy", it.name ) }
 		put("offset", request.offset.toString())
 		put("limit", request.limit.toString())

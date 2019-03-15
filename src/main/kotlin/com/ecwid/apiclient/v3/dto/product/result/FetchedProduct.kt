@@ -7,7 +7,7 @@ data class FetchedProduct(
 		val id: Int = 0,
 		val name: String = "",
 		val description: String? = null,
-		val sku: String? = null,
+		val sku: String,
 		val isSampleProduct: Boolean? = null, // TODO Figure out how to test
 		val url: String? = null,
 
@@ -23,7 +23,7 @@ data class FetchedProduct(
 		val warningLimit: Int? = null,
 
 		val categoryIds: List<Int>? = null,
-		val categories: List<CategoryInfo>? = null, // TODO Figure out how to test
+		val categories: List<CategoryInfo>? = null,
 		val defaultCategoryId: Int? = null,
 		val showOnFrontpage: Int? = null,
 
