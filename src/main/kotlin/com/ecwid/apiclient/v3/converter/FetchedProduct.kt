@@ -49,7 +49,7 @@ private fun FetchedProduct.WholesalePrice.toUpdated() = UpdatedProduct.Wholesale
 private fun FetchedProduct.ProductOption.toUpdated() = UpdatedProduct.ProductOption(
 		type = type,
 		name = name,
-		choices = choices?.map(FetchedProduct.ProductOptionChoice::toUpdated),
+		choices = choices?.map { it.toUpdated() },
 		defaultChoice = defaultChoice,
 		required = required
 )
