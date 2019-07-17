@@ -30,7 +30,7 @@ abstract class BaseEntityTest {
 	protected lateinit var apiClient: ApiClient
 
 	protected open fun beforeEach() {
-		apiClient = ApiClient(
+		apiClient = ApiClientBuilder(
 				apiServerDomain = ApiServerDomain(),
 				storeCredentials = ApiStoreCredentials(
 						storeId = PropertiesLoader.storeId,
@@ -40,7 +40,7 @@ abstract class BaseEntityTest {
 						logRequestBody = true,
 						logSuccessfulResponseBody = true
 				)
-		)
+		).build()
 	}
 
 	protected fun removeAllProducts() {
