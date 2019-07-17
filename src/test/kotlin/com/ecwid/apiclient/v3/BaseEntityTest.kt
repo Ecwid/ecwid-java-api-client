@@ -30,7 +30,7 @@ abstract class BaseEntityTest {
 	protected lateinit var apiClient: ApiClient
 
 	protected open fun beforeEach() {
-		apiClient = ApiClient(
+		apiClient = ApiClientBuilder(
 				apiServerDomain = ApiServerDomain(),
 				storeCredentials = ApiStoreCredentials(
 						storeId = PropertiesLoader.storeId,
@@ -40,7 +40,7 @@ abstract class BaseEntityTest {
 						logRequestBody = true,
 						logSuccessfulResponseBody = true
 				)
-		)
+		).build()
 	}
 
 	protected fun removeAllProducts() {
@@ -98,7 +98,7 @@ abstract class BaseEntityTest {
 				.searchCustomerGroupsAsSequence(CustomerGroupsSearchRequest())
 				.map(FetchedCustomerGroup::id)
 				.filterNotNull()
-				.filter { customerGroupId -> customerGroupId > 0} // We cannot delete “General” customer group
+				.filter { customerGroupId -> customerGroupId > 0 } // We cannot delete “General” customer group
 				.forEach { customerGroupId ->
 					apiClient.deleteCustomerGroup(CustomerGroupDeleteRequest(customerGroupId))
 				}
