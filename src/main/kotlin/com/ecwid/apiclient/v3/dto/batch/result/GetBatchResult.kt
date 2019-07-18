@@ -3,18 +3,18 @@ package com.ecwid.apiclient.v3.dto.batch.result
 import com.google.gson.annotations.SerializedName
 
 data class GetBatchResult(
-        var status: String,
+        var status: BatchStatus,
         // TODO: remove this gson specific annotation
         @SerializedName("total_requests")
         var totalRequests: Int,
         // TODO: remove this gson specific annotation
         @SerializedName("completed_requests")
         var completedRequests: Int,
-        var responses: List<SingleBatchResponse>
+        var responses: List<SingleBatchResponse>?
 )
 
 data class SingleBatchResponse(
-        var id: String,
+        var id: String?,
         // TODO: remove this gson specific annotation
         @SerializedName("http_body")
         var httpBody: String?,
@@ -26,6 +26,12 @@ data class SingleBatchResponse(
         var httpStatusLine: String,
         var status: BatchResponseStatus
 )
+
+enum class BatchStatus {
+    QUEUED,
+    IN_PROGRESS,
+    COMPLETED
+}
 
 enum class BatchResponseStatus {
     COMPLETED,
