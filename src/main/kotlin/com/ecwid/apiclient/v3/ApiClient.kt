@@ -21,39 +21,9 @@ import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
+import com.ecwid.apiclient.v3.httptransport.HttpTransport
 import com.ecwid.apiclient.v3.impl.*
-
-class ApiClientBuilder(
-		apiServerDomain: ApiServerDomain,
-		storeCredentials: ApiStoreCredentials,
-		loggingSettings: LoggingSettings = LoggingSettings()
-) {
-
-	private val apiClientHelper: ApiClientHelper = ApiClientHelper(apiServerDomain, storeCredentials, loggingSettings)
-
-
-	private val productsApiClient: ProductsApiClient = ProductsApiClientImpl(apiClientHelper)
-	private val categoriesApiClient: CategoriesApiClient = CategoriesApiClientImpl(apiClientHelper)
-	private val ordersApiClient: OrdersApiClient = OrdersApiClientImpl(apiClientHelper)
-	private val productTypesApiClient: ProductTypesApiClient = ProductTypesApiClientImpl(apiClientHelper)
-	private val customersApiClient: CustomersApiClient = CustomersApiClientImpl(apiClientHelper)
-	private val customerGroupsApiClient: CustomerGroupsApiClient = CustomerGroupsApiClientImpl(apiClientHelper)
-	private val batchApiClient: BatchApiClient = BatchApiClientImpl(apiClientHelper)
-
-	fun build(): ApiClient {
-		return ApiClient(
-				productsApiClient,
-				categoriesApiClient,
-				ordersApiClient,
-				productTypesApiClient,
-				customersApiClient,
-				customerGroupsApiClient,
-				batchApiClient
-		)
-	}
-
-}
-
+import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 
 class ApiClient internal constructor(
 		productsApiClient: ProductsApiClient,
@@ -70,7 +40,29 @@ class ApiClient internal constructor(
 		ProductTypesApiClient by productTypesApiClient,
 		CustomersApiClient by customersApiClient,
 		CustomerGroupsApiClient by customerGroupsApiClient,
-		BatchApiClient by batchApiClient
+		BatchApiClient by batchApiClient {
+
+	companion object {
+		fun create(apiServerDomain: ApiServerDomain,
+				   storeCredentials: ApiStoreCredentials,
+				   loggingSettings: LoggingSettings = LoggingSettings(),
+				   jsonTransformer: JsonTransformer,
+				   httpTransport: HttpTransport): ApiClient {
+			val apiClientHelper = ApiClientHelper(apiServerDomain, storeCredentials, loggingSettings, jsonTransformer, httpTransport)
+
+			return ApiClient(
+					ProductsApiClientImpl(apiClientHelper),
+					CategoriesApiClientImpl(apiClientHelper),
+					OrdersApiClientImpl(apiClientHelper),
+					ProductTypesApiClientImpl(apiClientHelper),
+					CustomersApiClientImpl(apiClientHelper),
+					CustomerGroupsApiClientImpl(apiClientHelper),
+					BatchApiClientImpl(apiClientHelper)
+			)
+
+		}
+	}
+}
 
 // Products
 // https://developers.ecwid.com/api-documentation/products

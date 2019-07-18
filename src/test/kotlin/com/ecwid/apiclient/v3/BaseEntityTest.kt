@@ -21,6 +21,8 @@ import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypeDeleteRequest
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypesGetAllRequest
 import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
+import com.ecwid.apiclient.v3.httptransport.impl.ApacheCommonsHttpClientTransport
+import com.ecwid.apiclient.v3.jsontransformer.impl.GsonJsonTransformer
 import com.ecwid.apiclient.v3.util.PropertiesLoader
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -30,7 +32,7 @@ abstract class BaseEntityTest {
 	protected lateinit var apiClient: ApiClient
 
 	protected open fun beforeEach() {
-		apiClient = ApiClientBuilder(
+		apiClient = ApiClient.create(
 				apiServerDomain = ApiServerDomain(),
 				storeCredentials = ApiStoreCredentials(
 						storeId = PropertiesLoader.storeId,
@@ -39,8 +41,10 @@ abstract class BaseEntityTest {
 				loggingSettings = LoggingSettings().copy(
 						logRequestBody = true,
 						logSuccessfulResponseBody = true
-				)
-		).build()
+				),
+				jsonTransformer = GsonJsonTransformer(),
+				httpTransport = ApacheCommonsHttpClientTransport()
+		)
 	}
 
 	protected fun removeAllProducts() {
