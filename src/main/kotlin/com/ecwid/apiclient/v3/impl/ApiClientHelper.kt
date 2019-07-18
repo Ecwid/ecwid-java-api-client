@@ -11,9 +11,7 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.httptransport.HttpRequest
 import com.ecwid.apiclient.v3.httptransport.HttpResponse
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
-import com.ecwid.apiclient.v3.httptransport.impl.ApacheCommonsHttpClientTransport
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
-import com.ecwid.apiclient.v3.jsontransformer.impl.GsonJsonTransformer
 import java.net.URI
 import java.util.*
 import java.util.logging.Level
@@ -26,13 +24,12 @@ private const val API_TOKEN_PARAM_NAME = "token"
 internal class ApiClientHelper(
 		private val apiServerDomain: ApiServerDomain,
 		private val storeCredentials: ApiStoreCredentials,
-		private val loggingSettings: LoggingSettings
+		private val loggingSettings: LoggingSettings,
+		internal val jsonTransformer: JsonTransformer,
+		private val httpTransport: HttpTransport
 ) {
 
 	private val log = Logger.getLogger(this::class.java.name)
-
-	private val httpTransport: HttpTransport = ApacheCommonsHttpClientTransport()
-	private val jsonTransformer: JsonTransformer = GsonJsonTransformer()
 
 	inline fun <reified V> makeGetRequest(
 			endpoint: String,

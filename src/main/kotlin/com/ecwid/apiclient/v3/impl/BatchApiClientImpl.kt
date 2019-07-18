@@ -25,10 +25,7 @@ internal class BatchApiClientImpl(
 
     override fun getTypedBatch(request: GetBatchRequest): GetTypedBatchResult {
         val response = getEscapedBatch(request)
-        return GetTypedBatchResult(response, object : JsonTransformer {
-            override fun serialize(src: Any?) = apiClientHelper.serializeJson(src)
-            override fun <V> deserialize(json: String, clazz: Class<V>) = apiClientHelper.deserializeJson(json, clazz)
-        })
+        return GetTypedBatchResult(response, apiClientHelper.jsonTransformer)
     }
 
     override fun getBatch(request: GetBatchRequest) = apiClientHelper.makeGetRequest<GetBatchResult>(
