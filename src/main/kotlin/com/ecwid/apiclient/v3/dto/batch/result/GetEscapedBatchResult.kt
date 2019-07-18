@@ -10,7 +10,7 @@ data class GetEscapedBatchResult(
         // TODO: remove this gson specific annotation
         @SerializedName("completed_requests")
         var completedRequests: Int,
-        var responses: List<EscapedSingleBatchResponse>
+        var responses: List<EscapedSingleBatchResponse>?
 )
 
 data class EscapedSingleBatchResponse(

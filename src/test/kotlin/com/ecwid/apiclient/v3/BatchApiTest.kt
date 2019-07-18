@@ -58,7 +58,7 @@ class BatchApiTest : BaseEntityTest() {
                 ticket = createBatchResult.ticket
         ))
 
-        val productCreateResult = getBatchResult.responses.first().toTypedResponse(ProductCreateResult::class.java)
+        val productCreateResult = getBatchResult.responses!!.first().toTypedResponse(ProductCreateResult::class.java)
         Assertions.assertNotNull(productCreateRequest)
         Assertions.assertEquals(productCreateResult!!.javaClass, TypedBatchResponse.Ok::class.java)
         Assertions.assertTrue((productCreateResult as TypedBatchResponse.Ok<ProductCreateResult>).value.id > 0)
