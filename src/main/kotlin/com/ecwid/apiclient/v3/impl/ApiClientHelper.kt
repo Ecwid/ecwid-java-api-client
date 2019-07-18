@@ -5,15 +5,15 @@ import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.DEFAULT_HTTPS_PORT
 import com.ecwid.apiclient.v3.config.LoggingSettings
 import com.ecwid.apiclient.v3.dto.EcwidApiError
-import com.ecwid.apiclient.v3.httptransport.HttpBody
-import com.ecwid.apiclient.v3.httptransport.HttpResponse
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
+import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.httptransport.HttpRequest
-import com.ecwid.apiclient.v3.jsontransformer.impl.GsonJsonTransformer
-import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
-import com.ecwid.apiclient.v3.httptransport.impl.ApacheCommonsHttpClientTransport
+import com.ecwid.apiclient.v3.httptransport.HttpResponse
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
+import com.ecwid.apiclient.v3.httptransport.impl.ApacheCommonsHttpClientTransport
+import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
+import com.ecwid.apiclient.v3.jsontransformer.impl.GsonJsonTransformer
 import java.net.URI
 import java.util.*
 import java.util.logging.Level
@@ -93,6 +93,10 @@ internal class ApiClientHelper(
 		val requestTime = Date().time - startTime
 		val responseBytes = httpResponse.responseBytes
 		val responseBody = lazy { responseBytes.asString() }
+		return processHttpResponse(httpResponse, clazz, requestId, requestTime, responseBody, responseBytes)
+	}
+
+	private fun <V> processHttpResponse(httpResponse: HttpResponse, clazz: Class<V>, requestId: String, requestTime: Long, responseBody: Lazy<String>, responseBytes: ByteArray): V {
 		return when (httpResponse) {
 			is HttpResponse.Success -> {
 				try {
@@ -106,7 +110,7 @@ internal class ApiClientHelper(
 						responseBytes as V
 					} else {
 						logSuccessfulResponseIfNeeded(requestId, requestTime, responseBody.value)
-						jsonTransformer.deserialize(responseBytes.asString(), clazz)!!
+						deserializeJson(responseBytes.asString(), clazz)!!
 					}
 				} catch (e: JsonDeserializationException) {
 					logCannotParseResponseError(requestId, requestTime, responseBytes.asString(), e)
@@ -119,7 +123,7 @@ internal class ApiClientHelper(
 			is HttpResponse.Error -> {
 				try {
 					logErrorResponseIfNeeded(requestId, requestTime, httpResponse.statusCode, responseBody.value)
-					val ecwidError = jsonTransformer.deserialize(responseBody.value, EcwidApiError::class.java)
+					val ecwidError = deserializeJson(responseBody.value, EcwidApiError::class.java)
 					throw EcwidApiException(
 							statusCode = httpResponse.statusCode,
 							reasonPhrase = httpResponse.reasonPhrase,
@@ -169,6 +173,8 @@ internal class ApiClientHelper(
 	}
 
 	fun serializeJson(src: Any?): String = jsonTransformer.serialize(src)
+
+	fun <T> deserializeJson(src: String, clazz: Class<T>): T = jsonTransformer.deserialize(src, clazz)!!
 
 	private fun createApiEndpointUri(endpoint: String): String {
 		return URI(
