@@ -3,6 +3,12 @@ package com.ecwid.apiclient.v3
 import com.ecwid.apiclient.v3.config.ApiServerDomain
 import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.LoggingSettings
+import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
+import com.ecwid.apiclient.v3.dto.batch.request.GetBatchRequest
+import com.ecwid.apiclient.v3.dto.batch.result.CreateBatchResult
+import com.ecwid.apiclient.v3.dto.batch.result.GetBatchResult
+import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
+import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.result.*
 import com.ecwid.apiclient.v3.dto.customer.request.*
@@ -25,16 +31,27 @@ class ApiClientBuilder(
 
 	private val apiClientHelper: ApiClientHelper = ApiClientHelper(apiServerDomain, storeCredentials, loggingSettings)
 
+
 	private val productsApiClient: ProductsApiClient = ProductsApiClientImpl(apiClientHelper)
 	private val categoriesApiClient: CategoriesApiClient = CategoriesApiClientImpl(apiClientHelper)
 	private val ordersApiClient: OrdersApiClient = OrdersApiClientImpl(apiClientHelper)
 	private val productTypesApiClient: ProductTypesApiClient = ProductTypesApiClientImpl(apiClientHelper)
 	private val customersApiClient: CustomersApiClient = CustomersApiClientImpl(apiClientHelper)
 	private val customerGroupsApiClient: CustomerGroupsApiClient = CustomerGroupsApiClientImpl(apiClientHelper)
+	private val batchApiClient: BatchApiClient = BatchApiClientImpl(apiClientHelper)
 
 	fun build(): ApiClient {
-		return ApiClient(productsApiClient, categoriesApiClient, ordersApiClient, productTypesApiClient, customersApiClient, customerGroupsApiClient)
+		return ApiClient(
+				productsApiClient,
+				categoriesApiClient,
+				ordersApiClient,
+				productTypesApiClient,
+				customersApiClient,
+				customerGroupsApiClient,
+				batchApiClient
+		)
 	}
+
 }
 
 
@@ -44,14 +61,16 @@ class ApiClient internal constructor(
 		ordersApiClient: OrdersApiClient,
 		productTypesApiClient: ProductTypesApiClient,
 		customersApiClient: CustomersApiClient,
-		customerGroupsApiClient: CustomerGroupsApiClient
+		customerGroupsApiClient: CustomerGroupsApiClient,
+		batchApiClient: BatchApiClient
 ) :
 		ProductsApiClient by productsApiClient,
 		CategoriesApiClient by categoriesApiClient,
 		OrdersApiClient by ordersApiClient,
 		ProductTypesApiClient by productTypesApiClient,
 		CustomersApiClient by customersApiClient,
-		CustomerGroupsApiClient by customerGroupsApiClient
+		CustomerGroupsApiClient by customerGroupsApiClient,
+		BatchApiClient by batchApiClient
 
 // Products
 // https://developers.ecwid.com/api-documentation/products
@@ -141,6 +160,13 @@ interface CustomerGroupsApiClient {
 	fun createCustomerGroup(request: CustomerGroupCreateRequest): CustomerGroupCreateResult
 	fun updateCustomerGroup(request: CustomerGroupUpdateRequest): CustomerGroupUpdateResult
 	fun deleteCustomerGroup(request: CustomerGroupDeleteRequest): CustomerGroupDeleteResult
+}
+
+interface BatchApiClient {
+	fun createBatch(request: CreateBatchRequest): CreateBatchResult
+	fun getTypedBatch(request: GetBatchRequest): GetTypedBatchResult
+	fun getBatch(request: GetBatchRequest): GetBatchResult
+	fun getEscapedBatch(request: GetBatchRequest): GetEscapedBatchResult
 }
 
 // Store information
