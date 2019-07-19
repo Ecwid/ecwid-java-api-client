@@ -1,24 +1,16 @@
 package com.ecwid.apiclient.v3.impl
 
-import com.ecwid.apiclient.v3.*
+import com.ecwid.apiclient.v3.ProductsApiClient
 import com.ecwid.apiclient.v3.dto.product.request.*
-import com.ecwid.apiclient.v3.dto.UploadFileData
 import com.ecwid.apiclient.v3.dto.product.result.*
-import com.ecwid.apiclient.v3.httptransport.HttpBody
 
 internal class ProductsApiClientImpl(
 		private val apiClientHelper: ApiClientHelper
-): ProductsApiClient {
+) : ProductsApiClient {
 
-	override fun searchProducts(request: ProductsSearchRequest.ByFilters) = apiClientHelper.makeGetRequest<ProductsSearchResult>(
-			endpoint = request.toEndpoint(),
-			params = request.toParams()
-	)
+	override fun searchProducts(request: ProductsSearchRequest.ByFilters) = apiClientHelper.makeRequest<ProductsSearchResult>(request)
 
-	override fun searchProducts(request: ProductsSearchRequest.ByIds) = apiClientHelper.makeGetRequest<ProductsSearchResult>(
-			endpoint = request.toEndpoint(),
-			params = request.toParams()
-	)
+	override fun searchProducts(request: ProductsSearchRequest.ByIds) = apiClientHelper.makeRequest<ProductsSearchResult>(request)
 
 	override fun searchProductsAsSequence(request: ProductsSearchRequest.ByFilters) = sequence {
 		var offsetRequest = request
@@ -33,200 +25,22 @@ internal class ProductsApiClientImpl(
 		return searchProducts(request).items.asSequence()
 	}
 
-	override fun getProductDetails(request: ProductDetailsRequest) = apiClientHelper.makeGetRequest<FetchedProduct>(
-			endpoint = request.toEndpoint(),
-			params = mapOf()
-	)
-
-	override fun createProduct(request: ProductCreateRequest) = apiClientHelper.makePostRequest<ProductCreateResult>(
-			endpoint = request.toEndpoint(),
-			params = mapOf(),
-			httpBody = HttpBody.JsonBody(
-					obj = apiClientHelper.serializeJson(request.newProduct)
-			)
-	)
-
-	override fun updateProduct(request: ProductUpdateRequest) = apiClientHelper.makePutRequest<ProductUpdateResult>(
-			endpoint = request.toEndpoint(),
-			params = mapOf(),
-			httpBody = HttpBody.JsonBody(
-					obj = apiClientHelper.serializeJson(request.updatedProduct)
-			)
-	)
-
-	override fun updateProductInventory(request: ProductInventoryUpdateRequest) = apiClientHelper.makePutRequest<ProductInventoryUpdateResult>(
-			endpoint = request.toEndpoint(),
-			params = request.toParams(),
-			httpBody = HttpBody.JsonBody(
-					obj = apiClientHelper.serializeJson(request.inventoryAdjustment)
-			)
-	)
-
-	override fun deleteProduct(request: ProductDeleteRequest) = apiClientHelper.makeDeleteRequest<ProductDeleteResult>(
-			endpoint = request.toEndpoint(),
-			params = mapOf()
-	)
-
-	override fun uploadProductImage(request: ProductImageUploadRequest): ProductImageUploadResult {
-		val fileData = request.fileData
-		return when (fileData) {
-			is UploadFileData.ExternalUrlData -> apiClientHelper.makePostRequest(
-					endpoint = request.toEndpoint(),
-					params = mapOf(
-							"externalUrl" to fileData.externalUrl
-					),
-					httpBody = HttpBody.EmptyBody
-			)
-			is UploadFileData.ByteArrayData -> apiClientHelper.makePostRequest(
-					endpoint = request.toEndpoint(),
-					params = mapOf(),
-					httpBody = HttpBody.ByteArrayBody(
-							bytes = fileData.bytes,
-							mimeType = MIME_TYPE_OCTET_STREAM
-					)
-			)
-			is UploadFileData.LocalFileData -> apiClientHelper.makePostRequest(
-					endpoint = request.toEndpoint(),
-					params = mapOf(),
-					httpBody = HttpBody.LocalFileBody(
-							file = fileData.file,
-							mimeType = MIME_TYPE_OCTET_STREAM
-					)
-			)
-			is UploadFileData.InputStreamData -> apiClientHelper.makePostRequest(
-					endpoint = request.toEndpoint(),
-					params = mapOf(),
-					httpBody = HttpBody.InputStreamBody(
-							stream = fileData.stream,
-							mimeType = MIME_TYPE_OCTET_STREAM
-					)
-			)
-		}
-	}
-
-	override fun deleteProductImage(request: ProductImageDeleteRequest) = apiClientHelper.makeDeleteRequest<ProductImageDeleteResult>(
-			endpoint = request.toEndpoint(),
-			params = mapOf()
-	)
-
-	override fun uploadProductGalleryImage(request: ProductGalleryImageUploadRequest): ProductGalleryImageUploadResult {
-		val commonParams = mapOf(
-				"fileName" to request.fileName
-		)
-		val fileData = request.fileData
-		return when (fileData) {
-			is UploadFileData.ExternalUrlData -> apiClientHelper.makePostRequest(
-					endpoint = request.toEndpoint(),
-					params = commonParams + mapOf(
-							"externalUrl" to fileData.externalUrl
-					),
-					httpBody = HttpBody.EmptyBody
-			)
-			is UploadFileData.ByteArrayData -> apiClientHelper.makePostRequest(
-					endpoint = request.toEndpoint(),
-					params = commonParams,
-					httpBody = HttpBody.ByteArrayBody(
-							bytes = fileData.bytes,
-							mimeType = MIME_TYPE_OCTET_STREAM
-					)
-			)
-			is UploadFileData.LocalFileData -> apiClientHelper.makePostRequest(
-					endpoint = request.toEndpoint(),
-					params = commonParams,
-					httpBody = HttpBody.LocalFileBody(
-							file = fileData.file,
-							mimeType = MIME_TYPE_OCTET_STREAM
-					)
-			)
-			is UploadFileData.InputStreamData -> apiClientHelper.makePostRequest(
-					endpoint = request.toEndpoint(),
-					params = commonParams,
-					httpBody = HttpBody.InputStreamBody(
-							stream = fileData.stream,
-							mimeType = MIME_TYPE_OCTET_STREAM
-					)
-			)
-		}
-	}
-
-	override fun deleteProductGalleryImage(request: ProductGalleryImageDeleteRequest) = apiClientHelper.makeDeleteRequest<ProductGalleryImageDeleteResult>(
-		endpoint = request.toEndpoint(),
-		params = mapOf()
-	)
-
-	override fun deleteProductGalleryImages(request: ProductGalleryImagesDeleteRequest) = apiClientHelper.makeDeleteRequest<ProductGalleryImagesDeleteResult>(
-			endpoint = request.toEndpoint(),
-			params = mapOf()
-	)
-
-	override fun downloadProductFile(request: ProductFileDownloadRequest) = apiClientHelper.makeGetRequest<ByteArray>(
-			endpoint = request.toEndpoint(),
-			params = mapOf()
-	)
-
-	override fun uploadProductFile(request: ProductFileUploadRequest): ProductFileUploadResult {
-		val commonParams = mapOf(
-				"fileName" to request.fileName,
-				"description" to request.description
-		)
-		val fileData = request.fileData
-		return when (fileData) {
-			is UploadFileData.ExternalUrlData -> apiClientHelper.makePostRequest(
-					endpoint = request.toEndpoint(),
-					params = commonParams + mapOf(
-							"externalUrl" to fileData.externalUrl
-					),
-					httpBody = HttpBody.EmptyBody
-			)
-			is UploadFileData.ByteArrayData -> apiClientHelper.makePostRequest(
-					endpoint = request.toEndpoint(),
-					params = commonParams,
-					httpBody = HttpBody.ByteArrayBody(
-							bytes = fileData.bytes,
-							mimeType = MIME_TYPE_OCTET_STREAM
-					)
-			)
-			is UploadFileData.LocalFileData -> apiClientHelper.makePostRequest(
-					endpoint = request.toEndpoint(),
-					params = commonParams,
-					httpBody = HttpBody.LocalFileBody(
-							file = fileData.file,
-							mimeType = MIME_TYPE_OCTET_STREAM
-					)
-			)
-			is UploadFileData.InputStreamData -> apiClientHelper.makePostRequest(
-					endpoint = request.toEndpoint(),
-					params = commonParams,
-					httpBody = HttpBody.InputStreamBody(
-							stream = fileData.stream,
-							mimeType = MIME_TYPE_OCTET_STREAM
-					)
-			)
-		}
-	}
-
-	override fun updateProductFile(request: ProductFileUpdateRequest) = apiClientHelper.makePutRequest<ProductFileUpdateResult>(
-			endpoint = request.toEndpoint(),
-			params = mapOf(),
-			httpBody = HttpBody.JsonBody(
-					obj = apiClientHelper.serializeJson(request.updatedProductFile)
-			)
-	)
-
-	override fun deleteProductFile(request: ProductFileDeleteRequest) = apiClientHelper.makeDeleteRequest<ProductFileDeleteResult>(
-			endpoint = request.toEndpoint(),
-			params = mapOf()
-	)
-
-	override fun deleteProductFiles(request: ProductFilesDeleteRequest) = apiClientHelper.makeDeleteRequest<ProductFilesDeleteResult>(
-			endpoint = request.toEndpoint(),
-			params = mapOf()
-	)
-
-	override fun searchDeletedProducts(request: DeletedProductsSearchRequest) = apiClientHelper.makeGetRequest<DeletedProductsSearchResult>(
-			endpoint = request.toEndpoint(),
-			params = request.toParams()
-	)
+	override fun getProductDetails(request: ProductDetailsRequest) = apiClientHelper.makeRequest<FetchedProduct>(request)
+	override fun createProduct(request: ProductCreateRequest) = apiClientHelper.makeRequest<ProductCreateResult>(request)
+	override fun updateProduct(request: ProductUpdateRequest) = apiClientHelper.makeRequest<ProductUpdateResult>(request)
+	override fun updateProductInventory(request: ProductInventoryUpdateRequest) = apiClientHelper.makeRequest<ProductInventoryUpdateResult>(request)
+	override fun deleteProduct(request: ProductDeleteRequest) = apiClientHelper.makeRequest<ProductDeleteResult>(request)
+	override fun uploadProductImage(request: ProductImageUploadRequest) = apiClientHelper.makeRequest<ProductImageUploadResult>(request)
+	override fun deleteProductImage(request: ProductImageDeleteRequest) = apiClientHelper.makeRequest<ProductImageDeleteResult>(request)
+	override fun uploadProductGalleryImage(request: ProductGalleryImageUploadRequest) = apiClientHelper.makeRequest<ProductGalleryImageUploadResult>(request)
+	override fun deleteProductGalleryImage(request: ProductGalleryImageDeleteRequest) = apiClientHelper.makeRequest<ProductGalleryImageDeleteResult>(request)
+	override fun deleteProductGalleryImages(request: ProductGalleryImagesDeleteRequest) = apiClientHelper.makeRequest<ProductGalleryImagesDeleteResult>(request)
+	override fun downloadProductFile(request: ProductFileDownloadRequest) = apiClientHelper.makeRequest<ByteArray>(request)
+	override fun uploadProductFile(request: ProductFileUploadRequest) = apiClientHelper.makeRequest<ProductFileUploadResult>(request)
+	override fun updateProductFile(request: ProductFileUpdateRequest) = apiClientHelper.makeRequest<ProductFileUpdateResult>(request)
+	override fun deleteProductFile(request: ProductFileDeleteRequest) = apiClientHelper.makeRequest<ProductFileDeleteResult>(request)
+	override fun deleteProductFiles(request: ProductFilesDeleteRequest) = apiClientHelper.makeRequest<ProductFilesDeleteResult>(request)
+	override fun searchDeletedProducts(request: DeletedProductsSearchRequest) = apiClientHelper.makeRequest<DeletedProductsSearchResult>(request)
 
 	override fun searchDeletedProductsAsSequence(request: DeletedProductsSearchRequest): Sequence<DeletedProduct> = sequence {
 		var offsetRequest = request
@@ -239,77 +53,3 @@ internal class ProductsApiClientImpl(
 
 }
 
-private fun ProductsSearchRequest.toEndpoint() = "products"
-private fun ProductCreateRequest.toEndpoint() = "products"
-private fun ProductUpdateRequest.toEndpoint() = "products/$productId"
-private fun ProductDeleteRequest.toEndpoint() = "products/$productId"
-private fun ProductDetailsRequest.toEndpoint() = "products/$productId"
-private fun ProductInventoryUpdateRequest.toEndpoint() = "products/$productId/inventory"
-private fun ProductImageUploadRequest.toEndpoint() = "products/$productId/image"
-private fun ProductImageDeleteRequest.toEndpoint() = "products/$productId/image"
-private fun ProductGalleryImageUploadRequest.toEndpoint() = "products/$productId/gallery"
-private fun ProductGalleryImageDeleteRequest.toEndpoint() = "products/$productId/gallery/$fileId"
-private fun ProductGalleryImagesDeleteRequest.toEndpoint() = "products/$productId/gallery"
-private fun ProductFileUploadRequest.toEndpoint() = "products/$productId/files"
-private fun ProductFileUpdateRequest.toEndpoint() = "products/$productId/files/$fileId"
-private fun ProductFileDownloadRequest.toEndpoint() = "products/$productId/files/$fileId"
-private fun ProductFileDeleteRequest.toEndpoint() = "products/$productId/files/$fileId"
-private fun ProductFilesDeleteRequest.toEndpoint() = "products/$productId/files"
-private fun DeletedProductsSearchRequest.toEndpoint() = "products/deleted"
-
-private fun ProductsSearchRequest.ByFilters.toParams(): Map<String, String> {
-	val request = this
-	return mutableMapOf<String, String>().apply {
-		request.keyword?.let { put("keyword", it) }
-		request.sku?.let { put("sku", it) }
-		request.priceFrom?.let { put("priceFrom", it.toString()) }
-		request.priceTo?.let { put("priceTo", it.toString()) }
-		request.createdFrom?.let { put("createdFrom", (it.time / 1000).toString()) }
-		request.createdTo?.let { put("createdTo", (it.time / 1000).toString()) }
-		request.updatedFrom?.let { put("updatedFrom", (it.time / 1000).toString()) }
-		request.updatedTo?.let { put("updatedTo", (it.time / 1000).toString()) }
-		request.enabled?.let { put("enabled", it.toString()) }
-		request.inventory?.let { put("inventory", if (it) "instock" else "outofstock") }
-		request.onSale?.let { put("onsale", if (it) "onsale" else "notonsale") }
-		request.attributes?.let { attributes ->
-			attributes.attributes.forEach { (attributeName, attributeValue) ->
-				put("attribute_$attributeName", attributeValue.joinToString(","))
-			}
-		}
-		request.options?.let { options ->
-			options.options.forEach { (optionName, optionValue) ->
-				put("option_$optionName", optionValue.joinToString(","))
-			}
-		}
-		request.categories?.let { put("categories", it.joinToString(",") ) }
-		request.includeProductsFromSubcategories?.let { put("includeProductsFromSubcategories", it.toString()) }
-		request.baseUrl?.let { put("baseUrl", it) }
-		request.cleanUrls?.let { put("cleanUrls", it.toString()) }
-		request.sortBy?.let { put("sortBy", it.name ) }
-		put("offset", request.offset.toString())
-		put("limit", request.limit.toString())
-	}.toMap()
-}
-
-private fun ProductsSearchRequest.ByIds.toParams(): Map<String, String> {
-	val request = this
-	return mutableMapOf<String, String>().apply {
-		put("productId", request.productIds.joinToString(","))
-	}.toMap()
-}
-
-private fun ProductInventoryUpdateRequest.toParams(): Map<String, String> {
-	return mutableMapOf<String, String>().apply {
-		checkLowStockNotification?.let { put("checkLowStockNotification", it.toString()) }
-	}.toMap()
-}
-
-private fun DeletedProductsSearchRequest.toParams(): Map<String, String> {
-	val request = this
-	return mutableMapOf<String, String>().apply {
-		request.deletedFrom?.let { put("from_date", (it.time / 1000).toString()) }
-		request.deletedTo?.let { put("to_date", (it.time / 1000).toString()) }
-		put("offset", request.offset.toString())
-		put("limit", request.limit.toString())
-	}.toMap()
-}
