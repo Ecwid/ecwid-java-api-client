@@ -41,27 +41,24 @@ internal class ProductsApiClientImpl(
 	override fun createProduct(request: ProductCreateRequest) = apiClientHelper.makePostRequest<ProductCreateResult>(
 			endpoint = request.toEndpoint(),
 			params = mapOf(),
-			httpBody = HttpBody.StringBody(
-					body = apiClientHelper.serializeJson(request.newProduct),
-					mimeType = MIME_TYPE_APPLICATION_JSON
+			httpBody = HttpBody.JsonBody(
+					obj = apiClientHelper.serializeJson(request.newProduct)
 			)
 	)
 
 	override fun updateProduct(request: ProductUpdateRequest) = apiClientHelper.makePutRequest<ProductUpdateResult>(
 			endpoint = request.toEndpoint(),
 			params = mapOf(),
-			httpBody = HttpBody.StringBody(
-					body = apiClientHelper.serializeJson(request.updatedProduct),
-					mimeType = MIME_TYPE_APPLICATION_JSON
+			httpBody = HttpBody.JsonBody(
+					obj = apiClientHelper.serializeJson(request.updatedProduct)
 			)
 	)
 
 	override fun updateProductInventory(request: ProductInventoryUpdateRequest) = apiClientHelper.makePutRequest<ProductInventoryUpdateResult>(
 			endpoint = request.toEndpoint(),
 			params = request.toParams(),
-			httpBody = HttpBody.StringBody(
-					body = apiClientHelper.serializeJson(request.inventoryAdjustment),
-					mimeType = MIME_TYPE_APPLICATION_JSON
+			httpBody = HttpBody.JsonBody(
+					obj = apiClientHelper.serializeJson(request.inventoryAdjustment)
 			)
 	)
 
@@ -78,7 +75,7 @@ internal class ProductsApiClientImpl(
 					params = mapOf(
 							"externalUrl" to fileData.externalUrl
 					),
-					httpBody = HttpBody.EmptyBody()
+					httpBody = HttpBody.EmptyBody
 			)
 			is UploadFileData.ByteArrayData -> apiClientHelper.makePostRequest(
 					endpoint = request.toEndpoint(),
@@ -123,7 +120,7 @@ internal class ProductsApiClientImpl(
 					params = commonParams + mapOf(
 							"externalUrl" to fileData.externalUrl
 					),
-					httpBody = HttpBody.EmptyBody()
+					httpBody = HttpBody.EmptyBody
 			)
 			is UploadFileData.ByteArrayData -> apiClientHelper.makePostRequest(
 					endpoint = request.toEndpoint(),
@@ -179,7 +176,7 @@ internal class ProductsApiClientImpl(
 					params = commonParams + mapOf(
 							"externalUrl" to fileData.externalUrl
 					),
-					httpBody = HttpBody.EmptyBody()
+					httpBody = HttpBody.EmptyBody
 			)
 			is UploadFileData.ByteArrayData -> apiClientHelper.makePostRequest(
 					endpoint = request.toEndpoint(),
@@ -211,9 +208,8 @@ internal class ProductsApiClientImpl(
 	override fun updateProductFile(request: ProductFileUpdateRequest) = apiClientHelper.makePutRequest<ProductFileUpdateResult>(
 			endpoint = request.toEndpoint(),
 			params = mapOf(),
-			httpBody = HttpBody.StringBody(
-					body = apiClientHelper.serializeJson(request.updatedProductFile),
-					mimeType = MIME_TYPE_APPLICATION_JSON
+			httpBody = HttpBody.JsonBody(
+					obj = apiClientHelper.serializeJson(request.updatedProductFile)
 			)
 	)
 

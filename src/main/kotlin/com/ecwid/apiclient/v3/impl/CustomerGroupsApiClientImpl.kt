@@ -31,18 +31,16 @@ internal class CustomerGroupsApiClientImpl(
 	override fun createCustomerGroup(request: CustomerGroupCreateRequest) = apiClientHelper.makePostRequest<CustomerGroupCreateResult>(
 			endpoint = request.toEndpoint(),
 			params = mapOf(),
-			httpBody = HttpBody.StringBody(
-					body = apiClientHelper.serializeJson(request.newCustomerGroup),
-					mimeType = MIME_TYPE_APPLICATION_JSON
+			httpBody = HttpBody.JsonBody(
+					obj = apiClientHelper.serializeJson(request.newCustomerGroup)
 			)
 	)
 
 	override fun updateCustomerGroup(request: CustomerGroupUpdateRequest) = apiClientHelper.makePutRequest<CustomerGroupUpdateResult>(
 			endpoint = request.toEndpoint(),
 			params = mapOf(),
-			httpBody = HttpBody.StringBody(
-					body = apiClientHelper.serializeJson(request.updatedCustomerGroup),
-					mimeType = MIME_TYPE_APPLICATION_JSON
+			httpBody = HttpBody.JsonBody(
+					obj = apiClientHelper.serializeJson(request.updatedCustomerGroup)
 			)
 	)
 

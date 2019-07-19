@@ -22,18 +22,16 @@ internal class ProductTypesApiClientImpl(
 	override fun createProductType(request: ProductTypeCreateRequest) = apiClientHelper.makePostRequest<ProductTypeCreateResult>(
 			endpoint = request.toEndpoint(),
 			params = mapOf(),
-			httpBody = HttpBody.StringBody(
-					body = apiClientHelper.serializeJson(request.newProductType),
-					mimeType = MIME_TYPE_APPLICATION_JSON
+			httpBody = HttpBody.JsonBody(
+					obj = apiClientHelper.serializeJson(request.newProductType)
 			)
 	)
 
 	override fun updateProductType(request: ProductTypeUpdateRequest) = apiClientHelper.makePutRequest<ProductTypeUpdateResult>(
 			endpoint = request.toEndpoint(),
 			params = mapOf(),
-			httpBody = HttpBody.StringBody(
-					body = apiClientHelper.serializeJson(request.updatedProductType),
-					mimeType = MIME_TYPE_APPLICATION_JSON
+			httpBody = HttpBody.JsonBody(
+					obj = apiClientHelper.serializeJson(request.updatedProductType)
 			)
 	)
 

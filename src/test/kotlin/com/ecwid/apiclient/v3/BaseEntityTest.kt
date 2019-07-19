@@ -32,6 +32,7 @@ abstract class BaseEntityTest {
 	protected lateinit var apiClient: ApiClient
 
 	protected open fun beforeEach() {
+		val jsonTransformer = GsonJsonTransformer()
 		apiClient = ApiClient.create(
 				apiServerDomain = ApiServerDomain(),
 				storeCredentials = ApiStoreCredentials(
@@ -42,8 +43,8 @@ abstract class BaseEntityTest {
 						logRequestBody = true,
 						logSuccessfulResponseBody = true
 				),
-				jsonTransformer = GsonJsonTransformer(),
-				httpTransport = ApacheCommonsHttpClientTransport()
+				jsonTransformer = jsonTransformer,
+				httpTransport = ApacheCommonsHttpClientTransport(jsonTransformer)
 		)
 	}
 

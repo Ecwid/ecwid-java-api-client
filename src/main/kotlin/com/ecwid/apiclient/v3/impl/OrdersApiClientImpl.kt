@@ -38,18 +38,16 @@ internal class OrdersApiClientImpl(
 	override fun createOrder(request: OrderCreateRequest) = apiClientHelper.makePostRequest<OrderCreateResult>(
 			endpoint = request.toEndpoint(),
 			params = mapOf(),
-			httpBody = HttpBody.StringBody(
-					body = apiClientHelper.serializeJson(request.newOrder),
-					mimeType = MIME_TYPE_APPLICATION_JSON
+			httpBody = HttpBody.JsonBody(
+					obj = request.newOrder
 			)
 	)
 
 	override fun updateOrder(request: OrderUpdateRequest) = apiClientHelper.makePutRequest<OrderUpdateResult>(
 			endpoint = request.toEndpoint(),
 			params = mapOf(),
-			httpBody = HttpBody.StringBody(
-					body = apiClientHelper.serializeJson(request.updatedOrder),
-					mimeType = MIME_TYPE_APPLICATION_JSON
+			httpBody = HttpBody.JsonBody(
+					obj = request.updatedOrder
 			)
 	)
 
@@ -69,7 +67,7 @@ internal class OrdersApiClientImpl(
 					params = commonParams + mapOf(
 							"externalUrl" to fileData.externalUrl
 					),
-					httpBody = HttpBody.EmptyBody()
+					httpBody = HttpBody.EmptyBody
 			)
 			is UploadFileData.ByteArrayData -> apiClientHelper.makePostRequest(
 					endpoint = request.toEndpoint(),
