@@ -923,7 +923,7 @@ class ProductsTest: BaseEntityTest() {
 	private fun assertProductsSearch(productSearchRequest: ProductsSearchRequest.ByFilters, desiredSkus: List<String>) {
 		val productsSearchResult = apiClient.searchProducts(productSearchRequest)
 		assertEquals(desiredSkus.size, productsSearchResult.items.size)
-		assertEquals(desiredSkus, productsSearchResult.items.map(FetchedProduct::sku))
+		assertEquals(desiredSkus.toSet(), productsSearchResult.items.map(FetchedProduct::sku).toSet())
 	}
 
 	private fun assertMediaProductImage(expectedId: String, expectedOrderBy: Int, expectedIsMain: Boolean, expectedPathEnd: String?, productImage: FetchedProduct.ProductImage?) {

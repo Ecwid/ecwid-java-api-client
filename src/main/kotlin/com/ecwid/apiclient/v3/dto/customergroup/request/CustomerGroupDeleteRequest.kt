@@ -7,6 +7,6 @@ data class CustomerGroupDeleteRequest(
 		var customerGroupId: Int = 0
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createDeleteRequest(
-			endpoint = "customer_groups/$customerGroupId}"
+			endpoint = "customer_groups/$customerGroupId"
 	)
 }

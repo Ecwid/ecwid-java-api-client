@@ -10,7 +10,7 @@ data class DeletedOrdersSearchRequest(
 		var offset: Int = 0,
 		var limit: Int = 100
 ) : ApiRequest {
-	override fun toRequestInfo() = RequestInfo.createDeleteRequest(
+	override fun toRequestInfo() = RequestInfo.createGetRequest(
 			endpoint = "orders/deleted",
 			params = toParams()
 	)
