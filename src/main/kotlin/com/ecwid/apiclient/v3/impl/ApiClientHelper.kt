@@ -32,54 +32,6 @@ internal class ApiClientHelper(
 
 	private val log = Logger.getLogger(this::class.java.name)
 
-	inline fun <reified V> makeGetRequest(
-			endpoint: String,
-			params: Map<String, String>
-	): V {
-		val httpRequest = HttpRequest.HttpGetRequest(
-				uri = createApiEndpointUri(endpoint),
-				params = params.withApiTokenParam(storeCredentials.apiToken)
-		)
-		return makeRequest(httpRequest, V::class.java)
-	}
-
-	inline fun <reified V> makePostRequest(
-			endpoint: String,
-			params: Map<String, String>,
-			httpBody: HttpBody
-	): V {
-		val httpRequest = HttpRequest.HttpPostRequest(
-				uri = createApiEndpointUri(endpoint),
-				params = params.withApiTokenParam(storeCredentials.apiToken),
-				httpBody = httpBody
-		)
-		return makeRequest(httpRequest, V::class.java)
-	}
-
-	inline fun <reified V> makePutRequest(
-			endpoint: String,
-			params: Map<String, String>,
-			httpBody: HttpBody
-	): V {
-		val httpRequest = HttpRequest.HttpPutRequest(
-				uri = createApiEndpointUri(endpoint),
-				params = params.withApiTokenParam(storeCredentials.apiToken),
-				httpBody = httpBody
-		)
-		return makeRequest(httpRequest, V::class.java)
-	}
-
-	inline fun <reified V> makeDeleteRequest(
-			endpoint: String,
-			params: Map<String, String>
-	): V {
-		val httpRequest = HttpRequest.HttpDeleteRequest(
-				uri = createApiEndpointUri(endpoint),
-				params = params.withApiTokenParam(storeCredentials.apiToken)
-		)
-		return makeRequest(httpRequest, V::class.java)
-	}
-
 	inline fun <reified V> makeRequest(
 			request: ApiRequest
 	): V {
