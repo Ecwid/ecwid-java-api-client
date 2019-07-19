@@ -31,18 +31,16 @@ internal data class CustomersApiClientImpl(
 	override fun createCustomer(request: CustomerCreateRequest) = apiClientHelper.makePostRequest<CustomerCreateResult>(
 			endpoint = request.toEndpoint(),
 			params = mapOf(),
-			httpBody = HttpBody.StringBody(
-					body = apiClientHelper.serializeJson(request.newCustomer),
-					mimeType = MIME_TYPE_APPLICATION_JSON
+			httpBody = HttpBody.JsonBody(
+					obj = apiClientHelper.serializeJson(request.newCustomer)
 			)
 	)
 
 	override fun updateCustomer(request: CustomerUpdateRequest) = apiClientHelper.makePutRequest<CustomerUpdateResult>(
 			endpoint = request.toEndpoint(),
 			params = mapOf(),
-			httpBody = HttpBody.StringBody(
-					body = apiClientHelper.serializeJson(request.updatedCustomer),
-					mimeType = MIME_TYPE_APPLICATION_JSON
+			httpBody = HttpBody.JsonBody(
+					obj = apiClientHelper.serializeJson(request.updatedCustomer)
 			)
 	)
 

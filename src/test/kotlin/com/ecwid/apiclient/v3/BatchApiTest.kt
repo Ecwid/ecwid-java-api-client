@@ -2,11 +2,9 @@ package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.request.GetBatchRequest
-import com.ecwid.apiclient.v3.dto.batch.request.SingleBatchRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest
-import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
-import com.ecwid.apiclient.v3.dto.product.result.ProductCreateResult
+import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
+import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
+import com.ecwid.apiclient.v3.dto.category.result.CategoryCreateResult
 import com.ecwid.apiclient.v3.impl.TypedBatchResponse
 import com.ecwid.apiclient.v3.util.randomAlphanumeric
 import org.junit.jupiter.api.Assertions
@@ -16,52 +14,37 @@ import java.util.concurrent.TimeUnit
 
 class BatchApiTest : BaseEntityTest() {
 
-    @BeforeEach
-    override fun beforeEach() {
-        super.beforeEach()
-    }
+	@BeforeEach
+	override fun beforeEach() {
+		super.beforeEach()
+	}
 
-    @Test
-    fun `Search first page of products`() {
-        val productSearchRequest = ProductsSearchRequest.ByFilters()
+	@Test
+	fun `Search first page of products`() {
 
-        val productCreateRequest = ProductCreateRequest(
-                newProduct = UpdatedProduct(
-                        name = "Product " + randomAlphanumeric(8)
-                )
-        )
+		val productCreateRequest = CategoryCreateRequest(
+				newCategory = UpdatedCategory(
+						name = "Product " + randomAlphanumeric(8)
+				)
+		)
 
-        val batchSearchRequest = SingleBatchRequest(
-                id = "test-request",
-                path = "products",
-                method = "GET",
-                body = productSearchRequest
-        )
+		val createBatchResult = apiClient.createBatch(
+				CreateBatchRequest(
+						requests = mapOf("123123" to productCreateRequest)
+				)
+		)
 
-        val batchCreateProductRequest = SingleBatchRequest(
-                id = "test-create-products",
-                path = "products",
-                method = "POST",
-                body = productCreateRequest
+		TimeUnit.SECONDS.sleep(5)
 
-        )
+		val getBatchResult = apiClient.getTypedBatch(GetBatchRequest(
+				ticket = createBatchResult.ticket,
+				escapedJson = false
+		))
 
-        val createBatchResult = apiClient.createBatch(
-                CreateBatchRequest(
-                        requests = listOf(batchCreateProductRequest)
-                )
-        )
+		val productCreateResult = getBatchResult.responses!!.first().toTypedResponse(CategoryCreateResult::class.java)
+		Assertions.assertNotNull(productCreateRequest)
+		Assertions.assertEquals(productCreateResult!!.javaClass, TypedBatchResponse.Ok::class.java)
+		Assertions.assertTrue((productCreateResult as TypedBatchResponse.Ok<CategoryCreateResult>).value.id > 0)
 
-        TimeUnit.SECONDS.sleep(5)
-
-        val getBatchResult = apiClient.getTypedBatch(GetBatchRequest(
-                ticket = createBatchResult.ticket
-        ))
-
-        val productCreateResult = getBatchResult.responses!!.first().toTypedResponse(ProductCreateResult::class.java)
-        Assertions.assertNotNull(productCreateRequest)
-        Assertions.assertEquals(productCreateResult!!.javaClass, TypedBatchResponse.Ok::class.java)
-        Assertions.assertTrue((productCreateResult as TypedBatchResponse.Ok<ProductCreateResult>).value.id > 0)
-
-    }
+	}
 }

@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.config.ApiServerDomain
 import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.DEFAULT_HTTPS_PORT
 import com.ecwid.apiclient.v3.config.LoggingSettings
+import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.EcwidApiError
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
@@ -79,6 +80,33 @@ internal class ApiClientHelper(
 		return makeRequest(httpRequest, V::class.java)
 	}
 
+	inline fun <reified V> makeRequest(
+			request: ApiRequest
+	): V {
+		val requestInfo = request.toRequestInfo()
+		val httpRequest = when (requestInfo.method) {
+			HttpMethod.GET -> HttpRequest.HttpGetRequest(
+					uri = createApiEndpointUri(requestInfo.endpoint),
+					params = requestInfo.params.withApiTokenParam(storeCredentials.apiToken)
+			)
+			HttpMethod.POST -> HttpRequest.HttpPostRequest(
+					uri = createApiEndpointUri(requestInfo.endpoint),
+					params = requestInfo.params.withApiTokenParam(storeCredentials.apiToken),
+					httpBody = requestInfo.httpBody
+			)
+			HttpMethod.PUT -> HttpRequest.HttpPutRequest(
+					uri = createApiEndpointUri(requestInfo.endpoint),
+					params = requestInfo.params.withApiTokenParam(storeCredentials.apiToken),
+					httpBody = requestInfo.httpBody
+			)
+			HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
+					uri = createApiEndpointUri(requestInfo.endpoint),
+					params = requestInfo.params.withApiTokenParam(storeCredentials.apiToken)
+			)
+		}
+		return makeRequest(httpRequest, V::class.java)
+	}
+
 	fun <V> makeRequest(httpRequest: HttpRequest, clazz: Class<V>): V {
 		val requestId = generateRequestId()
 
@@ -107,7 +135,7 @@ internal class ApiClientHelper(
 						responseBytes as V
 					} else {
 						logSuccessfulResponseIfNeeded(requestId, requestTime, responseBody.value)
-						deserializeJson(responseBytes.asString(), clazz)!!
+						jsonTransformer.deserialize(responseBytes.asString(), clazz)!!
 					}
 				} catch (e: JsonDeserializationException) {
 					logCannotParseResponseError(requestId, requestTime, responseBytes.asString(), e)
@@ -120,7 +148,7 @@ internal class ApiClientHelper(
 			is HttpResponse.Error -> {
 				try {
 					logErrorResponseIfNeeded(requestId, requestTime, httpResponse.statusCode, responseBody.value)
-					val ecwidError = deserializeJson(responseBody.value, EcwidApiError::class.java)
+					val ecwidError = jsonTransformer.deserialize(responseBody.value, EcwidApiError::class.java)
 					throw EcwidApiException(
 							statusCode = httpResponse.statusCode,
 							reasonPhrase = httpResponse.reasonPhrase,
@@ -170,8 +198,6 @@ internal class ApiClientHelper(
 	}
 
 	fun serializeJson(src: Any?): String = jsonTransformer.serialize(src)
-
-	fun <T> deserializeJson(src: String, clazz: Class<T>): T = jsonTransformer.deserialize(src, clazz)!!
 
 	private fun createApiEndpointUri(endpoint: String): String {
 		return URI(
