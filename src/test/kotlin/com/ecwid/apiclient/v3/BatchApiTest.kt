@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.request.GetBatchRequest
+import com.ecwid.apiclient.v3.dto.batch.request.GetTypedBatchRequest
 import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
 import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
 import com.ecwid.apiclient.v3.dto.category.result.CategoryCreateResult
@@ -36,9 +37,8 @@ class BatchApiTest : BaseEntityTest() {
 
 		TimeUnit.SECONDS.sleep(5)
 
-		val getBatchResult = apiClient.getTypedBatch(GetBatchRequest(
-				ticket = createBatchResult.ticket,
-				escapedJson = false
+		val getBatchResult = apiClient.getTypedBatch(GetTypedBatchRequest(
+				ticket = createBatchResult.ticket
 		))
 
 		val productCreateResult = getBatchResult.responses!!.first().toTypedResponse(CategoryCreateResult::class.java)

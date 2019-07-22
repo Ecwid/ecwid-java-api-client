@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.LoggingSettings
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.request.GetBatchRequest
+import com.ecwid.apiclient.v3.dto.batch.request.GetTypedBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.result.CreateBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
@@ -156,9 +157,7 @@ interface CustomerGroupsApiClient {
 
 interface BatchApiClient {
 	fun createBatch(request: CreateBatchRequest): CreateBatchResult
-	fun getTypedBatch(request: GetBatchRequest): GetTypedBatchResult
-	fun getBatch(request: GetBatchRequest): GetBatchResult
-	fun getEscapedBatch(request: GetBatchRequest): GetEscapedBatchResult
+	fun getTypedBatch(request: GetTypedBatchRequest): GetTypedBatchResult
 }
 
 // Store information
