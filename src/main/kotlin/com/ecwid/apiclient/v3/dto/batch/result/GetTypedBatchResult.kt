@@ -10,7 +10,7 @@ class GetTypedBatchResult(
         jsonTransformer: JsonTransformer
 ) {
 
-    val status: String = escapedBatchResult.status
+    val status: BatchStatus = escapedBatchResult.status
     val totalRequests: Int = escapedBatchResult.totalRequests
     val completedRequests: Int = escapedBatchResult.completedRequests
     val responses: List<TypedSingleBatchResponse>? = escapedBatchResult.responses?.map { TypedSingleBatchResponse(it, jsonTransformer) }

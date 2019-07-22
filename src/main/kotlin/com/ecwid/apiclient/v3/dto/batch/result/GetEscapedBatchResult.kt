@@ -3,7 +3,7 @@ package com.ecwid.apiclient.v3.dto.batch.result
 import com.google.gson.annotations.SerializedName
 
 data class GetEscapedBatchResult(
-        var status: String,
+        var status: BatchStatus,
         // TODO: remove this gson specific annotation
         @SerializedName("total_requests")
         var totalRequests: Int,
