@@ -1,28 +1,28 @@
 package com.ecwid.apiclient.v3.dto.batch.result
 
-import com.google.gson.annotations.SerializedName
-
 data class GetEscapedBatchResult(
-        var status: BatchStatus,
-        // TODO: remove this gson specific annotation
-        @SerializedName("total_requests")
-        var totalRequests: Int,
-        // TODO: remove this gson specific annotation
-        @SerializedName("completed_requests")
-        var completedRequests: Int,
-        var responses: List<EscapedSingleBatchResponse>?
+		var status: BatchStatus,
+		var totalRequests: Int,
+		var completedRequests: Int,
+		var responses: List<EscapedSingleBatchResponse>?
 )
 
 data class EscapedSingleBatchResponse(
-        var id: String,
-        // TODO: remove this gson specific annotation
-        @SerializedName("escaped_http_body")
-        var escapedHttpBody: String?,
-        // TODO: remove this gson specific annotation
-        @SerializedName("http_status_code")
-        var httpStatusCode: Int,
-        // TODO: remove this gson specific annotation
-        @SerializedName("http_status_line")
-        var httpStatusLine: String,
-        var status: BatchResponseStatus
+		var id: String,
+		var escapedHttpBody: String?,
+		var httpStatusCode: Int,
+		var httpStatusLine: String,
+		var status: BatchResponseStatus
 )
+
+enum class BatchStatus {
+	QUEUED,
+	IN_PROGRESS,
+	COMPLETED
+}
+
+enum class BatchResponseStatus {
+	COMPLETED,
+	FAILED,
+	NOT_EXECUTED
+}

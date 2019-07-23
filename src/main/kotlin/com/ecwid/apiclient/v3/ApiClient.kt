@@ -4,11 +4,8 @@ import com.ecwid.apiclient.v3.config.ApiServerDomain
 import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.LoggingSettings
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
-import com.ecwid.apiclient.v3.dto.batch.request.GetBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.request.GetTypedBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.result.CreateBatchResult
-import com.ecwid.apiclient.v3.dto.batch.result.GetBatchResult
-import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.result.*
