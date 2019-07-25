@@ -22,4 +22,5 @@ sealed class TypedBatchResponse<T> {
 	data class Ok<T>(val value: T) : TypedBatchResponse<T>()
 	data class ApiError<T>(val ecwidApiError: EcwidApiError) : TypedBatchResponse<T>()
 	data class ParseError<T>(val jsonDeserializationException: JsonDeserializationException) : TypedBatchResponse<T>()
+	class NotExecuted<T> : TypedBatchResponse<T>()
 }

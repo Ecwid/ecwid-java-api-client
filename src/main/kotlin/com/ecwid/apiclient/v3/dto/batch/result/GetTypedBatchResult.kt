@@ -28,8 +28,8 @@ class TypedSingleBatchResponse(
     val status: BatchResponseStatus = escapedSingleBatchResponse.status
 
 
-    fun <T> toTypedResponse(clazz: Class<T>): TypedBatchResponse<T>? {
-        val body = escapedHttpBody ?: return null
+    fun <T> toTypedResponse(clazz: Class<T>): TypedBatchResponse<T> {
+        val body = escapedHttpBody ?: return TypedBatchResponse.NotExecuted()
         return when (status) {
             BatchResponseStatus.COMPLETED -> {
                 try {
@@ -47,7 +47,7 @@ class TypedSingleBatchResponse(
                 }
             }
             BatchResponseStatus.NOT_EXECUTED -> {
-                null
+                TypedBatchResponse.NotExecuted()
             }
         }
     }

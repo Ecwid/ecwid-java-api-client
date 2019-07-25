@@ -8,7 +8,6 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.EcwidApiError
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
-import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.httptransport.HttpRequest
 import com.ecwid.apiclient.v3.httptransport.HttpResponse
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
@@ -18,7 +17,6 @@ import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
 import kotlin.random.Random
-
 
 private const val API_TOKEN_PARAM_NAME = "token"
 
@@ -67,26 +65,31 @@ internal class ApiClientHelper(
 		val startTime = Date().time
 		val httpResponse = httpTransport.makeHttpRequest(httpRequest)
 
-		val requestTime = Date().time - startTime
-		val responseBytes = httpResponse.responseBytes
-		val responseBody = lazy { responseBytes.asString() }
-		return processHttpResponse(httpResponse, clazz, requestId, requestTime, responseBody, responseBytes)
+		return processHttpResponse(
+				httpResponse = httpResponse,
+				clazz = clazz,
+				requestId = requestId,
+				requestTime = Date().time - startTime
+		)
 	}
 
-	private fun <V> processHttpResponse(httpResponse: HttpResponse, clazz: Class<V>, requestId: String, requestTime: Long, responseBody: Lazy<String>, responseBytes: ByteArray): V {
+	private fun <V> processHttpResponse(httpResponse: HttpResponse, clazz: Class<V>, requestId: String, requestTime: Long): V {
+		val responseBytes = httpResponse.responseBytes
 		return when (httpResponse) {
 			is HttpResponse.Success -> {
 				try {
 					if (clazz.isAssignableFrom(String::class.java)) {
-						logSuccessfulResponseIfNeeded(requestId, requestTime, responseBody.value)
+						val responseBody = responseBytes.asString()
+						logSuccessfulResponseIfNeeded(requestId, requestTime, responseBody)
 						@Suppress("UNCHECKED_CAST") // We already checked above that this cast is safe
-						responseBody.value as V
+						responseBody as V
 					} else if (clazz.isAssignableFrom(ByteArray::class.java)) {
 						logSuccessfulResponseIfNeeded(requestId, requestTime, "[Binary data: byte array of size ${responseBytes.size}]")
 						@Suppress("UNCHECKED_CAST") // We already checked above that this cast is safe
 						responseBytes as V
 					} else {
-						logSuccessfulResponseIfNeeded(requestId, requestTime, responseBody.value)
+						val responseBody = responseBytes.asString()
+						logSuccessfulResponseIfNeeded(requestId, requestTime, responseBody)
 						jsonTransformer.deserialize(responseBytes.asString(), clazz)!!
 					}
 				} catch (e: JsonDeserializationException) {
@@ -99,8 +102,9 @@ internal class ApiClientHelper(
 			}
 			is HttpResponse.Error -> {
 				try {
-					logErrorResponseIfNeeded(requestId, requestTime, httpResponse.statusCode, responseBody.value)
-					val ecwidError = jsonTransformer.deserialize(responseBody.value, EcwidApiError::class.java)
+					val responseBody = responseBytes.asString()
+					logErrorResponseIfNeeded(requestId, requestTime, httpResponse.statusCode, responseBody)
+					val ecwidError = jsonTransformer.deserialize(responseBody, EcwidApiError::class.java)
 					throw EcwidApiException(
 							statusCode = httpResponse.statusCode,
 							reasonPhrase = httpResponse.reasonPhrase,
@@ -148,8 +152,6 @@ internal class ApiClientHelper(
 				}
 		)
 	}
-
-	fun serializeJson(src: Any?): String = jsonTransformer.serialize(src)
 
 	private fun createApiEndpointUri(endpoint: String): String {
 		return URI(

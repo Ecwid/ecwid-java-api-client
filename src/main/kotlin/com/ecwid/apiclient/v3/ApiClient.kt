@@ -23,7 +23,7 @@ import com.ecwid.apiclient.v3.httptransport.HttpTransport
 import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 
-class ApiClient internal constructor(
+class ApiClient private constructor(
 		productsApiClient: ProductsApiClient,
 		categoriesApiClient: CategoriesApiClient,
 		ordersApiClient: OrdersApiClient,

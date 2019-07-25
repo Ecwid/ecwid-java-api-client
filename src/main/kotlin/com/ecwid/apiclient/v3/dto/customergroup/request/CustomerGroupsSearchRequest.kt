@@ -11,12 +11,13 @@ data class CustomerGroupsSearchRequest(
 			endpoint = "customer_groups",
 			params = toParams()
 	)
-}
 
-private fun CustomerGroupsSearchRequest.toParams(): Map<String, String> {
-	val request = this
-	return mutableMapOf<String, String>().apply {
-		put("offset", request.offset.toString())
-		put("limit", request.limit.toString())
-	}.toMap()
+	private fun toParams(): Map<String, String> {
+		val request = this
+		return mutableMapOf<String, String>().apply {
+			put("offset", request.offset.toString())
+			put("limit", request.limit.toString())
+		}.toMap()
+	}
+
 }
