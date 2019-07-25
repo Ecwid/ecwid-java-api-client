@@ -9,7 +9,7 @@ data class GetEscapedBatchResult(
 
 data class EscapedSingleBatchResponse(
 		var id: String,
-		var escapedHttpBody: String?,
+		var escapedHttpBody: String,
 		var httpStatusCode: Int,
 		var httpStatusLine: String,
 		var status: BatchResponseStatus
