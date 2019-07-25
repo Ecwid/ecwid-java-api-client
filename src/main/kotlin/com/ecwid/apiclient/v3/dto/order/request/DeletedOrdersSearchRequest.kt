@@ -14,14 +14,14 @@ data class DeletedOrdersSearchRequest(
 			endpoint = "orders/deleted",
 			params = toParams()
 	)
-}
 
-private fun DeletedOrdersSearchRequest.toParams(): Map<String, String> {
-	val request = this
-	return mutableMapOf<String, String>().apply {
-		request.deletedFrom?.let { put("from_date", (it.time / 1000).toString()) }
-		request.deletedTo?.let { put("to_date", (it.time / 1000).toString()) }
-		put("offset", request.offset.toString())
-		put("limit", request.limit.toString())
-	}.toMap()
+	private fun toParams(): Map<String, String> {
+		val request = this
+		return mutableMapOf<String, String>().apply {
+			request.deletedFrom?.let { put("from_date", (it.time / 1000).toString()) }
+			request.deletedTo?.let { put("to_date", (it.time / 1000).toString()) }
+			put("offset", request.offset.toString())
+			put("limit", request.limit.toString())
+		}.toMap()
+	}
 }

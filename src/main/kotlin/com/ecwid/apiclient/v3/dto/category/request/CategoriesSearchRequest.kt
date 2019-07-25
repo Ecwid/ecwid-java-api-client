@@ -24,27 +24,28 @@ data class CategoriesSearchRequest(
 		class WithId(val id: Int) : ParentCategory()
 	}
 
-}
+	private fun toParams(): Map<String, String> {
+		val parentCategoryId = when (parentCategoryId) {
+			is CategoriesSearchRequest.ParentCategory.Root ->
+				0
+			is CategoriesSearchRequest.ParentCategory.WithId ->
+				parentCategoryId.id
+			else ->
+				null
+		}
 
-
-private fun CategoriesSearchRequest.toParams(): Map<String, String> {
-	val parentCategoryId = when (parentCategoryId) {
-		is CategoriesSearchRequest.ParentCategory.Root ->
-			0
-		is CategoriesSearchRequest.ParentCategory.WithId ->
-			parentCategoryId.id
-		else ->
-			null
+		val request = this
+		return mutableMapOf<String, String>().apply {
+			parentCategoryId?.let { put("parent", it.toString()) }
+			request.hiddenCategories?.let { put("hidden_categories", it.toString()) }
+			request.returnProductIds?.let { put("productIds", it.toString()) }
+			request.baseUrl?.let { put("baseUrl", it) }
+			request.cleanUrls?.let { put("cleanUrls", it.toString()) }
+			put("offset", request.offset.toString())
+			put("limit", request.limit.toString())
+		}.toMap()
 	}
 
-	val request = this
-	return mutableMapOf<String, String>().apply {
-		parentCategoryId?.let { put("parent", it.toString()) }
-		request.hiddenCategories?.let { put("hidden_categories", it.toString()) }
-		request.returnProductIds?.let { put("productIds", it.toString()) }
-		request.baseUrl?.let { put("baseUrl", it) }
-		request.cleanUrls?.let { put("cleanUrls", it.toString()) }
-		put("offset", request.offset.toString())
-		put("limit", request.limit.toString())
-	}.toMap()
 }
+
+

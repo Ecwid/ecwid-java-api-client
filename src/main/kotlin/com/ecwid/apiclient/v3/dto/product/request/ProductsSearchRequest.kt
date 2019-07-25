@@ -32,6 +32,40 @@ sealed class ProductsSearchRequest {
 				endpoint = "products",
 				params = toParams()
 		)
+
+		private fun toParams(): Map<String, String> {
+			val request = this
+			return mutableMapOf<String, String>().apply {
+				request.keyword?.let { put("keyword", it) }
+				request.sku?.let { put("sku", it) }
+				request.priceFrom?.let { put("priceFrom", it.toString()) }
+				request.priceTo?.let { put("priceTo", it.toString()) }
+				request.createdFrom?.let { put("createdFrom", (it.time / 1000).toString()) }
+				request.createdTo?.let { put("createdTo", (it.time / 1000).toString()) }
+				request.updatedFrom?.let { put("updatedFrom", (it.time / 1000).toString()) }
+				request.updatedTo?.let { put("updatedTo", (it.time / 1000).toString()) }
+				request.enabled?.let { put("enabled", it.toString()) }
+				request.inventory?.let { put("inventory", if (it) "instock" else "outofstock") }
+				request.onSale?.let { put("onsale", if (it) "onsale" else "notonsale") }
+				request.attributes?.let { attributes ->
+					attributes.attributes.forEach { (attributeName, attributeValue) ->
+						put("attribute_$attributeName", attributeValue.joinToString(","))
+					}
+				}
+				request.options?.let { options ->
+					options.options.forEach { (optionName, optionValue) ->
+						put("option_$optionName", optionValue.joinToString(","))
+					}
+				}
+				request.categories?.let { put("categories", it.joinToString(",")) }
+				request.includeProductsFromSubcategories?.let { put("includeProductsFromSubcategories", it.toString()) }
+				request.baseUrl?.let { put("baseUrl", it) }
+				request.cleanUrls?.let { put("cleanUrls", it.toString()) }
+				request.sortBy?.let { put("sortBy", it.name) }
+				put("offset", request.offset.toString())
+				put("limit", request.limit.toString())
+			}.toMap()
+		}
 	}
 
 	data class ByIds(val productIds: List<Int> = listOf()) : ProductsSearchRequest(), ApiRequest {
@@ -41,6 +75,13 @@ sealed class ProductsSearchRequest {
 		)
 
 		constructor(productId: Int) : this(listOf(productId))
+
+		private fun toParams(): Map<String, String> {
+			val request = this
+			return mutableMapOf<String, String>().apply {
+				put("productId", request.productIds.joinToString(","))
+			}.toMap()
+		}
 	}
 
 	data class ProductSearchAttributes(val attributes: List<AttributeValue>) {
@@ -71,45 +112,4 @@ sealed class ProductsSearchRequest {
 		UPDATED_TIME_DESC
 	}
 
-}
-
-private fun ProductsSearchRequest.ByFilters.toParams(): Map<String, String> {
-	val request = this
-	return mutableMapOf<String, String>().apply {
-		request.keyword?.let { put("keyword", it) }
-		request.sku?.let { put("sku", it) }
-		request.priceFrom?.let { put("priceFrom", it.toString()) }
-		request.priceTo?.let { put("priceTo", it.toString()) }
-		request.createdFrom?.let { put("createdFrom", (it.time / 1000).toString()) }
-		request.createdTo?.let { put("createdTo", (it.time / 1000).toString()) }
-		request.updatedFrom?.let { put("updatedFrom", (it.time / 1000).toString()) }
-		request.updatedTo?.let { put("updatedTo", (it.time / 1000).toString()) }
-		request.enabled?.let { put("enabled", it.toString()) }
-		request.inventory?.let { put("inventory", if (it) "instock" else "outofstock") }
-		request.onSale?.let { put("onsale", if (it) "onsale" else "notonsale") }
-		request.attributes?.let { attributes ->
-			attributes.attributes.forEach { (attributeName, attributeValue) ->
-				put("attribute_$attributeName", attributeValue.joinToString(","))
-			}
-		}
-		request.options?.let { options ->
-			options.options.forEach { (optionName, optionValue) ->
-				put("option_$optionName", optionValue.joinToString(","))
-			}
-		}
-		request.categories?.let { put("categories", it.joinToString(",")) }
-		request.includeProductsFromSubcategories?.let { put("includeProductsFromSubcategories", it.toString()) }
-		request.baseUrl?.let { put("baseUrl", it) }
-		request.cleanUrls?.let { put("cleanUrls", it.toString()) }
-		request.sortBy?.let { put("sortBy", it.name) }
-		put("offset", request.offset.toString())
-		put("limit", request.limit.toString())
-	}.toMap()
-}
-
-private fun ProductsSearchRequest.ByIds.toParams(): Map<String, String> {
-	val request = this
-	return mutableMapOf<String, String>().apply {
-		put("productId", request.productIds.joinToString(","))
-	}.toMap()
 }

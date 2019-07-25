@@ -12,7 +12,7 @@ data class CreateBatchRequest(
 			endpoint = "batch",
 			httpBody = HttpBody.JsonBody(
 					obj = requests.map { (id, request) ->
-						SingleBatchRequest.create(request, id)
+						SingleBatchRequest.create(id, request)
 					}
 			)
 	)
@@ -27,7 +27,7 @@ private class SingleBatchRequest private constructor(
 ) {
 
 	companion object {
-		internal fun create(apiRequest: ApiRequest, id: String): SingleBatchRequest {
+		internal fun create(id: String, apiRequest: ApiRequest): SingleBatchRequest {
 			val requestInfo = apiRequest.toRequestInfo()
 			return SingleBatchRequest(
 					id = id,
@@ -36,9 +36,9 @@ private class SingleBatchRequest private constructor(
 					body = when (requestInfo.httpBody) {
 						is HttpBody.EmptyBody -> null
 						is HttpBody.JsonBody -> requestInfo.httpBody.obj
-						is HttpBody.ByteArrayBody -> TODO()
-						is HttpBody.InputStreamBody -> TODO()
-						is HttpBody.LocalFileBody -> TODO()
+						is HttpBody.ByteArrayBody -> throw IllegalStateException("Request type ${HttpBody.ByteArrayBody::class.java.simpleName} is not allowed in batch requests")
+						is HttpBody.InputStreamBody -> throw IllegalStateException("Request type ${HttpBody.InputStreamBody::class.java.simpleName} is not allowed in batch requests")
+						is HttpBody.LocalFileBody -> throw IllegalStateException("Request type ${HttpBody.LocalFileBody::class.java.simpleName} is not allowed in batch requests")
 					}
 			)
 		}

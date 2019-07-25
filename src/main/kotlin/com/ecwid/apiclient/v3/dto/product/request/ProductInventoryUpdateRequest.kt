@@ -21,10 +21,9 @@ data class ProductInventoryUpdateRequest(
 			val quantityDelta: Int = 0
 	)
 
-}
-
-private fun ProductInventoryUpdateRequest.toParams(): Map<String, String> {
-	return mutableMapOf<String, String>().apply {
-		checkLowStockNotification?.let { put("checkLowStockNotification", it.toString()) }
-	}.toMap()
+	private fun toParams(): Map<String, String> {
+		return mutableMapOf<String, String>().apply {
+			checkLowStockNotification?.let { put("checkLowStockNotification", it.toString()) }
+		}.toMap()
+	}
 }
