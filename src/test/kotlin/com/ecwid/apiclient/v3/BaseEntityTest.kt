@@ -24,6 +24,7 @@ import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
 import com.ecwid.apiclient.v3.httptransport.impl.ApacheCommonsHttpClientTransport
 import com.ecwid.apiclient.v3.jsontransformer.impl.GsonJsonTransformer
 import com.ecwid.apiclient.v3.util.PropertiesLoader
+import org.junit.jupiter.api.Assertions
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -110,5 +111,19 @@ abstract class BaseEntityTest {
 	}
 
 	protected fun getTestPngFilePath(): Path = Paths.get(javaClass.getResource("/logo-ecwid-small.png").toURI())
+
+	protected fun waitForProductCount(productsSearchRequest: ProductsSearchRequest.ByFilters, desiredProductCount: Int) {
+		var tries = 0
+		var lastProductCount: Int
+		do {
+			val productsSearchResult = apiClient.searchProducts(productsSearchRequest)
+			if (productsSearchResult.items.size == desiredProductCount) return
+			lastProductCount = productsSearchResult.items.size
+			tries++
+			Thread.sleep(500L * tries)
+		} while (tries < 10)
+
+		return Assertions.fail("After $tries tries was $lastProductCount products found instead of $desiredProductCount")
+	}
 
 }
