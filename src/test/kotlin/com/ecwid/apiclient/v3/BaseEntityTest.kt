@@ -44,7 +44,7 @@ abstract class BaseEntityTest {
 						logSuccessfulResponseBody = true
 				),
 				jsonTransformer = jsonTransformer,
-				httpTransport = ApacheCommonsHttpClientTransport(jsonTransformer)
+				httpTransport = ApacheCommonsHttpClientTransport()
 		)
 	}
 
