@@ -2,9 +2,11 @@ package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.request.GetTypedBatchRequest
-import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
-import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
-import com.ecwid.apiclient.v3.dto.category.result.CategoryCreateResult
+import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
+import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest
+import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
+import com.ecwid.apiclient.v3.dto.product.result.ProductCreateResult
+import com.ecwid.apiclient.v3.dto.product.result.ProductsSearchResult
 import com.ecwid.apiclient.v3.impl.TypedBatchResponse
 import com.ecwid.apiclient.v3.util.randomAlphanumeric
 import org.junit.jupiter.api.Assertions
@@ -20,33 +22,73 @@ class BatchApiTest : BaseEntityTest() {
 	}
 
 	@Test
-	fun `Create category with batch API`() {
+	fun `Create a product with batch API and search it`() {
 
-		val categoryCreateRequest = CategoryCreateRequest(
-				newCategory = UpdatedCategory(
-						name = "Category " + randomAlphanumeric(8)
+		val name = randomAlphanumeric(8)
+		val productCreateRequest = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = name
 				)
 		)
 
-		val createBatchResult = apiClient.createBatch(
+		val productSearchRequest = ProductsSearchRequest.ByFilters(
+				keyword = name
+		)
+
+		val createProductBatch = apiClient.createBatch(
 				CreateBatchRequest(
-						requests = mapOf("test_id" to categoryCreateRequest)
+						requests = mapOf(
+								"test_product" to productCreateRequest
+						)
 				)
 		)
 
-		TimeUnit.SECONDS.sleep(5)
+		waitForProductCount(productSearchRequest, 1)
 
-		val getBatchResult = apiClient.getTypedBatch(
+		val createProductBatchResult = apiClient.getTypedBatch(
 				GetTypedBatchRequest(
-						ticket = createBatchResult.ticket
+						ticket = createProductBatch.ticket
 				)
 		)
 
-		val categoryCreateResult = getBatchResult.responses!!.first().toTypedResponse(CategoryCreateResult::class.java)
-		when (categoryCreateResult) {
+		val createResponses = createProductBatchResult.responses
+		require(createResponses != null)
+		val productCreateResult = createResponses.first().toTypedResponse(ProductCreateResult::class.java)
+		when (productCreateResult) {
 
 			is TypedBatchResponse.Ok -> {
-				Assertions.assertTrue(categoryCreateResult.value.id > 0)
+				Assertions.assertTrue(productCreateResult.value.id > 0)
+			}
+			is TypedBatchResponse.ApiError -> Assertions.fail("Api error is unexpected")
+			is TypedBatchResponse.ParseError -> Assertions.fail("Parse error is unexpected")
+			is TypedBatchResponse.NotExecuted -> Assertions.fail("Not executed error is not expected")
+		}
+
+
+		val searchProductBatch = apiClient.createBatch(
+				CreateBatchRequest(
+						requests = mapOf(
+								"search_product" to productSearchRequest
+						)
+				)
+		)
+
+		// No way to predict when this query will be executed, let's simply wait
+		TimeUnit.SECONDS.sleep(5)
+
+		val searchProductBatchResult = apiClient.getTypedBatch(
+				GetTypedBatchRequest(
+						ticket = searchProductBatch.ticket
+				)
+		)
+
+		val searchResponses = searchProductBatchResult.responses
+		require(searchResponses != null)
+		val productsSearchResult = searchResponses.first().toTypedResponse(ProductsSearchResult::class.java)
+		when (productsSearchResult) {
+
+			is TypedBatchResponse.Ok -> {
+				Assertions.assertTrue(productsSearchResult.value.count > 0)
 			}
 			is TypedBatchResponse.ApiError -> Assertions.fail("Api error is unexpected")
 			is TypedBatchResponse.ParseError -> Assertions.fail("Parse error is unexpected")

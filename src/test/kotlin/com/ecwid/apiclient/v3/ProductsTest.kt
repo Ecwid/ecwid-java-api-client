@@ -948,20 +948,6 @@ class ProductsTest: BaseEntityTest() {
 		)
 	}
 
-	private fun waitForProductCount(productsSearchRequest: ProductsSearchRequest.ByFilters, desiredProductCount: Int) {
-		var tries = 0
-		var lastProductCount: Int
-		do {
-			val productsSearchResult = apiClient.searchProducts(productsSearchRequest)
-			if (productsSearchResult.items.size == desiredProductCount) return
-			lastProductCount = productsSearchResult.items.size
-			tries++
-			Thread.sleep(500L * tries)
-		} while (tries < 10)
-
-		return fail("After $tries tries was $lastProductCount products found instead of $desiredProductCount")
-	}
-
 }
 
 private fun generateTestCategory(parentId: Int? = null): UpdatedCategory {
