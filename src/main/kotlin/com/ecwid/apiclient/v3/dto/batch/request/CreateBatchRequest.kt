@@ -32,15 +32,7 @@ private class SingleBatchRequest private constructor(
 	companion object {
 		internal fun create(id: String, apiRequest: ApiRequest): SingleBatchRequest {
 			val requestInfo = apiRequest.toRequestInfo()
-			val queryString = if (requestInfo.params.isEmpty()) {
-				""
-			} else {
-				requestInfo.params.entries.joinToString(
-						prefix = "?",
-						separator = "&") { (key, value) ->
-					URLEncoder.encode(key, UTF_CHARSET) + "=" + URLEncoder.encode(value, UTF_CHARSET)
-				}
-			}
+			val queryString = buildQueryString(requestInfo.params)
 			return SingleBatchRequest(
 					id = id,
 					method = requestInfo.method.name,
@@ -56,4 +48,14 @@ private class SingleBatchRequest private constructor(
 		}
 	}
 
+}
+
+internal fun buildQueryString(params: Map<String, String>): String {
+	return if (params.isEmpty()) {
+		""
+	} else {
+		params.entries.joinToString(prefix = "?", separator = "&") { (key, value) ->
+			URLEncoder.encode(key, UTF_CHARSET) + "=" + URLEncoder.encode(value, UTF_CHARSET)
+		}
+	}
 }
