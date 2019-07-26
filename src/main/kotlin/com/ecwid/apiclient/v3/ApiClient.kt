@@ -152,6 +152,8 @@ interface CustomerGroupsApiClient {
 	fun deleteCustomerGroup(request: CustomerGroupDeleteRequest): CustomerGroupDeleteResult
 }
 
+// Batch requests
+// https://developers.ecwid.com/api-documentation/batch-requests
 interface BatchApiClient {
 	fun createBatch(request: CreateBatchRequest): CreateBatchResult
 	fun getTypedBatch(request: GetTypedBatchRequest): GetTypedBatchResult
