@@ -8,10 +8,10 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.EcwidApiError
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
-import com.ecwid.apiclient.v3.httptransport.HttpRequest
-import com.ecwid.apiclient.v3.httptransport.HttpResponse
-import com.ecwid.apiclient.v3.httptransport.HttpTransport
+import com.ecwid.apiclient.v3.httptransport.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
+import java.io.ByteArrayInputStream
+import java.io.FileInputStream
 import java.net.URI
 import java.util.*
 import java.util.logging.Level
@@ -42,25 +42,25 @@ internal class ApiClientHelper(
 			HttpMethod.POST -> HttpRequest.HttpPostRequest(
 					uri = createApiEndpointUri(requestInfo.endpoint),
 					params = requestInfo.params.withApiTokenParam(storeCredentials.apiToken),
-					httpBody = requestInfo.httpBody
+					transportHttpBody = requestInfo.httpBody.prepare(jsonTransformer)
 			)
 			HttpMethod.PUT -> HttpRequest.HttpPutRequest(
 					uri = createApiEndpointUri(requestInfo.endpoint),
 					params = requestInfo.params.withApiTokenParam(storeCredentials.apiToken),
-					httpBody = requestInfo.httpBody
+					transportHttpBody = requestInfo.httpBody.prepare(jsonTransformer)
 			)
 			HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
 					uri = createApiEndpointUri(requestInfo.endpoint),
 					params = requestInfo.params.withApiTokenParam(storeCredentials.apiToken)
 			)
 		}
-		return makeRequest(httpRequest, V::class.java)
+		return makeRequest(httpRequest, requestInfo.httpBody, V::class.java)
 	}
 
-	fun <V> makeRequest(httpRequest: HttpRequest, clazz: Class<V>): V {
+	fun <V> makeRequest(httpRequest: HttpRequest, httpBody: HttpBody, clazz: Class<V>): V {
 		val requestId = generateRequestId()
 
-		logRequestIfNeeded(requestId, httpRequest)
+		logRequestIfNeeded(requestId, httpRequest, httpBody)
 
 		val startTime = Date().time
 		val httpResponse = httpTransport.makeHttpRequest(httpRequest)
@@ -130,7 +130,7 @@ internal class ApiClientHelper(
 		}
 	}
 
-	private fun logRequestIfNeeded(requestId: String, httpRequest: HttpRequest) {
+	private fun logRequestIfNeeded(requestId: String, httpRequest: HttpRequest, httpBody: HttpBody) {
 		if (!loggingSettings.logRequest) return
 
 		val params = if (loggingSettings.maskRequestApiToken) {
@@ -147,7 +147,7 @@ internal class ApiClientHelper(
 					add("${httpRequest.method} ${httpRequest.uri}")
 					add(params.dumpToString())
 					if (loggingSettings.logRequestBody) {
-						httpRequest.httpBody.asString()?.let { add(it) }
+						httpBody.asString()?.let { add(it) }
 					}
 				}
 		)
@@ -276,3 +276,22 @@ private fun Map<String, String>.dumpToString(): String {
 }
 
 private fun ByteArray.asString() = String(this, Charsets.UTF_8)
+
+private fun HttpBody.prepare(jsonTransformer: JsonTransformer): TransportHttpBody {
+	return when (this) {
+		HttpBody.EmptyBody -> TransportHttpBody.EmptyBody
+		is HttpBody.JsonBody -> {
+			val bodyAsBytes = jsonTransformer.serialize(obj).toByteArray()
+			TransportHttpBody.InputStreamBody(ByteArrayInputStream(bodyAsBytes), MIME_TYPE_APPLICATION_JSON)
+		}
+		is HttpBody.ByteArrayBody -> {
+			TransportHttpBody.InputStreamBody(ByteArrayInputStream(bytes), mimeType)
+		}
+		is HttpBody.InputStreamBody -> {
+			TransportHttpBody.InputStreamBody(stream, mimeType)
+		}
+		is HttpBody.LocalFileBody -> {
+			TransportHttpBody.InputStreamBody(FileInputStream(file), mimeType)
+		}
+	}
+}

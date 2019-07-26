@@ -1,10 +1,6 @@
 package com.ecwid.apiclient.v3.httptransport.impl
 
-import com.ecwid.apiclient.v3.httptransport.HttpBody
-import com.ecwid.apiclient.v3.httptransport.HttpRequest
-import com.ecwid.apiclient.v3.httptransport.HttpResponse
-import com.ecwid.apiclient.v3.httptransport.HttpTransport
-import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
+import com.ecwid.apiclient.v3.httptransport.*
 import org.apache.http.Consts
 import org.apache.http.HttpStatus
 import org.apache.http.client.HttpClient
@@ -24,9 +20,7 @@ private const val DEFAULT_READ_TIMEOUT = 60_000 // 1 min
 private const val DEFAULT_MAX_CONNECTIONS = 10
 
 
-internal class ApacheCommonsHttpClientTransport(
-		private val jsonTransformer: JsonTransformer
-) : HttpTransport {
+internal class ApacheCommonsHttpClientTransport : HttpTransport {
 
 	private val httpClient: HttpClient
 
@@ -75,12 +69,12 @@ internal class ApacheCommonsHttpClientTransport(
 			is HttpRequest.HttpPostRequest -> {
 				RequestBuilder
 						.post(httpRequest.uri)
-						.setEntity(httpRequest.httpBody.toEntity(jsonTransformer))
+						.setEntity(httpRequest.transportHttpBody.toEntity())
 			}
 			is HttpRequest.HttpPutRequest -> {
 				RequestBuilder
 						.put(httpRequest.uri)
-						.setEntity(httpRequest.httpBody.toEntity(jsonTransformer))
+						.setEntity(httpRequest.transportHttpBody.toEntity())
 			}
 			is HttpRequest.HttpDeleteRequest -> {
 				RequestBuilder.delete(httpRequest.uri)
@@ -101,15 +95,9 @@ private fun createNameValuePairs(params: Map<String, String>): Array<BasicNameVa
 
 private fun String.toContentType(): ContentType = ContentType.create(this, Consts.UTF_8)
 
-private fun HttpBody.toEntity(jsonTransformer: JsonTransformer): AbstractHttpEntity? = when (this) {
-	is HttpBody.EmptyBody ->
+private fun TransportHttpBody.toEntity(): AbstractHttpEntity? = when (this) {
+	is TransportHttpBody.EmptyBody ->
 		null
-	is HttpBody.JsonBody ->
-		StringEntity(jsonTransformer.serialize(obj), mimeType.toContentType())
-	is HttpBody.ByteArrayBody ->
-		ByteArrayEntity(bytes, mimeType.toContentType())
-	is HttpBody.InputStreamBody ->
+	is TransportHttpBody.InputStreamBody ->
 		InputStreamEntity(stream, mimeType.toContentType())
-	is HttpBody.LocalFileBody ->
-		FileEntity(file, mimeType.toContentType())
 }
