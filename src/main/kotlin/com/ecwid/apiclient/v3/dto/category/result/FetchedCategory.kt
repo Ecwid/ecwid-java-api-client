@@ -5,7 +5,9 @@ data class FetchedCategory(
 		val parentId: Int? = null,
 		val orderBy: Int? = null,
 		val name: String = "",
+		val nameTranslated: Map<String, String>? = null,
 		val description: String? = null,
+		val descriptionTranslated: Map<String, String>? = null,
 		val enabled: Boolean = true,
 		val productIds: List<Int>? = null,
 

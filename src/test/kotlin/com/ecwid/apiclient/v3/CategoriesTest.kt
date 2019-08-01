@@ -2,10 +2,8 @@ package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.UploadFileData
-import com.ecwid.apiclient.v3.dto.category.request.CategoryImageDeleteRequest
-import com.ecwid.apiclient.v3.dto.category.request.CategoryImageUploadRequest
 import com.ecwid.apiclient.v3.dto.category.request.*
-import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest.*
+import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest.ParentCategory
 import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
@@ -20,15 +18,15 @@ import java.io.FileInputStream
 import java.nio.file.Files
 
 
-class CategoriesTest: BaseEntityTest() {
+class CategoriesTest : BaseEntityTest() {
 
 	@BeforeEach
 	override fun beforeEach() {
 		super.beforeEach()
 
 		// We need to start from scratch each time
-		removeAllCategories()
-		removeAllProducts()
+//		removeAllCategories()
+//		removeAllProducts()
 	}
 
 	@Test
@@ -308,6 +306,34 @@ class CategoriesTest: BaseEntityTest() {
 	}
 
 	@Test
+	fun testTranslations() {
+		// Creating new category
+		val categoryCreateRequest = CategoryCreateRequest(
+				newCategory = generateTestCategory()
+		)
+		val categoryCreateResult = apiClient.createCategory(categoryCreateRequest)
+		assertTrue(categoryCreateResult.id > 0)
+
+		val categoryDetails = apiClient.getCategoryDetails(
+				CategoryDetailsRequest(
+						categoryId = categoryCreateResult.id
+				)
+		)
+		val descriptionTranslated = categoryDetails.descriptionTranslated
+		require(descriptionTranslated != null)
+		assertTrue(descriptionTranslated.size > 0)
+		assertTrue(descriptionTranslated.containsKey("ru"))
+		assertTrue(descriptionTranslated.getValue("ru").startsWith("Описание"))
+
+
+		val nameTranslated = categoryDetails.nameTranslated
+		require(nameTranslated != null)
+		assertTrue(nameTranslated.size > 0)
+		assertTrue(nameTranslated.containsKey("ru"))
+		assertTrue(nameTranslated.getValue("ru").startsWith("Категория"))
+	}
+
+	@Test
 	fun testManipulateCategoryImage() {
 		// Creating new category
 		val categoryCreateRequest = CategoryCreateRequest(
@@ -386,7 +412,10 @@ class CategoriesTest: BaseEntityTest() {
 
 	private fun assertCategoryImage(expectedThumbnailImageId: Int, categoryDetails: FetchedCategory) {
 		assertAll(
-				{ assertTrue( categoryDetails.thumbnailUrl?.endsWith("/$expectedThumbnailImageId.jpg") ?: false, "thumbnailUrl mismatch") },
+				{
+					assertTrue(categoryDetails.thumbnailUrl?.endsWith("/$expectedThumbnailImageId.jpg")
+							?: false, "thumbnailUrl mismatch")
+				},
 				{ assertFalse(categoryDetails.hdThumbnailUrl.isNullOrEmpty(), "hdThumbnailUrl is empty") },
 				// { assertFalse(categoryDetails.imageUrl.isNullOrEmpty(), "imageUrl is empty") }, // TODO Cannot test due to bug https://track.ecwid.com/youtrack/issue/ECWID-53222
 				{ assertFalse(categoryDetails.originalImageUrl.isNullOrEmpty(), "originalImageUrl is empty") },
@@ -398,7 +427,7 @@ class CategoriesTest: BaseEntityTest() {
 
 	private fun assertNoCategoryImage(categoryDetails: FetchedCategory) {
 		assertAll(
-				{ assertNull( categoryDetails.thumbnailUrl, "thumbnailUrl not empty") },
+				{ assertNull(categoryDetails.thumbnailUrl, "thumbnailUrl not empty") },
 				{ assertNull(categoryDetails.hdThumbnailUrl, "hdThumbnailUrl is not empty") },
 				// { assertNull(categoryDetails.imageUrl, "imageUrl is not empty") }, // TODO Cannot test due to bug https://track.ecwid.com/youtrack/issue/ECWID-53222
 				{ assertNull(categoryDetails.originalImageUrl, "originalImageUrl is not empty") },
@@ -427,7 +456,13 @@ private fun generateTestCategory(
 			parentId = parentCategoryId,
 			orderBy = 1,
 			name = "Category " + randomAlphanumeric(8),
+			nameTranslated = mapOf(
+					"ru" to "Категория " + randomAlphanumeric(8)
+			),
 			description = "Description " + randomAlphanumeric(16),
+			descriptionTranslated = mapOf(
+					"ru" to "Описание " + randomAlphanumeric(16)
+			),
 			enabled = enabled,
 			productIds = productIds
 	)
