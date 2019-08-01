@@ -25,8 +25,8 @@ class CategoriesTest : BaseEntityTest() {
 		super.beforeEach()
 
 		// We need to start from scratch each time
-//		removeAllCategories()
-//		removeAllProducts()
+		removeAllCategories()
+		removeAllProducts()
 	}
 
 	@Test
