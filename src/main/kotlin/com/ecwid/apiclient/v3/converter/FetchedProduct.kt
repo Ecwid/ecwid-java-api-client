@@ -70,6 +70,7 @@ private fun FetchedProduct.ShippingSettings.toUpdated() = UpdatedProduct.Shippin
 
 private fun FetchedProduct.AttributeValue.toUpdated() = UpdatedProduct.AttributeValue(
 		id = id,
+		name = name,
 		alias = alias,
 		value = value,
 		show = show
