@@ -19,6 +19,8 @@ import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
+import com.ecwid.apiclient.v3.dto.variation.request.CreateProductVariationRequest
+import com.ecwid.apiclient.v3.dto.variation.result.CreateProductVariationResult
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
 import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
@@ -30,6 +32,7 @@ class ApiClient private constructor(
 		productTypesApiClient: ProductTypesApiClient,
 		customersApiClient: CustomersApiClient,
 		customerGroupsApiClient: CustomerGroupsApiClient,
+		productVariationsApiClient: ProductVariationsApiClient,
 		batchApiClient: BatchApiClient
 ) :
 		ProductsApiClient by productsApiClient,
@@ -38,6 +41,7 @@ class ApiClient private constructor(
 		ProductTypesApiClient by productTypesApiClient,
 		CustomersApiClient by customersApiClient,
 		CustomerGroupsApiClient by customerGroupsApiClient,
+		ProductVariationsApiClient by productVariationsApiClient,
 		BatchApiClient by batchApiClient {
 
 	companion object {
@@ -55,6 +59,7 @@ class ApiClient private constructor(
 					ProductTypesApiClientImpl(apiClientHelper),
 					CustomersApiClientImpl(apiClientHelper),
 					CustomerGroupsApiClientImpl(apiClientHelper),
+					ProductVariationsApiClientImpl(apiClientHelper),
 					BatchApiClientImpl(apiClientHelper)
 			)
 
@@ -166,6 +171,17 @@ interface BatchApiClient {
 // Product variations
 // https://developers.ecwid.com/api-documentation/product-variations
 // TODO
+interface ProductVariationsApiClient {
+	fun createProductVariation(request: CreateProductVariationRequest): CreateProductVariationResult
+//	fun uploadVariationImage()
+//	fun getAllProductVariations()
+//	fun getProductVariation()
+//	fun updateProductVariation()
+//	fun deleteProductVariation()
+//	fun deleteAllProductVariations()
+//	fun adjustVariationInventory()
+//	fun deleteVariationImage()
+}
 
 // Carts
 // https://developers.ecwid.com/api-documentation/carts

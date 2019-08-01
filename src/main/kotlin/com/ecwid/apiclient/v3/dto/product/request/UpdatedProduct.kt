@@ -151,6 +151,7 @@ data class UpdatedProduct(
 
 	data class AttributeValue internal constructor(
 			val id: Int? = null,
+			val name: String? = null,
 			val alias: AttributeValueAlias? = null,
 			val value: String? = null,
 			val show: AttributeValueLocation? = null
