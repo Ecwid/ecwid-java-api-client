@@ -1,13 +1,15 @@
 package com.ecwid.apiclient.v3.dto.category.result
 
+import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
+
 data class FetchedCategory(
 		val id: Int = 0,
 		val parentId: Int? = null,
 		val orderBy: Int? = null,
 		val name: String = "",
-		val nameTranslated: Map<String, String>? = null,
+		val nameTranslated: LocalizedValueMap? = null,
 		val description: String? = null,
-		val descriptionTranslated: Map<String, String>? = null,
+		val descriptionTranslated: LocalizedValueMap? = null,
 		val enabled: Boolean = true,
 		val productIds: List<Int>? = null,
 
