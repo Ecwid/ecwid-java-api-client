@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.product.result
 
 import com.ecwid.apiclient.v3.dto.product.enums.*
+import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 import java.util.*
 
 data class FetchedProduct(
@@ -58,10 +59,10 @@ data class FetchedProduct(
 		val galleryImages: List<GalleryImage>? = null,
 		val media: ProductMedia? = null,
 		val files: List<ProductFile>? = null,
-		val favorites: FavoritesStats? = null // TODO Figure out how to test
+		val favorites: FavoritesStats? = null, // TODO Figure out how to test
 
-		// val defaultCombinationId: Int? = null // TODO implement combinations support
-		// val combinations: List<Combination>? = null // TODO implement combinations support
+		val defaultCombinationId: Int? = null, // TODO implement combinations support
+		val combinations: List<FetchedVariation>? = null // TODO implement combinations support
 ) {
 
 	data class WholesalePrice(
@@ -103,6 +104,7 @@ data class FetchedProduct(
 
 	data class AttributeValue(
 			val id: Int? = null,
+			val name: String? = null,
 			val alias: AttributeValueAlias? = null,
 			val value: String? = null,
 			val show: AttributeValueLocation? = null
