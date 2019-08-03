@@ -36,7 +36,7 @@ data class UpdatedProduct(
 		val relatedProducts: RelatedProducts? = null,
 
 		val media: ProductMedia? = null
-	) {
+) {
 
 	data class WholesalePrice(
 			val quantity: Int = 0,
@@ -48,13 +48,47 @@ data class UpdatedProduct(
 			val enabledManualTaxes: List<Int> = listOf()
 	)
 
-	data class ProductOption internal constructor(
-			val type: ProductOptionType? = null,
-			val name: String? = null,
-			val choices: List<ProductOptionChoice>? = null,
-			val defaultChoice: Int? = null,
-			val required: Boolean? = false
+	sealed class ProductOption constructor(
+			val type: ProductOptionType? = null
 	) {
+		data class SelectOption(
+				val name: String = "",
+				val choices: List<ProductOptionChoice> = listOf(),
+				val defaultChoice: Int = 0,
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.SELECT)
+
+		data class RadioOption(
+				val name: String = "",
+				val choices: List<ProductOptionChoice> = listOf(),
+				val defaultChoice: Int = 0,
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.RADIO)
+
+		data class CheckboxOption(
+				val name: String = "",
+				val choices: List<ProductOptionChoice> = listOf()
+		) : ProductOption(ProductOptionType.CHECKBOX)
+
+		data class TextFieldOption(
+				val name: String = "",
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.TEXTFIELD)
+
+		data class TextAreaOption(
+				val name: String = "",
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.TEXTAREA)
+
+		data class DateOption(
+				val name: String = "",
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.DATE)
+
+		data class FilesOption(
+				val name: String = "",
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.FILES)
 
 		companion object {
 
@@ -63,8 +97,7 @@ data class UpdatedProduct(
 					choices: List<ProductOptionChoice> = listOf(),
 					defaultChoice: Int = 0,
 					required: Boolean = false
-			) = ProductOption(
-					type = ProductOptionType.SELECT,
+			) = SelectOption(
 					name = name,
 					choices = choices,
 					defaultChoice = defaultChoice,
@@ -76,8 +109,7 @@ data class UpdatedProduct(
 					choices: List<ProductOptionChoice> = listOf(),
 					defaultChoice: Int = 0,
 					required: Boolean = false
-			) = ProductOption(
-					type = ProductOptionType.RADIO,
+			) = RadioOption(
 					name = name,
 					choices = choices,
 					defaultChoice = defaultChoice,
@@ -87,8 +119,7 @@ data class UpdatedProduct(
 			fun createCheckboxOption(
 					name: String = "",
 					choices: List<ProductOptionChoice> = listOf()
-			) = ProductOption(
-					type = ProductOptionType.CHECKBOX,
+			) = CheckboxOption(
 					name = name,
 					choices = choices
 			)
@@ -96,19 +127,15 @@ data class UpdatedProduct(
 			fun createTextFieldOption(
 					name: String = "",
 					required: Boolean = false
-			) = ProductOption(
-					type = ProductOptionType.TEXTFIELD,
+			) = TextFieldOption(
 					name = name,
-					choices = null,
-					defaultChoice = null,
 					required = required
 			)
 
 			fun createTextAreaOption(
 					name: String = "",
 					required: Boolean = false
-			) = ProductOption(
-					type = ProductOptionType.TEXTAREA,
+			) = TextAreaOption(
 					name = name,
 					required = required
 			)
@@ -116,8 +143,7 @@ data class UpdatedProduct(
 			fun createDateOption(
 					name: String = "",
 					required: Boolean = false
-			) = ProductOption(
-					type = ProductOptionType.DATE,
+			) = DateOption(
 					name = name,
 					required = required
 			)
@@ -125,8 +151,7 @@ data class UpdatedProduct(
 			fun createFilesOption(
 					name: String = "",
 					required: Boolean = false
-			) = ProductOption(
-					type = ProductOptionType.FILES,
+			) = FilesOption(
 					name = name,
 					required = required
 			)

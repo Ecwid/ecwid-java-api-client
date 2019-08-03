@@ -80,13 +80,49 @@ data class FetchedProduct(
 			val enabledManualTaxes: List<Int> = listOf()
 	)
 
-	data class ProductOption(
-			val type: ProductOptionType? = null,
-			val name: String? = null,
-			val choices: List<ProductOptionChoice>? = null,
-			val defaultChoice: Int? = null,
-			val required: Boolean? = null
-	)
+	sealed class ProductOption(
+			val type: ProductOptionType? = null
+	) {
+
+		data class SelectOption(
+				val name: String = "",
+				val choices: List<ProductOptionChoice> = listOf(),
+				val defaultChoice: Int = 0,
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.SELECT)
+
+		data class RadioOption(
+				val name: String = "",
+				val choices: List<ProductOptionChoice> = listOf(),
+				val defaultChoice: Int = 0,
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.RADIO)
+
+		data class CheckboxOption(
+				val name: String = "",
+				val choices: List<ProductOptionChoice> = listOf()
+		) : ProductOption(ProductOptionType.CHECKBOX)
+
+		data class TextFieldOption(
+				val name: String = "",
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.TEXTFIELD)
+
+		data class TextAreaOption(
+				val name: String = "",
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.TEXTAREA)
+
+		data class DateOption(
+				val name: String = "",
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.DATE)
+
+		data class FilesOption(
+				val name: String = "",
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.FILES)
+	}
 
 	data class ProductOptionChoice(
 			val text: String = "",
