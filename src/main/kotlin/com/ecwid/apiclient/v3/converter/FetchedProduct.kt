@@ -46,11 +46,52 @@ private fun FetchedProduct.WholesalePrice.toUpdated() = UpdatedProduct.Wholesale
 		price = price
 )
 
-private fun FetchedProduct.ProductOption.toUpdated() = UpdatedProduct.ProductOption(
-		type = type,
+private fun FetchedProduct.ProductOption.toUpdated() = when (this) {
+	is FetchedProduct.ProductOption.SelectOption -> toUpdated()
+	is FetchedProduct.ProductOption.RadioOption -> toUpdated()
+	is FetchedProduct.ProductOption.CheckboxOption -> toUpdated()
+	is FetchedProduct.ProductOption.TextFieldOption -> toUpdated()
+	is FetchedProduct.ProductOption.TextAreaOption -> toUpdated()
+	is FetchedProduct.ProductOption.DateOption -> toUpdated()
+	is FetchedProduct.ProductOption.FilesOption -> toUpdated()
+}
+
+private fun FetchedProduct.ProductOption.SelectOption.toUpdated() =  UpdatedProduct.ProductOption.SelectOption(
 		name = name,
-		choices = choices?.map { it.toUpdated() },
+		choices = choices.map { it.toUpdated() },
 		defaultChoice = defaultChoice,
+		required = required
+)
+
+private fun FetchedProduct.ProductOption.RadioOption.toUpdated() = UpdatedProduct.ProductOption.RadioOption(
+		name = name,
+		choices = choices.map { it.toUpdated() },
+		defaultChoice = defaultChoice,
+		required = required
+)
+
+private fun FetchedProduct.ProductOption.CheckboxOption.toUpdated() = UpdatedProduct.ProductOption.CheckboxOption(
+		name = name,
+		choices = choices.map { it.toUpdated() }
+)
+
+private fun FetchedProduct.ProductOption.TextFieldOption.toUpdated() = UpdatedProduct.ProductOption.TextFieldOption(
+		name = name,
+		required = required
+)
+
+private fun FetchedProduct.ProductOption.TextAreaOption.toUpdated() = UpdatedProduct.ProductOption.TextAreaOption(
+		name = name,
+		required = required
+)
+
+private fun FetchedProduct.ProductOption.DateOption.toUpdated() = UpdatedProduct.ProductOption.DateOption(
+		name = name,
+		required = required
+)
+
+private fun FetchedProduct.ProductOption.FilesOption.toUpdated() = UpdatedProduct.ProductOption.FilesOption(
+		name = name,
 		required = required
 )
 
