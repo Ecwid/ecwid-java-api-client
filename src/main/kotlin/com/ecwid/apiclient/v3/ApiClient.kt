@@ -23,7 +23,6 @@ import com.ecwid.apiclient.v3.dto.variation.request.CreateProductVariationReques
 import com.ecwid.apiclient.v3.dto.variation.result.CreateProductVariationResult
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
 import com.ecwid.apiclient.v3.impl.*
-import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 
 class ApiClient private constructor(
 		productsApiClient: ProductsApiClient,
@@ -48,9 +47,8 @@ class ApiClient private constructor(
 		fun create(apiServerDomain: ApiServerDomain,
 				   storeCredentials: ApiStoreCredentials,
 				   loggingSettings: LoggingSettings = LoggingSettings(),
-				   jsonTransformer: JsonTransformer,
 				   httpTransport: HttpTransport): ApiClient {
-			val apiClientHelper = ApiClientHelper(apiServerDomain, storeCredentials, loggingSettings, jsonTransformer, httpTransport)
+			val apiClientHelper = ApiClientHelper(apiServerDomain, storeCredentials, loggingSettings, httpTransport)
 
 			return ApiClient(
 					ProductsApiClientImpl(apiClientHelper),
