@@ -22,7 +22,7 @@ import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypeDeleteRequest
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypesGetAllRequest
 import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
 import com.ecwid.apiclient.v3.httptransport.impl.ApacheCommonsHttpClientTransport
-import com.ecwid.apiclient.v3.jsontransformer.impl.GsonJsonTransformer
+import com.ecwid.apiclient.v3.jsontransformer.GsonJsonTransformer
 import com.ecwid.apiclient.v3.util.PropertiesLoader
 import org.junit.jupiter.api.Assertions
 import java.nio.file.Path
@@ -33,7 +33,6 @@ abstract class BaseEntityTest {
 	protected lateinit var apiClient: ApiClient
 
 	protected open fun beforeEach() {
-		val jsonTransformer = GsonJsonTransformer()
 		apiClient = ApiClient.create(
 				apiServerDomain = ApiServerDomain(),
 				storeCredentials = ApiStoreCredentials(
@@ -44,7 +43,6 @@ abstract class BaseEntityTest {
 						logRequestBody = true,
 						logSuccessfulResponseBody = true
 				),
-				jsonTransformer = jsonTransformer,
 				httpTransport = ApacheCommonsHttpClientTransport()
 		)
 	}

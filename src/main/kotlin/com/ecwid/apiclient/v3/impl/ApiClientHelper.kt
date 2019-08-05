@@ -9,7 +9,7 @@ import com.ecwid.apiclient.v3.dto.EcwidApiError
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.httptransport.*
-import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
+import com.ecwid.apiclient.v3.jsontransformer.GsonJsonTransformer
 import java.io.ByteArrayInputStream
 import java.io.FileInputStream
 import java.net.URI
@@ -24,11 +24,12 @@ internal class ApiClientHelper(
 		private val apiServerDomain: ApiServerDomain,
 		private val storeCredentials: ApiStoreCredentials,
 		private val loggingSettings: LoggingSettings,
-		internal val jsonTransformer: JsonTransformer,
 		private val httpTransport: HttpTransport
 ) {
 
 	private val log = Logger.getLogger(this::class.java.name)
+
+	internal val jsonTransformer = GsonJsonTransformer()
 
 	inline fun <reified V> makeRequest(
 			request: ApiRequest
@@ -277,7 +278,7 @@ private fun Map<String, String>.dumpToString(): String {
 
 private fun ByteArray.asString() = String(this, Charsets.UTF_8)
 
-private fun HttpBody.prepare(jsonTransformer: JsonTransformer): TransportHttpBody {
+private fun HttpBody.prepare(jsonTransformer: GsonJsonTransformer): TransportHttpBody {
 	return when (this) {
 		HttpBody.EmptyBody -> TransportHttpBody.EmptyBody
 		is HttpBody.JsonBody -> {
