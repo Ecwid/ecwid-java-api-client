@@ -7,8 +7,11 @@ fun FetchedCategory.toUpdated(): UpdatedCategory {
 	return UpdatedCategory(
 			parentId = parentId,
 			orderBy = orderBy,
+			isSampleCategory = isSampleCategory,
 			name = name,
+			nameTranslated = nameTranslated,
 			description = description,
+			descriptionTranslated = descriptionTranslated,
 			enabled = enabled,
 			productIds = productIds
 	)

@@ -7,6 +7,7 @@ data class FetchedCategory(
 		val parentId: Int? = null,
 		val orderBy: Int? = null,
 		val name: String = "",
+		val isSampleCategory: Boolean? = null,
 		val nameTranslated: LocalizedValueMap? = null,
 		val description: String? = null,
 		val descriptionTranslated: LocalizedValueMap? = null,
