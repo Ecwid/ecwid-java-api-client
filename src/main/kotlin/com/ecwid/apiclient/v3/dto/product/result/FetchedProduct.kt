@@ -9,7 +9,7 @@ data class FetchedProduct(
 		val name: String = "",
 		val description: String? = null,
 		val sku: String,
-		val isSampleProduct: Boolean? = null, // TODO Figure out how to test
+		val isSampleProduct: Boolean? = null,
 		val url: String? = null,
 
 		val created: Date = Date(),
