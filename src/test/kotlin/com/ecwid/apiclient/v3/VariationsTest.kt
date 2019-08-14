@@ -82,6 +82,6 @@ private fun generateProductSelectOption(name: String, values: List<String>): Upd
 
 private fun generateProductOptionChoice(value: String) = UpdatedProduct.ProductOptionChoice(
 		text = value,
-		priceModifier = randomModifier(),
+		priceModifier = 5.0,
 		priceModifierType = randomEnumValue()
 )
