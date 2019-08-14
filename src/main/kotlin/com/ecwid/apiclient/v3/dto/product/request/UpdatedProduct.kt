@@ -67,7 +67,8 @@ data class UpdatedProduct(
 
 		data class CheckboxOption(
 				val name: String = "",
-				val choices: List<ProductOptionChoice> = listOf()
+				val choices: List<ProductOptionChoice> = listOf(),
+				val required: Boolean = false
 		) : ProductOption(ProductOptionType.CHECKBOX)
 
 		data class TextFieldOption(

@@ -1,21 +1,28 @@
 package com.ecwid.apiclient.v3.jsontransformer
 
-import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
-import com.ecwid.apiclient.v3.jsontransformer.typeadapters.ProductOptionDeserializer
+import com.ecwid.apiclient.v3.jsontransformer.typeadapters.PolymorphicDeserializer
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParseException
 
-class GsonJsonTransformer {
+class GsonJsonTransformer(
+		polymorphicTypes: Set<PolymorphicType<*>>
+) : AbstractJsonTransformer(polymorphicTypes) {
 
-	private val gson = GsonBuilder()
-			.setDateFormat("yyyy-MM-dd HH:mm:ss z")
-			.registerTypeAdapter(FetchedProduct.ProductOption::class.java, ProductOptionDeserializer())
-			.create()
+	private val gson: Gson
 
-	fun serialize(src: Any?): String = gson.toJson(src)
+	init {
+		val gsonBuilder = GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss z")
+		polymorphicTypes.forEach { polymorphType ->
+			gsonBuilder.registerTypeAdapter(polymorphType.rootClass, PolymorphicDeserializer(polymorphType))
+		}
+		gson = gsonBuilder.create()
+	}
 
-	fun <V> deserialize(json: String, clazz: Class<V>): V? {
+	override fun serialize(src: Any?): String = gson.toJson(src)
+
+	override fun <V> deserialize(json: String, clazz: Class<V>): V? {
 		try {
 			return gson.fromJson(json, clazz)
 		} catch (e: JsonParseException) {

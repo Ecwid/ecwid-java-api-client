@@ -3,11 +3,11 @@ package com.ecwid.apiclient.v3.dto.batch.result
 import com.ecwid.apiclient.v3.dto.EcwidApiError
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.impl.TypedBatchResponse
-import com.ecwid.apiclient.v3.jsontransformer.GsonJsonTransformer
+import com.ecwid.apiclient.v3.jsontransformer.AbstractJsonTransformer
 
 class GetTypedBatchResult(
         escapedBatchResult: GetEscapedBatchResult,
-        jsonTransformer: GsonJsonTransformer
+        jsonTransformer: AbstractJsonTransformer
 ) {
 
     val status: BatchStatus = escapedBatchResult.status
@@ -18,7 +18,7 @@ class GetTypedBatchResult(
 
 class TypedSingleBatchResponse(
         escapedSingleBatchResponse: EscapedSingleBatchResponse,
-        private val jsonTransformer: GsonJsonTransformer
+        private val jsonTransformer: AbstractJsonTransformer
 ) {
 
     val id: String = escapedSingleBatchResponse.id
