@@ -1158,7 +1158,9 @@ private fun UpdatedProduct.AttributeValue.cleanupForComparison(attributeValue: U
 			// Id is not used for BRAND/UPC attributes and can be used for custom attributes 
 			id = if (attributeValue?.alias != null) attributeValue.id else null,
 			// Alias is write only field
-			alias = attributeValue?.alias
+			alias = attributeValue?.alias,
+			// We do not have to send name to create attribute value, but it will present be in response, so ignore it
+			name = null
 	)
 }
 
