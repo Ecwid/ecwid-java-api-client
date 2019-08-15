@@ -7,7 +7,7 @@ import java.net.URLEncoder
 
 private val UTF_CHARSET = Charsets.UTF_8.toString()
 
-data class CreateBatchRequest(
+data class CreateBatchRequestWithIds(
 		val requests: Map<String, ApiRequest>
 ) : ApiRequest {
 
@@ -21,6 +21,18 @@ data class CreateBatchRequest(
 	)
 }
 
+data class CreateBatchRequest(
+		val requests: List<ApiRequest>
+) : ApiRequest {
+
+	override fun toRequestInfo() = RequestInfo.createPostRequest(
+			endpoint = "batch",
+			httpBody = HttpBody.JsonBody(
+					obj = requests.map(SingleBatchRequest.Companion::create)
+			)
+	)
+}
+
 @Suppress("unused")
 private class SingleBatchRequest private constructor(
 		val id: String?,
@@ -30,7 +42,12 @@ private class SingleBatchRequest private constructor(
 ) {
 
 	companion object {
-		internal fun create(id: String, apiRequest: ApiRequest): SingleBatchRequest {
+
+		internal fun create(apiRequest: ApiRequest): SingleBatchRequest {
+			return create(null, apiRequest)
+		}
+
+		internal fun create(id: String?, apiRequest: ApiRequest): SingleBatchRequest {
 			val requestInfo = apiRequest.toRequestInfo()
 			val queryString = buildQueryString(requestInfo.params)
 			return SingleBatchRequest(

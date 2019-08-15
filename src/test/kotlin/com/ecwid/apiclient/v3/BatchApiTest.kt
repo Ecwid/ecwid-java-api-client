@@ -1,7 +1,7 @@
 package com.ecwid.apiclient.v3
 
-import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
-import com.ecwid.apiclient.v3.dto.batch.request.GetTypedBatchRequest
+import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequestWithIds
+import com.ecwid.apiclient.v3.dto.batch.request.GetEscapedBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.result.BatchStatus
 import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest
@@ -36,7 +36,7 @@ class BatchApiTest : BaseEntityTest() {
 		)
 
 		val createProductBatch = apiClient.createBatch(
-				CreateBatchRequest(
+				CreateBatchRequestWithIds(
 						requests = mapOf(
 								"test_product" to productCreateRequest
 						)
@@ -46,7 +46,7 @@ class BatchApiTest : BaseEntityTest() {
 		waitForProductCount(productSearchRequest, 1)
 
 		val createProductBatchResult = apiClient.getTypedBatch(
-				GetTypedBatchRequest(
+				GetEscapedBatchRequest(
 						ticket = createProductBatch.ticket
 				)
 		)
@@ -66,7 +66,7 @@ class BatchApiTest : BaseEntityTest() {
 
 
 		val searchProductBatch = apiClient.createBatch(
-				CreateBatchRequest(
+				CreateBatchRequestWithIds(
 						requests = mapOf(
 								"search_product" to productSearchRequest
 						)
@@ -77,7 +77,7 @@ class BatchApiTest : BaseEntityTest() {
 		awaitBatchExecution(searchProductBatch.ticket)
 
 		val searchProductBatchResult = apiClient.getTypedBatch(
-				GetTypedBatchRequest(
+				GetEscapedBatchRequest(
 						ticket = searchProductBatch.ticket
 				)
 		)
@@ -100,7 +100,7 @@ class BatchApiTest : BaseEntityTest() {
 		var tries = 0
 
 		do {
-			val batchResult = apiClient.getTypedBatch(GetTypedBatchRequest(ticket = ticket))
+			val batchResult = apiClient.getTypedBatch(GetEscapedBatchRequest(ticket = ticket))
 			if (batchResult.status == BatchStatus.COMPLETED) {
 				return
 			}
