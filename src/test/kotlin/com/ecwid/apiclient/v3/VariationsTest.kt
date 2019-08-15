@@ -23,8 +23,10 @@ class VariationsTest : BaseEntityTest() {
 	@Test
 	fun `Create product, add combo and fetch product`() {
 		// Create one product
+		val productPrice = randomPrice()
 		val productCreateRequest = ProductCreateRequest(
 				newProduct = UpdatedProduct(
+						price = productPrice,
 						name = "Product ${randomAlphanumeric(8)}",
 						sku = "testVariations",
 						options = listOf(
@@ -38,8 +40,8 @@ class VariationsTest : BaseEntityTest() {
 		Assertions.assertTrue(newProductId > 0)
 
 		val testVariationSku = "testVariation"
-		val testVariationPrice = 90.0
-		val testVariationWeight = 5.5
+		val testVariationPrice = randomPrice()
+		val testVariationWeight = randomWeight()
 		val createProductVariationRequest = CreateProductVariationRequest(
 				productId = newProductId,
 				newVariaion = UpdatedVariation(
@@ -82,6 +84,6 @@ private fun generateProductSelectOption(name: String, values: List<String>): Upd
 
 private fun generateProductOptionChoice(value: String) = UpdatedProduct.ProductOptionChoice(
 		text = value,
-		priceModifier = 5.0,
+		priceModifier = randomModifier(),
 		priceModifierType = randomEnumValue()
 )
