@@ -6,7 +6,9 @@ import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 fun FetchedProduct.toUpdated(): UpdatedProduct {
 	return UpdatedProduct(
 			name = name,
+			nameTranslated = nameTranslated,
 			description = description,
+			descriptionTranslated = descriptionTranslated,
 			sku = sku,
 
 			enabled = enabled,
@@ -58,6 +60,7 @@ private fun FetchedProduct.ProductOption.toUpdated() = when (this) {
 
 private fun FetchedProduct.ProductOption.SelectOption.toUpdated() =  UpdatedProduct.ProductOption.SelectOption(
 		name = name,
+		nameTranslated = nameTranslated,
 		choices = choices.map { it.toUpdated() },
 		defaultChoice = defaultChoice,
 		required = required
@@ -65,6 +68,7 @@ private fun FetchedProduct.ProductOption.SelectOption.toUpdated() =  UpdatedProd
 
 private fun FetchedProduct.ProductOption.RadioOption.toUpdated() = UpdatedProduct.ProductOption.RadioOption(
 		name = name,
+		nameTranslated = nameTranslated,
 		choices = choices.map { it.toUpdated() },
 		defaultChoice = defaultChoice,
 		required = required
@@ -72,31 +76,37 @@ private fun FetchedProduct.ProductOption.RadioOption.toUpdated() = UpdatedProduc
 
 private fun FetchedProduct.ProductOption.CheckboxOption.toUpdated() = UpdatedProduct.ProductOption.CheckboxOption(
 		name = name,
+		nameTranslated = nameTranslated,
 		choices = choices.map { it.toUpdated() }
 )
 
 private fun FetchedProduct.ProductOption.TextFieldOption.toUpdated() = UpdatedProduct.ProductOption.TextFieldOption(
 		name = name,
+		nameTranslated = nameTranslated,
 		required = required
 )
 
 private fun FetchedProduct.ProductOption.TextAreaOption.toUpdated() = UpdatedProduct.ProductOption.TextAreaOption(
 		name = name,
+		nameTranslated = nameTranslated,
 		required = required
 )
 
 private fun FetchedProduct.ProductOption.DateOption.toUpdated() = UpdatedProduct.ProductOption.DateOption(
 		name = name,
+		nameTranslated = nameTranslated,
 		required = required
 )
 
 private fun FetchedProduct.ProductOption.FilesOption.toUpdated() = UpdatedProduct.ProductOption.FilesOption(
 		name = name,
+		nameTranslated = nameTranslated,
 		required = required
 )
 
 private fun FetchedProduct.ProductOptionChoice.toUpdated() = UpdatedProduct.ProductOptionChoice(
 		text = text,
+		textTranslated = textTranslated,
 		priceModifier = priceModifier,
 		priceModifierType = priceModifierType
 )

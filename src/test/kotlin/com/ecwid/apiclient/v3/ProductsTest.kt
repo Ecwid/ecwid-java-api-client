@@ -4,33 +4,27 @@ import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.UploadFileData
 import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
 import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
-import com.ecwid.apiclient.v3.dto.product.request.ProductFilesDeleteRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductFileDeleteRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductFileDownloadRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductFileUpdateRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductFileUploadRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductGalleryImagesDeleteRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductGalleryImageDeleteRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductGalleryImageUploadRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductImageDeleteRequest
-import com.ecwid.apiclient.v3.dto.product.request.DeletedProductsSearchRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest.*
-import com.ecwid.apiclient.v3.dto.product.enums.*
+import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
+import com.ecwid.apiclient.v3.dto.product.enums.PriceModifierType
+import com.ecwid.apiclient.v3.dto.product.enums.ShippingSettingsType
 import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest.InventoryAdjustment
+import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest.*
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct.*
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.*
-import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import java.io.FileInputStream
 import java.nio.file.Files
 import java.util.*
 
 
-class ProductsTest: BaseEntityTest() {
+class ProductsTest : BaseEntityTest() {
 
 	@BeforeEach
 	override fun beforeEach() {
@@ -348,10 +342,10 @@ class ProductsTest: BaseEntityTest() {
 		// Create some products
 		for (i in 1..3) {
 			val productCreateRequest = ProductCreateRequest(newProduct =
-				UpdatedProduct(
-						name = "Product $testName " + randomAlphanumeric(8),
-						sku = "$testName$i"
-				)
+			UpdatedProduct(
+					name = "Product $testName " + randomAlphanumeric(8),
+					sku = "$testName$i"
+			)
 			)
 			val productCreateResult = apiClient.createProduct(productCreateRequest)
 			assertTrue(productCreateResult.id > 0)
@@ -421,9 +415,12 @@ class ProductsTest: BaseEntityTest() {
 				productDetails2.toUpdated().cleanupForComparison(productCreateRequest)
 		)
 		assertEquals(3, productDetails2.categories?.size)
-		assertTrue(productDetails2.categories?.contains(FetchedProduct.CategoryInfo(id = categoryCreateResult1.id, enabled = true)) ?: false)
-		assertTrue(productDetails2.categories?.contains(FetchedProduct.CategoryInfo(id = categoryCreateResult2.id, enabled = true)) ?: false)
-		assertTrue(productDetails2.categories?.contains(FetchedProduct.CategoryInfo(id = categoryCreateResult3.id, enabled = true)) ?: false)
+		assertTrue(productDetails2.categories?.contains(FetchedProduct.CategoryInfo(id = categoryCreateResult1.id, enabled = true))
+				?: false)
+		assertTrue(productDetails2.categories?.contains(FetchedProduct.CategoryInfo(id = categoryCreateResult2.id, enabled = true))
+				?: false)
+		assertTrue(productDetails2.categories?.contains(FetchedProduct.CategoryInfo(id = categoryCreateResult3.id, enabled = true))
+				?: false)
 
 		// Deleting product
 		val productDeleteRequest = ProductDeleteRequest(productId = productDetails1.id)
@@ -963,7 +960,13 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 	val basePrice = randomPrice()
 	return UpdatedProduct(
 			name = "Product " + randomAlphanumeric(8),
+			nameTranslated = LocalizedValueMap(
+					"ru" to "Продукт " + randomAlphanumeric(8)
+			),
 			description = "Description " + randomAlphanumeric(16),
+			descriptionTranslated = LocalizedValueMap(
+					"ru" to "Описание " + randomAlphanumeric(16)
+			),
 			sku = "SKU " + randomAlphanumeric(8),
 
 			enabled = randomBoolean(),
@@ -1020,6 +1023,9 @@ private fun generateProductSelectOption(): UpdatedProduct.ProductOption {
 	)
 	return ProductOption.createSelectOption(
 			name = "Option " + randomAlphanumeric(8),
+			nameTranslated = LocalizedValueMap(
+					"ru" to "Опция " + randomAlphanumeric(8)
+			),
 			choices = choices,
 			defaultChoice = randomIndex(choices),
 			required = randomBoolean()
@@ -1034,6 +1040,9 @@ private fun generateProductRadioOption(): UpdatedProduct.ProductOption {
 	)
 	return ProductOption.createRadioOption(
 			name = "Option " + randomAlphanumeric(8),
+			nameTranslated = LocalizedValueMap(
+					"ru" to "Опция " + randomAlphanumeric(8)
+			),
 			choices = choices,
 			defaultChoice = randomIndex(choices),
 			required = randomBoolean()
@@ -1042,6 +1051,9 @@ private fun generateProductRadioOption(): UpdatedProduct.ProductOption {
 
 private fun generateProductCheckboxOption() = ProductOption.createCheckboxOption(
 		name = "Option " + randomAlphanumeric(8),
+		nameTranslated = LocalizedValueMap(
+				"ru" to "Опция " + randomAlphanumeric(8)
+		),
 		choices = listOf(
 				generateProductOptionChoice(),
 				generateProductOptionChoice(),
@@ -1051,26 +1063,41 @@ private fun generateProductCheckboxOption() = ProductOption.createCheckboxOption
 
 private fun generateProductTextFieldOption() = ProductOption.createTextFieldOption(
 		name = "Option " + randomAlphanumeric(8),
+		nameTranslated = LocalizedValueMap(
+				"ru" to "Опция " + randomAlphanumeric(8)
+		),
 		required = randomBoolean()
 )
 
 private fun generateProductTextAreaOption() = ProductOption.createTextAreaOption(
 		name = "Option " + randomAlphanumeric(8),
+		nameTranslated = LocalizedValueMap(
+				"ru" to "Опция " + randomAlphanumeric(8)
+		),
 		required = randomBoolean()
 )
 
 private fun generateProductDateOption() = ProductOption.createDateOption(
 		name = "Option " + randomAlphanumeric(8),
+		nameTranslated = LocalizedValueMap(
+				"ru" to "Опция " + randomAlphanumeric(8)
+		),
 		required = randomBoolean()
 )
 
 private fun generateProductFilesOption() = ProductOption.createFilesOption(
 		name = "Option " + randomAlphanumeric(8),
+		nameTranslated = LocalizedValueMap(
+				"ru" to "Опция " + randomAlphanumeric(8)
+		),
 		required = randomBoolean()
 )
 
 private fun generateProductOptionChoice() = ProductOptionChoice(
 		text = "Option choice " + randomAlphanumeric(8),
+		textTranslated = LocalizedValueMap(
+				"ru" to "Выбор опции " + randomAlphanumeric(8)
+		),
 		priceModifier = randomModifier(),
 		priceModifierType = randomEnumValue<PriceModifierType>()
 )
