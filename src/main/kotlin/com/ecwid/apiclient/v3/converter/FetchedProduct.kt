@@ -32,6 +32,8 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 			productClassId = productClassId,
 			attributes = attributes?.map(FetchedProduct.AttributeValue::toUpdated),
 
+			isSampleProduct = isSampleProduct,
+
 			seoTitle = seoTitle,
 			seoDescription = seoDescription,
 
