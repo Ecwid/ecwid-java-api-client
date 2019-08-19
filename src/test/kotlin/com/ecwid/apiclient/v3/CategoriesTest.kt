@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.UploadFileData
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest.ParentCategory
 import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
+import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.ecwid.apiclient.v3.exception.EcwidApiException
@@ -456,11 +457,11 @@ private fun generateTestCategory(
 			parentId = parentCategoryId,
 			orderBy = 1,
 			name = "Category " + randomAlphanumeric(8),
-			nameTranslated = mapOf(
+			nameTranslated = LocalizedValueMap(
 					"ru" to "Категория " + randomAlphanumeric(8)
 			),
 			description = "Description " + randomAlphanumeric(16),
-			descriptionTranslated = mapOf(
+			descriptionTranslated = LocalizedValueMap(
 					"ru" to "Описание " + randomAlphanumeric(16)
 			),
 			enabled = enabled,

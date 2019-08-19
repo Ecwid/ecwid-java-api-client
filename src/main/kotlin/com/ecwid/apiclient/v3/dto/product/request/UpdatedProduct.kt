@@ -1,10 +1,13 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
+import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.*
 
 data class UpdatedProduct(
 		val name: String? = null,
+		val nameTranslated: LocalizedValueMap? = null,
 		val description: String? = null,
+		val descriptionTranslated: LocalizedValueMap? = null,
 		val sku: String? = null,
 
 		val enabled: Boolean? = null,
@@ -53,6 +56,7 @@ data class UpdatedProduct(
 	) {
 		data class SelectOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val choices: List<ProductOptionChoice> = listOf(),
 				val defaultChoice: Int = 0,
 				val required: Boolean = false
@@ -60,6 +64,7 @@ data class UpdatedProduct(
 
 		data class RadioOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val choices: List<ProductOptionChoice> = listOf(),
 				val defaultChoice: Int = 0,
 				val required: Boolean = false
@@ -67,27 +72,32 @@ data class UpdatedProduct(
 
 		data class CheckboxOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val choices: List<ProductOptionChoice> = listOf(),
 				val required: Boolean = false
 		) : ProductOption(ProductOptionType.CHECKBOX)
 
 		data class TextFieldOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val required: Boolean = false
 		) : ProductOption(ProductOptionType.TEXTFIELD)
 
 		data class TextAreaOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val required: Boolean = false
 		) : ProductOption(ProductOptionType.TEXTAREA)
 
 		data class DateOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val required: Boolean = false
 		) : ProductOption(ProductOptionType.DATE)
 
 		data class FilesOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val required: Boolean = false
 		) : ProductOption(ProductOptionType.FILES)
 
@@ -95,11 +105,13 @@ data class UpdatedProduct(
 
 			fun createSelectOption(
 					name: String = "",
+					nameTranslated: LocalizedValueMap? = null,
 					choices: List<ProductOptionChoice> = listOf(),
 					defaultChoice: Int = 0,
 					required: Boolean = false
 			) = SelectOption(
 					name = name,
+					nameTranslated = nameTranslated,
 					choices = choices,
 					defaultChoice = defaultChoice,
 					required = required
@@ -107,11 +119,13 @@ data class UpdatedProduct(
 
 			fun createRadioOption(
 					name: String = "",
+					nameTranslated: LocalizedValueMap? = null,
 					choices: List<ProductOptionChoice> = listOf(),
 					defaultChoice: Int = 0,
 					required: Boolean = false
 			) = RadioOption(
 					name = name,
+					nameTranslated = nameTranslated,
 					choices = choices,
 					defaultChoice = defaultChoice,
 					required = required
@@ -119,41 +133,51 @@ data class UpdatedProduct(
 
 			fun createCheckboxOption(
 					name: String = "",
+					nameTranslated: LocalizedValueMap? = null,
 					choices: List<ProductOptionChoice> = listOf()
 			) = CheckboxOption(
 					name = name,
+					nameTranslated = nameTranslated,
 					choices = choices
 			)
 
 			fun createTextFieldOption(
 					name: String = "",
+					nameTranslated: LocalizedValueMap? = null,
 					required: Boolean = false
 			) = TextFieldOption(
 					name = name,
+					nameTranslated = nameTranslated,
 					required = required
 			)
 
 			fun createTextAreaOption(
 					name: String = "",
+					nameTranslated: LocalizedValueMap? = null,
 					required: Boolean = false
 			) = TextAreaOption(
 					name = name,
+					nameTranslated = nameTranslated,
 					required = required
 			)
 
 			fun createDateOption(
 					name: String = "",
+					nameTranslated: LocalizedValueMap? = null,
 					required: Boolean = false
 			) = DateOption(
 					name = name,
+					nameTranslated = nameTranslated,
 					required = required
 			)
 
 			fun createFilesOption(
 					name: String = "",
+					nameTranslated: LocalizedValueMap? = null,
 					required: Boolean = false
 			) = FilesOption(
 					name = name,
+					nameTranslated = nameTranslated,
 					required = required
 			)
 
@@ -163,6 +187,7 @@ data class UpdatedProduct(
 
 	data class ProductOptionChoice(
 			val text: String = "",
+			val textTranslated: LocalizedValueMap? = null,
 			val priceModifier: Double = 0.0,
 			val priceModifierType: PriceModifierType = PriceModifierType.ABSOLUTE
 	)

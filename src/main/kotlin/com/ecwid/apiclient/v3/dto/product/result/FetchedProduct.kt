@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.product.result
 
+import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.*
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 import java.util.*
@@ -7,7 +8,9 @@ import java.util.*
 data class FetchedProduct(
 		val id: Int = 0,
 		val name: String = "",
+		val nameTranslated: LocalizedValueMap? = null,
 		val description: String? = null,
+		val descriptionTranslated: LocalizedValueMap? = null,
 		val sku: String,
 		val isSampleProduct: Boolean? = null,
 		val url: String? = null,
@@ -20,7 +23,7 @@ data class FetchedProduct(
 		val enabled: Boolean? = null,
 		val quantity: Int? = null,
 		val unlimited: Boolean? = null,
-		val inStock: Boolean? = null, // TODO Figure out how to test
+		val inStock: Boolean? = null,
 		val warningLimit: Int? = null,
 
 		val categoryIds: List<Int>? = null,
@@ -86,6 +89,7 @@ data class FetchedProduct(
 
 		data class SelectOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val choices: List<ProductOptionChoice> = listOf(),
 				val defaultChoice: Int = 0,
 				val required: Boolean = false
@@ -93,6 +97,7 @@ data class FetchedProduct(
 
 		data class RadioOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val choices: List<ProductOptionChoice> = listOf(),
 				val defaultChoice: Int = 0,
 				val required: Boolean = false
@@ -100,32 +105,38 @@ data class FetchedProduct(
 
 		data class CheckboxOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val choices: List<ProductOptionChoice> = listOf()
 		) : ProductOption(ProductOptionType.CHECKBOX)
 
 		data class TextFieldOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val required: Boolean = false
 		) : ProductOption(ProductOptionType.TEXTFIELD)
 
 		data class TextAreaOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val required: Boolean = false
 		) : ProductOption(ProductOptionType.TEXTAREA)
 
 		data class DateOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val required: Boolean = false
 		) : ProductOption(ProductOptionType.DATE)
 
 		data class FilesOption(
 				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
 				val required: Boolean = false
 		) : ProductOption(ProductOptionType.FILES)
 	}
 
 	data class ProductOptionChoice(
 			val text: String = "",
+			val textTranslated: LocalizedValueMap? = null,
 			val priceModifier: Double = 0.0,
 			val priceModifierType: PriceModifierType = PriceModifierType.ABSOLUTE
 	)

@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.variation.result
 
+import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueAlias
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
 
@@ -47,8 +48,8 @@ data class FetchedVariation(
 
 	data class Option(
 			val name: String? = null,
-			val nameTranslated: Map<String, String>? = null,
+			val nameTranslated: LocalizedValueMap? = null,
 			val value: String? = null,
-			val valueTranslated: Map<String, String>? = null
+			val valueTranslated: LocalizedValueMap? = null
 	)
 }
