@@ -38,7 +38,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 			seoDescription = seoDescription,
 
 			options = options?.map(FetchedProduct.ProductOption::toUpdated),
-//			tax: TaxInfo? = null, TODO restore when tax field will be filled
+			tax = tax?.toUpdated(),
 			relatedProducts = relatedProducts?.toUpdated(),
 
 			media = media?.toUpdated()
@@ -153,4 +153,9 @@ fun FetchedProduct.ProductMedia.toUpdated() = UpdatedProduct.ProductMedia(
 private fun FetchedProduct.ProductImage.toUpdated() = UpdatedProduct.ProductImage(
 		id = id,
 		orderBy = orderBy
+)
+
+private fun FetchedProduct.TaxInfo.toUpdated() = UpdatedProduct.TaxInfo(
+		defaultLocationIncludedTaxRate = defaultLocationIncludedTaxRate,
+		enabledManualTaxes = enabledManualTaxes
 )
