@@ -39,11 +39,5 @@ private fun FetchedVariation.AttributeValue.toUpdated() = UpdatedVariation.Attri
 
 private fun FetchedVariation.Option.toUpdated() = UpdatedVariation.Option(
 		name = name,
-		nameTranslated = nameTranslated?.let {
-			HashMap(it)
-		},
-		value = value,
-		valueTranslated = valueTranslated?.let {
-			HashMap(it)
-		}
+		value = value
 )
