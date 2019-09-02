@@ -48,7 +48,6 @@ data class UpdatedProduct(
 	)
 
 	data class TaxInfo(
-			val defaultLocationIncludedTaxRate: Double = 0.0,
 			val enabledManualTaxes: List<Int> = listOf()
 	)
 

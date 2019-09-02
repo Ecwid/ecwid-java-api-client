@@ -38,9 +38,7 @@ data class UpdatedVariation(
 
 	data class Option(
 			val name: String? = null,
-			val nameTranslated: Map<String, String>? = null,
-			val value: String? = null,
-			val valueTranslated: Map<String, String>? = null
+			val value: String? = null
 	)
 }
 

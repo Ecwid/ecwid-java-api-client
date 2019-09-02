@@ -156,6 +156,5 @@ private fun FetchedProduct.ProductImage.toUpdated() = UpdatedProduct.ProductImag
 )
 
 private fun FetchedProduct.TaxInfo.toUpdated() = UpdatedProduct.TaxInfo(
-		defaultLocationIncludedTaxRate = defaultLocationIncludedTaxRate,
 		enabledManualTaxes = enabledManualTaxes
 )
