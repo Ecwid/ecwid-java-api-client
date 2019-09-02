@@ -21,8 +21,14 @@ import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
+import com.ecwid.apiclient.v3.dto.variation.request.ProductVariationImageUploadRequest
 import com.ecwid.apiclient.v3.dto.variation.request.CreateProductVariationRequest
+import com.ecwid.apiclient.v3.dto.variation.request.ProductVariationDetailsRequest
+import com.ecwid.apiclient.v3.dto.variation.request.ProductVariationImageDeleteRequest
+import com.ecwid.apiclient.v3.dto.variation.result.ProductVariationImageUploadResult
 import com.ecwid.apiclient.v3.dto.variation.result.CreateProductVariationResult
+import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
+import com.ecwid.apiclient.v3.dto.variation.result.ProductVariationImageDeleteResult
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
 import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
@@ -196,14 +202,14 @@ interface BatchApiClient {
 // TODO
 interface ProductVariationsApiClient {
 	fun createProductVariation(request: CreateProductVariationRequest): CreateProductVariationResult
-//	fun uploadVariationImage()
+	fun uploadVariationImage(request: ProductVariationImageUploadRequest): ProductVariationImageUploadResult
 //	fun getAllProductVariations()
-//	fun getProductVariation()
+	fun getProductVariation(request: ProductVariationDetailsRequest): FetchedVariation
 //	fun updateProductVariation()
 //	fun deleteProductVariation()
 //	fun deleteAllProductVariations()
 //	fun adjustVariationInventory()
-//	fun deleteVariationImage()
+	fun deleteVariationImage(request: ProductVariationImageDeleteRequest): ProductVariationImageDeleteResult
 }
 
 // Carts
