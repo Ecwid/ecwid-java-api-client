@@ -47,6 +47,7 @@ class VariationsTest : BaseEntityTest() {
 				newVariaion = UpdatedVariation(
 						sku = testVariationSku,
 						quantity = 2,
+						isShippingRequired = false,
 						price = testVariationPrice,
 						weight = testVariationWeight,
 						options = listOf(
