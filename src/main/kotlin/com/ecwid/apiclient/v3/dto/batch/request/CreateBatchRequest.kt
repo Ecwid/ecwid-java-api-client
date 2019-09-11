@@ -8,11 +8,15 @@ import java.net.URLEncoder
 private val UTF_CHARSET = Charsets.UTF_8.toString()
 
 data class CreateBatchRequestWithIds(
-		val requests: Map<String, ApiRequest>
+		val requests: Map<String, ApiRequest>,
+		val stopOnFirstFailure: Boolean = true
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 			endpoint = "batch",
+			params = mapOf(
+					"stopOnFirstFailure" to stopOnFirstFailure.toString()
+			),
 			httpBody = HttpBody.JsonBody(
 					obj = requests.map { (id, request) ->
 						SingleBatchRequest.create(id, request)
@@ -22,11 +26,15 @@ data class CreateBatchRequestWithIds(
 }
 
 data class CreateBatchRequest(
-		val requests: List<ApiRequest>
+		val requests: List<ApiRequest>,
+		val stopOnFirstFailure: Boolean = true
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 			endpoint = "batch",
+			params = mapOf(
+					"stopOnFirstFailure" to stopOnFirstFailure.toString()
+			),
 			httpBody = HttpBody.JsonBody(
 					obj = requests.map(SingleBatchRequest.Companion::create)
 			)
