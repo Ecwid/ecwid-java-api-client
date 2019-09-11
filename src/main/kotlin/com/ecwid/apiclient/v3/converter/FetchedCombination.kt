@@ -19,8 +19,9 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 
 			attributes = attributes?.map(FetchedVariation.AttributeValue::toUpdated),
 
+			options = options?.map(FetchedVariation.Option::toUpdated),
 
-			options = options?.map(FetchedVariation.Option::toUpdated)
+			isShippingRequired = isShippingRequired
 	)
 }
 

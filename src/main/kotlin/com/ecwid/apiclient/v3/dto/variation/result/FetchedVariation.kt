@@ -29,7 +29,9 @@ data class FetchedVariation(
 
 		val weight: Double? = null,
 
-		val attributes: List<AttributeValue>? = null
+		val attributes: List<AttributeValue>? = null,
+
+		val isShippingRequired: Boolean? = null
 
 ) {
 
