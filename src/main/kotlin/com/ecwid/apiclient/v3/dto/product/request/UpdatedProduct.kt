@@ -202,10 +202,8 @@ data class UpdatedProduct(
 
 	data class AttributeValue internal constructor(
 			val id: Int? = null,
-			val name: String? = null,
 			val alias: AttributeValueAlias? = null,
-			val value: String? = null,
-			val show: AttributeValueLocation? = null
+			val value: String? = null
 	) {
 
 		companion object {
@@ -213,21 +211,18 @@ data class UpdatedProduct(
 			fun createBrandAttributeValue(value: String) = AttributeValue(
 					id = null,
 					alias = AttributeValueAlias.BRAND,
-					value = value,
-					show = AttributeValueLocation.DESCR
+					value = value
 			)
 
 			fun createUpcAttributeValue(value: String) = AttributeValue(
 					id = null,
 					alias = AttributeValueAlias.UPC,
-					value = value,
-					show = AttributeValueLocation.DESCR
+					value = value
 			)
 
-			fun createAttributeValue(productAttributeId: Int, value: String, show: AttributeValueLocation) = AttributeValue(
+			fun createAttributeValue(productAttributeId: Int, value: String) = AttributeValue(
 					id = productAttributeId,
-					value = value,
-					show = show
+					value = value
 			)
 
 		}
