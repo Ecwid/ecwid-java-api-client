@@ -25,6 +25,79 @@ class ProductTypesTest: BaseEntityTest() {
 	}
 
 	@Test
+	fun testGeneralProductTypeLifecycle() {
+		val productTypeCreateRequest = ProductTypeCreateRequest(
+				newProductType = UpdatedProductType(
+						name = randomOf("Shirts & Tops", "Books", "Tablet Computers"),
+						attributes = listOf(
+								UpdatedProductType.Attribute(
+										name = "Attribute Upc",
+										type = AttributeType.UPC,
+										show = AttributeDisplayType.DESCR
+								),
+								UpdatedProductType.Attribute(
+										name = "Attribute Brand",
+										type = AttributeType.BRAND,
+										show = AttributeDisplayType.DESCR
+								),
+								UpdatedProductType.Attribute(
+										name = "Attribute Gender",
+										type = AttributeType.GENDER,
+										show = AttributeDisplayType.PRICE
+								),
+								UpdatedProductType.Attribute(
+										name = "Attribute Age Group",
+										type = AttributeType.AGE_GROUP,
+										show = AttributeDisplayType.PRICE
+								),
+								UpdatedProductType.Attribute(
+										name = "Attribute Color",
+										type = AttributeType.COLOR,
+										show = AttributeDisplayType.DESCR
+								),
+								UpdatedProductType.Attribute(
+										name = "Attribute Size",
+										type = AttributeType.SIZE,
+										show = AttributeDisplayType.NOTSHOW
+								),
+								UpdatedProductType.Attribute(
+										name = "Attribute Ebay",
+										type = AttributeType.EBAY,
+										show = AttributeDisplayType.DESCR
+								),
+								UpdatedProductType.Attribute(
+										name = "Attribute Ebay required",
+										type = AttributeType.EBAY_REQUIRED,
+										show = AttributeDisplayType.NOTSHOW
+								),
+								UpdatedProductType.Attribute(
+										name = "Attribute Price Per Unit",
+										type = AttributeType.PRICE_PER_UNIT,
+										show = AttributeDisplayType.DESCR
+								),
+								UpdatedProductType.Attribute(
+										name = "Attribute Units in product",
+										type = AttributeType.UNITS_IN_PRODUCT,
+										show = AttributeDisplayType.NOTSHOW
+								)
+						)
+				)
+		)
+
+		val productTypeCreateResult = apiClient.createProductType(productTypeCreateRequest)
+		assertTrue(productTypeCreateResult.id > 0)
+
+		// Checking that product type was successfully created with necessary parameters
+		val productTypeDetailsRequest = ProductTypeDetailsRequest(productTypeId = productTypeCreateResult.id)
+		val productTypeDetails1 = apiClient.getProductTypeDetails(productTypeDetailsRequest)
+
+		val cleanedDetails = productTypeDetails1.toUpdated()
+				.cleanupAttributeIds()
+
+		assertEquals(productTypeCreateRequest.newProductType, cleanedDetails)
+	}
+
+	@Test
 	fun testProductTypeLifecycle() {
 		// Creating new product type
 		val productTypeCreateRequest = ProductTypeCreateRequest(
