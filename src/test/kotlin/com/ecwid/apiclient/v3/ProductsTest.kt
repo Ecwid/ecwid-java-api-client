@@ -958,14 +958,18 @@ private fun generateTestCategory(parentId: Int? = null): UpdatedCategory {
 
 private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProduct {
 	val basePrice = randomPrice()
+	val enName = "Product " + randomAlphanumeric(8)
+	val enDescription = "Description " + randomAlphanumeric(16)
 	return UpdatedProduct(
-			name = "Product " + randomAlphanumeric(8),
+			name = enName,
 			nameTranslated = LocalizedValueMap(
-					"ru" to "Продукт " + randomAlphanumeric(8)
+					"ru" to "Продукт " + randomAlphanumeric(8),
+					"en" to enName
 			),
-			description = "Description " + randomAlphanumeric(16),
+			description = enDescription,
 			descriptionTranslated = LocalizedValueMap(
-					"ru" to "Описание " + randomAlphanumeric(16)
+					"ru" to "Описание " + randomAlphanumeric(16),
+					"en" to enDescription
 			),
 			sku = "SKU " + randomAlphanumeric(8),
 
@@ -1015,16 +1019,18 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 	)
 }
 
-private fun generateProductSelectOption(): UpdatedProduct.ProductOption {
+private fun generateProductSelectOption(): ProductOption.SelectOption {
 	val choices = listOf(
 			generateProductOptionChoice(),
 			generateProductOptionChoice(),
 			generateProductOptionChoice()
 	)
+	val enName = "Option " + randomAlphanumeric(8)
 	return ProductOption.createSelectOption(
-			name = "Option " + randomAlphanumeric(8),
+			name = enName,
 			nameTranslated = LocalizedValueMap(
-					"ru" to "Опция " + randomAlphanumeric(8)
+					"ru" to "Опция " + randomAlphanumeric(8),
+					"en" to enName
 			),
 			choices = choices,
 			defaultChoice = randomIndex(choices),
@@ -1032,16 +1038,18 @@ private fun generateProductSelectOption(): UpdatedProduct.ProductOption {
 	)
 }
 
-private fun generateProductRadioOption(): UpdatedProduct.ProductOption {
+private fun generateProductRadioOption(): ProductOption.RadioOption {
 	val choices = listOf(
 			generateProductOptionChoice(),
 			generateProductOptionChoice(),
 			generateProductOptionChoice()
 	)
+	val enName = "Option " + randomAlphanumeric(8)
 	return ProductOption.createRadioOption(
-			name = "Option " + randomAlphanumeric(8),
+			name = enName,
 			nameTranslated = LocalizedValueMap(
-					"ru" to "Опция " + randomAlphanumeric(8)
+					"ru" to "Опция " + randomAlphanumeric(8),
+					"en" to enName
 			),
 			choices = choices,
 			defaultChoice = randomIndex(choices),
@@ -1049,58 +1057,83 @@ private fun generateProductRadioOption(): UpdatedProduct.ProductOption {
 	)
 }
 
-private fun generateProductCheckboxOption() = ProductOption.createCheckboxOption(
-		name = "Option " + randomAlphanumeric(8),
-		nameTranslated = LocalizedValueMap(
-				"ru" to "Опция " + randomAlphanumeric(8)
-		),
-		choices = listOf(
-				generateProductOptionChoice(),
-				generateProductOptionChoice(),
-				generateProductOptionChoice()
-		)
-)
+private fun generateProductCheckboxOption(): ProductOption.CheckboxOption {
+	val enName = "Option " + randomAlphanumeric(8)
+	return ProductOption.createCheckboxOption(
+			name = enName,
+			nameTranslated = LocalizedValueMap(
+					"ru" to "Опция " + randomAlphanumeric(8),
+					"en" to enName
+			),
+			choices = listOf(
+					generateProductOptionChoice(),
+					generateProductOptionChoice(),
+					generateProductOptionChoice()
+			)
+	)
+}
 
-private fun generateProductTextFieldOption() = ProductOption.createTextFieldOption(
-		name = "Option " + randomAlphanumeric(8),
-		nameTranslated = LocalizedValueMap(
-				"ru" to "Опция " + randomAlphanumeric(8)
-		),
-		required = randomBoolean()
-)
+private fun generateProductTextFieldOption(): ProductOption.TextFieldOption {
+	val enName = "Option " + randomAlphanumeric(8)
+	return ProductOption.createTextFieldOption(
+			name = enName,
+			nameTranslated = LocalizedValueMap(
+					"ru" to "Опция " + randomAlphanumeric(8),
+					"en" to enName
+			),
+			required = randomBoolean()
+	)
+}
 
-private fun generateProductTextAreaOption() = ProductOption.createTextAreaOption(
-		name = "Option " + randomAlphanumeric(8),
-		nameTranslated = LocalizedValueMap(
-				"ru" to "Опция " + randomAlphanumeric(8)
-		),
-		required = randomBoolean()
-)
+private fun generateProductTextAreaOption(): ProductOption.TextAreaOption {
+	val enName = "Option " + randomAlphanumeric(8)
+	return ProductOption.createTextAreaOption(
+			name = enName,
+			nameTranslated = LocalizedValueMap(
+					"ru" to "Опция " + randomAlphanumeric(8),
+					"en" to enName
+			),
+			required = randomBoolean()
+	)
+}
 
-private fun generateProductDateOption() = ProductOption.createDateOption(
-		name = "Option " + randomAlphanumeric(8),
-		nameTranslated = LocalizedValueMap(
-				"ru" to "Опция " + randomAlphanumeric(8)
-		),
-		required = randomBoolean()
-)
+private fun generateProductDateOption(): ProductOption.DateOption {
+	val enName = "Option " + randomAlphanumeric(8)
 
-private fun generateProductFilesOption() = ProductOption.createFilesOption(
-		name = "Option " + randomAlphanumeric(8),
-		nameTranslated = LocalizedValueMap(
-				"ru" to "Опция " + randomAlphanumeric(8)
-		),
-		required = randomBoolean()
-)
+	return ProductOption.createDateOption(
+			name = enName,
+			nameTranslated = LocalizedValueMap(
+					"ru" to "Опция " + randomAlphanumeric(8),
+					"en" to enName
+			),
+			required = randomBoolean()
+	)
+}
 
-private fun generateProductOptionChoice() = ProductOptionChoice(
-		text = "Option choice " + randomAlphanumeric(8),
-		textTranslated = LocalizedValueMap(
-				"ru" to "Выбор опции " + randomAlphanumeric(8)
-		),
-		priceModifier = randomModifier(),
-		priceModifierType = randomEnumValue<PriceModifierType>()
-)
+private fun generateProductFilesOption(): ProductOption.FilesOption {
+	val enName = "Option " + randomAlphanumeric(8)
+	return ProductOption.createFilesOption(
+			name = enName,
+			nameTranslated = LocalizedValueMap(
+					"ru" to "Опция " + randomAlphanumeric(8),
+					"en" to enName
+			),
+			required = randomBoolean()
+	)
+}
+
+private fun generateProductOptionChoice(): ProductOptionChoice {
+	val enText = "Option choice " + randomAlphanumeric(8)
+	return ProductOptionChoice(
+			text = enText,
+			textTranslated = LocalizedValueMap(
+					"ru" to "Выбор опции " + randomAlphanumeric(8),
+					"en" to enText
+			),
+			priceModifier = randomModifier(),
+			priceModifierType = randomEnumValue<PriceModifierType>()
+	)
+}
 
 fun generateRelatedProducts() = RelatedProducts(
 		productIds = listOf(
