@@ -978,7 +978,7 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 			unlimited = false, // To allow set quantity
 			warningLimit = randomByte(),
 
-			categoryIds = categoryIds,
+			categoryIds = categoryIds.sorted(),
 			defaultCategoryId = categoryIds.firstOrNull(),
 			showOnFrontpage = randomByte(),
 
@@ -1015,7 +1015,11 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 					generateProductFilesOption()
 			),
 //			tax = generateTaxInfo(), // TODO Fill with real tax ids when api client will support it
-			relatedProducts = generateRelatedProducts()
+			relatedProducts = generateRelatedProducts(),
+
+			isSampleProduct = false,
+
+			tax = TaxInfo()
 	)
 }
 
@@ -1209,7 +1213,8 @@ private fun UpdatedProduct.cleanupForComparison(productCreateRequest: ProductCre
 				val attributeValue = productCreateRequest.newProduct.attributes?.get(index)
 				attribute.cleanupForComparison(attributeValue)
 			},
-			media = if (media?.images?.isEmpty() != false) null else media
+			media = if (media?.images?.isEmpty() != false) null else media,
+			categoryIds = categoryIds?.sorted()
 	)
 }
 
