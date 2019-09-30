@@ -11,6 +11,9 @@ class PropertiesLoader {
 
 		init {
 			val resource = PropertiesLoader::class.java.getResourceAsStream("/test.properties")
+			if (resource == null) {
+				throw IllegalStateException("File test.properties not found in test/resources dir. Please copy test/resources/test.properties.sample and configure it")
+			}
 
 			val p = Properties()
 			p.load(resource)
