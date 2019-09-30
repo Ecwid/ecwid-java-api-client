@@ -453,19 +453,25 @@ private fun generateTestCategory(
 		productIds: List<Int> = listOf(),
 		enabled: Boolean = randomBoolean()
 ): UpdatedCategory {
+	val name = "Category " + randomAlphanumeric(8)
+	val description = "Description " + randomAlphanumeric(16)
+
 	return UpdatedCategory(
 			parentId = parentCategoryId,
-			orderBy = 1,
-			name = "Category " + randomAlphanumeric(8),
+			orderBy = 10,
+			name = name,
 			nameTranslated = LocalizedValueMap(
-					"ru" to "Категория " + randomAlphanumeric(8)
+					"ru" to "Категория " + randomAlphanumeric(8),
+					"en" to name
 			),
-			description = "Description " + randomAlphanumeric(16),
+			description = description,
 			descriptionTranslated = LocalizedValueMap(
-					"ru" to "Описание " + randomAlphanumeric(16)
+					"ru" to "Описание " + randomAlphanumeric(16),
+					"en" to description
 			),
 			enabled = enabled,
-			productIds = productIds
+			productIds = productIds,
+			isSampleCategory = false
 	)
 }
 
