@@ -32,10 +32,8 @@ private fun FetchedVariation.WholesalePrice.toUpdated() = UpdatedVariation.Whole
 
 private fun FetchedVariation.AttributeValue.toUpdated() = UpdatedVariation.AttributeValue(
 		id = id,
-		name = name,
 		alias = type,
-		value = value,
-		show = show
+		value = value
 )
 
 private fun FetchedVariation.Option.toUpdated() = UpdatedVariation.Option(

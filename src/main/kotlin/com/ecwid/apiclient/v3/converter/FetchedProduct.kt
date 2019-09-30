@@ -123,10 +123,8 @@ private fun FetchedProduct.ShippingSettings.toUpdated() = UpdatedProduct.Shippin
 
 private fun FetchedProduct.AttributeValue.toUpdated() = UpdatedProduct.AttributeValue(
 		id = id,
-		name = name,
 		alias = type,
-		value = value,
-		show = show
+		value = value
 )
 
 private fun FetchedProduct.RelatedProducts.toUpdated() = UpdatedProduct.RelatedProducts(

@@ -27,10 +27,8 @@ data class UpdatedVariation(
 
 	data class AttributeValue(
 			val id: Int? = null,
-			val name: String? = null,
 			val alias: AttributeValueAlias? = null,
-			val value: String? = null,
-			val show: AttributeValueLocation? = null
+			val value: String? = null
 	)
 
 	data class WholesalePrice(
