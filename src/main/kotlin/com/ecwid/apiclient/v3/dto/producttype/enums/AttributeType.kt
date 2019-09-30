@@ -8,6 +8,8 @@ enum class AttributeType {
 	AGE_GROUP,
 	COLOR,
 	SIZE,
+	EBAY,
+	EBAY_REQUIRED,
 	PRICE_PER_UNIT,
 	UNITS_IN_PRODUCT
 }
