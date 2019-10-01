@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.converter
 
+import com.ecwid.apiclient.v3.dto.product.enums.toAttributeValueAlias
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 
@@ -123,7 +124,7 @@ private fun FetchedProduct.ShippingSettings.toUpdated() = UpdatedProduct.Shippin
 
 private fun FetchedProduct.AttributeValue.toUpdated() = UpdatedProduct.AttributeValue(
 		id = id,
-		alias = type,
+		alias = type?.toAttributeValueAlias(),
 		value = value
 )
 

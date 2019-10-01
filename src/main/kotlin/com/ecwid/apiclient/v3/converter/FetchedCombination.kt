@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.converter
 
+import com.ecwid.apiclient.v3.dto.product.enums.toAttributeValueAlias
 import com.ecwid.apiclient.v3.dto.variation.request.UpdatedVariation
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 
@@ -32,7 +33,7 @@ private fun FetchedVariation.WholesalePrice.toUpdated() = UpdatedVariation.Whole
 
 private fun FetchedVariation.AttributeValue.toUpdated() = UpdatedVariation.AttributeValue(
 		id = id,
-		alias = type,
+		alias = type?.toAttributeValueAlias(),
 		value = value
 )
 
