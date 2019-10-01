@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.product.result
 
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.*
+import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 import java.util.*
 
@@ -152,7 +153,7 @@ data class FetchedProduct(
 	data class AttributeValue(
 			val id: Int? = null,
 			val name: String? = null,
-			val type: AttributeValueAlias? = null,
+			val type: AttributeType? = null,
 			val value: String? = null,
 			val show: AttributeValueLocation? = null
 	)
