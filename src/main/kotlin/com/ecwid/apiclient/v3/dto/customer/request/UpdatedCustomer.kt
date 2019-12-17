@@ -8,8 +8,8 @@ data class UpdatedCustomer(
 		var shippingAddresses: List<ShippingAddress>? = null,
 		var taxId: String? = null,
 		var taxIdValid: Boolean? = null,
-		var taxExempt: Boolean? = null
-) {
+		var taxExempt: Boolean? = null,
+		val acceptMarketing: Boolean? = null) {
 
 	data class BillingPerson(
 			var name: String? = null,

@@ -374,7 +374,8 @@ private fun generateTestCustomerForCreate(customerGroupId: Int?): UpdatedCustome
 			),
 			taxId = randomAlphanumeric(8),
 			taxIdValid = randomBoolean(),
-			taxExempt = randomBoolean()
+			taxExempt = randomBoolean(),
+			acceptMarketing = randomBoolean()
 	)
 }
 
@@ -392,7 +393,8 @@ private fun generateTestCustomerForUpdate(customerGroupId: Int, oldShippingAddre
 			),
 			taxId = randomAlphanumeric(8),
 			taxIdValid = randomBoolean(),
-			taxExempt = randomBoolean()
+			taxExempt = randomBoolean(),
+			acceptMarketing = randomBoolean()
 	)
 }
 

@@ -11,8 +11,8 @@ fun FetchedCustomer.toUpdated(): UpdatedCustomer {
 			shippingAddresses = shippingAddresses?.map(FetchedCustomer.ShippingAddress::toUpdated),
 			taxId = taxId,
 			taxIdValid = taxIdValid,
-			taxExempt = taxExempt
-	)
+			taxExempt = taxExempt,
+			acceptMarketing = acceptMarketing)
 }
 
 fun FetchedCustomer.BillingPerson.toUpdated(): UpdatedCustomer.BillingPerson {
