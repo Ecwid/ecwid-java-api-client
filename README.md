@@ -3,12 +3,10 @@
 Simple example:
 ```
 val apiClient = ApiClient.create(
-		apiServerDomain = ApiServerDomain(
-				host = config.ecwidApiRequestDomain,
-				securePort = config.ecwidApiRequestDomainPort),
+		apiServerDomain = ApiServerDomain(),
 		storeCredentials = ApiStoreCredentials(
-				storeId = account.storeId,
-				apiToken = account.ecwidApiToken),
+				storeId = 1003,
+				apiToken = "secret_mysecuretoken"),
 		httpTransport = ApacheCommonsHttpClientTransport(),
 		jsonTransformerProvider = object : JsonTransformerProvider {
 			override fun build(polymorphicTypes: Set<PolymorphicType<*>>) = GsonJsonTransformer(polymorphicTypes)
@@ -21,12 +19,10 @@ println("api/v3 customer: $customer")
 Batch example:
 ```
 val apiClient = ApiClient.create(
-		apiServerDomain = ApiServerDomain(
-				host = config.ecwidApiRequestDomain,
-				securePort = config.ecwidApiRequestDomainPort),
+		apiServerDomain = ApiServerDomain(),
 		storeCredentials = ApiStoreCredentials(
-				storeId = account.storeId,
-				apiToken = account.ecwidApiToken),
+				storeId = 1003,
+				apiToken = "secret_mysecuretoken"),
 		httpTransport = ApacheCommonsHttpClientTransport(),
 		jsonTransformerProvider = object : JsonTransformerProvider {
 			override fun build(polymorphicTypes: Set<PolymorphicType<*>>) = GsonJsonTransformer(polymorphicTypes)
