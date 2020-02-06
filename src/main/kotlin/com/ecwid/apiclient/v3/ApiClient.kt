@@ -11,14 +11,12 @@ import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.result.*
+import com.ecwid.apiclient.v3.dto.coupon.request.*
+import com.ecwid.apiclient.v3.dto.coupon.result.*
 import com.ecwid.apiclient.v3.dto.customer.request.*
 import com.ecwid.apiclient.v3.dto.customer.result.*
 import com.ecwid.apiclient.v3.dto.customergroup.request.*
 import com.ecwid.apiclient.v3.dto.customergroup.result.*
-import com.ecwid.apiclient.v3.dto.coupon.request.CouponDetailsRequest
-import com.ecwid.apiclient.v3.dto.coupon.request.CouponSearchRequest
-import com.ecwid.apiclient.v3.dto.coupon.result.CouponSearchResult
-import com.ecwid.apiclient.v3.dto.coupon.result.FetchedCoupon
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.*
 import com.ecwid.apiclient.v3.dto.product.request.*
@@ -227,10 +225,11 @@ interface ProductVariationsApiClient {
 // https://developers.ecwid.com/api-documentation/discount-coupons
 interface CouponsApiClient {
 	fun searchCoupons(request: CouponSearchRequest): CouponSearchResult
+	fun searchCouponsAsSequence(request: CouponSearchRequest): Sequence<FetchedCoupon>
 	fun getCouponDetails(request: CouponDetailsRequest): FetchedCoupon
-//	fun createCoupon()
-//	fun updateCoupon()
-//	fun deleteCoupon()
+	fun createCoupon(request: CouponCreateRequest): CouponCreateResult
+	fun updateCoupon(request: CouponUpdateRequest): CouponUpdateResult
+	fun deleteCoupon(request: CouponDeleteRequest): CouponDeleteResult
 }
 
 // Application

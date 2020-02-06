@@ -40,7 +40,13 @@ internal fun randomDate(): Date {
 	val instant = Instant.now()
 			.minusMillis(Random.nextInt().toLong())
 			.truncatedTo(ChronoUnit.SECONDS)
-	return Date.from(instant);
+	return Date.from(instant)
+}
+
+internal fun randomDateFrom(date: Date): Date {
+	val instant = date.toInstant()
+			.plusSeconds(randomInt(1, 100000).toLong())
+	return Date.from(instant)
 }
 
 internal fun randomAlphanumeric(size: Int): String {
@@ -48,7 +54,7 @@ internal fun randomAlphanumeric(size: Int): String {
 	return (1..size)
 			.map { Random.nextInt(0, characters.size) }
 			.map(characters::get)
-			.joinToString("");
+			.joinToString("")
 }
 
 internal inline fun <reified E : Enum<E>> randomEnumValue(vararg exclude: E): E {
@@ -68,7 +74,9 @@ internal fun <V> randomOf(vararg options: V): V {
 
 internal fun randomFileName(prefix: String, extension: String) = "$prefix-${Random.nextInt()}.$extension"
 
-private fun randomInt(min: Int, max: Int) = Random.nextInt(min, max)
+internal fun randomInt(min: Int, max: Int) = Random.nextInt(min, max)
+
+internal fun randomDouble(min: Double, max: Double) = Random.nextDouble(min, max)
 
 private fun Double.roundDouble(): Double {
 	return toBigDecimal()

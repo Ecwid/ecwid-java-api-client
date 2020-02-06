@@ -1,4 +1,4 @@
-package com.ecwid.apiclient.v3.dto.coupon.result
+package com.ecwid.apiclient.v3.dto.coupon.request
 
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponApplicationLimit
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponStatus
@@ -6,8 +6,7 @@ import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponType
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponUsesLimit
 import java.util.*
 
-data class FetchedCoupon (
-        var id: Int = 0,
+data class UpdatedCoupon(
         var name: String = "",
         var code: String = "",
         var discountType: DiscountCouponType? = null,
@@ -19,8 +18,6 @@ data class FetchedCoupon (
         var usesLimit: DiscountCouponUsesLimit? = null,
         var repeatCustomerOnly: Boolean? = null,
         var applicationLimit: DiscountCouponApplicationLimit? = null,
-        var creationDate: Date? = null,
-        var updateDate: Date? = null,
         var orderCount: Int? = null,
         var catalogLimit: DiscountCouponCatalogLimit? = null
 ) {
