@@ -15,9 +15,6 @@ import java.util.*
 
 class CouponsTest: BaseEntityTest() {
 
-    // Since the methods for creating coupons in the api are not yet implemented,
-    // tests will be run on three default coupons: MOXQ3YCWXRXA, J3N4JM3SIPCJ, O3Q4AP5FKXJ1
-
     @BeforeEach
     override fun beforeEach() {
         super.beforeEach()
