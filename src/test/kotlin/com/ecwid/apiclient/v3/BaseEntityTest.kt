@@ -6,6 +6,9 @@ import com.ecwid.apiclient.v3.config.LoggingSettings
 import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest
 import com.ecwid.apiclient.v3.dto.category.request.CategoryDeleteRequest
 import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
+import com.ecwid.apiclient.v3.dto.coupon.request.CouponDeleteRequest
+import com.ecwid.apiclient.v3.dto.coupon.request.CouponSearchRequest
+import com.ecwid.apiclient.v3.dto.coupon.result.FetchedCoupon
 import com.ecwid.apiclient.v3.dto.customer.request.CustomerDeleteRequest
 import com.ecwid.apiclient.v3.dto.customer.request.CustomersSearchRequest
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
@@ -111,6 +114,16 @@ abstract class BaseEntityTest {
 				.filter { customerGroupId -> customerGroupId > 0 } // We cannot delete “General” customer group
 				.forEach { customerGroupId ->
 					apiClient.deleteCustomerGroup(CustomerGroupDeleteRequest(customerGroupId))
+				}
+	}
+
+	protected fun removeAllCoupons() {
+		apiClient
+				.searchCouponsAsSequence(CouponSearchRequest())
+				.map(FetchedCoupon::code)
+				.filterNotNull()
+				.forEach { couponIdentifier ->
+					apiClient.deleteCoupon(CouponDeleteRequest(couponIdentifier))
 				}
 	}
 

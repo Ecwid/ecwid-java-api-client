@@ -11,6 +11,8 @@ import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.result.*
+import com.ecwid.apiclient.v3.dto.coupon.request.*
+import com.ecwid.apiclient.v3.dto.coupon.result.*
 import com.ecwid.apiclient.v3.dto.customer.request.*
 import com.ecwid.apiclient.v3.dto.customer.result.*
 import com.ecwid.apiclient.v3.dto.customergroup.request.*
@@ -42,7 +44,8 @@ class ApiClient private constructor(
 		customersApiClient: CustomersApiClient,
 		customerGroupsApiClient: CustomerGroupsApiClient,
 		productVariationsApiClient: ProductVariationsApiClient,
-		batchApiClient: BatchApiClient
+		batchApiClient: BatchApiClient,
+		discountCouponsApiClient: CouponsApiClient
 ) :
 		ProductsApiClient by productsApiClient,
 		CategoriesApiClient by categoriesApiClient,
@@ -51,7 +54,8 @@ class ApiClient private constructor(
 		CustomersApiClient by customersApiClient,
 		CustomerGroupsApiClient by customerGroupsApiClient,
 		ProductVariationsApiClient by productVariationsApiClient,
-		BatchApiClient by batchApiClient {
+		BatchApiClient by batchApiClient,
+		CouponsApiClient by discountCouponsApiClient{
 
 	companion object {
 		fun create(apiServerDomain: ApiServerDomain,
@@ -87,7 +91,8 @@ class ApiClient private constructor(
 					CustomersApiClientImpl(apiClientHelper),
 					CustomerGroupsApiClientImpl(apiClientHelper),
 					ProductVariationsApiClientImpl(apiClientHelper),
-					BatchApiClientImpl(apiClientHelper)
+					BatchApiClientImpl(apiClientHelper),
+					CouponsApiClientImpl(apiClientHelper)
 			)
 
 		}
@@ -217,8 +222,15 @@ interface ProductVariationsApiClient {
 // TODO
 
 // Discount coupons
-// https://developers.ecwid.com/api-documentation/discount-coupons + deleted
-// TODO
+// https://developers.ecwid.com/api-documentation/discount-coupons
+interface CouponsApiClient {
+	fun searchCoupons(request: CouponSearchRequest): CouponSearchResult
+	fun searchCouponsAsSequence(request: CouponSearchRequest): Sequence<FetchedCoupon>
+	fun getCouponDetails(request: CouponDetailsRequest): FetchedCoupon
+	fun createCoupon(request: CouponCreateRequest): CouponCreateResult
+	fun updateCoupon(request: CouponUpdateRequest): CouponUpdateResult
+	fun deleteCoupon(request: CouponDeleteRequest): CouponDeleteResult
+}
 
 // Application
 // https://developers.ecwid.com/api-documentation/application
@@ -231,3 +243,4 @@ interface ProductVariationsApiClient {
 // Static store pages
 // https://developers.ecwid.com/api-documentation/static-store-pages
 // TODO
+
