@@ -46,6 +46,7 @@ internal fun randomDate(): Date {
 internal fun randomDateFrom(date: Date): Date {
 	val instant = date.toInstant()
 			.plusSeconds(randomInt(1, 100000).toLong())
+			.truncatedTo(ChronoUnit.SECONDS)
 	return Date.from(instant)
 }
 

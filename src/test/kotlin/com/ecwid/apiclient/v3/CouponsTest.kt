@@ -40,8 +40,8 @@ class CouponsTest: BaseEntityTest() {
         val couponDetailsRequest = CouponDetailsRequest(couponIdentifier = couponCreateRequest.newCoupon.code)
         val couponDetails = apiClient.getCouponDetails(couponDetailsRequest)
         assertEquals(
-                couponCreateRequest.newCoupon.toString(),
-                couponDetails.toUpdated().toString()
+                couponCreateRequest.newCoupon,
+                couponDetails.toUpdated()
         )
 
         // Completely updating newly created customer, leaving shipping addresses ids to update not recreate them
@@ -56,8 +56,8 @@ class CouponsTest: BaseEntityTest() {
         val couponDetailsRequest1 = CouponDetailsRequest(couponIdentifier = couponUpdateRequest.updatedCoupon.code)
         val couponDetails1 = apiClient.getCouponDetails(couponDetailsRequest1)
         assertEquals(
-                couponUpdateRequest.updatedCoupon.toString(),
-                couponDetails1.toUpdated().toString()
+                couponUpdateRequest.updatedCoupon,
+                couponDetails1.toUpdated()
         )
 
         // Deleting coupon
