@@ -116,11 +116,11 @@ class CouponsTest: BaseEntityTest() {
         assertCouponsSearch(
                 positiveSearchRequest = CouponSearchRequest(
                         code = couponCreateRequest1.newCoupon.code,
-                        discountType = couponCreateRequest1.newCoupon.discountType?.name
+                        discountType = setOf(couponCreateRequest1.newCoupon.discountType!!)
                 ),
                 negativeSearchRequest = CouponSearchRequest(
                         code = couponCreateRequest1.newCoupon.code,
-                        discountType = couponCreateRequest2.newCoupon.discountType?.name
+                        discountType = setOf(couponCreateRequest2.newCoupon.discountType!!)
                 )
         )
 
