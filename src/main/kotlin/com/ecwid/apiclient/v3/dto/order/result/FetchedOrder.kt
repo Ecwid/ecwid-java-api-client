@@ -40,6 +40,7 @@ data class FetchedOrder(
 
 		var customerId: Int? = null, // TODO Figure out how to test
 		var customerGroup: String? = null,
+		var acceptMarketing: Boolean? = null,
 
 		var total: Double? = null,
 		var subtotal: Double? = null,

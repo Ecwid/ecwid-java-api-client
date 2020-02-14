@@ -439,6 +439,7 @@ private fun generateTestOrder(): UpdatedOrder {
 			externalTransactionId = randomAlphanumeric(16),
 
 			customerGroup = "Group " + randomAlphanumeric(8),
+			acceptMarketing = randomBoolean(),
 
 			total = randomPrice(),
 			subtotal = randomPrice(),

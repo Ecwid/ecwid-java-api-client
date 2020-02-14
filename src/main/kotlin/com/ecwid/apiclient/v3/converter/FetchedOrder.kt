@@ -34,6 +34,7 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 			externalTransactionId = externalTransactionId,
 
 			customerGroup = customerGroup,
+			acceptMarketing = acceptMarketing,
 
 			total = total,
 			subtotal = subtotal,

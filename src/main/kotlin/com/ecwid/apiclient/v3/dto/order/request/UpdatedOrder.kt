@@ -36,6 +36,7 @@ data class UpdatedOrder(
 		var externalTransactionId: String? = null,
 
 		var customerGroup: String? = null,
+		var acceptMarketing: Boolean? = null,
 
 		var total: Double? = null,
 		var subtotal: Double? = null,
