@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.coupon.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
+import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponStatus
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponType
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.google.gson.annotations.SerializedName
@@ -12,7 +13,7 @@ data class CouponSearchRequest(
 		var code: String? = null,
 		@SerializedName("discount_type")
 		var discountType: Set<DiscountCouponType>? = null,
-		var availability: String? = null,
+		var availability: DiscountCouponStatus? = null,
 		var createdFrom: Date? = null,
 		var createdTo: Date? = null,
 		var updatedFrom: Date? = null,
@@ -30,7 +31,7 @@ data class CouponSearchRequest(
 			put("limit", request.limit.toString())
 			request.code?.let { put("code", it) }
 			request.discountType?.let { put("discount_type", it.joinToString(separator = ",")) }
-			request.availability?.let { put("availability", it) }
+			request.availability?.let { put("availability", it.name) }
 			request.createdFrom?.let { put("createdFrom", (it.time / 1000).toString()) }
 			request.createdTo?.let { put("createdTo", (it.time / 1000).toString()) }
 			request.updatedFrom?.let { put("updatedFrom", (it.time / 1000).toString()) }
