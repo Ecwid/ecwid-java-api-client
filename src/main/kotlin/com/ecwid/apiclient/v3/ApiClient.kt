@@ -9,6 +9,8 @@ import com.ecwid.apiclient.v3.dto.batch.request.GetEscapedBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.result.CreateBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
+import com.ecwid.apiclient.v3.dto.cart.request.*
+import com.ecwid.apiclient.v3.dto.cart.result.*
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.result.*
 import com.ecwid.apiclient.v3.dto.coupon.request.*
@@ -39,7 +41,8 @@ class ApiClient private constructor(
 		customerGroupsApiClient: CustomerGroupsApiClient,
 		productVariationsApiClient: ProductVariationsApiClient,
 		batchApiClient: BatchApiClient,
-		discountCouponsApiClient: CouponsApiClient
+		discountCouponsApiClient: CouponsApiClient,
+		abandonedCartsApiClient: CartsApiClient
 ) :
 		ProductsApiClient by productsApiClient,
 		CategoriesApiClient by categoriesApiClient,
@@ -49,7 +52,8 @@ class ApiClient private constructor(
 		CustomerGroupsApiClient by customerGroupsApiClient,
 		ProductVariationsApiClient by productVariationsApiClient,
 		BatchApiClient by batchApiClient,
-		CouponsApiClient by discountCouponsApiClient{
+		CouponsApiClient by discountCouponsApiClient,
+		CartsApiClient by abandonedCartsApiClient{
 
 	companion object {
 		fun create(apiServerDomain: ApiServerDomain,
@@ -86,7 +90,8 @@ class ApiClient private constructor(
 					CustomerGroupsApiClientImpl(apiClientHelper),
 					ProductVariationsApiClientImpl(apiClientHelper),
 					BatchApiClientImpl(apiClientHelper),
-					CouponsApiClientImpl(apiClientHelper)
+					CouponsApiClientImpl(apiClientHelper),
+					CartsApiClientImpl(apiClientHelper)
 			)
 
 		}
@@ -213,7 +218,14 @@ interface ProductVariationsApiClient {
 
 // Carts
 // https://developers.ecwid.com/api-documentation/carts
-// TODO
+interface CartsApiClient {
+	fun searchAbandonedCart(request: CartsSearchRequest): CartsSearchResult
+	fun searchAbandonedCartsAsSequence(request: CartsSearchRequest): List<FetchedCart>
+	fun getAbandonedCart(request: CartDetailsRequest): FetchedCart
+	fun updateAbandonedCart(request: CartUpdateRequest): CartUpdateResult
+	fun calculateOrderDetails(request: CalculateOrderDetailsRequest): CalculateOrderDetailsResult
+	fun convertAbandonedCartToOrder(request: ConvertCartToOrderRequest): ConvertCartToOrderResult
+}
 
 // Discount coupons
 // https://developers.ecwid.com/api-documentation/discount-coupons
