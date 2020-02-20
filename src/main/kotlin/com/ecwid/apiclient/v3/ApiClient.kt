@@ -205,7 +205,7 @@ interface ProductVariationsApiClient {
 	fun getAllProductVariations(request: ProductVariationsRequest): ProductVariationsResult
 	fun getProductVariation(request: ProductVariationDetailsRequest): FetchedVariation
 	fun updateProductVariation(request: UpdateProductVariationRequest): UpdateProductVariationResult
-//	fun deleteProductVariation()
+	fun deleteProductVariation(request: DeleteProductVariationRequest): DeleteProductVariationResult
 //	fun deleteAllProductVariations()
 //	fun adjustVariationInventory()
 	fun deleteVariationImage(request: ProductVariationImageDeleteRequest): ProductVariationImageDeleteResult
