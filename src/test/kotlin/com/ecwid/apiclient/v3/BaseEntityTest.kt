@@ -24,6 +24,7 @@ import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypeDeleteRequest
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypesGetAllRequest
 import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
+import com.ecwid.apiclient.v3.dto.variation.request.DeleteAllProductVariationsRequest
 import com.ecwid.apiclient.v3.httptransport.impl.ApacheCommonsHttpClientTransport
 import com.ecwid.apiclient.v3.jsontransformer.GsonJsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
@@ -54,6 +55,16 @@ abstract class BaseEntityTest {
 				httpTransport = ApacheCommonsHttpClientTransport(),
 				jsonTransformerProvider = jsonTransformerProvider
 		)
+	}
+
+	protected fun removeAllVariations() {
+		apiClient
+				.searchProductsAsSequence(ProductsSearchRequest.ByFilters())
+				.map(FetchedProduct::id)
+				.filterNotNull()
+				.forEach { productId ->
+					apiClient.deleteAllProductVariations(DeleteAllProductVariationsRequest(productId))
+				}
 	}
 
 	protected fun removeAllProducts() {
