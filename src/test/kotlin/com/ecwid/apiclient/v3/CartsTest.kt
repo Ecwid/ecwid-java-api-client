@@ -183,6 +183,41 @@ class CartsTest: BaseEntityTest() {
         )
     }
 
+    @Test
+    fun testConvertCartToOrder() {
+        // Creating new cart
+        val testOrder = generateTestOrder()
+        val newCartId = createNewCart(testOrder)
+
+        // Converting cart to order
+        val convertCartToOrderRequest = ConvertCartToOrderRequest(newCartId)
+        val convertCartToOrderResult = apiClient.convertAbandonedCartToOrder(convertCartToOrderRequest)
+
+        // Checking that cart was converted to order
+        assertNotNull(convertCartToOrderResult.orderNumber)
+        assertNotNull(convertCartToOrderResult.vendorOrderNumber)
+
+        // Checking that order was created with necessary parameters
+        val orderDetailsRequest = OrderDetailsRequest(convertCartToOrderResult.orderNumber!!)
+        val createdOrder = apiClient.getOrderDetails(orderDetailsRequest).toUpdated()
+
+        testOrder.createDate = createdOrder.createDate
+        testOrder.paymentStatus = OrderPaymentStatus.AWAITING_PAYMENT
+        testOrder.paymentMessage = null // TODO Discover why after each create this field resets to null
+        testOrder.items?.forEachIndexed() { itemIndex, item ->
+            item.selectedOptions?.forEachIndexed { selectedOptionIndex, selectedOption ->
+                // TODO Discover why after create these two fields some times resets to null
+                selectedOption.valuesArray = createdOrder.items?.get(itemIndex)?.selectedOptions?.get(selectedOptionIndex)?.valuesArray
+                selectedOption.selections = createdOrder.items?.get(itemIndex)?.selectedOptions?.get(selectedOptionIndex)?.selections
+            }
+        }
+
+        assertEquals(
+                testOrder,
+                createdOrder
+        )
+    }
+
     private fun createNewCart(updatedOrder: UpdatedOrder): String {
         val cartsearchRequest = CartsSearchRequest()
         val cartSearchResult1 = apiClient.searchAbandonedCartsAsSequence(cartsearchRequest)
