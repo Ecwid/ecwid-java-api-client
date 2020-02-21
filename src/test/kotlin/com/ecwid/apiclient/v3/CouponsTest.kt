@@ -41,7 +41,7 @@ class CouponsTest: BaseEntityTest() {
                 couponDetails.toUpdated()
         )
 
-        // Completely updating newly created customer, leaving shipping addresses ids to update not recreate them
+        // Completely updating newly created coupon
         val couponUpdateRequest = CouponUpdateRequest(
                 couponIdentifier = couponDetails.code,
                 updatedCoupon = generateTestCouponForUpdate()
@@ -49,7 +49,7 @@ class CouponsTest: BaseEntityTest() {
         val couponUpdateResult = apiClient.updateCoupon(couponUpdateRequest)
         assertEquals(1, couponUpdateResult.updateCount)
 
-        // Checking that customer was successfully updated with necessary parameters
+        // Checking that coupon was successfully updated with necessary parameters
         val couponDetailsRequest1 = CouponDetailsRequest(couponIdentifier = couponUpdateRequest.updatedCoupon.code)
         val couponDetails1 = apiClient.getCouponDetails(couponDetailsRequest1)
         assertEquals(
@@ -62,7 +62,7 @@ class CouponsTest: BaseEntityTest() {
         val couponDeleteResult = apiClient.deleteCoupon(couponDeleteRequest)
         assertEquals(1, couponDeleteResult.deleteCount)
 
-        // Checking that deleted customer is not accessible anymore
+        // Checking that deleted coupon is not accessible anymore
         try {
             apiClient.getCouponDetails(couponDetailsRequest1)
         } catch (e: EcwidApiException) {
