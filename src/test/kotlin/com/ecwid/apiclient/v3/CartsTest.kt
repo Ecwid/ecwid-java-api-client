@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3
 
+import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.cart.request.*
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.*
@@ -160,6 +161,28 @@ class CartsTest: BaseEntityTest() {
         assertEquals(testOrder.handlingFee?.description, cartDetailsResult.handlingFee?.description)
     }
 
+    @Test
+    fun testUpdateCart() {
+        // Creating new cart
+        val newCartId = createNewCart(generateTestOrder())
+
+        // Updating cart
+        val cartUpdateRequest = CartUpdateRequest(
+                cartId = newCartId,
+                updatedCart = generateTestCartForUpdate()
+        )
+        val cartUpdateResult = apiClient.updateAbandonedCart(cartUpdateRequest)
+        assertEquals(1, cartUpdateResult.updateCount)
+
+        // Checking that cart was successfully updated with necessary parameters
+        val cartDetailsRequest1 = CartDetailsRequest(newCartId)
+        val cartDetailsResult1 = apiClient.getAbandonedCart(cartDetailsRequest1)
+        assertEquals(
+                cartUpdateRequest.updatedCart,
+                cartDetailsResult1.toUpdated()
+        )
+    }
+
     private fun createNewCart(updatedOrder: UpdatedOrder): String {
         val cartsearchRequest = CartsSearchRequest()
         val cartSearchResult1 = apiClient.searchAbandonedCartsAsSequence(cartsearchRequest)
@@ -179,4 +202,10 @@ class CartsTest: BaseEntityTest() {
         return newCartList[0].cartId
     }
 
+    private fun generateTestCartForUpdate(): UpdatedCart {
+        return UpdatedCart(
+                hidden = randomBoolean(),
+                taxesOnShipping = null // TODO Discover why after each update this field resets to null
+        )
+    }
 }
