@@ -241,7 +241,7 @@ class CartsTest: BaseEntityTest() {
             assertEquals(forCalculateItem.categoryId, calculatedItem.categoryId)
             assertEquals(forCalculateItem.price, calculatedItem.price)
             assertEquals(forCalculateItem.productPrice, calculatedItem.productPrice)
-            assertEquals(133.2,  calculatedItem.shipping)
+            assertEquals(133.2, calculatedItem.shipping)
             assertEquals(0.0, calculatedItem.tax) // TODO Discover why after each calculation this field resets to 0
             assertEquals(forCalculateItem.fixedShippingRate, calculatedItem.fixedShippingRate)
             assertEquals(null, calculatedItem.couponAmount) // TODO Discover why after each calculation this field resets to null
@@ -332,6 +332,58 @@ class CartsTest: BaseEntityTest() {
         assertEquals(null, calculatedOrder.discountInfo) // TODO Discover why after each calculation this field resets to null
     }
 
+    @Test
+    fun testSearchCarts() {
+
+        // Create two carts
+        val totalPrice = randomPrice()
+        val cartForSearch1 = generateCartForTestingSearch(totalPrice, false)
+        val newCartId1 = createNewCart(cartForSearch1)
+        val cartDetailsRequest1 = CartDetailsRequest(newCartId1)
+        val fetchedCart1 = apiClient.getAbandonedCart(cartDetailsRequest1)
+
+        val cartForSearch2 = generateCartForTestingSearch(totalPrice, true)
+        createNewCart(cartForSearch2)
+
+        val cartSearchRequest1 = CartsSearchRequest(
+                totalFrom = totalPrice - 1,
+                totalTo = totalPrice + 1,
+                showHidden = false
+        )
+        val cartsSearchResult1 = apiClient.searchAbandonedCart(cartSearchRequest1)
+        assertEquals(1, cartsSearchResult1.count)
+
+        val cartSearchRequest2 = CartsSearchRequest(
+                totalFrom = totalPrice - 1,
+                totalTo = totalPrice + 1,
+                showHidden = true
+        )
+        val cartsSearchResult2 = apiClient.searchAbandonedCart(cartSearchRequest2)
+        assertEquals(2, cartsSearchResult2.count)
+
+        val createDate = fetchedCart1.createDate ?: throw IllegalStateException("fetchedCart.createDate not found")
+        val instantCreate = createDate.toInstant()
+        val instantCreateFrom = instantCreate.minusSeconds(1)
+        val instantCreateTo = instantCreate.plusSeconds(2)
+        val cartSearchRequest3 = CartsSearchRequest(
+                createdFrom = Date.from(instantCreateFrom),
+                createdTo = Date.from(instantCreateTo)
+        )
+        val cartsSearchResult3 = apiClient.searchAbandonedCart(cartSearchRequest3)
+        assertEquals(1, cartsSearchResult3.count)
+
+        val updateDate = fetchedCart1.updateDate ?: throw IllegalStateException("fetchedCart.updateDate not found")
+        val instantUpdate = updateDate.toInstant()
+        val instantUpdateFrom = instantUpdate.minusSeconds(1)
+        val instantUpdateTo = instantUpdate.plusSeconds(2)
+        val cartSearchRequest4 = CartsSearchRequest(
+                updatedFrom = Date.from(instantUpdateFrom),
+                updatedTo = Date.from(instantUpdateTo)
+        )
+        val cartsSearchResult4 = apiClient.searchAbandonedCart(cartSearchRequest4)
+        assertEquals(1, cartsSearchResult4.count)
+    }
+
     private fun createNewCart(updatedOrder: UpdatedOrder): String {
         val cartsearchRequest = CartsSearchRequest()
         val cartSearchResult1 = apiClient.searchAbandonedCartsAsSequence(cartsearchRequest)
@@ -402,7 +454,7 @@ class CartsTest: BaseEntityTest() {
                 name = "Order item " + randomAlphanumeric(8),
                 shortDescription = "Order item description " + randomAlphanumeric(32),
                 quantity = 2,
-                quantityInStock= 10,
+                quantityInStock = 10,
                 weight = 3.0,
                 imageUrl = randomUrl(),
                 isShippingRequired = true, // true for weight field
@@ -565,6 +617,34 @@ class CartsTest: BaseEntityTest() {
         return OrderForCalculate.DiscountCouponCatalogLimit(
                 products = listOf(1, 2, 3),
                 categories = listOf(1)
+        )
+    }
+
+    private fun generateCartForTestingSearch(price: Double, hidden: Boolean): UpdatedOrder {
+        return UpdatedOrder(
+                paymentStatus = OrderPaymentStatus.INCOMPLETE,
+                fulfillmentStatus = OrderFulfillmentStatus.PROCESSING,
+                items = generateItemsForTestingSearch(),
+                discountCoupon = UpdatedOrder.DiscountCouponInfo(
+                        name = "testCoupon",
+                        code = "123abc555"
+                ),
+                // customerId = TODO Discover why this field not specified when creating an order
+                hidden = hidden,
+                total = price
+        )
+    }
+
+    private fun generateItemsForTestingSearch(): List<UpdatedOrder.OrderItem> {
+        return listOf(
+                UpdatedOrder.OrderItem(
+                        name = "AAA",
+                        price = 200.0
+                ),
+                UpdatedOrder.OrderItem(
+                        name = "BBB",
+                        price = 300.0
+                )
         )
     }
 }
