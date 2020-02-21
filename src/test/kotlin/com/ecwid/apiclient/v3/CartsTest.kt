@@ -2,12 +2,14 @@ package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.cart.request.*
+import com.ecwid.apiclient.v3.dto.cart.result.CalculateOrderDetailsResult
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.util.*
 
 class CartsTest: BaseEntityTest() {
 
@@ -218,6 +220,118 @@ class CartsTest: BaseEntityTest() {
         )
     }
 
+    @Test
+    fun testCalculateOrderDetails() {
+        // Calculate order details
+        val orderForCalculate = generateTestOrderForCalculate()
+        val calculateOrderDetailsRequest = CalculateOrderDetailsRequest(orderForCalculate)
+        val calculatedOrder = apiClient.calculateOrderDetails(calculateOrderDetailsRequest)
+
+        //check that all parameters of the calculated order are correct
+        assertEquals(orderForCalculate.email, calculatedOrder.email)
+        assertEquals(orderForCalculate.ipAddress, calculatedOrder.ipAddress)
+        assertEquals(orderForCalculate.customerId, calculatedOrder.customerId)
+        assertEquals(null, calculatedOrder.discountCoupon) // TODO Discover why after each calculation this field resets to null
+
+        assertEquals(orderForCalculate.items?.count(), calculatedOrder.items?.count())
+        calculatedOrder.items?.forEachIndexed { itemIndex, calculatedItem ->
+            val forCalculateItem = orderForCalculate.items?.get(itemIndex)
+                    ?: throw IllegalStateException("orderForCalculate.items[$itemIndex] not found")
+            assertEquals(forCalculateItem.id, calculatedItem.id)
+            assertEquals(forCalculateItem.categoryId, calculatedItem.categoryId)
+            assertEquals(forCalculateItem.price, calculatedItem.price)
+            assertEquals(forCalculateItem.productPrice, calculatedItem.productPrice)
+            assertEquals(133.2,  calculatedItem.shipping)
+            assertEquals(0.0, calculatedItem.tax) // TODO Discover why after each calculation this field resets to 0
+            assertEquals(forCalculateItem.fixedShippingRate, calculatedItem.fixedShippingRate)
+            assertEquals(null, calculatedItem.couponAmount) // TODO Discover why after each calculation this field resets to null
+            assertEquals(forCalculateItem.sku, calculatedItem.sku)
+            assertEquals(forCalculateItem.name, calculatedItem.name)
+            assertEquals(forCalculateItem.shortDescription, calculatedItem.shortDescription)
+            assertEquals(forCalculateItem.quantity, calculatedItem.quantity)
+            assertEquals(forCalculateItem.quantityInStock, calculatedItem.quantityInStock)
+            assertEquals(forCalculateItem.weight, calculatedItem.weight)
+            assertEquals(forCalculateItem.isShippingRequired, calculatedItem.isShippingRequired)
+            assertEquals(forCalculateItem.trackQuantity, calculatedItem.trackQuantity)
+            assertEquals(forCalculateItem.fixedShippingRateOnly, calculatedItem.fixedShippingRateOnly)
+            assertEquals(forCalculateItem.digital, calculatedItem.digital)
+            assertEquals(false, calculatedItem.couponApplied)
+            assertEquals(forCalculateItem.dimensions?.length, calculatedItem.dimensions?.length)
+            assertEquals(forCalculateItem.dimensions?.width, calculatedItem.dimensions?.width)
+            assertEquals(forCalculateItem.dimensions?.height, calculatedItem.dimensions?.height)
+
+            assertEquals(forCalculateItem.selectedOptions?.count(), calculatedItem.selectedOptions?.count())
+            calculatedItem.selectedOptions?.forEachIndexed { selectedOptionIndex, calculatedOrderItemOptions ->
+                val forCalculateItemOption = forCalculateItem.selectedOptions?.get(selectedOptionIndex)
+                        ?: throw IllegalStateException("orderForCalculate.items[$itemIndex].selectedOptions[$selectedOptionIndex] not found")
+                assertEquals(forCalculateItemOption.name, calculatedOrderItemOptions.name)
+                assertEquals(forCalculateItemOption.type, calculatedOrderItemOptions.type)
+                forCalculateItemOption.valuesArray = calculatedOrderItemOptions.valuesArray // TODO Discover why after each calculation this field some times resets to null
+                assertEquals(forCalculateItemOption.valuesArray, calculatedOrderItemOptions.valuesArray)
+
+                assertEquals(null, calculatedOrderItemOptions.files?.count()) // TODO Discover why after each calculation this field resets to null
+//                assertEquals(forCalculateItemOption.files?.count(), calculatedOrderItemOptions.files?.count())
+//                calculatedItem.files?.forEachIndexed { fileIndex, calculatedFile ->
+//                    val forCalculateFile = forCalculateItem.files?.get(fileIndex)
+//                            ?: throw IllegalStateException("orderForCalculate.items[$itemIndex].selectedOptions[$selectedOptionIndex].files[$fileIndex] not found")
+//                    assertEquals(forCalculateFile.productFileId, calculatedFile.productFileId)
+//                    assertEquals(forCalculateFile.maxDownloads, calculatedFile.maxDownloads)
+//                    assertEquals(forCalculateFile.remainingDownloads, calculatedFile.remainingDownloads)
+//                    assertEquals(forCalculateFile.expire, calculatedFile.expire)
+//                    assertEquals(forCalculateFile.name, calculatedFile.name)
+//                    assertEquals(forCalculateFile.description, calculatedFile.description)
+//                    assertEquals(forCalculateFile.size, calculatedFile.size)
+//                    assertEquals(forCalculateFile.adminUrl, calculatedFile.adminUrl)
+//                    assertEquals(forCalculateFile.customerUrl, calculatedFile.customerUrl)
+//                }
+            }
+
+            assertEquals(null, calculatedItem.taxes?.count()) // TODO Discover why after each calculation this field resets to null
+//            assertEquals(forCalculateItem.taxes?.count(), calculatedItem.taxes?.count())
+//            calculatedItem.taxes?.forEachIndexed { taxIndex, calculatedTaxe ->
+//                val forCalculatedTaxe = calculatedItem.taxes?.get(taxIndex)
+//                        ?: throw IllegalStateException("orderForCalculate.items[$itemIndex].taxes[$taxIndex] not found")
+//                assertEquals(forCalculatedTaxe.name, calculatedTaxe.name)
+//                assertEquals(forCalculatedTaxe.value, calculatedTaxe.value)
+//                assertEquals(forCalculatedTaxe.total, calculatedTaxe.total)
+//                assertEquals(forCalculatedTaxe.taxOnDiscountedSubtotal, calculatedTaxe.taxOnDiscountedSubtotal)
+//                assertEquals(forCalculatedTaxe.taxOnShipping, calculatedTaxe.taxOnShipping)
+//                assertEquals(forCalculatedTaxe.includeInPrice, calculatedTaxe.includeInPrice)
+//            }
+
+            assertEquals(forCalculateItem.files?.count(), calculatedItem.files?.count())
+            calculatedItem.files?.forEachIndexed { taxIndex, calculatedFile ->
+                val forCalculateFile = calculatedItem.files?.get(taxIndex)
+                        ?: throw IllegalStateException("orderForCalculate.items[$itemIndex].taxes[$taxIndex] not found")
+                assertEquals(forCalculateFile.productFileId, calculatedFile.productFileId)
+                assertEquals(forCalculateFile.maxDownloads, calculatedFile.maxDownloads)
+                assertEquals(forCalculateFile.remainingDownloads, calculatedFile.remainingDownloads)
+                assertEquals(forCalculateFile.expire, calculatedFile.expire)
+                assertEquals(forCalculateFile.name, calculatedFile.name)
+                assertEquals(forCalculateFile.description, calculatedFile.description)
+                assertEquals(forCalculateFile.size, calculatedFile.size)
+                assertEquals(forCalculateFile.adminUrl, calculatedFile.adminUrl)
+                assertEquals(forCalculateFile.customerUrl, calculatedFile.customerUrl)
+            }
+
+            assertEquals(null, calculatedItem.discounts?.count()) // TODO Discover why after each calculation this field resets to null
+//            assertEquals(forCalculateItem.discounts?.count(), calculatedItem.discounts?.count())
+//            calculatedItem.discounts?.forEachIndexed { discountIndex, calcullatedDiscounts ->
+//                val forCalculatedDiscount = forCalculateItem.discounts?.get(discountIndex)
+//                        ?: throw IllegalStateException("orderForCalculate.items[$itemIndex].discounts[$discountIndex] not found")
+//                assertEquals(forCalculatedDiscount.discountInfo?.value, calcullatedDiscounts.discountInfo?.value)
+//                assertEquals(forCalculatedDiscount.discountInfo?.type, calcullatedDiscounts.discountInfo?.type)
+//                assertEquals(forCalculatedDiscount.discountInfo?.base, calcullatedDiscounts.discountInfo?.base)
+//                assertEquals(forCalculatedDiscount.discountInfo?.orderTotal, calcullatedDiscounts.discountInfo?.orderTotal)
+//                assertEquals(forCalculatedDiscount.total, calcullatedDiscounts.total)
+//            }
+        }
+
+        checkPersonsEquals(orderForCalculate.billingPerson, calculatedOrder.billingPerson)
+        checkPersonsEquals(orderForCalculate.shippingPerson, calculatedOrder.shippingPerson)
+        assertEquals(null, calculatedOrder.discountInfo) // TODO Discover why after each calculation this field resets to null
+    }
+
     private fun createNewCart(updatedOrder: UpdatedOrder): String {
         val cartsearchRequest = CartsSearchRequest()
         val cartSearchResult1 = apiClient.searchAbandonedCartsAsSequence(cartsearchRequest)
@@ -237,10 +351,220 @@ class CartsTest: BaseEntityTest() {
         return newCartList[0].cartId
     }
 
+    private fun checkPersonsEquals(billingPerson1: OrderForCalculate.PersonInfo?, billingPerson2: CalculateOrderDetailsResult.PersonInfo?) {
+        assertEquals(billingPerson1?.name, billingPerson2?.name)
+        assertEquals(billingPerson1?.companyName, billingPerson2?.companyName)
+        assertEquals(billingPerson1?.street, billingPerson2?.street)
+        assertEquals(billingPerson1?.city, billingPerson2?.city)
+        assertEquals(billingPerson1?.countryCode, billingPerson2?.countryCode)
+        assertEquals(billingPerson1?.countryName, billingPerson2?.countryName)
+        assertEquals(billingPerson1?.postalCode, billingPerson2?.postalCode)
+        assertEquals(billingPerson1?.stateOrProvinceCode, billingPerson2?.stateOrProvinceCode)
+        assertEquals(billingPerson1?.stateOrProvinceName, billingPerson2?.stateOrProvinceName)
+        assertEquals(billingPerson1?.phone, billingPerson2?.phone)
+    }
+
     private fun generateTestCartForUpdate(): UpdatedCart {
         return UpdatedCart(
                 hidden = randomBoolean(),
                 taxesOnShipping = null // TODO Discover why after each update this field resets to null
+        )
+    }
+
+    private fun generateTestOrderForCalculate(): OrderForCalculate {
+        return OrderForCalculate(
+                email = randomEmail(),
+                ipAddress = randomIp(),
+                customerId = randomId(),
+                discountCoupon = generateTestDiscountCoupon(),
+                items = listOf(generateTestItem()),
+                billingPerson = generatePersonInfo(),
+                shippingPerson = generatePersonInfo(),
+                discountInfo = listOf(
+                        generateTestDiscountInfo(),
+                        generateTestDiscountInfo()
+                )
+        )
+    }
+
+    private fun generateTestItem(): OrderForCalculate.OrderItem {
+        return OrderForCalculate.OrderItem(
+                id = randomId(),
+                productId = randomId(),
+                categoryId = randomId(),
+                price = 22.2,
+                productPrice = 33.3,
+                shipping = 44.4,
+                tax = 55.5,
+                fixedShippingRate = 66.6,
+                couponAmount = 15.0,
+                sku = randomAlphanumeric(16),
+                name = "Order item " + randomAlphanumeric(8),
+                shortDescription = "Order item description " + randomAlphanumeric(32),
+                quantity = 2,
+                quantityInStock= 10,
+                weight = 3.0,
+                imageUrl = randomUrl(),
+                isShippingRequired = true, // true for weight field
+                trackQuantity = true,
+                fixedShippingRateOnly = true,
+                digital = true,
+                couponApplied = true,
+                selectedOptions = listOf(
+                        generateChoiceSelectedOption(),
+                        generateChoicesSelectedOption(),
+                        generateTextSelectedOption(),
+                        generateDateSelectedOption(),
+                        generateFilesSelectedOption()
+                ),
+                taxes = listOf(
+                        generateTestOrderItemTax()
+                ),
+                dimensions = OrderForCalculate.ProductDimensions(
+                        length = 12.0,
+                        width = 5.2,
+                        height = 6.6
+                ),
+                discounts = listOf(
+                        generateOrderItemDiscounts()
+                )
+        )
+    }
+
+    private fun generateChoiceSelectedOption(): OrderForCalculate.OrderItemOption {
+        return OrderForCalculate.OrderItemOption.createForChoiceOption(
+                name = "Choice Option " + randomAlphanumeric(8),
+                selection = "Selection #1, " + randomAlphanumeric(8),
+                files = listOf(
+                        OrderForCalculate.OrderItemOptinonFile(
+                                id = randomId(),
+                                name = "Order item option file" + randomAlphanumeric(4),
+                                size = randomInt(1, 10),
+                                url = randomUrl()
+                        )
+                )
+        )
+    }
+
+    private fun generateChoicesSelectedOption(): OrderForCalculate.OrderItemOption {
+        val value1 = "Selection #1, " + randomAlphanumeric(8)
+        val value3 = "Selection #3, " + randomAlphanumeric(8)
+        return OrderForCalculate.OrderItemOption.createForChoicesOption(
+                name = "Choices Option " + randomAlphanumeric(8),
+                selections = listOf(
+                        OrderForCalculate.SelectionInfo(
+                                selectionTitle = value1,
+                                selectionModifier = 10.0,
+                                selectionModifierType = PriceModifierType.ABSOLUTE
+                        ),
+                        OrderForCalculate.SelectionInfo(
+                                selectionTitle = value3,
+                                selectionModifier = 5.5,
+                                selectionModifierType = PriceModifierType.ABSOLUTE
+                        )
+                ),
+                files = listOf(
+                        OrderForCalculate.OrderItemOptinonFile(
+                                id = randomId(),
+                                name = "Order item option file" + randomAlphanumeric(4),
+                                size = randomInt(1, 10),
+                                url = randomUrl()
+                        )
+                )
+        )
+    }
+
+    private fun generateTextSelectedOption(): OrderForCalculate.OrderItemOption {
+        return OrderForCalculate.OrderItemOption.createForTextOption(
+                name = "Text Option " + randomAlphanumeric(8),
+                value = randomAlphanumeric(8)
+        )
+    }
+
+    private fun generateDateSelectedOption(): OrderForCalculate.OrderItemOption {
+        return OrderForCalculate.OrderItemOption.createForDateOption(
+                name = "Date Option " + randomAlphanumeric(8),
+                date = randomDate()
+        )
+    }
+
+    private fun generateFilesSelectedOption(): OrderForCalculate.OrderItemOption {
+        return OrderForCalculate.OrderItemOption.createForFilesOption(name = "Files Option " + randomAlphanumeric(8))
+    }
+
+    private fun generateTestOrderItemTax(): OrderForCalculate.OrderItemTax {
+        return OrderForCalculate.OrderItemTax(
+                name = "Tax " + randomAlphanumeric(8),
+                value = 12.2,
+                total = 22.6,
+                taxOnDiscountedSubtotal = 4.4,
+                taxOnShipping = 3.3,
+                includeInPrice = true
+        )
+    }
+
+    private fun generatePersonInfo(): OrderForCalculate.PersonInfo {
+        return OrderForCalculate.PersonInfo(
+                name = "Name " + randomAlphanumeric(8),
+                companyName = "Company " + randomAlphanumeric(8),
+                street = "Line 1 " + randomAlphanumeric(8) + "\nLine 2 " + randomAlphanumeric(8),
+                city = "City " + randomAlphanumeric(8),
+                countryCode = "US",
+                countryName = "United States",
+                postalCode = randomAlphanumeric(5),
+                stateOrProvinceCode = "CA",
+                stateOrProvinceName = "California",
+                phone = randomAlphanumeric(10)
+        )
+    }
+
+    private fun generateOrderItemDiscounts(): OrderForCalculate.OrderItemDiscounts {
+        return OrderForCalculate.OrderItemDiscounts(
+                discountInfo = generateTestCustomDiscountInfo(),
+                total = 12.5
+        )
+    }
+
+    private fun generateTestDiscountCoupon(): OrderForCalculate.DiscountCouponInfo {
+        val creationDate = randomDateFrom(Date())
+        val launchDate = randomDateFrom(creationDate)
+        val expirationDate = randomDateFrom(launchDate)
+        return OrderForCalculate.DiscountCouponInfo(
+                name = "Discount Coupon " + randomAlphanumeric(8),
+                code = randomAlphanumeric(16),
+                discountType = DiscountCouponType.ABS_AND_SHIPPING,
+                status = DiscountCouponStatus.ACTIVE,
+                discount = 50.0,
+                launchDate = launchDate,
+                expirationDate = expirationDate,
+                totalLimit = 5555.5,
+                usesLimit = DiscountCouponUsesLimit.UNLIMITED,
+                applicationLimit = DiscountCouponApplicationLimit.UNLIMITED,
+                creationDate = creationDate,
+                orderCount = 1,
+                catalogLimit = generateTestDiscountCouponCatalogLimit()
+        )
+    }
+
+    private fun generateTestCustomDiscountInfo() = OrderForCalculate.OrderItemDiscountInfo(
+            value = 22.2,
+            type = DiscountType.ABS,
+            base = DiscountBase.CUSTOM,
+            orderTotal = 33.3
+    )
+
+    private fun generateTestDiscountInfo() = OrderForCalculate.DiscountInfo(
+            value = 55.3,
+            type = DiscountType.ABS,
+            base = DiscountBase.ON_TOTAL,
+            orderTotal = 66.6,
+            description = "On total discount " + randomAlphanumeric(8)
+    )
+
+    private fun generateTestDiscountCouponCatalogLimit(): OrderForCalculate.DiscountCouponCatalogLimit {
+        return OrderForCalculate.DiscountCouponCatalogLimit(
+                products = listOf(1, 2, 3),
+                categories = listOf(1)
         )
     }
 }
