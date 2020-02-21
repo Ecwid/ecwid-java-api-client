@@ -35,6 +35,7 @@ data class UpdatedOrder(
 		var creditCardStatus: CreditCardStatus? = null,
 		var externalTransactionId: String? = null,
 
+		var customerId: Int? = null,
 		var customerGroup: String? = null,
 		var acceptMarketing: Boolean? = null,
 

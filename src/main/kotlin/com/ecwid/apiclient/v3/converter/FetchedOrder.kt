@@ -33,6 +33,7 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 			creditCardStatus = creditCardStatus?.toUpdated(),
 			externalTransactionId = externalTransactionId,
 
+			customerId = customerId,
 			customerGroup = customerGroup,
 			acceptMarketing = acceptMarketing,
 
