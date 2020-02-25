@@ -26,7 +26,7 @@ class CartsTest: BaseEntityTest() {
 
         // Checking that cart was successfully created with necessary parameters
         val cartDetailsRequest = CartDetailsRequest(newCartId)
-        val cartDetailsResult = apiClient.getAbandonedCart(cartDetailsRequest)
+        val cartDetailsResult = apiClient.getCartDetails(cartDetailsRequest)
 
         assertEquals(testOrder.ipAddress, cartDetailsResult.ipAddress)
         assertEquals(testOrder.email, cartDetailsResult.email)
@@ -173,12 +173,12 @@ class CartsTest: BaseEntityTest() {
                 cartId = newCartId,
                 updatedCart = generateTestCartForUpdate()
         )
-        val cartUpdateResult = apiClient.updateAbandonedCart(cartUpdateRequest)
+        val cartUpdateResult = apiClient.updateCart(cartUpdateRequest)
         assertEquals(1, cartUpdateResult.updateCount)
 
         // Checking that cart was successfully updated with necessary parameters
         val cartDetailsRequest1 = CartDetailsRequest(newCartId)
-        val cartDetailsResult1 = apiClient.getAbandonedCart(cartDetailsRequest1)
+        val cartDetailsResult1 = apiClient.getCartDetails(cartDetailsRequest1)
         assertEquals(
                 cartUpdateRequest.updatedCart,
                 cartDetailsResult1.toUpdated()
@@ -193,7 +193,7 @@ class CartsTest: BaseEntityTest() {
 
         // Converting cart to order
         val convertCartToOrderRequest = ConvertCartToOrderRequest(newCartId)
-        val convertCartToOrderResult = apiClient.convertAbandonedCartToOrder(convertCartToOrderRequest)
+        val convertCartToOrderResult = apiClient.convertCartToOrder(convertCartToOrderRequest)
 
         // Checking that cart was converted to order
         assertNotNull(convertCartToOrderResult.orderNumber)
@@ -242,7 +242,6 @@ class CartsTest: BaseEntityTest() {
             assertEquals(forCalculateItem.price, calculatedItem.price)
             assertEquals(forCalculateItem.productPrice, calculatedItem.productPrice)
             assertEquals(133.2, calculatedItem.shipping)
-            assertEquals(0.0, calculatedItem.tax) // TODO Discover why after each calculation this field resets to 0
             assertEquals(forCalculateItem.fixedShippingRate, calculatedItem.fixedShippingRate)
             assertEquals(null, calculatedItem.couponAmount) // TODO Discover why after each calculation this field resets to null
             assertEquals(forCalculateItem.sku, calculatedItem.sku)
@@ -256,9 +255,6 @@ class CartsTest: BaseEntityTest() {
             assertEquals(forCalculateItem.fixedShippingRateOnly, calculatedItem.fixedShippingRateOnly)
             assertEquals(forCalculateItem.digital, calculatedItem.digital)
             assertEquals(false, calculatedItem.couponApplied)
-            assertEquals(forCalculateItem.dimensions?.length, calculatedItem.dimensions?.length)
-            assertEquals(forCalculateItem.dimensions?.width, calculatedItem.dimensions?.width)
-            assertEquals(forCalculateItem.dimensions?.height, calculatedItem.dimensions?.height)
 
             assertEquals(forCalculateItem.selectedOptions?.count(), calculatedItem.selectedOptions?.count())
             calculatedItem.selectedOptions?.forEachIndexed { selectedOptionIndex, calculatedOrderItemOptions ->
@@ -270,34 +266,7 @@ class CartsTest: BaseEntityTest() {
                 assertEquals(forCalculateItemOption.valuesArray, calculatedOrderItemOptions.valuesArray)
 
                 assertEquals(null, calculatedOrderItemOptions.files?.count()) // TODO Discover why after each calculation this field resets to null
-//                assertEquals(forCalculateItemOption.files?.count(), calculatedOrderItemOptions.files?.count())
-//                calculatedItem.files?.forEachIndexed { fileIndex, calculatedFile ->
-//                    val forCalculateFile = forCalculateItem.files?.get(fileIndex)
-//                            ?: throw IllegalStateException("orderForCalculate.items[$itemIndex].selectedOptions[$selectedOptionIndex].files[$fileIndex] not found")
-//                    assertEquals(forCalculateFile.productFileId, calculatedFile.productFileId)
-//                    assertEquals(forCalculateFile.maxDownloads, calculatedFile.maxDownloads)
-//                    assertEquals(forCalculateFile.remainingDownloads, calculatedFile.remainingDownloads)
-//                    assertEquals(forCalculateFile.expire, calculatedFile.expire)
-//                    assertEquals(forCalculateFile.name, calculatedFile.name)
-//                    assertEquals(forCalculateFile.description, calculatedFile.description)
-//                    assertEquals(forCalculateFile.size, calculatedFile.size)
-//                    assertEquals(forCalculateFile.adminUrl, calculatedFile.adminUrl)
-//                    assertEquals(forCalculateFile.customerUrl, calculatedFile.customerUrl)
-//                }
             }
-
-            assertEquals(null, calculatedItem.taxes?.count()) // TODO Discover why after each calculation this field resets to null
-//            assertEquals(forCalculateItem.taxes?.count(), calculatedItem.taxes?.count())
-//            calculatedItem.taxes?.forEachIndexed { taxIndex, calculatedTaxe ->
-//                val forCalculatedTaxe = calculatedItem.taxes?.get(taxIndex)
-//                        ?: throw IllegalStateException("orderForCalculate.items[$itemIndex].taxes[$taxIndex] not found")
-//                assertEquals(forCalculatedTaxe.name, calculatedTaxe.name)
-//                assertEquals(forCalculatedTaxe.value, calculatedTaxe.value)
-//                assertEquals(forCalculatedTaxe.total, calculatedTaxe.total)
-//                assertEquals(forCalculatedTaxe.taxOnDiscountedSubtotal, calculatedTaxe.taxOnDiscountedSubtotal)
-//                assertEquals(forCalculatedTaxe.taxOnShipping, calculatedTaxe.taxOnShipping)
-//                assertEquals(forCalculatedTaxe.includeInPrice, calculatedTaxe.includeInPrice)
-//            }
 
             assertEquals(forCalculateItem.files?.count(), calculatedItem.files?.count())
             calculatedItem.files?.forEachIndexed { taxIndex, calculatedFile ->
@@ -315,16 +284,6 @@ class CartsTest: BaseEntityTest() {
             }
 
             assertEquals(null, calculatedItem.discounts?.count()) // TODO Discover why after each calculation this field resets to null
-//            assertEquals(forCalculateItem.discounts?.count(), calculatedItem.discounts?.count())
-//            calculatedItem.discounts?.forEachIndexed { discountIndex, calcullatedDiscounts ->
-//                val forCalculatedDiscount = forCalculateItem.discounts?.get(discountIndex)
-//                        ?: throw IllegalStateException("orderForCalculate.items[$itemIndex].discounts[$discountIndex] not found")
-//                assertEquals(forCalculatedDiscount.discountInfo?.value, calcullatedDiscounts.discountInfo?.value)
-//                assertEquals(forCalculatedDiscount.discountInfo?.type, calcullatedDiscounts.discountInfo?.type)
-//                assertEquals(forCalculatedDiscount.discountInfo?.base, calcullatedDiscounts.discountInfo?.base)
-//                assertEquals(forCalculatedDiscount.discountInfo?.orderTotal, calcullatedDiscounts.discountInfo?.orderTotal)
-//                assertEquals(forCalculatedDiscount.total, calcullatedDiscounts.total)
-//            }
         }
 
         checkPersonsEquals(orderForCalculate.billingPerson, calculatedOrder.billingPerson)
@@ -340,67 +299,70 @@ class CartsTest: BaseEntityTest() {
         val cartForSearch1 = generateCartForTestingSearch(totalPrice, false)
         val newCartId1 = createNewCart(cartForSearch1)
         val cartDetailsRequest1 = CartDetailsRequest(newCartId1)
-        val fetchedCart1 = apiClient.getAbandonedCart(cartDetailsRequest1)
+        val fetchedCart1 = apiClient.getCartDetails(cartDetailsRequest1)
 
         val cartForSearch2 = generateCartForTestingSearch(totalPrice, true)
         createNewCart(cartForSearch2)
 
-        val cartSearchRequest1 = CartsSearchRequest(
+        val cartsSearchRequest1 = CartsSearchRequest(
                 totalFrom = totalPrice - 1,
                 totalTo = totalPrice + 1,
                 showHidden = false
         )
-        val cartsSearchResult1 = apiClient.searchAbandonedCart(cartSearchRequest1)
+        val cartsSearchResult1 = apiClient.searchCarts(cartsSearchRequest1)
         assertEquals(1, cartsSearchResult1.count)
 
-        val cartSearchRequest2 = CartsSearchRequest(
+        val cartsSearchRequest2 = CartsSearchRequest(
                 totalFrom = totalPrice - 1,
                 totalTo = totalPrice + 1,
                 showHidden = true
         )
-        val cartsSearchResult2 = apiClient.searchAbandonedCart(cartSearchRequest2)
+        val cartsSearchResult2 = apiClient.searchCarts(cartsSearchRequest2)
         assertEquals(2, cartsSearchResult2.count)
 
         val createDate = fetchedCart1.createDate ?: throw IllegalStateException("fetchedCart.createDate not found")
         val instantCreate = createDate.toInstant()
         val instantCreateFrom = instantCreate.minusSeconds(1)
         val instantCreateTo = instantCreate.plusSeconds(2)
-        val cartSearchRequest3 = CartsSearchRequest(
+        val cartsSearchRequest3 = CartsSearchRequest(
                 createdFrom = Date.from(instantCreateFrom),
                 createdTo = Date.from(instantCreateTo)
         )
-        val cartsSearchResult3 = apiClient.searchAbandonedCart(cartSearchRequest3)
+        val cartsSearchResult3 = apiClient.searchCarts(cartsSearchRequest3)
         assertEquals(1, cartsSearchResult3.count)
 
         val updateDate = fetchedCart1.updateDate ?: throw IllegalStateException("fetchedCart.updateDate not found")
         val instantUpdate = updateDate.toInstant()
         val instantUpdateFrom = instantUpdate.minusSeconds(1)
         val instantUpdateTo = instantUpdate.plusSeconds(2)
-        val cartSearchRequest4 = CartsSearchRequest(
+        val cartsSearchRequest4 = CartsSearchRequest(
                 updatedFrom = Date.from(instantUpdateFrom),
                 updatedTo = Date.from(instantUpdateTo)
         )
-        val cartsSearchResult4 = apiClient.searchAbandonedCart(cartSearchRequest4)
+        val cartsSearchResult4 = apiClient.searchCarts(cartsSearchRequest4)
         assertEquals(1, cartsSearchResult4.count)
     }
 
     private fun createNewCart(updatedOrder: UpdatedOrder): String {
-        val cartsearchRequest = CartsSearchRequest()
-        val cartSearchResult1 = apiClient.searchAbandonedCartsAsSequence(cartsearchRequest)
+        val cartsSearchRequest = CartsSearchRequest()
+        val cartsSearchResult1 = apiClient.searchCartsAsSequence(cartsSearchRequest)
         updatedOrder.paymentStatus = OrderPaymentStatus.INCOMPLETE
         val orderCreateRequest = OrderCreateRequest(
                 newOrder = updatedOrder
         )
 
         apiClient.createOrder(orderCreateRequest)
-        Thread.sleep(5000) // because the order does not have time to create
 
-        val cartSearchResult2 = apiClient.searchAbandonedCartsAsSequence(cartsearchRequest)
-        val newCartList = cartSearchResult2 - cartSearchResult1
+        var tries = 0
+        do {
+            val cartsSearchResult2 = apiClient.searchCartsAsSequence(cartsSearchRequest)
+            val newCartList = cartsSearchResult2 - cartsSearchResult1
+            if (newCartList.count() == 1) return newCartList[0].cartId
+            tries++
+            Thread.sleep(500L * tries) // because the order does not have time to create
+        } while (tries < 10)
 
-        assertEquals(1, newCartList.count())
-
-        return newCartList[0].cartId
+        return fail("After $tries tries, cart was not created")
     }
 
     private fun checkPersonsEquals(billingPerson1: OrderForCalculate.PersonInfo?, billingPerson2: CalculateOrderDetailsResult.PersonInfo?) {

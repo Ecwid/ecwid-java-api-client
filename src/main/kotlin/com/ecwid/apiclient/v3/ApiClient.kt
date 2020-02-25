@@ -42,7 +42,7 @@ class ApiClient private constructor(
 		productVariationsApiClient: ProductVariationsApiClient,
 		batchApiClient: BatchApiClient,
 		discountCouponsApiClient: CouponsApiClient,
-		abandonedCartsApiClient: CartsApiClient
+		сartsApiClient: CartsApiClient
 ) :
 		ProductsApiClient by productsApiClient,
 		CategoriesApiClient by categoriesApiClient,
@@ -53,7 +53,7 @@ class ApiClient private constructor(
 		ProductVariationsApiClient by productVariationsApiClient,
 		BatchApiClient by batchApiClient,
 		CouponsApiClient by discountCouponsApiClient,
-		CartsApiClient by abandonedCartsApiClient{
+		CartsApiClient by сartsApiClient{
 
 	companion object {
 		fun create(apiServerDomain: ApiServerDomain,
@@ -219,12 +219,12 @@ interface ProductVariationsApiClient {
 // Carts
 // https://developers.ecwid.com/api-documentation/carts
 interface CartsApiClient {
-	fun searchAbandonedCart(request: CartsSearchRequest): CartsSearchResult
-	fun searchAbandonedCartsAsSequence(request: CartsSearchRequest): List<FetchedCart>
-	fun getAbandonedCart(request: CartDetailsRequest): FetchedCart
-	fun updateAbandonedCart(request: CartUpdateRequest): CartUpdateResult
+	fun searchCarts(request: CartsSearchRequest): CartsSearchResult
+	fun searchCartsAsSequence(request: CartsSearchRequest): List<FetchedCart>
+	fun getCartDetails(request: CartDetailsRequest): FetchedCart
+	fun updateCart(request: CartUpdateRequest): CartUpdateResult
 	fun calculateOrderDetails(request: CalculateOrderDetailsRequest): CalculateOrderDetailsResult
-	fun convertAbandonedCartToOrder(request: ConvertCartToOrderRequest): ConvertCartToOrderResult
+	fun convertCartToOrder(request: ConvertCartToOrderRequest): ConvertCartToOrderResult
 }
 
 // Discount coupons
