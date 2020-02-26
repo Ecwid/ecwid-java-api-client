@@ -141,17 +141,22 @@ abstract class BaseEntityTest {
 	protected fun getTestPngFilePath(): Path = Paths.get(javaClass.getResource("/logo-ecwid-small.png").toURI())
 
 	protected fun waitForProductCount(productsSearchRequest: ProductsSearchRequest.ByFilters, desiredProductCount: Int) {
-		var tries = 0
-		var lastProductCount: Int
-		do {
+		processDelay(500L, 10) {
 			val productsSearchResult = apiClient.searchProducts(productsSearchRequest)
-			if (productsSearchResult.items.size == desiredProductCount) return
-			lastProductCount = productsSearchResult.items.size
-			tries++
-			Thread.sleep(500L * tries)
-		} while (tries < 10)
+			if (productsSearchResult.items.size == desiredProductCount) "" else null
+		}
+	}
 
-		return Assertions.fail("After $tries tries was $lastProductCount products found instead of $desiredProductCount")
+	protected inline fun processDelay(delay: Long, totalTries: Int, crossinline block: () -> String?) : String {
+		var tries = 0
+		if (tries >= totalTries) return Assertions.fail("Expected 'totalTries' value must be > 0, but actual is '$totalTries'")
+		do {
+			val result = block()
+			if (result != null) return result
+			tries++
+			Thread.sleep(delay * tries)
+		} while (tries < totalTries)
+		return Assertions.fail("After $tries tries, item was not processed")
 	}
 
 }
