@@ -353,16 +353,11 @@ class CartsTest: BaseEntityTest() {
 
         apiClient.createOrder(orderCreateRequest)
 
-        var tries = 0
-        do {
+        return processDelay(500L, 10) {
             val cartsSearchResult2 = apiClient.searchCartsAsSequence(cartsSearchRequest)
             val newCartList = cartsSearchResult2 - cartsSearchResult1
-            if (newCartList.count() == 1) return newCartList[0].cartId
-            tries++
-            Thread.sleep(500L * tries) // because the order does not have time to create
-        } while (tries < 10)
-
-        return fail("After $tries tries, cart was not created")
+            if (newCartList.count() == 1) newCartList[0].cartId else null
+        }
     }
 
     private fun checkPersonsEquals(billingPerson1: OrderForCalculate.PersonInfo?, billingPerson2: CalculateOrderDetailsResult.PersonInfo?) {
