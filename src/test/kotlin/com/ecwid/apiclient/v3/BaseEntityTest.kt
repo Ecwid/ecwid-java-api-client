@@ -43,7 +43,10 @@ abstract class BaseEntityTest {
 			override fun build(polymorphicTypes: Set<PolymorphicType<*>>) = GsonJsonTransformer(polymorphicTypes)
 		}
 		apiClient = ApiClient.create(
-				apiServerDomain = ApiServerDomain(),
+				apiServerDomain = ApiServerDomain(
+						host = PropertiesLoader.apiHost,
+						securePort = PropertiesLoader.apiPort
+				),
 				storeCredentials = ApiStoreCredentials(
 						storeId = PropertiesLoader.storeId,
 						apiToken = PropertiesLoader.apiToken

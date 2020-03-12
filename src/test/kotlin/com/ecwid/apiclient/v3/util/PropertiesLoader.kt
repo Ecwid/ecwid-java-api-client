@@ -6,17 +6,31 @@ class PropertiesLoader {
 
 	companion object {
 
+		val apiHost: String
+		val apiPort: Int
 		val storeId: Int
 		val apiToken: String
 
 		init {
 			val resource = PropertiesLoader::class.java.getResourceAsStream("/test.properties")
-			if (resource == null) {
-				throw IllegalStateException("File test.properties not found in test/resources dir. Please copy test/resources/test.properties.sample and configure it")
-			}
+					?: throw IllegalStateException("File test.properties not found in test/resources dir. Please copy test/resources/test.properties.sample and configure it")
 
 			val p = Properties()
 			p.load(resource)
+
+			val apiHostStr = p.getProperty("apiHost")
+			apiHost = if (apiHostStr.isNullOrEmpty()) {
+				"app.ecwid.com"
+			} else {
+				apiHostStr
+			}
+
+			val apiPortStr = p.getProperty("apiPort")
+			apiPort = if (apiHostStr.isNullOrEmpty()) {
+				443
+			} else {
+				apiPortStr.toInt()
+			}
 
 			val storeIdStr = p.getProperty("storeId")
 			if (storeIdStr.isNullOrEmpty()) {
