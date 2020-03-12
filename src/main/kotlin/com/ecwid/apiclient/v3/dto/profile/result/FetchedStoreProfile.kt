@@ -17,7 +17,8 @@ data class FetchedStoreProfile(
         var featureToggles: List<FeatureTogglesInfo>? = null,
         var productFiltersSettings: ProductFiltersSettings? = null,
         var fbMessengerSettings: FBMessengerSettings? = null,
-        var orderInvoiceSettings: OrderInvoiceSettings? = null
+        var orderInvoiceSettings: OrderInvoiceSettings? = null,
+        var giftCardSettings: GiftCardSettings? = null
 ) {
     data class GeneralInfo(
             var storeId: Int = 0,
@@ -366,5 +367,16 @@ data class FetchedStoreProfile(
             ATTACH_TO_ALL_EMAILS, DO_NOT_ATTACH
         }
     }
+
+    data class GiftCardSettings(
+            var products: List<GiftCardProducts>? = null,
+            var displayLocation: String? = null
+    )
+
+    data class GiftCardProducts(
+            var id: Int? = null,
+            var name: String? = null,
+            var url: String? = null
+    )
 
 }
