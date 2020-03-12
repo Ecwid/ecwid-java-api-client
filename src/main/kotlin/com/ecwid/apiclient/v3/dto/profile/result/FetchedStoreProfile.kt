@@ -3,7 +3,9 @@ package com.ecwid.apiclient.v3.dto.profile.result
 data class FetchedStoreProfile(
         var generalInfo: GeneralInfo? = null,
         var account: Account? = null,
-        var settings: Settings? = null
+        var settings: Settings? = null,
+        var mailNotifications: MailNotifications? = null,
+        var company: Company? = null
 ) {
     data class GeneralInfo(
             var storeId: Int = 0,
@@ -80,4 +82,20 @@ data class FetchedStoreProfile(
             NONE, ABS, PERCENT
         }
     }
+
+    data class MailNotifications(
+            var adminNotificationEmails: List<String>? = null,
+            var customerNotificationFromEmail: String? = null
+    )
+
+    data class Company(
+            var companyName: String? = null,
+            var email: String? = null,
+            var street: String? = null,
+            var city: String? = null,
+            var countryCode: String? = null,
+            var postalCode: String? = null,
+            var stateOrProvinceCode: String? = null,
+            var phone: String? = null
+    )
 }
