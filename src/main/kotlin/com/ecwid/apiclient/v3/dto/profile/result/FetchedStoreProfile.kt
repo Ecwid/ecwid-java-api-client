@@ -86,10 +86,10 @@ data class FetchedStoreProfile(
         var autoAbandonedSalesRecovery: Boolean? = null
     )
 
-    class SalePriceSettings {
-        var displayOnProductList: Boolean? = null
-        var oldPriceLabel: String? = null
-        var displayDiscount: DisplayDiscount? = null
+    data class SalePriceSettings(
+            var displayOnProductList: Boolean? = null,
+            var oldPriceLabel: String? = null,
+            var displayDiscount: DisplayDiscount? = null) {
 
         enum class DisplayDiscount {
             NONE, ABS, PERCENT
