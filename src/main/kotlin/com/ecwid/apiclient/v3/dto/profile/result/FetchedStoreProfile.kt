@@ -9,7 +9,10 @@ data class FetchedStoreProfile(
         var formatsAndUnits: FormatsAndUnits? = null,
         var languages: Languages? = null,
         var shipping: Shipping? = null,
-        var taxSettings: TaxSettings? = null
+        var taxSettings: TaxSettings? = null,
+        var zones: List<Zone>? = null,
+        var businessRegistrationID: BusinessRegistrationID? = null,
+        var legalPagesSettings: LegalPagesSettingsDetails? = null
 ) {
     data class GeneralInfo(
             var storeId: Int = 0,
@@ -283,6 +286,32 @@ data class FetchedStoreProfile(
                 var zoneId: String? = null,
                 var tax: Double? = null
         )
+    }
+
+    data class BusinessRegistrationID(
+            var name: String? = null,
+            var value: String? = null
+    )
+
+    data class LegalPagesSettingsDetails(
+            var requireTermsAgreementAtCheckout: Boolean? = null,
+            var legalPages: List<LegalPagesInfo>? = null
+    )
+
+    data class LegalPagesInfo(
+            var type: Type? = null,
+            var enabled: Boolean? = null,
+            var title: String? = null,
+            var display: Display? = null,
+            var text: String? = null,
+            var externalUrl: String? = null
+    ) {
+        enum class Type {
+            LEGAL_INFO, SHIPPING_COST_PAYMENT_INFO, REVOCATION_TERMS, TERMS, PRIVACY_STATEMENT
+        }
+        enum class Display {
+            INLINE, EXTERNAL_URL
+        }
     }
 
 }
