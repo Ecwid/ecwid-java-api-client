@@ -12,7 +12,8 @@ data class FetchedStoreProfile(
         var taxSettings: TaxSettings? = null,
         var zones: List<Zone>? = null,
         var businessRegistrationID: BusinessRegistrationID? = null,
-        var legalPagesSettings: LegalPagesSettingsDetails? = null
+        var legalPagesSettings: LegalPagesSettingsDetails? = null,
+        var payment: PaymentInfo? = null
 ) {
     data class GeneralInfo(
             var storeId: Int = 0,
@@ -313,5 +314,26 @@ data class FetchedStoreProfile(
             INLINE, EXTERNAL_URL
         }
     }
+
+    data class PaymentInfo(
+            var paymentOptions: List<PaymentOptionInfo>? = null
+    )
+
+    data class PaymentOptionInfo(
+            var id: String? = null,
+            var enabled: Boolean? = null,
+            var checkoutTitle: String? = null,
+            var checkoutDescription: String? = null,
+            var paymentProcessorId: String? = null,
+            var paymentProcessorTitle: String? = null,
+            var orderBy: Int? = null,
+            var appClientId: String? = null,
+            var instructionsForCustomer: InstructionsForCustomerInfo? = null
+    )
+
+    data class InstructionsForCustomerInfo(
+            var instructionsTitle: String? = null,
+            var instructions: String? = null
+    )
 
 }
