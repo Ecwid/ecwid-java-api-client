@@ -25,6 +25,8 @@ import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
+import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
+import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
@@ -33,6 +35,7 @@ import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
 
 class ApiClient private constructor(
+		storeProfileApiClient: StoreProfileApiClientImpl,
 		productsApiClient: ProductsApiClient,
 		categoriesApiClient: CategoriesApiClient,
 		ordersApiClient: OrdersApiClient,
@@ -44,6 +47,7 @@ class ApiClient private constructor(
 		discountCouponsApiClient: CouponsApiClient,
 		сartsApiClient: CartsApiClient
 ) :
+		StoreProfileApiClient by storeProfileApiClient,
 		ProductsApiClient by productsApiClient,
 		CategoriesApiClient by categoriesApiClient,
 		OrdersApiClient by ordersApiClient,
@@ -82,6 +86,7 @@ class ApiClient private constructor(
 			val apiClientHelper = ApiClientHelper(apiServerDomain, storeCredentials, loggingSettings, httpTransport, jsonTransformer)
 
 			return ApiClient(
+					StoreProfileApiClientImpl(apiClientHelper),
 					ProductsApiClientImpl(apiClientHelper),
 					CategoriesApiClientImpl(apiClientHelper),
 					OrdersApiClientImpl(apiClientHelper),
@@ -96,6 +101,12 @@ class ApiClient private constructor(
 
 		}
 	}
+}
+
+// Store-Profile
+// https://api-docs.ecwid.com/reference/store-profile
+interface StoreProfileApiClient {
+	fun getStoreProfile(request: StoreProfileRequest): FetchedStoreProfile
 }
 
 // Products
