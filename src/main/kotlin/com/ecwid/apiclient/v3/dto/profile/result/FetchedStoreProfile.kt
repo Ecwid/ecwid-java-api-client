@@ -13,7 +13,11 @@ data class FetchedStoreProfile(
         var zones: List<Zone>? = null,
         var businessRegistrationID: BusinessRegistrationID? = null,
         var legalPagesSettings: LegalPagesSettingsDetails? = null,
-        var payment: PaymentInfo? = null
+        var payment: PaymentInfo? = null,
+        var featureToggles: List<FeatureTogglesInfo>? = null,
+        var productFiltersSettings: ProductFiltersSettings? = null,
+        var fbMessengerSettings: FBMessengerSettings? = null,
+        var orderInvoiceSettings: OrderInvoiceSettings? = null
 ) {
     data class GeneralInfo(
             var storeId: Int = 0,
@@ -335,5 +339,32 @@ data class FetchedStoreProfile(
             var instructionsTitle: String? = null,
             var instructions: String? = null
     )
+
+    data class FeatureTogglesInfo(
+            var name: String? = null,
+            var visible: Boolean? = null,
+            var enabled: Boolean? = null
+    )
+
+    data class ProductFiltersSettings(
+            var enabledInStorefront: Boolean? = null
+    )
+
+    data class FBMessengerSettings(
+            var enabled: Boolean? = null,
+            var fbMessengerPageId: String? = null,
+            var fbMessengerThemeColor: String? = null,
+            var fbMessengerMessageUsButtonColor: String? = null
+    )
+
+    data class OrderInvoiceSettings(
+            var displayOrderInvoices: Boolean? = null,
+            var attachInvoiceToOrderEmailNotifications: AttachValue? = null,
+            var invoiceLogoUrl: String? = null
+    ) {
+        enum class AttachValue {
+            ATTACH_TO_ALL_EMAILS, DO_NOT_ATTACH
+        }
+    }
 
 }
