@@ -26,7 +26,9 @@ import com.ecwid.apiclient.v3.dto.product.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
+import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
+import com.ecwid.apiclient.v3.dto.profile.result.StoreProfileUpdateResult
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
@@ -107,6 +109,7 @@ class ApiClient private constructor(
 // https://api-docs.ecwid.com/reference/store-profile
 interface StoreProfileApiClient {
 	fun getStoreProfile(request: StoreProfileRequest): FetchedStoreProfile
+	fun updateStoreProfile(request: StoreProfileUpdateRequest): StoreProfileUpdateResult
 }
 
 // Products
