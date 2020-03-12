@@ -8,7 +8,8 @@ data class FetchedStoreProfile(
         var company: Company? = null,
         var formatsAndUnits: FormatsAndUnits? = null,
         var languages: Languages? = null,
-        var shipping: Shipping? = null
+        var shipping: Shipping? = null,
+        var taxSettings: TaxSettings? = null
 ) {
     data class GeneralInfo(
             var storeId: Int = 0,
@@ -261,5 +262,27 @@ data class FetchedStoreProfile(
             var perItem: Double? = null,
             var perWeightUnitRate: Double? = null
     )
+
+    data class TaxSettings(
+            var automaticTaxEnabled: Boolean? = null,
+            var taxes: List<Taxes>? = null
+    ) {
+        data class Taxes(
+                var id: Int? = null,
+                var name: String? = null,
+                var enabled: Boolean? = null,
+                var includeInPrice: Boolean? = null,
+                var useShippingAddress: Boolean? = null,
+                var taxShipping: Boolean? = null,
+                var appliedByDefault: Boolean? = null,
+                var defaultTax: Double? = null,
+                var rules: List<TaxRule>? = null
+        )
+
+        data class TaxRule(
+                var zoneId: String? = null,
+                var tax: Double? = null
+        )
+    }
 
 }
