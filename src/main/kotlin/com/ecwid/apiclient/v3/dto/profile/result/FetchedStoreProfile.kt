@@ -5,7 +5,8 @@ data class FetchedStoreProfile(
         var account: Account? = null,
         var settings: Settings? = null,
         var mailNotifications: MailNotifications? = null,
-        var company: Company? = null
+        var company: Company? = null,
+        var formatsAndUnits: FormatsAndUnits? = null
 ) {
     data class GeneralInfo(
             var storeId: Int = 0,
@@ -98,4 +99,30 @@ data class FetchedStoreProfile(
             var stateOrProvinceCode: String? = null,
             var phone: String? = null
     )
+
+    data class FormatsAndUnits(
+            var currency: String? = null,
+            var currencyPrefix: String? = null,
+            var currencySuffix: String? = null,
+            var currencyPrecision: String? = null,
+            var currencyGroupSeparator: String? = null,
+            var currencyDecimalSeparator: String? = null,
+            var currencyTruncateZeroFractional: Boolean? = null,
+            var currencyRate: Double? = null,
+            var weightUnit: WeightUnit? = null,
+            var weightPrecision: Int? = null,
+            var weightGroupSeparator: String? = null,
+            var weightDecimalSeparator: String? = null,
+            var weightTruncateZeroFractional: Boolean? = null,
+            var dateFormat: String? = null,
+            var timeFormat: String? = null,
+            var timezone: String? = null,
+            var dimensionsUnit: String? = null,
+            var orderNumberPrefix: String? = null,
+            var orderNumberSuffix: String? = null
+    )
+
+    enum class WeightUnit {
+        CARAT, GRAM, OUNCE, POUND, KILOGRAM
+    }
 }
