@@ -129,13 +129,17 @@ data class FetchedStoreProfile(
             var dateFormat: String? = null,
             var timeFormat: String? = null,
             var timezone: String? = null,
-            var dimensionsUnit: String? = null,
+            var dimensionsUnit: DimensionUnit? = null,
             var orderNumberPrefix: String? = null,
             var orderNumberSuffix: String? = null
     )
 
     enum class WeightUnit {
         CARAT, GRAM, OUNCE, POUND, KILOGRAM
+    }
+
+    enum class DimensionUnit {
+        MM, CM, IN, YD
     }
 
     data class Languages(
