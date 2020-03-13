@@ -1,7 +1,10 @@
 package com.ecwid.apiclient.v3
 
+import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
+import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
+import com.ecwid.apiclient.v3.util.PropertiesLoader
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -158,6 +161,49 @@ class StoreProfileTest: BaseEntityTest() {
 
         assertTrue(updateResult.success)
         assertEquals(1, updateResult.updateCount)
+
+        val actualProfile = apiClient.getStoreProfile(StoreProfileRequest())
+
+        assertEquals(PropertiesLoader.storeId, actualProfile.generalInfo!!.storeId)
+        assertEquals("bobyor", actualProfile.generalInfo!!.starterSite!!.ecwidSubdomain)
+        assertEquals("example.com", actualProfile.generalInfo!!.starterSite!!.customDomain)
+        assertEquals("https://example.com:9043", actualProfile.generalInfo!!.starterSite!!.generatedUrl)
+        assertEquals("https://www.ecwid.com", actualProfile.generalInfo!!.storeUrl)
+        assertEquals(FetchedStoreProfile.WebsitePlatform.wordpress, actualProfile.generalInfo!!.websitePlatform)
+
+        assertEquals("The Bobyør", actualProfile.account!!.accountName)
+        assertEquals("bobyør", actualProfile.account!!.accountNickName)
+        assertEquals("bobyor@example.com", actualProfile.account!!.accountEmail)
+        assertTrue(actualProfile.account!!.availableFeatures!!.contains("API"))
+        assertEquals(false, actualProfile.account!!.whiteLabel)
+
+        assertEquals(true, actualProfile.settings!!.closed)
+        assertEquals("The Shop", actualProfile.settings!!.storeName)
+        assertEquals("The Store Description", actualProfile.settings!!.storeDescription)
+        assertEquals(true, actualProfile.settings!!.googleRemarketingEnabled)
+        assertEquals("googleAnalyticsId", actualProfile.settings!!.googleAnalyticsId)
+        assertEquals("fbPixelId", actualProfile.settings!!.fbPixelId)
+        assertEquals(true, actualProfile.settings!!.orderCommentsEnabled)
+        assertEquals("orderCommentsCaption", actualProfile.settings!!.orderCommentsCaption)
+        assertEquals(true, actualProfile.settings!!.orderCommentsRequired)
+        assertEquals(true, actualProfile.settings!!.hideOutOfStockProductsInStorefront)
+        assertEquals(true, actualProfile.settings!!.askCompanyName)
+        assertEquals(true, actualProfile.settings!!.favoritesEnabled)
+        assertEquals(FetchedStoreProfile.ProductSortOrder.NAME_ASC, actualProfile.settings!!.defaultProductSortOrder)
+
+        assertEquals(true, actualProfile.settings!!.abandonedSales!!.autoAbandonedSalesRecovery)
+
+        assertEquals(true, actualProfile.settings!!.salePrice!!.displayOnProductList)
+        assertEquals("oldPriceLabel", actualProfile.settings!!.salePrice!!.oldPriceLabel)
+        assertEquals(FetchedStoreProfile.SalePriceSettings.DisplayDiscount.PERCENT, actualProfile.settings!!.salePrice!!.displayDiscount)
+
+        assertEquals(true, actualProfile.settings!!.showAcceptMarketingCheckbox)
+        assertEquals(true, actualProfile.settings!!.acceptMarketingCheckboxDefaultValue)
+        assertEquals("acceptMarketingCheckboxCustomText", actualProfile.settings!!.acceptMarketingCheckboxCustomText)
+        assertEquals(true, actualProfile.settings!!.askConsentToTrackInStorefront)
+        assertEquals("snapPixelId", actualProfile.settings!!.snapPixelId)
+        assertEquals("googleTagId", actualProfile.settings!!.googleTagId)
+        assertEquals("googleEventId", actualProfile.settings!!.googleEventId)
     }
 
 }
