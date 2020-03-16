@@ -37,7 +37,7 @@ import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
 
 class ApiClient private constructor(
-		storeProfileApiClient: StoreProfileApiClientImpl,
+		storeProfileApiClient: StoreProfileApiClient,
 		productsApiClient: ProductsApiClient,
 		categoriesApiClient: CategoriesApiClient,
 		ordersApiClient: OrdersApiClient,
