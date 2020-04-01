@@ -1007,6 +1007,7 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 
 			options = listOf(
 					generateProductSelectOption(),
+					generateProductSizeOption(),
 					generateProductRadioOption(),
 					generateProductCheckboxOption(),
 					generateProductTextFieldOption(),
@@ -1031,6 +1032,25 @@ private fun generateProductSelectOption(): ProductOption.SelectOption {
 	)
 	val enName = "Option " + randomAlphanumeric(8)
 	return ProductOption.createSelectOption(
+			name = enName,
+			nameTranslated = LocalizedValueMap(
+					"ru" to "Опция " + randomAlphanumeric(8),
+					"en" to enName
+			),
+			choices = choices,
+			defaultChoice = randomIndex(choices),
+			required = randomBoolean()
+	)
+}
+
+private fun generateProductSizeOption(): ProductOption.SizeOption {
+	val choices = listOf(
+			generateProductOptionChoice(),
+			generateProductOptionChoice(),
+			generateProductOptionChoice()
+	)
+	val enName = "Option " + randomAlphanumeric(8)
+	return ProductOption.createSizeOption(
 			name = enName,
 			nameTranslated = LocalizedValueMap(
 					"ru" to "Опция " + randomAlphanumeric(8),

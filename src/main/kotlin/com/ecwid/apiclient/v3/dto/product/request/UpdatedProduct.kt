@@ -62,6 +62,14 @@ data class UpdatedProduct(
 				val required: Boolean = false
 		) : ProductOption(ProductOptionType.SELECT)
 
+		data class SizeOption(
+				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
+				val choices: List<ProductOptionChoice> = listOf(),
+				val defaultChoice: Int = 0,
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.SIZE)
+
 		data class RadioOption(
 				val name: String = "",
 				val nameTranslated: LocalizedValueMap? = null,
@@ -110,6 +118,20 @@ data class UpdatedProduct(
 					defaultChoice: Int = 0,
 					required: Boolean = false
 			) = SelectOption(
+					name = name,
+					nameTranslated = nameTranslated,
+					choices = choices,
+					defaultChoice = defaultChoice,
+					required = required
+			)
+
+			fun createSizeOption(
+					name: String = "",
+					nameTranslated: LocalizedValueMap? = null,
+					choices: List<ProductOptionChoice> = listOf(),
+					defaultChoice: Int = 0,
+					required: Boolean = false
+			) = SizeOption(
 					name = name,
 					nameTranslated = nameTranslated,
 					choices = choices,

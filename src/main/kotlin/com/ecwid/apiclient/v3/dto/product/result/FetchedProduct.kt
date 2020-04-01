@@ -96,6 +96,14 @@ data class FetchedProduct(
 				val required: Boolean = false
 		) : ProductOption(ProductOptionType.SELECT)
 
+		data class SizeOption(
+				val name: String = "",
+				val nameTranslated: LocalizedValueMap? = null,
+				val choices: List<ProductOptionChoice> = listOf(),
+				val defaultChoice: Int = 0,
+				val required: Boolean = false
+		) : ProductOption(ProductOptionType.SIZE)
+
 		data class RadioOption(
 				val name: String = "",
 				val nameTranslated: LocalizedValueMap? = null,
