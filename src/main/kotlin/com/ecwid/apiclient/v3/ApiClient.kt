@@ -47,7 +47,7 @@ class ApiClient private constructor(
 		productVariationsApiClient: ProductVariationsApiClient,
 		batchApiClient: BatchApiClient,
 		discountCouponsApiClient: CouponsApiClient,
-		сartsApiClient: CartsApiClient
+		cartsApiClient: CartsApiClient
 ) :
 		StoreProfileApiClient by storeProfileApiClient,
 		ProductsApiClient by productsApiClient,
@@ -59,7 +59,7 @@ class ApiClient private constructor(
 		ProductVariationsApiClient by productVariationsApiClient,
 		BatchApiClient by batchApiClient,
 		CouponsApiClient by discountCouponsApiClient,
-		CartsApiClient by сartsApiClient{
+		CartsApiClient by cartsApiClient {
 
 	companion object {
 		fun create(apiServerDomain: ApiServerDomain,
