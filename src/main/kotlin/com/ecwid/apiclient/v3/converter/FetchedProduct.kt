@@ -53,6 +53,7 @@ private fun FetchedProduct.WholesalePrice.toUpdated() = UpdatedProduct.Wholesale
 
 private fun FetchedProduct.ProductOption.toUpdated() = when (this) {
 	is FetchedProduct.ProductOption.SelectOption -> toUpdated()
+	is FetchedProduct.ProductOption.SizeOption -> toUpdated()
 	is FetchedProduct.ProductOption.RadioOption -> toUpdated()
 	is FetchedProduct.ProductOption.CheckboxOption -> toUpdated()
 	is FetchedProduct.ProductOption.TextFieldOption -> toUpdated()
@@ -62,6 +63,14 @@ private fun FetchedProduct.ProductOption.toUpdated() = when (this) {
 }
 
 private fun FetchedProduct.ProductOption.SelectOption.toUpdated() =  UpdatedProduct.ProductOption.SelectOption(
+		name = name,
+		nameTranslated = nameTranslated,
+		choices = choices.map { it.toUpdated() },
+		defaultChoice = defaultChoice,
+		required = required
+)
+
+private fun FetchedProduct.ProductOption.SizeOption.toUpdated() =  UpdatedProduct.ProductOption.SizeOption(
 		name = name,
 		nameTranslated = nameTranslated,
 		choices = choices.map { it.toUpdated() },

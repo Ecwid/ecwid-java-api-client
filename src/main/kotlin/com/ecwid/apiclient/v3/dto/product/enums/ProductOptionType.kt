@@ -7,5 +7,6 @@ enum class ProductOptionType {
 	TEXTFIELD,
 	TEXTAREA,
 	DATE,
-	FILES
+	FILES,
+	SIZE
 }

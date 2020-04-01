@@ -75,6 +75,7 @@ class ApiClient private constructor(
 									jsonFieldName = "type",
 									childClasses = setOf(
 											Pair(FetchedProduct.ProductOption.SelectOption::class.java, "select"),
+											Pair(FetchedProduct.ProductOption.SizeOption::class.java, "size"),
 											Pair(FetchedProduct.ProductOption.RadioOption::class.java, "radio"),
 											Pair(FetchedProduct.ProductOption.CheckboxOption::class.java, "checkbox"),
 											Pair(FetchedProduct.ProductOption.TextFieldOption::class.java, "textfield"),
