@@ -219,9 +219,9 @@ data class FetchedStoreProfile(
     )
 
     data class DefaultPostageDimensions(
-            var length: Int? = null,
-            var width: Int? = null,
-            var height: Int? = null
+            var length: Double? = null,
+            var width: Double? = null,
+            var height: Double? = null
     )
 
     enum class RatesCalculationType {
