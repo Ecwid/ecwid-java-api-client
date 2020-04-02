@@ -9,12 +9,13 @@ import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.randomAlphanumeric
 import com.ecwid.apiclient.v3.util.randomEnumValue
 import com.ecwid.apiclient.v3.util.randomOf
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 
-class ProductTypesTest: BaseEntityTest() {
+class ProductTypesTest : BaseEntityTest() {
 
 	@BeforeEach
 	override fun beforeEach() {
@@ -164,7 +165,7 @@ class ProductTypesTest: BaseEntityTest() {
 private fun generateTestProductTypeForCreate(): UpdatedProductType {
 	return UpdatedProductType(
 			name = randomOf("Shirts & Tops", "Books", "Tablet Computers"),
-			attributes = AttributeType.values().map(::generateProductAttribute) 
+			attributes = AttributeType.values().map(::generateProductAttribute)
 	)
 }
 

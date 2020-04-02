@@ -47,8 +47,8 @@ class PropertiesLoader {
 				throw IllegalStateException("Parameter storeId must be a valid Store ID")
 			}
 
-			Companion.storeId = storeId 
-			Companion.apiToken = apiToken 
+			Companion.storeId = storeId
+			Companion.apiToken = apiToken
 		}
 
 	}

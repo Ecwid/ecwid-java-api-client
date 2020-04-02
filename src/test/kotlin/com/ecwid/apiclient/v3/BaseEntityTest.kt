@@ -150,7 +150,7 @@ abstract class BaseEntityTest {
 		}
 	}
 
-	protected inline fun processDelay(delay: Long, totalTries: Int, crossinline block: () -> String?) : String {
+	protected inline fun processDelay(delay: Long, totalTries: Int, crossinline block: () -> String?): String {
 		var tries = 0
 		if (tries >= totalTries) return Assertions.fail("Expected 'totalTries' value must be > 0, but actual is '$totalTries'")
 		do {

@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 
-class CustomersTest: BaseEntityTest() {
+class CustomersTest : BaseEntityTest() {
 
 	@BeforeEach
 	override fun beforeEach() {
