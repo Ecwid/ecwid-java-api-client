@@ -7,7 +7,7 @@ data class ProductVariationImageDeleteRequest(
 		val productId: Int = 0,
 		val variationId: Int = 0
 ) : ApiRequest {
-	override fun toRequestInfo() =  RequestInfo.createDeleteRequest(
+	override fun toRequestInfo() = RequestInfo.createDeleteRequest(
 			endpoint = "products/$productId/combinations/$variationId/image"
 	)
 }

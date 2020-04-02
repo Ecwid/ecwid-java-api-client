@@ -6,11 +6,11 @@ import java.io.InputStream
 
 sealed class HttpBody(val mimeType: String) {
 
-	object EmptyBody: HttpBody("")
-	class JsonBody(val obj: Any): HttpBody(MIME_TYPE_APPLICATION_JSON)
-	class ByteArrayBody(val bytes: ByteArray, mimeType: String): HttpBody(mimeType)
-	class InputStreamBody(val stream: InputStream, mimeType: String): HttpBody(mimeType)
-	class LocalFileBody(val file: File, mimeType: String): HttpBody(mimeType)
+	object EmptyBody : HttpBody("")
+	class JsonBody(val obj: Any) : HttpBody(MIME_TYPE_APPLICATION_JSON)
+	class ByteArrayBody(val bytes: ByteArray, mimeType: String) : HttpBody(mimeType)
+	class InputStreamBody(val stream: InputStream, mimeType: String) : HttpBody(mimeType)
+	class LocalFileBody(val file: File, mimeType: String) : HttpBody(mimeType)
 
 	fun asString() = when (this) {
 		is EmptyBody -> null
@@ -23,6 +23,6 @@ sealed class HttpBody(val mimeType: String) {
 }
 
 sealed class TransportHttpBody(val mimeType: String) {
-	object EmptyBody: TransportHttpBody("")
-	class InputStreamBody(val stream: InputStream, mimeType: String): TransportHttpBody(mimeType)
+	object EmptyBody : TransportHttpBody("")
+	class InputStreamBody(val stream: InputStream, mimeType: String) : TransportHttpBody(mimeType)
 }

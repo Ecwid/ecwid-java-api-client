@@ -12,8 +12,8 @@ internal class ProductVariationsApiClientImpl(
 	override fun deleteVariationImage(request: ProductVariationImageDeleteRequest) = apiClientHelper.makeRequest<ProductVariationImageDeleteResult>(request)
 	override fun getAllProductVariations(request: ProductVariationsRequest) = apiClientHelper.makeRequest<ProductVariationsResult>(request)
 	override fun getProductVariation(request: ProductVariationDetailsRequest) = apiClientHelper.makeRequest<FetchedVariation>(request)
-	override fun updateProductVariation(request: UpdateProductVariationRequest)= apiClientHelper.makeRequest<UpdateProductVariationResult>(request)
-	override fun deleteProductVariation(request: DeleteProductVariationRequest)= apiClientHelper.makeRequest<DeleteProductVariationsResult>(request)
-	override fun deleteAllProductVariations(request: DeleteAllProductVariationsRequest)= apiClientHelper.makeRequest<DeleteProductVariationsResult>(request)
+	override fun updateProductVariation(request: UpdateProductVariationRequest) = apiClientHelper.makeRequest<UpdateProductVariationResult>(request)
+	override fun deleteProductVariation(request: DeleteProductVariationRequest) = apiClientHelper.makeRequest<DeleteProductVariationsResult>(request)
+	override fun deleteAllProductVariations(request: DeleteAllProductVariationsRequest) = apiClientHelper.makeRequest<DeleteProductVariationsResult>(request)
 	override fun adjustVariationInventory(request: AdjustVariationInventoryRequest) = apiClientHelper.makeRequest<AdjustVariationInventoryResult>(request)
 }

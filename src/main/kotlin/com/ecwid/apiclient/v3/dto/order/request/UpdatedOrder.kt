@@ -2,11 +2,9 @@ package com.ecwid.apiclient.v3.dto.order.request
 
 import com.ecwid.apiclient.v3.dto.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
-import com.ecwid.apiclient.v3.dto.order.enums.OrderFulfillmentStatus
-import com.ecwid.apiclient.v3.dto.order.enums.OrderPaymentStatus
-import java.util.*
-import java.text.SimpleDateFormat
 import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 data class UpdatedOrder(

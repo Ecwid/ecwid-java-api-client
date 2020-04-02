@@ -4,7 +4,7 @@ import com.ecwid.apiclient.v3.dto.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.ProductOptionType
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
-import java.util.ArrayList
+import java.util.*
 
 fun FetchedOrder.toUpdated(): UpdatedOrder {
 	return UpdatedOrder(

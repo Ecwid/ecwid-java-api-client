@@ -1,7 +1,6 @@
 package com.ecwid.apiclient.v3.dto.variation.result
 
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
-import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueAlias
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 

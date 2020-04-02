@@ -7,11 +7,11 @@ class LocalizedValueMap() : HashMap<LocaleName, String>() {
 		this.putAll(pairs)
 	}
 
-	constructor(other: LocalizedValueMap): this() {
+	constructor(other: LocalizedValueMap) : this() {
 		this.putAll(other)
 	}
 
-	constructor(other: Map<String, String>): this() {
+	constructor(other: Map<String, String>) : this() {
 		this.putAll(other)
 	}
 }

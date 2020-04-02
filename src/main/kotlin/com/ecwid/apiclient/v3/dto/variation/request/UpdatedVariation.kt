@@ -1,7 +1,6 @@
 package com.ecwid.apiclient.v3.dto.variation.request
 
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueAlias
-import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
 
 data class UpdatedVariation(
 

@@ -10,7 +10,6 @@ import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.httptransport.*
 import com.ecwid.apiclient.v3.jsontransformer.AbstractJsonTransformer
-import com.ecwid.apiclient.v3.jsontransformer.GsonJsonTransformer
 import java.io.ByteArrayInputStream
 import java.io.FileInputStream
 import java.net.URI
@@ -248,7 +247,7 @@ private fun generateRequestId(): String {
 	return (1..8)
 			.map { Random.nextInt(0, characters.size) }
 			.map(characters::get)
-			.joinToString("");
+			.joinToString("")
 }
 
 private fun Map<String, String>.withApiTokenParam(apiToken: String): Map<String, String> {
