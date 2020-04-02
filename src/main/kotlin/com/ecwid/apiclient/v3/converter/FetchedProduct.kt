@@ -62,7 +62,7 @@ private fun FetchedProduct.ProductOption.toUpdated() = when (this) {
 	is FetchedProduct.ProductOption.FilesOption -> toUpdated()
 }
 
-private fun FetchedProduct.ProductOption.SelectOption.toUpdated() =  UpdatedProduct.ProductOption.SelectOption(
+private fun FetchedProduct.ProductOption.SelectOption.toUpdated() = UpdatedProduct.ProductOption.SelectOption(
 		name = name,
 		nameTranslated = nameTranslated,
 		choices = choices.map { it.toUpdated() },
@@ -70,7 +70,7 @@ private fun FetchedProduct.ProductOption.SelectOption.toUpdated() =  UpdatedProd
 		required = required
 )
 
-private fun FetchedProduct.ProductOption.SizeOption.toUpdated() =  UpdatedProduct.ProductOption.SizeOption(
+private fun FetchedProduct.ProductOption.SizeOption.toUpdated() = UpdatedProduct.ProductOption.SizeOption(
 		name = name,
 		nameTranslated = nameTranslated,
 		choices = choices.map { it.toUpdated() },

@@ -5,12 +5,12 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class CouponCreateRequest(
-        var newCoupon: UpdatedCoupon = UpdatedCoupon()
+		var newCoupon: UpdatedCoupon = UpdatedCoupon()
 ) : ApiRequest {
-    override fun toRequestInfo() = RequestInfo.createPostRequest(
-            endpoint = "discount_coupons",
-            httpBody = HttpBody.JsonBody(
-                    obj = newCoupon
-            )
-    )
+	override fun toRequestInfo() = RequestInfo.createPostRequest(
+			endpoint = "discount_coupons",
+			httpBody = HttpBody.JsonBody(
+					obj = newCoupon
+			)
+	)
 }

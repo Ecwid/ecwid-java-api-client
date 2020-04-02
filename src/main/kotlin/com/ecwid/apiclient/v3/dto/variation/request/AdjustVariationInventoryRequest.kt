@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class AdjustVariationInventoryRequest(
-        val productId: Int = 0,
+		val productId: Int = 0,
 		val variationId: Int = 0,
 		val checkLowStockNotification: Boolean = false,
 		val quantityDelta: Int = 0

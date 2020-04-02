@@ -6,48 +6,48 @@ import com.ecwid.apiclient.v3.impl.TypedBatchResponse
 import com.ecwid.apiclient.v3.jsontransformer.AbstractJsonTransformer
 
 class GetTypedBatchResult(
-        escapedBatchResult: GetEscapedBatchResult,
-        jsonTransformer: AbstractJsonTransformer
+		escapedBatchResult: GetEscapedBatchResult,
+		jsonTransformer: AbstractJsonTransformer
 ) {
 
-    val status: BatchStatus = escapedBatchResult.status
-    val totalRequests: Int = escapedBatchResult.totalRequests
-    val completedRequests: Int = escapedBatchResult.completedRequests
-    val responses: List<TypedSingleBatchResponse>? = escapedBatchResult.responses?.map { TypedSingleBatchResponse(it, jsonTransformer) }
+	val status: BatchStatus = escapedBatchResult.status
+	val totalRequests: Int = escapedBatchResult.totalRequests
+	val completedRequests: Int = escapedBatchResult.completedRequests
+	val responses: List<TypedSingleBatchResponse>? = escapedBatchResult.responses?.map { TypedSingleBatchResponse(it, jsonTransformer) }
 }
 
 class TypedSingleBatchResponse(
-        escapedSingleBatchResponse: EscapedSingleBatchResponse,
-        private val jsonTransformer: AbstractJsonTransformer
+		escapedSingleBatchResponse: EscapedSingleBatchResponse,
+		private val jsonTransformer: AbstractJsonTransformer
 ) {
 
-    val id: String = escapedSingleBatchResponse.id
-    val escapedHttpBody: String = escapedSingleBatchResponse.escapedHttpBody
-    val httpStatusCode: Int = escapedSingleBatchResponse.httpStatusCode
-    val httpStatusLine: String = escapedSingleBatchResponse.httpStatusLine
-    val status: BatchResponseStatus = escapedSingleBatchResponse.status
+	val id: String = escapedSingleBatchResponse.id
+	val escapedHttpBody: String = escapedSingleBatchResponse.escapedHttpBody
+	val httpStatusCode: Int = escapedSingleBatchResponse.httpStatusCode
+	val httpStatusLine: String = escapedSingleBatchResponse.httpStatusLine
+	val status: BatchResponseStatus = escapedSingleBatchResponse.status
 
 
-    fun <T> toTypedResponse(clazz: Class<T>): TypedBatchResponse<T> {
-        return when (status) {
-            BatchResponseStatus.COMPLETED -> {
-                try {
-                    TypedBatchResponse.Ok<T>(jsonTransformer.deserialize(escapedHttpBody, clazz)!!)
-                } catch (jsonDeserializationException: JsonDeserializationException) {
-                    TypedBatchResponse.ParseError<T>(jsonDeserializationException)
-                }
-            }
-            BatchResponseStatus.FAILED -> {
-                try {
-                    val ecwidError = jsonTransformer.deserialize(escapedHttpBody, EcwidApiError::class.java)!!
-                    TypedBatchResponse.ApiError<T>(ecwidError)
-                } catch (jsonDeserializationException: JsonDeserializationException) {
-                    TypedBatchResponse.ParseError<T>(jsonDeserializationException)
-                }
-            }
-            BatchResponseStatus.NOT_EXECUTED -> {
-                TypedBatchResponse.NotExecuted()
-            }
-        }
-    }
+	fun <T> toTypedResponse(clazz: Class<T>): TypedBatchResponse<T> {
+		return when (status) {
+			BatchResponseStatus.COMPLETED -> {
+				try {
+					TypedBatchResponse.Ok<T>(jsonTransformer.deserialize(escapedHttpBody, clazz)!!)
+				} catch (jsonDeserializationException: JsonDeserializationException) {
+					TypedBatchResponse.ParseError<T>(jsonDeserializationException)
+				}
+			}
+			BatchResponseStatus.FAILED -> {
+				try {
+					val ecwidError = jsonTransformer.deserialize(escapedHttpBody, EcwidApiError::class.java)!!
+					TypedBatchResponse.ApiError<T>(ecwidError)
+				} catch (jsonDeserializationException: JsonDeserializationException) {
+					TypedBatchResponse.ParseError<T>(jsonDeserializationException)
+				}
+			}
+			BatchResponseStatus.NOT_EXECUTED -> {
+				TypedBatchResponse.NotExecuted()
+			}
+		}
+	}
 }

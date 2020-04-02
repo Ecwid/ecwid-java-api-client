@@ -10,7 +10,7 @@ data class ProductVariationImageUploadRequest(
 		val productId: Int = 0,
 		val variationId: Int = 0,
 		val fileData: UploadFileData = UploadFileData.ExternalUrlData("")
-): ApiRequest {
+) : ApiRequest {
 
 	override fun toRequestInfo() = when (fileData) {
 		is UploadFileData.ExternalUrlData -> RequestInfo.createPostRequest(

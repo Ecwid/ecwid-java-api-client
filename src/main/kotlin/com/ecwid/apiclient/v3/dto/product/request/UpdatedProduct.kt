@@ -1,7 +1,10 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
-import com.ecwid.apiclient.v3.dto.product.enums.*
+import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueAlias
+import com.ecwid.apiclient.v3.dto.product.enums.PriceModifierType
+import com.ecwid.apiclient.v3.dto.product.enums.ProductOptionType
+import com.ecwid.apiclient.v3.dto.product.enums.ShippingSettingsType
 
 data class UpdatedProduct(
 		val name: String? = null,

@@ -1,13 +1,18 @@
 package com.ecwid.apiclient.v3.httptransport.impl
 
-import com.ecwid.apiclient.v3.httptransport.*
+import com.ecwid.apiclient.v3.httptransport.HttpRequest
+import com.ecwid.apiclient.v3.httptransport.HttpResponse
+import com.ecwid.apiclient.v3.httptransport.HttpTransport
+import com.ecwid.apiclient.v3.httptransport.TransportHttpBody
 import org.apache.http.Consts
 import org.apache.http.HttpStatus
 import org.apache.http.client.HttpClient
 import org.apache.http.client.config.RequestConfig
 import org.apache.http.client.methods.HttpUriRequest
 import org.apache.http.client.methods.RequestBuilder
-import org.apache.http.entity.*
+import org.apache.http.entity.AbstractHttpEntity
+import org.apache.http.entity.ContentType
+import org.apache.http.entity.InputStreamEntity
 import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager
 import org.apache.http.message.BasicNameValuePair
@@ -25,7 +30,7 @@ internal class ApacheCommonsHttpClientTransport : HttpTransport {
 	private val httpClient: HttpClient
 
 	init {
-		val connectionManager = PoolingHttpClientConnectionManager().apply { 
+		val connectionManager = PoolingHttpClientConnectionManager().apply {
 			maxTotal = DEFAULT_MAX_CONNECTIONS
 			defaultMaxPerRoute = DEFAULT_MAX_CONNECTIONS
 		}

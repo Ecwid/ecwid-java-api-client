@@ -18,7 +18,7 @@ data class OrderItemOptionFileUploadRequest(
 				"fileName" to fileName
 		)
 		val fileData = fileData
-		
+
 		return when (fileData) {
 			is UploadFileData.ExternalUrlData -> RequestInfo.createPostRequest(
 					endpoint = endpoint,
@@ -53,6 +53,6 @@ data class OrderItemOptionFileUploadRequest(
 			)
 		}
 	}
-	
+
 	private val endpoint = "orders/$orderNumber/items/$orderItemId/options/$optionName"
 }

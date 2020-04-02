@@ -2,8 +2,6 @@ package com.ecwid.apiclient.v3.dto.order.result
 
 import com.ecwid.apiclient.v3.dto.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
-import com.ecwid.apiclient.v3.dto.order.enums.OrderFulfillmentStatus
-import com.ecwid.apiclient.v3.dto.order.enums.OrderPaymentStatus
 import java.util.*
 
 data class FetchedOrder(
@@ -69,7 +67,7 @@ data class FetchedOrder(
 		var handlingFee: HandlingFee? = null,
 
 		var refundedAmount: Double? = null,
-		var refunds: List<RefundInfo>? = null 
+		var refunds: List<RefundInfo>? = null
 
 ) {
 
@@ -180,10 +178,10 @@ data class FetchedOrder(
 	)
 
 	data class OrderItemProductFile(
-		var id: Int? = null,
-		var name: String? = null, 
-		var size: Int? = null,
-		var url: String? = null
+			var id: Int? = null,
+			var name: String? = null,
+			var size: Int? = null,
+			var url: String? = null
 	)
 
 	data class PersonInfo(
