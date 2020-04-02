@@ -2,7 +2,8 @@ package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.UploadFileData
-import com.ecwid.apiclient.v3.dto.order.enums.*
+import com.ecwid.apiclient.v3.dto.order.enums.OrderFulfillmentStatus
+import com.ecwid.apiclient.v3.dto.order.enums.OrderPaymentStatus
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.dto.order.result.OrdersSearchResult
@@ -17,7 +18,7 @@ import java.nio.file.Files
 import java.util.*
 
 
-class OrdersTest: BaseEntityTest() {
+class OrdersTest : BaseEntityTest() {
 
 	@BeforeEach
 	override fun beforeEach() {
