@@ -1,22 +1,24 @@
-package com.ecwid.apiclient.v3.jsontransformer
+package com.ecwid.apiclient.v3.jsontransformer.gson
 
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
-import com.ecwid.apiclient.v3.jsontransformer.typeadapters.PolymorphicDeserializer
+import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
+import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
+import com.ecwid.apiclient.v3.jsontransformer.gson.typeadapters.GsonPolymorphicDeserializer
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParseException
 
-class GsonJsonTransformer(
-		polymorphicTypes: Set<PolymorphicType<*>>
-) : AbstractJsonTransformer(polymorphicTypes) {
+class GsonTransformer(polymorphicTypes: List<PolymorphicType<*>>) : JsonTransformer {
 
 	private val gson: Gson
 
 	init {
 		val gsonBuilder = GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss z")
+
 		polymorphicTypes.forEach { polymorphType ->
-			gsonBuilder.registerTypeAdapter(polymorphType.rootClass, PolymorphicDeserializer(polymorphType))
+			gsonBuilder.registerTypeAdapter(polymorphType.rootClass, GsonPolymorphicDeserializer(polymorphType))
 		}
+
 		gson = gsonBuilder.create()
 	}
 

@@ -68,24 +68,23 @@ class ApiClient private constructor(
 				   httpTransport: HttpTransport,
 				   jsonTransformerProvider: JsonTransformerProvider): ApiClient {
 
-			val jsonTransformer = jsonTransformerProvider.build(
-					setOf(
-							PolymorphicType(
-									rootClass = FetchedProduct.ProductOption::class.java,
-									jsonFieldName = "type",
-									childClasses = setOf(
-											Pair(FetchedProduct.ProductOption.SelectOption::class.java, "select"),
-											Pair(FetchedProduct.ProductOption.SizeOption::class.java, "size"),
-											Pair(FetchedProduct.ProductOption.RadioOption::class.java, "radio"),
-											Pair(FetchedProduct.ProductOption.CheckboxOption::class.java, "checkbox"),
-											Pair(FetchedProduct.ProductOption.TextFieldOption::class.java, "textfield"),
-											Pair(FetchedProduct.ProductOption.TextAreaOption::class.java, "textarea"),
-											Pair(FetchedProduct.ProductOption.DateOption::class.java, "date"),
-											Pair(FetchedProduct.ProductOption.FilesOption::class.java, "files")
-									)
-							)
+			val productOptionsPolymorphicType = PolymorphicType(
+					rootClass = FetchedProduct.ProductOption::class.java,
+					jsonFieldName = "type",
+					childClasses = mapOf(
+							"select" to FetchedProduct.ProductOption.SelectOption::class.java,
+							"size" to FetchedProduct.ProductOption.SizeOption::class.java,
+							"radio" to FetchedProduct.ProductOption.RadioOption::class.java,
+							"checkbox" to FetchedProduct.ProductOption.CheckboxOption::class.java,
+							"textfield" to FetchedProduct.ProductOption.TextFieldOption::class.java,
+							"textarea" to FetchedProduct.ProductOption.TextAreaOption::class.java,
+							"date" to FetchedProduct.ProductOption.DateOption::class.java,
+							"files" to FetchedProduct.ProductOption.FilesOption::class.java
 					)
 			)
+
+			val polymorphicTypes = listOf(productOptionsPolymorphicType)
+			val jsonTransformer = jsonTransformerProvider.build(polymorphicTypes)
 			val apiClientHelper = ApiClientHelper(apiServerDomain, storeCredentials, loggingSettings, httpTransport, jsonTransformer)
 
 			return ApiClient(
