@@ -18,6 +18,8 @@ data class FetchedCustomer(
 
 	data class BillingPerson(
 			var name: String? = null,
+			var firstName: String? = null,
+			var lastName: String? = null,
 			var companyName: String? = null,
 			var street: String? = null,
 			var city: String? = null,
