@@ -19,6 +19,8 @@ class StoreProfileTest : BaseEntityTest() {
 
 	@Test
 	fun testStoreProfile() {
+		val testStoreId = PropertiesLoader.load().storeId
+
 		val expectedProfile = UpdatedStoreProfile(
 				generalInfo = UpdatedStoreProfile.GeneralInfo(
 						storeUrl = "https://www.ecwid.com",
@@ -164,7 +166,7 @@ class StoreProfileTest : BaseEntityTest() {
 
 		val actualProfile = apiClient.getStoreProfile(StoreProfileRequest())
 
-		assertEquals(PropertiesLoader.storeId, actualProfile.generalInfo!!.storeId)
+		assertEquals(testStoreId, actualProfile.generalInfo!!.storeId)
 		assertEquals("bobyor", actualProfile.generalInfo!!.starterSite!!.ecwidSubdomain)
 		assertEquals("example.com", actualProfile.generalInfo!!.starterSite!!.customDomain)
 		assertEquals("https://bobyor.ecwid.com", actualProfile.generalInfo!!.starterSite!!.generatedUrl)

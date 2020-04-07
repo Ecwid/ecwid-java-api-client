@@ -26,8 +26,6 @@ import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypesGetAllRequest
 import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
 import com.ecwid.apiclient.v3.dto.variation.request.DeleteAllProductVariationsRequest
 import com.ecwid.apiclient.v3.httptransport.impl.ApacheCommonsHttpClientTransport
-import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
-import com.ecwid.apiclient.v3.jsontransformer.gson.GsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.gson.GsonTransformerProvider
 import com.ecwid.apiclient.v3.util.PropertiesLoader
 import org.junit.jupiter.api.Assertions
@@ -39,14 +37,16 @@ abstract class BaseEntityTest {
 	protected lateinit var apiClient: ApiClient
 
 	protected open fun beforeEach() {
+		val properties = PropertiesLoader.load()
+
 		apiClient = ApiClient.create(
 				apiServerDomain = ApiServerDomain(
-						host = PropertiesLoader.apiHost,
-						securePort = PropertiesLoader.apiPort
+						host = properties.apiHost,
+						securePort = properties.apiPort
 				),
 				storeCredentials = ApiStoreCredentials(
-						storeId = PropertiesLoader.storeId,
-						apiToken = PropertiesLoader.apiToken
+						storeId = properties.storeId,
+						apiToken = properties.apiToken
 				),
 				loggingSettings = LoggingSettings().copy(
 						logRequestBody = true,
