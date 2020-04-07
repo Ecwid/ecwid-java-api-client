@@ -21,3 +21,6 @@ jobs:
 
     - name: Build with Gradle
       run: gradle build
+      env:
+        STORE_ID: ${{ secrets.ECWID_TEST_STORE_ID }}
+        API_TOKEN: ${{ secrets.ECWID_TEST_API_TOKEN }}
