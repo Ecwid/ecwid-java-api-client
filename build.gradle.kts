@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	java
-	kotlin("jvm") version "1.3.21"
+	kotlin("jvm") version "1.3.71"
 }
 
 group = "com.ecwid.apiclient"
