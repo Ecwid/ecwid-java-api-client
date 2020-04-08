@@ -1,4 +1,4 @@
-# Ecwid java api client library
+# Ecwid java api client library ![](https://github.com/Ecwid/ecwid-java-api-client/workflows/Gradle%20Package/badge.svg)
 
 API documentation: https://api-docs.ecwid.com/reference/overview 
 
