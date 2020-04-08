@@ -17,6 +17,7 @@ import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import java.io.FileInputStream
@@ -36,6 +37,7 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testSearchByFilters() {
 		// Create some categories
 
@@ -200,6 +202,7 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testSearchUrls() {
 		// Create one product
 		val productCreateRequest = ProductCreateRequest(
@@ -244,6 +247,7 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testSearchOrder() {
 		val testName = "testSearchOrder"
 
@@ -336,6 +340,7 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testSearchPaging() {
 		val testName = "testSearchPaging"
 
@@ -364,6 +369,7 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testProductLifecycle() {
 		// Create some categories
 
@@ -868,6 +874,7 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testDeletedProducts() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(

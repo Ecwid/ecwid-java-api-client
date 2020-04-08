@@ -11,6 +11,7 @@ import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import java.io.FileInputStream
@@ -29,6 +30,7 @@ class OrdersTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testOrderLifecycle() {
 		// Creating new order
 		val orderCreateRequest = OrderCreateRequest(
@@ -183,6 +185,7 @@ class OrdersTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testSearchFields() {
 		// Creating new order
 		val orderCreateRequest = OrderCreateRequest(
@@ -313,6 +316,7 @@ class OrdersTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testSearchPaging() {
 		// Create some orders
 		for (i in 1..3) {
@@ -336,6 +340,7 @@ class OrdersTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testGetOrderInvoice() {
 		val orderCreateRequest = OrderCreateRequest(
 				newOrder = UpdatedOrder(

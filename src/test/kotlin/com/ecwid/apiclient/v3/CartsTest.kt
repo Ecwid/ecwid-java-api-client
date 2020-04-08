@@ -11,6 +11,7 @@ import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -22,6 +23,7 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testCreateAndGetCart() {
 		// Creating new cart
 		val testOrder = generateTestOrder()
@@ -189,6 +191,7 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testConvertCartToOrder() {
 		// Creating new cart
 		val testOrder = generateTestOrder()
@@ -295,6 +298,7 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testSearchCarts() {
 
 		// Create two carts
