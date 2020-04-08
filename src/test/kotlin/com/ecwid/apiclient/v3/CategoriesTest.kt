@@ -13,6 +13,7 @@ import com.ecwid.apiclient.v3.util.randomAlphanumeric
 import com.ecwid.apiclient.v3.util.randomBoolean
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import java.io.FileInputStream
@@ -31,6 +32,7 @@ class CategoriesTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testSearchByFilters() {
 		// Creating some products to put into new categories
 
@@ -180,6 +182,7 @@ class CategoriesTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testSearchUrls() {
 		// Create one category
 		val categoryCreateRequest = CategoryCreateRequest(
@@ -232,6 +235,7 @@ class CategoriesTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testCategoryLifecycle() {
 		val nameSuffix = "testCategoryLifecycle"
 
@@ -307,6 +311,7 @@ class CategoriesTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testTranslations() {
 		// Creating new category
 		val categoryCreateRequest = CategoryCreateRequest(

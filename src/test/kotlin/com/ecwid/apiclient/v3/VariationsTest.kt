@@ -10,9 +10,11 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class VariationsTest : BaseEntityTest() {
+
 	@BeforeEach
 	override fun beforeEach() {
 		super.beforeEach()
@@ -24,6 +26,7 @@ class VariationsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun `Create product, add combo and fetch product`() {
 		// Create one product
 		val productPrice = randomPrice()

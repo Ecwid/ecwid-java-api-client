@@ -12,6 +12,7 @@ import com.ecwid.apiclient.v3.impl.TypedBatchResponse
 import com.ecwid.apiclient.v3.util.randomAlphanumeric
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class BatchApiTest : BaseEntityTest() {
@@ -22,8 +23,8 @@ class BatchApiTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun `Create a product with batch API and search it`() {
-
 		val name = randomAlphanumeric(8)
 		val productCreateRequest = ProductCreateRequest(
 				newProduct = UpdatedProduct(
@@ -110,4 +111,5 @@ class BatchApiTest : BaseEntityTest() {
 
 		return Assertions.fail("Failed to await for batch completion")
 	}
+
 }

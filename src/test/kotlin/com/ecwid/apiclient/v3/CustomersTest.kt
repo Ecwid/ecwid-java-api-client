@@ -14,6 +14,7 @@ import com.ecwid.apiclient.v3.util.randomBoolean
 import com.ecwid.apiclient.v3.util.randomEmail
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -31,6 +32,7 @@ class CustomersTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testCustomerLifecycle() {
 		// Creating one customer group
 		val customerGroupCreateRequest1 = CustomerGroupCreateRequest(
@@ -117,6 +119,7 @@ class CustomersTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testSearchFields() {
 		// Creating new customer group
 		val customerGroupCreateRequest = CustomerGroupCreateRequest(
@@ -213,6 +216,7 @@ class CustomersTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testSearchPaging() {
 		// Create some customers
 		for (i in 1..3) {
@@ -237,6 +241,7 @@ class CustomersTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testSearchSorting() {
 		// Creating some customers
 
