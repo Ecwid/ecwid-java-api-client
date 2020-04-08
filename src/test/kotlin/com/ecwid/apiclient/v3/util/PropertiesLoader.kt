@@ -30,13 +30,17 @@ class PropertiesLoader {
 
 		private fun fromEnv(): TestProperties? {
 			val apiHost = System.getenv("API_HOST") ?: DEFAULT_API_HOST
-			val apiPort = System.getenv("API_PORT")?.toIntOrNull() ?: DEFAULT_API_PORT
 			val storeId = System.getenv("STORE_ID")?.toIntOrNull()
 					?: return null
 			val apiToken = System.getenv("API_TOKEN")
 					?: return null
 
-			return TestProperties(apiHost, apiPort, storeId, apiToken)
+			return TestProperties(
+					apiHost = apiHost,
+					apiPort = DEFAULT_API_PORT,
+					storeId = storeId,
+					apiToken = apiToken
+			)
 		}
 
 		private fun fromResource(resourceName: String): LoadResult {
@@ -70,7 +74,13 @@ class PropertiesLoader {
 				return LoadResult.Failed("Parameter storeId must be a valid Store ID")
 			}
 
-			val testProperties = TestProperties(apiHost, apiPort, storeId, apiToken)
+			val testProperties = TestProperties(
+					apiHost = apiHost,
+					apiPort = apiPort,
+					storeId = storeId,
+					apiToken = apiToken
+			)
+
 			return LoadResult.Success(testProperties)
 		}
 	}
