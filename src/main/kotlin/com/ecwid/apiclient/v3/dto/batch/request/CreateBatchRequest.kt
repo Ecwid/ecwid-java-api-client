@@ -9,12 +9,13 @@ private val UTF_CHARSET = Charsets.UTF_8.toString()
 
 data class CreateBatchRequestWithIds(
 		val requests: Map<String, ApiRequest>,
-		val stopOnFirstFailure: Boolean = true
+		val stopOnFirstFailure: Boolean = true,
+		val extraParams: Map<String, String> = emptyMap()
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 			endpoint = "batch",
-			params = mapOf(
+			params = extraParams + mapOf(
 					"stopOnFirstFailure" to stopOnFirstFailure.toString()
 			),
 			httpBody = HttpBody.JsonBody(
@@ -27,12 +28,13 @@ data class CreateBatchRequestWithIds(
 
 data class CreateBatchRequest(
 		val requests: List<ApiRequest>,
-		val stopOnFirstFailure: Boolean = true
+		val stopOnFirstFailure: Boolean = true,
+		val extraParams: Map<String, String> = emptyMap()
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 			endpoint = "batch",
-			params = mapOf(
+			params = extraParams + mapOf(
 					"stopOnFirstFailure" to stopOnFirstFailure.toString()
 			),
 			httpBody = HttpBody.JsonBody(
