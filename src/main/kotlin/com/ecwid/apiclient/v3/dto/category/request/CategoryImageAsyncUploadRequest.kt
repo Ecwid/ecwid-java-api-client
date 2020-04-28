@@ -6,8 +6,8 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class CategoryImageAsyncUploadRequest(
-		val categoryId: Int = 0,
-		val asyncPictureData: AsyncPictureData = AsyncPictureData()
+		val categoryId: Int,
+		val asyncPictureData: AsyncPictureData
 
 ) : ApiRequest {
 	override fun toRequestInfo(): RequestInfo {
