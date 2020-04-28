@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.converter.toUpdated
+import com.ecwid.apiclient.v3.dto.AsyncPictureData
 import com.ecwid.apiclient.v3.dto.UploadFileData
 import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
 import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
@@ -902,6 +903,68 @@ class ProductsTest : BaseEntityTest() {
 		require(deletedProduct != null)
 		assertTrue(instantFrom.isBefore(deletedProduct.date.toInstant()))
 		assertTrue(instantTo.isAfter(deletedProduct.date.toInstant()))
+	}
+
+	@Test
+	@Disabled("Async upload is not in API stable version now")
+	fun testUploadProductImageAsync() {
+		// Creating new product
+		val productCreateRequest = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product ${randomAlphanumeric(8)}",
+						sku = "testUploadProductImageAsync"
+				)
+		)
+		val productCreateResult = apiClient.createProduct(productCreateRequest)
+		assertTrue(productCreateResult.id > 0)
+
+		val productDetailsRequest = ProductDetailsRequest(productId = productCreateResult.id)
+		val productDetails = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(0, productDetails.media?.images?.size)
+
+		val request = ProductImageAsyncUploadRequest(
+				productId = productCreateResult.id,
+				asyncPictureData = AsyncPictureData(
+						url = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png",
+						width = 180,
+						height = 180
+				)
+		)
+		apiClient.uploadProductImageAsync(request)
+
+		val productDetailsAfterUpload = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(1, productDetailsAfterUpload.media?.images?.size)
+	}
+
+	@Test
+	@Disabled("Async upload is not in API stable version now")
+	fun testUploadProductGalleryImageAsync() {
+		// Creating new product
+		val productCreateRequest = ProductCreateRequest(
+				newProduct = UpdatedProduct(
+						name = "Product ${randomAlphanumeric(8)}",
+						sku = "testUploadProductGalleryImageAsync"
+				)
+		)
+		val productCreateResult = apiClient.createProduct(productCreateRequest)
+		assertTrue(productCreateResult.id > 0)
+
+		val productDetailsRequest = ProductDetailsRequest(productId = productCreateResult.id)
+		val productDetails = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(0, productDetails.media?.images?.size)
+
+		val request = ProductGalleryImageAsyncUploadRequest(
+				productId = productCreateResult.id,
+				asyncPictureData = AsyncPictureData(
+						url = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png",
+						width = 180,
+						height = 180
+				)
+		)
+		apiClient.uploadProductGalleryImageAsync(request)
+
+		val productDetailsAfterUpload = apiClient.getProductDetails(productDetailsRequest)
+		assertEquals(1, productDetailsAfterUpload.media?.images?.size)
 	}
 
 	private fun assertProductUrlMatchesRegex(productSearchRequest: ProductsSearchRequest.ByFilters, urlPattern: String) {

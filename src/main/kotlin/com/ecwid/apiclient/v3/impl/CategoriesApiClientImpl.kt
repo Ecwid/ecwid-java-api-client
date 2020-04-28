@@ -23,6 +23,7 @@ internal class CategoriesApiClientImpl(
 	override fun updateCategory(request: CategoryUpdateRequest) = apiClientHelper.makeRequest<CategoryUpdateResult>(request)
 	override fun deleteCategory(request: CategoryDeleteRequest) = apiClientHelper.makeRequest<CategoryDeleteResult>(request)
 	override fun uploadCategoryImage(request: CategoryImageUploadRequest) = apiClientHelper.makeRequest<CategoryImageUploadResult>(request)
+	override fun uploadCategoryImageAsync(request: CategoryImageAsyncUploadRequest) = apiClientHelper.makeRequest<CategoryImageAsyncUploadResult>(request)
 	override fun deleteCategoryImage(request: CategoryImageDeleteRequest) = apiClientHelper.makeRequest<CategoryImageDeleteResult>(request)
 
 }
