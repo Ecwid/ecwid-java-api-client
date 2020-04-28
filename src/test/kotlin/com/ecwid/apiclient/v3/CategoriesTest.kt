@@ -424,6 +424,36 @@ class CategoriesTest : BaseEntityTest() {
 
 		val categoryDetailsAfterUpload = apiClient.getCategoryDetails(categoryDetailsRequest)
 		assertNotNull(categoryDetailsAfterUpload.imageUrl)
+
+		val requestWithBlankUrl = CategoryImageAsyncUploadRequest(
+				categoryId = categoryCreateResult.id,
+				asyncPictureData = AsyncPictureData(
+						url = "  ",
+						width = 180,
+						height = 180
+				)
+		)
+		try {
+			apiClient.uploadCategoryImageAsync(requestWithBlankUrl)
+			fail("Request must return error")
+		} catch (e: EcwidApiException) {
+			// ok
+		}
+
+		val requestWithWrongUrl = CategoryImageAsyncUploadRequest(
+				categoryId = categoryCreateResult.id,
+				asyncPictureData = AsyncPictureData(
+						url = "htt://sssss",
+						width = 180,
+						height = 180
+				)
+		)
+		try {
+			apiClient.uploadCategoryImageAsync(requestWithWrongUrl)
+			fail("Request must return error")
+		} catch (e: EcwidApiException) {
+			// ok
+		}
 	}
 
 	private fun assertCategory(desiredId: Int, desiredProductIds: List<Int>?, desiredProductCount: Int, desiredEnabledProductCount: Int?, category: FetchedCategory) {
