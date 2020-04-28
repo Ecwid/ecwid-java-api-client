@@ -15,12 +15,9 @@ import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct.*
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.*
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import java.io.FileInputStream
 import java.nio.file.Files
 import java.util.*
@@ -934,6 +931,36 @@ class ProductsTest : BaseEntityTest() {
 
 		val productDetailsAfterUpload = apiClient.getProductDetails(productDetailsRequest)
 		assertEquals(1, productDetailsAfterUpload.media?.images?.size)
+
+		val requestWithBlankUrl = ProductImageAsyncUploadRequest(
+				productId = productCreateResult.id,
+				asyncPictureData = AsyncPictureData(
+						url = "  ",
+						width = 180,
+						height = 180
+				)
+		)
+		try {
+			apiClient.uploadProductImageAsync(requestWithBlankUrl)
+			fail("Request must return error")
+		} catch (e: EcwidApiException) {
+			// ok
+		}
+
+		val requestWithWrongUrl = ProductImageAsyncUploadRequest(
+				productId = productCreateResult.id,
+				asyncPictureData = AsyncPictureData(
+						url = "htt://sssss",
+						width = 180,
+						height = 180
+				)
+		)
+		try {
+			apiClient.uploadProductImageAsync(requestWithWrongUrl)
+			fail("Request must return error")
+		} catch (e: EcwidApiException) {
+			// ok
+		}
 	}
 
 	@Test
@@ -965,6 +992,36 @@ class ProductsTest : BaseEntityTest() {
 
 		val productDetailsAfterUpload = apiClient.getProductDetails(productDetailsRequest)
 		assertEquals(1, productDetailsAfterUpload.media?.images?.size)
+
+		val requestWithBlankUrl = ProductGalleryImageAsyncUploadRequest(
+				productId = productCreateResult.id,
+				asyncPictureData = AsyncPictureData(
+						url = "  ",
+						width = 180,
+						height = 180
+				)
+		)
+		try {
+			apiClient.uploadProductGalleryImageAsync(requestWithBlankUrl)
+			fail("Request must return error")
+		} catch (e: EcwidApiException) {
+			// ok
+		}
+
+		val requestWithWrongUrl = ProductGalleryImageAsyncUploadRequest(
+				productId = productCreateResult.id,
+				asyncPictureData = AsyncPictureData(
+						url = "htt://sssss",
+						width = 180,
+						height = 180
+				)
+		)
+		try {
+			apiClient.uploadProductGalleryImageAsync(requestWithWrongUrl)
+			fail("Request must return error")
+		} catch (e: EcwidApiException) {
+			// ok
+		}
 	}
 
 	private fun assertProductUrlMatchesRegex(productSearchRequest: ProductsSearchRequest.ByFilters, urlPattern: String) {
