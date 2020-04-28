@@ -1,2 +1,3 @@
+# don't use id of store that contains valuable and useful data! tests can modify or even delete store data
 storeId=
 apiToken=
