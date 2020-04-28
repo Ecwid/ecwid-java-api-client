@@ -25,3 +25,7 @@ jobs:
         STORE_ID: ${{ secrets.STORE_ID }}
         API_TOKEN: ${{ secrets.API_TOKEN }}
         API_HOST: ${{ secrets.API_HOST }}
+    - uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: /home/runner/work/ecwid-java-api-client/ecwid-java-api-client/build/reports/tests/test/index.html
