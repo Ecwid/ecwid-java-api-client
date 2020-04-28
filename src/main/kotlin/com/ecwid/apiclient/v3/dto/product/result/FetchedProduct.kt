@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.product.result
 
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
+import com.ecwid.apiclient.v3.dto.common.PictureInfo
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
 import com.ecwid.apiclient.v3.dto.product.enums.PriceModifierType
 import com.ecwid.apiclient.v3.dto.product.enums.ProductOptionType
@@ -63,6 +64,7 @@ data class FetchedProduct(
 		val tax: TaxInfo? = null,
 		val relatedProducts: RelatedProducts? = null,
 
+		val originalImage: PictureInfo? = null,
 		val galleryImages: List<GalleryImage>? = null,
 		val media: ProductMedia? = null,
 		val files: List<ProductFile>? = null,

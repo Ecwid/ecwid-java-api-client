@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.category.result
 
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
+import com.ecwid.apiclient.v3.dto.common.PictureInfo
 
 data class FetchedCategory(
 		val id: Int = 0,
@@ -22,12 +23,4 @@ data class FetchedCategory(
 		val url: String? = null,
 		val productCount: Int? = null,
 		val enabledProductCount: Int? = null
-) {
-
-	data class PictureInfo(
-			val url: String? = null,
-			val width: Int? = null,
-			val height: Int? = null
-	)
-
-}
+)
