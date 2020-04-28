@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.converter.toUpdated
+import com.ecwid.apiclient.v3.dto.AsyncPictureData
 import com.ecwid.apiclient.v3.dto.UploadFileData
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest.ParentCategory
@@ -394,6 +395,35 @@ class CategoriesTest : BaseEntityTest() {
 		// Check that category has now no main image now
 		val categoryDetails2 = apiClient.getCategoryDetails(categoryDetailsRequest)
 		assertNoCategoryImage(categoryDetails = categoryDetails2)
+	}
+
+	@Test
+	@Disabled("Async upload is not in API stable version now")
+	fun testUploadCategoryImageAsync() {
+		// Creating new category
+		val categoryCreateRequest = CategoryCreateRequest(
+				newCategory = generateTestCategory()
+		)
+		val categoryCreateResult = apiClient.createCategory(categoryCreateRequest)
+		assertTrue(categoryCreateResult.id > 0)
+
+		val categoryDetailsRequest = CategoryDetailsRequest(categoryId = categoryCreateResult.id)
+		val categoryDetails = apiClient.getCategoryDetails(categoryDetailsRequest)
+		assertNull(categoryDetails.imageUrl)
+
+		// Try to send async image upload request
+		val request = CategoryImageAsyncUploadRequest(
+				categoryId = categoryCreateResult.id,
+				asyncPictureData = AsyncPictureData(
+						url = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png",
+						width = 180,
+						height = 180
+				)
+		)
+		apiClient.uploadCategoryImageAsync(request)
+
+		val categoryDetailsAfterUpload = apiClient.getCategoryDetails(categoryDetailsRequest)
+		assertNotNull(categoryDetailsAfterUpload.imageUrl)
 	}
 
 	private fun assertCategory(desiredId: Int, desiredProductIds: List<Int>?, desiredProductCount: Int, desiredEnabledProductCount: Int?, category: FetchedCategory) {

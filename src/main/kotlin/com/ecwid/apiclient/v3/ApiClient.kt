@@ -137,8 +137,10 @@ interface ProductsApiClient {
 	fun updateProductInventory(request: ProductInventoryUpdateRequest): ProductInventoryUpdateResult
 	fun deleteProduct(request: ProductDeleteRequest): ProductDeleteResult
 	fun uploadProductImage(request: ProductImageUploadRequest): ProductImageUploadResult
+	fun uploadProductImageAsync(request: ProductImageAsyncUploadRequest): ProductImageAsyncUploadResult
 	fun deleteProductImage(request: ProductImageDeleteRequest): ProductImageDeleteResult
 	fun uploadProductGalleryImage(request: ProductGalleryImageUploadRequest): ProductGalleryImageUploadResult
+	fun uploadProductGalleryImageAsync(request: ProductGalleryImageAsyncUploadRequest): ProductGalleryImageAsyncUploadResult
 	fun deleteProductGalleryImage(request: ProductGalleryImageDeleteRequest): ProductGalleryImageDeleteResult
 	fun deleteProductGalleryImages(request: ProductGalleryImagesDeleteRequest): ProductGalleryImagesDeleteResult
 	fun downloadProductFile(request: ProductFileDownloadRequest): ByteArray
@@ -160,6 +162,7 @@ interface CategoriesApiClient {
 	fun updateCategory(request: CategoryUpdateRequest): CategoryUpdateResult
 	fun deleteCategory(request: CategoryDeleteRequest): CategoryDeleteResult
 	fun uploadCategoryImage(request: CategoryImageUploadRequest): CategoryImageUploadResult
+	fun uploadCategoryImageAsync(request: CategoryImageAsyncUploadRequest): CategoryImageAsyncUploadResult
 	fun deleteCategoryImage(request: CategoryImageDeleteRequest): CategoryImageDeleteResult
 }
 
