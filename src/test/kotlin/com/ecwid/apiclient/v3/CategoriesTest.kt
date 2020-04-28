@@ -13,9 +13,7 @@ import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.randomAlphanumeric
 import com.ecwid.apiclient.v3.util.randomBoolean
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.assertAll
 import java.io.FileInputStream
 import java.nio.file.Files
@@ -435,7 +433,7 @@ class CategoriesTest : BaseEntityTest() {
 		)
 		try {
 			apiClient.uploadCategoryImageAsync(requestWithBlankUrl)
-			fail("Request must return error")
+			fail(message = "Request must return error")
 		} catch (e: EcwidApiException) {
 			// ok
 		}
@@ -450,7 +448,7 @@ class CategoriesTest : BaseEntityTest() {
 		)
 		try {
 			apiClient.uploadCategoryImageAsync(requestWithWrongUrl)
-			fail("Request must return error")
+			fail(message = "Request must return error")
 		} catch (e: EcwidApiException) {
 			// ok
 		}
