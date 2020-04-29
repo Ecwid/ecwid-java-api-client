@@ -25,7 +25,7 @@ private const val DEFAULT_READ_TIMEOUT = 60_000 // 1 min
 private const val DEFAULT_MAX_CONNECTIONS = 10
 
 
-internal class ApacheCommonsHttpClientTransport : HttpTransport {
+class ApacheCommonsHttpClientTransport : HttpTransport {
 
 	private val httpClient: HttpClient
 
