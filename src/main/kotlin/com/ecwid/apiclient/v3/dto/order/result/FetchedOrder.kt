@@ -67,7 +67,9 @@ data class FetchedOrder(
 		var handlingFee: HandlingFee? = null,
 
 		var refundedAmount: Double? = null,
-		var refunds: List<RefundInfo>? = null
+		var refunds: List<RefundInfo>? = null,
+
+		var utmData: UtmData? = null
 
 ) {
 
@@ -221,4 +223,11 @@ data class FetchedOrder(
 			var amount: Double? = null
 	)
 
+	data class UtmData(
+			var source: String? = null,
+			val campaign: String? = null,
+			val medium: String? = null,
+			val mcEid: String? = null,
+			val mcCid: String? = null
+	)
 }

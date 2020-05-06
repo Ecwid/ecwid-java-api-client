@@ -60,7 +60,9 @@ data class UpdatedOrder(
 		var shippingPerson: PersonInfo? = null,
 
 		var shippingOption: ShippingOption? = null,
-		var handlingFee: HandlingFee? = null
+		var handlingFee: HandlingFee? = null,
+
+		var utmData: UtmData? = null
 ) {
 
 	data class CreditCardStatus(
@@ -245,4 +247,11 @@ data class UpdatedOrder(
 			var description: String? = null
 	)
 
+	data class UtmData(
+			var source: String? = null,
+			val campaign: String? = null,
+			val medium: String? = null,
+			val mcEid: String? = null,
+			val mcCid: String? = null
+	)
 }
