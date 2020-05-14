@@ -63,7 +63,9 @@ data class FetchedCart(
 		var shippingPerson: PersonInfo? = null,
 
 		var shippingOption: ShippingOptionInfo? = null,
-		var handlingFee: HandlingFeeInfo? = null
+		var handlingFee: HandlingFeeInfo? = null,
+
+		var utmData: UtmData? = null
 ) {
 
 	data class CreditCardStatus(
@@ -230,4 +232,13 @@ data class FetchedCart(
 			var value: Double? = null,
 			var total: Double? = null
 	)
+
+	data class UtmData(
+			var source: String? = null,
+			val campaign: String? = null,
+			val medium: String? = null,
+			val mcEid: String? = null,
+			val mcCid: String? = null
+	)
+
 }
