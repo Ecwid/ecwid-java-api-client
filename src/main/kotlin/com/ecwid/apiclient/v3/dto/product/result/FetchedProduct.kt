@@ -71,7 +71,8 @@ data class FetchedProduct(
 		val favorites: FavoritesStats? = null, // TODO Figure out how to test
 
 		val defaultCombinationId: Int? = null, // TODO implement combinations support
-		val combinations: List<FetchedVariation>? = null // TODO implement combinations support
+		val combinations: List<FetchedVariation>? = null, // TODO implement combinations support
+		val isGiftCard: Boolean? = null // TODO from ECWID-67826: this flag is read-only. API for creating gift cards in the plans (BACKLOG-4157)
 ) {
 
 	data class WholesalePrice(
