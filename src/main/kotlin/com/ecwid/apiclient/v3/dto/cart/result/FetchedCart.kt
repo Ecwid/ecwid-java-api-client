@@ -65,7 +65,9 @@ data class FetchedCart(
 		var shippingOption: ShippingOptionInfo? = null,
 		var handlingFee: HandlingFeeInfo? = null,
 
-		var utmData: UtmData? = null
+		var utmData: UtmData? = null,
+
+		var acceptMarketing: Boolean? = null
 ) {
 
 	data class CreditCardStatus(
