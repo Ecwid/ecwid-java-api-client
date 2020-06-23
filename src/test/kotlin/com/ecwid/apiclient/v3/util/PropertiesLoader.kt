@@ -34,15 +34,13 @@ class PropertiesLoader {
 		}
 
 		private fun fromEnv(): TestProperties? {
-			//TODO: remove logging
 			val apiHost = System.getenv("API_HOST") ?: DEFAULT_API_HOST
-			println("apiHost = $apiHost; DEFAULT_API_HOST = $DEFAULT_API_HOST")
 			val storeId = System.getenv("STORE_ID")?.toIntOrNull()
 					?: return null
-			println("storeId = $storeId")
 			val apiToken = System.getenv("API_TOKEN")
 					?: return null
-			println("apiToken = ${apiToken.take(10)}")
+			//TODO: remove logging
+			println("apiHost = $apiHost; storeId = $storeId; apiToken = ${apiToken.take(10)}")
 
 			return TestProperties(
 					apiHost = apiHost,
