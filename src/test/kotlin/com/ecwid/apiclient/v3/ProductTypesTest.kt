@@ -12,6 +12,7 @@ import com.ecwid.apiclient.v3.util.randomOf
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 
@@ -26,6 +27,7 @@ class ProductTypesTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testGeneralProductTypeLifecycle() {
 		val productTypeCreateRequest = ProductTypeCreateRequest(
 				newProductType = UpdatedProductType(
@@ -99,6 +101,7 @@ class ProductTypesTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testProductTypeLifecycle() {
 		// Creating new product type
 		val productTypeCreateRequest = ProductTypeCreateRequest(

@@ -227,6 +227,7 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Fix in ECWID-66808")
 	fun testCalculateOrderDetails() {
 		// Calculate order details
 		val orderForCalculate = generateTestOrderForCalculate()
