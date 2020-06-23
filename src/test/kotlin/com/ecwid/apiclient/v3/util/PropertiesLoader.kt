@@ -1,12 +1,19 @@
 package com.ecwid.apiclient.v3.util
 
 import java.util.*
+import java.util.logging.Level
+import java.util.logging.Logger
 
 private const val DEFAULT_API_HOST = "app.ecwid.com"
 private const val DEFAULT_API_PORT = 443
 
 class PropertiesLoader {
+
+	private val logger = Logger.getLogger(this::class.qualifiedName)
+
 	companion object {
+		private val log = Logger.getLogger(this::class.qualifiedName)
+
 		sealed class LoadResult {
 			data class Success(val properties: TestProperties) : LoadResult()
 			data class Failed(val message: String) : LoadResult()
@@ -24,7 +31,10 @@ class PropertiesLoader {
 		fun load(): TestProperties {
 			return when (val loadResult = lazyLoadProperties.value) {
 				is LoadResult.Success -> loadResult.properties
-				is LoadResult.Failed -> throw PropertiesLoadError(loadResult.message)
+				is LoadResult.Failed -> {
+					log.log(Level.WARNING, "Error during properties load: ${loadResult.message}")
+					throw PropertiesLoadError(loadResult.message)
+				}
 			}
 		}
 
