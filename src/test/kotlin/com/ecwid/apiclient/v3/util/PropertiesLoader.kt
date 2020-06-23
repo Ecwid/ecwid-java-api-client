@@ -1,8 +1,6 @@
 package com.ecwid.apiclient.v3.util
 
 import java.util.*
-import java.util.logging.Level
-import java.util.logging.Logger
 
 private const val DEFAULT_API_HOST = "app.ecwid.com"
 private const val DEFAULT_API_PORT = 443
@@ -36,11 +34,15 @@ class PropertiesLoader {
 		}
 
 		private fun fromEnv(): TestProperties? {
+			//TODO: remove logging
 			val apiHost = System.getenv("API_HOST") ?: DEFAULT_API_HOST
+			println("apiHost = $apiHost; DEFAULT_API_HOST = $DEFAULT_API_HOST")
 			val storeId = System.getenv("STORE_ID")?.toIntOrNull()
 					?: return null
+			println("storeId = $storeId")
 			val apiToken = System.getenv("API_TOKEN")
 					?: return null
+			println("apiToken = ${apiToken.take(10)}")
 
 			return TestProperties(
 					apiHost = apiHost,

@@ -35,7 +35,7 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
 	useJUnitPlatform()
 	testLogging {
-		showStandardStreams = true
+		showStandardStreams = true //TODO: remove
 		events("passed", "skipped", "failed")
 	}
 }
