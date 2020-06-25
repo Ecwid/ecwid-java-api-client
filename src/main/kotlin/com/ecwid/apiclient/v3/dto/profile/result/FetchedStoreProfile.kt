@@ -329,7 +329,8 @@ data class FetchedStoreProfile(
 	}
 
 	data class PaymentInfo(
-			var paymentOptions: List<PaymentOptionInfo>? = null
+			var paymentOptions: List<PaymentOptionInfo>? = null,
+			var applePay: ApplePay? = null
 	)
 
 	data class PaymentOptionInfo(
@@ -342,6 +343,13 @@ data class FetchedStoreProfile(
 			var orderBy: Int? = null,
 			var appClientId: String? = null,
 			var instructionsForCustomer: InstructionsForCustomerInfo? = null
+	)
+
+	data class ApplePay(
+			var enabled: Boolean,
+			var available: Boolean,
+			var gateway: String?,
+			var verificationFileUrl: String?
 	)
 
 	data class InstructionsForCustomerInfo(
