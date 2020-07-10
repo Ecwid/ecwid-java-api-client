@@ -23,7 +23,6 @@ import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.*
 import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.result.*
-import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct.ProductOption
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
@@ -35,7 +34,6 @@ import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
 import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
-import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
 
 class ApiClient private constructor(
 		storeProfileApiClient: StoreProfileApiClient,
@@ -87,7 +85,7 @@ class ApiClient private constructor(
 				httpTransport: HttpTransport,
 				jsonTransformerProvider: JsonTransformerProvider
 		): ApiClient {
-			val apiClientHelper = createDefaultApiClientHelper(
+			val apiClientHelper = ApiClientHelper(
 					apiServerDomain = apiServerDomain,
 					storeCredentials = storeCredentials,
 					loggingSettings = loggingSettings,
@@ -273,38 +271,3 @@ interface CouponsApiClient {
 // Static store pages
 // https://developers.ecwid.com/api-documentation/static-store-pages
 // TODO
-
-private fun createDefaultApiClientHelper(
-		apiServerDomain: ApiServerDomain,
-		storeCredentials: ApiStoreCredentials,
-		loggingSettings: LoggingSettings,
-		httpTransport: HttpTransport,
-		jsonTransformerProvider: JsonTransformerProvider
-): ApiClientHelper {
-	val polymorphicTypes = listOf(createProductOptionsPolymorphicType())
-	val jsonTransformer = jsonTransformerProvider.build(polymorphicTypes)
-	return ApiClientHelper(
-			apiServerDomain = apiServerDomain,
-			storeCredentials = storeCredentials,
-			loggingSettings = loggingSettings,
-			httpTransport = httpTransport,
-			jsonTransformer = jsonTransformer
-	)
-}
-
-private fun createProductOptionsPolymorphicType(): PolymorphicType<ProductOption> {
-	return PolymorphicType(
-			rootClass = ProductOption::class.java,
-			jsonFieldName = "type",
-			childClasses = mapOf(
-					"select" to ProductOption.SelectOption::class.java,
-					"size" to ProductOption.SizeOption::class.java,
-					"radio" to ProductOption.RadioOption::class.java,
-					"checkbox" to ProductOption.CheckboxOption::class.java,
-					"textfield" to ProductOption.TextFieldOption::class.java,
-					"textarea" to ProductOption.TextAreaOption::class.java,
-					"date" to ProductOption.DateOption::class.java,
-					"files" to ProductOption.FilesOption::class.java
-			)
-	)
-}
