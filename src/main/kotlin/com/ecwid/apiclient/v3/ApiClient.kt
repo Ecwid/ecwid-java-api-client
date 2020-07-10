@@ -35,7 +35,8 @@ import com.ecwid.apiclient.v3.httptransport.HttpTransport
 import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 
-class ApiClient private constructor(
+open class ApiClient private constructor(
+		protected val apiClientHelper: ApiClientHelper,
 		storeProfileApiClient: StoreProfileApiClient,
 		productsApiClient: ProductsApiClient,
 		categoriesApiClient: CategoriesApiClient,
@@ -63,6 +64,7 @@ class ApiClient private constructor(
 {
 
 	constructor(apiClientHelper: ApiClientHelper): this(
+			apiClientHelper = apiClientHelper,
 			storeProfileApiClient = StoreProfileApiClientImpl(apiClientHelper),
 			productsApiClient = ProductsApiClientImpl(apiClientHelper),
 			categoriesApiClient = CategoriesApiClientImpl(apiClientHelper),
