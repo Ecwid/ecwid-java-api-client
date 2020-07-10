@@ -23,6 +23,7 @@ import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.*
 import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.result.*
+import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct.ProductOption
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
@@ -79,28 +80,14 @@ class ApiClient private constructor(
 
 	companion object {
 
-		fun create(apiServerDomain: ApiServerDomain,
-				   storeCredentials: ApiStoreCredentials,
-				   loggingSettings: LoggingSettings = LoggingSettings(),
-				   httpTransport: HttpTransport,
-				   jsonTransformerProvider: JsonTransformerProvider): ApiClient {
-
-			val productOptionsPolymorphicType = PolymorphicType(
-					rootClass = FetchedProduct.ProductOption::class.java,
-					jsonFieldName = "type",
-					childClasses = mapOf(
-							"select" to FetchedProduct.ProductOption.SelectOption::class.java,
-							"size" to FetchedProduct.ProductOption.SizeOption::class.java,
-							"radio" to FetchedProduct.ProductOption.RadioOption::class.java,
-							"checkbox" to FetchedProduct.ProductOption.CheckboxOption::class.java,
-							"textfield" to FetchedProduct.ProductOption.TextFieldOption::class.java,
-							"textarea" to FetchedProduct.ProductOption.TextAreaOption::class.java,
-							"date" to FetchedProduct.ProductOption.DateOption::class.java,
-							"files" to FetchedProduct.ProductOption.FilesOption::class.java
-					)
-			)
-
-			val polymorphicTypes = listOf(productOptionsPolymorphicType)
+		fun create(
+				apiServerDomain: ApiServerDomain,
+				storeCredentials: ApiStoreCredentials,
+				loggingSettings: LoggingSettings = LoggingSettings(),
+				httpTransport: HttpTransport,
+				jsonTransformerProvider: JsonTransformerProvider
+		): ApiClient {
+			val polymorphicTypes = listOf(createProductOptionsPolymorphicType())
 			val jsonTransformer = jsonTransformerProvider.build(polymorphicTypes)
 			val apiClientHelper = ApiClientHelper(apiServerDomain, storeCredentials, loggingSettings, httpTransport, jsonTransformer)
 
@@ -284,3 +271,19 @@ interface CouponsApiClient {
 // https://developers.ecwid.com/api-documentation/static-store-pages
 // TODO
 
+private fun createProductOptionsPolymorphicType(): PolymorphicType<ProductOption> {
+	return PolymorphicType(
+			rootClass = ProductOption::class.java,
+			jsonFieldName = "type",
+			childClasses = mapOf(
+					"select" to ProductOption.SelectOption::class.java,
+					"size" to ProductOption.SizeOption::class.java,
+					"radio" to ProductOption.RadioOption::class.java,
+					"checkbox" to ProductOption.CheckboxOption::class.java,
+					"textfield" to ProductOption.TextFieldOption::class.java,
+					"textarea" to ProductOption.TextAreaOption::class.java,
+					"date" to ProductOption.DateOption::class.java,
+					"files" to ProductOption.FilesOption::class.java
+			)
+	)
+}
