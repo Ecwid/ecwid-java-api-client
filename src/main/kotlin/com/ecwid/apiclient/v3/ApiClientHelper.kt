@@ -1,4 +1,4 @@
-package com.ecwid.apiclient.v3.impl
+package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.config.ApiServerDomain
 import com.ecwid.apiclient.v3.config.ApiStoreCredentials
@@ -10,6 +10,9 @@ import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct.ProductOption
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.httptransport.*
+import com.ecwid.apiclient.v3.impl.HttpMethod
+import com.ecwid.apiclient.v3.impl.MIME_TYPE_APPLICATION_JSON
+import com.ecwid.apiclient.v3.impl.maskApiToken
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
@@ -23,13 +26,15 @@ import kotlin.random.Random
 
 private const val API_TOKEN_PARAM_NAME = "token"
 
-internal class ApiClientHelper private constructor(
-		private val apiServerDomain: ApiServerDomain,
-		private val storeCredentials: ApiStoreCredentials,
-		private val loggingSettings: LoggingSettings,
-		private val httpTransport: HttpTransport,
-		internal val jsonTransformer: JsonTransformer
+class ApiClientHelper private constructor(
+		val apiServerDomain: ApiServerDomain,
+		val storeCredentials: ApiStoreCredentials,
+		val loggingSettings: LoggingSettings,
+		val httpTransport: HttpTransport,
+		val jsonTransformer: JsonTransformer
 ) {
+
+	private val log = Logger.getLogger(this::class.qualifiedName)
 
 	constructor(
 			apiServerDomain: ApiServerDomain,
@@ -44,8 +49,6 @@ internal class ApiClientHelper private constructor(
 			httpTransport = httpTransport,
 			jsonTransformer = jsonTransformerProvider.build(listOf(createProductOptionsPolymorphicType()))
 	)
-
-	private val log = Logger.getLogger(this::class.qualifiedName)
 
 	inline fun <reified V> makeRequest(
 			request: ApiRequest
@@ -170,7 +173,8 @@ internal class ApiClientHelper private constructor(
 		)
 	}
 
-	private fun createApiEndpointUri(endpoint: String): String {
+	@PublishedApi
+	internal fun createApiEndpointUri(endpoint: String): String {
 		return URI(
 				"https",
 				null,
@@ -267,7 +271,8 @@ private fun generateRequestId(): String {
 			.joinToString("")
 }
 
-private fun Map<String, String>.withApiTokenParam(apiToken: String): Map<String, String> {
+@PublishedApi
+internal fun Map<String, String>.withApiTokenParam(apiToken: String): Map<String, String> {
 	return toMutableMap()
 			.apply {
 				put(API_TOKEN_PARAM_NAME, apiToken)
@@ -294,7 +299,8 @@ private fun Map<String, String>.dumpToString(): String {
 
 private fun ByteArray.asString() = String(this, Charsets.UTF_8)
 
-private fun HttpBody.prepare(jsonTransformer: JsonTransformer): TransportHttpBody {
+@PublishedApi
+internal fun HttpBody.prepare(jsonTransformer: JsonTransformer): TransportHttpBody {
 	return when (this) {
 		HttpBody.EmptyBody -> TransportHttpBody.EmptyBody
 		is HttpBody.JsonBody -> {

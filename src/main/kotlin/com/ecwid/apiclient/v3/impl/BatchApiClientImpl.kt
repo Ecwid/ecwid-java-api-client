@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.impl
 
+import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.BatchApiClient
 import com.ecwid.apiclient.v3.dto.EcwidApiError
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest

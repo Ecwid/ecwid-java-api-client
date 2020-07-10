@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.impl
 
+import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.OrdersApiClient
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.*

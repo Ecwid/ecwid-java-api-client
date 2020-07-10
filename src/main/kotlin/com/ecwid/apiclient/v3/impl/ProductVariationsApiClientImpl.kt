@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.impl
 
+import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.ProductVariationsApiClient
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*

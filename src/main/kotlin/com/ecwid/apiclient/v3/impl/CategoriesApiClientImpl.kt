@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.impl
 
+import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.CategoriesApiClient
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.result.*

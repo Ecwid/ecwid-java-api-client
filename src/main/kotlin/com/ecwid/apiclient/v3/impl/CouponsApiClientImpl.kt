@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.impl
 
+import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.CouponsApiClient
 import com.ecwid.apiclient.v3.dto.coupon.request.*
 import com.ecwid.apiclient.v3.dto.coupon.result.*

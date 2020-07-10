@@ -62,7 +62,7 @@ class ApiClient private constructor(
 
 {
 
-	private constructor(apiClientHelper: ApiClientHelper): this(
+	constructor(apiClientHelper: ApiClientHelper): this(
 			storeProfileApiClient = StoreProfileApiClientImpl(apiClientHelper),
 			productsApiClient = ProductsApiClientImpl(apiClientHelper),
 			categoriesApiClient = CategoriesApiClientImpl(apiClientHelper),
