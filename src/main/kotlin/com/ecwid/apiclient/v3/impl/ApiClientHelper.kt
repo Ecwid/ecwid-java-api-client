@@ -6,10 +6,13 @@ import com.ecwid.apiclient.v3.config.DEFAULT_HTTPS_PORT
 import com.ecwid.apiclient.v3.config.LoggingSettings
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.EcwidApiError
+import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct.ProductOption
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.httptransport.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
+import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
+import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
 import java.io.ByteArrayInputStream
 import java.io.FileInputStream
 import java.net.URI
@@ -20,13 +23,28 @@ import kotlin.random.Random
 
 private const val API_TOKEN_PARAM_NAME = "token"
 
-internal class ApiClientHelper(
+internal class ApiClientHelper private constructor(
 		private val apiServerDomain: ApiServerDomain,
 		private val storeCredentials: ApiStoreCredentials,
 		private val loggingSettings: LoggingSettings,
 		private val httpTransport: HttpTransport,
 		internal val jsonTransformer: JsonTransformer
 ) {
+
+	constructor(
+			apiServerDomain: ApiServerDomain,
+			storeCredentials: ApiStoreCredentials,
+			loggingSettings: LoggingSettings,
+			httpTransport: HttpTransport,
+			jsonTransformerProvider: JsonTransformerProvider
+	): this(
+			apiServerDomain = apiServerDomain,
+			storeCredentials = storeCredentials,
+			loggingSettings = loggingSettings,
+			httpTransport = httpTransport,
+			jsonTransformer = jsonTransformerProvider.build(listOf(createProductOptionsPolymorphicType()))
+	)
+
 	private val log = Logger.getLogger(this::class.qualifiedName)
 
 	inline fun <reified V> makeRequest(
@@ -293,4 +311,21 @@ private fun HttpBody.prepare(jsonTransformer: JsonTransformer): TransportHttpBod
 			TransportHttpBody.InputStreamBody(FileInputStream(file), mimeType)
 		}
 	}
+}
+
+private fun createProductOptionsPolymorphicType(): PolymorphicType<ProductOption> {
+	return PolymorphicType(
+			rootClass = ProductOption::class.java,
+			jsonFieldName = "type",
+			childClasses = mapOf(
+					"select" to ProductOption.SelectOption::class.java,
+					"size" to ProductOption.SizeOption::class.java,
+					"radio" to ProductOption.RadioOption::class.java,
+					"checkbox" to ProductOption.CheckboxOption::class.java,
+					"textfield" to ProductOption.TextFieldOption::class.java,
+					"textarea" to ProductOption.TextAreaOption::class.java,
+					"date" to ProductOption.DateOption::class.java,
+					"files" to ProductOption.FilesOption::class.java
+			)
+	)
 }
