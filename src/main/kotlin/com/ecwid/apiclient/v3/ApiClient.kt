@@ -87,10 +87,13 @@ class ApiClient private constructor(
 				httpTransport: HttpTransport,
 				jsonTransformerProvider: JsonTransformerProvider
 		): ApiClient {
-			val polymorphicTypes = listOf(createProductOptionsPolymorphicType())
-			val jsonTransformer = jsonTransformerProvider.build(polymorphicTypes)
-			val apiClientHelper = ApiClientHelper(apiServerDomain, storeCredentials, loggingSettings, httpTransport, jsonTransformer)
-
+			val apiClientHelper = createDefaultApiClientHelper(
+					apiServerDomain = apiServerDomain,
+					storeCredentials = storeCredentials,
+					loggingSettings = loggingSettings,
+					httpTransport = httpTransport,
+					jsonTransformerProvider = jsonTransformerProvider
+			)
 			return ApiClient(apiClientHelper)
 		}
 
@@ -270,6 +273,24 @@ interface CouponsApiClient {
 // Static store pages
 // https://developers.ecwid.com/api-documentation/static-store-pages
 // TODO
+
+private fun createDefaultApiClientHelper(
+		apiServerDomain: ApiServerDomain,
+		storeCredentials: ApiStoreCredentials,
+		loggingSettings: LoggingSettings,
+		httpTransport: HttpTransport,
+		jsonTransformerProvider: JsonTransformerProvider
+): ApiClientHelper {
+	val polymorphicTypes = listOf(createProductOptionsPolymorphicType())
+	val jsonTransformer = jsonTransformerProvider.build(polymorphicTypes)
+	return ApiClientHelper(
+			apiServerDomain = apiServerDomain,
+			storeCredentials = storeCredentials,
+			loggingSettings = loggingSettings,
+			httpTransport = httpTransport,
+			jsonTransformer = jsonTransformer
+	)
+}
 
 private fun createProductOptionsPolymorphicType(): PolymorphicType<ProductOption> {
 	return PolymorphicType(
