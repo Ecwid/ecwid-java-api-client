@@ -59,9 +59,26 @@ class ApiClient private constructor(
 		ProductVariationsApiClient by productVariationsApiClient,
 		BatchApiClient by batchApiClient,
 		CouponsApiClient by discountCouponsApiClient,
-		CartsApiClient by cartsApiClient {
+		CartsApiClient by cartsApiClient
+
+{
+
+	private constructor(apiClientHelper: ApiClientHelper): this(
+			storeProfileApiClient = StoreProfileApiClientImpl(apiClientHelper),
+			productsApiClient = ProductsApiClientImpl(apiClientHelper),
+			categoriesApiClient = CategoriesApiClientImpl(apiClientHelper),
+			ordersApiClient = OrdersApiClientImpl(apiClientHelper),
+			productTypesApiClient = ProductTypesApiClientImpl(apiClientHelper),
+			customersApiClient = CustomersApiClientImpl(apiClientHelper),
+			customerGroupsApiClient = CustomerGroupsApiClientImpl(apiClientHelper),
+			productVariationsApiClient = ProductVariationsApiClientImpl(apiClientHelper),
+			batchApiClient = BatchApiClientImpl(apiClientHelper),
+			discountCouponsApiClient = CouponsApiClientImpl(apiClientHelper),
+			cartsApiClient = CartsApiClientImpl(apiClientHelper)
+	)
 
 	companion object {
+
 		fun create(apiServerDomain: ApiServerDomain,
 				   storeCredentials: ApiStoreCredentials,
 				   loggingSettings: LoggingSettings = LoggingSettings(),
@@ -87,21 +104,9 @@ class ApiClient private constructor(
 			val jsonTransformer = jsonTransformerProvider.build(polymorphicTypes)
 			val apiClientHelper = ApiClientHelper(apiServerDomain, storeCredentials, loggingSettings, httpTransport, jsonTransformer)
 
-			return ApiClient(
-					StoreProfileApiClientImpl(apiClientHelper),
-					ProductsApiClientImpl(apiClientHelper),
-					CategoriesApiClientImpl(apiClientHelper),
-					OrdersApiClientImpl(apiClientHelper),
-					ProductTypesApiClientImpl(apiClientHelper),
-					CustomersApiClientImpl(apiClientHelper),
-					CustomerGroupsApiClientImpl(apiClientHelper),
-					ProductVariationsApiClientImpl(apiClientHelper),
-					BatchApiClientImpl(apiClientHelper),
-					CouponsApiClientImpl(apiClientHelper),
-					CartsApiClientImpl(apiClientHelper)
-			)
-
+			return ApiClient(apiClientHelper)
 		}
+
 	}
 }
 
