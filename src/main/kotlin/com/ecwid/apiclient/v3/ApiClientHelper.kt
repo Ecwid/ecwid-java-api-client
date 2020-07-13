@@ -59,6 +59,20 @@ class ApiClientHelper private constructor(
 	inline fun <reified V> makeRequest(
 			request: ApiRequest
 	): V {
+		val responseParser = object : ResponseParser<V> {
+			override fun parse(responseBytes: ByteArray): V {
+				return parseResponseBytes(responseBytes, V::class.java)
+			}
+
+			override fun getLogString(responseBytes: ByteArray): String {
+				return getLoggableResponseBody(responseBytes, V::class.java)
+			}
+		}
+
+		return makeRequest(request, responseParser)
+	}
+
+	inline fun <reified V> makeRequest(request: ApiRequest, responseParser: ResponseParser<V>): V {
 		val requestId = generateRequestId()
 
 		val requestInfo = request.toRequestInfo()
@@ -72,14 +86,7 @@ class ApiClientHelper private constructor(
 				httpResponse = httpResponse,
 				requestId = requestId,
 				requestTime = Date().time - startTime,
-				responseParser = object : ResponseParser<V> {
-					override fun parse(responseBytes: ByteArray): V {
-						return parseResponseBytes(responseBytes, V::class.java)
-					}
-					override fun getLogString(responseBytes: ByteArray): String {
-						return getLoggableResponseBody(responseBytes, V::class.java)
-					}
-				}
+				responseParser = responseParser
 		)
 	}
 
