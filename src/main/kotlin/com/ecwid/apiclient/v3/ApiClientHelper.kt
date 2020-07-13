@@ -10,9 +10,8 @@ import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct.ProductOption
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.httptransport.*
-import com.ecwid.apiclient.v3.impl.HttpMethod
+import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.impl.MIME_TYPE_APPLICATION_JSON
-import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.impl.maskApiToken
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
@@ -35,11 +34,6 @@ class ApiClientHelper private constructor(
 		val jsonTransformer: JsonTransformer
 ) {
 
-	interface ResponseParser<V> {
-		fun parse(responseBytes: ByteArray): V
-		fun getLogString(responseBytes: ByteArray): String
-	}
-
 	private val log = Logger.getLogger(this::class.qualifiedName)
 
 	constructor(
@@ -56,19 +50,8 @@ class ApiClientHelper private constructor(
 			jsonTransformer = jsonTransformerProvider.build(listOf(createProductOptionsPolymorphicType()))
 	)
 
-	inline fun <reified V> makeRequest(
-			request: ApiRequest
-	): V {
-		val responseParser = object : ResponseParser<V> {
-			override fun parse(responseBytes: ByteArray): V {
-				return parseResponseBytes(responseBytes, V::class.java)
-			}
-
-			override fun getLogString(responseBytes: ByteArray): String {
-				return getLoggableResponseBody(responseBytes, V::class.java)
-			}
-		}
-
+	inline fun <reified V> makeRequest(request: ApiRequest): V {
+		val responseParser = ObjectResponseParser(jsonTransformer, V::class.java)
 		return makeRequest(request, responseParser)
 	}
 
@@ -88,6 +71,16 @@ class ApiClientHelper private constructor(
 				requestTime = Date().time - startTime,
 				responseParser = responseParser
 		)
+	}
+
+	@Suppress("NOTHING_TO_INLINE")
+	inline fun makeByteArrayResultRequest(request: ApiRequest): ByteArray {
+		return makeRequest(request, ByteArrayResponseParser())
+	}
+
+	@Suppress("NOTHING_TO_INLINE")
+	inline fun makeStringResultRequest(request: ApiRequest): String {
+		return makeRequest(request, StringResponseParser())
 	}
 
 	@PublishedApi
@@ -135,32 +128,6 @@ class ApiClientHelper private constructor(
 						cause = httpResponse.exception
 				)
 			}
-		}
-	}
-
-	@PublishedApi
-	internal fun <V> parseResponseBytes(responseBytes: ByteArray, clazz: Class<V>): V {
-		return if (clazz.isAssignableFrom(String::class.java)) {
-			val responseBody = responseBytes.asString()
-			@Suppress("UNCHECKED_CAST") // We already checked above that this cast is safe
-			responseBody as V
-		} else if (clazz.isAssignableFrom(ByteArray::class.java)) {
-			@Suppress("UNCHECKED_CAST") // We already checked above that this cast is safe
-			responseBytes as V
-		} else {
-			val responseBody = responseBytes.asString()
-			jsonTransformer.deserialize(responseBody, clazz)!!
-		}
-	}
-
-	@PublishedApi
-	internal fun <V> getLoggableResponseBody(responseBytes: ByteArray, clazz: Class<V>): String {
-		return if (clazz.isAssignableFrom(String::class.java)) {
-			responseBytes.asString()
-		} else if (clazz.isAssignableFrom(ByteArray::class.java)) {
-			"[Binary data: byte array of size ${responseBytes.size}]"
-		} else {
-			responseBytes.asString()
 		}
 	}
 
@@ -335,7 +302,7 @@ private fun Map<String, String>.dumpToString(): String {
 			.joinToString(separator = ", ")
 }
 
-private fun ByteArray.asString() = String(this, Charsets.UTF_8)
+fun ByteArray.asString() = String(this, Charsets.UTF_8)
 
 @PublishedApi
 internal fun HttpBody.prepare(jsonTransformer: JsonTransformer): TransportHttpBody {
