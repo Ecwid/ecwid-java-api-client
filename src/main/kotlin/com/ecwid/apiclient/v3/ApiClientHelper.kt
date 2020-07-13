@@ -59,15 +59,11 @@ class ApiClientHelper private constructor(
 	inline fun <reified V> makeRequest(
 			request: ApiRequest
 	): V {
-		val requestInfo = request.toRequestInfo()
-		val httpRequest = requestInfo.toHttpRequest()
-		return makeRequest(httpRequest, requestInfo.httpBody, V::class.java)
-	}
-
-	fun <V> makeRequest(httpRequest: HttpRequest, httpBody: HttpBody, clazz: Class<V>): V {
 		val requestId = generateRequestId()
 
-		logRequestIfNeeded(requestId, httpRequest, httpBody)
+		val requestInfo = request.toRequestInfo()
+		val httpRequest = requestInfo.toHttpRequest()
+		logRequestIfNeeded(requestId, httpRequest, requestInfo.httpBody)
 
 		val startTime = Date().time
 		val httpResponse = httpTransport.makeHttpRequest(httpRequest)
@@ -78,16 +74,17 @@ class ApiClientHelper private constructor(
 				requestTime = Date().time - startTime,
 				responseParser = object : ResponseParser<V> {
 					override fun parse(responseBytes: ByteArray): V {
-						return parseResponseBytes(responseBytes, clazz)
+						return parseResponseBytes(responseBytes, V::class.java)
 					}
 					override fun getLogString(responseBytes: ByteArray): String {
-						return getLoggableResponseBody(responseBytes, clazz)
+						return getLoggableResponseBody(responseBytes, V::class.java)
 					}
 				}
 		)
 	}
 
-	private fun <V> processHttpResponse(httpResponse: HttpResponse, requestId: String, requestTime: Long, responseParser: ResponseParser<V>): V {
+	@PublishedApi
+	internal fun <V> processHttpResponse(httpResponse: HttpResponse, requestId: String, requestTime: Long, responseParser: ResponseParser<V>): V {
 		val responseBytes = httpResponse.responseBytes
 		return when (httpResponse) {
 			is HttpResponse.Success -> {
@@ -134,7 +131,8 @@ class ApiClientHelper private constructor(
 		}
 	}
 
-	private fun <V> parseResponseBytes(responseBytes: ByteArray, clazz: Class<V>): V {
+	@PublishedApi
+	internal fun <V> parseResponseBytes(responseBytes: ByteArray, clazz: Class<V>): V {
 		return if (clazz.isAssignableFrom(String::class.java)) {
 			val responseBody = responseBytes.asString()
 			@Suppress("UNCHECKED_CAST") // We already checked above that this cast is safe
@@ -148,7 +146,8 @@ class ApiClientHelper private constructor(
 		}
 	}
 
-	private fun <V> getLoggableResponseBody(responseBytes: ByteArray, clazz: Class<V>): String {
+	@PublishedApi
+	internal fun <V> getLoggableResponseBody(responseBytes: ByteArray, clazz: Class<V>): String {
 		return if (clazz.isAssignableFrom(String::class.java)) {
 			responseBytes.asString()
 		} else if (clazz.isAssignableFrom(ByteArray::class.java)) {
@@ -158,7 +157,8 @@ class ApiClientHelper private constructor(
 		}
 	}
 
-	private fun logRequestIfNeeded(requestId: String, httpRequest: HttpRequest, httpBody: HttpBody) {
+	@PublishedApi
+	internal fun logRequestIfNeeded(requestId: String, httpRequest: HttpRequest, httpBody: HttpBody) {
 		if (!loggingSettings.logRequest) return
 
 		val params = if (loggingSettings.maskRequestApiToken) {
@@ -293,7 +293,8 @@ class ApiClientHelper private constructor(
 
 }
 
-private fun generateRequestId(): String {
+@PublishedApi
+internal fun generateRequestId(): String {
 	val characters = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 	return (1..8)
 			.map { Random.nextInt(0, characters.size) }
