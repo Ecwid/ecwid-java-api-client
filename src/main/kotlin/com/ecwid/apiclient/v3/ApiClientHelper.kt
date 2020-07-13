@@ -54,7 +54,8 @@ class ApiClientHelper private constructor(
 		return makeObjectResultRequest(request)
 	}
 
-	inline fun <reified V> makeRequest(request: ApiRequest, responseParser: ResponseParser<V>): V {
+	@PublishedApi
+	internal inline fun <reified V> makeRequestInt(request: ApiRequest, responseParser: ResponseParser<V>): V {
 		val requestId = generateRequestId()
 
 		val requestInfo = request.toRequestInfo()
@@ -73,21 +74,21 @@ class ApiClientHelper private constructor(
 	}
 
 	inline fun <reified V> makeObjectResultRequest(request: ApiRequest): V {
-		return makeRequest(request, ObjectResponseParser(jsonTransformer, V::class.java))
+		return makeRequestInt(request, ObjectResponseParser(jsonTransformer, V::class.java))
 	}
 
 	inline fun <reified VBase, reified VExt> makeObjectWithExtResultRequest(request: ApiRequest): ParsedResponseWithExt<VBase, VExt> {
-		return makeRequest(request, ObjectWithExtResponseParser(jsonTransformer, VBase::class.java, VExt::class.java))
+		return makeRequestInt(request, ObjectWithExtResponseParser(jsonTransformer, VBase::class.java, VExt::class.java))
 	}
 
 	@Suppress("NOTHING_TO_INLINE")
 	inline fun makeByteArrayResultRequest(request: ApiRequest): ByteArray {
-		return makeRequest(request, ByteArrayResponseParser())
+		return makeRequestInt(request, ByteArrayResponseParser())
 	}
 
 	@Suppress("NOTHING_TO_INLINE")
 	inline fun makeStringResultRequest(request: ApiRequest): String {
-		return makeRequest(request, StringResponseParser())
+		return makeRequestInt(request, StringResponseParser())
 	}
 
 	@PublishedApi
