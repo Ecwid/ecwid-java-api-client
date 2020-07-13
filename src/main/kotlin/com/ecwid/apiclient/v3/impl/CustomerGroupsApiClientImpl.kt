@@ -9,7 +9,7 @@ internal class CustomerGroupsApiClientImpl(
 		private val apiClientHelper: ApiClientHelper
 ) : CustomerGroupsApiClient {
 
-	override fun searchCustomerGroups(request: CustomerGroupsSearchRequest) = apiClientHelper.makeRequest<CustomerGroupsSearchResult>(request)
+	override fun searchCustomerGroups(request: CustomerGroupsSearchRequest) = apiClientHelper.makeObjectResultRequest<CustomerGroupsSearchResult>(request)
 
 	override fun searchCustomerGroupsAsSequence(request: CustomerGroupsSearchRequest) = sequence {
 		var offsetRequest = request
@@ -20,10 +20,10 @@ internal class CustomerGroupsApiClientImpl(
 		} while (searchResult.count >= searchResult.limit)
 	}
 
-	override fun getCustomerGroupDetails(request: CustomerGroupDetailsRequest) = apiClientHelper.makeRequest<FetchedCustomerGroup>(request)
-	override fun createCustomerGroup(request: CustomerGroupCreateRequest) = apiClientHelper.makeRequest<CustomerGroupCreateResult>(request)
-	override fun updateCustomerGroup(request: CustomerGroupUpdateRequest) = apiClientHelper.makeRequest<CustomerGroupUpdateResult>(request)
-	override fun deleteCustomerGroup(request: CustomerGroupDeleteRequest) = apiClientHelper.makeRequest<CustomerGroupDeleteResult>(request)
+	override fun getCustomerGroupDetails(request: CustomerGroupDetailsRequest) = apiClientHelper.makeObjectResultRequest<FetchedCustomerGroup>(request)
+	override fun createCustomerGroup(request: CustomerGroupCreateRequest) = apiClientHelper.makeObjectResultRequest<CustomerGroupCreateResult>(request)
+	override fun updateCustomerGroup(request: CustomerGroupUpdateRequest) = apiClientHelper.makeObjectResultRequest<CustomerGroupUpdateResult>(request)
+	override fun deleteCustomerGroup(request: CustomerGroupDeleteRequest) = apiClientHelper.makeObjectResultRequest<CustomerGroupDeleteResult>(request)
 
 }
 
