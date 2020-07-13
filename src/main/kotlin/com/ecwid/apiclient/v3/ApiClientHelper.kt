@@ -35,6 +35,11 @@ class ApiClientHelper private constructor(
 		val jsonTransformer: JsonTransformer
 ) {
 
+	interface ResponseParser<V> {
+		fun parse(responseBytes: ByteArray): V
+		fun getLogString(responseBytes: ByteArray): String
+	}
+
 	private val log = Logger.getLogger(this::class.qualifiedName)
 
 	constructor(
@@ -69,31 +74,28 @@ class ApiClientHelper private constructor(
 
 		return processHttpResponse(
 				httpResponse = httpResponse,
-				clazz = clazz,
 				requestId = requestId,
-				requestTime = Date().time - startTime
+				requestTime = Date().time - startTime,
+				responseParser = object : ResponseParser<V> {
+					override fun parse(responseBytes: ByteArray): V {
+						return parseResponseBytes(responseBytes, clazz)
+					}
+					override fun getLogString(responseBytes: ByteArray): String {
+						return getLoggableResponseBody(responseBytes, clazz)
+					}
+				}
 		)
 	}
 
-	private fun <V> processHttpResponse(httpResponse: HttpResponse, clazz: Class<V>, requestId: String, requestTime: Long): V {
+	private fun <V> processHttpResponse(httpResponse: HttpResponse, requestId: String, requestTime: Long, responseParser: ResponseParser<V>): V {
 		val responseBytes = httpResponse.responseBytes
 		return when (httpResponse) {
 			is HttpResponse.Success -> {
 				try {
-					if (clazz.isAssignableFrom(String::class.java)) {
-						val responseBody = responseBytes.asString()
-						logSuccessfulResponseIfNeeded(requestId, requestTime, responseBody)
-						@Suppress("UNCHECKED_CAST") // We already checked above that this cast is safe
-						responseBody as V
-					} else if (clazz.isAssignableFrom(ByteArray::class.java)) {
-						logSuccessfulResponseIfNeeded(requestId, requestTime, "[Binary data: byte array of size ${responseBytes.size}]")
-						@Suppress("UNCHECKED_CAST") // We already checked above that this cast is safe
-						responseBytes as V
-					} else {
-						val responseBody = responseBytes.asString()
-						logSuccessfulResponseIfNeeded(requestId, requestTime, responseBody)
-						jsonTransformer.deserialize(responseBytes.asString(), clazz)!!
-					}
+					val parsedResponse = responseParser.parse(responseBytes)
+					val responseBodyForLog = responseParser.getLogString(responseBytes)
+					logSuccessfulResponseIfNeeded(requestId, requestTime, responseBodyForLog)
+					parsedResponse
 				} catch (e: JsonDeserializationException) {
 					logCannotParseResponseError(requestId, requestTime, responseBytes.asString(), e)
 					throw EcwidApiException(
@@ -129,6 +131,30 @@ class ApiClientHelper private constructor(
 						cause = httpResponse.exception
 				)
 			}
+		}
+	}
+
+	private fun <V> parseResponseBytes(responseBytes: ByteArray, clazz: Class<V>): V {
+		return if (clazz.isAssignableFrom(String::class.java)) {
+			val responseBody = responseBytes.asString()
+			@Suppress("UNCHECKED_CAST") // We already checked above that this cast is safe
+			responseBody as V
+		} else if (clazz.isAssignableFrom(ByteArray::class.java)) {
+			@Suppress("UNCHECKED_CAST") // We already checked above that this cast is safe
+			responseBytes as V
+		} else {
+			val responseBody = responseBytes.asString()
+			jsonTransformer.deserialize(responseBody, clazz)!!
+		}
+	}
+
+	private fun <V> getLoggableResponseBody(responseBytes: ByteArray, clazz: Class<V>): String {
+		return if (clazz.isAssignableFrom(String::class.java)) {
+			responseBytes.asString()
+		} else if (clazz.isAssignableFrom(ByteArray::class.java)) {
+			"[Binary data: byte array of size ${responseBytes.size}]"
+		} else {
+			responseBytes.asString()
 		}
 	}
 
