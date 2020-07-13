@@ -38,7 +38,7 @@ internal class ProductsApiClientImpl(
 	override fun uploadProductGalleryImageAsync(request: ProductGalleryImageAsyncUploadRequest) = apiClientHelper.makeRequest<ProductGalleryImageAsyncUploadResult>(request)
 	override fun deleteProductGalleryImage(request: ProductGalleryImageDeleteRequest) = apiClientHelper.makeRequest<ProductGalleryImageDeleteResult>(request)
 	override fun deleteProductGalleryImages(request: ProductGalleryImagesDeleteRequest) = apiClientHelper.makeRequest<ProductGalleryImagesDeleteResult>(request)
-	override fun downloadProductFile(request: ProductFileDownloadRequest) = apiClientHelper.makeRequest<ByteArray>(request)
+	override fun downloadProductFile(request: ProductFileDownloadRequest) = apiClientHelper.makeByteArrayResultRequest(request)
 	override fun uploadProductFile(request: ProductFileUploadRequest) = apiClientHelper.makeRequest<ProductFileUploadResult>(request)
 	override fun updateProductFile(request: ProductFileUpdateRequest) = apiClientHelper.makeRequest<ProductFileUpdateResult>(request)
 	override fun deleteProductFile(request: ProductFileDeleteRequest) = apiClientHelper.makeRequest<ProductFileDeleteResult>(request)
