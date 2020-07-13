@@ -12,6 +12,7 @@ import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.httptransport.*
 import com.ecwid.apiclient.v3.impl.HttpMethod
 import com.ecwid.apiclient.v3.impl.MIME_TYPE_APPLICATION_JSON
+import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.impl.maskApiToken
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
@@ -54,26 +55,7 @@ class ApiClientHelper private constructor(
 			request: ApiRequest
 	): V {
 		val requestInfo = request.toRequestInfo()
-		val httpRequest = when (requestInfo.method) {
-			HttpMethod.GET -> HttpRequest.HttpGetRequest(
-					uri = createApiEndpointUri(requestInfo.endpoint),
-					params = requestInfo.params.withApiTokenParam(storeCredentials.apiToken)
-			)
-			HttpMethod.POST -> HttpRequest.HttpPostRequest(
-					uri = createApiEndpointUri(requestInfo.endpoint),
-					params = requestInfo.params.withApiTokenParam(storeCredentials.apiToken),
-					transportHttpBody = requestInfo.httpBody.prepare(jsonTransformer)
-			)
-			HttpMethod.PUT -> HttpRequest.HttpPutRequest(
-					uri = createApiEndpointUri(requestInfo.endpoint),
-					params = requestInfo.params.withApiTokenParam(storeCredentials.apiToken),
-					transportHttpBody = requestInfo.httpBody.prepare(jsonTransformer)
-			)
-			HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
-					uri = createApiEndpointUri(requestInfo.endpoint),
-					params = requestInfo.params.withApiTokenParam(storeCredentials.apiToken)
-			)
-		}
+		val httpRequest = requestInfo.toHttpRequest()
 		return makeRequest(httpRequest, requestInfo.httpBody, V::class.java)
 	}
 
@@ -170,6 +152,28 @@ class ApiClientHelper private constructor(
 						httpBody.asString()?.let { add(it) }
 					}
 				}
+		)
+	}
+
+	@PublishedApi
+	internal fun RequestInfo.toHttpRequest(): HttpRequest = when (method) {
+		HttpMethod.GET -> HttpRequest.HttpGetRequest(
+				uri = createApiEndpointUri(endpoint),
+				params = params.withApiTokenParam(storeCredentials.apiToken)
+		)
+		HttpMethod.POST -> HttpRequest.HttpPostRequest(
+				uri = createApiEndpointUri(endpoint),
+				params = params.withApiTokenParam(storeCredentials.apiToken),
+				transportHttpBody = httpBody.prepare(jsonTransformer)
+		)
+		HttpMethod.PUT -> HttpRequest.HttpPutRequest(
+				uri = createApiEndpointUri(endpoint),
+				params = params.withApiTokenParam(storeCredentials.apiToken),
+				transportHttpBody = httpBody.prepare(jsonTransformer)
+		)
+		HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
+				uri = createApiEndpointUri(endpoint),
+				params = params.withApiTokenParam(storeCredentials.apiToken)
 		)
 	}
 
