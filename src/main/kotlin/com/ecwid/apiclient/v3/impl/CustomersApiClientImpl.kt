@@ -9,7 +9,7 @@ internal data class CustomersApiClientImpl(
 		private val apiClientHelper: ApiClientHelper
 ) : CustomersApiClient {
 
-	override fun searchCustomers(request: CustomersSearchRequest) = apiClientHelper.makeRequest<CustomersSearchResult>(request)
+	override fun searchCustomers(request: CustomersSearchRequest) = apiClientHelper.makeObjectResultRequest<CustomersSearchResult>(request)
 
 	override fun searchCustomersAsSequence(request: CustomersSearchRequest) = sequence {
 		var offsetRequest = request
@@ -20,11 +20,11 @@ internal data class CustomersApiClientImpl(
 		} while (searchResult.count >= searchResult.limit)
 	}
 
-	override fun getCustomerDetails(request: CustomerDetailsRequest) = apiClientHelper.makeRequest<FetchedCustomer>(request)
-	override fun createCustomer(request: CustomerCreateRequest) = apiClientHelper.makeRequest<CustomerCreateResult>(request)
-	override fun updateCustomer(request: CustomerUpdateRequest) = apiClientHelper.makeRequest<CustomerUpdateResult>(request)
-	override fun deleteCustomer(request: CustomerDeleteRequest) = apiClientHelper.makeRequest<CustomerDeleteResult>(request)
-	override fun searchDeletedCustomers(request: DeletedCustomersSearchRequest) = apiClientHelper.makeRequest<DeletedCustomersSearchResult>(request)
+	override fun getCustomerDetails(request: CustomerDetailsRequest) = apiClientHelper.makeObjectResultRequest<FetchedCustomer>(request)
+	override fun createCustomer(request: CustomerCreateRequest) = apiClientHelper.makeObjectResultRequest<CustomerCreateResult>(request)
+	override fun updateCustomer(request: CustomerUpdateRequest) = apiClientHelper.makeObjectResultRequest<CustomerUpdateResult>(request)
+	override fun deleteCustomer(request: CustomerDeleteRequest) = apiClientHelper.makeObjectResultRequest<CustomerDeleteResult>(request)
+	override fun searchDeletedCustomers(request: DeletedCustomersSearchRequest) = apiClientHelper.makeObjectResultRequest<DeletedCustomersSearchResult>(request)
 
 	override fun searchDeletedCustomersAsSequence(request: DeletedCustomersSearchRequest) = sequence {
 		var offsetRequest = request

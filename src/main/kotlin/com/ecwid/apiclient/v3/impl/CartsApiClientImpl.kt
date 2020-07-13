@@ -8,7 +8,7 @@ import com.ecwid.apiclient.v3.dto.cart.result.*
 internal data class CartsApiClientImpl(
 		private val apiClientHelper: ApiClientHelper
 ) : CartsApiClient {
-	override fun searchCarts(request: CartsSearchRequest) = apiClientHelper.makeRequest<CartsSearchResult>(request)
+	override fun searchCarts(request: CartsSearchRequest) = apiClientHelper.makeObjectResultRequest<CartsSearchResult>(request)
 
 	override fun searchCartsAsSequence(request: CartsSearchRequest): List<FetchedCart> {
 		var offsetRequest = request
@@ -21,8 +21,8 @@ internal data class CartsApiClientImpl(
 		return totalList
 	}
 
-	override fun getCartDetails(request: CartDetailsRequest) = apiClientHelper.makeRequest<FetchedCart>(request)
-	override fun updateCart(request: CartUpdateRequest) = apiClientHelper.makeRequest<CartUpdateResult>(request)
-	override fun calculateOrderDetails(request: CalculateOrderDetailsRequest) = apiClientHelper.makeRequest<CalculateOrderDetailsResult>(request)
-	override fun convertCartToOrder(request: ConvertCartToOrderRequest) = apiClientHelper.makeRequest<ConvertCartToOrderResult>(request)
+	override fun getCartDetails(request: CartDetailsRequest) = apiClientHelper.makeObjectResultRequest<FetchedCart>(request)
+	override fun updateCart(request: CartUpdateRequest) = apiClientHelper.makeObjectResultRequest<CartUpdateResult>(request)
+	override fun calculateOrderDetails(request: CalculateOrderDetailsRequest) = apiClientHelper.makeObjectResultRequest<CalculateOrderDetailsResult>(request)
+	override fun convertCartToOrder(request: ConvertCartToOrderRequest) = apiClientHelper.makeObjectResultRequest<ConvertCartToOrderResult>(request)
 }

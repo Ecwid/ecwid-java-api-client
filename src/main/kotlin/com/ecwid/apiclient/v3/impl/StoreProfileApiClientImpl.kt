@@ -10,7 +10,7 @@ import com.ecwid.apiclient.v3.dto.profile.result.StoreProfileUpdateResult
 internal class StoreProfileApiClientImpl(
 		private val apiClientHelper: ApiClientHelper
 ) : StoreProfileApiClient {
-	override fun getStoreProfile(request: StoreProfileRequest) = apiClientHelper.makeRequest<FetchedStoreProfile>(request)
-	override fun updateStoreProfile(request: StoreProfileUpdateRequest) = apiClientHelper.makeRequest<StoreProfileUpdateResult>(request)
+	override fun getStoreProfile(request: StoreProfileRequest) = apiClientHelper.makeObjectResultRequest<FetchedStoreProfile>(request)
+	override fun updateStoreProfile(request: StoreProfileUpdateRequest) = apiClientHelper.makeObjectResultRequest<StoreProfileUpdateResult>(request)
 
 }

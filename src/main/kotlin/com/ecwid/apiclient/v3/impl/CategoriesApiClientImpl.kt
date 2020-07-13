@@ -9,7 +9,7 @@ internal class CategoriesApiClientImpl(
 		private val apiClientHelper: ApiClientHelper
 ) : CategoriesApiClient {
 
-	override fun searchCategories(request: CategoriesSearchRequest) = apiClientHelper.makeRequest<CategoriesSearchResult>(request)
+	override fun searchCategories(request: CategoriesSearchRequest) = apiClientHelper.makeObjectResultRequest<CategoriesSearchResult>(request)
 	override fun searchCategoriesAsSequence(request: CategoriesSearchRequest) = sequence {
 		var offsetRequest = request
 		do {
@@ -19,13 +19,13 @@ internal class CategoriesApiClientImpl(
 		} while (searchResult.count >= searchResult.limit)
 	}
 
-	override fun getCategoryDetails(request: CategoryDetailsRequest) = apiClientHelper.makeRequest<FetchedCategory>(request)
-	override fun createCategory(request: CategoryCreateRequest) = apiClientHelper.makeRequest<CategoryCreateResult>(request)
-	override fun updateCategory(request: CategoryUpdateRequest) = apiClientHelper.makeRequest<CategoryUpdateResult>(request)
-	override fun deleteCategory(request: CategoryDeleteRequest) = apiClientHelper.makeRequest<CategoryDeleteResult>(request)
-	override fun uploadCategoryImage(request: CategoryImageUploadRequest) = apiClientHelper.makeRequest<CategoryImageUploadResult>(request)
-	override fun uploadCategoryImageAsync(request: CategoryImageAsyncUploadRequest) = apiClientHelper.makeRequest<CategoryImageAsyncUploadResult>(request)
-	override fun deleteCategoryImage(request: CategoryImageDeleteRequest) = apiClientHelper.makeRequest<CategoryImageDeleteResult>(request)
+	override fun getCategoryDetails(request: CategoryDetailsRequest) = apiClientHelper.makeObjectResultRequest<FetchedCategory>(request)
+	override fun createCategory(request: CategoryCreateRequest) = apiClientHelper.makeObjectResultRequest<CategoryCreateResult>(request)
+	override fun updateCategory(request: CategoryUpdateRequest) = apiClientHelper.makeObjectResultRequest<CategoryUpdateResult>(request)
+	override fun deleteCategory(request: CategoryDeleteRequest) = apiClientHelper.makeObjectResultRequest<CategoryDeleteResult>(request)
+	override fun uploadCategoryImage(request: CategoryImageUploadRequest) = apiClientHelper.makeObjectResultRequest<CategoryImageUploadResult>(request)
+	override fun uploadCategoryImageAsync(request: CategoryImageAsyncUploadRequest) = apiClientHelper.makeObjectResultRequest<CategoryImageAsyncUploadResult>(request)
+	override fun deleteCategoryImage(request: CategoryImageDeleteRequest) = apiClientHelper.makeObjectResultRequest<CategoryImageDeleteResult>(request)
 
 }
 

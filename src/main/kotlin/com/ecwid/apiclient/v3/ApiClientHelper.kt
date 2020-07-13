@@ -50,10 +50,6 @@ class ApiClientHelper private constructor(
 			jsonTransformer = jsonTransformerProvider.build(listOf(createProductOptionsPolymorphicType()))
 	)
 
-	inline fun <reified V> makeRequest(request: ApiRequest): V {
-		return makeObjectResultRequest(request)
-	}
-
 	@PublishedApi
 	internal inline fun <reified V> makeRequestInt(request: ApiRequest, responseParser: ResponseParser<V>): V {
 		val requestId = generateRequestId()
