@@ -51,8 +51,7 @@ class ApiClientHelper private constructor(
 	)
 
 	inline fun <reified V> makeRequest(request: ApiRequest): V {
-		val responseParser = ObjectResponseParser(jsonTransformer, V::class.java)
-		return makeRequest(request, responseParser)
+		return makeObjectResultRequest(request)
 	}
 
 	inline fun <reified V> makeRequest(request: ApiRequest, responseParser: ResponseParser<V>): V {
@@ -71,6 +70,14 @@ class ApiClientHelper private constructor(
 				requestTime = Date().time - startTime,
 				responseParser = responseParser
 		)
+	}
+
+	inline fun <reified V> makeObjectResultRequest(request: ApiRequest): V {
+		return makeRequest(request, ObjectResponseParser(jsonTransformer, V::class.java))
+	}
+
+	inline fun <reified VBase, reified VExt> makeObjectWithExtResultRequest(request: ApiRequest): ParsedResponseWithExt<VBase, VExt> {
+		return makeRequest(request, ObjectWithExtResponseParser(jsonTransformer, VBase::class.java, VExt::class.java))
 	}
 
 	@Suppress("NOTHING_TO_INLINE")

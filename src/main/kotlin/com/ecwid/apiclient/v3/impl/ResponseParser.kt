@@ -8,6 +8,11 @@ interface ResponseParser<V> {
     fun getLogString(responseBytes: ByteArray): String
 }
 
+data class ParsedResponseWithExt<VBase, VExt>(
+		val baseResult: VBase,
+		val extResult: VExt
+)
+
 @PublishedApi
 internal class StringResponseParser: ResponseParser<String> {
 
@@ -49,3 +54,23 @@ internal class ObjectResponseParser<V>(
 	}
 
 }
+
+@PublishedApi
+internal class ObjectWithExtResponseParser<VBase, VExt>(
+		private val jsonTransformer: JsonTransformer,
+		private val baseClass: Class<VBase>,
+		private val extClass: Class<VExt>
+): ResponseParser<ParsedResponseWithExt<VBase, VExt>> {
+
+	override fun parse(responseBytes: ByteArray): ParsedResponseWithExt<VBase, VExt> {
+		val baseResult = jsonTransformer.deserialize(responseBytes.asString(), baseClass)!!
+		val extResult = jsonTransformer.deserialize(responseBytes.asString(), extClass)!!
+		return ParsedResponseWithExt(baseResult, extResult)
+	}
+
+	override fun getLogString(responseBytes: ByteArray): String {
+		return responseBytes.asString()
+	}
+
+}
+
