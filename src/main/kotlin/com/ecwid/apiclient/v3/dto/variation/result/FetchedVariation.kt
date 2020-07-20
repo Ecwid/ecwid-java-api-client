@@ -20,6 +20,7 @@ data class FetchedVariation(
 
 
 		val price: Double? = null,
+		val defaultDisplayedPrice: Double? = null,
 		val compareToPrice: Double? = null,
 		val wholesalePrices: List<WholesalePrice>? = null,
 
