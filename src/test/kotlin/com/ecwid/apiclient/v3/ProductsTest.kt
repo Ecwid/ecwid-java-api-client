@@ -13,6 +13,8 @@ import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest.
 import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest.*
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct.*
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
+import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
+import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.*
@@ -30,12 +32,12 @@ class ProductsTest : BaseEntityTest() {
 		super.beforeEach()
 
 		// We need to start from scratch each time
+		prepareStoreProfile()
 		removeAllCategories()
 		removeAllProducts()
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testSearchByFilters() {
 		// Create some categories
 
@@ -1024,6 +1026,17 @@ class ProductsTest : BaseEntityTest() {
 		}
 	}
 
+	private fun prepareStoreProfile() {
+		val expectedProfile = UpdatedStoreProfile(
+			taxSettings = UpdatedStoreProfile.TaxSettings(
+				automaticTaxEnabled = false,
+				taxes = listOf()
+			)
+		)
+
+		apiClient.updateStoreProfile(StoreProfileUpdateRequest(expectedProfile))
+	}
+
 	private fun assertProductUrlMatchesRegex(productSearchRequest: ProductsSearchRequest.ByFilters, urlPattern: String) {
 		val searchProducts = apiClient.searchProducts(productSearchRequest)
 		assertEquals(1, searchProducts.total)
@@ -1120,7 +1133,7 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 			attributes = listOf(
 					generateBrandAttributeValue(),
 					generateUpcAttributeValue()
-//					generateGeneralAttributeValue(), // TODO Send real product attribute id when api client will support product attribute creation 
+//					generateGeneralAttributeValue(), // TODO Send real product attribute id when api client will support product attribute creation
 //					generateGeneralAttributeValue()
 			),
 
@@ -1367,7 +1380,7 @@ private fun UpdatedProduct.cleanupForComparison(productCreateRequest: ProductCre
 
 private fun UpdatedProduct.AttributeValue.cleanupForComparison(attributeValue: UpdatedProduct.AttributeValue?): UpdatedProduct.AttributeValue {
 	return copy(
-			// Id is not used for BRAND/UPC attributes and can be used for custom attributes 
+			// Id is not used for BRAND/UPC attributes and can be used for custom attributes
 			id = if (attributeValue?.alias != null) attributeValue.id else null,
 			// Alias is write only field
 			alias = attributeValue?.alias
