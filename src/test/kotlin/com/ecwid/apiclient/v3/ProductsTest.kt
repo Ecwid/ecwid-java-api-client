@@ -247,7 +247,6 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testSearchOrder() {
 		val testName = "testSearchOrder"
 
@@ -1030,6 +1029,10 @@ class ProductsTest : BaseEntityTest() {
 		val expectedProfile = UpdatedStoreProfile(
 			generalInfo = UpdatedStoreProfile.GeneralInfo(
 				storeUrl = ""
+			),
+			languages = UpdatedStoreProfile.Languages(
+				enabledLanguages = listOf("en", "ru"),
+				defaultLanguage = "en"
 			),
 			taxSettings = UpdatedStoreProfile.TaxSettings(
 				automaticTaxEnabled = false,
