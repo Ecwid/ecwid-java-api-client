@@ -339,7 +339,6 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testSearchPaging() {
 		val testName = "testSearchPaging"
 
@@ -368,7 +367,6 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testProductLifecycle() {
 		// Create some categories
 
@@ -873,7 +871,6 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testDeletedProducts() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
