@@ -202,7 +202,6 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testSearchUrls() {
 		// Create one product
 		val productCreateRequest = ProductCreateRequest(
@@ -223,19 +222,20 @@ class ProductsTest : BaseEntityTest() {
 		// Searching products with different combinations of baseUrl and cleanUrls parameters
 		assertProductUrlMatchesRegex(
 				productSearchRequest = ProductsSearchRequest.ByFilters(),
-				urlPattern = "https://store.*.ecwid.com/Product-.*-p.*"
-		)
-		assertProductUrlMatchesRegex(
-				productSearchRequest = ProductsSearchRequest.ByFilters(
-						baseUrl = "https://google.com/"
-				),
-				urlPattern = "https://google.com/Product-.*-p.*"
+				urlPattern = "https://.*.company.site.*/Product-.*-p.*"
 		)
 		assertProductUrlMatchesRegex(
 				productSearchRequest = ProductsSearchRequest.ByFilters(
 						cleanUrls = false
 				),
-				urlPattern = "https://store.*.ecwid.com/#!/Product-.*/p/.*"
+				urlPattern = "https://.*.company.site.*/#!/Product-.*/p/.*"
+		)
+		assertProductUrlMatchesRegex(
+				productSearchRequest = ProductsSearchRequest.ByFilters(
+						baseUrl = "https://google.com/",
+						cleanUrls = true
+					),
+				urlPattern = "https://google.com/Product-.*-p.*"
 		)
 		assertProductUrlMatchesRegex(
 				productSearchRequest = ProductsSearchRequest.ByFilters(
@@ -1028,6 +1028,9 @@ class ProductsTest : BaseEntityTest() {
 
 	private fun prepareStoreProfile() {
 		val expectedProfile = UpdatedStoreProfile(
+			generalInfo = UpdatedStoreProfile.GeneralInfo(
+				storeUrl = ""
+			),
 			taxSettings = UpdatedStoreProfile.TaxSettings(
 				automaticTaxEnabled = false,
 				taxes = listOf()
