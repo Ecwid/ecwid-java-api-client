@@ -6,7 +6,6 @@ import com.ecwid.apiclient.v3.dto.order.enums.OrderFulfillmentStatus
 import com.ecwid.apiclient.v3.dto.order.enums.OrderPaymentStatus
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
-import com.ecwid.apiclient.v3.dto.order.result.OrdersSearchResult
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.exception.EcwidApiException
@@ -313,8 +312,12 @@ class OrdersTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testSearchPaging() {
+		// This test is very much tied to the number of orders. Therefore, we wait for some time, until the order to index
+		// and remove them again.
+		Thread.sleep(1000)
+		removeAllOrders()
+
 		// Create some orders
 		for (i in 1..3) {
 			val orderCreateRequest = OrderCreateRequest(newOrder = UpdatedOrder())
@@ -323,15 +326,12 @@ class OrdersTest : BaseEntityTest() {
 		}
 
 		// Waiting till order became available for searching and trying to request only one page
-		var tries = 0
 		val ordersSearchRequest = OrdersSearchRequest(offset = 2, limit = 2)
-		var ordersSearchResult: OrdersSearchResult
-		do {
-			ordersSearchResult = apiClient.searchOrders(ordersSearchRequest)
-			if (ordersSearchResult.total == 3) break
-			tries++
-			Thread.sleep(1000)
-		} while (tries <= 10)
+		val ordersSearchResult = processDelay(1000, 10) {
+			val result = apiClient.searchOrders(ordersSearchRequest)
+			if (result.count == 1) result else null
+		}
+
 		assertEquals(1, ordersSearchResult.count)
 		assertEquals(3, ordersSearchResult.total)
 	}
