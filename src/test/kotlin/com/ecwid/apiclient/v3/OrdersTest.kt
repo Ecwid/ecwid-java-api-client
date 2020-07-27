@@ -7,6 +7,8 @@ import com.ecwid.apiclient.v3.dto.order.enums.OrderPaymentStatus
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.dto.order.result.OrdersSearchResult
+import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
+import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.Assertions.*
@@ -26,6 +28,7 @@ class OrdersTest : BaseEntityTest() {
 		super.beforeEach()
 
 		// We need to start from scratch each time
+		prepareStoreProfile()
 		removeAllOrders()
 	}
 
@@ -184,7 +187,6 @@ class OrdersTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testSearchFields() {
 		// Creating new order
 		val orderCreateRequest = OrderCreateRequest(
@@ -211,17 +213,13 @@ class OrdersTest : BaseEntityTest() {
 		assertTrue(orderCreateResult.id > 0)
 
 		// Waiting till order became available for searching
-		var tries = 0
-		do {
+		processDelay(1000, 10) {
 			val ordersSearchRequest = OrdersSearchRequest(keywords = orderCreateRequest.newOrder.orderComments)
 			val ordersSearchResult = apiClient.searchOrders(ordersSearchRequest)
-			if (ordersSearchResult.total > 0) break
-			tries++
-			Thread.sleep(1000)
-		} while (tries <= 10)
+			if (ordersSearchResult.total > 0) "" else null
+		}
 
 		// Trying to search by different fields
-
 		assertOrdersSearch(
 				positiveOrderNumber = orderCreateResult.id,
 				positiveSearchRequest = OrdersSearchRequest(keywords = orderCreateRequest.newOrder.orderComments),
@@ -388,13 +386,22 @@ class OrdersTest : BaseEntityTest() {
 
 	private fun assertOrdersSearch(positiveOrderNumber: Int, positiveSearchRequest: OrdersSearchRequest, negativeSearchRequest: OrdersSearchRequest) {
 		val positiveOrdersSearchResult = apiClient.searchOrders(positiveSearchRequest)
-		assertEquals(1, positiveOrdersSearchResult.total)
-		assertEquals(positiveOrderNumber, positiveOrdersSearchResult.items[0].orderNumber)
+		assertTrue(positiveOrdersSearchResult.items.any { order -> order.orderNumber == positiveOrderNumber })
 
 		val negativeOrdersSearchResult = apiClient.searchOrders(negativeSearchRequest)
-		assertEquals(0, negativeOrdersSearchResult.total)
+		assertFalse(negativeOrdersSearchResult.items.any { order -> order.orderNumber == positiveOrderNumber })
 	}
 
+	private fun prepareStoreProfile() {
+		val expectedProfile = UpdatedStoreProfile(
+			formatsAndUnits = UpdatedStoreProfile.FormatsAndUnits(
+				orderNumberPrefix = "",
+				orderNumberSuffix = ""
+			)
+		)
+
+		apiClient.updateStoreProfile(StoreProfileUpdateRequest(expectedProfile))
+	}
 }
 
 private fun assertFileOption(orderItemProductFile: FetchedOrder.OrderItemProductFile, fileName: String) {
