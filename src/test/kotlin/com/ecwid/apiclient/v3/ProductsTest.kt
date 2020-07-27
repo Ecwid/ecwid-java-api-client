@@ -945,6 +945,9 @@ class ProductsTest : BaseEntityTest() {
 		)
 	}
 
+	private fun temp() {
+
+	}
 }
 
 private fun generateTestCategory(parentId: Int? = null): UpdatedCategory {
@@ -993,7 +996,7 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 			attributes = listOf(
 					generateBrandAttributeValue(),
 					generateUpcAttributeValue()
-//					generateGeneralAttributeValue(), // TODO Send real product attribute id when api client will support product attribute creation 
+//					generateGeneralAttributeValue(), // TODO Send real product attribute id when api client will support product attribute creation
 //					generateGeneralAttributeValue()
 			),
 
@@ -1240,7 +1243,7 @@ private fun UpdatedProduct.cleanupForComparison(productCreateRequest: ProductCre
 
 private fun UpdatedProduct.AttributeValue.cleanupForComparison(attributeValue: UpdatedProduct.AttributeValue?): UpdatedProduct.AttributeValue {
 	return copy(
-			// Id is not used for BRAND/UPC attributes and can be used for custom attributes 
+			// Id is not used for BRAND/UPC attributes and can be used for custom attributes
 			id = if (attributeValue?.alias != null) attributeValue.id else null,
 			// Alias is write only field
 			alias = attributeValue?.alias
