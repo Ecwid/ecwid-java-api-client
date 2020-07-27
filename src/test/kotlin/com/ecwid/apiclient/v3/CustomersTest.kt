@@ -32,7 +32,6 @@ class CustomersTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testCustomerLifecycle() {
 		// Creating one customer group
 		val customerGroupCreateRequest1 = CustomerGroupCreateRequest(
@@ -119,7 +118,6 @@ class CustomersTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testSearchFields() {
 		// Creating new customer group
 		val customerGroupCreateRequest = CustomerGroupCreateRequest(
@@ -130,7 +128,7 @@ class CustomersTest : BaseEntityTest() {
 		val customerGroupCreateResult = apiClient.createCustomerGroup(customerGroupCreateRequest)
 		assertTrue(customerGroupCreateResult.id > 0)
 
-		// Creating new customer attached to this customer group 
+		// Creating new customer attached to this customer group
 		val customerCreateRequest = CustomerCreateRequest(
 				newCustomer = UpdatedCustomer(
 						email = randomEmail(),
@@ -216,7 +214,6 @@ class CustomersTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testSearchPaging() {
 		// Create some customers
 		for (i in 1..3) {
@@ -227,13 +224,13 @@ class CustomersTest : BaseEntityTest() {
 			assertTrue(customerCreateResult.id > 0)
 		}
 
-		// Trying to request first page 
+		// Trying to request first page
 		val customersSearchRequest1 = CustomersSearchRequest(offset = 0, limit = 2)
 		val customersSearchResult1 = apiClient.searchCustomers(customersSearchRequest1)
 		assertEquals(2, customersSearchResult1.count)
 		assertEquals(3, customersSearchResult1.total)
 
-		// Trying to request second and the last page 
+		// Trying to request second and the last page
 		val customersSearchRequest2 = CustomersSearchRequest(offset = 2, limit = 2)
 		val customersSearchResult2 = apiClient.searchCustomers(customersSearchRequest2)
 		assertEquals(1, customersSearchResult2.count)
@@ -241,7 +238,6 @@ class CustomersTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testSearchSorting() {
 		// Creating some customers
 
