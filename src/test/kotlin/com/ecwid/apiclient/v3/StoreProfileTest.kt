@@ -23,7 +23,7 @@ class StoreProfileTest : BaseEntityTest() {
 
 		val expectedProfile = UpdatedStoreProfile(
 				generalInfo = UpdatedStoreProfile.GeneralInfo(
-						storeUrl = "https://www.ecwid.com",
+						storeUrl = "https://www.mysite.com",
 						starterSite = UpdatedStoreProfile.InstantSiteInfo(
 								ecwidSubdomain = "bobyor",
 								customDomain = "example.com"
@@ -169,8 +169,8 @@ class StoreProfileTest : BaseEntityTest() {
 		assertEquals(testStoreId, actualProfile.generalInfo!!.storeId)
 		assertEquals("bobyor", actualProfile.generalInfo!!.starterSite!!.ecwidSubdomain)
 		assertEquals("example.com", actualProfile.generalInfo!!.starterSite!!.customDomain)
-		assertEquals("https://bobyor.ecwid.com", actualProfile.generalInfo!!.starterSite!!.generatedUrl)
-		assertEquals("https://www.ecwid.com", actualProfile.generalInfo!!.storeUrl)
+		assertEquals("https://bobyor.company.site", actualProfile.generalInfo!!.starterSite!!.generatedUrl)
+		assertEquals("https://www.mysite.com", actualProfile.generalInfo!!.storeUrl)
 		assertEquals(FetchedStoreProfile.WebsitePlatform.wordpress, actualProfile.generalInfo!!.websitePlatform)
 
 		assertEquals("The Bobyør", actualProfile.account!!.accountName)
