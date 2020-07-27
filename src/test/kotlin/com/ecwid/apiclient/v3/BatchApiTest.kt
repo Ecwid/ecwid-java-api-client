@@ -23,7 +23,6 @@ class BatchApiTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun `Create a product with batch API and search it`() {
 		val name = randomAlphanumeric(8)
 		val productCreateRequest = ProductCreateRequest(
