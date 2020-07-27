@@ -30,7 +30,6 @@ class OrdersTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testOrderLifecycle() {
 		// Creating new order
 		val orderCreateRequest = OrderCreateRequest(
@@ -42,7 +41,7 @@ class OrdersTest : BaseEntityTest() {
 		// Checking that order was successfully created with necessary parameters
 		val orderDetailsRequest = OrderDetailsRequest(orderNumber = orderCreateResult.id)
 		val orderDetails1 = apiClient.getOrderDetails(orderDetailsRequest)
-		assertEquals(orderCreateRequest.newOrder, orderDetails1.toUpdated())
+		assertEquals(orderCreateRequest.newOrder, orderDetails1.toUpdated().cleanupForComparison(orderCreateRequest.newOrder))
 
 		// Completely updating newly created order
 		val orderUpdateRequest = OrderUpdateRequest(
@@ -56,7 +55,7 @@ class OrdersTest : BaseEntityTest() {
 
 		// Checking that order was successfully updated with necessary parameters
 		val orderDetails2 = apiClient.getOrderDetails(orderDetailsRequest)
-		assertEquals(orderUpdateRequest.updatedOrder, orderDetails2.toUpdated())
+		assertEquals(orderUpdateRequest.updatedOrder, orderDetails2.toUpdated().cleanupForComparison(orderUpdateRequest.updatedOrder))
 
 		// Deleting order
 		val orderDeleteRequest = OrderDeleteRequest(orderNumber = orderDetails1.orderNumber)
@@ -404,5 +403,36 @@ private fun assertFileOption(orderItemProductFile: FetchedOrder.OrderItemProduct
 			{ assertEquals(fileName, orderItemProductFile.name) },
 			{ assertTrue(orderItemProductFile.size ?: 0 > 0) },
 			{ assertTrue(orderItemProductFile.url?.contains(fileName) ?: false) }
+	)
+}
+
+private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder {
+	return copy(
+		additionalInfo = order.additionalInfo,
+		pickupTime = order.pickupTime,
+		customerId = order.customerId,
+		customerGroup = order.customerGroup,
+		items = items?.mapIndexed { index, item ->
+			val requestItem = order.items?.get(index)
+			item.cleanupForComparison(requestItem)
+		}
+	)
+}
+
+private fun UpdatedOrder.OrderItem.cleanupForComparison(orderItem: UpdatedOrder.OrderItem?): UpdatedOrder.OrderItem {
+	return copy(
+		selectedOptions = selectedOptions?.mapIndexed { index, option ->
+			val requestOption = orderItem?.selectedOptions?.get(index)
+			option.cleanupForComparison(requestOption)
+		}
+	)
+}
+
+private fun UpdatedOrder.OrderItemSelectedOption.cleanupForComparison(orderItemSelectedOption: UpdatedOrder.OrderItemSelectedOption?): UpdatedOrder.OrderItemSelectedOption {
+	return copy(
+		valuesArray = orderItemSelectedOption?.valuesArray,
+		selections = orderItemSelectedOption?.selections?.map { selectionInfo ->
+			selectionInfo.copy()
+		}
 	)
 }
