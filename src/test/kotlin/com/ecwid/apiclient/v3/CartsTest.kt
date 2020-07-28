@@ -23,7 +23,6 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testCreateAndGetCart() {
 		// Creating new cart
 		val testOrder = generateTestOrder()
@@ -297,7 +296,6 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testSearchCarts() {
 
 		// Create two carts
