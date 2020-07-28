@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.AsyncPictureData
 import com.ecwid.apiclient.v3.dto.UploadFileData
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest.ParentCategory
+import com.ecwid.apiclient.v3.dto.category.result.CategoriesSearchResult
 import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
@@ -31,7 +32,6 @@ class CategoriesTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testSearchByFilters() {
 		// Creating some products to put into new categories
 
@@ -48,7 +48,6 @@ class CategoriesTest : BaseEntityTest() {
 		assertTrue(productCreateResult2.id > 0)
 
 		// Creating some categories
-
 		val categoryCreateRequest1 = CategoryCreateRequest(
 				newCategory = generateTestCategory(enabled = true)
 		)
@@ -72,111 +71,100 @@ class CategoriesTest : BaseEntityTest() {
 		assertTrue(categoryCreateResult3.id > 0)
 
 		// Trying to search by different filters
-
-		val categoriesSearchRequest1 = CategoriesSearchRequest(
+		val searchCategoriesResult1 = waitCategories(
+			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.WithId(categoryCreateResult2.id),
 				hiddenCategories = true
+			),
+			desiredCategoriesCount = 1
 		)
-		val searchCategoriesResult1 = apiClient.searchCategories(categoriesSearchRequest1)
 		assertEquals(1, searchCategoriesResult1.total)
 		assertCategory(
-				desiredId = categoryCreateResult3.id,
-				desiredProductIds = null,
-				desiredProductCount = 2,
-				desiredEnabledProductCount = null,
-				category = searchCategoriesResult1.items[0]
+			desiredId = categoryCreateResult3.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchCategoriesResult1
 		)
 
-		val categoriesSearchRequest2 = CategoriesSearchRequest(
+		val searchCategoriesResult2 = waitCategories(
+			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.Root,
 				hiddenCategories = true
+			),
+			desiredCategoriesCount = 2
 		)
-		val searchCategoriesResult2 = apiClient.searchCategories(categoriesSearchRequest2)
 		assertEquals(2, searchCategoriesResult2.total)
 		assertCategory(
-				desiredId = categoryCreateResult1.id,
-				desiredProductIds = null,
-				desiredProductCount = 0,
-				desiredEnabledProductCount = null,
-				category = searchCategoriesResult2.items[0]
+			desiredId = categoryCreateResult1.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchCategoriesResult2
 		)
 		assertCategory(
-				desiredId = categoryCreateResult2.id,
-				desiredProductIds = null,
-				desiredProductCount = 2,
-				desiredEnabledProductCount = null,
-				category = searchCategoriesResult2.items[1]
+			desiredId = categoryCreateResult2.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchCategoriesResult2
 		)
 
-		val categoriesSearchRequest3 = CategoriesSearchRequest(
+		val searchCategoriesResult3 = waitCategories(
+			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.Any,
 				hiddenCategories = true,
 				returnProductIds = true
+			),
+			desiredCategoriesCount = 3
 		)
-		val searchCategoriesResult3 = apiClient.searchCategories(categoriesSearchRequest3)
 		assertEquals(3, searchCategoriesResult3.total)
 		assertCategory(
-				desiredId = categoryCreateResult1.id,
-				desiredProductIds = null,
-				desiredProductCount = 0,
-				desiredEnabledProductCount = null,
-				category = searchCategoriesResult3.items[0]
+			desiredId = categoryCreateResult1.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchCategoriesResult3
 		)
 		assertCategory(
-				desiredId = categoryCreateResult2.id,
-				desiredProductIds = null,
-				desiredProductCount = 2,
-				desiredEnabledProductCount = null,
-				category = searchCategoriesResult3.items[1]
+			desiredId = categoryCreateResult2.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchCategoriesResult3
 		)
 		assertCategory(
-				desiredId = categoryCreateResult3.id,
-				desiredProductIds = listOf(productCreateResult1.id, productCreateResult2.id),
-				desiredProductCount = 2,
-				desiredEnabledProductCount = 1,
-				category = searchCategoriesResult3.items[2]
+			desiredId = categoryCreateResult3.id,
+			desiredProductIds = listOf(productCreateResult1.id, productCreateResult2.id),
+			categoriesSearchResult = searchCategoriesResult3
 		)
 
-		val categoriesSearchRequest4 = CategoriesSearchRequest(
+		val searchCategoriesResult4 = waitCategories(
+			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.Any,
 				hiddenCategories = true
+			),
+			desiredCategoriesCount = 3
 		)
-		val searchCategoriesResult4 = apiClient.searchCategories(categoriesSearchRequest4)
 		assertEquals(3, searchCategoriesResult3.total)
 		assertCategory(
-				desiredId = categoryCreateResult1.id,
-				desiredProductIds = null,
-				desiredProductCount = 0,
-				desiredEnabledProductCount = null,
-				category = searchCategoriesResult4.items[0]
+			desiredId = categoryCreateResult1.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchCategoriesResult4
 		)
 		assertCategory(
-				desiredId = categoryCreateResult2.id,
-				desiredProductIds = null,
-				desiredProductCount = 2,
-				desiredEnabledProductCount = null,
-				category = searchCategoriesResult4.items[1]
+			desiredId = categoryCreateResult2.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchCategoriesResult4
 		)
 		assertCategory(
-				desiredId = categoryCreateResult3.id,
-				desiredProductIds = null,
-				desiredProductCount = 2,
-				desiredEnabledProductCount = null,
-				category = searchCategoriesResult4.items[2]
+			desiredId = categoryCreateResult3.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchCategoriesResult4
 		)
 
-		val categoriesSearchRequest5 = CategoriesSearchRequest(
+		val searchCategoriesResult5 = waitCategories(
+			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.Any,
 				hiddenCategories = false
+			),
+			desiredCategoriesCount = 1
 		)
-		val searchCategoriesResult5 = apiClient.searchCategories(categoriesSearchRequest5)
 		assertEquals(1, searchCategoriesResult5.total)
 		assertCategory(
-				desiredId = categoryCreateResult1.id,
-				desiredProductIds = null,
-				desiredProductCount = 0,
-				desiredEnabledProductCount = null,
-				category = searchCategoriesResult5.items[0]
+			desiredId = categoryCreateResult1.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchCategoriesResult5
 		)
 	}
 
@@ -454,12 +442,14 @@ class CategoriesTest : BaseEntityTest() {
 		}
 	}
 
-	private fun assertCategory(desiredId: Int, desiredProductIds: List<Int>?, desiredProductCount: Int, desiredEnabledProductCount: Int?, category: FetchedCategory) {
+	private fun assertCategory(desiredId: Int, desiredProductIds: List<Int>?, categoriesSearchResult: CategoriesSearchResult) {
+		val category = categoriesSearchResult.items.find { category ->
+			category.id == desiredId
+		} ?: fail("Category with id $desiredId not found")
+
 		assertAll(
-				{ assertEquals(desiredId, category.id) },
-				{ assertEquals(desiredProductIds, category.productIds) },
-				{ assertEquals(desiredProductCount, category.productCount) },
-				{ assertEquals(desiredEnabledProductCount, category.enabledProductCount) }
+			{ assertEquals(desiredId, category.id) },
+			{ assertEquals(desiredProductIds, category.productIds) }
 		)
 	}
 
