@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.LoggingSettings
 import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest
 import com.ecwid.apiclient.v3.dto.category.request.CategoryDeleteRequest
+import com.ecwid.apiclient.v3.dto.category.result.CategoriesSearchResult
 import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 import com.ecwid.apiclient.v3.dto.coupon.request.CouponDeleteRequest
 import com.ecwid.apiclient.v3.dto.coupon.request.CouponSearchRequest
@@ -144,6 +145,13 @@ abstract class BaseEntityTest {
 		processDelay(500L, 10) {
 			val productsSearchResult = apiClient.searchProducts(productsSearchRequest)
 			if (productsSearchResult.items.size == desiredProductCount) "" else null
+		}
+	}
+
+	protected fun waitCategories(categoriesSearchRequest: CategoriesSearchRequest, desiredCategoriesCount: Int): CategoriesSearchResult {
+		return processDelay(500L, 10) {
+			val productsSearchResult = apiClient.searchCategories(categoriesSearchRequest)
+			if (productsSearchResult.items.size == desiredCategoriesCount) productsSearchResult else null
 		}
 	}
 
