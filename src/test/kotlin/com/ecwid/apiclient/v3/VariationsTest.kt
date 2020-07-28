@@ -26,7 +26,6 @@ class VariationsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun `Create product, add combo and fetch product`() {
 		// Create one product
 		val productPrice = randomPrice()
@@ -34,7 +33,7 @@ class VariationsTest : BaseEntityTest() {
 				newProduct = UpdatedProduct(
 						price = productPrice,
 						name = "Product ${randomAlphanumeric(8)}",
-						sku = "testVariations",
+						sku = "testAddVariations",
 						options = listOf(
 								generateProductSelectOption("Size", listOf("S", "M", "L"))
 						)
