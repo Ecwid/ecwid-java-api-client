@@ -225,7 +225,6 @@ class CategoriesTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testCategoryLifecycle() {
 		val nameSuffix = "testCategoryLifecycle"
 
@@ -301,7 +300,6 @@ class CategoriesTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testTranslations() {
 		// Creating new category
 		val categoryCreateRequest = CategoryCreateRequest(
