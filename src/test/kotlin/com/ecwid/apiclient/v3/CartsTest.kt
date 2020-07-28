@@ -191,7 +191,6 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testConvertCartToOrder() {
 		// Creating new cart
 		val testOrder = generateTestOrder()
@@ -222,7 +221,7 @@ class CartsTest : BaseEntityTest() {
 
 		assertEquals(
 				testOrder,
-				createdOrder
+				createdOrder.cleanupForComparison(testOrder)
 		)
 	}
 
@@ -611,4 +610,11 @@ class CartsTest : BaseEntityTest() {
 				)
 		)
 	}
+}
+
+private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder {
+	return copy(
+		pickupTime = order.pickupTime,
+		customerId = order.customerId
+	)
 }
