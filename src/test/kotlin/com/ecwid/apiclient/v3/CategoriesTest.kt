@@ -72,7 +72,7 @@ class CategoriesTest : BaseEntityTest() {
 		assertTrue(categoryCreateResult3.id > 0)
 
 		// Trying to search by different filters
-		val searchCategoriesResult1 = waitCategories(
+		val searchCategoriesResult1 = waitForIndexedCategories(
 			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.WithId(categoryCreateResult2.id),
 				hiddenCategories = true
@@ -86,7 +86,7 @@ class CategoriesTest : BaseEntityTest() {
 			categoriesSearchResult = searchCategoriesResult1
 		)
 
-		val searchCategoriesResult2 = waitCategories(
+		val searchCategoriesResult2 = waitForIndexedCategories(
 			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.Root,
 				hiddenCategories = true
@@ -105,7 +105,7 @@ class CategoriesTest : BaseEntityTest() {
 			categoriesSearchResult = searchCategoriesResult2
 		)
 
-		val searchCategoriesResult3 = waitCategories(
+		val searchCategoriesResult3 = waitForIndexedCategories(
 			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.Any,
 				hiddenCategories = true,
@@ -130,7 +130,7 @@ class CategoriesTest : BaseEntityTest() {
 			categoriesSearchResult = searchCategoriesResult3
 		)
 
-		val searchCategoriesResult4 = waitCategories(
+		val searchCategoriesResult4 = waitForIndexedCategories(
 			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.Any,
 				hiddenCategories = true
@@ -154,7 +154,7 @@ class CategoriesTest : BaseEntityTest() {
 			categoriesSearchResult = searchCategoriesResult4
 		)
 
-		val searchCategoriesResult5 = waitCategories(
+		val searchCategoriesResult5 = waitForIndexedCategories(
 			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.Any,
 				hiddenCategories = false

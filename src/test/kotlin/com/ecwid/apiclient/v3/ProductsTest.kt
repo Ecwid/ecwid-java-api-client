@@ -87,7 +87,7 @@ class ProductsTest : BaseEntityTest() {
 		assertTrue(productCreateResult.id > 0)
 
 		// Waiting till product became available for searching
-		waitForProductCount(
+		waitForIndexedProducts(
 				productsSearchRequest = ProductsSearchRequest.ByFilters(keyword = productCreateRequest.newProduct.sku),
 				desiredProductCount = 1
 		)
@@ -212,7 +212,7 @@ class ProductsTest : BaseEntityTest() {
 		assertTrue(productCreateResult.id > 0)
 
 		// Waiting till product became available for searching
-		waitForProductCount(
+		waitForIndexedProducts(
 				productsSearchRequest = ProductsSearchRequest.ByFilters(keyword = productCreateRequest.newProduct.sku),
 				desiredProductCount = 1
 		)
@@ -299,7 +299,7 @@ class ProductsTest : BaseEntityTest() {
 		assertTrue(productCreateResult3.id > 0)
 
 		// Waiting till product became available for searching
-		waitForProductCount(
+		waitForIndexedProducts(
 				productsSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName),
 				desiredProductCount = 3
 		)
@@ -365,7 +365,7 @@ class ProductsTest : BaseEntityTest() {
 		}
 
 		// Waiting till product became available for searching and trying to request only one page
-		waitForProductCount(
+		waitForIndexedProducts(
 				productsSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName),
 				desiredProductCount = 3
 		)
