@@ -25,6 +25,8 @@ import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypeDeleteRequest
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypesGetAllRequest
 import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
+import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
+import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.dto.variation.request.DeleteAllProductVariationsRequest
 import com.ecwid.apiclient.v3.httptransport.impl.ApacheCommonsHttpClientTransport
 import com.ecwid.apiclient.v3.jsontransformer.gson.GsonTransformerProvider
@@ -56,6 +58,28 @@ abstract class BaseEntityTest {
 				httpTransport = ApacheCommonsHttpClientTransport(),
 				jsonTransformerProvider = GsonTransformerProvider()
 		)
+	}
+
+	protected fun initStoreProfile() {
+		val expectedProfile = UpdatedStoreProfile(
+			generalInfo = UpdatedStoreProfile.GeneralInfo(
+				storeUrl = ""
+			),
+			formatsAndUnits = UpdatedStoreProfile.FormatsAndUnits(
+				orderNumberPrefix = "",
+				orderNumberSuffix = ""
+			),
+			languages = UpdatedStoreProfile.Languages(
+				enabledLanguages = listOf("en", "ru"),
+				defaultLanguage = "en"
+			),
+			taxSettings = UpdatedStoreProfile.TaxSettings(
+				automaticTaxEnabled = false,
+				taxes = listOf()
+			)
+		)
+
+		apiClient.updateStoreProfile(StoreProfileUpdateRequest(expectedProfile))
 	}
 
 	protected fun removeAllVariations() {
