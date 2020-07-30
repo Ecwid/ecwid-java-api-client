@@ -322,7 +322,7 @@ class OrdersTest : BaseEntityTest() {
 		val ordersSearchRequest = OrdersSearchRequest(offset = 2, limit = 2)
 		val ordersSearchResult = processDelay(1000, 10) {
 			val result = apiClient.searchOrders(ordersSearchRequest)
-			if (result.count == 1) result else null
+			if (result.count == 1 && result.total == 3) result else null
 		}
 
 		assertEquals(1, ordersSearchResult.count)
