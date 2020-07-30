@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.UploadFileData
 import com.ecwid.apiclient.v3.dto.order.enums.OrderFulfillmentStatus
 import com.ecwid.apiclient.v3.dto.order.enums.OrderPaymentStatus
+import com.ecwid.apiclient.v3.dto.order.enums.ProductOptionType
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.exception.EcwidApiException
@@ -400,10 +401,13 @@ private fun assertFileOption(orderItemProductFile: FetchedOrder.OrderItemProduct
 
 private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder {
 	return copy(
-		additionalInfo = order.additionalInfo,
-		pickupTime = order.pickupTime,
+		// Pickup time converted to UTC from local during order creation
+		pickupTime = pickupTime?.let { dateToUtc(it) },
+		// Customer id and customer group updated during order creation
 		customerId = order.customerId,
 		customerGroup = order.customerGroup,
+
+		// Delete after bug ECWID-71481 fix
 		items = items?.mapIndexed { index, item ->
 			val requestItem = order.items?.get(index)
 			item.cleanupForComparison(requestItem)
@@ -414,8 +418,12 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 private fun UpdatedOrder.OrderItem.cleanupForComparison(orderItem: UpdatedOrder.OrderItem?): UpdatedOrder.OrderItem {
 	return copy(
 		selectedOptions = selectedOptions?.mapIndexed { index, option ->
-			val requestOption = orderItem?.selectedOptions?.get(index)
-			option.cleanupForComparison(requestOption)
+			if (option.type == ProductOptionType.CHOICES) {
+				val requestOption = orderItem?.selectedOptions?.get(index)
+				option.cleanupForComparison(requestOption)
+			} else {
+				option
+			}
 		}
 	)
 }
