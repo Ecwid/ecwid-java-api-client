@@ -311,11 +311,6 @@ class OrdersTest : BaseEntityTest() {
 
 	@Test
 	fun testSearchPaging() {
-		// This test is very much tied to the number of orders. Therefore, we wait for some time, until the order to index
-		// and remove them again.
-		Thread.sleep(1000)
-		removeAllOrders()
-
 		// Create some orders
 		for (i in 1..3) {
 			val orderCreateRequest = OrderCreateRequest(newOrder = UpdatedOrder())
@@ -343,6 +338,11 @@ class OrdersTest : BaseEntityTest() {
 		)
 		val orderCreateResult = apiClient.createOrder(orderCreateRequest)
 		assertTrue(orderCreateResult.id > 0)
+
+		processDelay(1000, 10) {
+			val result = apiClient.searchOrders(OrdersSearchRequest())
+			if (result.count == 1) result else null
+		}
 
 		val orderInvoiceRequest = OrderInvoiceRequest(orderNumber = orderCreateResult.id)
 		val invoiceHtml = apiClient.getOrderInvoice(orderInvoiceRequest)
@@ -383,10 +383,11 @@ class OrdersTest : BaseEntityTest() {
 
 	private fun assertOrdersSearch(positiveOrderNumber: Int, positiveSearchRequest: OrdersSearchRequest, negativeSearchRequest: OrdersSearchRequest) {
 		val positiveOrdersSearchResult = apiClient.searchOrders(positiveSearchRequest)
-		assertTrue(positiveOrdersSearchResult.items.any { order -> order.orderNumber == positiveOrderNumber })
+		assertEquals(1, positiveOrdersSearchResult.total)
+		assertEquals(positiveOrderNumber, positiveOrdersSearchResult.items[0].orderNumber)
 
 		val negativeOrdersSearchResult = apiClient.searchOrders(negativeSearchRequest)
-		assertFalse(negativeOrdersSearchResult.items.any { order -> order.orderNumber == positiveOrderNumber })
+		assertEquals(0, negativeOrdersSearchResult.total)
 	}
 }
 

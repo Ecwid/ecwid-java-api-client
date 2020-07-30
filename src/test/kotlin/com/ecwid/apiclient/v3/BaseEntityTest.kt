@@ -114,6 +114,10 @@ abstract class BaseEntityTest {
 	}
 
 	protected fun removeAllOrders() {
+		// This test is very much tied to the number of orders. Therefore, we wait for some time, until the order to index
+		// and remove them again.
+		Thread.sleep(1000)
+
 		apiClient
 				.searchOrdersAsSequence(OrdersSearchRequest())
 				.map(FetchedOrder::orderNumber)
