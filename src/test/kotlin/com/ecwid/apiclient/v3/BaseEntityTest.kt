@@ -22,6 +22,7 @@ import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.dto.product.request.ProductDeleteRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
+import com.ecwid.apiclient.v3.dto.product.result.ProductsSearchResult
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypeDeleteRequest
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypesGetAllRequest
 import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
@@ -165,14 +166,14 @@ abstract class BaseEntityTest {
 
 	protected fun getTestPngFilePath(): Path = Paths.get(javaClass.getResource("/logo-ecwid-small.png").toURI())
 
-	protected fun waitForProductCount(productsSearchRequest: ProductsSearchRequest.ByFilters, desiredProductCount: Int) {
-		processDelay(500L, 10) {
+	protected fun waitForIndexedProducts(productsSearchRequest: ProductsSearchRequest.ByFilters, desiredProductCount: Int): ProductsSearchResult {
+		return processDelay(500L, 10) {
 			val productsSearchResult = apiClient.searchProducts(productsSearchRequest)
-			if (productsSearchResult.items.size == desiredProductCount) "" else null
+			if (productsSearchResult.items.size == desiredProductCount) productsSearchResult else null
 		}
 	}
 
-	protected fun waitCategories(categoriesSearchRequest: CategoriesSearchRequest, desiredCategoriesCount: Int): CategoriesSearchResult {
+	protected fun waitForIndexedCategories(categoriesSearchRequest: CategoriesSearchRequest, desiredCategoriesCount: Int): CategoriesSearchResult {
 		return processDelay(500L, 10) {
 			val productsSearchResult = apiClient.searchCategories(categoriesSearchRequest)
 			if (productsSearchResult.items.size == desiredCategoriesCount) productsSearchResult else null

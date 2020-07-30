@@ -12,7 +12,6 @@ import com.ecwid.apiclient.v3.impl.TypedBatchResponse
 import com.ecwid.apiclient.v3.util.randomAlphanumeric
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class BatchApiTest : BaseEntityTest() {
@@ -43,7 +42,7 @@ class BatchApiTest : BaseEntityTest() {
 				)
 		)
 
-		waitForProductCount(productSearchRequest, 1)
+		waitForIndexedProducts(productSearchRequest, 1)
 
 		val createProductBatchResult = apiClient.getTypedBatch(
 				GetEscapedBatchRequest(

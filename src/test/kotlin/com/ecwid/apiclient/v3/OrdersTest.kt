@@ -213,7 +213,7 @@ class OrdersTest : BaseEntityTest() {
 		processDelay(1000, 10) {
 			val ordersSearchRequest = OrdersSearchRequest(keywords = orderCreateRequest.newOrder.orderComments)
 			val ordersSearchResult = apiClient.searchOrders(ordersSearchRequest)
-			if (ordersSearchResult.total > 0) "" else null
+			if (ordersSearchResult.total > 0) ordersSearchResult else null
 		}
 
 		// Trying to search by different fields
