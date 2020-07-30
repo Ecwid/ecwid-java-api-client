@@ -225,10 +225,22 @@ class ProductsTest : BaseEntityTest() {
 				urlPattern = "https://.*.company.site.*/Product-.*-p.*"
 		)
 		assertProductUrlMatchesRegex(
+			productSearchRequest = ProductsSearchRequest.ByFilters(
+				cleanUrls = true
+			),
+			urlPattern = "https://.*.company.site.*/Product-.*-p.*"
+		)
+		assertProductUrlMatchesRegex(
 				productSearchRequest = ProductsSearchRequest.ByFilters(
 						cleanUrls = false
 				),
 				urlPattern = "https://.*.company.site.*/#!/Product-.*/p/.*"
+		)
+		assertProductUrlMatchesRegex(
+			productSearchRequest = ProductsSearchRequest.ByFilters(
+				baseUrl = "https://google.com/"
+			),
+			urlPattern = "https://google.com/#!/Product-.*/p/.*"
 		)
 		assertProductUrlMatchesRegex(
 				productSearchRequest = ProductsSearchRequest.ByFilters(
