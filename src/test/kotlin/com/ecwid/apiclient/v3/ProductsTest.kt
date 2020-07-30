@@ -13,8 +13,6 @@ import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest.
 import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest.*
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct.*
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
-import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
-import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.*
@@ -32,7 +30,7 @@ class ProductsTest : BaseEntityTest() {
 		super.beforeEach()
 
 		// We need to start from scratch each time
-		prepareStoreProfile()
+		initStoreProfile()
 		removeAllCategories()
 		removeAllProducts()
 	}
@@ -1032,24 +1030,6 @@ class ProductsTest : BaseEntityTest() {
 		} catch (e: EcwidApiException) {
 			// ok
 		}
-	}
-
-	private fun prepareStoreProfile() {
-		val expectedProfile = UpdatedStoreProfile(
-			generalInfo = UpdatedStoreProfile.GeneralInfo(
-				storeUrl = ""
-			),
-			languages = UpdatedStoreProfile.Languages(
-				enabledLanguages = listOf("en", "ru"),
-				defaultLanguage = "en"
-			),
-			taxSettings = UpdatedStoreProfile.TaxSettings(
-				automaticTaxEnabled = false,
-				taxes = listOf()
-			)
-		)
-
-		apiClient.updateStoreProfile(StoreProfileUpdateRequest(expectedProfile))
 	}
 
 	private fun assertProductUrlMatchesRegex(productSearchRequest: ProductsSearchRequest.ByFilters, urlPattern: String) {

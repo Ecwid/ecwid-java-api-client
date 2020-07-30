@@ -10,8 +10,6 @@ import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
-import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
-import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.randomAlphanumeric
 import com.ecwid.apiclient.v3.util.randomBoolean
@@ -29,7 +27,7 @@ class CategoriesTest : BaseEntityTest() {
 		super.beforeEach()
 
 		// We need to start from scratch each time
-		prepareStoreProfile()
+		initStoreProfile()
 		removeAllCategories()
 		removeAllProducts()
 	}
@@ -453,20 +451,6 @@ class CategoriesTest : BaseEntityTest() {
 		} catch (e: EcwidApiException) {
 			// ok
 		}
-	}
-
-	private fun prepareStoreProfile() {
-		val expectedProfile = UpdatedStoreProfile(
-			generalInfo = UpdatedStoreProfile.GeneralInfo(
-				storeUrl = ""
-			),
-			languages = UpdatedStoreProfile.Languages(
-				enabledLanguages = listOf("en", "ru"),
-				defaultLanguage = "en"
-			)
-		)
-
-		apiClient.updateStoreProfile(StoreProfileUpdateRequest(expectedProfile))
 	}
 
 	private fun assertCategory(desiredId: Int, desiredProductIds: List<Int>?, categoriesSearchResult: CategoriesSearchResult) {

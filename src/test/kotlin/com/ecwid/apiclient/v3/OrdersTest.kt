@@ -6,8 +6,6 @@ import com.ecwid.apiclient.v3.dto.order.enums.OrderFulfillmentStatus
 import com.ecwid.apiclient.v3.dto.order.enums.OrderPaymentStatus
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
-import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
-import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.Assertions.*
@@ -26,7 +24,7 @@ class OrdersTest : BaseEntityTest() {
 		super.beforeEach()
 
 		// We need to start from scratch each time
-		prepareStoreProfile()
+		initStoreProfile()
 		removeAllOrders()
 	}
 
@@ -388,17 +386,6 @@ class OrdersTest : BaseEntityTest() {
 
 		val negativeOrdersSearchResult = apiClient.searchOrders(negativeSearchRequest)
 		assertFalse(negativeOrdersSearchResult.items.any { order -> order.orderNumber == positiveOrderNumber })
-	}
-
-	private fun prepareStoreProfile() {
-		val expectedProfile = UpdatedStoreProfile(
-			formatsAndUnits = UpdatedStoreProfile.FormatsAndUnits(
-				orderNumberPrefix = "",
-				orderNumberSuffix = ""
-			)
-		)
-
-		apiClient.updateStoreProfile(StoreProfileUpdateRequest(expectedProfile))
 	}
 }
 
