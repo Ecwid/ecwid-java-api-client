@@ -186,10 +186,22 @@ class CategoriesTest : BaseEntityTest() {
 				urlPattern = "https://.*.company.site.*/Category-.*-c.*"
 		)
 		assertCategoryUrlMatchesRegex(
+			categorySearchRequest = CategoriesSearchRequest(
+				cleanUrls = true
+			),
+			urlPattern = "https://.*.company.site.*/Category-.*-c.*"
+		)
+		assertCategoryUrlMatchesRegex(
 				categorySearchRequest = CategoriesSearchRequest(
 						cleanUrls = false
 				),
 				urlPattern = "https://.*.company.site.*/#!/Category-.*/c/.*"
+		)
+		assertCategoryUrlMatchesRegex(
+			categorySearchRequest = CategoriesSearchRequest(
+				baseUrl = "https://google.com/"
+			),
+			urlPattern = "https://google.com/#!/Category-.*/c/.*"
 		)
 		assertCategoryUrlMatchesRegex(
 			categorySearchRequest = CategoriesSearchRequest(
