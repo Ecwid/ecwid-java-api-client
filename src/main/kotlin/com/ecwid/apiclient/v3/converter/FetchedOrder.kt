@@ -18,6 +18,11 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 			affiliateId = affiliateId,
 			additionalInfo = OrderedStringToStringMap(additionalInfo),
 
+			refererId = refererId,
+			disableAllCustomerNotifications = disableAllCustomerNotifications,
+			externalFulfillment = externalFulfillment,
+			externalOrderId = externalOrderId,
+
 			orderComments = orderComments,
 			privateAdminNotes = privateAdminNotes,
 

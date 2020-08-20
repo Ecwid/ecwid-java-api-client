@@ -18,6 +18,11 @@ data class UpdatedOrder(
 		var affiliateId: String? = null,
 		var additionalInfo: OrderedStringToStringMap? = null,
 
+		var refererId: String? = null,
+		var disableAllCustomerNotifications: Boolean? = null,
+		var externalFulfillment: Boolean? = null,
+		var externalOrderId: String? = null,
+
 		var orderComments: String? = null,
 		var privateAdminNotes: String? = null,
 
