@@ -22,6 +22,8 @@ data class UpdatedOrder(
 		var disableAllCustomerNotifications: Boolean? = null,
 		var externalFulfillment: Boolean? = null,
 		var externalOrderId: String? = null,
+		var latestDeliveryDate: String? = null,
+		var latestShipDate: String? = null,
 
 		var orderComments: String? = null,
 		var privateAdminNotes: String? = null,

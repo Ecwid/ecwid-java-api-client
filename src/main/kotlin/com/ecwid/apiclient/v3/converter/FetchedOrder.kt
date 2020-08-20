@@ -22,7 +22,9 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 			disableAllCustomerNotifications = disableAllCustomerNotifications,
 			externalFulfillment = externalFulfillment,
 			externalOrderId = externalOrderId,
-
+			latestDeliveryDate = latestDeliveryDate,
+			latestShipDate = latestShipDate,
+			
 			orderComments = orderComments,
 			privateAdminNotes = privateAdminNotes,
 
