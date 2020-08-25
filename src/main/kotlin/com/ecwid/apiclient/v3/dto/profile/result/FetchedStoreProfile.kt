@@ -569,7 +569,13 @@ data class FetchedStoreProfile(
 			var productFiltersPositionCategoryPage: String? = null,
 
 			@SerializedName("show_root_categories")
-			var showRootCategories: Boolean? = null
+			var showRootCategories: Boolean? = null,
+
+			@SerializedName("product_details_show_subtitle")
+			var productDetailsShowSubtitle: Boolean? = null,
+
+			@SerializedName("product_list_subtitles_behavior")
+			var productListSubtitlesBehavior: String? = null
 	)
 
 	data class ProductFiltersSettings(
