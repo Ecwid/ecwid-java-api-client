@@ -4,9 +4,7 @@ import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
 import com.ecwid.apiclient.v3.jsontransformer.gson.typeadapters.GsonPolymorphicDeserializer
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonParseException
+import com.google.gson.*
 
 class GsonTransformer(polymorphicTypes: List<PolymorphicType<*>>) : JsonTransformer {
 
@@ -22,7 +20,15 @@ class GsonTransformer(polymorphicTypes: List<PolymorphicType<*>>) : JsonTransfor
 		gson = gsonBuilder.create()
 	}
 
-	override fun serialize(src: Any?): String = gson.toJson(src)
+	override fun serialize(src: Any?, srcExt: Any?): String {
+		return if (srcExt == null) {
+			gson.toJson(src)
+		} else {
+			val target = gson.toJsonTree(src).asJsonObject
+			target.mergeJsonObject(gson.toJsonTree(srcExt).asJsonObject)
+			gson.toJson(target)
+		}
+	}
 
 	override fun <V> deserialize(json: String, clazz: Class<V>): V? {
 		try {
@@ -31,6 +37,11 @@ class GsonTransformer(polymorphicTypes: List<PolymorphicType<*>>) : JsonTransfor
 			throw JsonDeserializationException(e.message, e)
 		}
 	}
+}
 
+private fun JsonObject.mergeJsonObject(from: JsonObject) {
+	for (entry in from.entrySet()) {
+		add(entry.key, entry.value)
+	}
 }
 

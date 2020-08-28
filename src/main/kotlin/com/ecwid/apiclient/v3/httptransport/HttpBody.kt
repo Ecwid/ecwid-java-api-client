@@ -7,7 +7,7 @@ import java.io.InputStream
 sealed class HttpBody(val mimeType: String) {
 
 	object EmptyBody : HttpBody("")
-	class JsonBody(val obj: Any) : HttpBody(MIME_TYPE_APPLICATION_JSON)
+	class JsonBody(val obj: Any, var objExt: Any? = null) : HttpBody(MIME_TYPE_APPLICATION_JSON)
 	class ByteArrayBody(val bytes: ByteArray, mimeType: String) : HttpBody(mimeType)
 	class InputStreamBody(val stream: InputStream, mimeType: String) : HttpBody(mimeType)
 	class LocalFileBody(val file: File, mimeType: String) : HttpBody(mimeType)
