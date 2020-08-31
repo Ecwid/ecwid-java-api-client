@@ -39,11 +39,11 @@ import java.nio.file.Paths
 abstract class BaseEntityTest {
 
 	protected lateinit var apiClient: ApiClient
+	protected lateinit var apiClientHelper: ApiClientHelper
 
 	protected open fun beforeEach() {
 		val properties = PropertiesLoader.load()
-
-		apiClient = ApiClient.create(
+		apiClientHelper = ApiClientHelper(
 				apiServerDomain = ApiServerDomain(
 						host = properties.apiHost,
 						securePort = properties.apiPort
@@ -53,12 +53,14 @@ abstract class BaseEntityTest {
 						apiToken = properties.apiToken
 				),
 				loggingSettings = LoggingSettings().copy(
+						logRequest = true,
 						logRequestBody = true,
 						logSuccessfulResponseBody = true
 				),
 				httpTransport = ApacheCommonsHttpClientTransport(),
 				jsonTransformerProvider = GsonTransformerProvider()
 		)
+		apiClient = ApiClient(apiClientHelper)
 	}
 
 	protected fun initStoreProfile() {
