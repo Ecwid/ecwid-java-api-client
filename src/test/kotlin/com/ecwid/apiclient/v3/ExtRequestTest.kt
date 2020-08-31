@@ -1,16 +1,10 @@
 package com.ecwid.apiclient.v3
 
-import com.ecwid.apiclient.v3.config.ApiServerDomain
-import com.ecwid.apiclient.v3.config.ApiStoreCredentials
-import com.ecwid.apiclient.v3.config.LoggingSettings
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.customer.request.CustomerDetailsRequest
 import com.ecwid.apiclient.v3.dto.customer.result.CustomerCreateResult
 import com.ecwid.apiclient.v3.httptransport.HttpBody
-import com.ecwid.apiclient.v3.httptransport.impl.ApacheCommonsHttpClientTransport
 import com.ecwid.apiclient.v3.impl.RequestInfo
-import com.ecwid.apiclient.v3.jsontransformer.gson.GsonTransformerProvider
-import com.ecwid.apiclient.v3.util.PropertiesLoader
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -26,10 +20,10 @@ class ExtRequestTest : BaseEntityTest() {
 	fun testCreateExtCustomer() {
 		val email = "test@mail.com"
 		val taxId = "10"
-		val customerData = CustomerData(email = email)
-		val customerDataExt = CustomerDataExt(taxId = taxId)
+		val newTaxId = "11"
+		val customerData = CustomerData(email = email, taxId = taxId)
+		val customerDataExt = CustomerDataExt(taxId = newTaxId)
 
-		val apiClientHelper = createApiClientHelper()
 		val customerCreateRequest = CustomerCreateRequestExt(
 				newCustomer = customerData,
 				newCustomerExt = customerDataExt
@@ -42,28 +36,8 @@ class ExtRequestTest : BaseEntityTest() {
 		val customerDetails = apiClient.getCustomerDetails(customerDetailsRequest)
 
 		assertEquals(customerDetails.email, email)
-		assertEquals(customerDetails.taxId, taxId)
+		assertEquals(customerDetails.taxId, newTaxId)
 	}
-}
-
-private fun createApiClientHelper(): ApiClientHelper {
-	val properties = PropertiesLoader.load()
-	return ApiClientHelper(
-			apiServerDomain = ApiServerDomain(
-					host = properties.apiHost,
-					securePort = properties.apiPort
-			),
-			storeCredentials = ApiStoreCredentials(
-					storeId = properties.storeId,
-					apiToken = properties.apiToken
-			),
-			loggingSettings = LoggingSettings().copy(
-					logRequest = true,
-					logSuccessfulResponseBody = true
-			),
-			httpTransport = ApacheCommonsHttpClientTransport(),
-			jsonTransformerProvider = GsonTransformerProvider()
-	)
 }
 
 private data class CustomerData(
