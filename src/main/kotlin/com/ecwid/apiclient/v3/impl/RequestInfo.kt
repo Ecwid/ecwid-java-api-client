@@ -9,19 +9,19 @@ class RequestInfo private constructor(
 		val httpBody: HttpBody
 ) {
 	companion object {
-		internal fun createGetRequest(endpoint: String, params: Map<String, String> = mapOf()): RequestInfo {
+		fun createGetRequest(endpoint: String, params: Map<String, String> = mapOf()): RequestInfo {
 			return RequestInfo(endpoint, HttpMethod.GET, params, HttpBody.EmptyBody)
 		}
 
-		internal fun createDeleteRequest(endpoint: String, params: Map<String, String> = mapOf()): RequestInfo {
+		fun createDeleteRequest(endpoint: String, params: Map<String, String> = mapOf()): RequestInfo {
 			return RequestInfo(endpoint, HttpMethod.DELETE, params, HttpBody.EmptyBody)
 		}
 
-		internal fun createPostRequest(endpoint: String, params: Map<String, String> = mapOf(), httpBody: HttpBody): RequestInfo {
+		fun createPostRequest(endpoint: String, params: Map<String, String> = mapOf(), httpBody: HttpBody): RequestInfo {
 			return RequestInfo(endpoint, HttpMethod.POST, params, httpBody)
 		}
 
-		internal fun createPutRequest(endpoint: String, params: Map<String, String> = mapOf(), httpBody: HttpBody): RequestInfo {
+		fun createPutRequest(endpoint: String, params: Map<String, String> = mapOf(), httpBody: HttpBody): RequestInfo {
 			return RequestInfo(endpoint, HttpMethod.PUT, params, httpBody)
 		}
 	}
