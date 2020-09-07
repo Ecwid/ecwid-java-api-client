@@ -72,8 +72,17 @@ data class FetchedProduct(
 
 		val defaultCombinationId: Int? = null, // TODO implement combinations support
 		val combinations: List<FetchedVariation>? = null, // TODO implement combinations support
-		val isGiftCard: Boolean? = null // TODO from ECWID-67826: this flag is read-only. API for creating gift cards in the plans (BACKLOG-4157)
+		val isGiftCard: Boolean? = null, // TODO from ECWID-67826: this flag is read-only. API for creating gift cards in the plans (BACKLOG-4157)
+		val subtitle: String? = null,
+		val ribbon: Ribbon? = null,
+		val ribbonTranslated: LocalizedValueMap? = null,
+		val subtitleTranslated: LocalizedValueMap? = null
 ) {
+
+	data class Ribbon(
+			val text: String? = null,
+			val color: String? = null
+	)
 
 	data class WholesalePrice(
 			val quantity: Int = 0,

@@ -1155,7 +1155,21 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 
 			isSampleProduct = false,
 
-			tax = TaxInfo()
+			tax = TaxInfo(),
+
+			subtitle = "Subtitle sample",
+			ribbon = Ribbon(
+				"Ribbon",
+				"#FFFFF"
+			),
+			ribbonTranslated = LocalizedValueMap(
+					"ru" to "Лейбл",
+					"en" to "Ribbon"
+			),
+			subtitleTranslated = LocalizedValueMap(
+					"ru" to "Сабтайтл",
+					"en" to "Subtitle"
+			)
 	)
 }
 
@@ -1369,7 +1383,20 @@ private fun UpdatedProduct.cleanupForComparison(productCreateRequest: ProductCre
 				attribute.cleanupForComparison(attributeValue)
 			},
 			media = if (media?.images?.isEmpty() != false) null else media,
-			categoryIds = categoryIds?.sorted()
+			categoryIds = categoryIds?.sorted(),
+			subtitle = "Subtitle sample",
+			ribbon = Ribbon(
+				"Ribbon",
+				"#FFFFF"
+			),
+			ribbonTranslated = LocalizedValueMap(
+				"ru" to "Лейбл",
+				"en" to "Ribbon"
+			),
+			subtitleTranslated = LocalizedValueMap(
+				"ru" to "Сабтайтл",
+				"en" to "Subtitle"
+			)
 	)
 }
 
