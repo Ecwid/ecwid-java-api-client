@@ -42,7 +42,13 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 			tax = tax?.toUpdated(),
 			relatedProducts = relatedProducts?.toUpdated(),
 
-			media = media?.toUpdated()
+			media = media?.toUpdated(),
+
+			subtitle = subtitle,
+			ribbon = ribbon,
+			ribbonColor = ribbonColor,
+			ribbonTranslated = ribbonTranslated,
+			subtitleTranslated = subtitleTranslated
 	)
 }
 
