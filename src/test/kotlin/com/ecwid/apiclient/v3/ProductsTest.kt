@@ -1158,8 +1158,10 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 			tax = TaxInfo(),
 
 			subtitle = "Subtitle sample",
-			ribbon = "Ribbon sample",
-			ribbonColor = "#FFFFF",
+			ribbon = Ribbon(
+				"Ribbon",
+				"#FFFFF"
+			),
 			ribbonTranslated = LocalizedValueMap(
 					"ru" to "Лейбл",
 					"en" to "Ribbon"

@@ -45,12 +45,16 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 			media = media?.toUpdated(),
 
 			subtitle = subtitle,
-			ribbon = ribbon,
-			ribbonColor = ribbonColor,
+			ribbon = ribbon?.toUpdated(),
 			ribbonTranslated = ribbonTranslated,
 			subtitleTranslated = subtitleTranslated
 	)
 }
+
+private fun FetchedProduct.Ribbon.toUpdated() = UpdatedProduct.Ribbon(
+		text = text,
+		color = color
+)
 
 private fun FetchedProduct.WholesalePrice.toUpdated() = UpdatedProduct.WholesalePrice(
 		quantity = quantity,
