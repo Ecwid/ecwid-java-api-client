@@ -42,7 +42,13 @@ data class UpdatedProduct(
 		val tax: TaxInfo? = null,
 		val relatedProducts: RelatedProducts? = null,
 
-		val media: ProductMedia? = null
+		val media: ProductMedia? = null,
+
+		val subtitle: String? = null,
+		val ribbon: String? = null,
+		val ribbonColor: String? = null,
+		val ribbonTranslated: LocalizedValueMap? = null,
+		val subtitleTranslated: LocalizedValueMap? = null
 ) {
 
 	data class WholesalePrice(
