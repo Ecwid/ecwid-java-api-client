@@ -8,11 +8,19 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class OrderItemOptionFileUploadRequest(
 		var orderNumber: Int = 0,
+		var orderIdentity: String = "",
 		var orderItemId: Int = 0,
 		var optionName: String = "",
 		var fileName: String = "",
 		var fileData: UploadFileData = UploadFileData.ExternalUrlData("")
 ) : ApiRequest {
+	constructor(orderNumber: Int = 0,
+				orderItemId: Int = 0,
+				optionName: String = "",
+				fileName: String = "",
+				fileData: UploadFileData = UploadFileData.ExternalUrlData("")
+	) : this(orderNumber, orderNumber.toString(), orderItemId, optionName, fileName, fileData)
+
 	override fun toRequestInfo(): RequestInfo {
 		val commonParams = mapOf(
 				"fileName" to fileName
@@ -54,5 +62,5 @@ data class OrderItemOptionFileUploadRequest(
 		}
 	}
 
-	private val endpoint = "orders/$orderNumber/items/$orderItemId/options/$optionName"
+	private val endpoint = "orders/$orderIdentity/items/$orderItemId/options/$optionName"
 }

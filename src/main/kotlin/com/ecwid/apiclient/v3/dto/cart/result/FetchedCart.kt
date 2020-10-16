@@ -32,6 +32,7 @@ data class FetchedCart(
 		var externalTransactionId: String? = null,
 
 		var recoveredOrderId: Int? = null,
+		var recoveredPublicUid: String? = null,
 		var recoveryEmailSentTimestamp: Date? = null,
 
 		var customerId: Int? = null,

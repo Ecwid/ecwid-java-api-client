@@ -6,10 +6,16 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class OrderUpdateRequest(
 		var orderNumber: Int = 0,
+		var orderIdentity: String = "",
 		var updatedOrder: UpdatedOrder = UpdatedOrder()
 ) : ApiRequest {
+	constructor(
+			orderNumber: Int = 0,
+			updatedOrder: UpdatedOrder = UpdatedOrder()
+	) : this(orderNumber, orderNumber.toString(), updatedOrder)
+
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			endpoint = "orders/$orderNumber",
+			endpoint = "orders/$orderIdentity",
 			httpBody = HttpBody.JsonBody(
 					obj = updatedOrder
 			)
