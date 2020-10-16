@@ -5,8 +5,9 @@ import com.ecwid.apiclient.v3.dto.order.enums.*
 import java.util.*
 
 data class FetchedOrder(
-		var orderNumber: Int = 0,
+		var id: String? = null,
 
+		var orderNumber: Int = 0,
 		var email: String? = null,
 		var ipAddress: String? = null,
 		var hidden: Boolean? = null,

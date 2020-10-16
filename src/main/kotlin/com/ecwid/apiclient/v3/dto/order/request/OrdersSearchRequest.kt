@@ -7,6 +7,7 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 import java.util.*
 
 data class OrdersSearchRequest(
+		var ids: String? = null,
 		var keywords: String? = null,
 		var totalFrom: Double? = null,
 		var totalTo: Double? = null,
@@ -33,6 +34,7 @@ data class OrdersSearchRequest(
 	private fun toParams(): Map<String, String> {
 		val request = this
 		return mutableMapOf<String, String>().apply {
+			request.ids?.let { put("ids", it) }
 			request.keywords?.let { put("keywords", it) }
 			request.totalFrom?.let { put("totalFrom", it.toString()) }
 			request.totalTo?.let { put("totalTo", it.toString()) }
