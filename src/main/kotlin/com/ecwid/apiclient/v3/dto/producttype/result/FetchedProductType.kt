@@ -6,6 +6,7 @@ import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 data class FetchedProductType(
 		var id: Int = 0,
 		var name: String? = null,
+		var googleTaxonomy: String? = null,
 		var attributes: List<Attribute>? = null
 ) {
 
