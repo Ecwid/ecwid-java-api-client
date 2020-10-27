@@ -91,7 +91,7 @@ fun generateTestOrder(): UpdatedOrder {
 					shippingMethodName = "Method " + randomAlphanumeric(8),
 					shippingRate = randomPrice(),
 					estimatedTransitTime = "Estimates " + randomAlphanumeric(8),
-					isPickup = randomBoolean(),
+					isPickup = false,
 					pickupInstruction = "Instruction " + randomAlphanumeric(64)
 			),
 			handlingFee = UpdatedOrder.HandlingFee(
