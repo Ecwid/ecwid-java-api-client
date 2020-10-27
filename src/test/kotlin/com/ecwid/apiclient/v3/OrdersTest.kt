@@ -402,8 +402,6 @@ private fun assertFileOption(orderItemProductFile: FetchedOrder.OrderItemProduct
 
 private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder {
 	return copy(
-		// Pickup time converted to UTC from local during order creation
-		pickupTime = pickupTime?.let { dateToUtc(it) },
 		// Customer id and customer group updated during order creation
 		customerId = order.customerId,
 		customerGroup = order.customerGroup,
