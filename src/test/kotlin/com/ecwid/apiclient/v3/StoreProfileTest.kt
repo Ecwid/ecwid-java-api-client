@@ -8,6 +8,7 @@ import com.ecwid.apiclient.v3.util.PropertiesLoader
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class StoreProfileTest : BaseEntityTest() {
@@ -18,6 +19,7 @@ class StoreProfileTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-75364")
 	fun testStoreProfile() {
 		val testStoreId = PropertiesLoader.load().storeId
 
