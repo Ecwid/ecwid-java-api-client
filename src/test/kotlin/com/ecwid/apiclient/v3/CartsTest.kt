@@ -296,6 +296,7 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-75364")
 	fun testSearchCarts() {
 
 		// Create two carts

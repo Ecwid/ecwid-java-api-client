@@ -377,6 +377,7 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-75364")
 	fun testProductLifecycle() {
 		// Create some categories
 
@@ -881,6 +882,7 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-75364")
 	fun testDeletedProducts() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
