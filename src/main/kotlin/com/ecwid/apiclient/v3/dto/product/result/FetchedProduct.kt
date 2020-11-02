@@ -76,7 +76,8 @@ data class FetchedProduct(
 		val subtitle: String? = null,
 		val ribbon: Ribbon? = null,
 		val ribbonTranslated: LocalizedValueMap? = null,
-		val subtitleTranslated: LocalizedValueMap? = null
+		val subtitleTranslated: LocalizedValueMap? = null,
+		val nameYourPriceEnabled: Boolean? = null
 ) {
 
 	data class Ribbon(
