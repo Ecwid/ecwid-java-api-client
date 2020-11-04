@@ -10,7 +10,8 @@ data class CategoriesSearchRequest(
 		val baseUrl: String? = null,
 		val cleanUrls: Boolean? = null,
 		val offset: Int = 0,
-		val limit: Int = 100
+		val limit: Int = 100,
+		val lang: String? = null
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
@@ -43,6 +44,7 @@ data class CategoriesSearchRequest(
 			request.cleanUrls?.let { put("cleanUrls", it.toString()) }
 			put("offset", request.offset.toString())
 			put("limit", request.limit.toString())
+			request.lang?.let { put("lang", it) }
 		}.toMap()
 	}
 
