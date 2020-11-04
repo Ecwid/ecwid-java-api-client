@@ -18,6 +18,7 @@ sealed class ProductsSearchRequest {
 			val updatedFrom: Date? = null,
 			val updatedTo: Date? = null,
 			val enabled: Boolean? = null,
+			val inStock: Boolean? = null,
 			val inventory: Boolean? = null,
 			val onSale: Boolean? = null,
 			val attributes: ProductSearchAttributes? = null,
@@ -26,7 +27,8 @@ sealed class ProductsSearchRequest {
 			val baseUrl: String? = null,
 			val cleanUrls: Boolean? = null,
 			val offset: Int = 0,
-			val limit: Int = 100
+			val limit: Int = 100,
+			val lang: String? = null
 	) : ProductsSearchRequest(), ApiRequest {
 		override fun toRequestInfo() = RequestInfo.createGetRequest(
 				endpoint = "products",
@@ -45,6 +47,7 @@ sealed class ProductsSearchRequest {
 				request.updatedFrom?.let { put("updatedFrom", (it.time / 1000).toString()) }
 				request.updatedTo?.let { put("updatedTo", (it.time / 1000).toString()) }
 				request.enabled?.let { put("enabled", it.toString()) }
+				request.inStock?.let { put("inStock", it.toString()) }
 				request.inventory?.let { put("inventory", if (it) "instock" else "outofstock") }
 				request.onSale?.let { put("onsale", if (it) "onsale" else "notonsale") }
 				request.attributes?.let { attributes ->
@@ -64,6 +67,7 @@ sealed class ProductsSearchRequest {
 				request.sortBy?.let { put("sortBy", it.name) }
 				put("offset", request.offset.toString())
 				put("limit", request.limit.toString())
+				request.lang?.let { put("lang", it) }
 			}.toMap()
 		}
 	}
@@ -102,6 +106,7 @@ sealed class ProductsSearchRequest {
 
 	enum class SortOrder {
 		RELEVANCE,
+		DEFINED_BY_STORE_OWNER,
 		ADDED_TIME_DESC,
 		ADDED_TIME_ASC,
 		NAME_ASC,
