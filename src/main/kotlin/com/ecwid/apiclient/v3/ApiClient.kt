@@ -29,6 +29,14 @@ import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 import com.ecwid.apiclient.v3.dto.profile.result.StoreProfileUpdateResult
+import com.ecwid.apiclient.v3.dto.saleschannels.request.GoogleShoppingFeedConfigGetRequest
+import com.ecwid.apiclient.v3.dto.saleschannels.request.ShopzillaFeedConfigGetRequest
+import com.ecwid.apiclient.v3.dto.saleschannels.request.YahooShoppingFeedConfigGetRequest
+import com.ecwid.apiclient.v3.dto.saleschannels.request.YandexMarketFeedConfigGetRequest
+import com.ecwid.apiclient.v3.dto.saleschannels.response.GoogleShoppingFeedConfigGetResponse
+import com.ecwid.apiclient.v3.dto.saleschannels.response.ShopzillaFeedConfigGetResponse
+import com.ecwid.apiclient.v3.dto.saleschannels.response.YahooShoppingFeedConfigGetResponse
+import com.ecwid.apiclient.v3.dto.saleschannels.response.YandexMarketFeedConfigGetResponse
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
@@ -47,7 +55,8 @@ open class ApiClient private constructor(
 		productVariationsApiClient: ProductVariationsApiClient,
 		batchApiClient: BatchApiClient,
 		discountCouponsApiClient: CouponsApiClient,
-		cartsApiClient: CartsApiClient
+		cartsApiClient: CartsApiClient,
+		salesChannelsApiClient: SalesChannelsApiClient
 ) :
 		StoreProfileApiClient by storeProfileApiClient,
 		ProductsApiClient by productsApiClient,
@@ -59,7 +68,8 @@ open class ApiClient private constructor(
 		ProductVariationsApiClient by productVariationsApiClient,
 		BatchApiClient by batchApiClient,
 		CouponsApiClient by discountCouponsApiClient,
-		CartsApiClient by cartsApiClient
+		CartsApiClient by cartsApiClient,
+		SalesChannelsApiClient by salesChannelsApiClient
 
 {
 
@@ -75,7 +85,8 @@ open class ApiClient private constructor(
 			productVariationsApiClient = ProductVariationsApiClientImpl(apiClientHelper),
 			batchApiClient = BatchApiClientImpl(apiClientHelper),
 			discountCouponsApiClient = CouponsApiClientImpl(apiClientHelper),
-			cartsApiClient = CartsApiClientImpl(apiClientHelper)
+			cartsApiClient = CartsApiClientImpl(apiClientHelper),
+			salesChannelsApiClient = SalesChannelsApiClientImpl(apiClientHelper)
 	)
 
 	companion object {
@@ -260,6 +271,13 @@ interface CouponsApiClient {
 	fun createCoupon(request: CouponCreateRequest): CouponCreateResult
 	fun updateCoupon(request: CouponUpdateRequest): CouponUpdateResult
 	fun deleteCoupon(request: CouponDeleteRequest): CouponDeleteResult
+}
+
+interface SalesChannelsApiClient {
+	fun getGoogleShoppingFeedConfig(request: GoogleShoppingFeedConfigGetRequest): GoogleShoppingFeedConfigGetResponse
+	fun getShopzillaFeedConfig(request: ShopzillaFeedConfigGetRequest): ShopzillaFeedConfigGetResponse
+	fun getYahooShoppingFeedConfig(request: YahooShoppingFeedConfigGetRequest): YahooShoppingFeedConfigGetResponse
+	fun getYandexMarketFeedConfig(request: YandexMarketFeedConfigGetRequest): YandexMarketFeedConfigGetResponse
 }
 
 // Application
