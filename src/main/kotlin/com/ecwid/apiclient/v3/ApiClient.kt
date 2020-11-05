@@ -31,6 +31,8 @@ import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedLatestStats
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 import com.ecwid.apiclient.v3.dto.profile.result.StoreProfileUpdateResult
+import com.ecwid.apiclient.v3.dto.saleschannels.request.*
+import com.ecwid.apiclient.v3.dto.saleschannels.response.*
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
@@ -49,7 +51,8 @@ open class ApiClient private constructor(
 		productVariationsApiClient: ProductVariationsApiClient,
 		batchApiClient: BatchApiClient,
 		discountCouponsApiClient: CouponsApiClient,
-		cartsApiClient: CartsApiClient
+		cartsApiClient: CartsApiClient,
+		salesChannelsApiClient: SalesChannelsApiClient
 ) :
 		StoreProfileApiClient by storeProfileApiClient,
 		ProductsApiClient by productsApiClient,
@@ -61,7 +64,8 @@ open class ApiClient private constructor(
 		ProductVariationsApiClient by productVariationsApiClient,
 		BatchApiClient by batchApiClient,
 		CouponsApiClient by discountCouponsApiClient,
-		CartsApiClient by cartsApiClient
+		CartsApiClient by cartsApiClient,
+		SalesChannelsApiClient by salesChannelsApiClient
 
 {
 
@@ -77,7 +81,8 @@ open class ApiClient private constructor(
 			productVariationsApiClient = ProductVariationsApiClientImpl(apiClientHelper),
 			batchApiClient = BatchApiClientImpl(apiClientHelper),
 			discountCouponsApiClient = CouponsApiClientImpl(apiClientHelper),
-			cartsApiClient = CartsApiClientImpl(apiClientHelper)
+			cartsApiClient = CartsApiClientImpl(apiClientHelper),
+			salesChannelsApiClient = SalesChannelsApiClientImpl(apiClientHelper)
 	)
 
 	companion object {
@@ -263,6 +268,13 @@ interface CouponsApiClient {
 	fun createCoupon(request: CouponCreateRequest): CouponCreateResult
 	fun updateCoupon(request: CouponUpdateRequest): CouponUpdateResult
 	fun deleteCoupon(request: CouponDeleteRequest): CouponDeleteResult
+}
+
+interface SalesChannelsApiClient {
+	fun getGoogleShoppingFeedConfig(request: GoogleShoppingFeedConfigGetRequest): FetchedGoogleShoppingFeedConfig
+	fun getShopzillaFeedConfig(request: ShopzillaFeedConfigGetRequest): FetchedShopzillaFeedConfig
+	fun getYahooShoppingFeedConfig(request: YahooShoppingFeedConfigGetRequest): FetchedYahooShoppingFeedConfig
+	fun getYandexMarketFeedConfig(request: YandexMarketFeedConfigGetRequest): FetchedYandexMarketFeedConfig
 }
 
 // Application
