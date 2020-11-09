@@ -62,6 +62,8 @@ data class UpdatedOrder(
 		var shippingOption: ShippingOption? = null,
 		var handlingFee: HandlingFee? = null,
 
+		var customSurcharges: List<Surcharge>? = null,
+
 		var utmData: UtmData? = null
 ) {
 
@@ -253,5 +255,14 @@ data class UpdatedOrder(
 			val medium: String? = null,
 			val mcEid: String? = null,
 			val mcCid: String? = null
+	)
+
+	data class Surcharge(
+			var id: String? = null,
+			var value: Double? = null,
+			var type: SurchargeType? = null,
+			var total: Double? = null,
+			var description: String? = null,
+			var taxable: Boolean? = null
 	)
 }

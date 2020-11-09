@@ -70,8 +70,11 @@ data class FetchedOrder(
 		var refundedAmount: Double? = null,
 		var refunds: List<RefundInfo>? = null,
 
-		var utmData: UtmData? = null
+		var utmData: UtmData? = null,
 
+		var customSurcharges: List<Surcharge>? = null,
+
+		var giftCardRedemption: Double? = null
 ) {
 
 	data class CreditCardStatus(
@@ -230,5 +233,14 @@ data class FetchedOrder(
 			val medium: String? = null,
 			val mcEid: String? = null,
 			val mcCid: String? = null
+	)
+
+	data class Surcharge(
+			var id: String? = null,
+			var value: Double? = null,
+			var type: SurchargeType? = null,
+			var total: Double? = null,
+			var description: String? = null,
+			var taxable: Boolean? = null
 	)
 }
