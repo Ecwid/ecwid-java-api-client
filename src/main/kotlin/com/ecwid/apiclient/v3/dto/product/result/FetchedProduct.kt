@@ -16,7 +16,7 @@ data class FetchedProduct(
 		val nameTranslated: LocalizedValueMap? = null,
 		val description: String? = null,
 		val descriptionTranslated: LocalizedValueMap? = null,
-		val sku: String,
+		val sku: String? = null,
 		val isSampleProduct: Boolean? = null,
 		val url: String? = null,
 
