@@ -195,7 +195,7 @@ class ProductsTest : BaseEntityTest() {
 						categories = listOf(categoryCreateResult1.id),
 						includeProductsFromSubcategories = true
 				),
-				desiredSkus = listOf(productDetails.sku!!)
+				desiredSkus = listOf(productDetails.sku)
 		)
 	}
 
