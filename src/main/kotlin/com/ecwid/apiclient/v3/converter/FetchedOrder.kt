@@ -60,7 +60,9 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 			shippingPerson = shippingPerson?.toUpdated(),
 
 			shippingOption = shippingOption?.toUpdated(),
-			handlingFee = handlingFee?.toUpdated()
+			handlingFee = handlingFee?.toUpdated(),
+
+			customSurcharges = customSurcharges?.map(FetchedOrder.Surcharge::toUpdated)
 	)
 }
 
@@ -201,5 +203,16 @@ fun FetchedOrder.HandlingFee.toUpdated(): UpdatedOrder.HandlingFee {
 			name = name,
 			value = value,
 			description = description
+	)
+}
+
+fun FetchedOrder.Surcharge.toUpdated(): UpdatedOrder.Surcharge {
+	return UpdatedOrder.Surcharge(
+			id = id,
+			value = value,
+			type = type,
+			total = total,
+			description = description,
+			taxable = taxable
 	)
 }
