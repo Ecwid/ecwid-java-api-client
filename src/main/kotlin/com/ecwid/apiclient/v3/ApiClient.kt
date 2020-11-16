@@ -25,8 +25,10 @@ import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
+import com.ecwid.apiclient.v3.dto.profile.request.LatestStatsRequest
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
+import com.ecwid.apiclient.v3.dto.profile.result.FetchedLatestStats
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 import com.ecwid.apiclient.v3.dto.profile.result.StoreProfileUpdateResult
 import com.ecwid.apiclient.v3.dto.saleschannels.request.*
@@ -110,6 +112,7 @@ open class ApiClient private constructor(
 interface StoreProfileApiClient {
 	fun getStoreProfile(request: StoreProfileRequest): FetchedStoreProfile
 	fun updateStoreProfile(request: StoreProfileUpdateRequest): StoreProfileUpdateResult
+	fun getLatestStats(request: LatestStatsRequest): FetchedLatestStats
 //	fun getShippingOptions()
 //	fun addShippingOption()
 //	fun updateShippingOption()
