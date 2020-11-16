@@ -1,10 +1,10 @@
-package ru.cdev.xnext.api.v3.model
+package com.ecwid.apiclient.v3.dto.saleschannels
 
 import java.util.*
 
 data class ProductFeedInfo(
-		var productsProcessed: Int = 0,
-		val productsIncluded: Int = 0,
+		var productsProcessed: Int? = null,
+		val productsIncluded: Int? = null,
 		val lastGenerated: Date? = null,
 		val nextGenerated: Date? = null
 )

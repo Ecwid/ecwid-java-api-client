@@ -29,14 +29,8 @@ import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 import com.ecwid.apiclient.v3.dto.profile.result.StoreProfileUpdateResult
-import com.ecwid.apiclient.v3.dto.saleschannels.request.GoogleShoppingFeedConfigGetRequest
-import com.ecwid.apiclient.v3.dto.saleschannels.request.ShopzillaFeedConfigGetRequest
-import com.ecwid.apiclient.v3.dto.saleschannels.request.YahooShoppingFeedConfigGetRequest
-import com.ecwid.apiclient.v3.dto.saleschannels.request.YandexMarketFeedConfigGetRequest
-import com.ecwid.apiclient.v3.dto.saleschannels.response.GoogleShoppingFeedConfigGetResponse
-import com.ecwid.apiclient.v3.dto.saleschannels.response.ShopzillaFeedConfigGetResponse
-import com.ecwid.apiclient.v3.dto.saleschannels.response.YahooShoppingFeedConfigGetResponse
-import com.ecwid.apiclient.v3.dto.saleschannels.response.YandexMarketFeedConfigGetResponse
+import com.ecwid.apiclient.v3.dto.saleschannels.request.*
+import com.ecwid.apiclient.v3.dto.saleschannels.response.*
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
@@ -274,10 +268,11 @@ interface CouponsApiClient {
 }
 
 interface SalesChannelsApiClient {
-	fun getGoogleShoppingFeedConfig(request: GoogleShoppingFeedConfigGetRequest): GoogleShoppingFeedConfigGetResponse
-	fun getShopzillaFeedConfig(request: ShopzillaFeedConfigGetRequest): ShopzillaFeedConfigGetResponse
-	fun getYahooShoppingFeedConfig(request: YahooShoppingFeedConfigGetRequest): YahooShoppingFeedConfigGetResponse
-	fun getYandexMarketFeedConfig(request: YandexMarketFeedConfigGetRequest): YandexMarketFeedConfigGetResponse
+	fun getGoogleShoppingFeedConfig(request: GoogleShoppingFeedConfigGetRequest): FetchedGoogleShoppingFeedConfig
+	fun getShopzillaFeedConfig(request: ShopzillaFeedConfigGetRequest): FetchedShopzillaFeedConfig
+	fun getYahooShoppingFeedConfig(request: YahooShoppingFeedConfigGetRequest): FetchedYahooShoppingFeedConfig
+	fun getYandexMarketFeedConfig(request: YandexMarketFeedConfigGetRequest): FetchedYandexMarketFeedConfig
+	fun updateProductFeedInfo(request: UpdateProductFeedRequest): UpdateProductFeedResponse
 }
 
 // Application

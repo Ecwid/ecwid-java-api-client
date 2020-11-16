@@ -1,8 +1,8 @@
-package ru.cdev.xnext.api.v3.model
+package com.ecwid.apiclient.v3.dto.saleschannels
 
 data class MarketplaceConfig(
-		var enabled: Boolean = false,
+		var enabled: Boolean? = null,
 		var taxonomyId: String? = null,
-		val firstInit: Boolean = false
+		val firstInit: Boolean? = null
 )
 
