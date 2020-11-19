@@ -4,9 +4,9 @@ import com.ecwid.apiclient.v3.dto.saleschannels.enums.Marketplace
 import com.ecwid.apiclient.v3.dto.saleschannels.request.GoogleShoppingFeedConfigGetRequest
 import com.ecwid.apiclient.v3.dto.saleschannels.request.UpdateProductFeedRequest
 import com.ecwid.apiclient.v3.dto.saleschannels.request.UpdatedProductFeed
-import jdk.nashorn.internal.ir.annotations.Ignore
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -17,8 +17,7 @@ class SalesChannelsTest: BaseEntityTest() {
 		super.beforeEach()
 	}
 
-	//("Игнорируем до релиза ECWID-73774")
-	@Ignore
+	@Disabled("Игнорируем до релиза ECWID-73774")
 	@Test
 	fun updateFeedInfo() {
 		val lastGenerated = Date()
