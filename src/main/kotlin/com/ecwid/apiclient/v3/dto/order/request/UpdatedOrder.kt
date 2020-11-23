@@ -62,7 +62,9 @@ data class UpdatedOrder(
 		var shippingOption: ShippingOption? = null,
 		var handlingFee: HandlingFee? = null,
 
-		var utmData: UtmData? = null
+		var utmData: UtmData? = null,
+
+		var pricesIncludeTax: Boolean? = null
 ) {
 
 	data class CreditCardStatus(

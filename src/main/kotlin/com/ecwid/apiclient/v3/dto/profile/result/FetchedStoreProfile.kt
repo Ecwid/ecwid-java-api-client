@@ -281,7 +281,8 @@ data class FetchedStoreProfile(
 
 	data class TaxSettings(
 			var automaticTaxEnabled: Boolean? = null,
-			var taxes: List<Taxes>? = null
+			var taxes: List<Taxes>? = null,
+			var pricesIncludeTax: Boolean? = null
 	) {
 		data class Taxes(
 				var id: Int? = null,

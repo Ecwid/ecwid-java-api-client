@@ -78,7 +78,8 @@ abstract class BaseEntityTest {
 			),
 			taxSettings = UpdatedStoreProfile.TaxSettings(
 				automaticTaxEnabled = false,
-				taxes = listOf()
+				taxes = listOf(),
+				pricesIncludeTax = false
 			)
 		)
 
