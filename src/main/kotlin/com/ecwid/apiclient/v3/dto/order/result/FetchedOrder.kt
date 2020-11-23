@@ -70,7 +70,9 @@ data class FetchedOrder(
 		var refundedAmount: Double? = null,
 		var refunds: List<RefundInfo>? = null,
 
-		var utmData: UtmData? = null
+		var utmData: UtmData? = null,
+
+		var pricesIncludeTax: Boolean? = null
 
 ) {
 

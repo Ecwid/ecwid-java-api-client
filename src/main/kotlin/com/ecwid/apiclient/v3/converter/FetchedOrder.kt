@@ -60,7 +60,9 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 			shippingPerson = shippingPerson?.toUpdated(),
 
 			shippingOption = shippingOption?.toUpdated(),
-			handlingFee = handlingFee?.toUpdated()
+			handlingFee = handlingFee?.toUpdated(),
+
+			pricesIncludeTax = pricesIncludeTax
 	)
 }
 

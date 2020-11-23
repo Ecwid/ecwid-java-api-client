@@ -129,7 +129,8 @@ class StoreProfileTest : BaseEntityTest() {
 //                                        tax = 14.0
 //                                )),
 								defaultTax = 12.0
-						))
+						)),
+						pricesIncludeTax = false
 				),
 // TODO: uncomment after bug ECWID-65838 is fixed
 //                zones = listOf(UpdatedStoreProfile.Zone(

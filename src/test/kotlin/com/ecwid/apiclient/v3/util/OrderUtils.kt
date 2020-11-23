@@ -98,7 +98,8 @@ fun generateTestOrder(): UpdatedOrder {
 					name = "Name " + randomAlphanumeric(8),
 					value = randomPrice(),
 					description = "Description " + randomAlphanumeric(64)
-			)
+			),
+			pricesIncludeTax = false
 	)
 }
 
