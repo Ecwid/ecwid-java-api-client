@@ -470,6 +470,12 @@ data class FetchedStoreProfile(
 			@SerializedName("product_details_show_tax")
 			var productDetailsShowTax: Boolean? = null,
 
+			@SerializedName("product_details_show_attributes")
+			var productDetailsShowAttributes: Boolean? = null,
+
+			@SerializedName("product_details_show_weight")
+			var productDetailsShowWeight: Boolean? = null,
+
 			@SerializedName("product_details_show_product_description")
 			var productDetailsShowProductDescription: Boolean? = null,
 
