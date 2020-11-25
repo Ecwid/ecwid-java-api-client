@@ -431,6 +431,9 @@ data class FetchedStoreProfile(
 			@SerializedName("product_list_show_on_sale_label")
 			var productListShowOnSaleLabel: Boolean? = null,
 
+			@SerializedName("product_list_show_name_your_price_label")
+			var productListShowPayWhatYouWantLabel: Boolean? = null,
+
 			@SerializedName("product_list_show_sold_out_label")
 			var productListShowSoldOutLabel: Boolean? = null,
 
@@ -580,6 +583,9 @@ data class FetchedStoreProfile(
 
 			@SerializedName("product_details_show_subtitle")
 			var productDetailsShowSubtitle: Boolean? = null,
+
+			@SerializedName("product_details_position_subtitle")
+			var productDetailsPositionSubtitle: Int? = null,
 
 			@SerializedName("product_list_subtitles_behavior")
 			var productListSubtitlesBehavior: String? = null
