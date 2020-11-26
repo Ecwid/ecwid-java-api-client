@@ -5,8 +5,8 @@ import com.ecwid.apiclient.v3.dto.saleschannels.ProductFeedInfo
 import com.ecwid.apiclient.v3.dto.saleschannels.enums.MarketplaceCondition
 
 data class FetchedGoogleShoppingFeedConfig (
-		var marketplaceConfig: MarketplaceConfig? = null,
-		var condition: MarketplaceCondition? = null,
-		var productFeedInfo: ProductFeedInfo? = null
+		val marketplaceConfig: MarketplaceConfig = MarketplaceConfig(),
+		val condition: MarketplaceCondition = MarketplaceCondition.NEW,
+		val productFeedInfo: ProductFeedInfo = ProductFeedInfo()
 )
 

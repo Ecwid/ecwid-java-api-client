@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.dto.saleschannels.ProductFeedInfo
 import com.ecwid.apiclient.v3.dto.saleschannels.enums.MarketplaceCondition
 
 data class FetchedShopzillaFeedConfig (
-		var marketplaceConfig: MarketplaceConfig? = null,
-		var condition: MarketplaceCondition? = null,
-		var productFeedInfo: ProductFeedInfo? = null
+		var marketplaceConfig: MarketplaceConfig = MarketplaceConfig(),
+		var condition: MarketplaceCondition = MarketplaceCondition.NEW,
+		var productFeedInfo: ProductFeedInfo = ProductFeedInfo()
 )
