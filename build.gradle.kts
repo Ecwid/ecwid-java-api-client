@@ -3,10 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	java
 	kotlin("jvm") version "1.3.71"
+	id("nebula.release") version "15.2.0"
 }
-
-group = "com.ecwid.apiclient"
-version = "0.1"
 
 repositories {
 	mavenCentral()
@@ -42,4 +40,12 @@ tasks.withType<Test> {
 
 tasks.withType<Wrapper> {
 	gradleVersion = "6.3"
+}
+
+tasks {
+	named("release").get().apply {
+		// All checks were already made by Gradle Package workflow => no checks here
+		dependsOn.removeIf { it is TaskProvider<*> && it.name == "build" }
+		dependsOn(named("assemble").get())
+	}
 }
