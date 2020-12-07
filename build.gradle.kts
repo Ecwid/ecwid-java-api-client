@@ -50,7 +50,7 @@ tasks.withType<Wrapper> {
 
 tasks {
 	named("release").get().apply {
-		// All checks were already made by Gradle Package workflow => no checks here
+		// All checks were already made by Gradle Build workflow => no checks here
 		dependsOn.removeIf { it is TaskProvider<*> && it.name == "build" }
 		dependsOn(named("assemble").get())
 	}
