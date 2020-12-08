@@ -5,6 +5,7 @@ plugins {
 	kotlin("jvm") version "1.3.71"
 	id("nebula.release") version "15.2.0"
 	id("maven-publish")
+	signing
 }
 
 repositories {
@@ -118,5 +119,16 @@ publishing {
 			url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
 		}
 	}
+}
+
+signing {
+	val gpgSigningKey: String? = System.getenv("GPG_SIGNING_KEY")
+	val gpgSigningPassword: String? = System.getenv("GPG_SIGNING_PASSWORD")
+	if (gpgSigningKey.isNullOrBlank() || gpgSigningPassword.isNullOrBlank()) {
+		throw IllegalArgumentException("Both GPG_SIGNING_KEY and GPG_SIGNING_PASSWORD environment variables must not be empty")
+	}
+
+	useInMemoryPgpKeys(gpgSigningKey, gpgSigningPassword)
+	sign(publishing.publications["mavenJava"])
 }
 

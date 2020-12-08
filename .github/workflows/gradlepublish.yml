@@ -27,6 +27,8 @@ jobs:
     - name: Build with Gradle
       run: gradle publish --info
       env:
+        GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
+        GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
         OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         GRGIT_USER: ${{ secrets.GRGIT_USER }}
