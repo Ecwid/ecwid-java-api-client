@@ -141,10 +141,17 @@ data class FetchedOrder(
 			var productAvailable: Boolean? = null, // TODO Probably this field is always true
 			var couponApplied: Boolean? = null,
 
+			var recurringChargeSettings: RecurringChargeSettings? = null,
+
 			var selectedOptions: List<OrderItemSelectedOption>? = null,
 			var taxes: List<OrderItemTax>? = null,
 			var dimensions: ProductDimensions? = null,
 			var discounts: List<OrderItemDiscounts>? = null
+	)
+
+	data class RecurringChargeSettings(
+			val recurringInterval: RecurringSubscriptionInterval = RecurringSubscriptionInterval.MONTH,
+			val recurringIntervalCount: Int = 1
 	)
 
 	data class OrderItemSelectedOption(
