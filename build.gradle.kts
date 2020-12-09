@@ -49,6 +49,8 @@ tasks.withType<Wrapper> {
 	gradleVersion = "6.3"
 }
 
+val settingsProvider = SettingsProvider()
+
 tasks {
 	named("release").get().apply {
 		// All checks were already made by Gradle Build workflow => no checks here
@@ -62,6 +64,18 @@ tasks {
 		// We need create new version git tag before publishing to Maven Central
 		dependsOn("release")
 		mustRunAfter("release")
+	}
+}
+
+tasks.withType<Sign> {
+	doFirst {
+		settingsProvider.validateGPGSecrets()
+	}
+}
+
+tasks.withType<PublishToMavenRepository> {
+	doFirst {
+		settingsProvider.validateOssrhCredentials()
 	}
 }
 
@@ -107,14 +121,8 @@ publishing {
 	repositories {
 		maven {
 			credentials {
-				val ossrhUsername: String? = System.getenv("OSSRH_USERNAME")
-				val ossrhPassword: String? = System.getenv("OSSRH_PASSWORD")
-				if (ossrhUsername.isNullOrBlank() || ossrhPassword.isNullOrBlank()) {
-					throw IllegalArgumentException("Both OSSRH_USERNAME and OSSRH_PASSWORD environment variables must not be empty")
-				}
-
-				username = ossrhUsername
-				password = ossrhPassword
+				username = settingsProvider.ossrhUsername
+				password = settingsProvider.ossrhPassword
 			}
 			url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
 		}
@@ -122,13 +130,39 @@ publishing {
 }
 
 signing {
-	val gpgSigningKey: String? = System.getenv("GPG_SIGNING_KEY")
-	val gpgSigningPassword: String? = System.getenv("GPG_SIGNING_PASSWORD")
-	if (gpgSigningKey.isNullOrBlank() || gpgSigningPassword.isNullOrBlank()) {
-		throw IllegalArgumentException("Both GPG_SIGNING_KEY and GPG_SIGNING_PASSWORD environment variables must not be empty")
-	}
-
-	useInMemoryPgpKeys(gpgSigningKey, gpgSigningPassword)
+	useInMemoryPgpKeys(settingsProvider.gpgSigningKey, settingsProvider.gpgSigningPassword)
 	sign(publishing.publications["mavenJava"])
 }
 
+class SettingsProvider {
+
+	val gpgSigningKey: String?
+		get() = System.getenv(GPG_SIGNING_KEY_PROPERTY)
+
+	val gpgSigningPassword: String?
+		get() = System.getenv(GPG_SIGNING_PASSWORD_PROPERTY)
+
+	val ossrhUsername: String?
+		get() = System.getenv(OSSRH_USERNAME_PROPERTY)
+
+	val ossrhPassword: String?
+		get() = System.getenv(OSSRH_PASSWORD_PROPERTY)
+
+	fun validateGPGSecrets() = require(
+		value = !gpgSigningKey.isNullOrBlank() && !gpgSigningPassword.isNullOrBlank(),
+		lazyMessage = { "Both $GPG_SIGNING_KEY_PROPERTY and $GPG_SIGNING_PASSWORD_PROPERTY environment variables must not be empty" }
+	)
+
+	fun validateOssrhCredentials() = require(
+			value = !ossrhUsername.isNullOrBlank() && !ossrhPassword.isNullOrBlank(),
+			lazyMessage = { "Both $OSSRH_USERNAME_PROPERTY and $OSSRH_PASSWORD_PROPERTY environment variables must not be empty" }
+	)
+
+	companion object {
+		private const val GPG_SIGNING_KEY_PROPERTY = "GPG_SIGNING_KEY"
+		private const val GPG_SIGNING_PASSWORD_PROPERTY = "GPG_SIGNING_PASSWORD"
+		private const val OSSRH_USERNAME_PROPERTY = "OSSRH_USERNAME"
+		private const val OSSRH_PASSWORD_PROPERTY = "OSSRH_PASSWORD"
+	}
+
+}
