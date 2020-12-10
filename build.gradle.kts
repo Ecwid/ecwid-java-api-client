@@ -56,14 +56,8 @@ tasks {
 		// All checks were already made by Gradle Build workflow => no checks here
 		dependsOn.removeIf { it is TaskProvider<*> && it.name == "build" }
 		dependsOn(named("assemble").get())
-	}
-}
-
-tasks {
-	named("publish") {
-		// We need create new version git tag before publishing to Maven Central
-		dependsOn("release")
-		mustRunAfter("release")
+		// Publish artifacts to Maven Central before pushing new git tag to repo
+		dependsOn(named("publish").get())
 	}
 }
 
