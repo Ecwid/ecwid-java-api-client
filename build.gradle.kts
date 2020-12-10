@@ -77,8 +77,8 @@ publishing {
 	publications {
 		create<MavenPublication>("mavenJava") {
 			from(components["java"])
-			groupId = "com.ecwid.apiclient"
-			artifactId = "api-client"
+			groupId = PublicationSettings.GROUP_ID
+			artifactId = PublicationSettings.ARTIFACT_ID
 			versionMapping {
 				usage("java-api") {
 					fromResolutionOf("runtimeClasspath")
@@ -88,26 +88,26 @@ publishing {
 				}
 			}
 			pom {
-				name.set("Ecwid Rest API wrapper")
-				description.set("Ecwid Rest API wrapper")
-				url.set("https://github.com/Ecwid/ecwid-java-api-client")
+				name.set(PublicationSettings.POM_NAME)
+				description.set(PublicationSettings.POM_DESCRIPTION)
+				url.set(PublicationSettings.POM_URL)
 				licenses {
 					license {
-						name.set("The Apache License, Version 2.0")
-						url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+						name.set(PublicationSettings.LICENSE_NAME)
+						url.set(PublicationSettings.LICENSE_URL)
 					}
 				}
 				developers {
 					developer {
-						id.set("vgv")
-						name.set("Vasily Vasilkov")
-						email.set("vgv@ecwid.com")
+						id.set(PublicationSettings.DEVELOPER_ID)
+						name.set(PublicationSettings.DEVELOPER_NAME)
+						email.set(PublicationSettings.DEVELOPER_EMAIL)
 					}
 				}
 				scm {
-					connection.set("scm:git:git@github.com:Ecwid/ecwid-java-api-client.git")
-					developerConnection.set("scm:git:git@github.com:Ecwid/ecwid-java-api-client.git")
-					url.set("https://github.com/Ecwid/ecwid-java-api-client.git")
+					connection.set(PublicationSettings.SCM_CONNECTION)
+					developerConnection.set(PublicationSettings.SCM_CONNECTION)
+					url.set(PublicationSettings.SCM_URL)
 				}
 			}
 		}
@@ -159,4 +159,27 @@ class SettingsProvider {
 		private const val OSSRH_PASSWORD_PROPERTY = "OSSRH_PASSWORD"
 	}
 
+}
+
+class PublicationSettings {
+	companion object {
+
+		const val GROUP_ID = "com.ecwid.apiclient"
+		const val ARTIFACT_ID = "api-client"
+
+		const val POM_NAME = "Ecwid Rest API wrapper"
+		const val POM_DESCRIPTION = "Ecwid Rest API wrapper"
+		const val POM_URL = "https://github.com/Ecwid/ecwid-java-api-client"
+
+		const val DEVELOPER_ID = "vgv"
+		const val DEVELOPER_NAME = "Vasily Vasilkov"
+		const val DEVELOPER_EMAIL = "vgv@ecwid.com"
+
+		const val LICENSE_NAME = "The Apache License, Version 2.0"
+		const val LICENSE_URL = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+
+		const val SCM_CONNECTION = "scm:git:git@github.com:Ecwid/ecwid-java-api-client.git"
+		const val SCM_URL = "https://github.com/Ecwid/ecwid-java-api-client.git"
+
+	}
 }
