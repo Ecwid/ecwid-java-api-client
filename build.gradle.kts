@@ -2,10 +2,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	java
+	signing
 	kotlin("jvm") version "1.3.71"
+	id("io.codearte.nexus-staging") version "0.22.0"
 	id("nebula.release") version "15.2.0"
 	id("maven-publish")
-	signing
 }
 
 repositories {
@@ -132,6 +133,17 @@ publishing {
 			}
 		}
 	}
+}
+
+signing {
+	useInMemoryPgpKeys(settingsProvider.gpgSigningKey, settingsProvider.gpgSigningPassword)
+	sign(publishing.publications["mavenJava"])
+}
+
+nexusStaging {
+	packageGroup = PublicationSettings.STAGING_PACKAGE_GROUP
+	username = settingsProvider.ossrhUsername
+	password = settingsProvider.ossrhPassword
 }
 
 // We want to change SNAPSHOT versions format from:
