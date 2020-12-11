@@ -52,13 +52,19 @@ tasks.withType<Wrapper> {
 val settingsProvider = SettingsProvider()
 
 tasks {
+
+	// All checks were already made by workflow "On pull request" => no checks here
+	if (gradle.startParameter.taskNames.contains("final")) {
+		named("build").get().apply {
+			dependsOn.removeIf { it == "check" }
+		}
+	}
+
+	// Publish artifacts to Maven Central before pushing new git tag to repo
 	named("release").get().apply {
-		// All checks were already made by Gradle Build workflow => no checks here
-		dependsOn.removeIf { it is TaskProvider<*> && it.name == "build" }
-		dependsOn(named("assemble").get())
-		// Publish artifacts to Maven Central before pushing new git tag to repo
 		dependsOn(named("publish").get())
 	}
+
 }
 
 tasks.withType<Sign> {
@@ -79,6 +85,7 @@ publishing {
 			from(components["java"])
 			groupId = PublicationSettings.GROUP_ID
 			artifactId = PublicationSettings.ARTIFACT_ID
+			version = sanitizeVersion(project.version.toString())
 			versionMapping {
 				usage("java-api") {
 					fromResolutionOf("runtimeClasspath")
@@ -118,15 +125,31 @@ publishing {
 				username = settingsProvider.ossrhUsername
 				password = settingsProvider.ossrhPassword
 			}
-			url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+			url = if (isSnapshotVersion(project.version.toString())) {
+				uri("https://oss.sonatype.org/content/repositories/snapshots/")
+			} else {
+				uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+			}
 		}
 	}
 }
 
-signing {
-	useInMemoryPgpKeys(settingsProvider.gpgSigningKey, settingsProvider.gpgSigningPassword)
-	sign(publishing.publications["mavenJava"])
+// We want to change SNAPSHOT versions format from:
+//		<major>.<minor>.<patch>-dev.#+<branchname>.<hash>
+// to:
+//		<major>.<minor>.<patch>-dev+<branchname>-SNAPSHOT
+fun sanitizeVersion(version: String): String {
+	return if (isSnapshotVersion(version)) {
+		version
+				.replace(Regex("-dev\\.\\d+\\+"), "-dev+")
+				.replace(Regex("\\.[a-z0-9]+$"), "-SNAPSHOT")
+	} else {
+		version
+	}
 }
+
+fun isSnapshotVersion(version: String): Boolean = version.contains("-dev.")
+
 
 class SettingsProvider {
 
@@ -162,6 +185,7 @@ class SettingsProvider {
 }
 
 class PublicationSettings {
+
 	companion object {
 
 		const val GROUP_ID = "com.ecwid.apiclient"
@@ -182,4 +206,5 @@ class PublicationSettings {
 		const val SCM_URL = "https://github.com/Ecwid/ecwid-java-api-client.git"
 
 	}
+
 }

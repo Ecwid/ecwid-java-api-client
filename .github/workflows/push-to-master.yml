@@ -1,7 +1,4 @@
-# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java#publishing-using-gradle
-
-name: Gradle Release
+name: On push to master
 
 on:
   push:
@@ -24,11 +21,11 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: '11'
-        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
+        server-id: github
+        settings-path:
 
-    - name: Build with Gradle
-      run: gradle release -Prelease.stage=final --info
+    - name: Upload release version to Maven Central and create git tag with Gradle
+      run: gradle final -Prelease.stage=final --info
       env:
         GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
         GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
