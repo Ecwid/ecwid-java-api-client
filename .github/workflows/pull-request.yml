@@ -21,8 +21,8 @@ jobs:
         server-id: github
         settings-path: ${{ github.workspace }}
 
-    - name: Upload dev snapshot to Maven Central with Gradle
-      run: gradle devSnapshot
+    - name: Build, run tests and upload dev snapshot to Maven Central with Gradle
+      run: gradle devSnapshot --info
       env:
         STORE_ID: ${{ secrets.STORE_ID }}
         API_TOKEN: ${{ secrets.API_TOKEN }}
@@ -31,6 +31,7 @@ jobs:
         GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
         OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+        GITHUB_HEAD_REF: ${{ github.head_ref }}
 
     - uses: actions/upload-artifact@v2
       if: failure()

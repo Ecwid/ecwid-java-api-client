@@ -42,6 +42,7 @@ abstract class BaseEntityTest {
 	protected lateinit var apiClientHelper: ApiClientHelper
 
 	protected open fun beforeEach() {
+		// Test comment
 		val properties = PropertiesLoader.load()
 		apiClientHelper = ApiClientHelper(
 				apiServerDomain = ApiServerDomain(

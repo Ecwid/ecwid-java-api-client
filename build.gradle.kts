@@ -54,11 +54,11 @@ val settingsProvider = SettingsProvider()
 tasks {
 
 	// All checks were already made by workflow "On pull request" => no checks here
-	if (gradle.startParameter.taskNames.contains("final")) {
+//	if (gradle.startParameter.taskNames.contains("final")) {
 		named("build").get().apply {
 			dependsOn.removeIf { it == "check" }
 		}
-	}
+//	}
 
 	// Publish artifacts to Maven Central before pushing new git tag to repo
 	named("release").get().apply {
@@ -135,14 +135,23 @@ publishing {
 }
 
 // We want to change SNAPSHOT versions format from:
-//		<major>.<minor>.<patch>-dev.#+<branchname>.<hash>
+//		<major>.<minor>.<patch>-dev.#+<branchname>.<hash> (local branch)
+//		<major>.<minor>.<patch>-dev.#+<hash> (github pull request)
 // to:
 //		<major>.<minor>.<patch>-dev+<branchname>-SNAPSHOT
 fun sanitizeVersion(version: String): String {
 	return if (isSnapshotVersion(version)) {
-		version
-				.replace(Regex("-dev\\.\\d+\\+"), "-dev+")
-				.replace(Regex("\\.[a-z0-9]+$"), "-SNAPSHOT")
+		val githubHeadRef = settingsProvider.githubHeadRef
+		if (githubHeadRef != null) {
+			// github pull request
+			version
+					.replace(Regex("-dev\\.\\d+\\+[a-f0-9]+$"), "-dev+$githubHeadRef-SNAPSHOT")
+		} else {
+			// local branch
+			version
+					.replace(Regex("-dev\\.\\d+\\+"), "-dev+")
+					.replace(Regex("\\.[a-f0-9]+$"), "-SNAPSHOT")
+		}
 	} else {
 		version
 	}
@@ -165,6 +174,9 @@ class SettingsProvider {
 	val ossrhPassword: String?
 		get() = System.getenv(OSSRH_PASSWORD_PROPERTY)
 
+	val githubHeadRef: String?
+		get() = System.getenv(GITHUB_HEAD_REF_PROPERTY)
+
 	fun validateGPGSecrets() = require(
 		value = !gpgSigningKey.isNullOrBlank() && !gpgSigningPassword.isNullOrBlank(),
 		lazyMessage = { "Both $GPG_SIGNING_KEY_PROPERTY and $GPG_SIGNING_PASSWORD_PROPERTY environment variables must not be empty" }
@@ -180,6 +192,7 @@ class SettingsProvider {
 		private const val GPG_SIGNING_PASSWORD_PROPERTY = "GPG_SIGNING_PASSWORD"
 		private const val OSSRH_USERNAME_PROPERTY = "OSSRH_USERNAME"
 		private const val OSSRH_PASSWORD_PROPERTY = "OSSRH_PASSWORD"
+		private const val GITHUB_HEAD_REF_PROPERTY = "GITHUB_HEAD_REF"
 	}
 
 }

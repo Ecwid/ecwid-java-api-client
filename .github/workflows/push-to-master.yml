@@ -25,7 +25,7 @@ jobs:
         settings-path:
 
     - name: Upload release version to Maven Central and create git tag with Gradle
-      run: gradle final -Prelease.stage=final --info
+      run: gradle final --info
       env:
         GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
         GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
