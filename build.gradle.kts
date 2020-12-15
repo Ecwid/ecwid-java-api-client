@@ -80,13 +80,33 @@ tasks.withType<PublishToMavenRepository> {
 	}
 }
 
+tasks.register("printFinalReleaseNode") {
+	doLast {
+		printFinalReleaseNode(
+				groupId = PublicationSettings.GROUP_ID,
+				artifactId = PublicationSettings.ARTIFACT_ID,
+				sanitizedVersion = project.sanitizeVersion()
+		)
+	}
+}
+
+tasks.register("printDevSnapshotReleaseNode") {
+	doLast {
+		printDevSnapshotReleaseNode(
+				groupId = PublicationSettings.GROUP_ID,
+				artifactId = PublicationSettings.ARTIFACT_ID,
+				sanitizedVersion = project.sanitizeVersion()
+		)
+	}
+}
+
 publishing {
 	publications {
 		create<MavenPublication>("mavenJava") {
 			from(components["java"])
 			groupId = PublicationSettings.GROUP_ID
 			artifactId = PublicationSettings.ARTIFACT_ID
-			version = sanitizeVersion(project.version.toString())
+			version = project.sanitizeVersion()
 			versionMapping {
 				usage("java-api") {
 					fromResolutionOf("runtimeClasspath")
@@ -126,7 +146,7 @@ publishing {
 				username = settingsProvider.ossrhUsername
 				password = settingsProvider.ossrhPassword
 			}
-			url = if (isSnapshotVersion(project.version.toString())) {
+			url = if (project.isSnapshotVersion()) {
 				uri("https://oss.sonatype.org/content/repositories/snapshots/")
 			} else {
 				uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
@@ -151,8 +171,9 @@ nexusStaging {
 //		<major>.<minor>.<patch>-dev.#+<hash> (github pull request)
 // to:
 //		<major>.<minor>.<patch>-dev+<branchname>-SNAPSHOT
-fun sanitizeVersion(version: String): String {
-	return if (isSnapshotVersion(version)) {
+fun Project.sanitizeVersion(): String {
+	val version = version.toString()
+	return if (project.isSnapshotVersion()) {
 		val githubHeadRef = settingsProvider.githubHeadRef
 		if (githubHeadRef != null) {
 			// github pull request
@@ -169,8 +190,48 @@ fun sanitizeVersion(version: String): String {
 	}
 }
 
-fun isSnapshotVersion(version: String): Boolean = version.contains("-dev.")
+fun Project.isSnapshotVersion() = version.toString().contains("-dev.")
 
+fun printFinalReleaseNode(groupId: String, artifactId: String, sanitizedVersion: String) {
+	println()
+	println("========================================================")
+	println()
+	println("New RELEASE artifact version were published:")
+	println("	groupId: $groupId")
+	println("	artifactId: $artifactId")
+	println("	version: $sanitizedVersion")
+	println()
+	println("Discover on Maven Central:")
+	println("	https://repo1.maven.org/maven2/${groupId.replace('.', '/')}/$artifactId/")
+	println()
+	println("Edit or delete artifacts on OSS Nexus Repository Manager:")
+	println("	https://oss.sonatype.org/#nexus-search;gav~$groupId~~~~")
+	println()
+	println("Control staging repositories on OSS Nexus Repository Manager:")
+	println("	https://oss.sonatype.org/#stagingRepositories")
+	println()
+	println("========================================================")
+	println()
+}
+
+fun printDevSnapshotReleaseNode(groupId: String, artifactId: String, sanitizedVersion: String) {
+	println()
+	println("========================================================")
+	println()
+	println("New developer SNAPSHOT artifact version were published:")
+	println("	groupId: $groupId")
+	println("	artifactId: $artifactId")
+	println("	version: $sanitizedVersion")
+	println()
+	println("Discover on Maven Central:")
+	println("	https://oss.sonatype.org/content/groups/public/${groupId.replace('.', '/')}/$artifactId/")
+	println()
+	println("Edit or delete artifacts on OSS Nexus Repository Manager:")
+	println("	https://oss.sonatype.org/#nexus-search;gav~$groupId~~~~")
+	println()
+	println("========================================================")
+	println()
+}
 
 class SettingsProvider {
 
