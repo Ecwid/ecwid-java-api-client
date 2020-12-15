@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	java
 	signing
-	kotlin("jvm") version "1.3.71"
+	kotlin("jvm") version "1.3.72"
 	id("com.adarshr.test-logger") version "2.1.1"
 	id("io.codearte.nexus-staging") version "0.22.0"
 	id("nebula.release") version "15.2.0"
@@ -19,12 +19,12 @@ dependencies {
 	implementation(kotlin("stdlib-jdk8"))
 	implementation(kotlin("reflect"))
 
-	implementation("com.google.code.gson:gson:2.8.5")
-	implementation("org.apache.httpcomponents:httpclient:4.5.6")
+	implementation("com.google.code.gson:gson:2.8.6")
+	implementation("org.apache.httpcomponents:httpclient:4.5.13")
 
-	testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.0")
-	testImplementation("org.junit.jupiter:junit-jupiter-params:5.4.0")
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.0")
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+	testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.0")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 }
 
 configure<JavaPluginConvention> {
