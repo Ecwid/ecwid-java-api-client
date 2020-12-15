@@ -25,7 +25,7 @@ jobs:
         settings-path:
 
     - name: Build, upload release version to Maven Central and create git release tag with Gradle
-      run: ./gradlew final closeAndReleaseRepository printFinalReleaseNode --info
+      run: ./gradlew final closeAndReleaseRepository printFinalReleaseNode
       env:
         GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
         GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
