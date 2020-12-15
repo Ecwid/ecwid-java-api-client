@@ -22,7 +22,7 @@ jobs:
         settings-path: ${{ github.workspace }}
 
     - name: Build, run tests and upload dev snapshot to Maven Central with Gradle
-      run: gradle devSnapshot --info
+      run: ./gradlew devSnapshot printDevSnapshotReleaseNode
       env:
         STORE_ID: ${{ secrets.STORE_ID }}
         API_TOKEN: ${{ secrets.API_TOKEN }}
