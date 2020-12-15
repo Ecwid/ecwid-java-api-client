@@ -3,6 +3,8 @@ package com.ecwid.apiclient.v3.impl
 import com.ecwid.apiclient.v3.asString
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 
+private const val MAX_LOG_ENTRY_LENGTH = 8_192
+
 interface ResponseParser<V> {
     fun parse(responseBytes: ByteArray): V
     fun getLogString(responseBytes: ByteArray): String
@@ -21,7 +23,7 @@ internal class StringResponseParser: ResponseParser<String> {
 	}
 
 	override fun getLogString(responseBytes: ByteArray): String {
-		return responseBytes.asString()
+		return responseBytes.asString().abbreviateForLog()
 	}
 
 }
@@ -34,7 +36,7 @@ internal class ByteArrayResponseParser: ResponseParser<ByteArray> {
 	}
 
 	override fun getLogString(responseBytes: ByteArray): String {
-		return "[Binary data: byte array of size ${responseBytes.size}]"
+		return responseBytes.abbreviateForLog()
 	}
 
 }
@@ -50,7 +52,7 @@ internal class ObjectResponseParser<V>(
 	}
 
 	override fun getLogString(responseBytes: ByteArray): String {
-		return responseBytes.asString()
+		return responseBytes.asString().abbreviateForLog()
 	}
 
 }
@@ -69,8 +71,19 @@ internal class ObjectWithExtResponseParser<VBase, VExt>(
 	}
 
 	override fun getLogString(responseBytes: ByteArray): String {
-		return responseBytes.asString()
+		return responseBytes.asString().abbreviateForLog()
 	}
 
 }
 
+private fun String.abbreviateForLog(): String {
+	return if (length > MAX_LOG_ENTRY_LENGTH) {
+		take(MAX_LOG_ENTRY_LENGTH) + "… [$length symbols total]"
+	} else {
+		this
+	}
+}
+
+private fun ByteArray.abbreviateForLog(): String {
+	return "[Binary data: byte array of size $size]"
+}
