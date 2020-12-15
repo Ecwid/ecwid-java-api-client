@@ -1,9 +1,11 @@
+import com.adarshr.gradle.testlogger.theme.ThemeType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	java
 	signing
 	kotlin("jvm") version "1.3.71"
+	id("com.adarshr.test-logger") version "2.1.1"
 	id("io.codearte.nexus-staging") version "0.22.0"
 	id("nebula.release") version "15.2.0"
 	id("maven-publish")
@@ -40,9 +42,14 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
-	testLogging {
-		events("passed", "skipped", "failed")
+	testlogger {
+		showFullStackTraces = true
 		showStandardStreams = true
+		showPassedStandardStreams = false
+		showSkippedStandardStreams = false
+		showFailedStandardStreams = true
+		slowThreshold = 30_000
+		theme = ThemeType.STANDARD
 	}
 }
 
