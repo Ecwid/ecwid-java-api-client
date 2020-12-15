@@ -54,7 +54,7 @@ tasks.withType<Test> {
 }
 
 tasks.withType<Wrapper> {
-	gradleVersion = "6.3"
+	gradleVersion = "6.7.1"
 }
 
 val settingsProvider = SettingsProvider()
