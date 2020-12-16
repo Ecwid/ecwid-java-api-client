@@ -1,4 +1,4 @@
-package com.ecwid.apiclient.v3
+package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest

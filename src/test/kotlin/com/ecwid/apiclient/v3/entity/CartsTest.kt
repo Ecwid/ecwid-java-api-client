@@ -1,4 +1,4 @@
-package com.ecwid.apiclient.v3
+package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.cart.request.*

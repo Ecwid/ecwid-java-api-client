@@ -1,4 +1,4 @@
-package com.ecwid.apiclient.v3
+package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.customer.request.CustomerDetailsRequest
@@ -50,8 +50,8 @@ private data class CustomerDataExt(
 )
 
 private data class CustomerCreateRequestExt(
-		var newCustomer: CustomerData = CustomerData(),
-		var newCustomerExt: CustomerDataExt = CustomerDataExt()
+        var newCustomer: CustomerData = CustomerData(),
+        var newCustomerExt: CustomerDataExt = CustomerDataExt()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 			endpoint = "customers",

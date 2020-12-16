@@ -1,5 +1,7 @@
-package com.ecwid.apiclient.v3
+package com.ecwid.apiclient.v3.entity
 
+import com.ecwid.apiclient.v3.ApiClient
+import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.config.ApiServerDomain
 import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.LoggingSettings
