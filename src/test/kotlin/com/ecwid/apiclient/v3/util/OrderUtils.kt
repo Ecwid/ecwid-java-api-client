@@ -1,6 +1,6 @@
 package com.ecwid.apiclient.v3.util
 
-import com.ecwid.apiclient.v3.dto.OrderedStringToStringMap
+import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 

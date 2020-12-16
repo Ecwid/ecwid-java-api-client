@@ -1,8 +1,8 @@
 package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.converter.toUpdated
-import com.ecwid.apiclient.v3.dto.AsyncPictureData
-import com.ecwid.apiclient.v3.dto.UploadFileData
+import com.ecwid.apiclient.v3.dto.common.AsyncPictureData
+import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
 import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap

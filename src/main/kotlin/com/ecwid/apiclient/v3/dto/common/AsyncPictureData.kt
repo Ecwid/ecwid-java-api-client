@@ -1,4 +1,4 @@
-package com.ecwid.apiclient.v3.dto
+package com.ecwid.apiclient.v3.dto.common
 
 data class AsyncPictureData(
 		val url: String,

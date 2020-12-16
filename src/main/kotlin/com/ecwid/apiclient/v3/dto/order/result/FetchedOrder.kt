@@ -1,78 +1,78 @@
 package com.ecwid.apiclient.v3.dto.order.result
 
-import com.ecwid.apiclient.v3.dto.OrderedStringToStringMap
+import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import java.util.*
 
 data class FetchedOrder(
-		var id: String? = null,
+        var id: String? = null,
 
-		var orderNumber: Int = 0,
-		var email: String? = null,
-		var ipAddress: String? = null,
-		var hidden: Boolean? = null,
-		var createDate: Date? = null,
-		var createTimestamp: Int? = null, // TODO Figure out how to test
-		var updateDate: Date? = null,
-		var updateTimestamp: Int? = null, // TODO Figure out how to test
+        var orderNumber: Int = 0,
+        var email: String? = null,
+        var ipAddress: String? = null,
+        var hidden: Boolean? = null,
+        var createDate: Date? = null,
+        var createTimestamp: Int? = null, // TODO Figure out how to test
+        var updateDate: Date? = null,
+        var updateTimestamp: Int? = null, // TODO Figure out how to test
 
-		var refererUrl: String? = null,
-		var globalReferer: String? = null,
-		var affiliateId: String? = null,
-		var additionalInfo: OrderedStringToStringMap? = null,
-		var extraFields: OrderedStringToStringMap? = null, // TODO Figure out how to test
+        var refererUrl: String? = null,
+        var globalReferer: String? = null,
+        var affiliateId: String? = null,
+        var additionalInfo: OrderedStringToStringMap? = null,
+        var extraFields: OrderedStringToStringMap? = null, // TODO Figure out how to test
 
-		var orderComments: String? = null,
-		var privateAdminNotes: String? = null,
+        var orderComments: String? = null,
+        var privateAdminNotes: String? = null,
 
-		var fulfillmentStatus: OrderFulfillmentStatus? = null,
-		var trackingNumber: String? = null,
-		var pickupTime: Date? = null,
+        var fulfillmentStatus: OrderFulfillmentStatus? = null,
+        var trackingNumber: String? = null,
+        var pickupTime: Date? = null,
 
-		var paymentStatus: OrderPaymentStatus? = null,
-		var paymentMethod: String? = null,
-		var paymentModule: String? = null,
-		var paymentParams: OrderedStringToStringMap? = null,
-		var paymentMessage: String? = null,
-		var creditCardStatus: CreditCardStatus? = null,
-		var externalTransactionId: String? = null,
+        var paymentStatus: OrderPaymentStatus? = null,
+        var paymentMethod: String? = null,
+        var paymentModule: String? = null,
+        var paymentParams: OrderedStringToStringMap? = null,
+        var paymentMessage: String? = null,
+        var creditCardStatus: CreditCardStatus? = null,
+        var externalTransactionId: String? = null,
 
-		var customerId: Int? = null, // TODO Figure out how to test
-		var customerGroup: String? = null,
-		var acceptMarketing: Boolean? = null,
+        var customerId: Int? = null, // TODO Figure out how to test
+        var customerGroup: String? = null,
+        var acceptMarketing: Boolean? = null,
 
-		var total: Double? = null,
-		var subtotal: Double? = null,
-		var usdTotal: Double? = null, // TODO Figure out how to test
+        var total: Double? = null,
+        var subtotal: Double? = null,
+        var usdTotal: Double? = null, // TODO Figure out how to test
 
-		var tax: Double? = null,
-		var customerTaxExempt: Boolean? = null,
-		var customerTaxId: String? = null,
-		var customerTaxIdValid: Boolean? = null,
-		var reversedTaxApplied: Boolean? = null,
+        var tax: Double? = null,
+        var customerTaxExempt: Boolean? = null,
+        var customerTaxId: String? = null,
+        var customerTaxIdValid: Boolean? = null,
+        var reversedTaxApplied: Boolean? = null,
 
-		var couponDiscount: Double? = null,
-		var volumeDiscount: Double? = null,
-		var membershipBasedDiscount: Double? = null,
-		var totalAndMembershipBasedDiscount: Double? = null,
-		var discount: Double? = null,
-		var discountInfo: List<DiscountInfo>? = null,
-		var discountCoupon: DiscountCouponInfo? = null,
+        var couponDiscount: Double? = null,
+        var volumeDiscount: Double? = null,
+        var membershipBasedDiscount: Double? = null,
+        var totalAndMembershipBasedDiscount: Double? = null,
+        var discount: Double? = null,
+        var discountInfo: List<DiscountInfo>? = null,
+        var discountCoupon: DiscountCouponInfo? = null,
 
-		var items: List<OrderItem>? = null,
+        var items: List<OrderItem>? = null,
 
-		var billingPerson: PersonInfo? = null,
-		var shippingPerson: PersonInfo? = null,
+        var billingPerson: PersonInfo? = null,
+        var shippingPerson: PersonInfo? = null,
 
-		var shippingOption: ShippingOption? = null,
-		var handlingFee: HandlingFee? = null,
+        var shippingOption: ShippingOption? = null,
+        var handlingFee: HandlingFee? = null,
 
-		var refundedAmount: Double? = null,
-		var refunds: List<RefundInfo>? = null,
+        var refundedAmount: Double? = null,
+        var refunds: List<RefundInfo>? = null,
 
-		var utmData: UtmData? = null,
+        var utmData: UtmData? = null,
 
-		var pricesIncludeTax: Boolean? = null
+        var pricesIncludeTax: Boolean? = null
 
 ) {
 

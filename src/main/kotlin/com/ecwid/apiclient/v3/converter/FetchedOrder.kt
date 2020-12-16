@@ -1,6 +1,6 @@
 package com.ecwid.apiclient.v3.converter
 
-import com.ecwid.apiclient.v3.dto.OrderedStringToStringMap
+import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.ProductOptionType
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder

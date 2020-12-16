@@ -1,6 +1,6 @@
 package com.ecwid.apiclient.v3.dto.batch.result
 
-import com.ecwid.apiclient.v3.dto.EcwidApiError
+import com.ecwid.apiclient.v3.dto.common.EcwidApiError
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.impl.TypedBatchResponse
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer

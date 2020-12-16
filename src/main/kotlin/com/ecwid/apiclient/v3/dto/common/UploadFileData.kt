@@ -1,4 +1,4 @@
-package com.ecwid.apiclient.v3.dto
+package com.ecwid.apiclient.v3.dto.common
 
 import java.io.File
 import java.io.InputStream

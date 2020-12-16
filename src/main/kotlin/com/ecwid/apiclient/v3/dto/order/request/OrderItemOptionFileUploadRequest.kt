@@ -1,7 +1,7 @@
 package com.ecwid.apiclient.v3.dto.order.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
-import com.ecwid.apiclient.v3.dto.UploadFileData
+import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.MIME_TYPE_OCTET_STREAM
 import com.ecwid.apiclient.v3.impl.RequestInfo
