@@ -44,7 +44,7 @@ data class CreateBatchRequest(
 }
 
 @Suppress("unused")
-private class SingleBatchRequest private constructor(
+private data class SingleBatchRequest(
 		val id: String?,
 		val path: String,
 		val method: String,

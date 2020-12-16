@@ -22,7 +22,7 @@ data class CategoriesSearchRequest(
 	sealed class ParentCategory {
 		object Any : ParentCategory()
 		object Root : ParentCategory()
-		class WithId(val id: Int) : ParentCategory()
+		data class WithId(val id: Int) : ParentCategory()
 	}
 
 	private fun toParams(): Map<String, String> {

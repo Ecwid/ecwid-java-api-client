@@ -4,7 +4,7 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
-class CouponUpdateRequest(
+data class CouponUpdateRequest(
 		var couponIdentifier: String = "",
 		var updatedCoupon: UpdatedCoupon = UpdatedCoupon()
 ) : ApiRequest {
