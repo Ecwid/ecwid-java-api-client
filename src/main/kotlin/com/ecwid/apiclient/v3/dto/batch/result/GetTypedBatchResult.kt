@@ -6,10 +6,10 @@ import com.ecwid.apiclient.v3.impl.TypedBatchResponse
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 
 data class GetTypedBatchResult(
-		val status: BatchStatus,
-		val totalRequests: Int,
-		val completedRequests: Int,
-		val responses: List<TypedSingleBatchResponse>?
+		val status: BatchStatus = BatchStatus.QUEUED,
+		val totalRequests: Int = 0,
+		val completedRequests: Int = 0,
+		val responses: List<TypedSingleBatchResponse>? = null
 ) {
 
 	internal constructor(
@@ -25,11 +25,11 @@ data class GetTypedBatchResult(
 }
 
 data class TypedSingleBatchResponse(
-		val id: String,
-		val escapedHttpBody: String,
-		val httpStatusCode: Int,
-		val httpStatusLine: String,
-		val status: BatchResponseStatus,
+		val id: String = "",
+		val escapedHttpBody: String = "",
+		val httpStatusCode: Int = 0,
+		val httpStatusLine: String = "",
+		val status: BatchResponseStatus = BatchResponseStatus.NOT_EXECUTED,
 		val jsonTransformer: JsonTransformer
 ) {
 

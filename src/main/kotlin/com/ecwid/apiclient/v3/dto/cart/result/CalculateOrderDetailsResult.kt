@@ -23,8 +23,8 @@ data class CalculateOrderDetailsResult(
 
 		var tax: Double? = null,
 		var taxesOnShipping: List<TaxOnShipping>? = null,
-		var availableTaxes: List<TaxInfo>,
-		var predictedPackage: List<PredictedPackage>,
+		var availableTaxes: List<TaxInfo> = emptyList(),
+		var predictedPackage: List<PredictedPackage> = emptyList(),
 
 		var paymentStatus: OrderPaymentStatus = OrderPaymentStatus.INCOMPLETE,
 		var fulfillmentStatus: OrderFulfillmentStatus = OrderFulfillmentStatus.AWAITING_PROCESSING,

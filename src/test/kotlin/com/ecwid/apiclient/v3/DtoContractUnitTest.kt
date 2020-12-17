@@ -1,12 +1,15 @@
 package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
+import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
-import kotlin.reflect.KClass
+import java.io.File
+import java.io.InputStream
+import java.lang.reflect.Constructor
 
 
 class DtoContractUnitTest {
@@ -17,22 +20,43 @@ class DtoContractUnitTest {
 		assertFalse(dtoClasses.isEmpty())
 
 		val problemDtoClasses = dtoClasses.filter { dtoClass ->
-			val kclass = dtoClass.kotlin
-			!kclass.isData && isDtoShouldBeMarkedAsDataClass(kclass)
+			!dtoClass.kotlin.isData && isDtoShouldBeMarkedAsDataClass(dtoClass)
 		}
 		assertTrue(problemDtoClasses.isEmpty()) {
-			"Some DTO classes are not marked as `data class`:\n" +
-					problemDtoClasses.joinToString(
-							separator = "\n",
-							transform = { clazz -> "\t* ${clazz.name}" }
-					)
+			"Some DTO classes are not marked as `data class`:\n" + classListToLoggableString(problemDtoClasses)
+		}
+	}
+
+	@Test
+	fun `test all data classes DTOs has default constructor`() {
+		val dtoDataClasses = getDtoClassesToCheck()
+				.filter { dtoClass -> dtoClass.kotlin.isData }
+		assertFalse(dtoDataClasses.isEmpty())
+
+		val problemDtoClasses = dtoDataClasses.filter { dtoDataClass ->
+			val constructors = dtoDataClass.constructors
+			val hasZeroArgConstructor = constructors.any { constructor -> constructor.parameters.isEmpty() }
+			!hasZeroArgConstructor && isDtoShouldHaveZeroArgConstructor(constructors)
+		}
+		assertTrue(problemDtoClasses.isEmpty()) {
+			"Some DTO data classes does not have zero-arg constructors " +
+					"(you need to add default values for all primary constructor arguments):\n" +
+					classListToLoggableString(problemDtoClasses)
 		}
 	}
 
 }
 
 
-private fun isDtoShouldBeMarkedAsDataClass(kclass: KClass<*>): Boolean {
+private fun classListToLoggableString(problemDtoClasses: List<Class<*>>) =
+		problemDtoClasses.joinToString(
+				separator = "\n",
+				transform = { clazz -> "\t* ${clazz.name}" }
+		)
+
+private fun isDtoShouldBeMarkedAsDataClass(dtoClass: Class<*>): Boolean {
+	val kclass = dtoClass.kotlin
+
 	if (kclass.isSealed) {
 		// Sealed classes must not be instantiated by themself but their inheritors must be marked as data classes
 		return false
@@ -43,16 +67,33 @@ private fun isDtoShouldBeMarkedAsDataClass(kclass: KClass<*>): Boolean {
 		return false
 	}
 
-	val constructors = kclass.constructors
+	val constructors = dtoClass.constructors
 	if (constructors.size == 1) {
-		val constructor = constructors.iterator().next()
-		if (constructor.parameters.isEmpty()) {
+		if (constructors.first().parameters.isEmpty()) {
 			// If class has only one zero-arg constructor then it cannot be marked as data class
 			return false
 		}
 	}
 
 	return true
+}
+
+private fun isDtoShouldHaveZeroArgConstructor(constructors: Array<Constructor<*>>): Boolean {
+	val maxParametersConstructor = constructors.maxBy { constructor -> constructor.parameters.size }
+	if (maxParametersConstructor == null) {
+		// Strange things
+		return true
+	}
+
+	val hasSpecialParameterType = maxParametersConstructor.parameters.any { parameter ->
+		// We have some DTOs with special primary constructor parameter types.
+		// We cannot assign a default value to them so will ignore them
+		parameter.type.isAssignableFrom(JsonTransformer::class.java)
+				|| parameter.type.isAssignableFrom(File::class.java)
+				|| parameter.type.isAssignableFrom(InputStream::class.java)
+	}
+
+	return !hasSpecialParameterType
 }
 
 private fun getDtoClassesToCheck() = Reflections(ApiRequest::class.java.packageName, SubTypesScanner(false))

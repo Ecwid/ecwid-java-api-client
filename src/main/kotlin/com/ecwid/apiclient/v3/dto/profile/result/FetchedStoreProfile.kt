@@ -347,10 +347,10 @@ data class FetchedStoreProfile(
 	)
 
 	data class ApplePay(
-			var enabled: Boolean,
-			var available: Boolean,
-			var gateway: String?,
-			var verificationFileUrl: String?
+			var enabled: Boolean = false,
+			var available: Boolean = false,
+			var gateway: String? = null,
+			var verificationFileUrl: String? = null
 	)
 
 	data class InstructionsForCustomerInfo(

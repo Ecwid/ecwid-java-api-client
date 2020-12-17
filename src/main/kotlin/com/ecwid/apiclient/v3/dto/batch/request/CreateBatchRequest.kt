@@ -8,7 +8,7 @@ import java.net.URLEncoder
 private val UTF_CHARSET = Charsets.UTF_8.toString()
 
 data class CreateBatchRequestWithIds(
-		val requests: Map<String, ApiRequest>,
+		val requests: Map<String, ApiRequest> = emptyMap(),
 		val stopOnFirstFailure: Boolean = true,
 		val extraParams: Map<String, String> = emptyMap()
 ) : ApiRequest {
@@ -27,7 +27,7 @@ data class CreateBatchRequestWithIds(
 }
 
 data class CreateBatchRequest(
-		val requests: List<ApiRequest>,
+		val requests: List<ApiRequest> = emptyList(),
 		val stopOnFirstFailure: Boolean = true,
 		val extraParams: Map<String, String> = emptyMap()
 ) : ApiRequest {
@@ -45,10 +45,10 @@ data class CreateBatchRequest(
 
 @Suppress("unused")
 private data class SingleBatchRequest(
-		val id: String?,
-		val path: String,
-		val method: String,
-		val body: Any?
+		val id: String? = null,
+		val path: String = "",
+		val method: String = "",
+		val body: Any? = null
 ) {
 
 	companion object {

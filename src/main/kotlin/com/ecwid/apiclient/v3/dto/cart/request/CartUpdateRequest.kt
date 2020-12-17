@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class CartUpdateRequest(
-		var cartId: String,
+		var cartId: String = "",
 		var updatedCart: UpdatedCart = UpdatedCart()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(

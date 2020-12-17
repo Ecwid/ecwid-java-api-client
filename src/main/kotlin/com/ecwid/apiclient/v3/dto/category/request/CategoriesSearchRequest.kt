@@ -22,14 +22,14 @@ data class CategoriesSearchRequest(
 	sealed class ParentCategory {
 		object Any : ParentCategory()
 		object Root : ParentCategory()
-		data class WithId(val id: Int) : ParentCategory()
+		data class WithId(val id: Int = 0) : ParentCategory()
 	}
 
 	private fun toParams(): Map<String, String> {
 		val parentCategoryId = when (parentCategoryId) {
-			is CategoriesSearchRequest.ParentCategory.Root ->
+			is ParentCategory.Root ->
 				0
-			is CategoriesSearchRequest.ParentCategory.WithId ->
+			is ParentCategory.WithId ->
 				parentCategoryId.id
 			else ->
 				null
