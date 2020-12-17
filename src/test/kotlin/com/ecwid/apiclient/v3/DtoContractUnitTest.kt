@@ -10,6 +10,9 @@ import org.reflections.scanners.SubTypesScanner
 import java.io.File
 import java.io.InputStream
 import java.lang.reflect.Constructor
+import kotlin.reflect.KMutableProperty
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.full.primaryConstructor
 
 
 class DtoContractUnitTest {
@@ -45,8 +48,23 @@ class DtoContractUnitTest {
 		}
 	}
 
-}
+	@Test
+	fun `test all data classes DTOs has only val parameters in their primary constructors`() {
+		val dtoDataClasses = getDtoClassesToCheck()
+				.filter { dtoClass -> dtoClass.kotlin.isData }
+		assertFalse(dtoDataClasses.isEmpty())
 
+		val problemDtoClasses = dtoDataClasses.filter { dtoDataClass ->
+			isPrimaryConstructorHasMutableProperties(dtoDataClass)
+		}
+		assertTrue(problemDtoClasses.isEmpty()) {
+			"Some DTO data classes does have mutable properties in their primary constructors " +
+					"(you need to replace all parameters from `var` to `val`):\n" +
+					classListToLoggableString(problemDtoClasses)
+		}
+	}
+
+}
 
 private fun classListToLoggableString(problemDtoClasses: List<Class<*>>) =
 		problemDtoClasses.joinToString(
@@ -94,6 +112,16 @@ private fun isDtoShouldHaveZeroArgConstructor(constructors: Array<Constructor<*>
 	}
 
 	return !hasSpecialParameterType
+}
+
+private fun isPrimaryConstructorHasMutableProperties(dtoDataClass: Class<*>): Boolean {
+	val kclass = dtoDataClass.kotlin
+	val primaryConstructorProperties = kclass.declaredMemberProperties.filter { member ->
+		kclass.primaryConstructor?.parameters?.any { parameter -> member.name == parameter.name } ?: false
+	}
+	return primaryConstructorProperties.any { property ->
+		property is KMutableProperty<*>
+	}
 }
 
 private fun getDtoClassesToCheck() = Reflections(ApiRequest::class.java.packageName, SubTypesScanner(false))

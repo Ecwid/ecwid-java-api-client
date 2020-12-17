@@ -5,17 +5,17 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 import java.util.*
 
 data class CartsSearchRequest(
-		var showHidden: Boolean? = null,
-		var totalFrom: Double? = null,
-		var totalTo: Double? = null,
-		var createdFrom: Date? = null,
-		var createdTo: Date? = null,
-		var updatedFrom: Date? = null,
-		var updatedTo: Date? = null,
-		var couponCode: String? = null,
-		var customer: String? = null,
-		var offset: Int = 0,
-		var limit: Int = 100
+		val showHidden: Boolean? = null,
+		val totalFrom: Double? = null,
+		val totalTo: Double? = null,
+		val createdFrom: Date? = null,
+		val createdTo: Date? = null,
+		val updatedFrom: Date? = null,
+		val updatedTo: Date? = null,
+		val couponCode: String? = null,
+		val customer: String? = null,
+		val offset: Int = 0,
+		val limit: Int = 100
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 			endpoint = "carts",

@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class CalculateOrderDetailsRequest(
-		var orderForCalculate: OrderForCalculate = OrderForCalculate()
+		val orderForCalculate: OrderForCalculate = OrderForCalculate()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 			endpoint = "order/calculate",

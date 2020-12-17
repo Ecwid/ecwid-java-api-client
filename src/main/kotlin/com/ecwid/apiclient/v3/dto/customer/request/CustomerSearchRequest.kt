@@ -5,19 +5,19 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 import java.util.*
 
 data class CustomersSearchRequest(
-		var keyword: String? = null,
-		var name: String? = null,
-		var email: String? = null,
-		var customerGroupId: Int? = null,
-		var minOrderCount: Int? = null,
-		var maxOrderCount: Int? = null,
-		var createdFrom: Date? = null,
-		var createdTo: Date? = null,
-		var updatedFrom: Date? = null,
-		var updatedTo: Date? = null,
-		var sortBy: SortOrder? = null,
-		var offset: Int = 0,
-		var limit: Int = 100
+		val keyword: String? = null,
+		val name: String? = null,
+		val email: String? = null,
+		val customerGroupId: Int? = null,
+		val minOrderCount: Int? = null,
+		val maxOrderCount: Int? = null,
+		val createdFrom: Date? = null,
+		val createdTo: Date? = null,
+		val updatedFrom: Date? = null,
+		val updatedTo: Date? = null,
+		val sortBy: SortOrder? = null,
+		val offset: Int = 0,
+		val limit: Int = 100
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 			endpoint = "customers",

@@ -1,18 +1,18 @@
 package com.ecwid.apiclient.v3.dto.batch.result
 
 data class GetEscapedBatchResult(
-		var status: BatchStatus = BatchStatus.QUEUED,
-		var totalRequests: Int = 0,
-		var completedRequests: Int = 0,
-		var responses: List<EscapedSingleBatchResponse>? = null
+		val status: BatchStatus = BatchStatus.QUEUED,
+		val totalRequests: Int = 0,
+		val completedRequests: Int = 0,
+		val responses: List<EscapedSingleBatchResponse>? = null
 )
 
 data class EscapedSingleBatchResponse(
-		var id: String = "",
-		var escapedHttpBody: String = "",
-		var httpStatusCode: Int = 0,
-		var httpStatusLine: String = "",
-		var status: BatchResponseStatus = BatchResponseStatus.NOT_EXECUTED
+		val id: String = "",
+		val escapedHttpBody: String = "",
+		val httpStatusCode: Int = 0,
+		val httpStatusLine: String = "",
+		val status: BatchResponseStatus = BatchResponseStatus.NOT_EXECUTED
 )
 
 enum class BatchStatus {

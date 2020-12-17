@@ -1,29 +1,29 @@
 package com.ecwid.apiclient.v3.dto.profile.request
 
 data class UpdatedStoreProfile(
-		var generalInfo: GeneralInfo? = null,
-		var account: Account? = null,
-		var settings: Settings? = null,
-		var mailNotifications: MailNotifications? = null,
-		var company: Company? = null,
-		var formatsAndUnits: FormatsAndUnits? = null,
-		var languages: Languages? = null,
-		var shipping: Shipping? = null,
-		var taxSettings: TaxSettings? = null,
-		var zones: List<Zone>? = null,
-		var businessRegistrationID: BusinessRegistrationID? = null,
-		var legalPagesSettings: LegalPagesSettingsDetails? = null,
-		var orderInvoiceSettings: OrderInvoiceSettings? = null
+		val generalInfo: GeneralInfo? = null,
+		val account: Account? = null,
+		val settings: Settings? = null,
+		val mailNotifications: MailNotifications? = null,
+		val company: Company? = null,
+		val formatsAndUnits: FormatsAndUnits? = null,
+		val languages: Languages? = null,
+		val shipping: Shipping? = null,
+		val taxSettings: TaxSettings? = null,
+		val zones: List<Zone>? = null,
+		val businessRegistrationID: BusinessRegistrationID? = null,
+		val legalPagesSettings: LegalPagesSettingsDetails? = null,
+		val orderInvoiceSettings: OrderInvoiceSettings? = null
 ) {
 	data class GeneralInfo(
-			var storeUrl: String? = null,
-			var starterSite: InstantSiteInfo? = null,
-			var websitePlatform: WebsitePlatform? = null
+			val storeUrl: String? = null,
+			val starterSite: InstantSiteInfo? = null,
+			val websitePlatform: WebsitePlatform? = null
 	)
 
 	data class InstantSiteInfo(
-			var ecwidSubdomain: String? = null,
-			var customDomain: String? = null
+			val ecwidSubdomain: String? = null,
+			val customDomain: String? = null
 	)
 
 	enum class WebsitePlatform {
@@ -31,35 +31,35 @@ data class UpdatedStoreProfile(
 	}
 
 	data class Account(
-			var accountName: String? = null,
-			var accountNickName: String? = null,
-			var accountEmail: String? = null
+			val accountName: String? = null,
+			val accountNickName: String? = null,
+			val accountEmail: String? = null
 	)
 
 	data class Settings(
-			var closed: Boolean? = null,
-			var storeName: String? = null,
-			var storeDescription: String? = null,
-			var googleRemarketingEnabled: Boolean? = null,
-			var googleAnalyticsId: String? = null,
-			var fbPixelId: String? = null,
-			var orderCommentsEnabled: Boolean? = null,
-			var orderCommentsCaption: String? = null,
-			var orderCommentsRequired: Boolean? = null,
-			var hideOutOfStockProductsInStorefront: Boolean? = null,
-			var askCompanyName: Boolean? = null,
-			var favoritesEnabled: Boolean? = null,
-			var defaultProductSortOrder: ProductSortOrder? = null,
-			var abandonedSales: AbandonedSalesSettings? = null,
-			var salePrice: SalePriceSettings? = null,
-			var showAcceptMarketingCheckbox: Boolean? = null,
-			var acceptMarketingCheckboxDefaultValue: Boolean? = null,
-			var acceptMarketingCheckboxCustomText: String? = null,
-			var askConsentToTrackInStorefront: Boolean? = null,
-			var snapPixelId: String? = null,
-			var pinterestTagId: String? = null,
-			var googleTagId: String? = null,
-			var googleEventId: String? = null
+			val closed: Boolean? = null,
+			val storeName: String? = null,
+			val storeDescription: String? = null,
+			val googleRemarketingEnabled: Boolean? = null,
+			val googleAnalyticsId: String? = null,
+			val fbPixelId: String? = null,
+			val orderCommentsEnabled: Boolean? = null,
+			val orderCommentsCaption: String? = null,
+			val orderCommentsRequired: Boolean? = null,
+			val hideOutOfStockProductsInStorefront: Boolean? = null,
+			val askCompanyName: Boolean? = null,
+			val favoritesEnabled: Boolean? = null,
+			val defaultProductSortOrder: ProductSortOrder? = null,
+			val abandonedSales: AbandonedSalesSettings? = null,
+			val salePrice: SalePriceSettings? = null,
+			val showAcceptMarketingCheckbox: Boolean? = null,
+			val acceptMarketingCheckboxDefaultValue: Boolean? = null,
+			val acceptMarketingCheckboxCustomText: String? = null,
+			val askConsentToTrackInStorefront: Boolean? = null,
+			val snapPixelId: String? = null,
+			val pinterestTagId: String? = null,
+			val googleTagId: String? = null,
+			val googleEventId: String? = null
 	)
 
 	enum class ProductSortOrder {
@@ -72,13 +72,13 @@ data class UpdatedStoreProfile(
 	}
 
 	data class AbandonedSalesSettings(
-			var autoAbandonedSalesRecovery: Boolean? = null
+			val autoAbandonedSalesRecovery: Boolean? = null
 	)
 
 	data class SalePriceSettings(
-			var displayOnProductList: Boolean? = null,
-			var oldPriceLabel: String? = null,
-			var displayDiscount: DisplayDiscount? = null) {
+			val displayOnProductList: Boolean? = null,
+			val oldPriceLabel: String? = null,
+			val displayDiscount: DisplayDiscount? = null) {
 
 		enum class DisplayDiscount {
 			NONE, ABS, PERCENT
@@ -86,40 +86,40 @@ data class UpdatedStoreProfile(
 	}
 
 	data class MailNotifications(
-			var adminNotificationEmails: List<String>? = null,
-			var customerNotificationFromEmail: String? = null
+			val adminNotificationEmails: List<String>? = null,
+			val customerNotificationFromEmail: String? = null
 	)
 
 	data class Company(
-			var companyName: String? = null,
-			var email: String? = null,
-			var street: String? = null,
-			var city: String? = null,
-			var countryCode: String? = null,
-			var postalCode: String? = null,
-			var stateOrProvinceCode: String? = null,
-			var phone: String? = null
+			val companyName: String? = null,
+			val email: String? = null,
+			val street: String? = null,
+			val city: String? = null,
+			val countryCode: String? = null,
+			val postalCode: String? = null,
+			val stateOrProvinceCode: String? = null,
+			val phone: String? = null
 	)
 
 	data class FormatsAndUnits(
-			var currency: String? = null,
-			var currencyPrefix: String? = null,
-			var currencySuffix: String? = null,
-			var currencyGroupSeparator: String? = null,
-			var currencyDecimalSeparator: String? = null,
-			var currencyTruncateZeroFractional: Boolean? = null,
-			var currencyRate: Double? = null,
-			var weightUnit: WeightUnit? = null,
-			var weightPrecision: Int? = null,
-			var weightGroupSeparator: String? = null,
-			var weightDecimalSeparator: String? = null,
-			var weightTruncateZeroFractional: Boolean? = null,
-			var dateFormat: String? = null,
-			var timeFormat: String? = null,
-			var timezone: String? = null,
-			var dimensionsUnit: DimensionUnit? = null,
-			var orderNumberPrefix: String? = null,
-			var orderNumberSuffix: String? = null
+			val currency: String? = null,
+			val currencyPrefix: String? = null,
+			val currencySuffix: String? = null,
+			val currencyGroupSeparator: String? = null,
+			val currencyDecimalSeparator: String? = null,
+			val currencyTruncateZeroFractional: Boolean? = null,
+			val currencyRate: Double? = null,
+			val weightUnit: WeightUnit? = null,
+			val weightPrecision: Int? = null,
+			val weightGroupSeparator: String? = null,
+			val weightDecimalSeparator: String? = null,
+			val weightTruncateZeroFractional: Boolean? = null,
+			val dateFormat: String? = null,
+			val timeFormat: String? = null,
+			val timezone: String? = null,
+			val dimensionsUnit: DimensionUnit? = null,
+			val orderNumberPrefix: String? = null,
+			val orderNumberSuffix: String? = null
 	)
 
 	enum class WeightUnit {
@@ -131,68 +131,68 @@ data class UpdatedStoreProfile(
 	}
 
 	data class Languages(
-			var enabledLanguages: List<String>? = null,
-			var defaultLanguage: String? = null
+			val enabledLanguages: List<String>? = null,
+			val defaultLanguage: String? = null
 	)
 
 	data class Shipping(
-			var handlingFee: HandlingFee? = null
+			val handlingFee: HandlingFee? = null
 	)
 
 	data class HandlingFee(
-			var name: String? = null,
-			var value: Double? = null,
-			var description: String? = null
+			val name: String? = null,
+			val value: Double? = null,
+			val description: String? = null
 	)
 
 	data class Zone(
-			var id: String? = null,
-			var name: String? = null,
-			var countryCodes: List<String>? = null,
-			var stateOrProvinceCodes: List<String>? = null,
-			var postCodes: List<String>? = null
+			val id: String? = null,
+			val name: String? = null,
+			val countryCodes: List<String>? = null,
+			val stateOrProvinceCodes: List<String>? = null,
+			val postCodes: List<String>? = null
 	)
 
 	data class TaxSettings(
-			var automaticTaxEnabled: Boolean? = null,
-			var taxes: List<Taxes>? = null,
-			var pricesIncludeTax: Boolean? = null
+			val automaticTaxEnabled: Boolean? = null,
+			val taxes: List<Taxes>? = null,
+			val pricesIncludeTax: Boolean? = null
 	) {
 		data class Taxes(
-				var id: Int? = null,
-				var name: String? = null,
-				var enabled: Boolean? = null,
-				var includeInPrice: Boolean? = null,
-				var useShippingAddress: Boolean? = null,
-				var taxShipping: Boolean? = null,
-				var appliedByDefault: Boolean? = null,
-				var defaultTax: Double? = null,
-				var rules: List<TaxRule>? = null
+				val id: Int? = null,
+				val name: String? = null,
+				val enabled: Boolean? = null,
+				val includeInPrice: Boolean? = null,
+				val useShippingAddress: Boolean? = null,
+				val taxShipping: Boolean? = null,
+				val appliedByDefault: Boolean? = null,
+				val defaultTax: Double? = null,
+				val rules: List<TaxRule>? = null
 		)
 
 		data class TaxRule(
-				var zoneId: String? = null,
-				var tax: Double? = null
+				val zoneId: String? = null,
+				val tax: Double? = null
 		)
 	}
 
 	data class BusinessRegistrationID(
-			var name: String? = null,
-			var value: String? = null
+			val name: String? = null,
+			val value: String? = null
 	)
 
 	data class LegalPagesSettingsDetails(
-			var requireTermsAgreementAtCheckout: Boolean? = null,
-			var legalPages: List<LegalPagesInfo>? = null
+			val requireTermsAgreementAtCheckout: Boolean? = null,
+			val legalPages: List<LegalPagesInfo>? = null
 	)
 
 	data class LegalPagesInfo(
-			var type: Type? = null,
-			var enabled: Boolean? = null,
-			var title: String? = null,
-			var display: Display? = null,
-			var text: String? = null,
-			var externalUrl: String? = null
+			val type: Type? = null,
+			val enabled: Boolean? = null,
+			val title: String? = null,
+			val display: Display? = null,
+			val text: String? = null,
+			val externalUrl: String? = null
 	) {
 		enum class Type {
 			LEGAL_INFO, SHIPPING_COST_PAYMENT_INFO, REVOCATION_TERMS, TERMS, PRIVACY_STATEMENT
@@ -204,9 +204,9 @@ data class UpdatedStoreProfile(
 	}
 
 	data class OrderInvoiceSettings(
-			var displayOrderInvoices: Boolean? = null,
-			var attachInvoiceToOrderEmailNotifications: AttachValue? = null,
-			var invoiceLogoUrl: String? = null
+			val displayOrderInvoices: Boolean? = null,
+			val attachInvoiceToOrderEmailNotifications: AttachValue? = null,
+			val invoiceLogoUrl: String? = null
 	) {
 		enum class AttachValue {
 			ATTACH_TO_ALL_EMAILS, DO_NOT_ATTACH

@@ -4,8 +4,8 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class OrderInvoiceRequest(
-		var orderNumber: Int = 0,
-		var orderIdentity: String = ""
+		val orderNumber: Int = 0,
+		val orderIdentity: String = ""
 ) : ApiRequest {
 	constructor(orderNumber: Int = 0) : this(orderNumber, orderNumber.toString())
 

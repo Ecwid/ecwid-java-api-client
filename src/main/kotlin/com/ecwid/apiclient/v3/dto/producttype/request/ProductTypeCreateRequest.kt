@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class ProductTypeCreateRequest(
-		var newProductType: UpdatedProductType = UpdatedProductType()
+		val newProductType: UpdatedProductType = UpdatedProductType()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 			endpoint = "classes",

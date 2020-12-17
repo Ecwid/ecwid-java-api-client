@@ -1,6 +1,6 @@
 package com.ecwid.apiclient.v3.dto.customergroup.result
 
 data class FetchedCustomerGroup(
-		var id: Int = 0,
-		var name: String = ""
+		val id: Int = 0,
+		val name: String = ""
 )

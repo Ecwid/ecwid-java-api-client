@@ -4,10 +4,10 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class OrderItemOptionFilesDeleteRequest(
-		var orderNumber: Int = 0,
-		var orderIdentity: String = "",
-		var orderItemId: Int = 0,
-		var optionName: String = ""
+		val orderNumber: Int = 0,
+		val orderIdentity: String = "",
+		val orderItemId: Int = 0,
+		val optionName: String = ""
 ) : ApiRequest {
 	constructor(orderNumber: Int = 0,
 				orderItemId: Int = 0,

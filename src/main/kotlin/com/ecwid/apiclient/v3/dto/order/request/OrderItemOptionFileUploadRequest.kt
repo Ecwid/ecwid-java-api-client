@@ -7,12 +7,12 @@ import com.ecwid.apiclient.v3.impl.MIME_TYPE_OCTET_STREAM
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class OrderItemOptionFileUploadRequest(
-		var orderNumber: Int = 0,
-		var orderIdentity: String = "",
-		var orderItemId: Int = 0,
-		var optionName: String = "",
-		var fileName: String = "",
-		var fileData: UploadFileData = UploadFileData.ExternalUrlData("")
+		val orderNumber: Int = 0,
+		val orderIdentity: String = "",
+		val orderItemId: Int = 0,
+		val optionName: String = "",
+		val fileName: String = "",
+		val fileData: UploadFileData = UploadFileData.ExternalUrlData("")
 ) : ApiRequest {
 	constructor(orderNumber: Int = 0,
 				orderItemId: Int = 0,

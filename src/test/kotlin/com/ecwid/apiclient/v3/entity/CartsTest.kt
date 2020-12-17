@@ -108,8 +108,7 @@ class CartsTest : BaseEntityTest() {
 						?: throw IllegalStateException("testOrder.items[$itemIndex].selectedOptions[$selectedOptionIndex] not found")
 				assertEquals(orderSelectedOption.name, cartSelectedOptions.name)
 				assertEquals(orderSelectedOption.type, cartSelectedOptions.type)
-				orderSelectedOption.valuesArray = cartSelectedOptions.valuesArray // TODO Discover why after each create this field some times resets to null
-				assertEquals(orderSelectedOption.valuesArray, cartSelectedOptions.valuesArray)
+				// TODO Discover why after each create field `valuesArray` some times resets to null
 			}
 
 			assertEquals(orderItem.taxes?.count(), cartItem.taxes?.count())
@@ -207,20 +206,28 @@ class CartsTest : BaseEntityTest() {
 		val orderDetailsRequest = OrderDetailsRequest(convertCartToOrderResult.orderNumber!!)
 		val createdOrder = apiClient.getOrderDetails(orderDetailsRequest).toUpdated()
 
-		testOrder.createDate = createdOrder.createDate
-		testOrder.paymentStatus = OrderPaymentStatus.AWAITING_PAYMENT
-		testOrder.paymentMessage = null // TODO Discover why after each create this field resets to null
-		testOrder.items?.forEachIndexed { itemIndex, item ->
-			item.selectedOptions?.forEachIndexed { selectedOptionIndex, selectedOption ->
-				// TODO Discover why after create these two fields some times resets to null
-				selectedOption.valuesArray = createdOrder.items?.get(itemIndex)?.selectedOptions?.get(selectedOptionIndex)?.valuesArray
-				selectedOption.selections = createdOrder.items?.get(itemIndex)?.selectedOptions?.get(selectedOptionIndex)?.selections
-			}
-		}
+		val testOrderCopy = testOrder.copy(
+				createDate = createdOrder.createDate,
+				paymentStatus = OrderPaymentStatus.AWAITING_PAYMENT,
+				paymentMessage = null, // TODO Discover why after each create this field resets to null
+				items = testOrder.items?.mapIndexed { itemIndex, item ->
+					val selectedOptions2 = item.selectedOptions?.mapIndexed { selectedOptionIndex, selectedOption ->
+						// TODO Discover why after create these two fields some times resets to null
+						val createdOptionSelectedOption = createdOrder.items?.get(itemIndex)?.selectedOptions?.get(selectedOptionIndex)
+						selectedOption.copy(
+								valuesArray = createdOptionSelectedOption?.valuesArray,
+								selections = createdOptionSelectedOption?.selections
+						)
+					}
+					item.copy(
+							selectedOptions = selectedOptions2
+					)
+				}
+		)
 
 		assertEquals(
-				testOrder,
-				createdOrder.cleanupForComparison(testOrder)
+				testOrderCopy,
+				createdOrder.cleanupForComparison(testOrderCopy)
 		)
 	}
 
@@ -266,9 +273,7 @@ class CartsTest : BaseEntityTest() {
 						?: throw IllegalStateException("orderForCalculate.items[$itemIndex].selectedOptions[$selectedOptionIndex] not found")
 				assertEquals(forCalculateItemOption.name, calculatedOrderItemOptions.name)
 				assertEquals(forCalculateItemOption.type, calculatedOrderItemOptions.type)
-				forCalculateItemOption.valuesArray = calculatedOrderItemOptions.valuesArray // TODO Discover why after each calculation this field some times resets to null
-				assertEquals(forCalculateItemOption.valuesArray, calculatedOrderItemOptions.valuesArray)
-
+				// TODO Discover why after each calculation field `valuesArray` some times resets to null
 				assertEquals(null, calculatedOrderItemOptions.files?.count()) // TODO Discover why after each calculation this field resets to null
 			}
 
@@ -351,9 +356,10 @@ class CartsTest : BaseEntityTest() {
 	private fun createNewCart(updatedOrder: UpdatedOrder): String {
 		val cartsSearchRequest = CartsSearchRequest()
 		val cartsSearchResult1 = apiClient.searchCartsAsSequence(cartsSearchRequest)
-		updatedOrder.paymentStatus = OrderPaymentStatus.INCOMPLETE
 		val orderCreateRequest = OrderCreateRequest(
-				newOrder = updatedOrder
+				newOrder = updatedOrder.copy(
+						paymentStatus = OrderPaymentStatus.INCOMPLETE
+				)
 		)
 
 		apiClient.createOrder(orderCreateRequest)

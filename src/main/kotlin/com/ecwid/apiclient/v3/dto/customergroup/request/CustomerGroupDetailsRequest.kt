@@ -4,7 +4,7 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class CustomerGroupDetailsRequest(
-		var customerGroupId: Int = 0
+		val customerGroupId: Int = 0
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 			endpoint = "customer_groups/$customerGroupId"

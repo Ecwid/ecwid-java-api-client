@@ -7,22 +7,22 @@ import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponUsesLimit
 import java.util.*
 
 data class UpdatedCoupon(
-		var name: String = "",
-		var code: String = "",
-		var discountType: DiscountCouponType? = null,
-		var status: DiscountCouponStatus? = null,
-		var discount: Double? = null,
-		var launchDate: Date? = null,
-		var expirationDate: Date? = null,
-		var totalLimit: Double? = null,
-		var usesLimit: DiscountCouponUsesLimit? = null,
-		var repeatCustomerOnly: Boolean? = null,
-		var applicationLimit: DiscountCouponApplicationLimit? = null,
-		var orderCount: Int? = null,
-		var catalogLimit: DiscountCouponCatalogLimit? = null
+		val name: String = "",
+		val code: String = "",
+		val discountType: DiscountCouponType? = null,
+		val status: DiscountCouponStatus? = null,
+		val discount: Double? = null,
+		val launchDate: Date? = null,
+		val expirationDate: Date? = null,
+		val totalLimit: Double? = null,
+		val usesLimit: DiscountCouponUsesLimit? = null,
+		val repeatCustomerOnly: Boolean? = null,
+		val applicationLimit: DiscountCouponApplicationLimit? = null,
+		val orderCount: Int? = null,
+		val catalogLimit: DiscountCouponCatalogLimit? = null
 ) {
 	data class DiscountCouponCatalogLimit(
-			var products: List<Int>? = null,
-			var categories: List<Int>? = null
+			val products: List<Int>? = null,
+			val categories: List<Int>? = null
 	)
 }

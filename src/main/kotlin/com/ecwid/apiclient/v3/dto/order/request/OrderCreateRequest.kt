@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class OrderCreateRequest(
-		var newOrder: UpdatedOrder = UpdatedOrder()
+		val newOrder: UpdatedOrder = UpdatedOrder()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 			endpoint = "orders",
