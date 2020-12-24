@@ -142,6 +142,7 @@ data class FetchedOrder(
 			var couponApplied: Boolean? = null,
 
 			var recurringChargeSettings: RecurringChargeSettings? = null,
+			var subscriptionId: Long? = null,
 
 			var selectedOptions: List<OrderItemSelectedOption>? = null,
 			var taxes: List<OrderItemTax>? = null,
