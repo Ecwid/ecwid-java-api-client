@@ -40,8 +40,56 @@ class GsonTransformer(polymorphicTypes: List<PolymorphicType<*>>) : JsonTransfor
 }
 
 private fun JsonObject.mergeJsonObject(from: JsonObject) {
-	for (entry in from.entrySet()) {
-		add(entry.key, entry.value)
+	for ((key, element) in from.entrySet()) {
+		when (element) {
+			is JsonArray -> {
+				when (val oldElement = this[key]) {
+					is JsonArray -> oldElement.mergeJsonArray(element)
+					else -> add(key, element)
+				}
+			}
+
+			is JsonObject -> {
+				when (val oldElement = this[key]) {
+					is JsonObject -> oldElement.mergeJsonObject(element)
+					else -> add(key, element)
+				}
+			}
+
+			is JsonPrimitive -> {
+				add(key, element)
+			}
+		}
 	}
 }
 
+private fun JsonArray.mergeJsonArray(from: JsonArray) {
+	for (index in 0 until minOf(size(), from.size())) {
+		when (val element = from[index]) {
+			is JsonArray -> {
+				when (val oldElement = this[index]) {
+					is JsonArray -> oldElement.mergeJsonArray(element)
+					else -> this[index] = element
+				}
+			}
+
+			is JsonObject -> {
+				when (val oldElement = this[index]) {
+					is JsonObject -> oldElement.mergeJsonObject(element)
+					else -> this[index] = element
+				}
+			}
+
+			is JsonPrimitive -> {
+				this[index] = element
+			}
+		}
+	}
+
+	if (from.size() > size()) {
+		// If the second array is longer than the first one, append the second's tail to the first.
+		for (index in size() until from.size()) {
+			add(from[index])
+		}
+	}
+}
