@@ -4,8 +4,8 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class CustomerGroupsSearchRequest(
-		var offset: Int = 0,
-		var limit: Int = 100
+		val offset: Int = 0,
+		val limit: Int = 100
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 			endpoint = "customer_groups",

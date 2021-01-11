@@ -4,8 +4,8 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
-class StoreProfileUpdateRequest(
-		private val updatedStoreProfile: UpdatedStoreProfile
+data class StoreProfileUpdateRequest(
+		private val updatedStoreProfile: UpdatedStoreProfile = UpdatedStoreProfile()
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPutRequest(

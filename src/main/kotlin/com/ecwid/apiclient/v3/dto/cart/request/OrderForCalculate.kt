@@ -7,92 +7,92 @@ import java.util.*
 
 
 data class OrderForCalculate(
-		var email: String? = null,
-		var ipAddress: String? = null,
-		var customerId: Int? = null,
-		var discountCoupon: DiscountCouponInfo? = null,
-		var items: List<OrderItem>? = null,
-		var billingPerson: PersonInfo? = null,
-		var shippingPerson: PersonInfo? = null,
-		var discountInfo: List<DiscountInfo>? = null
+		val email: String? = null,
+		val ipAddress: String? = null,
+		val customerId: Int? = null,
+		val discountCoupon: DiscountCouponInfo? = null,
+		val items: List<OrderItem>? = null,
+		val billingPerson: PersonInfo? = null,
+		val shippingPerson: PersonInfo? = null,
+		val discountInfo: List<DiscountInfo>? = null
 ) {
 	data class DiscountInfo(
-			var value: Double? = null,
-			var type: DiscountType? = null,
-			var base: DiscountBase? = null,
-			var orderTotal: Double? = null,
-			var description: String? = null
+			val value: Double? = null,
+			val type: DiscountType? = null,
+			val base: DiscountBase? = null,
+			val orderTotal: Double? = null,
+			val description: String? = null
 	)
 
 	data class OrderItemDiscountInfo(
-			var value: Double? = null,
-			var type: DiscountType? = null,
-			var base: DiscountBase? = null,
-			var orderTotal: Double? = null
+			val value: Double? = null,
+			val type: DiscountType? = null,
+			val base: DiscountBase? = null,
+			val orderTotal: Double? = null
 	)
 
 	data class DiscountCouponInfo(
-			var name: String? = null,
-			var code: String? = null,
-			var discountType: DiscountCouponType? = null,
-			var status: DiscountCouponStatus? = null,
-			var discount: Double? = null,
-			var launchDate: Date? = null,
-			var expirationDate: Date? = null,
-			var totalLimit: Double? = null,
-			var usesLimit: DiscountCouponUsesLimit? = null,
-			var applicationLimit: DiscountCouponApplicationLimit? = null,
-			var creationDate: Date? = null,
-			var orderCount: Int? = null,
-			var catalogLimit: DiscountCouponCatalogLimit? = null
+			val name: String? = null,
+			val code: String? = null,
+			val discountType: DiscountCouponType? = null,
+			val status: DiscountCouponStatus? = null,
+			val discount: Double? = null,
+			val launchDate: Date? = null,
+			val expirationDate: Date? = null,
+			val totalLimit: Double? = null,
+			val usesLimit: DiscountCouponUsesLimit? = null,
+			val applicationLimit: DiscountCouponApplicationLimit? = null,
+			val creationDate: Date? = null,
+			val orderCount: Int? = null,
+			val catalogLimit: DiscountCouponCatalogLimit? = null
 	)
 
 	data class DiscountCouponCatalogLimit(
-			var products: List<Int>? = null,
-			var categories: List<Int>? = null
+			val products: List<Int>? = null,
+			val categories: List<Int>? = null
 	)
 
 	data class OrderItem(
-			var id: Int? = null,
+			val id: Int? = null,
 
-			var productId: Int? = null,
-			var categoryId: Int? = null,
+			val productId: Int? = null,
+			val categoryId: Int? = null,
 
-			var price: Double? = null,
-			var productPrice: Double? = null,
-			var shipping: Double? = null,
-			var tax: Double? = null,
-			var fixedShippingRate: Double? = null,
-			var couponAmount: Double? = null,
+			val price: Double? = null,
+			val productPrice: Double? = null,
+			val shipping: Double? = null,
+			val tax: Double? = null,
+			val fixedShippingRate: Double? = null,
+			val couponAmount: Double? = null,
 
-			var sku: String? = null,
-			var name: String? = null,
-			var shortDescription: String? = null,
-			var quantity: Int? = null,
-			var quantityInStock: Int? = null,
-			var weight: Double? = null,
-			var imageUrl: String? = null,
+			val sku: String? = null,
+			val name: String? = null,
+			val shortDescription: String? = null,
+			val quantity: Int? = null,
+			val quantityInStock: Int? = null,
+			val weight: Double? = null,
+			val imageUrl: String? = null,
 
-			var isShippingRequired: Boolean? = null,
-			var trackQuantity: Boolean? = null,
-			var fixedShippingRateOnly: Boolean? = null,
-			var digital: Boolean? = null,
-			var couponApplied: Boolean? = null,
+			val isShippingRequired: Boolean? = null,
+			val trackQuantity: Boolean? = null,
+			val fixedShippingRateOnly: Boolean? = null,
+			val digital: Boolean? = null,
+			val couponApplied: Boolean? = null,
 
-			var selectedOptions: List<OrderItemOption>? = null,
-			var taxes: List<OrderItemTax>? = null,
-			var files: List<OrderItemProductFile>? = null,
-			var dimensions: ProductDimensions? = null,
-			var discounts: List<OrderItemDiscounts>? = null
+			val selectedOptions: List<OrderItemOption>? = null,
+			val taxes: List<OrderItemTax>? = null,
+			val files: List<OrderItemProductFile>? = null,
+			val dimensions: ProductDimensions? = null,
+			val discounts: List<OrderItemDiscounts>? = null
 	)
 
 	data class OrderItemOption(
-			var name: String? = null,
-			var type: ProductOptionType? = null,
-			var value: String? = null,
-			var valuesArray: List<String>? = null,
-			var files: List<OrderItemOptinonFile>? = null,
-			var selections: List<SelectionInfo>? = null
+			val name: String? = null,
+			val type: ProductOptionType? = null,
+			val value: String? = null,
+			val valuesArray: List<String>? = null,
+			val files: List<OrderItemOptinonFile>? = null,
+			val selections: List<SelectionInfo>? = null
 	) {
 		companion object {
 
@@ -155,60 +155,60 @@ data class OrderForCalculate(
 	}
 
 	data class SelectionInfo(
-			var selectionTitle: String? = null,
-			var selectionModifier: Double? = null,
-			var selectionModifierType: PriceModifierType? = null
+			val selectionTitle: String? = null,
+			val selectionModifier: Double? = null,
+			val selectionModifierType: PriceModifierType? = null
 	)
 
 	data class OrderItemTax(
-			var name: String? = null,
-			var value: Double? = null,
-			var total: Double? = null,
-			var taxOnDiscountedSubtotal: Double? = null,
-			var taxOnShipping: Double? = null,
-			var includeInPrice: Boolean? = null
+			val name: String? = null,
+			val value: Double? = null,
+			val total: Double? = null,
+			val taxOnDiscountedSubtotal: Double? = null,
+			val taxOnShipping: Double? = null,
+			val includeInPrice: Boolean? = null
 	)
 
 	data class OrderItemProductFile(
-			var productFileId: Int? = null,
-			var maxDownloads: Int? = null,
-			var remainingDownloads: Int? = null,
-			var expire: Date? = null,
-			var name: String? = null,
-			var description: String? = null,
-			var size: Int? = null,
-			var adminUrl: String? = null,
-			var customerUrl: String? = null
+			val productFileId: Int? = null,
+			val maxDownloads: Int? = null,
+			val remainingDownloads: Int? = null,
+			val expire: Date? = null,
+			val name: String? = null,
+			val description: String? = null,
+			val size: Int? = null,
+			val adminUrl: String? = null,
+			val customerUrl: String? = null
 	)
 
 	data class ProductDimensions(
-			var length: Double? = null,
-			var width: Double? = null,
-			var height: Double? = null
+			val length: Double? = null,
+			val width: Double? = null,
+			val height: Double? = null
 	)
 
 	data class OrderItemDiscounts(
-			var discountInfo: OrderItemDiscountInfo? = null,
-			var total: Double? = null
+			val discountInfo: OrderItemDiscountInfo? = null,
+			val total: Double? = null
 	)
 
 	data class OrderItemOptinonFile(
-			var id: Int? = null,
-			var name: String? = null,
-			var size: Int? = null,
-			var url: String? = null
+			val id: Int? = null,
+			val name: String? = null,
+			val size: Int? = null,
+			val url: String? = null
 	)
 
 	data class PersonInfo(
-			var name: String? = null,
-			var companyName: String? = null,
-			var street: String? = null,
-			var city: String? = null,
-			var countryCode: String? = null,
-			var countryName: String? = null,
-			var postalCode: String? = null,
-			var stateOrProvinceCode: String? = null,
-			var stateOrProvinceName: String? = null,
-			var phone: String? = null
+			val name: String? = null,
+			val companyName: String? = null,
+			val street: String? = null,
+			val city: String? = null,
+			val countryCode: String? = null,
+			val countryName: String? = null,
+			val postalCode: String? = null,
+			val stateOrProvinceCode: String? = null,
+			val stateOrProvinceName: String? = null,
+			val phone: String? = null
 	)
 }

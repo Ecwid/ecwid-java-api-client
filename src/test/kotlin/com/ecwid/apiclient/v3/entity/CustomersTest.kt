@@ -1,4 +1,4 @@
-package com.ecwid.apiclient.v3
+package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.customer.request.*
@@ -14,7 +14,6 @@ import com.ecwid.apiclient.v3.util.randomBoolean
 import com.ecwid.apiclient.v3.util.randomEmail
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.*
 

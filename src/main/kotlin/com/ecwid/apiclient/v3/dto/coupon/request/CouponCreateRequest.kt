@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class CouponCreateRequest(
-		var newCoupon: UpdatedCoupon = UpdatedCoupon()
+		val newCoupon: UpdatedCoupon = UpdatedCoupon()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 			endpoint = "discount_coupons",

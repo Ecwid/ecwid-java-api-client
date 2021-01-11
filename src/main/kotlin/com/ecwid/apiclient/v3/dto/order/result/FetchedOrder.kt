@@ -1,153 +1,152 @@
 package com.ecwid.apiclient.v3.dto.order.result
 
-import com.ecwid.apiclient.v3.dto.OrderedStringToStringMap
+import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import java.util.*
 
 data class FetchedOrder(
-		var id: String? = null,
+		val id: String? = null,
 
-		var orderNumber: Int = 0,
-		var email: String? = null,
-		var ipAddress: String? = null,
-		var hidden: Boolean? = null,
-		var createDate: Date? = null,
-		var createTimestamp: Int? = null, // TODO Figure out how to test
-		var updateDate: Date? = null,
-		var updateTimestamp: Int? = null, // TODO Figure out how to test
+		val orderNumber: Int = 0,
+		val email: String? = null,
+		val ipAddress: String? = null,
+		val hidden: Boolean? = null,
+		val createDate: Date? = null,
+		val createTimestamp: Int? = null, // TODO Figure out how to test
+		val updateDate: Date? = null,
+		val updateTimestamp: Int? = null, // TODO Figure out how to test
 
-		var refererUrl: String? = null,
-		var globalReferer: String? = null,
-		var affiliateId: String? = null,
-		var additionalInfo: OrderedStringToStringMap? = null,
-		var extraFields: OrderedStringToStringMap? = null, // TODO Figure out how to test
+		val refererUrl: String? = null,
+		val globalReferer: String? = null,
+		val affiliateId: String? = null,
+		val additionalInfo: OrderedStringToStringMap? = null,
+		val extraFields: OrderedStringToStringMap? = null, // TODO Figure out how to test
 
-		var orderComments: String? = null,
-		var privateAdminNotes: String? = null,
+		val orderComments: String? = null,
+		val privateAdminNotes: String? = null,
 
-		var fulfillmentStatus: OrderFulfillmentStatus? = null,
-		var trackingNumber: String? = null,
-		var pickupTime: Date? = null,
+		val fulfillmentStatus: OrderFulfillmentStatus? = null,
+		val trackingNumber: String? = null,
+		val pickupTime: Date? = null,
 
-		var paymentStatus: OrderPaymentStatus? = null,
-		var paymentMethod: String? = null,
-		var paymentModule: String? = null,
-		var paymentParams: OrderedStringToStringMap? = null,
-		var paymentMessage: String? = null,
-		var creditCardStatus: CreditCardStatus? = null,
-		var externalTransactionId: String? = null,
+		val paymentStatus: OrderPaymentStatus? = null,
+		val paymentMethod: String? = null,
+		val paymentModule: String? = null,
+		val paymentParams: OrderedStringToStringMap? = null,
+		val paymentMessage: String? = null,
+		val creditCardStatus: CreditCardStatus? = null,
+		val externalTransactionId: String? = null,
 
-		var customerId: Int? = null, // TODO Figure out how to test
-		var customerGroup: String? = null,
-		var acceptMarketing: Boolean? = null,
+		val customerId: Int? = null, // TODO Figure out how to test
+		val customerGroup: String? = null,
+		val acceptMarketing: Boolean? = null,
 
-		var total: Double? = null,
-		var subtotal: Double? = null,
-		var usdTotal: Double? = null, // TODO Figure out how to test
+		val total: Double? = null,
+		val subtotal: Double? = null,
+		val usdTotal: Double? = null, // TODO Figure out how to test
 
-		var tax: Double? = null,
-		var customerTaxExempt: Boolean? = null,
-		var customerTaxId: String? = null,
-		var customerTaxIdValid: Boolean? = null,
-		var reversedTaxApplied: Boolean? = null,
+		val tax: Double? = null,
+		val customerTaxExempt: Boolean? = null,
+		val customerTaxId: String? = null,
+		val customerTaxIdValid: Boolean? = null,
+		val reversedTaxApplied: Boolean? = null,
 
-		var couponDiscount: Double? = null,
-		var volumeDiscount: Double? = null,
-		var membershipBasedDiscount: Double? = null,
-		var totalAndMembershipBasedDiscount: Double? = null,
-		var discount: Double? = null,
-		var discountInfo: List<DiscountInfo>? = null,
-		var discountCoupon: DiscountCouponInfo? = null,
+		val couponDiscount: Double? = null,
+		val volumeDiscount: Double? = null,
+		val membershipBasedDiscount: Double? = null,
+		val totalAndMembershipBasedDiscount: Double? = null,
+		val discount: Double? = null,
+		val discountInfo: List<DiscountInfo>? = null,
+		val discountCoupon: DiscountCouponInfo? = null,
 
-		var items: List<OrderItem>? = null,
+		val items: List<OrderItem>? = null,
 
-		var billingPerson: PersonInfo? = null,
-		var shippingPerson: PersonInfo? = null,
+		val billingPerson: PersonInfo? = null,
+		val shippingPerson: PersonInfo? = null,
 
-		var shippingOption: ShippingOption? = null,
-		var handlingFee: HandlingFee? = null,
+		val shippingOption: ShippingOption? = null,
+		val handlingFee: HandlingFee? = null,
 
-		var refundedAmount: Double? = null,
-		var refunds: List<RefundInfo>? = null,
+		val refundedAmount: Double? = null,
+		val refunds: List<RefundInfo>? = null,
 
-		var utmData: UtmData? = null,
+		val utmData: UtmData? = null,
 
-		var pricesIncludeTax: Boolean? = null
-
+		val pricesIncludeTax: Boolean? = null
 ) {
 
 	data class CreditCardStatus(
-			var avsMessage: String? = null,
-			var cvvMessage: String? = null
+			val avsMessage: String? = null,
+			val cvvMessage: String? = null
 	)
 
 	data class DiscountInfo(
-			var value: Double? = null,
-			var type: DiscountType? = null,
-			var base: DiscountBase? = null,
-			var orderTotal: Double? = null,
-			var description: String? = null
+			val value: Double? = null,
+			val type: DiscountType? = null,
+			val base: DiscountBase? = null,
+			val orderTotal: Double? = null,
+			val description: String? = null
 	)
 
 	data class DiscountCouponInfo(
-			var id: Int? = null, // TODO Figure out how to test
-			var name: String? = null,
-			var code: String? = null,
-			var discountType: DiscountCouponType? = null,
-			var status: DiscountCouponStatus? = null,
-			var discount: Double? = null,
-			var launchDate: Date? = null,
-			var expirationDate: Date? = null,
-			var totalLimit: Double? = null,
-			var usesLimit: DiscountCouponUsesLimit? = null,
-			var repeatCustomerOnly: Boolean? = null,
-			var creationDate: Date? = null,
-			var updateDate: Date? = null,
-			var orderCount: Int? = null, // TODO Figure out how to test 
-			var catalogLimit: DiscountCouponCatalogLimit? = null, // TODO Figure out how to test
-			var applicationLimit: DiscountCouponApplicationLimit? = null // TODO Add to docs?
+			val id: Int? = null, // TODO Figure out how to test
+			val name: String? = null,
+			val code: String? = null,
+			val discountType: DiscountCouponType? = null,
+			val status: DiscountCouponStatus? = null,
+			val discount: Double? = null,
+			val launchDate: Date? = null,
+			val expirationDate: Date? = null,
+			val totalLimit: Double? = null,
+			val usesLimit: DiscountCouponUsesLimit? = null,
+			val repeatCustomerOnly: Boolean? = null,
+			val creationDate: Date? = null,
+			val updateDate: Date? = null,
+			val orderCount: Int? = null, // TODO Figure out how to test
+			val catalogLimit: DiscountCouponCatalogLimit? = null, // TODO Figure out how to test
+			val applicationLimit: DiscountCouponApplicationLimit? = null // TODO Add to docs?
 	)
 
 	data class DiscountCouponCatalogLimit(
-			var products: List<Int>? = null,
-			var categories: List<Int>? = null
+			val products: List<Int>? = null,
+			val categories: List<Int>? = null
 	)
 
 	data class OrderItem(
-			var id: Int? = null, // TODO Figure out how to test
+			val id: Int? = null, // TODO Figure out how to test
 
-			var productId: Int? = null,
-			var categoryId: Int? = null,
+			val productId: Int? = null,
+			val categoryId: Int? = null,
 
-			var price: Double? = null,
-			var productPrice: Double? = null,
-			var shipping: Double? = null,
-			var tax: Double? = null,
-			var fixedShippingRate: Double? = null,
-			var couponAmount: Double? = null,
+			val price: Double? = null,
+			val productPrice: Double? = null,
+			val shipping: Double? = null,
+			val tax: Double? = null,
+			val fixedShippingRate: Double? = null,
+			val couponAmount: Double? = null,
 
-			var sku: String? = null,
-			var name: String? = null,
-			var shortDescription: String? = null,
-			var quantity: Int? = null,
-			var quantityInStock: Int? = null,
-			var weight: Double? = null,
-			var imageUrl: String? = null, // TODO Figure out how to test 
+			val sku: String? = null,
+			val name: String? = null,
+			val shortDescription: String? = null,
+			val quantity: Int? = null,
+			val quantityInStock: Int? = null,
+			val weight: Double? = null,
+			val imageUrl: String? = null, // TODO Figure out how to test
 
-			var isShippingRequired: Boolean? = null,
-			var trackQuantity: Boolean? = null,
-			var fixedShippingRateOnly: Boolean? = null,
-			var digital: Boolean? = null,
-			var productAvailable: Boolean? = null, // TODO Probably this field is always true
-			var couponApplied: Boolean? = null,
+			val isShippingRequired: Boolean? = null,
+			val trackQuantity: Boolean? = null,
+			val fixedShippingRateOnly: Boolean? = null,
+			val digital: Boolean? = null,
+			val productAvailable: Boolean? = null, // TODO Probably this field is always true
+			val couponApplied: Boolean? = null,
 
-			var recurringChargeSettings: RecurringChargeSettings? = null,
-			var subscriptionId: Long? = null,
+			val recurringChargeSettings: RecurringChargeSettings? = null,
+			val subscriptionId: Long? = null,
 
-			var selectedOptions: List<OrderItemSelectedOption>? = null,
-			var taxes: List<OrderItemTax>? = null,
-			var dimensions: ProductDimensions? = null,
-			var discounts: List<OrderItemDiscounts>? = null
+			val selectedOptions: List<OrderItemSelectedOption>? = null,
+			val taxes: List<OrderItemTax>? = null,
+			val dimensions: ProductDimensions? = null,
+			val discounts: List<OrderItemDiscounts>? = null
 	)
 
 	data class RecurringChargeSettings(
@@ -156,86 +155,86 @@ data class FetchedOrder(
 	)
 
 	data class OrderItemSelectedOption(
-			var name: String? = null,
-			var type: ProductOptionType? = null,
-			var value: String? = null,
-			var valuesArray: List<String>? = null,
-			var selections: List<OrderItemSelectionInfo>? = null,
-			var files: List<OrderItemProductFile>? = null
+			val name: String? = null,
+			val type: ProductOptionType? = null,
+			val value: String? = null,
+			val valuesArray: List<String>? = null,
+			val selections: List<OrderItemSelectionInfo>? = null,
+			val files: List<OrderItemProductFile>? = null
 	)
 
 	data class OrderItemSelectionInfo(
-			var selectionTitle: String? = null,
-			var selectionModifier: Double? = null,
-			var selectionModifierType: PriceModifierType? = null
+			val selectionTitle: String? = null,
+			val selectionModifier: Double? = null,
+			val selectionModifierType: PriceModifierType? = null
 	)
 
 	data class OrderItemTax(
-			var name: String? = null,
-			var value: Double? = null,
-			var total: Double? = null,
-			var taxOnDiscountedSubtotal: Double? = null,
-			var taxOnShipping: Double? = null,
-			var includeInPrice: Boolean? = null
+			val name: String? = null,
+			val value: Double? = null,
+			val total: Double? = null,
+			val taxOnDiscountedSubtotal: Double? = null,
+			val taxOnShipping: Double? = null,
+			val includeInPrice: Boolean? = null
 	)
 
 	data class ProductDimensions(
-			var length: Double? = null,
-			var width: Double? = null,
-			var height: Double? = null
+			val length: Double? = null,
+			val width: Double? = null,
+			val height: Double? = null
 	)
 
 	data class OrderItemDiscounts(
-			var discountInfo: DiscountInfo? = null,
-			var total: Double? = null
+			val discountInfo: DiscountInfo? = null,
+			val total: Double? = null
 	)
 
 	data class OrderItemProductFile(
-			var id: Int? = null,
-			var name: String? = null,
-			var size: Int? = null,
-			var url: String? = null
+			val id: Int? = null,
+			val name: String? = null,
+			val size: Int? = null,
+			val url: String? = null
 	)
 
 	data class PersonInfo(
-			var name: String? = null,
-			var firstName: String? = null,
-			var lastName: String? = null,
-			var companyName: String? = null,
-			var street: String? = null,
-			var city: String? = null,
-			var countryCode: String? = null,
-			var countryName: String? = null, // TODO Figure out how to test
-			var postalCode: String? = null,
-			var stateOrProvinceCode: String? = null,
-			var stateOrProvinceName: String? = null, // TODO Figure out how to test
-			var phone: String? = null
+			val name: String? = null,
+			val firstName: String? = null,
+			val lastName: String? = null,
+			val companyName: String? = null,
+			val street: String? = null,
+			val city: String? = null,
+			val countryCode: String? = null,
+			val countryName: String? = null, // TODO Figure out how to test
+			val postalCode: String? = null,
+			val stateOrProvinceCode: String? = null,
+			val stateOrProvinceName: String? = null, // TODO Figure out how to test
+			val phone: String? = null
 	)
 
 	data class ShippingOption(
-			var shippingCarrierName: String? = null,
-			var shippingMethodName: String? = null,
-			var shippingRate: Double? = null,
-			var estimatedTransitTime: String? = null,
-			var isPickup: Boolean? = null,
-			var pickupInstruction: String? = null
+			val shippingCarrierName: String? = null,
+			val shippingMethodName: String? = null,
+			val shippingRate: Double? = null,
+			val estimatedTransitTime: String? = null,
+			val isPickup: Boolean? = null,
+			val pickupInstruction: String? = null
 	)
 
 	data class HandlingFee(
-			var name: String? = null,
-			var value: Double? = null,
-			var description: String? = null
+			val name: String? = null,
+			val value: Double? = null,
+			val description: String? = null
 	)
 
 	data class RefundInfo(
-			var date: Date? = null,
-			var source: String? = null,
-			var reason: String? = null,
-			var amount: Double? = null
+			val date: Date? = null,
+			val source: String? = null,
+			val reason: String? = null,
+			val amount: Double? = null
 	)
 
 	data class UtmData(
-			var source: String? = null,
+			val source: String? = null,
 			val campaign: String? = null,
 			val medium: String? = null,
 			val mcEid: String? = null,

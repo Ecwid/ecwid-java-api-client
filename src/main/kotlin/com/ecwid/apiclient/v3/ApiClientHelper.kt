@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.DEFAULT_HTTPS_PORT
 import com.ecwid.apiclient.v3.config.LoggingSettings
 import com.ecwid.apiclient.v3.dto.ApiRequest
-import com.ecwid.apiclient.v3.dto.EcwidApiError
+import com.ecwid.apiclient.v3.dto.common.EcwidApiError
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct.ProductOption
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException

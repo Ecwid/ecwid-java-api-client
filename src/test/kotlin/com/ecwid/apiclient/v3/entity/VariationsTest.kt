@@ -1,6 +1,6 @@
-package com.ecwid.apiclient.v3
+package com.ecwid.apiclient.v3.entity
 
-import com.ecwid.apiclient.v3.dto.UploadFileData
+import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductDetailsRequest
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class VariationsTest : BaseEntityTest() {

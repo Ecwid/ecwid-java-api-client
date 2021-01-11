@@ -1,4 +1,4 @@
-package com.ecwid.apiclient.v3
+package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequestWithIds
 import com.ecwid.apiclient.v3.dto.batch.request.GetEscapedBatchRequest

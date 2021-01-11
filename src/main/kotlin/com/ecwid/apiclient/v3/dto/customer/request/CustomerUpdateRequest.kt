@@ -5,8 +5,8 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class CustomerUpdateRequest(
-		var customerId: Int = 0,
-		var updatedCustomer: UpdatedCustomer = UpdatedCustomer()
+		val customerId: Int = 0,
+		val updatedCustomer: UpdatedCustomer = UpdatedCustomer()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
 			endpoint = "customers/$customerId",

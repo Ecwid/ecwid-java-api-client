@@ -88,7 +88,9 @@ sealed class ProductsSearchRequest {
 		}
 	}
 
-	data class ProductSearchAttributes(val attributes: List<AttributeValue>) {
+	data class ProductSearchAttributes(
+			val attributes: List<AttributeValue> = emptyList()
+	) {
 
 		data class AttributeValue(val name: String = "", val values: List<String> = listOf()) {
 			constructor(name: String, value: String) : this(name = name, values = listOf(value))
@@ -96,7 +98,9 @@ sealed class ProductsSearchRequest {
 
 	}
 
-	data class ProductSearchOptions(val options: List<OptionValue>) {
+	data class ProductSearchOptions(
+			val options: List<OptionValue> = emptyList()
+	) {
 
 		data class OptionValue(val name: String = "", val values: List<String> = listOf()) {
 			constructor(name: String, value: String) : this(name = name, values = listOf(value))

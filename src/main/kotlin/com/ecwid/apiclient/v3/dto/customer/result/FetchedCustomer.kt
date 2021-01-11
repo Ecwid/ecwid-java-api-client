@@ -3,46 +3,46 @@ package com.ecwid.apiclient.v3.dto.customer.result
 import java.util.*
 
 data class FetchedCustomer(
-		var id: Int = 0,
-		var email: String = "",
-		var registered: Date? = null,
-		var updated: Date? = null,
-		var customerGroupId: Int? = null,
-		var customerGroupName: String? = null,
-		var billingPerson: BillingPerson? = null,
-		var shippingAddresses: List<ShippingAddress>? = null,
-		var taxId: String? = null,
-		var taxIdValid: Boolean? = null,
-		var taxExempt: Boolean? = null,
-		var acceptMarketing: Boolean? = null) {
+		val id: Int = 0,
+		val email: String = "",
+		val registered: Date? = null,
+		val updated: Date? = null,
+		val customerGroupId: Int? = null,
+		val customerGroupName: String? = null,
+		val billingPerson: BillingPerson? = null,
+		val shippingAddresses: List<ShippingAddress>? = null,
+		val taxId: String? = null,
+		val taxIdValid: Boolean? = null,
+		val taxExempt: Boolean? = null,
+		val acceptMarketing: Boolean? = null) {
 
 	data class BillingPerson(
-			var name: String? = null,
-			var firstName: String? = null,
-			var lastName: String? = null,
-			var companyName: String? = null,
-			var street: String? = null,
-			var city: String? = null,
-			var countryCode: String? = null,
-			var countryName: String? = null,
-			var postalCode: String? = null,
-			var stateOrProvinceCode: String? = null,
-			var stateOrProvinceName: String? = null,
-			var phone: String? = null
+			val name: String? = null,
+			val firstName: String? = null,
+			val lastName: String? = null,
+			val companyName: String? = null,
+			val street: String? = null,
+			val city: String? = null,
+			val countryCode: String? = null,
+			val countryName: String? = null,
+			val postalCode: String? = null,
+			val stateOrProvinceCode: String? = null,
+			val stateOrProvinceName: String? = null,
+			val phone: String? = null
 	)
 
 	data class ShippingAddress(
-			var id: Int? = null,
-			var name: String? = null,
-			var companyName: String? = null,
-			var street: String? = null,
-			var city: String? = null,
-			var countryCode: String? = null,
-			var countryName: String? = null,
-			var postalCode: String? = null,
-			var stateOrProvinceCode: String? = null,
-			var stateOrProvinceName: String? = null,
-			var phone: String? = null
+			val id: Int? = null,
+			val name: String? = null,
+			val companyName: String? = null,
+			val street: String? = null,
+			val city: String? = null,
+			val countryCode: String? = null,
+			val countryName: String? = null,
+			val postalCode: String? = null,
+			val stateOrProvinceCode: String? = null,
+			val stateOrProvinceName: String? = null,
+			val phone: String? = null
 	)
 
 }

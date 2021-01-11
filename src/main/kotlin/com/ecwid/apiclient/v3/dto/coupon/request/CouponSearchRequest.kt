@@ -8,16 +8,16 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 data class CouponSearchRequest(
-		var offset: Int = 0,
-		var limit: Int = 100,
-		var code: String? = null,
+		val offset: Int = 0,
+		val limit: Int = 100,
+		val code: String? = null,
 		@SerializedName("discount_type")
-		var discountType: Set<DiscountCouponType>? = null,
-		var availability: DiscountCouponStatus? = null,
-		var createdFrom: Date? = null,
-		var createdTo: Date? = null,
-		var updatedFrom: Date? = null,
-		var updatedTo: Date? = null
+		val discountType: Set<DiscountCouponType>? = null,
+		val availability: DiscountCouponStatus? = null,
+		val createdFrom: Date? = null,
+		val createdTo: Date? = null,
+		val updatedFrom: Date? = null,
+		val updatedTo: Date? = null
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 			endpoint = "discount_coupons",

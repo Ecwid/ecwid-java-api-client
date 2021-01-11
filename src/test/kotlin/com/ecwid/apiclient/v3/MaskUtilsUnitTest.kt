@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 
-class MaskUtilsTest {
+class MaskUtilsUnitTest {
 
 	@Test
 	fun testSecretTokens() {

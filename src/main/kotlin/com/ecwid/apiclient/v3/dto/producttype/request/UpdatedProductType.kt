@@ -4,15 +4,15 @@ import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeDisplayType
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 
 data class UpdatedProductType(
-		var name: String? = null,
-		var attributes: List<Attribute>? = null
+		val name: String? = null,
+		val attributes: List<Attribute>? = null
 ) {
 
 	data class Attribute(
-			var id: Int? = null,
-			var name: String? = null,
-			var type: AttributeType? = null,
-			var show: AttributeDisplayType? = null
+			val id: Int? = null,
+			val name: String? = null,
+			val type: AttributeType? = null,
+			val show: AttributeDisplayType? = null
 	)
 
 }

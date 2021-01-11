@@ -5,10 +5,10 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 import java.util.*
 
 data class DeletedOrdersSearchRequest(
-		var deletedFrom: Date? = null,
-		var deletedTo: Date? = null,
-		var offset: Int = 0,
-		var limit: Int = 100
+		val deletedFrom: Date? = null,
+		val deletedTo: Date? = null,
+		val offset: Int = 0,
+		val limit: Int = 100
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 			endpoint = "orders/deleted",

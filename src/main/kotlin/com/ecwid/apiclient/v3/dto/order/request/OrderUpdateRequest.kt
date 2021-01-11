@@ -5,9 +5,9 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class OrderUpdateRequest(
-		var orderNumber: Int = 0,
-		var orderIdentity: String = "",
-		var updatedOrder: UpdatedOrder = UpdatedOrder()
+		val orderNumber: Int = 0,
+		val orderIdentity: String = "",
+		val updatedOrder: UpdatedOrder = UpdatedOrder()
 ) : ApiRequest {
 	constructor(
 			orderNumber: Int = 0,

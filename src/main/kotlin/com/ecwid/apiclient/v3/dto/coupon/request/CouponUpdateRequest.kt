@@ -4,9 +4,9 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
-class CouponUpdateRequest(
-		var couponIdentifier: String = "",
-		var updatedCoupon: UpdatedCoupon = UpdatedCoupon()
+data class CouponUpdateRequest(
+		val couponIdentifier: String = "",
+		val updatedCoupon: UpdatedCoupon = UpdatedCoupon()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
 			endpoint = "discount_coupons/$couponIdentifier",

@@ -1,13 +1,13 @@
 package com.ecwid.apiclient.v3.dto.cart.request
 
 data class UpdatedCart(
-		var hidden: Boolean? = null,
-		var taxesOnShipping: List<TaxOnShipping>? = null
+		val hidden: Boolean? = null,
+		val taxesOnShipping: List<TaxOnShipping>? = null
 ) {
 
 	data class TaxOnShipping(
-			var name: String? = null,
-			var value: Double? = null,
-			var total: Double? = null
+			val name: String? = null,
+			val value: Double? = null,
+			val total: Double? = null
 	)
 }

@@ -1,9 +1,9 @@
 package com.ecwid.apiclient.v3.dto.cart.result
 
 data class CartsSearchResult(
-		var total: Int = 0,
-		var count: Int = 0,
-		var offset: Int = 0,
-		var limit: Int = 0,
-		var items: List<FetchedCart> = listOf()
+		val total: Int = 0,
+		val count: Int = 0,
+		val offset: Int = 0,
+		val limit: Int = 0,
+		val items: List<FetchedCart> = listOf()
 )
