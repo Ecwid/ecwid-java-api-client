@@ -141,6 +141,7 @@ data class FetchedOrder(
 			val couponApplied: Boolean? = null,
 
 			val recurringChargeSettings: RecurringChargeSettings? = null,
+			val subscriptionId: Long? = null,
 
 			val selectedOptions: List<OrderItemSelectedOption>? = null,
 			val taxes: List<OrderItemTax>? = null,
