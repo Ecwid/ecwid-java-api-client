@@ -2,10 +2,8 @@ package com.ecwid.apiclient.v3.dto.product.result
 
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.PictureInfo
-import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
-import com.ecwid.apiclient.v3.dto.product.enums.PriceModifierType
-import com.ecwid.apiclient.v3.dto.product.enums.ProductOptionType
-import com.ecwid.apiclient.v3.dto.product.enums.ShippingSettingsType
+import com.ecwid.apiclient.v3.dto.common.RecurringChargeSettings
+import com.ecwid.apiclient.v3.dto.product.enums.*
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 import java.util.*
@@ -77,7 +75,8 @@ data class FetchedProduct(
 		val ribbon: Ribbon? = null,
 		val ribbonTranslated: LocalizedValueMap? = null,
 		val subtitleTranslated: LocalizedValueMap? = null,
-		val nameYourPriceEnabled: Boolean? = null
+		val nameYourPriceEnabled: Boolean? = null,
+		val recurringChargeSettings: List<RecurringChargeSettings>? = null
 ) {
 
 	data class Ribbon(

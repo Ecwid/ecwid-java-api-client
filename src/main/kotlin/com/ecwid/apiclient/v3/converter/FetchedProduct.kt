@@ -48,7 +48,8 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 			ribbon = ribbon?.toUpdated(),
 			ribbonTranslated = ribbonTranslated,
 			subtitleTranslated = subtitleTranslated,
-			nameYourPriceEnabled = nameYourPriceEnabled
+			nameYourPriceEnabled = nameYourPriceEnabled,
+			recurringChargeSettings = recurringChargeSettings
 	)
 }
 

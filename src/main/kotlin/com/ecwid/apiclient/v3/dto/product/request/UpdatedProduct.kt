@@ -1,10 +1,8 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
-import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueAlias
-import com.ecwid.apiclient.v3.dto.product.enums.PriceModifierType
-import com.ecwid.apiclient.v3.dto.product.enums.ProductOptionType
-import com.ecwid.apiclient.v3.dto.product.enums.ShippingSettingsType
+import com.ecwid.apiclient.v3.dto.common.RecurringChargeSettings
+import com.ecwid.apiclient.v3.dto.product.enums.*
 
 data class UpdatedProduct(
 		val name: String? = null,
@@ -48,7 +46,8 @@ data class UpdatedProduct(
 		val ribbon: Ribbon? = null,
 		val ribbonTranslated: LocalizedValueMap? = null,
 		val subtitleTranslated: LocalizedValueMap? = null,
-		val nameYourPriceEnabled: Boolean? = null
+		val nameYourPriceEnabled: Boolean? = null,
+		val recurringChargeSettings: List<RecurringChargeSettings>? = null
 ) {
 
 	data class Ribbon(

@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.order.result
 
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
+import com.ecwid.apiclient.v3.dto.common.RecurringChargeSettings
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import java.util.*
 
@@ -147,11 +148,6 @@ data class FetchedOrder(
 			val taxes: List<OrderItemTax>? = null,
 			val dimensions: ProductDimensions? = null,
 			val discounts: List<OrderItemDiscounts>? = null
-	)
-
-	data class RecurringChargeSettings(
-			val recurringInterval: RecurringSubscriptionInterval = RecurringSubscriptionInterval.MONTH,
-			val recurringIntervalCount: Int = 1
 	)
 
 	data class OrderItemSelectedOption(
