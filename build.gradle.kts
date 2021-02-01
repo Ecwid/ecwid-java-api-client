@@ -56,7 +56,7 @@ tasks.withType<Test> {
 }
 
 tasks.withType<Wrapper> {
-	gradleVersion = "6.7.1"
+	gradleVersion = "6.8.1"
 }
 
 val settingsProvider = SettingsProvider()
@@ -290,9 +290,9 @@ class PublicationSettings {
 		const val POM_DESCRIPTION = "Ecwid Rest API wrapper"
 		const val POM_URL = "https://github.com/Ecwid/ecwid-java-api-client"
 
-		const val DEVELOPER_ID = "vgv"
-		const val DEVELOPER_NAME = "Vasily Vasilkov"
-		const val DEVELOPER_EMAIL = "vgv@ecwid.com"
+		const val DEVELOPER_ID = "opensource-bot"
+		const val DEVELOPER_NAME = "Ecwid Opensource Bot"
+		const val DEVELOPER_EMAIL = "opensource-bot@ecwid.com"
 
 		const val LICENSE_NAME = "The Apache License, Version 2.0"
 		const val LICENSE_URL = "http://www.apache.org/licenses/LICENSE-2.0.txt"
