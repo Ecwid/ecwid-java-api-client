@@ -66,7 +66,8 @@ class StoreProfileTest : BaseEntityTest() {
 						snapPixelId = "snapPixelId",
 						pinterestTagId = "pinterestTagId",
 						googleTagId = "googleTagId",
-						googleEventId = "googleEventId"
+						googleEventId = "googleEventId",
+						pinterestTagId = "pinterestTagId"
 				),
 				mailNotifications = UpdatedStoreProfile.MailNotifications(
 						adminNotificationEmails = listOf("admin@example.com", "admin2@example.com"),
@@ -209,6 +210,7 @@ class StoreProfileTest : BaseEntityTest() {
 		assertEquals("snapPixelId", actualProfile.settings!!.snapPixelId)
 		assertEquals("googleTagId", actualProfile.settings!!.googleTagId)
 		assertEquals("googleEventId", actualProfile.settings!!.googleEventId)
+		assertEquals("pinterestTagId", actualProfile.settings!!.pinterestTagId)
 	}
 
 }

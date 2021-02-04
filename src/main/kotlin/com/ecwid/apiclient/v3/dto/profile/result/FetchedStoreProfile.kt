@@ -73,7 +73,8 @@ data class FetchedStoreProfile(
 			val askConsentToTrackInStorefront: Boolean? = null,
 			val snapPixelId: String? = null,
 			val googleTagId: String? = null,
-			val googleEventId: String? = null
+			val googleEventId: String? = null,
+			val pinterestTagId: String? = null
 	)
 
 	enum class ProductSortOrder {
