@@ -2,7 +2,6 @@ package com.ecwid.apiclient.v3.dto.product.result
 
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.PictureInfo
-import com.ecwid.apiclient.v3.dto.common.RecurringChargeSettings
 import com.ecwid.apiclient.v3.dto.product.enums.*
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
@@ -82,6 +81,11 @@ data class FetchedProduct(
 	data class Ribbon(
 			val text: String? = null,
 			val color: String? = null
+	)
+
+	data class RecurringChargeSettings(
+			val recurringInterval: RecurringSubscriptionInterval = RecurringSubscriptionInterval.MONTH,
+			val recurringIntervalCount: Int = 1
 	)
 
 	data class WholesalePrice(

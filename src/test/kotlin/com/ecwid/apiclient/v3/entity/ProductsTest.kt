@@ -7,6 +7,7 @@ import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
 import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.PriceModifierType
+import com.ecwid.apiclient.v3.dto.product.enums.RecurringSubscriptionInterval
 import com.ecwid.apiclient.v3.dto.product.enums.ShippingSettingsType
 import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest.InventoryAdjustment
@@ -1171,7 +1172,11 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 			subtitleTranslated = LocalizedValueMap(
 					"ru" to "Сабтайтл",
 					"en" to "Subtitle"
-			)
+			),
+			recurringChargeSettings = listOf(RecurringChargeSettings(
+					recurringIntervalCount = 1,
+					recurringInterval = RecurringSubscriptionInterval.MONTH
+			))
 	)
 }
 

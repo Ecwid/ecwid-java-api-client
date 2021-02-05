@@ -1,7 +1,6 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
-import com.ecwid.apiclient.v3.dto.common.RecurringChargeSettings
 import com.ecwid.apiclient.v3.dto.product.enums.*
 
 data class UpdatedProduct(
@@ -53,6 +52,11 @@ data class UpdatedProduct(
 	data class Ribbon(
 			val text: String? = null,
 			val color: String? = null
+	)
+
+	data class RecurringChargeSettings(
+			val recurringInterval: RecurringSubscriptionInterval = RecurringSubscriptionInterval.MONTH,
+			val recurringIntervalCount: Int = 1
 	)
 
 	data class WholesalePrice(
