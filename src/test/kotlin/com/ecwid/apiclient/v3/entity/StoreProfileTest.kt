@@ -207,6 +207,7 @@ class StoreProfileTest : BaseEntityTest() {
 		assertEquals("acceptMarketingCheckboxCustomText", actualProfile.settings!!.acceptMarketingCheckboxCustomText)
 		assertEquals(true, actualProfile.settings!!.askConsentToTrackInStorefront)
 		assertEquals("snapPixelId", actualProfile.settings!!.snapPixelId)
+		assertEquals("pinterestTagId", actualProfile.settings!!.pinterestTagId)
 		assertEquals("googleTagId", actualProfile.settings!!.googleTagId)
 		assertEquals("googleEventId", actualProfile.settings!!.googleEventId)
 	}
