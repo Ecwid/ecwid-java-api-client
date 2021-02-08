@@ -48,7 +48,8 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 			ribbon = ribbon?.toUpdated(),
 			ribbonTranslated = ribbonTranslated,
 			subtitleTranslated = subtitleTranslated,
-			nameYourPriceEnabled = nameYourPriceEnabled
+			nameYourPriceEnabled = nameYourPriceEnabled,
+			recurringChargeSettings = recurringChargeSettings?.toUpdated()
 	)
 }
 
@@ -56,6 +57,13 @@ private fun FetchedProduct.Ribbon.toUpdated() = UpdatedProduct.Ribbon(
 		text = text,
 		color = color
 )
+
+private fun List<FetchedProduct.RecurringChargeSettings>.toUpdated() = map {
+	UpdatedProduct.RecurringChargeSettings(
+			recurringInterval = it.recurringInterval,
+			recurringIntervalCount = it.recurringIntervalCount
+	)
+}
 
 private fun FetchedProduct.WholesalePrice.toUpdated() = UpdatedProduct.WholesalePrice(
 		quantity = quantity,
