@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.httptransport.HttpResponse
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
 import com.ecwid.apiclient.v3.httptransport.TransportHttpBody
 import org.apache.http.Consts
+import org.apache.http.Header
 import org.apache.http.HttpStatus
 import org.apache.http.client.HttpClient
 import org.apache.http.client.config.RequestConfig
@@ -15,7 +16,6 @@ import org.apache.http.entity.ContentType
 import org.apache.http.entity.InputStreamEntity
 import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager
-import org.apache.http.message.BasicHeader
 import org.apache.http.message.BasicNameValuePair
 import org.apache.http.util.EntityUtils
 import java.io.IOException
@@ -46,11 +46,13 @@ class ApacheCommonsHttpClientTransport(
 	constructor(
 		defaultConnectionTimeout: Int = DEFAULT_CONNECTION_TIMEOUT,
 		defaultReadTimeout: Int = DEFAULT_READ_TIMEOUT,
-		defaultMaxConnections: Int = DEFAULT_MAX_CONNECTIONS
+		defaultMaxConnections: Int = DEFAULT_MAX_CONNECTIONS,
+		defaultHeaders: List<Header> = emptyList()
 	) : this(buildHttpClient(
 		defaultConnectionTimeout = defaultConnectionTimeout,
 		defaultReadTimeout = defaultReadTimeout,
-		defaulMaxConnections = defaultMaxConnections
+		defaulMaxConnections = defaultMaxConnections,
+		defaultHeaders = defaultHeaders
 	))
 
 	override fun makeHttpRequest(httpRequest: HttpRequest): HttpResponse {
@@ -111,7 +113,12 @@ class ApacheCommonsHttpClientTransport(
 	}
 
 	companion object {
-		private fun buildHttpClient(defaultConnectionTimeout: Int, defaultReadTimeout: Int, defaulMaxConnections: Int): HttpClient {
+		private fun buildHttpClient(
+			defaultConnectionTimeout: Int,
+			defaultReadTimeout: Int,
+			defaulMaxConnections: Int,
+			defaultHeaders: List<Header>
+		): HttpClient {
 			val connectionManager = PoolingHttpClientConnectionManager().apply {
 				maxTotal = defaulMaxConnections
 				defaultMaxPerRoute = defaulMaxConnections
@@ -123,12 +130,15 @@ class ApacheCommonsHttpClientTransport(
 				.setSocketTimeout(defaultReadTimeout)
 				.build()
 
-			return HttpClientBuilder.create()
+			val httpClientBuilder = HttpClientBuilder.create()
 				.setConnectionManager(connectionManager)
 				.setDefaultRequestConfig(requestConfig)
-				// TODO .setRetryHandler()
-				// TODO .setServiceUnavailableRetryStrategy()
-				.build()
+			// TODO .setRetryHandler()
+			// TODO .setServiceUnavailableRetryStrategy()
+			if (defaultHeaders.isNotEmpty()) {
+				httpClientBuilder.setDefaultHeaders(defaultHeaders)
+			}
+			return httpClientBuilder.build()
 		}
 	}
 
