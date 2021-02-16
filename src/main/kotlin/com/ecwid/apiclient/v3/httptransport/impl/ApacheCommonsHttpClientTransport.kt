@@ -40,20 +40,31 @@ private const val DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 60L
 private const val MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 120L
 
 class ApacheCommonsHttpClientTransport(
-	private val httpClient: HttpClient
+	private val httpClient: HttpClient,
+	private val defaultRateLimitAttempts: Int = DEFAULT_RATE_LIMIT_ATTEMPTS,
+	private val defaultRateLimitRetryInterval: Long = DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
+	private val maxRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS
 ) : HttpTransport {
 
 	constructor(
 		defaultConnectionTimeout: Int = DEFAULT_CONNECTION_TIMEOUT,
 		defaultReadTimeout: Int = DEFAULT_READ_TIMEOUT,
 		defaultMaxConnections: Int = DEFAULT_MAX_CONNECTIONS,
+		defaultRateLimitAttempts: Int = DEFAULT_RATE_LIMIT_ATTEMPTS,
+		defaultRateLimitRetryInterval: Long = DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
+		maxRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 		defaultHeaders: List<Header> = emptyList()
-	) : this(buildHttpClient(
-		defaultConnectionTimeout = defaultConnectionTimeout,
-		defaultReadTimeout = defaultReadTimeout,
-		defaulMaxConnections = defaultMaxConnections,
-		defaultHeaders = defaultHeaders
-	))
+	) : this(
+		httpClient = buildHttpClient(
+			defaultConnectionTimeout = defaultConnectionTimeout,
+			defaultReadTimeout = defaultReadTimeout,
+			defaulMaxConnections = defaultMaxConnections,
+			defaultHeaders = defaultHeaders
+		),
+		defaultRateLimitAttempts = defaultRateLimitAttempts,
+		defaultRateLimitRetryInterval = defaultRateLimitRetryInterval,
+		maxRateLimitRetryInterval = maxRateLimitRetryInterval
+	)
 
 	override fun makeHttpRequest(httpRequest: HttpRequest): HttpResponse {
 		val request = toHttpUriRequest(httpRequest)
@@ -64,7 +75,7 @@ class ApacheCommonsHttpClientTransport(
 		}
 	}
 
-	private fun doExecute(request: HttpUriRequest, attemptsLeft: Int = DEFAULT_RATE_LIMIT_ATTEMPTS): HttpResponse {
+	private fun doExecute(request: HttpUriRequest, attemptsLeft: Int = defaultRateLimitAttempts): HttpResponse {
 		return httpClient.execute(request) { response ->
 			val statusLine = response.statusLine
 			val responseBytes = EntityUtils.toByteArray(response.entity)
@@ -73,8 +84,8 @@ class ApacheCommonsHttpClientTransport(
 			} else if (statusLine.statusCode == 429 && attemptsLeft > 0) {
 				// server should reply, how long to wait before retry
 				val waitInterval = response.getFirstHeader("Retry-After")?.value?.toLong()
-					?: DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS
-				if (waitInterval <= MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS) {
+					?: defaultRateLimitRetryInterval
+				if (waitInterval <= maxRateLimitRetryInterval) {
 					// if servers says to wait acceptable time - we'll wait and retry
 					TimeUnit.SECONDS.sleep(waitInterval)
 					doExecute(request, attemptsLeft - 1) // рекурсивно декрементим остаток попыток
