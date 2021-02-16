@@ -35,7 +35,7 @@ private const val DEFAULT_RATE_LIMIT_ATTEMPTS = 2
  */
 private const val DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 10L
 /**
- * Maximal delay in seconds bereore next attempt
+ * Maximal delay in seconds before next attempt
  */
 private const val MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 60L
 
