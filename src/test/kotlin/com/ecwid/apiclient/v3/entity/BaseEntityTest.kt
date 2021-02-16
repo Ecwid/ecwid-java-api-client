@@ -59,7 +59,7 @@ abstract class BaseEntityTest {
 						logRequestBody = true,
 						logSuccessfulResponseBody = true
 				),
-				httpTransport = ApacheCommonsHttpClientTransport(),
+				httpTransport = ApacheCommonsHttpClientTransport(defaultHeaders = emptyList()),
 				jsonTransformerProvider = GsonTransformerProvider()
 		)
 		apiClient = ApiClient(apiClientHelper)
