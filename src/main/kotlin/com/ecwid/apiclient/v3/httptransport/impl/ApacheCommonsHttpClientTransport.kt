@@ -39,7 +39,7 @@ private const val DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 10L
  */
 private const val MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 60L
 
-class ApacheCommonsHttpClientTransport(
+open class ApacheCommonsHttpClientTransport(
 	private val httpClient: HttpClient,
 	private val defaultRateLimitAttempts: Int = DEFAULT_RATE_LIMIT_ATTEMPTS,
 	private val defaultRateLimitRetryInterval: Long = DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
@@ -88,7 +88,7 @@ class ApacheCommonsHttpClientTransport(
 				if (waitInterval <= maxRateLimitRetryInterval) {
 					// if servers says to wait acceptable time - we'll wait and retry
 					TimeUnit.SECONDS.sleep(waitInterval)
-					doExecute(request, attemptsLeft - 1) // рекурсивно декрементим остаток попыток
+					doExecute(request, attemptsLeft - 1)
 				} else {
 					// if server says we need to wait too long, we just don't
 					HttpResponse.Error(statusLine.statusCode, statusLine.reasonPhrase, responseBytes)
