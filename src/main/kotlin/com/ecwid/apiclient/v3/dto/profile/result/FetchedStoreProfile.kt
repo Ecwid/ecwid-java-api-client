@@ -74,7 +74,8 @@ data class FetchedStoreProfile(
 			val snapPixelId: String? = null,
 			val pinterestTagId: String? = null,
 			val googleTagId: String? = null,
-			val googleEventId: String? = null
+			val googleEventId: String? = null,
+			val showPricePerUnit: Boolean = false
 	)
 
 	enum class ProductSortOrder {
