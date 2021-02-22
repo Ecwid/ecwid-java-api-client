@@ -1173,10 +1173,7 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 					"ru" to "Сабтайтл",
 					"en" to "Subtitle"
 			),
-			recurringChargeSettings = listOf(RecurringChargeSettings(
-					recurringIntervalCount = 1,
-					recurringInterval = RecurringSubscriptionInterval.MONTH
-			))
+			subscriptionSettings = SubscriptionSettings()
 	)
 }
 
