@@ -1,5 +1,7 @@
 package com.ecwid.apiclient.v3.dto.profile.request
 
+import com.ecwid.apiclient.v3.dto.common.ProductCondition
+
 data class UpdatedStoreProfile(
 		val generalInfo: GeneralInfo? = null,
 		val account: Account? = null,
@@ -59,7 +61,9 @@ data class UpdatedStoreProfile(
 			val snapPixelId: String? = null,
 			val pinterestTagId: String? = null,
 			val googleTagId: String? = null,
-			val googleEventId: String? = null
+			val googleEventId: String? = null,
+			val googleProductCategory: Int? = null,
+			val productCondition: ProductCondition? = null
 	)
 
 	enum class ProductSortOrder {

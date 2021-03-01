@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.product.result
 
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.PictureInfo
+import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.product.enums.*
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
@@ -75,7 +76,10 @@ data class FetchedProduct(
 		val ribbonTranslated: LocalizedValueMap? = null,
 		val subtitleTranslated: LocalizedValueMap? = null,
 		val nameYourPriceEnabled: Boolean? = null,
-		val recurringChargeSettings: List<RecurringChargeSettings>? = null
+		val recurringChargeSettings: List<RecurringChargeSettings>? = null,
+		val googleProductCategory: Int? = null,
+		val googleProductCategoryName: String? = null,
+		val productCondition: ProductCondition? = null
 ) {
 
 	data class Ribbon(

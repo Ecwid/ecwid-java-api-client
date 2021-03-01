@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.profile.result
 
+import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.google.gson.annotations.SerializedName
 
 data class FetchedStoreProfile(
@@ -74,7 +75,10 @@ data class FetchedStoreProfile(
 			val snapPixelId: String? = null,
 			val pinterestTagId: String? = null,
 			val googleTagId: String? = null,
-			val googleEventId: String? = null
+			val googleEventId: String? = null,
+			val googleProductCategory: Int? = null,
+			val googleProductCategoryName: String? = null,
+			val productCondition: ProductCondition? = null
 	)
 
 	enum class ProductSortOrder {

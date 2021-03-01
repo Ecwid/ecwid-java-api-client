@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
+import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.product.enums.*
 
 data class UpdatedProduct(
@@ -46,7 +47,9 @@ data class UpdatedProduct(
 		val ribbonTranslated: LocalizedValueMap? = null,
 		val subtitleTranslated: LocalizedValueMap? = null,
 		val nameYourPriceEnabled: Boolean? = null,
-		val recurringChargeSettings: List<RecurringChargeSettings>? = null
+		val recurringChargeSettings: List<RecurringChargeSettings>? = null,
+		val googleProductCategory: Int? = null,
+		val productCondition: ProductCondition? = null
 ) {
 
 	data class Ribbon(
