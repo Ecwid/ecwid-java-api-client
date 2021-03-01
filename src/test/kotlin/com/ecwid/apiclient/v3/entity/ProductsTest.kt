@@ -914,7 +914,6 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Async upload is not in API stable version now")
 	fun testUploadProductImageAsync() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
@@ -975,7 +974,6 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Async upload is not in API stable version now")
 	fun testUploadProductGalleryImageAsync() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
