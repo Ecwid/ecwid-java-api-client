@@ -78,7 +78,7 @@ data class FetchedStoreProfile(
 			val googleEventId: String? = null,
 			val googleProductCategory: Int? = null,
 			val googleProductCategoryName: String? = null,
-			val productCondition: ProductCondition? = null
+			val productCondition: ProductCondition = ProductCondition.NEW
 	)
 
 	enum class ProductSortOrder {

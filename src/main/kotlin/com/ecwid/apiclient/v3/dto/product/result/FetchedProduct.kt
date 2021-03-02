@@ -79,7 +79,7 @@ data class FetchedProduct(
 		val recurringChargeSettings: List<RecurringChargeSettings>? = null,
 		val googleProductCategory: Int? = null,
 		val googleProductCategoryName: String? = null,
-		val productCondition: ProductCondition? = null
+		val productCondition: ProductCondition = ProductCondition.NEW
 ) {
 
 	data class Ribbon(
