@@ -283,7 +283,8 @@ data class FetchedStoreProfile(
 	data class TaxSettings(
 			val automaticTaxEnabled: Boolean? = null,
 			val taxes: List<Taxes>? = null,
-			val pricesIncludeTax: Boolean? = null
+			val pricesIncludeTax: Boolean? = null,
+			val taxExemptBusiness: Boolean = false
 	) {
 		data class Taxes(
 				val id: Int? = null,
