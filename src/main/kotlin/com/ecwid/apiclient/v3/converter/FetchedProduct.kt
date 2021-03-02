@@ -49,13 +49,19 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 			ribbonTranslated = ribbonTranslated,
 			subtitleTranslated = subtitleTranslated,
 			nameYourPriceEnabled = nameYourPriceEnabled,
-			recurringChargeSettings = recurringChargeSettings?.toUpdated()
+			subscriptionSettings = subscriptionSettings?.toUpdated()
 	)
 }
 
 private fun FetchedProduct.Ribbon.toUpdated() = UpdatedProduct.Ribbon(
 		text = text,
 		color = color
+)
+
+private fun FetchedProduct.SubscriptionSettings.toUpdated() = UpdatedProduct.SubscriptionSettings(
+		subscriptionAllowed = subscriptionAllowed,
+		oneTimePurchaseAllowed = oneTimePurchaseAllowed,
+		recurringChargeSettings = recurringChargeSettings.toUpdated()
 )
 
 private fun List<FetchedProduct.RecurringChargeSettings>.toUpdated() = map {
