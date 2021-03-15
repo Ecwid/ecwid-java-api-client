@@ -76,6 +76,7 @@ data class FetchedStoreProfile(
 			val pinterestTagId: String? = null,
 			val googleTagId: String? = null,
 			val googleEventId: String? = null,
+			val showPricePerUnit: Boolean = false,
 			val googleProductCategory: Int? = null,
 			val googleProductCategoryName: String? = null,
 			val productCondition: ProductCondition = ProductCondition.NEW
@@ -287,7 +288,8 @@ data class FetchedStoreProfile(
 	data class TaxSettings(
 			val automaticTaxEnabled: Boolean? = null,
 			val taxes: List<Taxes>? = null,
-			val pricesIncludeTax: Boolean? = null
+			val pricesIncludeTax: Boolean? = null,
+			val taxExemptBusiness: Boolean = false
 	) {
 		data class Taxes(
 				val id: Int? = null,

@@ -76,7 +76,7 @@ data class FetchedProduct(
 		val ribbonTranslated: LocalizedValueMap? = null,
 		val subtitleTranslated: LocalizedValueMap? = null,
 		val nameYourPriceEnabled: Boolean? = null,
-		val recurringChargeSettings: List<RecurringChargeSettings>? = null,
+		val subscriptionSettings: SubscriptionSettings? = null,
 		val googleProductCategory: Int? = null,
 		val googleProductCategoryName: String? = null,
 		val productCondition: ProductCondition = ProductCondition.NEW
@@ -85,6 +85,12 @@ data class FetchedProduct(
 	data class Ribbon(
 			val text: String? = null,
 			val color: String? = null
+	)
+
+	data class SubscriptionSettings(
+			val subscriptionAllowed: Boolean = false,
+			val oneTimePurchaseAllowed: Boolean = false,
+			val recurringChargeSettings: List<RecurringChargeSettings> = emptyList()
 	)
 
 	data class RecurringChargeSettings(

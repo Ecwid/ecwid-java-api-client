@@ -132,6 +132,8 @@ data class FetchedOrder(
 			val quantityInStock: Int? = null,
 			val weight: Double? = null,
 			val imageUrl: String? = null, // TODO Figure out how to test
+			val smallThumbnailUrl: String? = null,
+			val hdThumbnailUrl: String? = null,
 
 			val isShippingRequired: Boolean? = null,
 			val trackQuantity: Boolean? = null,

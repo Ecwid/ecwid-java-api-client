@@ -62,6 +62,7 @@ data class UpdatedStoreProfile(
 			val pinterestTagId: String? = null,
 			val googleTagId: String? = null,
 			val googleEventId: String? = null,
+			val showPricePerUnit: Boolean? = null,
 			val googleProductCategory: Int? = null,
 			val productCondition: ProductCondition? = null
 	)
@@ -160,7 +161,8 @@ data class UpdatedStoreProfile(
 	data class TaxSettings(
 			val automaticTaxEnabled: Boolean? = null,
 			val taxes: List<Taxes>? = null,
-			val pricesIncludeTax: Boolean? = null
+			val pricesIncludeTax: Boolean? = null,
+			val taxExemptBusiness: Boolean? = null
 	) {
 		data class Taxes(
 				val id: Int? = null,
