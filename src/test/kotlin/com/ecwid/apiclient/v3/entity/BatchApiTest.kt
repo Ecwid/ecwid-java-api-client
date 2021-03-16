@@ -12,6 +12,7 @@ import com.ecwid.apiclient.v3.impl.TypedBatchResponse
 import com.ecwid.apiclient.v3.util.randomAlphanumeric
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class BatchApiTest : BaseEntityTest() {
@@ -21,7 +22,9 @@ class BatchApiTest : BaseEntityTest() {
 		super.beforeEach()
 	}
 
+
 	@Test
+	@Disabled("Temporarily turned of due to ECWID-80491")
 	fun `Create a product with batch API and search it`() {
 		val name = randomAlphanumeric(8)
 		val productCreateRequest = ProductCreateRequest(
