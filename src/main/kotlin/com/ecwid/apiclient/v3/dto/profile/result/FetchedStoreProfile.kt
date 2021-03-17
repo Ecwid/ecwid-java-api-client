@@ -591,7 +591,13 @@ data class FetchedStoreProfile(
 			val productDetailsPositionSubtitle: Int? = null,
 
 			@SerializedName("product_list_subtitles_behavior")
-			val productListSubtitlesBehavior: String? = null
+			val productListSubtitlesBehavior: String? = null,
+
+			@SerializedName("breadcrumbs_have_home_item")
+			val breadcrumbsHaveHomeItem: Boolean? = null,
+
+			@SerializedName("breadcrumbs_home_url")
+			val breadcrumbsHomeUrl: String? = null
 	)
 
 	data class ProductFiltersSettings(
