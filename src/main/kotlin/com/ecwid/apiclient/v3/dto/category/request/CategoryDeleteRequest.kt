@@ -7,7 +7,10 @@ data class CategoryDeleteRequest(
 		val categoryId: Int = 0
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createDeleteRequest(
-			endpoint = "categories/$categoryId",
+			pathSegments = listOf(
+				"categories",
+				"$categoryId"
+			),
 			params = mapOf()
 	)
 }
