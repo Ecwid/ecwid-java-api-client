@@ -184,16 +184,17 @@ class ApiClientHelper private constructor(
 
 	@PublishedApi
 	internal fun createApiEndpointUri(pathSegments: List<String>): String {
-		val endpoint = buildEndpointPath(pathSegments)
-		return URI(
+		val uri = URI(
 				"https",
 				null,
 				apiServerDomain.host,
 				if (apiServerDomain.securePort == DEFAULT_HTTPS_PORT) -1 else apiServerDomain.securePort,
-				"/api/v3/${storeCredentials.storeId}/$endpoint",
+				null,
 				null,
 				null
-		).toString()
+		)
+		val encodedPath = "/api/v3/${storeCredentials.storeId}/" + buildEndpointPath(pathSegments)
+		return uri.toString() + encodedPath
 	}
 
 	private fun logSuccessfulResponseIfNeeded(requestId: String, requestTime: Long, responseBody: String) {
