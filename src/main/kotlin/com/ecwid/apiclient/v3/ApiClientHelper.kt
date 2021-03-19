@@ -12,7 +12,7 @@ import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.httptransport.*
 import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.impl.MIME_TYPE_APPLICATION_JSON
-import com.ecwid.apiclient.v3.impl.maskApiToken
+import com.ecwid.apiclient.v3.util.maskApiToken
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
