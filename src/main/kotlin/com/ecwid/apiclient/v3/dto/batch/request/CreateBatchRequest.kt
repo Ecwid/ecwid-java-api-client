@@ -13,7 +13,9 @@ data class CreateBatchRequestWithIds(
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
-			endpoint = "batch",
+			pathSegments = listOf(
+					"batch"
+			),
 			params = extraParams + mapOf(
 					"stopOnFirstFailure" to stopOnFirstFailure.toString()
 			),
@@ -32,7 +34,9 @@ data class CreateBatchRequest(
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
-			endpoint = "batch",
+			pathSegments = listOf(
+					"batch"
+			),
 			params = extraParams + mapOf(
 					"stopOnFirstFailure" to stopOnFirstFailure.toString()
 			),

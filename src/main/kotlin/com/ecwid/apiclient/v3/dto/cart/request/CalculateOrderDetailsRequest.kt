@@ -8,7 +8,10 @@ data class CalculateOrderDetailsRequest(
 		val orderForCalculate: OrderForCalculate = OrderForCalculate()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
-			endpoint = "order/calculate",
+			pathSegments = listOf(
+					"order",
+					"calculate"
+			),
 			httpBody = HttpBody.JsonBody(
 					obj = orderForCalculate
 			)

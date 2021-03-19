@@ -20,14 +20,14 @@ data class ProductFileUploadRequest(
 
 		return when (fileData) {
 			is UploadFileData.ExternalUrlData -> RequestInfo.createPostRequest(
-					endpoint = endpoint,
+					pathSegments = pathSegments,
 					params = commonParams + mapOf(
 							"externalUrl" to fileData.externalUrl
 					),
 					httpBody = HttpBody.EmptyBody
 			)
 			is UploadFileData.ByteArrayData -> RequestInfo.createPostRequest(
-					endpoint = endpoint,
+					pathSegments = pathSegments,
 					params = commonParams,
 					httpBody = HttpBody.ByteArrayBody(
 							bytes = fileData.bytes,
@@ -35,7 +35,7 @@ data class ProductFileUploadRequest(
 					)
 			)
 			is UploadFileData.LocalFileData -> RequestInfo.createPostRequest(
-					endpoint = endpoint,
+					pathSegments = pathSegments,
 					params = commonParams,
 					httpBody = HttpBody.LocalFileBody(
 							file = fileData.file,
@@ -43,7 +43,7 @@ data class ProductFileUploadRequest(
 					)
 			)
 			is UploadFileData.InputStreamData -> RequestInfo.createPostRequest(
-					endpoint = endpoint,
+					pathSegments = pathSegments,
 					params = commonParams,
 					httpBody = HttpBody.InputStreamBody(
 							stream = fileData.stream,
@@ -53,5 +53,10 @@ data class ProductFileUploadRequest(
 		}
 	}
 
-	private val endpoint = "products/$productId/files"
+	private val pathSegments = listOf(
+			"products",
+			"$productId",
+			"files"
+	)
+
 }

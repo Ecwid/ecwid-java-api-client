@@ -9,7 +9,11 @@ data class CreateProductVariationRequest(
 		val newVariaion: UpdatedVariation = UpdatedVariation()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
-			endpoint = "products/$productId/combinations",
+			pathSegments = listOf(
+					"products",
+					"$productId",
+					"combinations"
+			),
 			params = mapOf(),
 			httpBody = HttpBody.JsonBody(
 					obj = newVariaion

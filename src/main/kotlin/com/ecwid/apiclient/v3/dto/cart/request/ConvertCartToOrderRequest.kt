@@ -8,7 +8,11 @@ data class ConvertCartToOrderRequest(
 		val cartId: String = ""
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
-			endpoint = "carts/$cartId/place",
+			pathSegments = listOf(
+				"carts",
+				cartId,
+				"place"
+			),
 			httpBody = HttpBody.EmptyBody
 	)
 }

@@ -8,7 +8,9 @@ data class ProductCreateRequest(
 		val newProduct: UpdatedProduct = UpdatedProduct()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
-			endpoint = "products",
+			pathSegments = listOf(
+					"products"
+			),
 			params = mapOf(),
 			httpBody = HttpBody.JsonBody(
 					obj = newProduct
