@@ -15,7 +15,9 @@ data class CategoriesSearchRequest(
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "categories",
+			pathSegments = listOf(
+				"categories"
+			),
 			params = toParams()
 	)
 

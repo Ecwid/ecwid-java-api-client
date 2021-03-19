@@ -8,7 +8,9 @@ data class StoreProfileRequest(
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "profile",
+			pathSegments = listOf(
+				"profile"
+			),
 			params = toParams()
 	)
 

@@ -31,7 +31,9 @@ sealed class ProductsSearchRequest {
 			val lang: String? = null
 	) : ProductsSearchRequest(), ApiRequest {
 		override fun toRequestInfo() = RequestInfo.createGetRequest(
-				endpoint = "products",
+				pathSegments = listOf(
+					"products"
+				),
 				params = toParams()
 		)
 
@@ -74,10 +76,13 @@ sealed class ProductsSearchRequest {
 
 	data class ByIds(val productIds: List<Int> = listOf()) : ProductsSearchRequest(), ApiRequest {
 		override fun toRequestInfo() = RequestInfo.createGetRequest(
-				endpoint = "products",
+				pathSegments = listOf(
+					"products"
+				),
 				params = toParams()
 		)
 
+		@Suppress("unused")
 		constructor(productId: Int) : this(listOf(productId))
 
 		private fun toParams(): Map<String, String> {

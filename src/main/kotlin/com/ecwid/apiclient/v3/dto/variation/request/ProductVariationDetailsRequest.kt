@@ -8,6 +8,11 @@ data class ProductVariationDetailsRequest(
 		val variationId: Int = 0
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "products/$productId/combinations/$variationId"
+			pathSegments = listOf(
+				"products",
+				"$productId",
+				"combinations",
+				"$variationId"
+			)
 	)
 }

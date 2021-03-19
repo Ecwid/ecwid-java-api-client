@@ -10,6 +10,10 @@ data class OrderInvoiceRequest(
 	constructor(orderNumber: Int = 0) : this(orderNumber, orderNumber.toString())
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "orders/$orderIdentity/invoice"
+			pathSegments = listOf(
+				"orders",
+				orderIdentity,
+				"invoice"
+			)
 	)
 }
