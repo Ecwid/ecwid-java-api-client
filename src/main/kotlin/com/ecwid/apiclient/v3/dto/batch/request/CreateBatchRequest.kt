@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.dto.batch.request
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
+import com.ecwid.apiclient.v3.util.buildEndpointPath
 import com.ecwid.apiclient.v3.util.buildQueryString
 
 data class CreateBatchRequestWithIds(
@@ -41,7 +42,6 @@ data class CreateBatchRequest(
 	)
 }
 
-@Suppress("unused")
 private data class SingleBatchRequest(
 		val id: String? = null,
 		val path: String = "",
@@ -57,11 +57,12 @@ private data class SingleBatchRequest(
 
 		internal fun create(id: String?, apiRequest: ApiRequest): SingleBatchRequest {
 			val requestInfo = apiRequest.toRequestInfo()
+			val path = buildEndpointPath(requestInfo.pathSegments)
 			val queryString = buildQueryString(requestInfo.params)
 			return SingleBatchRequest(
 					id = id,
 					method = requestInfo.method.name,
-					path = requestInfo.endpoint + queryString,
+					path = path + queryString,
 					body = when (requestInfo.httpBody) {
 						is HttpBody.EmptyBody -> null
 						is HttpBody.JsonBody -> requestInfo.httpBody.obj

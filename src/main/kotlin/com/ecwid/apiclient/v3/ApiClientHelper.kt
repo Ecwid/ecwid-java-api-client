@@ -16,6 +16,7 @@ import com.ecwid.apiclient.v3.util.maskApiToken
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
+import com.ecwid.apiclient.v3.util.buildEndpointPath
 import java.io.ByteArrayInputStream
 import java.io.FileInputStream
 import java.net.URI
@@ -162,27 +163,28 @@ class ApiClientHelper private constructor(
 	@PublishedApi
 	internal fun RequestInfo.toHttpRequest(): HttpRequest = when (method) {
 		HttpMethod.GET -> HttpRequest.HttpGetRequest(
-				uri = createApiEndpointUri(endpoint),
+				uri = createApiEndpointUri(pathSegments),
 				params = params.withApiTokenParam(storeCredentials.apiToken)
 		)
 		HttpMethod.POST -> HttpRequest.HttpPostRequest(
-				uri = createApiEndpointUri(endpoint),
+				uri = createApiEndpointUri(pathSegments),
 				params = params.withApiTokenParam(storeCredentials.apiToken),
 				transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.PUT -> HttpRequest.HttpPutRequest(
-				uri = createApiEndpointUri(endpoint),
+				uri = createApiEndpointUri(pathSegments),
 				params = params.withApiTokenParam(storeCredentials.apiToken),
 				transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
-				uri = createApiEndpointUri(endpoint),
+				uri = createApiEndpointUri(pathSegments),
 				params = params.withApiTokenParam(storeCredentials.apiToken)
 		)
 	}
 
 	@PublishedApi
-	internal fun createApiEndpointUri(endpoint: String): String {
+	internal fun createApiEndpointUri(pathSegments: List<String>): String {
+		val endpoint = buildEndpointPath(pathSegments)
 		return URI(
 				"https",
 				null,

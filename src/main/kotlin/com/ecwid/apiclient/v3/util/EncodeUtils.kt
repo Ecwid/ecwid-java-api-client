@@ -13,3 +13,7 @@ internal fun buildQueryString(params: Map<String, String>): String {
 		}
 	}
 }
+
+internal fun buildEndpointPath(pathSegments: List<String>): String {
+	return pathSegments.joinToString(separator = "/")
+}
