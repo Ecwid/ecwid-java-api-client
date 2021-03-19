@@ -1,6 +1,6 @@
 package com.ecwid.apiclient.v3
 
-import com.ecwid.apiclient.v3.dto.batch.request.buildQueryString
+import com.ecwid.apiclient.v3.util.buildQueryString
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -15,7 +15,6 @@ class BatchSupportUnitTest {
 	@MethodSource("expectedQueryToParamsMapProvider")
 	fun queryBuilderTest(expectedQuery: String, params: Map<String, String>) {
 		Assertions.assertEquals(expectedQuery, buildQueryString(params))
-
 	}
 
 	companion object {

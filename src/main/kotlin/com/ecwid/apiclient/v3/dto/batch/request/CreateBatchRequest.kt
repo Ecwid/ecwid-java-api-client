@@ -3,9 +3,7 @@ package com.ecwid.apiclient.v3.dto.batch.request
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
-import java.net.URLEncoder
-
-private val UTF_CHARSET = Charsets.UTF_8.toString()
+import com.ecwid.apiclient.v3.util.buildQueryString
 
 data class CreateBatchRequestWithIds(
 		val requests: Map<String, ApiRequest> = emptyMap(),
@@ -77,12 +75,3 @@ private data class SingleBatchRequest(
 
 }
 
-internal fun buildQueryString(params: Map<String, String>): String {
-	return if (params.isEmpty()) {
-		""
-	} else {
-		params.entries.joinToString(prefix = "?", separator = "&") { (key, value) ->
-			URLEncoder.encode(key, UTF_CHARSET) + "=" + URLEncoder.encode(value, UTF_CHARSET)
-		}
-	}
-}
