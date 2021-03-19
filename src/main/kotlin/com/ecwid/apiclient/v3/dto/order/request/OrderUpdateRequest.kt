@@ -9,15 +9,24 @@ data class OrderUpdateRequest(
 		val orderIdentity: String = "",
 		val updatedOrder: UpdatedOrder = UpdatedOrder()
 ) : ApiRequest {
+
 	constructor(
 			orderNumber: Int = 0,
 			updatedOrder: UpdatedOrder = UpdatedOrder()
-	) : this(orderNumber, orderNumber.toString(), updatedOrder)
+	) : this(
+			orderNumber = orderNumber,
+			orderIdentity = orderNumber.toString(),
+			updatedOrder = updatedOrder
+	)
 
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			endpoint = "orders/$orderIdentity",
+			pathSegments = listOf(
+					"orders",
+					orderIdentity
+			),
 			httpBody = HttpBody.JsonBody(
 					obj = updatedOrder
 			)
 	)
+
 }

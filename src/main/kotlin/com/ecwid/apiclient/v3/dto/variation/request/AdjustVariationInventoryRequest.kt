@@ -11,7 +11,13 @@ data class AdjustVariationInventoryRequest(
 		val quantityDelta: Int = 0
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			endpoint = "products/$productId/combinations/$variationId/inventory",
+			pathSegments = listOf(
+					"products",
+					"$productId",
+					"combinations",
+					"$variationId",
+					"inventory"
+			),
 			params = mapOf("checkLowStockNotification" to checkLowStockNotification.toString()),
 			httpBody = HttpBody.JsonBody(
 					obj = mapOf("quantityDelta" to quantityDelta)

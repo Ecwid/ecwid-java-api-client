@@ -11,7 +11,12 @@ data class UpdateProductVariationRequest(
 		val variation: UpdatedVariation = UpdatedVariation()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			endpoint = "products/$productId/combinations/$variationId",
+			pathSegments = listOf(
+					"products",
+					"$productId",
+					"combinations",
+					"$variationId"
+			),
 			params = mapOf("checkLowStockNotification" to checkLowStockNotification.toString()),
 			httpBody = HttpBody.JsonBody(
 					obj = variation
