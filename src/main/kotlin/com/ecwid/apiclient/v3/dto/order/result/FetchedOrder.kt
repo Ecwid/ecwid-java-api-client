@@ -219,7 +219,8 @@ data class FetchedOrder(
 			val shippingRate: Double? = null,
 			val estimatedTransitTime: String? = null,
 			val isPickup: Boolean? = null,
-			val pickupInstruction: String? = null
+			val pickupInstruction: String? = null,
+			val fulfillmentType: FulfillmentType? = null
 	)
 
 	data class HandlingFee(
