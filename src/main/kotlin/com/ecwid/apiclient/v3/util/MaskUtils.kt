@@ -1,4 +1,4 @@
-package com.ecwid.apiclient.v3.impl
+package com.ecwid.apiclient.v3.util
 
 private const val TOKEN_UNMASKED_LENGTH = 3
 

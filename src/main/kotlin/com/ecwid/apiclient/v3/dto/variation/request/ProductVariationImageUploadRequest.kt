@@ -14,28 +14,28 @@ data class ProductVariationImageUploadRequest(
 
 	override fun toRequestInfo() = when (fileData) {
 		is UploadFileData.ExternalUrlData -> RequestInfo.createPostRequest(
-				endpoint = endpoint,
+				pathSegments = pathSegments,
 				params = mapOf(
 						"externalUrl" to fileData.externalUrl
 				),
 				httpBody = HttpBody.EmptyBody
 		)
 		is UploadFileData.ByteArrayData -> RequestInfo.createPostRequest(
-				endpoint = endpoint,
+				pathSegments = pathSegments,
 				httpBody = HttpBody.ByteArrayBody(
 						bytes = fileData.bytes,
 						mimeType = MIME_TYPE_OCTET_STREAM
 				)
 		)
 		is UploadFileData.LocalFileData -> RequestInfo.createPostRequest(
-				endpoint = endpoint,
+				pathSegments = pathSegments,
 				httpBody = HttpBody.LocalFileBody(
 						file = fileData.file,
 						mimeType = MIME_TYPE_OCTET_STREAM
 				)
 		)
 		is UploadFileData.InputStreamData -> RequestInfo.createPostRequest(
-				endpoint = endpoint,
+				pathSegments = pathSegments,
 				httpBody = HttpBody.InputStreamBody(
 						stream = fileData.stream,
 						mimeType = MIME_TYPE_OCTET_STREAM
@@ -43,6 +43,12 @@ data class ProductVariationImageUploadRequest(
 		)
 	}
 
-	private val endpoint = "products/$productId/combinations/$variationId/image"
+	private val pathSegments = listOf(
+			"products",
+			"$productId",
+			"combinations",
+			"$variationId",
+			"image"
+	)
 
 }

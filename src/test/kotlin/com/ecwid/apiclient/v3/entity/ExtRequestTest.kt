@@ -54,7 +54,9 @@ private data class CustomerCreateRequestExt(
         var newCustomerExt: CustomerDataExt = CustomerDataExt()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
-			endpoint = "customers",
+			pathSegments = listOf(
+					"customers"
+			),
 			httpBody = HttpBody.JsonBody(
 					obj = newCustomer,
 					objExt = newCustomerExt

@@ -9,6 +9,12 @@ data class ProductFileDownloadRequest(
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "products/$productId/files/$fileId"
+			pathSegments = listOf(
+				"products",
+				"$productId",
+				"files",
+				"$fileId"
+			)
 	)
+
 }

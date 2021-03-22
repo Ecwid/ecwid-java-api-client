@@ -14,29 +14,36 @@ data class OrderItemOptionFileUploadRequest(
 		val fileName: String = "",
 		val fileData: UploadFileData = UploadFileData.ExternalUrlData("")
 ) : ApiRequest {
-	constructor(orderNumber: Int = 0,
-				orderItemId: Int = 0,
-				optionName: String = "",
-				fileName: String = "",
-				fileData: UploadFileData = UploadFileData.ExternalUrlData("")
-	) : this(orderNumber, orderNumber.toString(), orderItemId, optionName, fileName, fileData)
+
+	constructor(
+			orderNumber: Int = 0,
+			orderItemId: Int = 0,
+			optionName: String = "",
+			fileName: String = "",
+			fileData: UploadFileData = UploadFileData.ExternalUrlData("")
+	) : this(
+			orderNumber = orderNumber,
+			orderIdentity = orderNumber.toString(),
+			orderItemId = orderItemId,
+			optionName = optionName,
+			fileName = fileName,
+			fileData = fileData
+	)
 
 	override fun toRequestInfo(): RequestInfo {
 		val commonParams = mapOf(
 				"fileName" to fileName
 		)
-		val fileData = fileData
-
 		return when (fileData) {
 			is UploadFileData.ExternalUrlData -> RequestInfo.createPostRequest(
-					endpoint = endpoint,
+					pathSegments = pathSegments,
 					params = commonParams + mapOf(
 							"externalUrl" to fileData.externalUrl
 					),
 					httpBody = HttpBody.EmptyBody
 			)
 			is UploadFileData.ByteArrayData -> RequestInfo.createPostRequest(
-					endpoint = endpoint,
+					pathSegments = pathSegments,
 					params = commonParams,
 					httpBody = HttpBody.ByteArrayBody(
 							bytes = fileData.bytes,
@@ -44,7 +51,7 @@ data class OrderItemOptionFileUploadRequest(
 					)
 			)
 			is UploadFileData.LocalFileData -> RequestInfo.createPostRequest(
-					endpoint = endpoint,
+					pathSegments = pathSegments,
 					params = commonParams,
 					httpBody = HttpBody.LocalFileBody(
 							file = fileData.file,
@@ -52,7 +59,7 @@ data class OrderItemOptionFileUploadRequest(
 					)
 			)
 			is UploadFileData.InputStreamData -> RequestInfo.createPostRequest(
-					endpoint = endpoint,
+					pathSegments = pathSegments,
 					params = commonParams,
 					httpBody = HttpBody.InputStreamBody(
 							stream = fileData.stream,
@@ -62,5 +69,13 @@ data class OrderItemOptionFileUploadRequest(
 		}
 	}
 
-	private val endpoint = "orders/$orderIdentity/items/$orderItemId/options/$optionName"
+	private val pathSegments = listOf(
+			"orders",
+			orderIdentity,
+			"items",
+			"$orderItemId",
+			"options",
+			optionName
+	)
+
 }

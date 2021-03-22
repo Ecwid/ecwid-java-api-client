@@ -7,6 +7,9 @@ data class CustomerGroupDetailsRequest(
 		val customerGroupId: Int = 0
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "customer_groups/$customerGroupId"
+			pathSegments = listOf(
+				"customer_groups",
+				"$customerGroupId"
+			)
 	)
 }

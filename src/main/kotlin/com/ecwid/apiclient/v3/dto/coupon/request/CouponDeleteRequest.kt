@@ -7,6 +7,9 @@ data class CouponDeleteRequest(
 		val couponIdentifier: String = ""
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createDeleteRequest(
-			endpoint = "discount_coupons/$couponIdentifier"
+			pathSegments = listOf(
+				"discount_coupons",
+				couponIdentifier
+			)
 	)
 }

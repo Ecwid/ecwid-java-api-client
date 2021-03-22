@@ -9,7 +9,10 @@ data class ProductTypeUpdateRequest(
 		val updatedProductType: UpdatedProductType = UpdatedProductType()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			endpoint = "classes/$productTypeId",
+			pathSegments = listOf(
+					"classes",
+					"$productTypeId"
+			),
 			httpBody = HttpBody.JsonBody(
 					obj = updatedProductType
 			)

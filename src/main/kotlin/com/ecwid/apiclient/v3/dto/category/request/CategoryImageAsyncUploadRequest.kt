@@ -12,11 +12,14 @@ data class CategoryImageAsyncUploadRequest(
 ) : ApiRequest {
 	override fun toRequestInfo(): RequestInfo {
 		return RequestInfo.createPostRequest(
-				endpoint = endpoint,
+				pathSegments = listOf(
+					"categories",
+					"$categoryId",
+					"image",
+					"async"
+				),
 				params = mapOf(),
 				httpBody = HttpBody.JsonBody(obj = asyncPictureData)
 		)
 	}
-
-	private val endpoint = "categories/$categoryId/image/async"
 }

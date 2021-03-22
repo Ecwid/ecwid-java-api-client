@@ -9,7 +9,9 @@ data class StoreProfileUpdateRequest(
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			endpoint = "profile",
+			pathSegments = listOf(
+					"profile"
+			),
 			httpBody = HttpBody.JsonBody(
 					obj = updatedStoreProfile
 			)

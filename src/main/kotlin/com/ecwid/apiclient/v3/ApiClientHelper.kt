@@ -12,10 +12,11 @@ import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.httptransport.*
 import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.impl.MIME_TYPE_APPLICATION_JSON
-import com.ecwid.apiclient.v3.impl.maskApiToken
+import com.ecwid.apiclient.v3.util.maskApiToken
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
+import com.ecwid.apiclient.v3.util.buildEndpointPath
 import java.io.ByteArrayInputStream
 import java.io.FileInputStream
 import java.net.URI
@@ -162,28 +163,29 @@ class ApiClientHelper private constructor(
 	@PublishedApi
 	internal fun RequestInfo.toHttpRequest(): HttpRequest = when (method) {
 		HttpMethod.GET -> HttpRequest.HttpGetRequest(
-				uri = createApiEndpointUri(endpoint),
+				uri = createApiEndpointUri(endpoint, pathSegments),
 				params = params.withApiTokenParam(storeCredentials.apiToken)
 		)
 		HttpMethod.POST -> HttpRequest.HttpPostRequest(
-				uri = createApiEndpointUri(endpoint),
+				uri = createApiEndpointUri(endpoint, pathSegments),
 				params = params.withApiTokenParam(storeCredentials.apiToken),
 				transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.PUT -> HttpRequest.HttpPutRequest(
-				uri = createApiEndpointUri(endpoint),
+				uri = createApiEndpointUri(endpoint, pathSegments),
 				params = params.withApiTokenParam(storeCredentials.apiToken),
 				transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
-				uri = createApiEndpointUri(endpoint),
+				uri = createApiEndpointUri(endpoint, pathSegments),
 				params = params.withApiTokenParam(storeCredentials.apiToken)
 		)
 	}
 
 	@PublishedApi
-	internal fun createApiEndpointUri(endpoint: String): String {
-		return URI(
+	internal fun createApiEndpointUri(endpoint: String?, pathSegments: List<String>?): String = when {
+		endpoint != null -> {
+			URI(
 				"https",
 				null,
 				apiServerDomain.host,
@@ -191,7 +193,24 @@ class ApiClientHelper private constructor(
 				"/api/v3/${storeCredentials.storeId}/$endpoint",
 				null,
 				null
-		).toString()
+			).toString()
+		}
+		pathSegments != null -> {
+			val uri = URI(
+				"https",
+				null,
+				apiServerDomain.host,
+				if (apiServerDomain.securePort == DEFAULT_HTTPS_PORT) -1 else apiServerDomain.securePort,
+				null,
+				null,
+				null
+			)
+			val encodedPath = "/api/v3/${storeCredentials.storeId}/" + buildEndpointPath(pathSegments)
+			uri.toString() + encodedPath
+		}
+		else -> {
+			throw IllegalArgumentException("At least one parameter 'endpoint' or 'pathSegments' must not be null")
+		}
 	}
 
 	private fun logSuccessfulResponseIfNeeded(requestId: String, requestTime: Long, responseBody: String) {

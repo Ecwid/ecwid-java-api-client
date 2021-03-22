@@ -11,7 +11,10 @@ data class DeletedProductsSearchRequest(
 		val limit: Int = 100
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "products/deleted",
+			pathSegments = listOf(
+				"products",
+				"deleted"
+			),
 			params = toParams()
 	)
 

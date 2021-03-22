@@ -10,7 +10,10 @@ data class ProductDetailsRequest(
 		val lang: String? = null
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "products/$productId",
+			pathSegments = listOf(
+				"products",
+				"$productId"
+			),
 			params = toParams()
 	)
 

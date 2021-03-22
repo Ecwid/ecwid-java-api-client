@@ -9,7 +9,10 @@ data class CategoryUpdateRequest(
 		val updatedCategory: UpdatedCategory = UpdatedCategory()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			endpoint = "categories/$categoryId",
+			pathSegments = listOf(
+					"categories",
+					"$categoryId"
+			),
 			httpBody = HttpBody.JsonBody(
 					obj = updatedCategory
 			)

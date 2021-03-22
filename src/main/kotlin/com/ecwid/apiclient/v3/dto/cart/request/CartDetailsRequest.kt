@@ -7,6 +7,9 @@ data class CartDetailsRequest(
 		val cartId: String = ""
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "carts/$cartId"
+			pathSegments = listOf(
+				"carts",
+				cartId
+			)
 	)
 }

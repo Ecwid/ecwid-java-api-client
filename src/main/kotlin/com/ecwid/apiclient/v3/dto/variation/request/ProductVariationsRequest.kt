@@ -8,7 +8,11 @@ data class ProductVariationsRequest(
 		val lang: String? = null
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "products/$productId/combinations",
+			pathSegments = listOf(
+				"products",
+				"$productId",
+				"combinations"
+			),
 			params = toParams()
 	)
 

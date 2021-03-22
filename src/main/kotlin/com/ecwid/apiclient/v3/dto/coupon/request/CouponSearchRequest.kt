@@ -20,7 +20,9 @@ data class CouponSearchRequest(
 		val updatedTo: Date? = null
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "discount_coupons",
+			pathSegments = listOf(
+				"discount_coupons"
+			),
 			params = toParams()
 	)
 

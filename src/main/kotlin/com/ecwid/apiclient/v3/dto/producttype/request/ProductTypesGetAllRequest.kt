@@ -5,6 +5,8 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 
 class ProductTypesGetAllRequest : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "classes"
+			pathSegments = listOf(
+				"classes"
+			)
 	)
 }

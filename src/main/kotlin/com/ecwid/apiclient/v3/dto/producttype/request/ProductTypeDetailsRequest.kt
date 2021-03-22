@@ -7,6 +7,9 @@ data class ProductTypeDetailsRequest(
 		val productTypeId: Int = 0
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "classes/$productTypeId"
+			pathSegments = listOf(
+				"classes",
+				"$productTypeId"
+			)
 	)
 }
