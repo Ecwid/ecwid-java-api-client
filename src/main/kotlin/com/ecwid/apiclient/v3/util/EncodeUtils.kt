@@ -16,9 +16,9 @@ internal fun buildQueryString(params: Map<String, String>): String {
 
 internal fun buildEndpointPath(pathSegments: List<String>): String {
 	return pathSegments.joinToString(separator = "/") { component ->
-		// We should use something like Guava's UrlEscapers.urlPathSegmentEscaper() here to escape url's path.
+		// We should have used something like Guava's UrlEscapers.urlPathSegmentEscaper() here to escape url's path.
 		// But Ecwid API backend decodes path segments as query parameters and not as url's path segments.
-		// So we should do the same here to correctly encode spaces as "+" and not "%20"
+		// So we have to do the same here to encode "+" sign as "%2B" and not "+".
 		URLEncoder.encode(component, UTF_CHARSET)
 	}
 }
