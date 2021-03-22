@@ -163,28 +163,40 @@ class ApiClientHelper private constructor(
 	@PublishedApi
 	internal fun RequestInfo.toHttpRequest(): HttpRequest = when (method) {
 		HttpMethod.GET -> HttpRequest.HttpGetRequest(
-				uri = createApiEndpointUri(pathSegments),
+				uri = createApiEndpointUri(endpoint, pathSegments),
 				params = params.withApiTokenParam(storeCredentials.apiToken)
 		)
 		HttpMethod.POST -> HttpRequest.HttpPostRequest(
-				uri = createApiEndpointUri(pathSegments),
+				uri = createApiEndpointUri(endpoint, pathSegments),
 				params = params.withApiTokenParam(storeCredentials.apiToken),
 				transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.PUT -> HttpRequest.HttpPutRequest(
-				uri = createApiEndpointUri(pathSegments),
+				uri = createApiEndpointUri(endpoint, pathSegments),
 				params = params.withApiTokenParam(storeCredentials.apiToken),
 				transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
-				uri = createApiEndpointUri(pathSegments),
+				uri = createApiEndpointUri(endpoint, pathSegments),
 				params = params.withApiTokenParam(storeCredentials.apiToken)
 		)
 	}
 
 	@PublishedApi
-	internal fun createApiEndpointUri(pathSegments: List<String>): String {
-		val uri = URI(
+	internal fun createApiEndpointUri(endpoint: String?, pathSegments: List<String>?): String = when {
+		endpoint != null -> {
+			URI(
+				"https",
+				null,
+				apiServerDomain.host,
+				if (apiServerDomain.securePort == DEFAULT_HTTPS_PORT) -1 else apiServerDomain.securePort,
+				"/api/v3/${storeCredentials.storeId}/$endpoint",
+				null,
+				null
+			).toString()
+		}
+		pathSegments != null -> {
+			val uri = URI(
 				"https",
 				null,
 				apiServerDomain.host,
@@ -192,9 +204,13 @@ class ApiClientHelper private constructor(
 				null,
 				null,
 				null
-		)
-		val encodedPath = "/api/v3/${storeCredentials.storeId}/" + buildEndpointPath(pathSegments)
-		return uri.toString() + encodedPath
+			)
+			val encodedPath = "/api/v3/${storeCredentials.storeId}/" + buildEndpointPath(pathSegments)
+			uri.toString() + encodedPath
+		}
+		else -> {
+			throw IllegalArgumentException("At least one parameter 'endpoint' or 'pathSegments' must not be null")
+		}
 	}
 
 	private fun logSuccessfulResponseIfNeeded(requestId: String, requestTime: Long, responseBody: String) {

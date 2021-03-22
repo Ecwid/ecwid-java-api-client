@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.util.buildEndpointPath
 import com.ecwid.apiclient.v3.util.buildQueryString
+import java.lang.IllegalArgumentException
 
 data class CreateBatchRequestWithIds(
 		val requests: Map<String, ApiRequest> = emptyMap(),
@@ -61,7 +62,11 @@ private data class SingleBatchRequest(
 
 		internal fun create(id: String?, apiRequest: ApiRequest): SingleBatchRequest {
 			val requestInfo = apiRequest.toRequestInfo()
-			val path = buildEndpointPath(requestInfo.pathSegments)
+			val path = when {
+				requestInfo.endpoint != null -> requestInfo.endpoint
+				requestInfo.pathSegments != null -> buildEndpointPath(requestInfo.pathSegments)
+				else -> throw IllegalArgumentException("At least one parameter 'endpoint' or 'pathSegments' must not be null")
+			}
 			val queryString = buildQueryString(requestInfo.params)
 			return SingleBatchRequest(
 					id = id,
@@ -76,6 +81,7 @@ private data class SingleBatchRequest(
 					}
 			)
 		}
+
 	}
 
 }
