@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.customer.result
 
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import java.util.*
 
 data class FetchedCustomer(
@@ -14,7 +15,8 @@ data class FetchedCustomer(
 		val taxId: String? = null,
 		val taxIdValid: Boolean? = null,
 		val taxExempt: Boolean? = null,
-		val acceptMarketing: Boolean? = null) {
+		val acceptMarketing: Boolean? = null
+) : ApiFetchedDTO {
 
 	data class BillingPerson(
 			val name: String? = null,

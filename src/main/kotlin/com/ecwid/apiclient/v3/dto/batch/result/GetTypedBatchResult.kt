@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.batch.result
 
+import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.EcwidApiError
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.impl.TypedBatchResponse
@@ -10,7 +11,7 @@ data class GetTypedBatchResult(
 		val totalRequests: Int = 0,
 		val completedRequests: Int = 0,
 		val responses: List<TypedSingleBatchResponse>? = null
-) {
+) : ApiResultDTO {
 
 	internal constructor(
 			escapedBatchResult: GetEscapedBatchResult,
@@ -31,7 +32,7 @@ data class TypedSingleBatchResponse(
 		val httpStatusLine: String = "",
 		val status: BatchResponseStatus = BatchResponseStatus.NOT_EXECUTED,
 		val jsonTransformer: JsonTransformer
-) {
+) : ApiResultDTO {
 
 	internal constructor(
 			escapedSingleBatchResponse: EscapedSingleBatchResponse,

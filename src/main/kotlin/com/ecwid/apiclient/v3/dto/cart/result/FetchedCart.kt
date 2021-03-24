@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.cart.result
 
 import com.ecwid.apiclient.v3.dto.cart.CartStringToStringMap
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import java.util.*
 
@@ -68,7 +69,7 @@ data class FetchedCart(
 		val utmData: UtmData? = null,
 
 		val acceptMarketing: Boolean? = null
-) {
+) : ApiFetchedDTO {
 
 	data class CreditCardStatus(
 			val avsMessage: String? = null,

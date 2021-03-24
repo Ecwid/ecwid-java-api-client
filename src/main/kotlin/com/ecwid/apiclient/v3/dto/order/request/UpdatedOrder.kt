@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.order.request
 
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import java.text.DateFormat
@@ -65,7 +66,7 @@ data class UpdatedOrder(
 		val utmData: UtmData? = null,
 
 		val pricesIncludeTax: Boolean? = null
-) {
+) : ApiUpdatedDTO {
 
 	data class CreditCardStatus(
 			val avsMessage: String? = null,

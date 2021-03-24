@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.category.request
 
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 
 data class UpdatedCategory(
@@ -12,4 +13,4 @@ data class UpdatedCategory(
 		val descriptionTranslated: LocalizedValueMap? = null,
 		val enabled: Boolean? = null,
 		val productIds: List<Int>? = null
-)
+) : ApiUpdatedDTO

@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.product.result
 
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.PictureInfo
 import com.ecwid.apiclient.v3.dto.product.enums.*
@@ -76,7 +77,7 @@ data class FetchedProduct(
 		val subtitleTranslated: LocalizedValueMap? = null,
 		val nameYourPriceEnabled: Boolean? = null,
 		val subscriptionSettings: SubscriptionSettings? = null
-) {
+) : ApiFetchedDTO {
 
 	data class Ribbon(
 			val text: String? = null,

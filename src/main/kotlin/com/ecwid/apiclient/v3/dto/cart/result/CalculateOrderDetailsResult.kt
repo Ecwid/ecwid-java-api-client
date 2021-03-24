@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.cart.result
 
 import com.ecwid.apiclient.v3.dto.cart.CartStringToStringMap
+import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import java.util.*
 
@@ -45,7 +46,8 @@ data class CalculateOrderDetailsResult(
 		val shippingOption: ShippingOptionInfo? = null,
 		val availableShippingOptions: List<ShippingOptionInfo>? = null,
 		val handlingFee: HandlingFeeInfo? = null
-) {
+): ApiResultDTO {
+
 	data class TaxInfo(
 			val id: Int? = null,
 			val name: String? = null,

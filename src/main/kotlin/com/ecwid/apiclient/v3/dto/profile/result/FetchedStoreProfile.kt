@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.profile.result
 
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 
 data class FetchedStoreProfile(
@@ -22,7 +23,8 @@ data class FetchedStoreProfile(
 		val fbMessengerSettings: FBMessengerSettings? = null,
 		val orderInvoiceSettings: OrderInvoiceSettings? = null,
 		val giftCardSettings: GiftCardSettings? = null
-) {
+) : ApiFetchedDTO {
+
 	data class GeneralInfo(
 			val storeId: Int = 0,
 			val storeUrl: String? = null,
