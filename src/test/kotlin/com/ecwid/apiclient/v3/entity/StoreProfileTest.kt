@@ -187,6 +187,9 @@ class StoreProfileTest : BaseEntityTest() {
 		val abandonedSales = settings.abandonedSales
 		require(abandonedSales != null)
 
+		val designSettings = actualProfile.designSettings
+		require(designSettings != null)
+
 		assertEquals(testStoreId, generalInfo.storeId)
 		assertEquals("bobyor", starterSite.ecwidSubdomain)
 		assertEquals("example.com", starterSite.customDomain)
@@ -229,6 +232,9 @@ class StoreProfileTest : BaseEntityTest() {
 		assertEquals("googleTagId", settings.googleTagId)
 		assertEquals("googleEventId", settings.googleEventId)
 		assertEquals(true, settings.showPricePerUnit)
+
+		// Checking field with custom name and annotation @JsonFieldName
+		assertEquals("MEDIUM", designSettings.productListImageSize)
 	}
 
 }
