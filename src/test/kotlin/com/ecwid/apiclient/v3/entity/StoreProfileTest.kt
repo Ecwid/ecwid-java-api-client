@@ -5,10 +5,8 @@ import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 import com.ecwid.apiclient.v3.util.PropertiesLoader
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class StoreProfileTest : BaseEntityTest() {
@@ -19,7 +17,6 @@ class StoreProfileTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Will be fixed in ECWID-75364")
 	fun testStoreProfile() {
 		val testStoreId = PropertiesLoader.load().storeId
 
@@ -124,24 +121,22 @@ class StoreProfileTest : BaseEntityTest() {
 								useShippingAddress = true,
 								taxShipping = true,
 								appliedByDefault = true,
-// TODO: uncomment after bug ECWID-65852 is fixed
-//                                rules = listOf(UpdatedStoreProfile.TaxSettings.TaxRule(
-//                                        zoneId = "zoneId",
-//                                        tax = 14.0
-//                                )),
+                                rules = listOf(UpdatedStoreProfile.TaxSettings.TaxRule(
+                                        zoneId = "zoneId",
+                                        tax = 14.0
+                                )),
 								defaultTax = 12.0
 						)),
 						pricesIncludeTax = false,
 						taxExemptBusiness = false
 				),
-// TODO: uncomment after bug ECWID-65838 is fixed
-//                zones = listOf(UpdatedStoreProfile.Zone(
-//                        id = "zoneId",
-//                        name = "Zone name",
-//                        countryCodes = listOf("RU", "UA"),
-//                        stateOrProvinceCodes = listOf("73", "77"),
-//                        postCodes = listOf("123456", "654321")
-//                )),
+                zones = listOf(UpdatedStoreProfile.Zone(
+                        id = "zoneId",
+                        name = "Zone name",
+                        countryCodes = listOf("RU", "UA"),
+                        stateOrProvinceCodes = listOf("RU-73", "RU-77"),
+                        postCodes = listOf("123456", "654321")
+                )),
 				businessRegistrationID = UpdatedStoreProfile.BusinessRegistrationID(
 						name = "businessRegistrationID",
 						value = "busines-value"
@@ -171,48 +166,69 @@ class StoreProfileTest : BaseEntityTest() {
 
 		val actualProfile = apiClient.getStoreProfile(StoreProfileRequest())
 
-		assertEquals(testStoreId, actualProfile.generalInfo!!.storeId)
-		assertEquals("bobyor", actualProfile.generalInfo!!.starterSite!!.ecwidSubdomain)
-		assertEquals("example.com", actualProfile.generalInfo!!.starterSite!!.customDomain)
-		assertEquals("https://bobyor.company.site", actualProfile.generalInfo!!.starterSite!!.generatedUrl)
-		assertEquals("https://www.mysite.com", actualProfile.generalInfo!!.storeUrl)
-		assertEquals(FetchedStoreProfile.WebsitePlatform.wordpress, actualProfile.generalInfo!!.websitePlatform)
+		val generalInfo = actualProfile.generalInfo
+		require(generalInfo != null)
 
-		assertEquals("The Bobyør", actualProfile.account!!.accountName)
-		assertEquals("bobyør", actualProfile.account!!.accountNickName)
-		assertEquals("bobyor@example.com", actualProfile.account!!.accountEmail)
-		assertTrue(actualProfile.account!!.availableFeatures!!.contains("API"))
-		assertEquals(false, actualProfile.account!!.whiteLabel)
+		val starterSite = generalInfo.starterSite
+		require(starterSite != null)
 
-		assertEquals(true, actualProfile.settings!!.closed)
-		assertEquals("The Shop", actualProfile.settings!!.storeName)
-		assertEquals("The Store Description", actualProfile.settings!!.storeDescription)
-		assertEquals(true, actualProfile.settings!!.googleRemarketingEnabled)
-		assertEquals("googleAnalyticsId", actualProfile.settings!!.googleAnalyticsId)
-		assertEquals("fbPixelId", actualProfile.settings!!.fbPixelId)
-		assertEquals(true, actualProfile.settings!!.orderCommentsEnabled)
-		assertEquals("orderCommentsCaption", actualProfile.settings!!.orderCommentsCaption)
-		assertEquals(true, actualProfile.settings!!.orderCommentsRequired)
-		assertEquals(true, actualProfile.settings!!.hideOutOfStockProductsInStorefront)
-		assertEquals(true, actualProfile.settings!!.askCompanyName)
-		assertEquals(true, actualProfile.settings!!.favoritesEnabled)
-		assertEquals(FetchedStoreProfile.ProductSortOrder.NAME_ASC, actualProfile.settings!!.defaultProductSortOrder)
+		val account = actualProfile.account
+		require(account != null)
 
-		assertEquals(true, actualProfile.settings!!.abandonedSales!!.autoAbandonedSalesRecovery)
+		val settings = actualProfile.settings
+		require(settings != null)
 
-		assertEquals(true, actualProfile.settings!!.salePrice!!.displayOnProductList)
-		assertEquals("oldPriceLabel", actualProfile.settings!!.salePrice!!.oldPriceLabel)
-		assertEquals(FetchedStoreProfile.SalePriceSettings.DisplayDiscount.PERCENT, actualProfile.settings!!.salePrice!!.displayDiscount)
+		val salePrice = settings.salePrice
+		require(salePrice != null)
 
-		assertEquals(true, actualProfile.settings!!.showAcceptMarketingCheckbox)
-		assertEquals(true, actualProfile.settings!!.acceptMarketingCheckboxDefaultValue)
-		assertEquals("acceptMarketingCheckboxCustomText", actualProfile.settings!!.acceptMarketingCheckboxCustomText)
-		assertEquals(true, actualProfile.settings!!.askConsentToTrackInStorefront)
-		assertEquals("snapPixelId", actualProfile.settings!!.snapPixelId)
-		assertEquals("pinterestTagId", actualProfile.settings!!.pinterestTagId)
-		assertEquals("googleTagId", actualProfile.settings!!.googleTagId)
-		assertEquals("googleEventId", actualProfile.settings!!.googleEventId)
-		assertEquals(true, actualProfile.settings!!.showPricePerUnit)
+		val availableFeatures = account.availableFeatures
+		require(availableFeatures != null)
+
+		val abandonedSales = settings.abandonedSales
+		require(abandonedSales != null)
+
+		assertEquals(testStoreId, generalInfo.storeId)
+		assertEquals("bobyor", starterSite.ecwidSubdomain)
+		assertEquals("example.com", starterSite.customDomain)
+		assertEquals("https://bobyor.company.site", starterSite.generatedUrl)
+		assertEquals("https://www.mysite.com", generalInfo.storeUrl)
+		assertEquals(FetchedStoreProfile.WebsitePlatform.wordpress, generalInfo.websitePlatform)
+
+		assertEquals("The Bobyør", account.accountName)
+		assertEquals("bobyør", account.accountNickName)
+		assertEquals("bobyor@example.com", account.accountEmail)
+		assertTrue(availableFeatures.contains("API"))
+		assertEquals(false, account.whiteLabel)
+
+		assertEquals(true, settings.closed)
+		assertEquals("The Shop", settings.storeName)
+		assertEquals("The Store Description", settings.storeDescription)
+		assertEquals(true, settings.googleRemarketingEnabled)
+		assertEquals("googleAnalyticsId", settings.googleAnalyticsId)
+		assertEquals("fbPixelId", settings.fbPixelId)
+		assertEquals(true, settings.orderCommentsEnabled)
+		assertEquals("orderCommentsCaption", settings.orderCommentsCaption)
+		assertEquals(true, settings.orderCommentsRequired)
+		assertEquals(true, settings.hideOutOfStockProductsInStorefront)
+		assertEquals(true, settings.askCompanyName)
+		assertEquals(true, settings.favoritesEnabled)
+		assertEquals(FetchedStoreProfile.ProductSortOrder.NAME_ASC, settings.defaultProductSortOrder)
+
+		assertEquals(true, abandonedSales.autoAbandonedSalesRecovery)
+
+		assertEquals(true, salePrice.displayOnProductList)
+		assertEquals("oldPriceLabel", salePrice.oldPriceLabel)
+		assertEquals(FetchedStoreProfile.SalePriceSettings.DisplayDiscount.PERCENT, salePrice.displayDiscount)
+
+		assertEquals(true, settings.showAcceptMarketingCheckbox)
+		assertEquals(true, settings.acceptMarketingCheckboxDefaultValue)
+		assertEquals("acceptMarketingCheckboxCustomText", settings.acceptMarketingCheckboxCustomText)
+		assertEquals(true, settings.askConsentToTrackInStorefront)
+		assertEquals("snapPixelId", settings.snapPixelId)
+		assertEquals("pinterestTagId", settings.pinterestTagId)
+		assertEquals("googleTagId", settings.googleTagId)
+		assertEquals("googleEventId", settings.googleEventId)
+		assertEquals(true, settings.showPricePerUnit)
 	}
 
 }
