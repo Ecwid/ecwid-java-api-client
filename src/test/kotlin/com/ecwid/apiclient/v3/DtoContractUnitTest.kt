@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
+import com.ecwid.apiclient.v3.dto.common.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -14,6 +15,12 @@ import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
 
+private val dtoMarkerInterfaces = listOf(
+	ApiFetchedDTO::class.java,
+	ApiUpdatedDTO::class.java,
+	ApiRequestDTO::class.java,
+	ApiResultDTO::class.java
+)
 
 class DtoContractUnitTest {
 
@@ -60,6 +67,22 @@ class DtoContractUnitTest {
 		assertTrue(problemDtoClasses.isEmpty()) {
 			"Some DTO data classes does have mutable properties in their primary constructors " +
 					"(you need to replace all parameters from `var` to `val`):\n" +
+					classListToLoggableString(problemDtoClasses)
+		}
+	}
+
+	@Test
+	fun `test all top level data classes DTOs implement one of DTO marker interface`() {
+		val dtoDataClasses = getDtoClassesToCheck()
+				.filterNot { dtoClass -> dtoClass.isEnum }
+				.filterNot { dtoClass -> dtoClass.packageName.startsWith("com.ecwid.apiclient.v3.dto.common") }
+		assertFalse(dtoDataClasses.isEmpty())
+
+		val problemDtoClasses = dtoDataClasses
+				.filterNot { dtoClass -> dtoClass.isClassifiedDTOOrEnclosingClass() }
+		assertTrue(problemDtoClasses.isEmpty()) {
+			val inderfacesStr = dtoMarkerInterfaces.joinToString(separator = ", ") { int -> int.simpleName }
+			"Some of top level DTO data classes does implement one of marker interfaces [$inderfacesStr]:\n" +
 					classListToLoggableString(problemDtoClasses)
 		}
 	}
@@ -136,3 +159,17 @@ private fun getDtoClassesToCheck() = Reflections(ApiRequest::class.java.packageN
 			}
 		}
 		.sortedBy { clazz -> clazz.canonicalName }
+
+private fun Class<*>.isClassifiedDTOOrEnclosingClass(): Boolean {
+	var clazz: Class<*>? = this
+	while (clazz != null) {
+		val isClassifiedDTO = dtoMarkerInterfaces.any { dtoMarkerInterface ->
+			dtoMarkerInterface.isAssignableFrom(clazz!!)
+		}
+		if (isClassifiedDTO) {
+			return true
+		}
+		clazz = clazz.enclosingClass
+	}
+	return false
+}
