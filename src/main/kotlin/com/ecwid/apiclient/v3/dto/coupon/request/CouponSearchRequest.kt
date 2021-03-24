@@ -4,14 +4,12 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponStatus
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponType
 import com.ecwid.apiclient.v3.impl.RequestInfo
-import com.google.gson.annotations.SerializedName
 import java.util.*
 
 data class CouponSearchRequest(
 		val offset: Int = 0,
 		val limit: Int = 100,
 		val code: String? = null,
-		@SerializedName("discount_type")
 		val discountType: Set<DiscountCouponType>? = null,
 		val availability: DiscountCouponStatus? = null,
 		val createdFrom: Date? = null,
