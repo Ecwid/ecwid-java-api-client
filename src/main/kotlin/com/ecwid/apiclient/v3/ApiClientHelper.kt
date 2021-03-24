@@ -342,7 +342,7 @@ internal fun HttpBody.prepare(jsonTransformer: JsonTransformer): TransportHttpBo
 			TransportHttpBody.InputStreamBody(stream, mimeType)
 		}
 		is HttpBody.LocalFileBody -> {
-			TransportHttpBody.InputStreamBody(FileInputStream(file), mimeType)
+			TransportHttpBody.LocalFileBody(file, mimeType)
 		}
 	}
 }
