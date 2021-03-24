@@ -1,17 +1,15 @@
 package com.ecwid.apiclient.v3.httptransport.impl
 
-import com.ecwid.apiclient.v3.httptransport.HttpRequest
-import com.ecwid.apiclient.v3.httptransport.HttpResponse
-import com.ecwid.apiclient.v3.httptransport.HttpTransport
-import com.ecwid.apiclient.v3.httptransport.TransportHttpBody
-import org.apache.http.Consts
+import com.ecwid.apiclient.v3.httptransport.*
 import org.apache.http.Header
 import org.apache.http.client.HttpClient
+import org.apache.http.client.ResponseHandler
 import org.apache.http.client.config.RequestConfig
 import org.apache.http.client.methods.HttpUriRequest
 import org.apache.http.client.methods.RequestBuilder
 import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager
+import org.apache.http.message.BasicHeader
 import org.apache.http.message.BasicNameValuePair
 import org.apache.http.util.EntityUtils
 import java.io.IOException
@@ -25,21 +23,24 @@ private const val DEFAULT_MAX_CONNECTIONS = 10
 /**
  * Number of attempts to retry request if server responded with 429
  */
-private const val DEFAULT_RATE_LIMIT_ATTEMPTS = 2
+internal const val DEFAULT_RATE_LIMIT_ATTEMPTS = 2
 /**
  * Number of seconds to wait until next attempt, if server didn't send Retry-After header
  */
-private const val DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 10L
+internal const val DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 10L
 /**
  * Maximal delay in seconds before next attempt
  */
-private const val MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 60L
+internal const val MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 60L
+
+val EMPTY_WAITING_REACITON: (Long) -> Unit = { }
 
 open class ApacheCommonsHttpClientTransport(
 	private val httpClient: HttpClient,
 	private val defaultRateLimitAttempts: Int = DEFAULT_RATE_LIMIT_ATTEMPTS,
 	private val defaultRateLimitRetryInterval: Long = DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
-	private val maxRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS
+	private val maxRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
+	private val onEverySecondOfWaiting: (Long) -> Unit = EMPTY_WAITING_REACITON
 ) : HttpTransport {
 
 	constructor(
@@ -49,7 +50,8 @@ open class ApacheCommonsHttpClientTransport(
 		defaultRateLimitAttempts: Int = DEFAULT_RATE_LIMIT_ATTEMPTS,
 		defaultRateLimitRetryInterval: Long = DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 		maxRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
-		defaultHeaders: List<Header> = emptyList()
+		defaultHeaders: List<Header> = emptyList(),
+		onEverySecondOfWaiting: (Long) -> Unit = EMPTY_WAITING_REACITON
 	) : this(
 		httpClient = buildHttpClient(
 			defaultConnectionTimeout = defaultConnectionTimeout,
@@ -59,39 +61,39 @@ open class ApacheCommonsHttpClientTransport(
 		),
 		defaultRateLimitAttempts = defaultRateLimitAttempts,
 		defaultRateLimitRetryInterval = defaultRateLimitRetryInterval,
-		maxRateLimitRetryInterval = maxRateLimitRetryInterval
+		maxRateLimitRetryInterval = maxRateLimitRetryInterval,
+		onEverySecondOfWaiting = onEverySecondOfWaiting
 	)
 
 	override fun makeHttpRequest(httpRequest: HttpRequest): HttpResponse {
 		val request = httpRequest.toHttpUriRequest()
 		return try {
-			doExecute(request)
+			if (httpRequest.transportHttpBody is TransportHttpBody.InputStreamBody) {
+				executeWithoutRetry(request)
+			} else {
+				executeWithRetryOnRateLimited(request)
+			}
 		} catch (e: IOException) {
 			HttpResponse.TransportError(e)
 		}
 	}
 
-	private fun doExecute(request: HttpUriRequest, attemptsLeft: Int = defaultRateLimitAttempts): HttpResponse {
-		return httpClient.execute(request) { response ->
-			val statusLine = response.statusLine
-			val responseBytes = EntityUtils.toByteArray(response.entity)
-			if (statusLine.statusCode == HttpStatus.SC_OK) {
-				HttpResponse.Success(responseBytes)
-			} else if (statusLine.statusCode == 429 && attemptsLeft > 0) {
-				// server should reply, how long to wait before retry
-				val waitInterval = response.getFirstHeader("Retry-After")?.value?.toLong()
-					?: defaultRateLimitRetryInterval
-				if (waitInterval <= maxRateLimitRetryInterval) {
-					// if servers says to wait acceptable time - we'll wait and retry
-					TimeUnit.SECONDS.sleep(waitInterval)
-					doExecute(request, attemptsLeft - 1)
-				} else {
-					// if server says we need to wait too long, we just don't
-					HttpResponse.Error(statusLine.statusCode, statusLine.reasonPhrase, responseBytes)
-				}
-			} else {
-				HttpResponse.Error(statusLine.statusCode, statusLine.reasonPhrase, responseBytes)
-			}
+	private fun executeWithoutRetry(request: HttpUriRequest) =
+		httpClient.execute(request).toApiResponse()
+
+	private fun executeWithRetryOnRateLimited(request: HttpUriRequest): HttpResponse {
+		return try {
+			RateLimitedHttpClientWrapper(
+				httpClient,
+				defaultRateLimitRetryInterval,
+				maxRateLimitRetryInterval,
+				defaultRateLimitAttempts,
+				onEverySecondOfWaiting
+			).execute(request, ResponseHandler<HttpResponse> { response ->
+				response.toApiResponse()
+			})
+		} catch (e: IOException) {
+			HttpResponse.TransportError(e)
 		}
 	}
 
