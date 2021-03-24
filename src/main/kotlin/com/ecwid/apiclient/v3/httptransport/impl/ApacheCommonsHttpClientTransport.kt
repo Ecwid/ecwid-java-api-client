@@ -12,6 +12,7 @@ import org.apache.http.client.config.RequestConfig
 import org.apache.http.client.methods.HttpUriRequest
 import org.apache.http.client.methods.RequestBuilder
 import org.apache.http.entity.AbstractHttpEntity
+import org.apache.http.entity.ByteArrayEntity
 import org.apache.http.entity.ContentType
 import org.apache.http.entity.InputStreamEntity
 import org.apache.http.impl.client.HttpClientBuilder
@@ -168,4 +169,6 @@ private fun TransportHttpBody.toEntity(): AbstractHttpEntity? = when (this) {
 		null
 	is TransportHttpBody.InputStreamBody ->
 		InputStreamEntity(stream, mimeType.toContentType())
+	is TransportHttpBody.ByteArrayBody ->
+		ByteArrayEntity(byteArray, mimeType.toContentType())
 }

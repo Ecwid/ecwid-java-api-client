@@ -333,10 +333,10 @@ internal fun HttpBody.prepare(jsonTransformer: JsonTransformer): TransportHttpBo
 		HttpBody.EmptyBody -> TransportHttpBody.EmptyBody
 		is HttpBody.JsonBody -> {
 			val bodyAsBytes = jsonTransformer.serialize(obj, objExt).toByteArray()
-			TransportHttpBody.InputStreamBody(ByteArrayInputStream(bodyAsBytes), MIME_TYPE_APPLICATION_JSON)
+			TransportHttpBody.ByteArrayBody(bodyAsBytes, MIME_TYPE_APPLICATION_JSON)
 		}
 		is HttpBody.ByteArrayBody -> {
-			TransportHttpBody.InputStreamBody(ByteArrayInputStream(bytes), mimeType)
+			TransportHttpBody.ByteArrayBody(bytes, mimeType)
 		}
 		is HttpBody.InputStreamBody -> {
 			TransportHttpBody.InputStreamBody(stream, mimeType)

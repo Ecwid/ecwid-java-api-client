@@ -25,4 +25,5 @@ sealed class HttpBody(val mimeType: String) {
 sealed class TransportHttpBody(val mimeType: String) {
 	object EmptyBody : TransportHttpBody("")
 	class InputStreamBody(val stream: InputStream, mimeType: String) : TransportHttpBody(mimeType)
+	class ByteArrayBody(val byteArray: ByteArray, mimeType: String) : TransportHttpBody(mimeType)
 }
