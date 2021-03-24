@@ -6,14 +6,13 @@ import com.ecwid.apiclient.v3.httptransport.HttpTransport
 import com.ecwid.apiclient.v3.httptransport.TransportHttpBody
 import org.apache.http.Consts
 import org.apache.http.Header
+import org.apache.http.HttpEntity
 import org.apache.http.HttpStatus
 import org.apache.http.client.HttpClient
 import org.apache.http.client.config.RequestConfig
 import org.apache.http.client.methods.HttpUriRequest
 import org.apache.http.client.methods.RequestBuilder
-import org.apache.http.entity.AbstractHttpEntity
-import org.apache.http.entity.ContentType
-import org.apache.http.entity.InputStreamEntity
+import org.apache.http.entity.*
 import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager
 import org.apache.http.message.BasicNameValuePair
@@ -163,9 +162,13 @@ private fun createNameValuePairs(params: Map<String, String>): Array<BasicNameVa
 
 private fun String.toContentType(): ContentType = ContentType.create(this, Consts.UTF_8)
 
-private fun TransportHttpBody.toEntity(): AbstractHttpEntity? = when (this) {
+private fun TransportHttpBody.toEntity(): HttpEntity? = when (this) {
 	is TransportHttpBody.EmptyBody ->
 		null
 	is TransportHttpBody.InputStreamBody ->
-		InputStreamEntity(stream, mimeType.toContentType())
+		BufferedHttpEntity(InputStreamEntity(stream, mimeType.toContentType()))
+	is TransportHttpBody.ByteArrayBody ->
+		ByteArrayEntity(byteArray, mimeType.toContentType())
+	is TransportHttpBody.LocalFileBody ->
+		FileEntity(file, mimeType.toContentType())
 }
