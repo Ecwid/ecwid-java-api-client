@@ -63,7 +63,7 @@ open class ApacheCommonsHttpClientTransport(
 	)
 
 	override fun makeHttpRequest(httpRequest: HttpRequest): HttpResponse {
-		val request = toHttpUriRequest(httpRequest)
+		val request = httpRequest.toHttpUriRequest()
 		return try {
 			doExecute(request)
 		} catch (e: IOException) {
@@ -93,30 +93,6 @@ open class ApacheCommonsHttpClientTransport(
 				HttpResponse.Error(statusLine.statusCode, statusLine.reasonPhrase, responseBytes)
 			}
 		}
-	}
-
-	private fun toHttpUriRequest(httpRequest: HttpRequest): HttpUriRequest {
-		val requestBuilder = when (httpRequest) {
-			is HttpRequest.HttpGetRequest -> {
-				RequestBuilder.get(httpRequest.uri)
-			}
-			is HttpRequest.HttpPostRequest -> {
-				RequestBuilder
-					.post(httpRequest.uri)
-					.setEntity(httpRequest.transportHttpBody.toEntity())
-			}
-			is HttpRequest.HttpPutRequest -> {
-				RequestBuilder
-					.put(httpRequest.uri)
-					.setEntity(httpRequest.transportHttpBody.toEntity())
-			}
-			is HttpRequest.HttpDeleteRequest -> {
-				RequestBuilder.delete(httpRequest.uri)
-			}
-		}
-		return requestBuilder
-			.addParameters(*createNameValuePairs(httpRequest.params))
-			.build()
 	}
 
 	companion object {
@@ -149,10 +125,4 @@ open class ApacheCommonsHttpClientTransport(
 		}
 	}
 
-}
-
-private fun createNameValuePairs(params: Map<String, String>): Array<BasicNameValuePair> {
-	return params
-			.map { (name, value) -> BasicNameValuePair(name, value) }
-			.toTypedArray()
 }
