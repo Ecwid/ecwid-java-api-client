@@ -8,17 +8,15 @@ import com.google.gson.*
 
 class GsonTransformer(polymorphicTypes: List<PolymorphicType<*>>) : JsonTransformer {
 
-	private val gson: Gson
-
-	init {
-		val gsonBuilder = GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss z")
-
-		polymorphicTypes.forEach { polymorphType ->
-			gsonBuilder.registerTypeAdapter(polymorphType.rootClass, GsonPolymorphicDeserializer(polymorphType))
+	private val gson: Gson = GsonBuilder()
+		.setDateFormat("yyyy-MM-dd HH:mm:ss z")
+		.setFieldNamingStrategy(GsonFieldNamingStrategy())
+		.also { gsonBuilder ->
+			polymorphicTypes.forEach { polymorphType ->
+				gsonBuilder.registerTypeAdapter(polymorphType.rootClass, GsonPolymorphicDeserializer(polymorphType))
+			}
 		}
-
-		gson = gsonBuilder.create()
-	}
+		.create()
 
 	override fun serialize(src: Any?, srcExt: Any?): String {
 		return if (srcExt == null) {
