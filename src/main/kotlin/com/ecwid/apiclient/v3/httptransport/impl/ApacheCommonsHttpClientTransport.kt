@@ -162,7 +162,7 @@ private fun createNameValuePairs(params: Map<String, String>): Array<BasicNameVa
 
 private fun String.toContentType(): ContentType = ContentType.create(this, Consts.UTF_8)
 
-private fun TransportHttpBody.toEntity(): HttpEntity? = when (this) {
+fun TransportHttpBody.toEntity(): HttpEntity? = when (this) {
 	is TransportHttpBody.EmptyBody ->
 		null
 	is TransportHttpBody.InputStreamBody ->
