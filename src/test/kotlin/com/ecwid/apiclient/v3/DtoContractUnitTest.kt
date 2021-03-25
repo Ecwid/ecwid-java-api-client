@@ -1,25 +1,32 @@
 package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
-import com.ecwid.apiclient.v3.dto.common.*
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
+import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 import com.ecwid.apiclient.v3.rule.nullablePropertyRules
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
+import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestMethodOrder
 import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
 import java.io.File
 import java.io.InputStream
 import java.lang.reflect.Constructor
+import java.lang.reflect.Member
 import kotlin.reflect.KMutableProperty
+import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty1
+import kotlin.reflect.KVisibility
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
-import java.lang.reflect.Member
-import kotlin.reflect.*
 import kotlin.reflect.jvm.javaField
 import kotlin.reflect.jvm.javaGetter
 
@@ -30,9 +37,11 @@ private val dtoMarkerInterfaces = arrayOf(
 	ApiResultDTO::class.java
 )
 
+@TestMethodOrder(OrderAnnotation::class)
 class DtoContractUnitTest {
 
 	@Test
+	@Order(0)
 	fun `test all DTOs marked as data classes`() {
 		val dtoClasses = getDtoClassesToCheck()
 		assertFalse(dtoClasses.isEmpty())
@@ -46,6 +55,7 @@ class DtoContractUnitTest {
 	}
 
 	@Test
+	@Order(1)
 	fun `test all data classes DTOs has default constructor`() {
 		val dtoDataClasses = getDtoClassesToCheck()
 			.filter { dtoClass -> dtoClass.kotlin.isData }
@@ -64,6 +74,7 @@ class DtoContractUnitTest {
 	}
 
 	@Test
+	@Order(2)
 	fun `test all data classes DTOs has only val parameters in their primary constructors`() {
 		val dtoDataClasses = getDtoClassesToCheck()
 			.filter { dtoClass -> dtoClass.kotlin.isData }
@@ -80,6 +91,7 @@ class DtoContractUnitTest {
 	}
 
 	@Test
+	@Order(3)
 	fun `test all top level data classes DTOs implement one of DTO marker interface`() {
 		val dtoDataClasses = getDtoClassesToCheck()
 			.filterNot { dtoClass -> dtoClass.isEnum }
@@ -96,6 +108,7 @@ class DtoContractUnitTest {
 	}
 
 	@Test
+	@Order(4)
 	fun `test all DTOs marked as 'preferably having non-nullable fields' have only non-nullable fields or fields added to exclusion list`() {
 		val dtoDataClasses = getDtoClassesToCheck()
 			.filter { dtoClass ->
@@ -131,6 +144,7 @@ class DtoContractUnitTest {
 	}
 
 	@Test
+	@Order(5)
 	fun `test no new exclusions added to file NullablePropertyRules`() {
 		val ignoreNullablePropertiesCount = nullablePropertyRules
 			.filterIsInstance<IgnoreNullable<*, *>>()
