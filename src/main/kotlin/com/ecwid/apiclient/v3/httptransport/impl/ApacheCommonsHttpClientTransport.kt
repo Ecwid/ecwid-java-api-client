@@ -1,12 +1,15 @@
 package com.ecwid.apiclient.v3.httptransport.impl
 
 import com.ecwid.apiclient.v3.httptransport.*
+import org.apache.http.Consts
 import org.apache.http.Header
+import org.apache.http.HttpEntity
 import org.apache.http.client.HttpClient
 import org.apache.http.client.ResponseHandler
 import org.apache.http.client.config.RequestConfig
 import org.apache.http.client.methods.HttpUriRequest
 import org.apache.http.client.methods.RequestBuilder
+import org.apache.http.entity.*
 import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager
 import org.apache.http.message.BasicHeader

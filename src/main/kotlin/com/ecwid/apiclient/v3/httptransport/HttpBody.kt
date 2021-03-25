@@ -1,9 +1,6 @@
 package com.ecwid.apiclient.v3.httptransport
 
 import com.ecwid.apiclient.v3.impl.MIME_TYPE_APPLICATION_JSON
-import org.apache.http.Consts
-import org.apache.http.HttpEntity
-import org.apache.http.entity.*
 import java.io.File
 import java.io.InputStream
 
@@ -30,18 +27,4 @@ sealed class TransportHttpBody(val mimeType: String) {
 	class InputStreamBody(val stream: InputStream, mimeType: String) : TransportHttpBody(mimeType)
 	class ByteArrayBody(val byteArray: ByteArray, mimeType: String) : TransportHttpBody(mimeType)
 	class LocalFileBody(val file: File, mimeType: String) : TransportHttpBody(mimeType)
-
-	fun toEntity(): HttpEntity? = when (this) {
-		is EmptyBody ->
-			null
-		is InputStreamBody ->
-			BufferedHttpEntity(InputStreamEntity(stream, mimeType.toContentType()))
-		is ByteArrayBody ->
-			ByteArrayEntity(byteArray, mimeType.toContentType())
-		is LocalFileBody ->
-			FileEntity(file, mimeType.toContentType())
-	}
-
-	private fun String.toContentType(): ContentType = ContentType.create(this, Consts.UTF_8)
-
 }
