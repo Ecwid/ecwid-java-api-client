@@ -12,6 +12,7 @@ import java.io.File
 import java.io.InputStream
 import java.lang.reflect.Constructor
 import kotlin.reflect.KMutableProperty
+import kotlin.reflect.KProperty1
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
 
@@ -139,12 +140,16 @@ private fun isDtoShouldHaveZeroArgConstructor(constructors: Array<Constructor<*>
 }
 
 private fun isPrimaryConstructorHasMutableProperties(dtoDataClass: Class<*>): Boolean {
-	val kclass = dtoDataClass.kotlin
-	val primaryConstructorProperties = kclass.declaredMemberProperties.filter { member ->
-		kclass.primaryConstructor?.parameters?.any { parameter -> member.name == parameter.name } ?: false
-	}
+	val primaryConstructorProperties = getPrimaryConstructorProperties(dtoDataClass)
 	return primaryConstructorProperties.any { property ->
 		property is KMutableProperty<*>
+	}
+}
+
+private fun getPrimaryConstructorProperties(dtoDataClass: Class<*>): List<KProperty1<*, *>> {
+	val kclass = dtoDataClass.kotlin
+	return kclass.declaredMemberProperties.filter { member ->
+		kclass.primaryConstructor?.parameters?.any { parameter -> member.name == parameter.name } ?: false
 	}
 }
 
