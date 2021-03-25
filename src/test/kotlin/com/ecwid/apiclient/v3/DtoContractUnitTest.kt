@@ -40,7 +40,7 @@ class DtoContractUnitTest {
 	@Test
 	fun `test all data classes DTOs has default constructor`() {
 		val dtoDataClasses = getDtoClassesToCheck()
-				.filter { dtoClass -> dtoClass.kotlin.isData }
+			.filter { dtoClass -> dtoClass.kotlin.isData }
 		assertFalse(dtoDataClasses.isEmpty())
 
 		val problemDtoClasses = dtoDataClasses.filter { dtoDataClass ->
@@ -58,7 +58,7 @@ class DtoContractUnitTest {
 	@Test
 	fun `test all data classes DTOs has only val parameters in their primary constructors`() {
 		val dtoDataClasses = getDtoClassesToCheck()
-				.filter { dtoClass -> dtoClass.kotlin.isData }
+			.filter { dtoClass -> dtoClass.kotlin.isData }
 		assertFalse(dtoDataClasses.isEmpty())
 
 		val problemDtoClasses = dtoDataClasses.filter { dtoDataClass ->
@@ -74,12 +74,12 @@ class DtoContractUnitTest {
 	@Test
 	fun `test all top level data classes DTOs implement one of DTO marker interface`() {
 		val dtoDataClasses = getDtoClassesToCheck()
-				.filterNot { dtoClass -> dtoClass.isEnum }
-				.filterNot { dtoClass -> dtoClass.packageName.startsWith("com.ecwid.apiclient.v3.dto.common") }
+			.filterNot { dtoClass -> dtoClass.isEnum }
+			.filterNot { dtoClass -> dtoClass.packageName.startsWith("com.ecwid.apiclient.v3.dto.common") }
 		assertFalse(dtoDataClasses.isEmpty())
 
 		val problemDtoClasses = dtoDataClasses
-				.filterNot { dtoClass -> dtoClass.isClassifiedDTOOrEnclosingClass(*dtoMarkerInterfaces) }
+			.filterNot { dtoClass -> dtoClass.isClassifiedDTOOrEnclosingClass(*dtoMarkerInterfaces) }
 		assertTrue(problemDtoClasses.isEmpty()) {
 			val inderfacesStr = dtoMarkerInterfaces.joinToString(separator = ", ") { int -> int.simpleName }
 			"Some of top level DTO data classes does implement one of marker interfaces [$inderfacesStr]:\n" +
@@ -149,17 +149,17 @@ private fun isPrimaryConstructorHasMutableProperties(dtoDataClass: Class<*>): Bo
 }
 
 private fun getDtoClassesToCheck() = Reflections(ApiRequest::class.java.packageName, SubTypesScanner(false))
-		.getSubTypesOf(Object::class.java)
-		.filterNot { clazz -> clazz.isInterface || clazz.isAnonymousClass }
-		.filterNot { clazz ->
-			try {
-				clazz.kotlin.isCompanion
-			} catch (e: UnsupportedOperationException) {
-				// Filtering file facades classes (*Kt classes) and synthetic classes (i.e. when-mappings classes)
-				true
-			}
+	.getSubTypesOf(Object::class.java)
+	.filterNot { clazz -> clazz.isInterface || clazz.isAnonymousClass }
+	.filterNot { clazz ->
+		try {
+			clazz.kotlin.isCompanion
+		} catch (e: UnsupportedOperationException) {
+			// Filtering file facades classes (*Kt classes) and synthetic classes (i.e. when-mappings classes)
+			true
 		}
-		.sortedBy { clazz -> clazz.canonicalName }
+	}
+	.sortedBy { clazz -> clazz.canonicalName }
 
 private fun Class<*>.isClassifiedDTOOrEnclosingClass(vararg dtoMarkerInterfaces: Class<*>): Boolean {
 	return dtoMarkerInterfaces.any { dtoMarkerInterface: Class<*> ->
