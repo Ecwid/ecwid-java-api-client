@@ -33,13 +33,6 @@ import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.jvm.javaField
 import kotlin.reflect.jvm.javaGetter
 
-private val dtoMarkerInterfaces = arrayOf(
-	ApiFetchedDTO::class.java,
-	ApiUpdatedDTO::class.java,
-	ApiRequestDTO::class.java,
-	ApiResultDTO::class.java
-)
-
 @TestMethodOrder(OrderAnnotation::class)
 class DtoContractUnitTest {
 
@@ -96,6 +89,13 @@ class DtoContractUnitTest {
 	@Test
 	@Order(3)
 	fun `test all top level data classes DTOs implement one of DTO marker interface`() {
+		val dtoMarkerInterfaces = arrayOf(
+			ApiFetchedDTO::class.java,
+			ApiUpdatedDTO::class.java,
+			ApiRequestDTO::class.java,
+			ApiResultDTO::class.java
+		)
+
 		val dtoDataClasses = getDtoClassesToCheck()
 			.filterNot { dtoClass -> dtoClass.isEnum }
 			.filterNot { dtoClass -> dtoClass.packageName.startsWith("com.ecwid.apiclient.v3.dto.common") }
