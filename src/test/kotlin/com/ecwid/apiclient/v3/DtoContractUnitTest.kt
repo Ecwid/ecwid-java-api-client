@@ -33,7 +33,7 @@ class DtoContractUnitTest {
 			!dtoClass.kotlin.isData && isDtoShouldBeMarkedAsDataClass(dtoClass)
 		}
 		assertTrue(problemDtoClasses.isEmpty()) {
-			"Some DTO classes are not marked as `data class`:\n" + classListToLoggableString(problemDtoClasses)
+			"Some DTO classes are not marked as `data class`:\n" + classesToLoggableString(problemDtoClasses)
 		}
 	}
 
@@ -51,7 +51,7 @@ class DtoContractUnitTest {
 		assertTrue(problemDtoClasses.isEmpty()) {
 			"Some DTO data classes does not have zero-arg constructors " +
 					"(you need to add default values for all primary constructor arguments):\n" +
-					classListToLoggableString(problemDtoClasses)
+					classesToLoggableString(problemDtoClasses)
 		}
 	}
 
@@ -67,7 +67,7 @@ class DtoContractUnitTest {
 		assertTrue(problemDtoClasses.isEmpty()) {
 			"Some DTO data classes does have mutable properties in their primary constructors " +
 					"(you need to replace all parameters from `var` to `val`):\n" +
-					classListToLoggableString(problemDtoClasses)
+					classesToLoggableString(problemDtoClasses)
 		}
 	}
 
@@ -83,17 +83,18 @@ class DtoContractUnitTest {
 		assertTrue(problemDtoClasses.isEmpty()) {
 			val inderfacesStr = dtoMarkerInterfaces.joinToString(separator = ", ") { int -> int.simpleName }
 			"Some of top level DTO data classes does implement one of marker interfaces [$inderfacesStr]:\n" +
-					classListToLoggableString(problemDtoClasses)
+					classesToLoggableString(problemDtoClasses)
 		}
 	}
 
 }
 
-private fun classListToLoggableString(problemDtoClasses: List<Class<*>>) =
-		problemDtoClasses.joinToString(
-				separator = "\n",
-				transform = { clazz -> "\t* ${clazz.name}" }
-		)
+private fun classesToLoggableString(classes: Collection<Class<*>>): String {
+	return classes.joinToString(
+		separator = "\n",
+		transform = { clazz -> "\t* ${clazz.name}" }
+	)
+}
 
 private fun isDtoShouldBeMarkedAsDataClass(dtoClass: Class<*>): Boolean {
 	val kclass = dtoClass.kotlin
