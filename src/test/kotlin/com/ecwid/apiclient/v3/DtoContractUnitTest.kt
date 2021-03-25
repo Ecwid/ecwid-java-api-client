@@ -15,7 +15,7 @@ import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
 
-private val dtoMarkerInterfaces = listOf(
+private val dtoMarkerInterfaces = arrayOf(
 	ApiFetchedDTO::class.java,
 	ApiUpdatedDTO::class.java,
 	ApiRequestDTO::class.java,
@@ -79,7 +79,7 @@ class DtoContractUnitTest {
 		assertFalse(dtoDataClasses.isEmpty())
 
 		val problemDtoClasses = dtoDataClasses
-				.filterNot { dtoClass -> dtoClass.isClassifiedDTOOrEnclosingClass() }
+				.filterNot { dtoClass -> dtoClass.isClassifiedDTOOrEnclosingClass(*dtoMarkerInterfaces) }
 		assertTrue(problemDtoClasses.isEmpty()) {
 			val inderfacesStr = dtoMarkerInterfaces.joinToString(separator = ", ") { int -> int.simpleName }
 			"Some of top level DTO data classes does implement one of marker interfaces [$inderfacesStr]:\n" +
@@ -161,13 +161,16 @@ private fun getDtoClassesToCheck() = Reflections(ApiRequest::class.java.packageN
 		}
 		.sortedBy { clazz -> clazz.canonicalName }
 
-private fun Class<*>.isClassifiedDTOOrEnclosingClass(): Boolean {
+private fun Class<*>.isClassifiedDTOOrEnclosingClass(vararg dtoMarkerInterfaces: Class<*>): Boolean {
+	return dtoMarkerInterfaces.any { dtoMarkerInterface: Class<*> ->
+		isClassifiedDTOOrEnclosingClass(dtoMarkerInterface)
+	}
+}
+
+private fun Class<*>.isClassifiedDTOOrEnclosingClass(dtoMarkerInterface: Class<*>): Boolean {
 	var clazz: Class<*>? = this
 	while (clazz != null) {
-		val isClassifiedDTO = dtoMarkerInterfaces.any { dtoMarkerInterface ->
-			dtoMarkerInterface.isAssignableFrom(clazz!!)
-		}
-		if (isClassifiedDTO) {
+		if (dtoMarkerInterface.isAssignableFrom(clazz)) {
 			return true
 		}
 		clazz = clazz.enclosingClass
