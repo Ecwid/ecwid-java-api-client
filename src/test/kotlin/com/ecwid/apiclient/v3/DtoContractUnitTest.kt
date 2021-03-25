@@ -3,6 +3,9 @@ package com.ecwid.apiclient.v3
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.common.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
+import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
+import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
+import com.ecwid.apiclient.v3.rule.nullablePropertyRules
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -15,6 +18,10 @@ import kotlin.reflect.KMutableProperty
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
+import java.lang.reflect.Member
+import kotlin.reflect.*
+import kotlin.reflect.jvm.javaField
+import kotlin.reflect.jvm.javaGetter
 
 private val dtoMarkerInterfaces = arrayOf(
 	ApiFetchedDTO::class.java,
@@ -88,6 +95,62 @@ class DtoContractUnitTest {
 		}
 	}
 
+	@Test
+	fun `test all DTOs marked as 'preferably having non-nullable fields' have only non-nullable fields or fields added to exclusion list`() {
+		val dtoDataClasses = getDtoClassesToCheck()
+			.filter { dtoClass ->
+				dtoClass.isClassifiedDTOOrEnclosingClass(
+					ApiFetchedDTO::class.java,
+					ApiRequestDTO::class.java,
+					ApiResultDTO::class.java
+				)
+			}
+			.filterNot { dtoClass -> dtoClass.kotlin.visibility == KVisibility.PRIVATE }
+		assertFalse(dtoDataClasses.isEmpty())
+
+		val allowedOrIgnoredNullableProperties = nullablePropertyRules
+			.filter { rule -> rule is AllowNullable || rule is IgnoreNullable }
+			.map { rule -> rule.property }
+			.toSet()
+
+		val nullableProperties = dtoDataClasses
+			.flatMap { dtoDataClass ->
+				getPrimaryConstructorProperties(dtoDataClass)
+					.filter { property -> property.returnType.isMarkedNullable }
+			}
+			.toSet()
+
+		val problemProperties = nullableProperties - allowedOrIgnoredNullableProperties
+		assertTrue(problemProperties.isEmpty()) {
+			"Some of DTO data classes have nullable properties but should not:\n" +
+					propertiesToLoggableString(problemProperties) + "\n" +
+					"Please make this properties non-nullable if possible.\n" +
+					"If Ecwid API sometimes return null as value for this property you CAN add it to as `AllowNullable()` exclusion in file `NullablePropertyRules.kt`\n" +
+					"You MUST NOT add exclusion with type IgnoreNullable() which is used only for old fields until they are fixed.\n"
+		}
+	}
+
+	@Test
+	fun `test no new exclusions added to file NullablePropertyRules`() {
+		val ignoreNullablePropertiesCount = nullablePropertyRules
+			.filterIsInstance<IgnoreNullable<*, *>>()
+			.size
+		assertTrue(ignoreNullablePropertiesCount <= 1062) {
+			"You MUST NOT add exclusion with type IgnoreNullable() which is used only for old fields until they are fixed.\n" +
+					"Please make added property non-nullable if possible.\n" +
+					"If Ecwid API sometimes return null as value for this property you CAN add it to as `AllowNullable()` exclusion type instead."
+		}
+	}
+
+}
+
+private fun propertiesToLoggableString(properties: Collection<KProperty1<*, *>>): String {
+	return properties
+		.sortedBy { property -> property.toString() }
+		.joinToString(
+			separator = "\n",
+			transform = { property -> "\t* ${property.declaringClass().canonicalName}::${property.name}" }
+		)
 }
 
 private fun classesToLoggableString(classes: Collection<Class<*>>): String {
@@ -181,4 +244,8 @@ private fun Class<*>.isClassifiedDTOOrEnclosingClass(dtoMarkerInterface: Class<*
 		clazz = clazz.enclosingClass
 	}
 	return false
+}
+
+fun KProperty<*>.declaringClass(): Class<*> {
+	return (this.javaField as Member? ?: this.javaGetter)?.declaringClass ?: error("Unable to access declaring class")
 }
