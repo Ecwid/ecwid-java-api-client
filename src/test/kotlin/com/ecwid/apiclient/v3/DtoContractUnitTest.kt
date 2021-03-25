@@ -6,8 +6,11 @@ import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
 import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
+import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.AllowNonnull
+import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.IgnoreNonnull
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
+import com.ecwid.apiclient.v3.rule.nonnullPropertyRules
 import com.ecwid.apiclient.v3.rule.nullablePropertyRules
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -153,6 +156,52 @@ class DtoContractUnitTest {
 			"You MUST NOT add exclusion with type IgnoreNullable() which is used only for old fields until they are fixed.\n" +
 					"Please make added property non-nullable if possible.\n" +
 					"If Ecwid API sometimes return null as value for this property you CAN add it to as `AllowNullable()` exclusion type instead."
+		}
+	}
+
+	@Test
+	@Order(6)
+	fun `test all DTOs marked as 'preferably having nullable fields' have only nullable fields or fields added to exclusion list`() {
+		val dtoDataClasses = getDtoClassesToCheck()
+			.filter { dtoClass ->
+				dtoClass.isClassifiedDTOOrEnclosingClass(
+					ApiUpdatedDTO::class.java
+				)
+			}
+		assertFalse(dtoDataClasses.isEmpty())
+
+		val allowedOrIgnoredNonnullProperties = nonnullPropertyRules
+			.filter { rule -> rule is AllowNonnull || rule is IgnoreNonnull }
+			.map { rule -> rule.property }
+			.toSet()
+
+		val nonnullProperties = dtoDataClasses
+			.flatMap { dtoDataClass ->
+				getPrimaryConstructorProperties(dtoDataClass)
+					.filterNot { property -> property.returnType.isMarkedNullable }
+			}
+			.toSet()
+
+		val problemProperties = nonnullProperties - allowedOrIgnoredNonnullProperties
+		assertTrue(problemProperties.isEmpty()) {
+			"Some of DTO data classes have nonnull properties but should not:\n" +
+					propertiesToLoggableString(problemProperties) + "\n" +
+					"Please make this properties nonnull if possible.\n" +
+					"If Ecwid API requires value for this property to be passed you CAN add it to as `AllowNonnull()` exclusion in file `NonnullPropertyRules.kt`\n" +
+					"You MUST NOT add exclusion with type IgnoreNonnull() which is used only for old fields until they are fixed.\n"
+		}
+	}
+
+	@Test
+	@Order(7)
+	fun `test no new exclusions added to file NonnullPropertyRules`() {
+		val ignoreNullablePropertiesCount = nonnullPropertyRules
+			.filterIsInstance<IgnoreNonnull<*, *>>()
+			.size
+		assertTrue(ignoreNullablePropertiesCount <= 43) {
+			"ou MUST NOT add exclusion with type IgnoreNonnull() which is used only for old fields until they are fixed.\n" +
+					"Please make this properties nonnull if possible.\n" +
+					"If Ecwid API requires value for this property to be passed you CAN add it to as `AllowNonnull()` exclusion in file `NonnullPropertyRules.kt`"
 		}
 	}
 
