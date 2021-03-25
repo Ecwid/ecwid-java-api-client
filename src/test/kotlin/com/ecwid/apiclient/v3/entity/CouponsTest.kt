@@ -224,13 +224,13 @@ class CouponsTest : BaseEntityTest() {
 		return UpdatedCoupon(
 				name = randomAlphanumeric(10),
 				code = randomAlphanumeric(10).toUpperCase(),
-				discountType = randomEnumValue<DiscountCouponType>(),
+				discountType = randomEnumValue(DiscountCouponType.SHIPPING), // DiscountCouponType.SHIPPING is not compatible with catalogLimit
 				status = DiscountCouponStatus.ACTIVE,
 				discount = randomDouble(0.0, 100000.0),
 				expirationDate = expirationDate,
 				launchDate = launchDate,
 				totalLimit = randomDouble(0.0, 100000.0),
-				usesLimit = randomEnumValue(DiscountCouponUsesLimit.UNLIMITED),
+				usesLimit = randomEnumValue<DiscountCouponUsesLimit>(),
 				repeatCustomerOnly = applicationLimit.toRepeatCustomerOnly(),
 				applicationLimit = applicationLimit,
 				orderCount = 0,
@@ -250,13 +250,13 @@ class CouponsTest : BaseEntityTest() {
 		return UpdatedCoupon(
 				name = randomAlphanumeric(10),
 				code = randomAlphanumeric(10).toUpperCase(),
-				discountType = randomEnumValue<DiscountCouponType>(),
+				discountType = randomEnumValue(DiscountCouponType.SHIPPING), // DiscountCouponType.SHIPPING is not compatible with catalogLimit
 				status = DiscountCouponStatus.ACTIVE,
 				discount = randomDouble(0.0, 100000.0),
 				expirationDate = expirationDate,
 				launchDate = launchDate,
 				totalLimit = randomDouble(0.0, 100000.0),
-				usesLimit = randomEnumValue(DiscountCouponUsesLimit.UNLIMITED),
+				usesLimit = randomEnumValue<DiscountCouponUsesLimit>(),
 				repeatCustomerOnly = applicationLimit.toRepeatCustomerOnly(),
 				applicationLimit = applicationLimit,
 				orderCount = 0,
