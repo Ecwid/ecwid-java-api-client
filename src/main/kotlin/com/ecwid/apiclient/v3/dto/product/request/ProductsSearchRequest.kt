@@ -1,10 +1,11 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
+import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import java.util.*
 
-sealed class ProductsSearchRequest {
+sealed class ProductsSearchRequest : ApiRequestDTO {
 
 	data class ByFilters(
 			val keyword: String? = null,

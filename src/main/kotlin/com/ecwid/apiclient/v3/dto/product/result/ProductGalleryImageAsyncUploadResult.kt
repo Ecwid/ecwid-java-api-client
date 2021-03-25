@@ -1,3 +1,5 @@
 package com.ecwid.apiclient.v3.dto.product.result
 
-class ProductGalleryImageAsyncUploadResult
+import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
+
+class ProductGalleryImageAsyncUploadResult : ApiResultDTO

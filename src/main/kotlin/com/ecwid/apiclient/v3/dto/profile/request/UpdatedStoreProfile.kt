@@ -1,5 +1,7 @@
 package com.ecwid.apiclient.v3.dto.profile.request
 
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
+
 data class UpdatedStoreProfile(
 		val generalInfo: GeneralInfo? = null,
 		val account: Account? = null,
@@ -14,7 +16,8 @@ data class UpdatedStoreProfile(
 		val businessRegistrationID: BusinessRegistrationID? = null,
 		val legalPagesSettings: LegalPagesSettingsDetails? = null,
 		val orderInvoiceSettings: OrderInvoiceSettings? = null
-) {
+) : ApiUpdatedDTO {
+
 	data class GeneralInfo(
 			val storeUrl: String? = null,
 			val starterSite: InstantSiteInfo? = null,

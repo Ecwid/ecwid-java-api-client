@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.batch.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
+import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
 import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.util.buildEndpointPath
@@ -52,7 +53,7 @@ private data class SingleBatchRequest(
 		val path: String = "",
 		val method: String = "",
 		val body: Any? = null
-) {
+) : ApiRequestDTO {
 
 	companion object {
 

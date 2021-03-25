@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.variation.result
 
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
@@ -35,7 +36,7 @@ data class FetchedVariation(
 
 		val isShippingRequired: Boolean? = null
 
-) {
+) : ApiFetchedDTO {
 
 	data class AttributeValue(
 			val id: Int? = null,

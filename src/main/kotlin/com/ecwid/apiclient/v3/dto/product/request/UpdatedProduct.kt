@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.*
 
@@ -47,7 +48,7 @@ data class UpdatedProduct(
 		val subtitleTranslated: LocalizedValueMap? = null,
 		val nameYourPriceEnabled: Boolean? = null,
 		val subscriptionSettings: SubscriptionSettings? = null
-) {
+) : ApiUpdatedDTO {
 
 	data class Ribbon(
 			val text: String? = null,
