@@ -12,8 +12,7 @@ import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 import com.ecwid.apiclient.v3.rule.nonnullPropertyRules
 import com.ecwid.apiclient.v3.rule.nullablePropertyRules
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
@@ -199,6 +198,71 @@ class DtoContractUnitTest {
 			"ou MUST NOT add exclusion with type IgnoreNonnull() which is used only for old fields until they are fixed.\n" +
 					"Please make this properties nonnull if possible.\n" +
 					"If Ecwid API requires value for this property to be passed you CAN add it to as `AllowNonnull()` exclusion in file `NonnullPropertyRules.kt`"
+		}
+	}
+
+	@Test
+	@Order(8)
+	fun `test fetched and updated DTOs correctly linked to each other`() {
+		val dtoClassesToCheck = getDtoClassesToCheck()
+
+		val fetchedDTOClassesMap = dtoClassesToCheck
+			.filter { dtoClass ->
+				ApiFetchedDTO::class.java.isAssignableFrom(dtoClass)
+			}.associate { dtoClass ->
+				val instance = dtoClass.getConstructor().newInstance() as ApiFetchedDTO
+				dtoClass.kotlin as KClass<*> to instance.getKind()
+			}
+		val updatedDTOClassesMap = dtoClassesToCheck
+			.filter { dtoClass ->
+				ApiUpdatedDTO::class.java.isAssignableFrom(dtoClass)
+			}.associate { dtoClass ->
+				val instance = dtoClass.getConstructor().newInstance() as ApiUpdatedDTO
+				dtoClass.kotlin as KClass<*> to instance.getKind()
+			}
+
+		fetchedDTOClassesMap.forEach { (dtoClass, kind) ->
+			@Suppress("UNUSED_VARIABLE")
+			val guard = when (kind) {
+				ApiFetchedDTO.DTOKind.ReadOnly -> {
+					// No UpdatedDTO to check
+				}
+				is ApiFetchedDTO.DTOKind.ReadWrite -> {
+					val updatedDTOClass = kind.updatedDTOClass
+					val updatedDtoKind = updatedDTOClassesMap[updatedDTOClass]
+					val guard = when (updatedDtoKind) {
+						is ApiUpdatedDTO.DTOKind.ReadWrite -> {
+							assertEquals(
+								dtoClass, updatedDtoKind.fetchedDTOClass,
+								"Classes ${dtoClass.qualifiedName} and ${updatedDTOClass.qualifiedName} does not links to each other")
+						}
+						null -> {
+							fail<Unit>("Impossible situation")
+						}
+					}
+				}
+			}
+		}
+
+		updatedDTOClassesMap.forEach { (dtoClass, kind) ->
+			@Suppress("UNUSED_VARIABLE")
+			val guard = when (kind) {
+				is ApiUpdatedDTO.DTOKind.ReadWrite -> {
+					val fetchedDTOClass = kind.fetchedDTOClass
+					val fetchedDtoKind = fetchedDTOClassesMap[fetchedDTOClass]
+					val guard = when (fetchedDtoKind) {
+						ApiFetchedDTO.DTOKind.ReadOnly -> {
+							fail<Unit>("Updatable class ${dtoClass.qualifiedName} links to class ${fetchedDTOClass.qualifiedName} which is marked as read-only ")
+						}
+						is ApiFetchedDTO.DTOKind.ReadWrite -> {
+							// Backlink was checked before
+						}
+						null -> {
+							fail<Unit>("Impossible situation")
+						}
+					}
+				}
+			}
 		}
 	}
 
