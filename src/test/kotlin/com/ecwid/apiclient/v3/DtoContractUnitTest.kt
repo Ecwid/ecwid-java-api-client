@@ -24,10 +24,7 @@ import java.io.File
 import java.io.InputStream
 import java.lang.reflect.Constructor
 import java.lang.reflect.Member
-import kotlin.reflect.KMutableProperty
-import kotlin.reflect.KProperty
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KVisibility
+import kotlin.reflect.*
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.jvm.javaField
@@ -260,6 +257,7 @@ private fun isDtoShouldHaveZeroArgConstructor(constructors: Array<Constructor<*>
 		parameter.type.isAssignableFrom(JsonTransformer::class.java)
 				|| parameter.type.isAssignableFrom(File::class.java)
 				|| parameter.type.isAssignableFrom(InputStream::class.java)
+				|| parameter.type.isAssignableFrom(KClass::class.java)
 	}
 
 	return !hasSpecialParameterType

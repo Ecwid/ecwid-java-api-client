@@ -1,6 +1,18 @@
 package com.ecwid.apiclient.v3.dto.common
 
-interface ApiFetchedDTO
+import kotlin.reflect.KClass
+
+interface ApiFetchedDTO {
+
+	fun getKind(): DTOKind
+
+	sealed class DTOKind {
+		object ReadOnly: DTOKind()
+		data class ReadWrite(val updatedDTOClass: KClass<out ApiUpdatedDTO>) : DTOKind()
+	}
+
+}
+
 interface ApiUpdatedDTO
 interface ApiRequestDTO
 interface ApiResultDTO

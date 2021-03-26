@@ -1,9 +1,11 @@
 package com.ecwid.apiclient.v3.dto.variation.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.DTOKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
+import com.ecwid.apiclient.v3.dto.variation.request.UpdatedVariation
 
 data class FetchedVariation(
 		val id: Int = 0,
@@ -57,4 +59,7 @@ data class FetchedVariation(
 			val value: String? = null,
 			val valueTranslated: LocalizedValueMap? = null
 	)
+
+	override fun getKind() = DTOKind.ReadWrite(UpdatedVariation::class)
+
 }

@@ -1,7 +1,9 @@
 package com.ecwid.apiclient.v3.dto.cart.result
 
 import com.ecwid.apiclient.v3.dto.cart.CartStringToStringMap
+import com.ecwid.apiclient.v3.dto.cart.request.UpdatedCart
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.DTOKind
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import java.util.*
 
@@ -243,5 +245,7 @@ data class FetchedCart(
 			val mcEid: String? = null,
 			val mcCid: String? = null
 	)
+
+	override fun getKind() = DTOKind.ReadWrite(UpdatedCart::class)
 
 }
