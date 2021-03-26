@@ -1,6 +1,8 @@
 package com.ecwid.apiclient.v3.dto.customer.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.DTOKind
+import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
 
 data class UpdatedCustomer(
 		val email: String = "",
@@ -36,5 +38,7 @@ data class UpdatedCustomer(
 			val stateOrProvinceCode: String? = null,
 			val phone: String? = null
 	)
+
+	override fun getKind() = DTOKind.ReadWrite(FetchedCustomer::class)
 
 }

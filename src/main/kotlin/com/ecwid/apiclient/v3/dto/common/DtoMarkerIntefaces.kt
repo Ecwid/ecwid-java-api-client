@@ -13,6 +13,15 @@ interface ApiFetchedDTO {
 
 }
 
-interface ApiUpdatedDTO
+interface ApiUpdatedDTO {
+
+	fun getKind(): DTOKind
+
+	sealed class DTOKind {
+		data class ReadWrite(val fetchedDTOClass: KClass<out ApiFetchedDTO>) : DTOKind()
+	}
+
+}
+
 interface ApiRequestDTO
 interface ApiResultDTO

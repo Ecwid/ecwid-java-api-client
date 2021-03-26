@@ -1,8 +1,10 @@
 package com.ecwid.apiclient.v3.dto.order.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.DTOKind
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
+import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -258,4 +260,7 @@ data class UpdatedOrder(
 			val mcEid: String? = null,
 			val mcCid: String? = null
 	)
+
+	override fun getKind() = DTOKind.ReadWrite(FetchedOrder::class)
+
 }

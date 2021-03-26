@@ -1,14 +1,18 @@
 package com.ecwid.apiclient.v3.rule
 
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.coupon.request.UpdatedCoupon
 import com.ecwid.apiclient.v3.dto.customer.request.UpdatedCustomer
 import com.ecwid.apiclient.v3.dto.customergroup.request.UpdatedCustomerGroup
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.ecwid.apiclient.v3.dto.variation.request.UpdatedVariation
+import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.AllowNonnull
 import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.IgnoreNonnull
 import kotlin.reflect.KProperty1
 
 val nonnullPropertyRules: List<NonnullPropertyRule<*, *>> = listOf(
+	AllowNonnull(ApiUpdatedDTO.DTOKind.ReadWrite::fetchedDTOClass),
+
 	IgnoreNonnull(UpdatedCoupon::code),
 	IgnoreNonnull(UpdatedCoupon::name),
 

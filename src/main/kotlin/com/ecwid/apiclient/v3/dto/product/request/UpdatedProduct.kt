@@ -1,8 +1,10 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.DTOKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.*
+import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 
 data class UpdatedProduct(
 		val name: String? = null,
@@ -301,5 +303,7 @@ data class UpdatedProduct(
 			val id: String = "0",
 			val orderBy: Int = 0
 	)
+
+	override fun getKind() = DTOKind.ReadWrite(FetchedProduct::class)
 
 }
