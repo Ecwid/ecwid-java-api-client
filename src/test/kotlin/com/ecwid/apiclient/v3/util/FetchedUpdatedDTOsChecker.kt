@@ -1,16 +1,20 @@
 package com.ecwid.apiclient.v3.util
 
+import com.ecwid.apiclient.v3.rule.NonUpdatablePropertyRule
 import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
+import kotlin.reflect.jvm.kotlinProperty
 
 internal fun checkFetchedUpdatedDTOsFields(
 	fetchedDTOClass: Class<*>,
-	updatedDTOClass: Class<*>
+	updatedDTOClass: Class<*>,
+	nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>>
 ): List<FieldProblem> {
 	val problemsCollector = mutableListOf<FieldProblem>()
 	checkClass(
 		fetchedDTOClass = fetchedDTOClass,
 		updatedDTOClass = updatedDTOClass,
+		nonUpdatablePropertyRules = nonUpdatablePropertyRules,
 		problemsCollector = problemsCollector
 	)
 	return problemsCollector.toList()
@@ -19,6 +23,7 @@ internal fun checkFetchedUpdatedDTOsFields(
 private fun checkClass(
 	fetchedDTOClass: Class<*>,
 	updatedDTOClass: Class<*>,
+	nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>>,
 	problemsCollector: MutableList<FieldProblem>
 ) {
 	fetchedDTOClass.declaredFields
@@ -28,16 +33,24 @@ private fun checkClass(
 					declaredField.name == fetchedDTOField.name
 				}
 			if (updatedDTOField == null) {
-				problemsCollector.add(
-					FieldProblem(
-						kind = FieldProblemKind.FIELD_NOT_FOUND,
-						fetchedDTOClass = fetchedDTOClass,
-						updatedDTOClass = updatedDTOClass,
-						fieldName = fetchedDTOField.name,
-						expectedFieldClass = fetchedDTOField.type,
-						actualFieldClass = null
+				val kotlinProperty = fetchedDTOField.kotlinProperty
+				val isIgnored = nonUpdatablePropertyRules.any { rule ->
+					rule.property == kotlinProperty
+				}
+				if (!isIgnored) {
+					problemsCollector.add(
+						FieldProblem(
+							kind = FieldProblemKind.FIELD_NOT_FOUND,
+							fetchedDTOClass = fetchedDTOClass,
+							updatedDTOClass = updatedDTOClass,
+							fieldName = fetchedDTOField.name,
+							expectedFieldClass = fetchedDTOField.type,
+							actualFieldClass = null
+						)
 					)
-				)
+				} else {
+					// That's fine
+				}
 			} else {
 				checkField(
 					fetchedDTOClass = fetchedDTOClass,
@@ -45,6 +58,7 @@ private fun checkClass(
 					fetchedDTOField = fetchedDTOField,
 					updatedDTOField = updatedDTOField,
 					fieldName = fetchedDTOField.name,
+					nonUpdatablePropertyRules = nonUpdatablePropertyRules,
 					problemsCollector = problemsCollector
 				)
 			}
@@ -57,6 +71,7 @@ private fun checkClassOrPrimitive(
 	parentFetchedDTOClass: Class<*>,
 	parentUpdatedDTOClass: Class<*>,
 	fieldName: String,
+	nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>>,
 	problemsCollector: MutableList<FieldProblem>
 ) {
 	if (fetchedDTOClass.isJreType() || fetchedDTOClass.isEnum) {
@@ -89,7 +104,12 @@ private fun checkClassOrPrimitive(
 				)
 			)
 		} else {
-			checkClass(fetchedDTOClass, updatedDTOClass, problemsCollector)
+			checkClass(
+				fetchedDTOClass = fetchedDTOClass,
+				updatedDTOClass = updatedDTOClass,
+				nonUpdatablePropertyRules = nonUpdatablePropertyRules,
+				problemsCollector = problemsCollector
+			)
 		}
 	}
 }
@@ -100,6 +120,7 @@ private fun checkField(
 	fetchedDTOField: Field,
 	updatedDTOField: Field,
 	fieldName: String,
+	nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>>,
 	problemsCollector: MutableList<FieldProblem>
 ) {
 	val fetchedDTOFieldClass = fetchedDTOField.type
@@ -127,6 +148,7 @@ private fun checkField(
 					parentFetchedDTOClass = fetchedDTOClass,
 					parentUpdatedDTOClass = updatedDTOClass,
 					fieldName = "$fieldName (map key)",
+					nonUpdatablePropertyRules = nonUpdatablePropertyRules,
 					problemsCollector = problemsCollector
 				)
 				checkClassOrPrimitive(
@@ -135,6 +157,7 @@ private fun checkField(
 					parentFetchedDTOClass = fetchedDTOClass,
 					parentUpdatedDTOClass = updatedDTOClass,
 					fieldName = "$fieldName (map value)",
+					nonUpdatablePropertyRules = nonUpdatablePropertyRules,
 					problemsCollector = problemsCollector
 				)
 			}
@@ -161,6 +184,7 @@ private fun checkField(
 					parentFetchedDTOClass = fetchedDTOClass,
 					parentUpdatedDTOClass = updatedDTOClass,
 					fieldName = "$fieldName (list value)",
+					nonUpdatablePropertyRules = nonUpdatablePropertyRules,
 					problemsCollector = problemsCollector
 				)
 			}
@@ -172,6 +196,7 @@ private fun checkField(
 				parentFetchedDTOClass = fetchedDTOClass,
 				parentUpdatedDTOClass = updatedDTOClass,
 				fieldName = fieldName,
+				nonUpdatablePropertyRules = nonUpdatablePropertyRules,
 				problemsCollector = problemsCollector
 			)
 		}

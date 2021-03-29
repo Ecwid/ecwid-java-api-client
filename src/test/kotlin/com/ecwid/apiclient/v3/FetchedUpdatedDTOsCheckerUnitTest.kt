@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3
 
+import com.ecwid.apiclient.v3.rule.NonUpdatablePropertyRule
 import com.ecwid.apiclient.v3.util.FieldProblem
 import com.ecwid.apiclient.v3.util.FieldProblemKind
 import com.ecwid.apiclient.v3.util.checkFetchedUpdatedDTOsFields
@@ -20,7 +21,7 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			val field1: Int
 		)
 
-		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java)
+		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java, listOf())
 
 		val expectedProblems = listOf(
 			FieldProblem(
@@ -58,7 +59,7 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			val field2: UpdatedSubDTO
 		)
 
-		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java)
+		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java, listOf())
 
 		val expectedProblems = listOf(
 			FieldProblem(
@@ -93,7 +94,7 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			val field3: UpdatedSubDTO
 		)
 
-		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java)
+		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java, listOf())
 
 		val expectedProblems = listOf(
 			FieldProblem(
@@ -133,7 +134,7 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			val field2: UpdatedSubDTO
 		)
 
-		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java)
+		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java, listOf())
 
 		val expectedProblems = listOf(
 			FieldProblem(
@@ -165,7 +166,7 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			val field2: UpdatedSubDTO
 		)
 
-		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java)
+		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java, listOf())
 
 		val expectedProblems = listOf(
 			FieldProblem(
@@ -199,7 +200,7 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			val field3: UpdatedListWrapper
 		)
 
-		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java)
+		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java, listOf())
 
 		val expectedProblems = listOf(
 			FieldProblem(
@@ -247,7 +248,7 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			val field5: UpdatedMapWrapper2
 		)
 
-		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java)
+		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java, listOf())
 
 		val expectedProblems = listOf(
 			FieldProblem(
@@ -302,7 +303,7 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			val field3: SharedEnum
 		)
 
-		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java)
+		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java, listOf())
 
 		val expectedProblems = listOf(
 			FieldProblem(
@@ -315,6 +316,29 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			)
 		)
 		Assertions.assertEquals(expectedProblems, problems)
+	}
+
+	@Test
+	fun `test ignored fields`() {
+
+		data class FetchedDTO(
+			val field1: Int,
+			val field2: String
+		)
+
+		data class UpdatedDTO(
+			val field1: Int
+		)
+
+		val problems = checkFetchedUpdatedDTOsFields(
+			fetchedDTOClass = FetchedDTO::class.java,
+			updatedDTOClass = UpdatedDTO::class.java,
+			nonUpdatablePropertyRules = listOf(
+				NonUpdatablePropertyRule.Ignored(FetchedDTO::field2)
+			)
+		)
+		Assertions.assertEquals(listOf<FieldProblem>(), problems)
+
 	}
 
 	@Test
@@ -354,7 +378,7 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			val field3: UpdatedSubDTO
 		)
 
-		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java)
+		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java, listOf())
 		Assertions.assertEquals(listOf<FieldProblem>(), problems)
 
 	}
