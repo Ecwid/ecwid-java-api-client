@@ -6,12 +6,18 @@ import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
 import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
+import com.ecwid.apiclient.v3.rule.NonUpdatablePropertyRule
 import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.AllowNonnull
 import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.IgnoreNonnull
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
+import com.ecwid.apiclient.v3.rule.nonUpdatablePropertyRules
 import com.ecwid.apiclient.v3.rule.nonnullPropertyRules
 import com.ecwid.apiclient.v3.rule.nullablePropertyRules
+import com.ecwid.apiclient.v3.util.FetchedUpdatedDTO
+import com.ecwid.apiclient.v3.util.FieldProblem
+import com.ecwid.apiclient.v3.util.FieldProblemKind
+import com.ecwid.apiclient.v3.util.checkFetchedUpdatedDTOsFields
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.Order
@@ -21,8 +27,7 @@ import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
 import java.io.File
 import java.io.InputStream
-import java.lang.reflect.Constructor
-import java.lang.reflect.Member
+import java.lang.reflect.*
 import kotlin.reflect.*
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
@@ -195,7 +200,7 @@ class DtoContractUnitTest {
 			.filterIsInstance<IgnoreNonnull<*, *>>()
 			.size
 		assertTrue(ignoreNullablePropertiesCount <= 43) {
-			"ou MUST NOT add exclusion with type IgnoreNonnull() which is used only for old fields until they are fixed.\n" +
+			"You MUST NOT add exclusion with type IgnoreNonnull() which is used only for old fields until they are fixed.\n" +
 					"Please make this properties nonnull if possible.\n" +
 					"If Ecwid API requires value for this property to be passed you CAN add it to as `AllowNonnull()` exclusion in file `NonnullPropertyRules.kt`"
 		}
@@ -266,6 +271,101 @@ class DtoContractUnitTest {
 		}
 	}
 
+	@Test
+	@Order(9)
+	fun `test fetched and updated DTOs fields list and their types are synchronized`() {
+		val dtoClassesToCheck = getDtoClassesToCheck()
+
+		val fetchedUpdatedDTOs = dtoClassesToCheck
+			.filter { dtoClass ->
+				ApiFetchedDTO::class.java.isAssignableFrom(dtoClass)
+			}.mapNotNull { fetchedDtoClass ->
+				val instance = fetchedDtoClass.getConstructor().newInstance() as ApiFetchedDTO
+				val dtoKind = instance.getKind()
+				if (dtoKind is ApiFetchedDTO.DTOKind.ReadWrite) {
+					FetchedUpdatedDTO(
+						fetchedClass = fetchedDtoClass,
+						updatedClass = dtoKind.updatedDTOClass.java
+					)
+				} else {
+					null
+				}
+			}
+
+		val fieldsProblems = checkFetchedUpdatedDTOsFields(fetchedUpdatedDTOs, nonUpdatablePropertyRules)
+
+		assertTrue(fieldsProblems.isEmpty()) {
+			fieldsProblems.joinToString(prefix = "\n\n", separator = "\n\n") { fieldsProblem ->
+				fieldsProblem.buildMessage()
+			}
+		}
+	}
+
+	@Test
+	@Order(10)
+	fun `test no new exclusions added to file NonUpdatablePropertyRules`() {
+		val ignoreNonUpdatablePropertyRulesCount = nonUpdatablePropertyRules
+			.filterIsInstance<NonUpdatablePropertyRule.Ignored<*, *>>()
+			.size
+		assertTrue(ignoreNonUpdatablePropertyRulesCount <= 159) {
+			"You MUST NOT add exclusion with type Ignored() which is used only for old fields until they are fixed.\n" +
+					"Please add this field to Updated DTO if possible.\n" +
+					"If this field is read-only in Ecwid API you CAN add it as `ReadOnly()` exclusion to file `NonUpdatablePropertyRules.kt`."
+		}
+	}
+
+
+}
+
+private fun FieldProblem.buildMessage(): String {
+	val problemKind = kind
+	val fieldName = fieldName
+
+	val fetchedDTOClassName = fetchedDTOClass.canonicalName
+	val updatedDTOClassName = updatedDTOClass.canonicalName
+
+	val actualFieldClass = actualFieldClass
+	val actualFieldClassStr = if (actualFieldClass != null) actualFieldClass.canonicalName else "<NOT FOUND>"
+
+	val expectedFieldClass = expectedFieldClass
+	val expectedFieldClassStr = if (expectedFieldClass != null) expectedFieldClass.canonicalName else "<N/A>"
+
+	val problemTitle = when (problemKind) {
+		FieldProblemKind.FIELD_NOT_FOUND -> {
+			"All updatable fields from Fetched DTO must have corresponding field in Updated DTO."
+		}
+		FieldProblemKind.TYPE_MUST_NOT_BE_REUSED -> {
+			"Fields with the same name in Fetched and Updated DTOs must not share the same DTO (except for primitives and enums)"
+		}
+		FieldProblemKind.FIELD_IS_NOT_MAP,
+		FieldProblemKind.FIELD_IS_NOT_LIST,
+		FieldProblemKind.PRIMITIVE_FIELDS_INCOMPATIBLE_TYPE -> {
+			"n/a"
+		}
+	}
+
+	val problemDescription = when (problemKind) {
+		FieldProblemKind.FIELD_NOT_FOUND -> {
+				"Please add this field to Updated DTO if possible.\n" +
+				"If this field is read-only in Ecwid API you CAN add it as `ReadOnly()` exclusion to file `NonUpdatablePropertyRules.kt`.\n" +
+				"You MUST NOT add exclusion with type Ignored() which is used only for old fields until they are fixed."
+		}
+		FieldProblemKind.FIELD_IS_NOT_MAP,
+		FieldProblemKind.FIELD_IS_NOT_LIST,
+		FieldProblemKind.PRIMITIVE_FIELDS_INCOMPATIBLE_TYPE,
+		FieldProblemKind.TYPE_MUST_NOT_BE_REUSED -> "n/a"
+	}
+
+	return """
+$problemKind: $problemTitle
+Description:
+	${problemDescription.split("\n").joinToString(separator = "\n\t\t")}
+Details:
+	fetchedDTOField: $fetchedDTOClassName::$fieldName
+	updatedDTOField: $updatedDTOClassName::$fieldName
+	expectedFieldClass: $expectedFieldClassStr
+	actualFieldClass: $actualFieldClassStr
+"""
 }
 
 private fun propertiesToLoggableString(properties: Collection<KProperty1<*, *>>): String {

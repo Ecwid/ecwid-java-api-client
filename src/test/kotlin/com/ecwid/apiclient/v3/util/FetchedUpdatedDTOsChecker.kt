@@ -5,20 +5,41 @@ import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
 import kotlin.reflect.jvm.kotlinProperty
 
+data class FetchedUpdatedDTO(
+	val fetchedClass: Class<*>,
+	val updatedClass: Class<*>
+)
+
 internal fun checkFetchedUpdatedDTOsFields(
 	fetchedDTOClass: Class<*>,
 	updatedDTOClass: Class<*>,
 	nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>>
 ): List<FieldProblem> {
-	val problemsCollector = mutableListOf<FieldProblem>()
-	checkClass(
-		fetchedDTOClass = fetchedDTOClass,
-		updatedDTOClass = updatedDTOClass,
-		nonUpdatablePropertyRules = nonUpdatablePropertyRules,
-		problemsCollector = problemsCollector
+	val fetchedUpdatedDTOs = listOf(
+		FetchedUpdatedDTO(
+			fetchedClass = fetchedDTOClass,
+			updatedClass = updatedDTOClass
+		)
 	)
+	return checkFetchedUpdatedDTOsFields(fetchedUpdatedDTOs, nonUpdatablePropertyRules)
+}
+
+internal fun checkFetchedUpdatedDTOsFields(
+	fetchedUpdatedDTOs: List<FetchedUpdatedDTO>,
+	nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>>
+): List<FieldProblem> {
+	val problemsCollector = mutableListOf<FieldProblem>()
+	fetchedUpdatedDTOs.forEach { fetchedUpdatedDTO ->
+		checkClass(
+			fetchedDTOClass = fetchedUpdatedDTO.fetchedClass,
+			updatedDTOClass = fetchedUpdatedDTO.updatedClass,
+			nonUpdatablePropertyRules = nonUpdatablePropertyRules,
+			problemsCollector = problemsCollector
+		)
+	}
 	return problemsCollector.toList()
 }
+
 
 private fun checkClass(
 	fetchedDTOClass: Class<*>,
@@ -76,7 +97,9 @@ private fun checkClassOrPrimitive(
 ) {
 	if (fetchedDTOClass.isJreType() || fetchedDTOClass.isEnum) {
 		// Primitive type
-		if (fetchedDTOClass != updatedDTOClass) {
+		val isCompatibleJreTypes = fetchedDTOClass.isJreType() && fetchedDTOClass.kotlin.javaObjectType == updatedDTOClass.kotlin.javaObjectType
+		val isCompatibleEnumTypes = fetchedDTOClass.isEnum && updatedDTOClass.isEnum
+		if (!isCompatibleJreTypes && !isCompatibleEnumTypes) {
 			problemsCollector.add(
 				FieldProblem(
 					kind = FieldProblemKind.PRIMITIVE_FIELDS_INCOMPATIBLE_TYPE,
