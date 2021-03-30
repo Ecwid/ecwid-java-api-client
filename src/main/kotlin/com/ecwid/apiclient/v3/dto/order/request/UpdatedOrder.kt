@@ -65,7 +65,8 @@ data class UpdatedOrder(
 
 		val utmData: UtmData? = null,
 
-		val pricesIncludeTax: Boolean? = null
+		val pricesIncludeTax: Boolean? = null,
+		val externalOrderPayload: ExternalOrderPayload? = null
 ) : ApiUpdatedDTO {
 
 	data class CreditCardStatus(
@@ -257,5 +258,12 @@ data class UpdatedOrder(
 			val medium: String? = null,
 			val mcEid: String? = null,
 			val mcCid: String? = null
+	)
+
+	data class ExternalOrderPayload(
+		val externalFulfillment: Boolean? = null,
+		val externalOrderId: String? = null,
+		val externalOrderSource: ExternalOrderSource? = null,
+		val platformSpecificFields: HashMap<String,String>? = null
 	)
 }

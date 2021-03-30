@@ -62,7 +62,8 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 			shippingOption = shippingOption?.toUpdated(),
 			handlingFee = handlingFee?.toUpdated(),
 
-			pricesIncludeTax = pricesIncludeTax
+			pricesIncludeTax = pricesIncludeTax,
+			externalOrderPayload = externalOrderPayload?.toUpdated()
 	)
 }
 
@@ -204,5 +205,14 @@ fun FetchedOrder.HandlingFee.toUpdated(): UpdatedOrder.HandlingFee {
 			name = name,
 			value = value,
 			description = description
+	)
+}
+
+fun FetchedOrder.ExternalOrderPayload.toUpdated(): UpdatedOrder.ExternalOrderPayload {
+	return UpdatedOrder.ExternalOrderPayload(
+		externalFulfillment = externalFulfillment,
+		externalOrderId = externalOrderId,
+		externalOrderSource = externalOrderSource,
+		platformSpecificFields = platformSpecificFields
 	)
 }
