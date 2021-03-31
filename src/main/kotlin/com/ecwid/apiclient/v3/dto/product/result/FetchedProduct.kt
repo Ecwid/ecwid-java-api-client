@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.PictureInfo
+import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.product.enums.*
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
@@ -78,7 +79,10 @@ data class FetchedProduct(
 		val ribbonTranslated: LocalizedValueMap? = null,
 		val subtitleTranslated: LocalizedValueMap? = null,
 		val nameYourPriceEnabled: Boolean? = null,
-		val subscriptionSettings: SubscriptionSettings? = null
+		val subscriptionSettings: SubscriptionSettings? = null,
+		val googleProductCategory: Int? = null,
+		val googleProductCategoryName: String? = null,
+		val productCondition: ProductCondition = ProductCondition.NEW
 ) : ApiFetchedDTO {
 
 	data class Ribbon(

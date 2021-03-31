@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.profile.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 
 data class UpdatedStoreProfile(
@@ -65,7 +66,9 @@ data class UpdatedStoreProfile(
 			val pinterestTagId: String? = null,
 			val googleTagId: String? = null,
 			val googleEventId: String? = null,
-			val showPricePerUnit: Boolean? = null
+			val showPricePerUnit: Boolean? = null,
+			val googleProductCategory: Int? = null,
+			val productCondition: ProductCondition? = null
 	)
 
 	enum class ProductSortOrder {

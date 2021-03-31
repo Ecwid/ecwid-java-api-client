@@ -6,6 +6,7 @@ import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
 import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
+import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.product.enums.PriceModifierType
 import com.ecwid.apiclient.v3.dto.product.enums.RecurringSubscriptionInterval
 import com.ecwid.apiclient.v3.dto.product.enums.ShippingSettingsType
@@ -1176,7 +1177,9 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 					"ru" to "Сабтайтл",
 					"en" to "Subtitle"
 			),
-			subscriptionSettings = SubscriptionSettings()
+			subscriptionSettings = SubscriptionSettings(),
+			googleProductCategory = 632,
+			productCondition = ProductCondition.USED
 	)
 }
 

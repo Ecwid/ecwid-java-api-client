@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.entity
 
+import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
@@ -64,7 +65,9 @@ class StoreProfileTest : BaseEntityTest() {
 						pinterestTagId = "pinterestTagId",
 						googleTagId = "googleTagId",
 						googleEventId = "googleEventId",
-						showPricePerUnit = true
+						showPricePerUnit = true,
+						googleProductCategory = 632,
+						productCondition = ProductCondition.USED
 				),
 				mailNotifications = UpdatedStoreProfile.MailNotifications(
 						adminNotificationEmails = listOf("admin@example.com", "admin2@example.com"),
@@ -235,6 +238,9 @@ class StoreProfileTest : BaseEntityTest() {
 
 		// Checking field with custom name and annotation @JsonFieldName
 		assertEquals("MEDIUM", designSettings.productListImageSize)
+
+		assertEquals(632, settings.googleProductCategory)
+		assertEquals(ProductCondition.USED, settings.productCondition)
 	}
 
 }
