@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.saleschannels.response
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.saleschannels.MarketplaceConfig
 import com.ecwid.apiclient.v3.dto.saleschannels.ProductFeedInfo
 
@@ -12,4 +13,8 @@ data class FetchedYandexMarketFeedConfig(
 		val adult: Boolean = false,
 		val salesNotes: String = "",
 		val productFeedInfo: ProductFeedInfo = ProductFeedInfo()
-) : ApiFetchedDTO
+) : ApiFetchedDTO {
+
+	override fun getModifyKind() = ModifyKind.ReadOnly
+
+}

@@ -1,8 +1,10 @@
 package com.ecwid.apiclient.v3.dto.order.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
+import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import java.util.*
 
 data class FetchedOrder(
@@ -244,4 +246,7 @@ data class FetchedOrder(
 			val mcEid: String? = null,
 			val mcCid: String? = null
 	)
+
+	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedOrder::class)
+
 }

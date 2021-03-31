@@ -1,6 +1,8 @@
 package com.ecwid.apiclient.v3.dto.profile.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 
 data class FetchedStoreProfile(
@@ -633,5 +635,7 @@ data class FetchedStoreProfile(
 			val name: String? = null,
 			val url: String? = null
 	)
+
+	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedStoreProfile::class)
 
 }
