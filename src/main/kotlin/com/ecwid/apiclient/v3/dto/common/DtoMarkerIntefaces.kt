@@ -4,21 +4,21 @@ import kotlin.reflect.KClass
 
 interface ApiFetchedDTO {
 
-	fun getKind(): DTOKind
+	fun getModifyKind(): ModifyKind
 
-	sealed class DTOKind {
-		object ReadOnly: DTOKind()
-		data class ReadWrite(val updatedDTOClass: KClass<out ApiUpdatedDTO>) : DTOKind()
+	sealed class ModifyKind {
+		object ReadOnly: ModifyKind()
+		data class ReadWrite(val updatedDTOClass: KClass<out ApiUpdatedDTO>) : ModifyKind()
 	}
 
 }
 
 interface ApiUpdatedDTO {
 
-	fun getKind(): DTOKind
+	fun getModifyKind(): ModifyKind
 
-	sealed class DTOKind {
-		data class ReadWrite(val fetchedDTOClass: KClass<out ApiFetchedDTO>) : DTOKind()
+	sealed class ModifyKind {
+		data class ReadWrite(val fetchedDTOClass: KClass<out ApiFetchedDTO>) : ModifyKind()
 	}
 
 }

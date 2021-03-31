@@ -1,7 +1,7 @@
 package com.ecwid.apiclient.v3.dto.producttype.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
-import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.DTOKind
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeDisplayType
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.producttype.request.UpdatedProductType
@@ -20,6 +20,6 @@ data class FetchedProductType(
 			val show: AttributeDisplayType? = null
 	)
 
-	override fun getKind() = DTOKind.ReadWrite(UpdatedProductType::class)
+	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedProductType::class)
 
 }

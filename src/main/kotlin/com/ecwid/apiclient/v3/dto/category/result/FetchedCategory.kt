@@ -2,7 +2,7 @@ package com.ecwid.apiclient.v3.dto.category.result
 
 import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
-import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.DTOKind
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.PictureInfo
 
@@ -28,6 +28,6 @@ data class FetchedCategory(
 		val enabledProductCount: Int? = null
 ) : ApiFetchedDTO {
 
-	override fun getKind() = DTOKind.ReadWrite(UpdatedCategory::class)
+	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedCategory::class)
 
 }

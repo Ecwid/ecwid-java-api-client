@@ -1,7 +1,7 @@
 package com.ecwid.apiclient.v3.dto.cart.request
 
 import com.ecwid.apiclient.v3.dto.cart.result.FetchedCart
-import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.DTOKind
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 
 data class UpdatedCart(
@@ -15,6 +15,6 @@ data class UpdatedCart(
 			val total: Double? = null
 	)
 
-	override fun getKind() = DTOKind.ReadWrite(FetchedCart::class)
+	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedCart::class)
 
 }

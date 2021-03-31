@@ -216,29 +216,29 @@ class DtoContractUnitTest {
 				ApiFetchedDTO::class.java.isAssignableFrom(dtoClass)
 			}.associate { dtoClass ->
 				val instance = dtoClass.getConstructor().newInstance() as ApiFetchedDTO
-				dtoClass.kotlin as KClass<*> to instance.getKind()
+				dtoClass.kotlin as KClass<*> to instance.getModifyKind()
 			}
 		val updatedDTOClassesMap = dtoClassesToCheck
 			.filter { dtoClass ->
 				ApiUpdatedDTO::class.java.isAssignableFrom(dtoClass)
 			}.associate { dtoClass ->
 				val instance = dtoClass.getConstructor().newInstance() as ApiUpdatedDTO
-				dtoClass.kotlin as KClass<*> to instance.getKind()
+				dtoClass.kotlin as KClass<*> to instance.getModifyKind()
 			}
 
 		fetchedDTOClassesMap.forEach { (dtoClass, kind) ->
 			@Suppress("UNUSED_VARIABLE")
 			val guard = when (kind) {
-				ApiFetchedDTO.DTOKind.ReadOnly -> {
+				ApiFetchedDTO.ModifyKind.ReadOnly -> {
 					// No UpdatedDTO to check
 				}
-				is ApiFetchedDTO.DTOKind.ReadWrite -> {
+				is ApiFetchedDTO.ModifyKind.ReadWrite -> {
 					val updatedDTOClass = kind.updatedDTOClass
-					val updatedDtoKind = updatedDTOClassesMap[updatedDTOClass]
-					val guard = when (updatedDtoKind) {
-						is ApiUpdatedDTO.DTOKind.ReadWrite -> {
+					val updatedDtoModifyKind = updatedDTOClassesMap[updatedDTOClass]
+					val guard = when (updatedDtoModifyKind) {
+						is ApiUpdatedDTO.ModifyKind.ReadWrite -> {
 							assertEquals(
-								dtoClass, updatedDtoKind.fetchedDTOClass,
+								dtoClass, updatedDtoModifyKind.fetchedDTOClass,
 								"Classes ${dtoClass.qualifiedName} and ${updatedDTOClass.qualifiedName} does not links to each other")
 						}
 						null -> {
@@ -252,14 +252,14 @@ class DtoContractUnitTest {
 		updatedDTOClassesMap.forEach { (dtoClass, kind) ->
 			@Suppress("UNUSED_VARIABLE")
 			val guard = when (kind) {
-				is ApiUpdatedDTO.DTOKind.ReadWrite -> {
+				is ApiUpdatedDTO.ModifyKind.ReadWrite -> {
 					val fetchedDTOClass = kind.fetchedDTOClass
-					val fetchedDtoKind = fetchedDTOClassesMap[fetchedDTOClass]
-					val guard = when (fetchedDtoKind) {
-						ApiFetchedDTO.DTOKind.ReadOnly -> {
+					val fetchedDtoModifyKind = fetchedDTOClassesMap[fetchedDTOClass]
+					val guard = when (fetchedDtoModifyKind) {
+						ApiFetchedDTO.ModifyKind.ReadOnly -> {
 							fail<Unit>("Updatable class ${dtoClass.qualifiedName} links to class ${fetchedDTOClass.qualifiedName} which is marked as read-only ")
 						}
-						is ApiFetchedDTO.DTOKind.ReadWrite -> {
+						is ApiFetchedDTO.ModifyKind.ReadWrite -> {
 							// Backlink was checked before
 						}
 						null -> {
@@ -281,11 +281,11 @@ class DtoContractUnitTest {
 				ApiFetchedDTO::class.java.isAssignableFrom(dtoClass)
 			}.mapNotNull { fetchedDtoClass ->
 				val instance = fetchedDtoClass.getConstructor().newInstance() as ApiFetchedDTO
-				val dtoKind = instance.getKind()
-				if (dtoKind is ApiFetchedDTO.DTOKind.ReadWrite) {
+				val dtoModifyKind = instance.getModifyKind()
+				if (dtoModifyKind is ApiFetchedDTO.ModifyKind.ReadWrite) {
 					FetchedUpdatedDTO(
 						fetchedClass = fetchedDtoClass,
-						updatedClass = dtoKind.updatedDTOClass.java
+						updatedClass = dtoModifyKind.updatedDTOClass.java
 					)
 				} else {
 					null

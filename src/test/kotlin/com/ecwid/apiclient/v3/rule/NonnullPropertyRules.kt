@@ -11,7 +11,7 @@ import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.IgnoreNonnull
 import kotlin.reflect.KProperty1
 
 val nonnullPropertyRules: List<NonnullPropertyRule<*, *>> = listOf(
-	AllowNonnull(ApiUpdatedDTO.DTOKind.ReadWrite::fetchedDTOClass),
+	AllowNonnull(ApiUpdatedDTO.ModifyKind.ReadWrite::fetchedDTOClass),
 
 	IgnoreNonnull(UpdatedCoupon::code),
 	IgnoreNonnull(UpdatedCoupon::name),

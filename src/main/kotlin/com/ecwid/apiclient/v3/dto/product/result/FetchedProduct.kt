@@ -1,7 +1,7 @@
 package com.ecwid.apiclient.v3.dto.product.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
-import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.DTOKind
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.PictureInfo
 import com.ecwid.apiclient.v3.dto.product.enums.*
@@ -255,6 +255,6 @@ data class FetchedProduct(
 			val displayedCount: String? = null
 	)
 
-	override fun getKind() = DTOKind.ReadWrite(UpdatedProduct::class)
+	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedProduct::class)
 
 }

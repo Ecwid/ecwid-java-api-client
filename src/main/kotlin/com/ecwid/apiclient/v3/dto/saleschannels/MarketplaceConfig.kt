@@ -1,7 +1,7 @@
 package com.ecwid.apiclient.v3.dto.saleschannels
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
-import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.DTOKind
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 
 data class MarketplaceConfig(
 		val enabled: Boolean = false,
@@ -9,7 +9,7 @@ data class MarketplaceConfig(
 		val firstInit: Boolean = false
 ) : ApiFetchedDTO {
 
-	override fun getKind() = DTOKind.ReadOnly
+	override fun getModifyKind() = ModifyKind.ReadOnly
 
 }
 

@@ -1,7 +1,7 @@
 package com.ecwid.apiclient.v3.dto.profile.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
-import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.DTOKind
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 
 data class UpdatedStoreProfile(
@@ -220,6 +220,6 @@ data class UpdatedStoreProfile(
 		}
 	}
 
-	override fun getKind() = DTOKind.ReadWrite(FetchedStoreProfile::class)
+	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedStoreProfile::class)
 
 }

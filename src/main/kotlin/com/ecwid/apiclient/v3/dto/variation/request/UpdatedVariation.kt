@@ -1,7 +1,7 @@
 package com.ecwid.apiclient.v3.dto.variation.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
-import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.DTOKind
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueAlias
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 
@@ -41,7 +41,7 @@ data class UpdatedVariation(
 			val value: String? = null
 	)
 
-	override fun getKind() = DTOKind.ReadWrite(FetchedVariation::class)
+	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedVariation::class)
 
 }
 

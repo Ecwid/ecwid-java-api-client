@@ -1,7 +1,7 @@
 package com.ecwid.apiclient.v3.dto.coupon.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
-import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.DTOKind
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.coupon.request.UpdatedCoupon
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponApplicationLimit
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponStatus
@@ -33,6 +33,6 @@ data class FetchedCoupon(
 			val categories: List<Int>? = null
 	)
 
-	override fun getKind() = DTOKind.ReadWrite(UpdatedCoupon::class)
+	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedCoupon::class)
 
 }
