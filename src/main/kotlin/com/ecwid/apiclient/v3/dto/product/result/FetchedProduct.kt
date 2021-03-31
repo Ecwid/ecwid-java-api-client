@@ -1,10 +1,12 @@
 package com.ecwid.apiclient.v3.dto.product.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.PictureInfo
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.product.enums.*
+import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 import java.util.*
@@ -256,5 +258,7 @@ data class FetchedProduct(
 			val count: Int? = null,
 			val displayedCount: String? = null
 	)
+
+	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedProduct::class)
 
 }

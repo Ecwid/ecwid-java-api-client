@@ -1,7 +1,9 @@
 package com.ecwid.apiclient.v3.dto.profile.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
+import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 
 data class UpdatedStoreProfile(
 		val generalInfo: GeneralInfo? = null,
@@ -220,5 +222,7 @@ data class UpdatedStoreProfile(
 			ATTACH_TO_ALL_EMAILS, DO_NOT_ATTACH
 		}
 	}
+
+	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedStoreProfile::class)
 
 }

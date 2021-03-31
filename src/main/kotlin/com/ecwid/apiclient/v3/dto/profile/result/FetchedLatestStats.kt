@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.profile.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import java.util.*
 
 data class FetchedLatestStats(
@@ -11,4 +12,8 @@ data class FetchedLatestStats(
 		val discountCouponsUpdated: Date = Date(),
 		val abandonedSalesUpdated: Date = Date(),
 		val customersUpdated: Date = Date()
-) : ApiFetchedDTO
+) : ApiFetchedDTO {
+
+	override fun getModifyKind() = ModifyKind.ReadOnly
+
+}
