@@ -49,6 +49,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedProduct::defaultCombinationId),
 	Ignored(FetchedProduct::combinations),
 	Ignored(FetchedProduct::isGiftCard),
+	ReadOnly(FetchedProduct::googleProductCategoryName),
 
 	Ignored(FetchedCart::cartId),
 	Ignored(FetchedCart::email),
@@ -177,6 +178,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedStoreProfile::productFiltersSettings),
 	Ignored(FetchedStoreProfile::fbMessengerSettings),
 	Ignored(FetchedStoreProfile::giftCardSettings),
+	ReadOnly(FetchedStoreProfile.Settings::googleProductCategoryName),
 
 	ReadOnly(FetchedVariation::id),
 	Ignored(FetchedVariation::combinationNumber),
