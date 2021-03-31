@@ -18,7 +18,9 @@ data class CartsSearchRequest(
 		val limit: Int = 100
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "carts",
+			pathSegments = listOf(
+				"carts"
+			),
 			params = toParams()
 	)
 

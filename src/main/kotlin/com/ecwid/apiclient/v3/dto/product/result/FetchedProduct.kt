@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.product.result
 
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.PictureInfo
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
@@ -80,7 +81,7 @@ data class FetchedProduct(
 		val googleProductCategory: Int? = null,
 		val googleProductCategoryName: String? = null,
 		val productCondition: ProductCondition = ProductCondition.NEW
-) {
+) : ApiFetchedDTO {
 
 	data class Ribbon(
 			val text: String? = null,

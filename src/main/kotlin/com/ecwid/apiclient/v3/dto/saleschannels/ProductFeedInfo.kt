@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.saleschannels
 
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import java.util.*
 
 data class ProductFeedInfo(
@@ -7,5 +8,5 @@ data class ProductFeedInfo(
 		val productsIncluded: Int = 0,
 		val lastGenerated: Date = Date(),
 		val nextGenerated: Date = Date()
-)
+) : ApiFetchedDTO
 

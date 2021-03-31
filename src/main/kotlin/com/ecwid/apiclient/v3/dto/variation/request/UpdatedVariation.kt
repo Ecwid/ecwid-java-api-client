@@ -1,9 +1,9 @@
 package com.ecwid.apiclient.v3.dto.variation.request
 
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueAlias
 
 data class UpdatedVariation(
-
 		val sku: String? = null,
 
 		val options: List<Option>? = null,
@@ -21,8 +21,7 @@ data class UpdatedVariation(
 		val attributes: List<AttributeValue>? = null,
 
 		val isShippingRequired: Boolean? = null
-
-) {
+) : ApiUpdatedDTO {
 
 	data class AttributeValue(
 			val id: Int? = null,
@@ -39,5 +38,6 @@ data class UpdatedVariation(
 			val name: String? = null,
 			val value: String? = null
 	)
+
 }
 

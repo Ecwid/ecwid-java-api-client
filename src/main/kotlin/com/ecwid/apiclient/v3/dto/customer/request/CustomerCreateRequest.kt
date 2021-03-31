@@ -8,7 +8,9 @@ data class CustomerCreateRequest(
 		val newCustomer: UpdatedCustomer = UpdatedCustomer()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
-			endpoint = "customers",
+			pathSegments = listOf(
+					"customers"
+			),
 			httpBody = HttpBody.JsonBody(
 					obj = newCustomer
 			)

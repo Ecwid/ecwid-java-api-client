@@ -8,15 +8,17 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 data class ProductImageAsyncUploadRequest(
 		val productId: Int = 0,
 		val asyncPictureData: AsyncPictureData = AsyncPictureData()
-
 ) : ApiRequest {
 	override fun toRequestInfo(): RequestInfo {
 		return RequestInfo.createPostRequest(
-				endpoint = endpoint,
+				pathSegments = listOf(
+						"products",
+						"$productId",
+						"image",
+						"async"
+				),
 				params = mapOf(),
 				httpBody = HttpBody.JsonBody(obj = asyncPictureData)
 		)
 	}
-
-	private val endpoint = "products/$productId/image/async"
 }

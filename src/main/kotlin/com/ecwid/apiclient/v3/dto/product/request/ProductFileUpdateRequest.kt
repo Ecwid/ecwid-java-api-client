@@ -10,7 +10,12 @@ data class ProductFileUpdateRequest(
 		val updatedProductFile: UpdatedProductFile = UpdatedProductFile()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			endpoint = "products/$productId/files/$fileId",
+			pathSegments = listOf(
+					"products",
+					"$productId",
+					"files",
+					"$fileId"
+			),
 			params = mapOf(),
 			httpBody = HttpBody.JsonBody(
 					obj = updatedProductFile

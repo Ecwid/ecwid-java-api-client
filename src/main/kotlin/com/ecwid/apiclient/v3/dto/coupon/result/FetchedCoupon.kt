@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.coupon.result
 
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponApplicationLimit
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponStatus
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponType
@@ -23,9 +24,11 @@ data class FetchedCoupon(
 		val updateDate: Date? = null,
 		val orderCount: Int? = null,
 		val catalogLimit: DiscountCouponCatalogLimit? = null
-) {
+) : ApiFetchedDTO {
+
 	data class DiscountCouponCatalogLimit(
 			val products: List<Int>? = null,
 			val categories: List<Int>? = null
 	)
+
 }

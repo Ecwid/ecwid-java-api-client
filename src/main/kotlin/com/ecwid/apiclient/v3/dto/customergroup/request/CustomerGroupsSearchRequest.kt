@@ -8,7 +8,9 @@ data class CustomerGroupsSearchRequest(
 		val limit: Int = 100
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "customer_groups",
+			pathSegments = listOf(
+				"customer_groups"
+			),
 			params = toParams()
 	)
 

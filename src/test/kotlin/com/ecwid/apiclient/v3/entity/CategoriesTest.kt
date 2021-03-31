@@ -395,7 +395,6 @@ class CategoriesTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Async upload is not in API stable version now")
 	fun testUploadCategoryImageAsync() {
 		// Creating new category
 		val categoryCreateRequest = CategoryCreateRequest(

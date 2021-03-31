@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.order.result
 
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import java.util.*
@@ -73,7 +74,7 @@ data class FetchedOrder(
 		val utmData: UtmData? = null,
 
 		val pricesIncludeTax: Boolean? = null
-) {
+) : ApiFetchedDTO {
 
 	data class CreditCardStatus(
 			val avsMessage: String? = null,
@@ -219,7 +220,8 @@ data class FetchedOrder(
 			val shippingRate: Double? = null,
 			val estimatedTransitTime: String? = null,
 			val isPickup: Boolean? = null,
-			val pickupInstruction: String? = null
+			val pickupInstruction: String? = null,
+			val fulfillmentType: FulfillmentType? = null
 	)
 
 	data class HandlingFee(

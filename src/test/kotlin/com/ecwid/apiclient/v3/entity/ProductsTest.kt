@@ -221,38 +221,43 @@ class ProductsTest : BaseEntityTest() {
 
 		// Searching products with different combinations of baseUrl and cleanUrls parameters
 		assertProductUrlMatchesRegex(
-				productSearchRequest = ProductsSearchRequest.ByFilters(),
+				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = productCreateRequest.newProduct.sku),
 				urlPattern = "https://.*.company.site.*/Product-.*-p.*"
 		)
 		assertProductUrlMatchesRegex(
 			productSearchRequest = ProductsSearchRequest.ByFilters(
-				cleanUrls = true
+					cleanUrls = true,
+					keyword = productCreateRequest.newProduct.sku
 			),
 			urlPattern = "https://.*.company.site.*/Product-.*-p.*"
 		)
 		assertProductUrlMatchesRegex(
 				productSearchRequest = ProductsSearchRequest.ByFilters(
-						cleanUrls = false
+						cleanUrls = false,
+						keyword = productCreateRequest.newProduct.sku
 				),
 				urlPattern = "https://.*.company.site.*/#!/Product-.*/p/.*"
 		)
 		assertProductUrlMatchesRegex(
 			productSearchRequest = ProductsSearchRequest.ByFilters(
-				baseUrl = "https://google.com/"
+					baseUrl = "https://google.com/",
+					keyword = productCreateRequest.newProduct.sku
 			),
 			urlPattern = "https://google.com/#!/Product-.*/p/.*"
 		)
 		assertProductUrlMatchesRegex(
 				productSearchRequest = ProductsSearchRequest.ByFilters(
 						baseUrl = "https://google.com/",
-						cleanUrls = true
+						cleanUrls = true,
+						keyword = productCreateRequest.newProduct.sku
 					),
 				urlPattern = "https://google.com/Product-.*-p.*"
 		)
 		assertProductUrlMatchesRegex(
 				productSearchRequest = ProductsSearchRequest.ByFilters(
 						baseUrl = "https://google.com/",
-						cleanUrls = false
+						cleanUrls = false,
+						keyword = productCreateRequest.newProduct.sku
 				),
 				urlPattern = "https://google.com/#!/Product-.*/p/.*"
 		)
@@ -915,7 +920,6 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Async upload is not in API stable version now")
 	fun testUploadProductImageAsync() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
@@ -976,7 +980,6 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("Async upload is not in API stable version now")
 	fun testUploadProductGalleryImageAsync() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(

@@ -8,6 +8,11 @@ data class DeleteProductVariationRequest(
 		val variationId: Int = 0
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createDeleteRequest(
-			endpoint = "products/$productId/combinations/$variationId"
+			pathSegments = listOf(
+				"products",
+				"$productId",
+				"combinations",
+				"$variationId"
+			)
 	)
 }

@@ -7,7 +7,9 @@ data class GetEscapedBatchRequest(
 		val ticket: String = ""
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "batch",
+			pathSegments = listOf(
+				"batch"
+			),
 			params = mapOf(
 					"ticket" to ticket,
 					"escapedJson" to "true"

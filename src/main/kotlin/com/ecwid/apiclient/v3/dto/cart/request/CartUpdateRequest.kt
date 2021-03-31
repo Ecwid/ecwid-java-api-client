@@ -9,7 +9,10 @@ data class CartUpdateRequest(
 		val updatedCart: UpdatedCart = UpdatedCart()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			endpoint = "carts/$cartId",
+			pathSegments = listOf(
+					"carts",
+					cartId
+			),
 			httpBody = HttpBody.JsonBody(
 					obj = updatedCart
 			)

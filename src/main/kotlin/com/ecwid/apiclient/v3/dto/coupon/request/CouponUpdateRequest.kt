@@ -9,7 +9,10 @@ data class CouponUpdateRequest(
 		val updatedCoupon: UpdatedCoupon = UpdatedCoupon()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			endpoint = "discount_coupons/$couponIdentifier",
+			pathSegments = listOf(
+					"discount_coupons",
+					"$couponIdentifier"
+			),
 			httpBody = HttpBody.JsonBody(
 					obj = updatedCoupon
 			)

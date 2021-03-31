@@ -7,6 +7,9 @@ data class CouponDetailsRequest(
 		val couponIdentifier: String = ""
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "discount_coupons/$couponIdentifier"
+			pathSegments = listOf(
+				"discount_coupons",
+				couponIdentifier
+			)
 	)
 }

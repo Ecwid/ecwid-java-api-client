@@ -9,12 +9,28 @@ data class OrderItemOptionFilesDeleteRequest(
 		val orderItemId: Int = 0,
 		val optionName: String = ""
 ) : ApiRequest {
-	constructor(orderNumber: Int = 0,
-				orderItemId: Int = 0,
-				optionName: String = ""
-	) : this(orderNumber, orderNumber.toString(), orderItemId, optionName)
+
+	constructor(
+			orderNumber: Int = 0,
+			orderItemId: Int = 0,
+			optionName: String = ""
+	) : this(
+			orderNumber = orderNumber,
+			orderIdentity = orderNumber.toString(),
+			orderItemId = orderItemId,
+			optionName = optionName
+	)
 
 	override fun toRequestInfo() = RequestInfo.createDeleteRequest(
-			endpoint = "orders/$orderIdentity/items/$orderItemId/options/$optionName/files"
+			pathSegments = listOf(
+				"orders",
+				orderIdentity,
+				"items",
+				"$orderItemId",
+				"options",
+				optionName,
+				"files"
+			)
 	)
+
 }

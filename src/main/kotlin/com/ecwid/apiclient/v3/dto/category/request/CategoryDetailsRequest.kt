@@ -10,7 +10,10 @@ data class CategoryDetailsRequest(
 		val lang: String? = null
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			endpoint = "categories/$categoryId",
+			pathSegments = listOf(
+				"categories",
+				"$categoryId"
+			),
 			params = toParams()
 	)
 

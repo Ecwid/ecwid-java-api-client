@@ -1,5 +1,7 @@
 package com.ecwid.apiclient.v3.dto.customer.request
 
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
+
 data class UpdatedCustomer(
 		val email: String = "",
 		val password: String? = null,
@@ -9,7 +11,8 @@ data class UpdatedCustomer(
 		val taxId: String? = null,
 		val taxIdValid: Boolean? = null,
 		val taxExempt: Boolean? = null,
-		val acceptMarketing: Boolean? = null) {
+		val acceptMarketing: Boolean? = null
+) : ApiUpdatedDTO {
 
 	data class BillingPerson(
 			val name: String? = null,

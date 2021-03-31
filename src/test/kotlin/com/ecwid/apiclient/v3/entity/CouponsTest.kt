@@ -1,17 +1,22 @@
 package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.converter.toUpdated
+import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
+import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
+import com.ecwid.apiclient.v3.dto.category.result.CategoryCreateResult
 import com.ecwid.apiclient.v3.dto.coupon.request.*
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponApplicationLimit
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponStatus
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponType
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponUsesLimit
+import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
+import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
+import com.ecwid.apiclient.v3.dto.product.result.ProductCreateResult
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -23,15 +28,28 @@ class CouponsTest : BaseEntityTest() {
 
 		// We need to start from scratch each time
 		removeAllCoupons()
+		removeAllCategories()
+		removeAllProducts()
 	}
 
 	@Test
-	@Disabled("Fix in ECWID-66808")
 	fun testCouponLifecycle() {
+
+		// Create two products
+		val productCreateResult1 = createTestProduct()
+		val productCreateResult2 = createTestProduct()
+		assertTrue(productCreateResult1.id > 0)
+		assertTrue(productCreateResult2.id > 0)
+
+		// Create two categories
+		val categoryCreateResult1 = createTestCategory()
+		val categoryCreateResult2 = createTestCategory()
+		assertTrue(categoryCreateResult1.id > 0)
+		assertTrue(categoryCreateResult2.id > 0)
 
 		// Creating new coupon
 		val couponCreateRequest = CouponCreateRequest(
-				newCoupon = generateTestCouponForCreate()
+				newCoupon = generateTestCouponForCreate(productCreateResult1.id, categoryCreateResult1.id)
 		)
 		val couponCreateResult = apiClient.createCoupon(couponCreateRequest)
 		assertTrue(couponCreateResult.id > 0)
@@ -47,7 +65,7 @@ class CouponsTest : BaseEntityTest() {
 		// Completely updating newly created coupon
 		val couponUpdateRequest = CouponUpdateRequest(
 				couponIdentifier = couponDetails.code,
-				updatedCoupon = generateTestCouponForUpdate()
+				updatedCoupon = generateTestCouponForUpdate(productCreateResult2.id, categoryCreateResult2.id)
 		)
 		val couponUpdateResult = apiClient.updateCoupon(couponUpdateRequest)
 		assertEquals(1, couponUpdateResult.updateCount)
@@ -177,48 +195,74 @@ class CouponsTest : BaseEntityTest() {
 		assertEquals(1, customerDeleteResult.deleteCount)
 	}
 
-	private fun generateTestCouponForCreate(): UpdatedCoupon {
+	private fun createTestProduct(): ProductCreateResult {
+		val productCreateRequest = ProductCreateRequest(
+			newProduct = UpdatedProduct(
+				name = "Product ${randomAlphanumeric(8)}"
+			)
+		)
+
+		return apiClient.createProduct(productCreateRequest)
+	}
+
+	private fun createTestCategory(): CategoryCreateResult {
+		val categoryCreateRequest = CategoryCreateRequest(
+			newCategory = UpdatedCategory(
+				name = "Category " + randomAlphanumeric(8)
+			)
+		)
+
+		return apiClient.createCategory(categoryCreateRequest)
+	}
+
+	private fun generateTestCouponForCreate(existingProductId: Int, existingCategoryId: Int): UpdatedCoupon {
 		val launchDate = randomDateFrom(Date())
 		val expirationDate = randomDateFrom(launchDate)
+
+		val applicationLimit = randomEnumValue<DiscountCouponApplicationLimit>()
+
 		return UpdatedCoupon(
 				name = randomAlphanumeric(10),
 				code = randomAlphanumeric(10).toUpperCase(),
-				discountType = randomEnumValue<DiscountCouponType>(),
+				discountType = randomEnumValue(DiscountCouponType.SHIPPING), // DiscountCouponType.SHIPPING is not compatible with catalogLimit
 				status = DiscountCouponStatus.ACTIVE,
 				discount = randomDouble(0.0, 100000.0),
 				expirationDate = expirationDate,
 				launchDate = launchDate,
 				totalLimit = randomDouble(0.0, 100000.0),
 				usesLimit = randomEnumValue<DiscountCouponUsesLimit>(),
-				repeatCustomerOnly = randomBoolean(),
-				applicationLimit = randomEnumValue<DiscountCouponApplicationLimit>(),
+				repeatCustomerOnly = applicationLimit.toRepeatCustomerOnly(),
+				applicationLimit = applicationLimit,
 				orderCount = 0,
 				catalogLimit = UpdatedCoupon.DiscountCouponCatalogLimit(
-						listOf(randomInt(0, 1000)),
-						listOf(randomInt(0, 5000))
+						products = listOf(existingProductId),
+						categories = listOf(existingCategoryId)
 				)
 		)
 	}
 
-	private fun generateTestCouponForUpdate(): UpdatedCoupon {
+	private fun generateTestCouponForUpdate(existingProductId: Int, existingCategoryId: Int): UpdatedCoupon {
 		val launchDate = randomDateFrom(Date())
 		val expirationDate = randomDateFrom(launchDate)
+
+		val applicationLimit = randomEnumValue<DiscountCouponApplicationLimit>()
+
 		return UpdatedCoupon(
 				name = randomAlphanumeric(10),
 				code = randomAlphanumeric(10).toUpperCase(),
-				discountType = randomEnumValue<DiscountCouponType>(),
+				discountType = randomEnumValue(DiscountCouponType.SHIPPING), // DiscountCouponType.SHIPPING is not compatible with catalogLimit
 				status = DiscountCouponStatus.ACTIVE,
 				discount = randomDouble(0.0, 100000.0),
 				expirationDate = expirationDate,
 				launchDate = launchDate,
 				totalLimit = randomDouble(0.0, 100000.0),
 				usesLimit = randomEnumValue<DiscountCouponUsesLimit>(),
-				repeatCustomerOnly = randomBoolean(),
-				applicationLimit = randomEnumValue<DiscountCouponApplicationLimit>(),
+				repeatCustomerOnly = applicationLimit.toRepeatCustomerOnly(),
+				applicationLimit = applicationLimit,
 				orderCount = 0,
 				catalogLimit = UpdatedCoupon.DiscountCouponCatalogLimit(
-						listOf(randomInt(0, 1000)),
-						listOf(randomInt(0, 5000))
+						products = listOf(existingProductId),
+						categories = listOf(existingCategoryId)
 				)
 		)
 	}
@@ -238,11 +282,7 @@ class CouponsTest : BaseEntityTest() {
 				usesLimit = randomEnumValue<DiscountCouponUsesLimit>(),
 				repeatCustomerOnly = randomBoolean(),
 				applicationLimit = randomEnumValue<DiscountCouponApplicationLimit>(),
-				orderCount = 0,
-				catalogLimit = UpdatedCoupon.DiscountCouponCatalogLimit(
-						listOf(randomInt(0, 1000)),
-						listOf(randomInt(0, 5000))
-				)
+				orderCount = 0
 		)
 	}
 
@@ -261,11 +301,7 @@ class CouponsTest : BaseEntityTest() {
 				usesLimit = randomEnumValue<DiscountCouponUsesLimit>(),
 				repeatCustomerOnly = randomBoolean(),
 				applicationLimit = randomEnumValue<DiscountCouponApplicationLimit>(),
-				orderCount = 0,
-				catalogLimit = UpdatedCoupon.DiscountCouponCatalogLimit(
-						listOf(randomInt(0, 1000)),
-						listOf(randomInt(0, 5000))
-				)
+				orderCount = 0
 		)
 	}
 
@@ -276,4 +312,7 @@ class CouponsTest : BaseEntityTest() {
 		val negativeCouponsSearchResult = apiClient.searchCoupons(negativeSearchRequest)
 		assertEquals(0, negativeCouponsSearchResult.count)
 	}
+
 }
+
+private fun DiscountCouponApplicationLimit.toRepeatCustomerOnly() = this == DiscountCouponApplicationLimit.REPEAT_CUSTOMER_ONLY

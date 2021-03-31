@@ -74,7 +74,7 @@ class OrdersTest : BaseEntityTest() {
 	@Test
 	fun testManipulateOrderItemOptionFiles() {
 		// Creating order with item with FILES option
-		val filesOptionName = "File option Тест !@#$%^&*()"
+		val filesOptionName = "File option / With Slashes / НеЛатиНсКиМи СиМвОлАМи / !@#\$%^&*()+"
 
 		val orderCreateRequest = OrderCreateRequest(
 				newOrder = UpdatedOrder(

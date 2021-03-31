@@ -8,7 +8,9 @@ data class OrderCreateRequest(
 		val newOrder: UpdatedOrder = UpdatedOrder()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
-			endpoint = "orders",
+			pathSegments = listOf(
+					"orders"
+			),
 			httpBody = HttpBody.JsonBody(
 					obj = newOrder
 			)

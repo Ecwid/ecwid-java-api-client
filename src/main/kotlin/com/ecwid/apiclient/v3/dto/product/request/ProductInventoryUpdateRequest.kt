@@ -9,8 +9,13 @@ data class ProductInventoryUpdateRequest(
 		val inventoryAdjustment: InventoryAdjustment = InventoryAdjustment(0),
 		val checkLowStockNotification: Boolean? = null
 ) : ApiRequest {
+
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			endpoint = "products/$productId/inventory",
+			pathSegments = listOf(
+					"products",
+					"$productId",
+					"inventory"
+			),
 			params = toParams(),
 			httpBody = HttpBody.JsonBody(
 					obj = inventoryAdjustment
@@ -26,4 +31,5 @@ data class ProductInventoryUpdateRequest(
 			checkLowStockNotification?.let { put("checkLowStockNotification", it.toString()) }
 		}.toMap()
 	}
+
 }

@@ -9,7 +9,10 @@ data class CustomerGroupUpdateRequest(
 		val updatedCustomerGroup: UpdatedCustomerGroup = UpdatedCustomerGroup()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			endpoint = "customer_groups/$customerGroupId",
+			pathSegments = listOf(
+					"customer_groups",
+					"$customerGroupId"
+			),
 			params = mapOf(),
 			httpBody = HttpBody.JsonBody(
 					obj = updatedCustomerGroup

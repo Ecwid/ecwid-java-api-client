@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.cart.request
 
+import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -15,7 +16,8 @@ data class OrderForCalculate(
 		val billingPerson: PersonInfo? = null,
 		val shippingPerson: PersonInfo? = null,
 		val discountInfo: List<DiscountInfo>? = null
-) {
+) : ApiRequestDTO {
+
 	data class DiscountInfo(
 			val value: Double? = null,
 			val type: DiscountType? = null,

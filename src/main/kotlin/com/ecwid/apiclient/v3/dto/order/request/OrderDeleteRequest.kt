@@ -10,6 +10,9 @@ data class OrderDeleteRequest(
 	constructor(orderNumber: Int = 0) : this(orderNumber, orderIdentity = orderNumber.toString())
 
 	override fun toRequestInfo() = RequestInfo.createDeleteRequest(
-			endpoint = "orders/$orderIdentity"
+			pathSegments = listOf(
+				"orders",
+				orderIdentity
+			)
 	)
 }

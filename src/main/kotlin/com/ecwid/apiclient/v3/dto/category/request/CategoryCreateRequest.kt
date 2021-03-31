@@ -8,7 +8,9 @@ data class CategoryCreateRequest(
 		val newCategory: UpdatedCategory = UpdatedCategory()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
-			endpoint = "categories",
+			pathSegments = listOf(
+					"categories"
+			),
 			httpBody = HttpBody.JsonBody(
 					obj = newCategory
 			)

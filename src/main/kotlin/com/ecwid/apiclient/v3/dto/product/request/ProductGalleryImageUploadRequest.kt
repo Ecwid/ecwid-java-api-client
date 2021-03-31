@@ -18,14 +18,14 @@ data class ProductGalleryImageUploadRequest(
 
 		return when (fileData) {
 			is UploadFileData.ExternalUrlData -> RequestInfo.createPostRequest(
-					endpoint = endpoint,
+					pathSegments = pathSegments,
 					params = commonParams + mapOf(
 							"externalUrl" to fileData.externalUrl
 					),
 					httpBody = HttpBody.EmptyBody
 			)
 			is UploadFileData.ByteArrayData -> RequestInfo.createPostRequest(
-					endpoint = endpoint,
+					pathSegments = pathSegments,
 					params = commonParams,
 					httpBody = HttpBody.ByteArrayBody(
 							bytes = fileData.bytes,
@@ -33,7 +33,7 @@ data class ProductGalleryImageUploadRequest(
 					)
 			)
 			is UploadFileData.LocalFileData -> RequestInfo.createPostRequest(
-					endpoint = endpoint,
+					pathSegments = pathSegments,
 					params = commonParams,
 					httpBody = HttpBody.LocalFileBody(
 							file = fileData.file,
@@ -41,7 +41,7 @@ data class ProductGalleryImageUploadRequest(
 					)
 			)
 			is UploadFileData.InputStreamData -> RequestInfo.createPostRequest(
-					endpoint = endpoint,
+					pathSegments = pathSegments,
 					params = commonParams,
 					httpBody = HttpBody.InputStreamBody(
 							stream = fileData.stream,
@@ -51,5 +51,10 @@ data class ProductGalleryImageUploadRequest(
 		}
 	}
 
-	private val endpoint = "products/$productId/gallery"
+	private val pathSegments = listOf(
+			"products",
+			"$productId",
+			"gallery"
+	)
+
 }
