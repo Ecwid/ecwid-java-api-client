@@ -1201,6 +1201,12 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 
 	IgnoreNullable(DeletedOrder::orderId),
 
+	AllowNullable(FetchedProduct::googleProductCategory),
+	AllowNullable(FetchedProduct::googleProductCategoryName),
+
+	AllowNullable(FetchedStoreProfile.Settings::googleProductCategory),
+	AllowNullable(FetchedStoreProfile.Settings::googleProductCategoryName),
+
 	IgnoreNullable(ProductInventoryUpdateResult::warning)
 
 )
