@@ -14,17 +14,25 @@ import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 import com.ecwid.apiclient.v3.rule.nonUpdatablePropertyRules
 import com.ecwid.apiclient.v3.rule.nonnullPropertyRules
 import com.ecwid.apiclient.v3.rule.nullablePropertyRules
-import com.ecwid.apiclient.v3.util.FetchedUpdatedDTO
+import com.ecwid.apiclient.v3.util.*
+import com.ecwid.apiclient.v3.util.DTORandomDataProviderStrategy
 import com.ecwid.apiclient.v3.util.FieldProblem
 import com.ecwid.apiclient.v3.util.FieldProblemKind
+import com.ecwid.apiclient.v3.util.checkDTOFieldsEmptiness
 import com.ecwid.apiclient.v3.util.checkFetchedUpdatedDTOsFields
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
 import org.reflections.Reflections
+import org.reflections.scanners.MethodParameterScanner
 import org.reflections.scanners.SubTypesScanner
+import org.reflections.util.ClasspathHelper
+import org.reflections.util.ConfigurationBuilder
+import org.reflections.util.FilterBuilder
+import uk.co.jemos.podam.api.PodamFactoryImpl
 import java.io.File
 import java.io.InputStream
 import java.lang.reflect.*
@@ -36,6 +44,14 @@ import kotlin.reflect.jvm.javaGetter
 
 @TestMethodOrder(OrderAnnotation::class)
 class DtoContractUnitTest {
+
+	private val convertersReflections =
+		Reflections(
+			ConfigurationBuilder()
+				.filterInputsBy(FilterBuilder().includePackage("com.ecwid.apiclient.v3.converter"))
+				.setUrls(ClasspathHelper.forPackage(""))
+				.setScanners(MethodParameterScanner())
+		)
 
 	@Test
 	@Order(0)
@@ -210,23 +226,10 @@ class DtoContractUnitTest {
 	@Order(8)
 	fun `test fetched and updated DTOs correctly linked to each other`() {
 		val dtoClassesToCheck = getDtoClassesToCheck()
+		val fetchedDTOClassesToModifyKindMap = getFetchedDTOClassesToModifyKindMap(dtoClassesToCheck)
+		val updatedDTOClassesToModifyKindMap = getUpdatedDTOClassesToModifyKindMap(dtoClassesToCheck)
 
-		val fetchedDTOClassesMap = dtoClassesToCheck
-			.filter { dtoClass ->
-				ApiFetchedDTO::class.java.isAssignableFrom(dtoClass)
-			}.associate { dtoClass ->
-				val instance = dtoClass.getConstructor().newInstance() as ApiFetchedDTO
-				dtoClass.kotlin as KClass<*> to instance.getModifyKind()
-			}
-		val updatedDTOClassesMap = dtoClassesToCheck
-			.filter { dtoClass ->
-				ApiUpdatedDTO::class.java.isAssignableFrom(dtoClass)
-			}.associate { dtoClass ->
-				val instance = dtoClass.getConstructor().newInstance() as ApiUpdatedDTO
-				dtoClass.kotlin as KClass<*> to instance.getModifyKind()
-			}
-
-		fetchedDTOClassesMap.forEach { (dtoClass, kind) ->
+		fetchedDTOClassesToModifyKindMap.forEach { (dtoClass, kind) ->
 			@Suppress("UNUSED_VARIABLE")
 			val guard = when (kind) {
 				ApiFetchedDTO.ModifyKind.ReadOnly -> {
@@ -234,7 +237,7 @@ class DtoContractUnitTest {
 				}
 				is ApiFetchedDTO.ModifyKind.ReadWrite -> {
 					val updatedDTOClass = kind.updatedDTOClass
-					val updatedDtoModifyKind = updatedDTOClassesMap[updatedDTOClass]
+					val updatedDtoModifyKind = updatedDTOClassesToModifyKindMap[updatedDTOClass]
 					val guard = when (updatedDtoModifyKind) {
 						is ApiUpdatedDTO.ModifyKind.ReadWrite -> {
 							assertEquals(
@@ -249,12 +252,12 @@ class DtoContractUnitTest {
 			}
 		}
 
-		updatedDTOClassesMap.forEach { (dtoClass, kind) ->
+		updatedDTOClassesToModifyKindMap.forEach { (dtoClass, kind) ->
 			@Suppress("UNUSED_VARIABLE")
 			val guard = when (kind) {
 				is ApiUpdatedDTO.ModifyKind.ReadWrite -> {
 					val fetchedDTOClass = kind.fetchedDTOClass
-					val fetchedDtoModifyKind = fetchedDTOClassesMap[fetchedDTOClass]
+					val fetchedDtoModifyKind = fetchedDTOClassesToModifyKindMap[fetchedDTOClass]
 					val guard = when (fetchedDtoModifyKind) {
 						ApiFetchedDTO.ModifyKind.ReadOnly -> {
 							fail<Unit>("Updatable class ${dtoClass.qualifiedName} links to class ${fetchedDTOClass.qualifiedName} which is marked as read-only ")
@@ -314,6 +317,54 @@ class DtoContractUnitTest {
 		}
 	}
 
+	@Test
+	@Order(11)
+	@Disabled
+	fun `test toUpdated extension functions are implemented correctly for all updatable FetchedDTOs`() {
+		val dataStrategy = DTORandomDataProviderStrategy()
+		val factory = PodamFactoryImpl(dataStrategy)
+
+		val dtoClassesToCheck = getDtoClassesToCheck()
+		val fetchedDTOClassesToModifyKindMap = getFetchedDTOClassesToModifyKindMap(dtoClassesToCheck)
+
+		val problemMessages = mutableListOf<String>()
+
+		val updatedDTOs = fetchedDTOClassesToModifyKindMap.mapNotNull { (fetchedDtoClass, kind) ->
+			when (kind) {
+				ApiFetchedDTO.ModifyKind.ReadOnly -> {
+					// No UpdatedDTO to check
+					null
+				}
+				is ApiFetchedDTO.ModifyKind.ReadWrite -> {
+					@Suppress("UNCHECKED_CAST")
+					val fetchedDtoKClass = fetchedDtoClass as KClass<out ApiFetchedDTO>
+					val updatedDTOClass = kind.updatedDTOClass
+
+					val toUpdatedMethod: Method? = findToUpdatedMethod(convertersReflections, fetchedDtoKClass, updatedDTOClass)
+					if (toUpdatedMethod == null) {
+						problemMessages += "Extension function with signature `${fetchedDtoKClass.java.canonicalName}.toUpdated(): ${updatedDTOClass.java.canonicalName}` is not implemented"
+						null
+					} else {
+						val fetchedDTO = factory.manufacturePojo(fetchedDtoKClass.java)
+						try {
+							toUpdatedMethod.invoke(null, fetchedDTO) as ApiUpdatedDTO
+						} catch (e: InvocationTargetException) {
+							problemMessages += "Exception occurred during invoking method `${fetchedDtoKClass.java.canonicalName}.toUpdated(): ${e.message}"
+							null
+						}
+					}
+				}
+			}
+		}
+
+		problemMessages += checkDTOFieldsEmptiness(updatedDTOs).map { problem ->
+			problem.buildMessage()
+		}
+
+		assertTrue(problemMessages.isEmpty()) {
+			problemMessages.joinToString(prefix = "\n * ", separator = "\n * ")
+		}
+	}
 
 }
 
@@ -366,6 +417,17 @@ Details:
 	expectedFieldClass: $expectedFieldClassStr
 	actualFieldClass: $actualFieldClassStr
 """
+}
+
+private fun FieldEmptinessProblem.buildMessage(): String {
+	val fieldName = "${fieldClass?.canonicalName}::$fieldName"
+	val fieldProblemMessage = when (kind) {
+		FieldEmptinessProblemKind.NULL_VALUE -> "has null value"
+		FieldEmptinessProblemKind.DEFAULT_VALUE -> "has null value"
+		FieldEmptinessProblemKind.EMPTY_LIST -> "is an empty list"
+		FieldEmptinessProblemKind.EMPTY_MAP -> "is an empty map"
+	}
+	return "Field `$fieldName` is not copied correctly – it $fieldProblemMessage"
 }
 
 private fun propertiesToLoggableString(properties: Collection<KProperty1<*, *>>): String {
@@ -441,7 +503,27 @@ private fun getPrimaryConstructorProperties(dtoDataClass: Class<*>): List<KPrope
 	}
 }
 
-private fun getDtoClassesToCheck() = Reflections(ApiRequest::class.java.packageName, SubTypesScanner(false))
+internal fun getFetchedDTOClassesToModifyKindMap(dtoClassesToCheck: List<Class<*>>): Map<KClass<*>, ApiFetchedDTO.ModifyKind> {
+	return dtoClassesToCheck
+		.filter { dtoClass ->
+			ApiFetchedDTO::class.java.isAssignableFrom(dtoClass)
+		}.associate { dtoClass ->
+			val instance = dtoClass.getConstructor().newInstance() as ApiFetchedDTO
+			dtoClass.kotlin to instance.getModifyKind()
+		}
+}
+
+private fun getUpdatedDTOClassesToModifyKindMap(dtoClassesToCheck: List<Class<*>>): Map<KClass<*>, ApiUpdatedDTO.ModifyKind> {
+	return dtoClassesToCheck
+		.filter { dtoClass ->
+			ApiUpdatedDTO::class.java.isAssignableFrom(dtoClass)
+		}.associate { dtoClass ->
+			val instance = dtoClass.getConstructor().newInstance() as ApiUpdatedDTO
+			dtoClass.kotlin as KClass<*> to instance.getModifyKind()
+		}
+}
+
+internal fun getDtoClassesToCheck() = Reflections(ApiRequest::class.java.packageName, SubTypesScanner(false))
 	.getSubTypesOf(Object::class.java)
 	.filterNot { clazz -> clazz.isInterface || clazz.isAnonymousClass }
 	.filterNot { clazz ->
@@ -453,6 +535,18 @@ private fun getDtoClassesToCheck() = Reflections(ApiRequest::class.java.packageN
 		}
 	}
 	.sortedBy { clazz -> clazz.canonicalName }
+
+private fun findToUpdatedMethod(
+	reflections: Reflections,
+	fetchedDtoClass: KClass<out ApiFetchedDTO>,
+	updatedDtoClass: KClass<out ApiUpdatedDTO>
+): Method? {
+	return reflections
+		.getMethodsReturn(updatedDtoClass.java)
+		.filter { method -> method.name == "toUpdated" }
+		.filter { method -> method.parameterCount == 1 }
+		.firstOrNull { method -> method.parameters[0].type == fetchedDtoClass.java }
+}
 
 private fun Class<*>.isClassifiedDTOOrEnclosingClass(vararg dtoMarkerInterfaces: Class<*>): Boolean {
 	return dtoMarkerInterfaces.any { dtoMarkerInterface: Class<*> ->
