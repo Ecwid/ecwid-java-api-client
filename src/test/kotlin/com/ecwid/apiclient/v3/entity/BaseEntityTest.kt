@@ -50,7 +50,7 @@ abstract class BaseEntityTest {
 						host = properties.apiHost,
 						securePort = properties.apiPort
 				),
-				storeCredentials = ApiStoreCredentials(
+				credentials = ApiStoreCredentials(
 						storeId = properties.storeId,
 						apiToken = properties.apiToken
 				),

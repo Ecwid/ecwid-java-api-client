@@ -217,7 +217,7 @@ data class FetchedProduct(
 	)
 
 	data class GalleryImage(
-			val id: Int = 0,
+			val id: Long = 0,
 			val orderBy: Int = 0,
 			val alt: String? = null,
 			val width: Int = 0,

@@ -1,9 +1,6 @@
 package com.ecwid.apiclient.v3
 
-import com.ecwid.apiclient.v3.config.ApiServerDomain
-import com.ecwid.apiclient.v3.config.ApiStoreCredentials
-import com.ecwid.apiclient.v3.config.DEFAULT_HTTPS_PORT
-import com.ecwid.apiclient.v3.config.LoggingSettings
+import com.ecwid.apiclient.v3.config.*
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.common.EcwidApiError
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct.ProductOption
@@ -17,8 +14,6 @@ import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
 import com.ecwid.apiclient.v3.util.buildEndpointPath
-import java.io.ByteArrayInputStream
-import java.io.FileInputStream
 import java.net.URI
 import java.util.*
 import java.util.logging.Level
@@ -26,29 +21,45 @@ import java.util.logging.Logger
 import kotlin.random.Random
 
 private const val API_TOKEN_PARAM_NAME = "token"
+private const val APP_CLIENT_ID_PARAM_NAME = "appClientId"
+private const val APP_CLIENT_SECRET_PARAM_NAME = "appSecretKey"
 
 class ApiClientHelper private constructor(
-		val apiServerDomain: ApiServerDomain,
-		val storeCredentials: ApiStoreCredentials,
-		val loggingSettings: LoggingSettings,
-		val httpTransport: HttpTransport,
-		val jsonTransformer: JsonTransformer
+	val apiServerDomain: ApiServerDomain,
+	val credentials: ApiCredentials,
+	val loggingSettings: LoggingSettings,
+	val httpTransport: HttpTransport,
+	val jsonTransformer: JsonTransformer
 ) {
 
 	private val log = Logger.getLogger(this::class.qualifiedName)
 
 	constructor(
-			apiServerDomain: ApiServerDomain,
-			storeCredentials: ApiStoreCredentials,
-			loggingSettings: LoggingSettings,
-			httpTransport: HttpTransport,
-			jsonTransformerProvider: JsonTransformerProvider
+		apiServerDomain: ApiServerDomain,
+		storeCredentials: ApiStoreCredentials,
+		loggingSettings: LoggingSettings,
+		httpTransport: HttpTransport,
+		jsonTransformerProvider: JsonTransformerProvider
 	): this(
 			apiServerDomain = apiServerDomain,
-			storeCredentials = storeCredentials,
+			credentials = storeCredentials,
 			loggingSettings = loggingSettings,
 			httpTransport = httpTransport,
 			jsonTransformer = jsonTransformerProvider.build(listOf(createProductOptionsPolymorphicType()))
+	)
+
+	constructor(
+		apiServerDomain: ApiServerDomain,
+		credentials: ApiCredentials,
+		loggingSettings: LoggingSettings,
+		httpTransport: HttpTransport,
+		jsonTransformerProvider: JsonTransformerProvider
+	): this(
+		apiServerDomain = apiServerDomain,
+		credentials = credentials,
+		loggingSettings = loggingSettings,
+		httpTransport = httpTransport,
+		jsonTransformer = jsonTransformerProvider.build(listOf(createProductOptionsPolymorphicType()))
 	)
 
 	@PublishedApi
@@ -164,21 +175,21 @@ class ApiClientHelper private constructor(
 	internal fun RequestInfo.toHttpRequest(): HttpRequest = when (method) {
 		HttpMethod.GET -> HttpRequest.HttpGetRequest(
 				uri = createApiEndpointUri(endpoint, pathSegments),
-				params = params.withApiTokenParam(storeCredentials.apiToken)
+				params = params.withCredentialsParams(credentials)
 		)
 		HttpMethod.POST -> HttpRequest.HttpPostRequest(
 				uri = createApiEndpointUri(endpoint, pathSegments),
-				params = params.withApiTokenParam(storeCredentials.apiToken),
+				params = params.withCredentialsParams(credentials),
 				transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.PUT -> HttpRequest.HttpPutRequest(
 				uri = createApiEndpointUri(endpoint, pathSegments),
-				params = params.withApiTokenParam(storeCredentials.apiToken),
+				params = params.withCredentialsParams(credentials),
 				transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
 				uri = createApiEndpointUri(endpoint, pathSegments),
-				params = params.withApiTokenParam(storeCredentials.apiToken)
+				params = params.withCredentialsParams(credentials)
 		)
 	}
 
@@ -190,7 +201,7 @@ class ApiClientHelper private constructor(
 				null,
 				apiServerDomain.host,
 				if (apiServerDomain.securePort == DEFAULT_HTTPS_PORT) -1 else apiServerDomain.securePort,
-				"/api/v3/${storeCredentials.storeId}/$endpoint",
+				"${buildBaseEndpointPath(credentials)}/$endpoint",
 				null,
 				null
 			).toString()
@@ -205,7 +216,7 @@ class ApiClientHelper private constructor(
 				null,
 				null
 			)
-			val encodedPath = "/api/v3/${storeCredentials.storeId}/" + buildEndpointPath(pathSegments)
+			val encodedPath = "${buildBaseEndpointPath(credentials)}/" + buildEndpointPath(pathSegments)
 			uri.toString() + encodedPath
 		}
 		else -> {
@@ -288,6 +299,11 @@ class ApiClientHelper private constructor(
 		}
 	}
 
+	private fun buildBaseEndpointPath(credentials: ApiCredentials) = when (credentials) {
+		is ApiStoreCredentials -> "/api/v3/${credentials.storeId}"
+		is ApiAppCredentials -> "/api/v3"
+	}
+
 }
 
 @PublishedApi
@@ -300,12 +316,29 @@ internal fun generateRequestId(): String {
 }
 
 @PublishedApi
+internal fun Map<String, String>.withCredentialsParams(credentials: ApiCredentials) = when (credentials) {
+	is ApiStoreCredentials -> this.withApiTokenParam(credentials.apiToken)
+	is ApiAppCredentials -> withAppCredentialsParams(credentials)
+}
+
+
+@PublishedApi
 internal fun Map<String, String>.withApiTokenParam(apiToken: String): Map<String, String> {
 	return toMutableMap()
 			.apply {
 				put(API_TOKEN_PARAM_NAME, apiToken)
 			}
 			.toMap()
+}
+
+@PublishedApi
+internal fun Map<String, String>.withAppCredentialsParams(appCredentials: ApiAppCredentials): Map<String, String> {
+	return toMutableMap()
+		.apply {
+			put(APP_CLIENT_ID_PARAM_NAME, appCredentials.clientId)
+			put(APP_CLIENT_SECRET_PARAM_NAME, appCredentials.clientSecret)
+		}
+		.toMap()
 }
 
 private fun Map<String, String>.withMaskedApiTokenParam(): Map<String, String> {
