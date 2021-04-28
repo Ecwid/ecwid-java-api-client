@@ -68,7 +68,10 @@ data class FetchedOrder(
 		val shippingPerson: PersonInfo? = null,
 
 		val shippingOption: ShippingOption? = null,
+		val taxesOnShipping: List<BaseOrderItemTax>? = null,
 		val handlingFee: HandlingFee? = null,
+
+		val customSurcharges: List<Surcharge>? = null,
 
 		val refundedAmount: Double? = null,
 		val refunds: List<RefundInfo>? = null,
@@ -174,6 +177,12 @@ data class FetchedOrder(
 			val selectionModifierType: PriceModifierType? = null
 	)
 
+	data class BaseOrderItemTax(
+		val name: String? = null,
+		val value: Double? = null,
+		val total: Double? = null
+	)
+
 	data class OrderItemTax(
 			val name: String? = null,
 			val value: Double? = null,
@@ -220,6 +229,7 @@ data class FetchedOrder(
 			val shippingCarrierName: String? = null,
 			val shippingMethodName: String? = null,
 			val shippingRate: Double? = null,
+			val shippingRateWithoutTax: Double? = null,
 			val estimatedTransitTime: String? = null,
 			val isPickup: Boolean? = null,
 			val pickupInstruction: String? = null,
@@ -229,7 +239,9 @@ data class FetchedOrder(
 	data class HandlingFee(
 			val name: String? = null,
 			val value: Double? = null,
-			val description: String? = null
+			val valueWithoutTax: Double? = null,
+			val description: String? = null,
+			val taxes: List<BaseOrderItemTax>? = null
 	)
 
 	data class RefundInfo(
@@ -245,6 +257,17 @@ data class FetchedOrder(
 			val medium: String? = null,
 			val mcEid: String? = null,
 			val mcCid: String? = null
+	)
+
+	data class Surcharge(
+		val id: String? = null,
+		val value: Double? = null,
+		val type: SurchargeType? = null,
+		val total: Double? = null,
+		val totalWithoutTax: Double? = null,
+		val description: String? = null,
+		val taxable: Boolean? = null,
+		val taxes: List<BaseOrderItemTax>? = null
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedOrder::class)
