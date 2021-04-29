@@ -155,6 +155,9 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedOrder.PersonInfo::lastName),
 	Ignored(FetchedOrder.PersonInfo::countryName),
 	Ignored(FetchedOrder.PersonInfo::stateOrProvinceName),
+	ReadOnly(FetchedOrder.ShippingOption::shippingRateWithoutTax),
+	ReadOnly(FetchedOrder.HandlingFee::valueWithoutTax),
+	ReadOnly(FetchedOrder.Surcharge::totalWithoutTax),
 	Ignored(FetchedOrder::refundedAmount),
 	Ignored(FetchedOrder::refunds),
 
