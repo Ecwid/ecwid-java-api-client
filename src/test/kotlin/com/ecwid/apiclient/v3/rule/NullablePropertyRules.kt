@@ -1042,11 +1042,12 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 
 	AllowNullable(ProductVariationsRequest::lang),
 
-	AllowNullable(FetchedOrder::externalOrderPayload),
-	AllowNullable(FetchedOrder.ExternalOrderPayload::externalOrderId),
-	AllowNullable(FetchedOrder.ExternalOrderPayload::externalFulfillment),
-	AllowNullable(FetchedOrder.ExternalOrderPayload::externalOrderSource),
-	AllowNullable(FetchedOrder.ExternalOrderPayload::platformSpecificFields),
+	AllowNullable(FetchedOrder::externalOrderData),
+	AllowNullable(FetchedOrder.ExternalOrderData::externalOrderId),
+	AllowNullable(FetchedOrder.ExternalOrderData::externalFulfillment),
+	AllowNullable(FetchedOrder.ExternalOrderData::refererId),
+	AllowNullable(FetchedOrder.ExternalOrderData::platformSpecificFields),
+	AllowNullable(FetchedOrder.ExternalOrderData::refererChannel),
 
 	IgnoreNullable(GetEscapedBatchResult::responses),
 	IgnoreNullable(GetTypedBatchResult::responses),

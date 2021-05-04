@@ -66,7 +66,7 @@ data class UpdatedOrder(
 		val utmData: UtmData? = null,
 
 		val pricesIncludeTax: Boolean? = null,
-		val externalOrderPayload: ExternalOrderPayload? = null
+		val externalOrderData: ExternalOrderData? = null
 ) : ApiUpdatedDTO {
 
 	data class CreditCardStatus(
@@ -260,10 +260,15 @@ data class UpdatedOrder(
 			val mcCid: String? = null
 	)
 
-	data class ExternalOrderPayload(
+	data class ExternalOrderData(
 		val externalFulfillment: Boolean? = null,
 		val externalOrderId: String? = null,
-		val externalOrderSource: ExternalOrderSource? = null,
-		val platformSpecificFields: HashMap<String,String>? = null
+		val refererId: String? = null,
+		val platformSpecificFields: HashMap<String,String>? = null,
+		val refererChannel: String? = null
 	)
+
+	companion object {
+		const val FACEBOOK_ORDER_REFERENCE_ID = "FACEBOOK"
+	}
 }
