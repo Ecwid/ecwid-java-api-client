@@ -1,8 +1,10 @@
 package com.ecwid.apiclient.v3.dto.order.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
+import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import java.util.*
 
 data class FetchedOrder(
@@ -66,7 +68,10 @@ data class FetchedOrder(
 		val shippingPerson: PersonInfo? = null,
 
 		val shippingOption: ShippingOption? = null,
+		val taxesOnShipping: List<BaseOrderItemTax> = listOf(),
 		val handlingFee: HandlingFee? = null,
+
+		val customSurcharges: List<Surcharge> = listOf(),
 
 		val refundedAmount: Double? = null,
 		val refunds: List<RefundInfo>? = null,
@@ -173,6 +178,12 @@ data class FetchedOrder(
 			val selectionModifierType: PriceModifierType? = null
 	)
 
+	data class BaseOrderItemTax(
+		val name: String? = null,
+		val value: Double? = null,
+		val total: Double? = null
+	)
+
 	data class OrderItemTax(
 			val name: String? = null,
 			val value: Double? = null,
@@ -219,6 +230,7 @@ data class FetchedOrder(
 			val shippingCarrierName: String? = null,
 			val shippingMethodName: String? = null,
 			val shippingRate: Double? = null,
+			val shippingRateWithoutTax: Double = 0.0,
 			val estimatedTransitTime: String? = null,
 			val isPickup: Boolean? = null,
 			val pickupInstruction: String? = null,
@@ -228,7 +240,9 @@ data class FetchedOrder(
 	data class HandlingFee(
 			val name: String? = null,
 			val value: Double? = null,
-			val description: String? = null
+			val valueWithoutTax: Double = 0.0,
+			val description: String? = null,
+			val taxes: List<BaseOrderItemTax> = listOf()
 	)
 
 	data class RefundInfo(
@@ -245,6 +259,20 @@ data class FetchedOrder(
 			val mcEid: String? = null,
 			val mcCid: String? = null
 	)
+
+	data class Surcharge(
+		val id: String = "",
+		val value: Double = 0.0,
+		val type: SurchargeType = SurchargeType.PERCENT,
+		val total: Double = 0.0,
+		val totalWithoutTax: Double = 0.0,
+		val description: String = "",
+		val taxable: Boolean = true,
+		val taxes: List<BaseOrderItemTax> = listOf()
+	)
+
+	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedOrder::class)
+
 
 	data class ExternalOrderData(
 		val externalFulfillment: Boolean? = null,

@@ -474,7 +474,7 @@ class CategoriesTest : BaseEntityTest() {
 		)
 	}
 
-	private fun assertCategoryImage(expectedThumbnailImageId: Int, categoryDetails: FetchedCategory) {
+	private fun assertCategoryImage(expectedThumbnailImageId: Long, categoryDetails: FetchedCategory) {
 		assertAll(
 				{
 					assertTrue(categoryDetails.thumbnailUrl?.endsWith("/$expectedThumbnailImageId.jpg")

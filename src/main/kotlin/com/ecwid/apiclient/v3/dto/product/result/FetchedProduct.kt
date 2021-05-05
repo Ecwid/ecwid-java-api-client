@@ -1,9 +1,12 @@
 package com.ecwid.apiclient.v3.dto.product.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.PictureInfo
+import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.product.enums.*
+import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 import java.util.*
@@ -76,7 +79,10 @@ data class FetchedProduct(
 		val ribbonTranslated: LocalizedValueMap? = null,
 		val subtitleTranslated: LocalizedValueMap? = null,
 		val nameYourPriceEnabled: Boolean? = null,
-		val subscriptionSettings: SubscriptionSettings? = null
+		val subscriptionSettings: SubscriptionSettings? = null,
+		val googleProductCategory: Int? = null,
+		val googleProductCategoryName: String? = null,
+		val productCondition: ProductCondition = ProductCondition.NEW
 ) : ApiFetchedDTO {
 
 	data class Ribbon(
@@ -211,7 +217,7 @@ data class FetchedProduct(
 	)
 
 	data class GalleryImage(
-			val id: Int = 0,
+			val id: Long = 0,
 			val orderBy: Int = 0,
 			val alt: String? = null,
 			val width: Int = 0,
@@ -252,5 +258,7 @@ data class FetchedProduct(
 			val count: Int? = null,
 			val displayedCount: String? = null
 	)
+
+	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedProduct::class)
 
 }

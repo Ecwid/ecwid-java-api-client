@@ -1,8 +1,10 @@
 package com.ecwid.apiclient.v3.dto.order.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
+import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -61,7 +63,10 @@ data class UpdatedOrder(
 		val shippingPerson: PersonInfo? = null,
 
 		val shippingOption: ShippingOption? = null,
+		val taxesOnShipping: List<BaseOrderItemTax>? = null,
 		val handlingFee: HandlingFee? = null,
+
+		val customSurcharges: List<Surcharge>? = null,
 
 		val utmData: UtmData? = null,
 
@@ -205,6 +210,12 @@ data class UpdatedOrder(
 			val selectionModifierType: PriceModifierType? = null
 	)
 
+	data class BaseOrderItemTax(
+		val name: String? = null,
+		val value: Double? = null,
+		val total: Double? = null
+	)
+
 	data class OrderItemTax(
 			val name: String? = null,
 			val value: Double? = null,
@@ -249,7 +260,8 @@ data class UpdatedOrder(
 	data class HandlingFee(
 			val name: String? = null,
 			val value: Double? = null,
-			val description: String? = null
+			val description: String? = null,
+			val taxes: List<BaseOrderItemTax>? = null
 	)
 
 	data class UtmData(
@@ -259,6 +271,19 @@ data class UpdatedOrder(
 			val mcEid: String? = null,
 			val mcCid: String? = null
 	)
+
+	data class Surcharge(
+		val id: String? = null,
+		val value: Double? = null,
+		val type: SurchargeType? = null,
+		val total: Double? = null,
+		val description: String? = null,
+		val taxable: Boolean? = null,
+		val taxes: List<BaseOrderItemTax>? = null
+	)
+
+	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedOrder::class)
+
 
 	data class ExternalOrderData(
 		val externalFulfillment: Boolean? = null,
