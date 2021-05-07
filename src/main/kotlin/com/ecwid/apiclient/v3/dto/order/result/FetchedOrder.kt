@@ -18,6 +18,7 @@ data class FetchedOrder(
 		val createTimestamp: Int? = null, // TODO Figure out how to test
 		val updateDate: Date? = null,
 		val updateTimestamp: Int? = null, // TODO Figure out how to test
+		val latestShipDate: Date? = null,
 
 		val refererUrl: String? = null,
 		val globalReferer: String? = null,

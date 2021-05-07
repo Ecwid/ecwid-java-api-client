@@ -12,6 +12,7 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 			ipAddress = ipAddress,
 			hidden = hidden,
 			createDate = createDate,
+			latestShipDate = latestShipDate,
 
 			refererUrl = refererUrl,
 			globalReferer = globalReferer,

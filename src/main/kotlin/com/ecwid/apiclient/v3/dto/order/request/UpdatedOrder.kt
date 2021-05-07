@@ -15,6 +15,7 @@ data class UpdatedOrder(
 		val ipAddress: String? = null,
 		val hidden: Boolean? = null,
 		val createDate: Date? = null,
+		val latestShipDate: Date? = null,
 
 		val refererUrl: String? = null,
 		val globalReferer: String? = null,
