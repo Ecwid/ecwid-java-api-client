@@ -354,7 +354,8 @@ data class FetchedStoreProfile(
 			val paymentProcessorTitle: String? = null,
 			val orderBy: Int? = null,
 			val appClientId: String? = null,
-			val instructionsForCustomer: InstructionsForCustomerInfo? = null
+			val instructionsForCustomer: InstructionsForCustomerInfo? = null,
+			val shippingSettings: ShippingSettings? = null
 	)
 
 	data class ApplePay(
@@ -367,6 +368,10 @@ data class FetchedStoreProfile(
 	data class InstructionsForCustomerInfo(
 			val instructionsTitle: String? = null,
 			val instructions: String? = null
+	)
+
+	data class ShippingSettings(
+			val enabledShippingMethods: List<String>? = null
 	)
 
 	data class FeatureTogglesInfo(
