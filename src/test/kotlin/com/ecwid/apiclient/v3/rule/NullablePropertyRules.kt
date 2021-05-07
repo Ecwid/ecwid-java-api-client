@@ -314,7 +314,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedOrder::totalAndMembershipBasedDiscount),
 	IgnoreNullable(FetchedOrder::trackingNumber),
 	IgnoreNullable(FetchedOrder::updateDate),
-	IgnoreNullable(FetchedOrder::latestShipDate),
+	AllowNullable(FetchedOrder::latestShipDate),
 	IgnoreNullable(FetchedOrder::updateTimestamp),
 	IgnoreNullable(FetchedOrder::usdTotal),
 	IgnoreNullable(FetchedOrder::utmData),
