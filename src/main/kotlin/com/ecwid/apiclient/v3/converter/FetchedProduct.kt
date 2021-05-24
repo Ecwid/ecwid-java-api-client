@@ -49,7 +49,9 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 			ribbonTranslated = ribbonTranslated,
 			subtitleTranslated = subtitleTranslated,
 			nameYourPriceEnabled = nameYourPriceEnabled,
-			subscriptionSettings = subscriptionSettings?.toUpdated()
+			subscriptionSettings = subscriptionSettings?.toUpdated(),
+			googleProductCategory = googleProductCategory,
+			productCondition = productCondition
 	)
 }
 

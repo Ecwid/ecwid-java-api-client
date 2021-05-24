@@ -24,7 +24,6 @@ val nonnullPropertyRules: List<NonnullPropertyRule<*, *>> = listOf(
 	IgnoreNonnull(UpdatedProduct.ProductImage::orderBy),
 	IgnoreNonnull(UpdatedProduct.ProductOption.CheckboxOption::choices),
 	IgnoreNonnull(UpdatedProduct.ProductOption.CheckboxOption::name),
-	IgnoreNonnull(UpdatedProduct.ProductOption.CheckboxOption::required),
 	IgnoreNonnull(UpdatedProduct.ProductOption.DateOption::name),
 	IgnoreNonnull(UpdatedProduct.ProductOption.DateOption::required),
 	IgnoreNonnull(UpdatedProduct.ProductOption.FilesOption::name),
