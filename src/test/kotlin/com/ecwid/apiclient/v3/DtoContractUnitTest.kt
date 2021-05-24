@@ -6,14 +6,11 @@ import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
 import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
-import com.ecwid.apiclient.v3.rule.NonUpdatablePropertyRule
+import com.ecwid.apiclient.v3.rule.*
 import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.AllowNonnull
 import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.IgnoreNonnull
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
-import com.ecwid.apiclient.v3.rule.nonUpdatablePropertyRules
-import com.ecwid.apiclient.v3.rule.nonnullPropertyRules
-import com.ecwid.apiclient.v3.rule.nullablePropertyRules
 import com.ecwid.apiclient.v3.util.*
 import com.ecwid.apiclient.v3.util.DTORandomDataProviderStrategy
 import com.ecwid.apiclient.v3.util.FieldProblem
@@ -21,7 +18,6 @@ import com.ecwid.apiclient.v3.util.FieldProblemKind
 import com.ecwid.apiclient.v3.util.checkDTOFieldsEmptiness
 import com.ecwid.apiclient.v3.util.checkFetchedUpdatedDTOsFields
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
@@ -215,7 +211,7 @@ class DtoContractUnitTest {
 		val ignoreNullablePropertiesCount = nonnullPropertyRules
 			.filterIsInstance<IgnoreNonnull<*, *>>()
 			.size
-		assertTrue(ignoreNullablePropertiesCount <= 43) {
+		assertTrue(ignoreNullablePropertiesCount <= 42) {
 			"You MUST NOT add exclusion with type IgnoreNonnull() which is used only for old fields until they are fixed.\n" +
 					"Please make this properties nonnull if possible.\n" +
 					"If Ecwid API requires value for this property to be passed you CAN add it to as `AllowNonnull()` exclusion in file `NonnullPropertyRules.kt`"
@@ -319,7 +315,6 @@ class DtoContractUnitTest {
 
 	@Test
 	@Order(11)
-	@Disabled
 	fun `test toUpdated extension functions are implemented correctly for all updatable FetchedDTOs`() {
 		val dataStrategy = DTORandomDataProviderStrategy()
 		val factory = PodamFactoryImpl(dataStrategy)
@@ -349,7 +344,7 @@ class DtoContractUnitTest {
 						try {
 							toUpdatedMethod.invoke(null, fetchedDTO) as ApiUpdatedDTO
 						} catch (e: InvocationTargetException) {
-							problemMessages += "Exception occurred during invoking method `${fetchedDtoKClass.java.canonicalName}.toUpdated(): ${e.message}"
+							problemMessages += "Exception occurred during invoking method `${fetchedDtoKClass.java.canonicalName}.toUpdated(): ${e.targetException.message}"
 							null
 						}
 					}
@@ -357,12 +352,34 @@ class DtoContractUnitTest {
 			}
 		}
 
-		problemMessages += checkDTOFieldsEmptiness(updatedDTOs).map { problem ->
-			problem.buildMessage()
-		}
+		problemMessages += checkDTOFieldsEmptiness(
+			values = updatedDTOs,
+			ignoredFields = nonDuplicablePropertyRules.map(NonDuplicablePropertyRule<*, *>::property))
+		.map(FieldEmptinessProblem::buildMessage)
 
-		assertTrue(problemMessages.isEmpty()) {
-			problemMessages.joinToString(prefix = "\n * ", separator = "\n * ")
+		if (problemMessages.isNotEmpty()) {
+			fail<Unit> {
+				"Some of Fetched DTOs' fields are not copied to Updated DTOs in proper way:\n" +
+						messagesToLoggableString(problemMessages) + "\n" +
+						"Please implement proper toUpdate() extension function for this fields.\n" +
+						"If this field is really write-only according to Ecwid API documentation you CAN add it as `WriteOnly()` exclusion in file `NonDuplicablePropertyRules.kt`.\n" +
+						"You MUST NOT add exclusion of any other type to this list.\n"
+			}
+		}
+	}
+
+	@Test
+	@Order(12)
+	fun `test no new non write-only exclusions added to file NonDuplicablePropertyRules`() {
+		val nonWriteOnlyPropertyRulesCount = nonDuplicablePropertyRules
+			.filter { it !is NonDuplicablePropertyRule.WriteOnly }
+			.size
+		if (nonWriteOnlyPropertyRulesCount > 1) {
+			fail<Unit> {
+				"You MUST NOT add exclusion with types other than `WriteOnly()` to file `NonDuplicablePropertyRules.kt`.\n" +
+						"If this field is really write-only according to Ecwid API documentation you CAN add it as `WriteOnly()` exclusion.\n" +
+						"Otherwise you MUST add proper implementation of method toUpdate() for this field."
+			}
 		}
 	}
 
@@ -427,7 +444,7 @@ private fun FieldEmptinessProblem.buildMessage(): String {
 		FieldEmptinessProblemKind.EMPTY_LIST -> "is an empty list"
 		FieldEmptinessProblemKind.EMPTY_MAP -> "is an empty map"
 	}
-	return "Field `$fieldName` is not copied correctly – it $fieldProblemMessage"
+	return "Field `$fieldName` $fieldProblemMessage"
 }
 
 private fun propertiesToLoggableString(properties: Collection<KProperty1<*, *>>): String {
@@ -443,6 +460,13 @@ private fun classesToLoggableString(classes: Collection<Class<*>>): String {
 	return classes.joinToString(
 		separator = "\n",
 		transform = { clazz -> "\t* ${clazz.name}" }
+	)
+}
+
+private fun messagesToLoggableString(messages: Collection<String>): String {
+	return messages.joinToString(
+		separator = "\n",
+		transform = { message -> "\t* $message" }
 	)
 }
 

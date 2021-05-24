@@ -2,9 +2,12 @@ package com.ecwid.apiclient.v3.util
 
 import java.lang.reflect.Modifier
 import java.util.*
+import kotlin.reflect.KProperty1
+import kotlin.reflect.jvm.kotlinProperty
 
 internal fun checkDTOFieldsEmptiness(
-	values: Collection<Any?>
+	values: Collection<Any?>,
+	ignoredFields: List<KProperty1<*, *>>
 ): Set<FieldEmptinessProblem> {
 	val problemsCollector = mutableSetOf<FieldEmptinessProblem>()
 	values.forEach { value ->
@@ -12,7 +15,8 @@ internal fun checkDTOFieldsEmptiness(
 			value = value,
 			fieldName = "",
 			declaringClass = value?.javaClass,
-			problemsCollector = problemsCollector
+			problemsCollector = problemsCollector,
+			ignoredProperties = ignoredFields
 		)
 	}
 	return problemsCollector.toSet()
@@ -22,7 +26,8 @@ private fun checkFieldEmptiness(
 	value: Any?,
 	fieldName: String,
 	declaringClass: Class<*>?,
-	problemsCollector: MutableSet<FieldEmptinessProblem>
+	problemsCollector: MutableSet<FieldEmptinessProblem>,
+	ignoredProperties: List<KProperty1<*, *>>
 ) {
 	when {
 		value == null -> {
@@ -84,7 +89,8 @@ private fun checkFieldEmptiness(
 						value = listValue,
 						fieldName = "$fieldName (list value)",
 						declaringClass = declaringClass,
-						problemsCollector = problemsCollector
+						problemsCollector = problemsCollector,
+						ignoredProperties = ignoredProperties
 					)
 				}
 		}
@@ -111,13 +117,15 @@ private fun checkFieldEmptiness(
 						value = k,
 						fieldName = "$fieldName (map key)",
 						declaringClass = declaringClass,
-						problemsCollector = problemsCollector
+						problemsCollector = problemsCollector,
+						ignoredProperties = ignoredProperties
 					)
 					checkFieldEmptiness(
 						value = v,
 						fieldName = "$fieldName (map value)",
 						declaringClass = declaringClass,
-						problemsCollector = problemsCollector
+						problemsCollector = problemsCollector,
+						ignoredProperties = ignoredProperties
 					)
 				}
 		}
@@ -128,12 +136,14 @@ private fun checkFieldEmptiness(
 						innerField.trySetAccessible()
 						val fieldValue = innerField.get(value)
 						val isCompanion = fieldValue?.javaClass?.kotlin?.isCompanion ?: false
-						if (!isCompanion) {
+						val isIgnored = innerField.kotlinProperty in ignoredProperties
+						if (!isCompanion && !isIgnored) {
 							checkFieldEmptiness(
 								value = fieldValue,
 								fieldName = innerField.name,
 								declaringClass = value.javaClass,
-								problemsCollector = problemsCollector
+								problemsCollector = problemsCollector,
+								ignoredProperties = ignoredProperties
 							)
 						}
 					}

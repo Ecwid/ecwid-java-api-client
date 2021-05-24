@@ -275,7 +275,10 @@ class DTOsEmptinessCheckerUnitTest {
 			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = TestDTO::class.java, fieldName = "nullDTOField")
 		)
 
-		val problems = checkDTOFieldsEmptiness(listOf(dto))
+		val problems = checkDTOFieldsEmptiness(
+			values = listOf(dto),
+			ignoredFields = listOf()
+		)
 		Assertions.assertEquals(expectedProblems, problems)
 	}
 
