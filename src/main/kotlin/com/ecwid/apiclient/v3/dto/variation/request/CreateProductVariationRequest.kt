@@ -6,7 +6,7 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class CreateProductVariationRequest(
 		val productId: Int = 0,
-		val newVariaion: UpdatedVariation = UpdatedVariation()
+		val newVariation: UpdatedVariation = UpdatedVariation()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 			pathSegments = listOf(
@@ -16,7 +16,7 @@ data class CreateProductVariationRequest(
 			),
 			params = mapOf(),
 			httpBody = HttpBody.JsonBody(
-					obj = newVariaion
+					obj = newVariation
 			)
 	)
 }

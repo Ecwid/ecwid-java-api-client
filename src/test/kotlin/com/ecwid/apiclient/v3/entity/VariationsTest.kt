@@ -48,7 +48,7 @@ class VariationsTest : BaseEntityTest() {
 		val testVariationWeight = randomWeight()
 		val createProductVariationRequest = CreateProductVariationRequest(
 				productId = newProductId,
-				newVariaion = UpdatedVariation(
+				newVariation = UpdatedVariation(
 						sku = testVariationSku,
 						quantity = 2,
 						isShippingRequired = true,
@@ -96,7 +96,7 @@ class VariationsTest : BaseEntityTest() {
 		// add 1st variation
 		val createProductVariationRequest = CreateProductVariationRequest(
 				productId = newProductId,
-				newVariaion = UpdatedVariation(
+				newVariation = UpdatedVariation(
 						sku = "first test Variation",
 						quantity = 2,
 						isShippingRequired = true,
@@ -113,7 +113,7 @@ class VariationsTest : BaseEntityTest() {
 		// add second variation
 		val create2ndProductVariationRequest = CreateProductVariationRequest(
 				productId = newProductId,
-				newVariaion = UpdatedVariation(
+				newVariation = UpdatedVariation(
 						sku = "second test Variation",
 						quantity = 9,
 						isShippingRequired = false,
@@ -189,7 +189,7 @@ class VariationsTest : BaseEntityTest() {
 		val testVariationWeight = randomWeight()
 		val createProductVariationRequest = CreateProductVariationRequest(
 				productId = newProductId,
-				newVariaion = UpdatedVariation(
+				newVariation = UpdatedVariation(
 						sku = "testVariation1",
 						quantity = 2,
 						price = testVariationPrice,

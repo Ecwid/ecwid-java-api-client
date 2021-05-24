@@ -148,7 +148,7 @@ data class CalculateOrderDetailsResult(
 			val type: ProductOptionType? = null,
 			val value: String? = null,
 			val valuesArray: List<String>? = null,
-			val files: List<OrderItemOptinonFile>? = null,
+			val files: List<OrderItemOptionFile>? = null,
 			val selections: List<SelectionInfo>? = null
 	)
 
@@ -190,7 +190,7 @@ data class CalculateOrderDetailsResult(
 			val total: Double? = null
 	)
 
-	data class OrderItemOptinonFile(
+	data class OrderItemOptionFile(
 			val id: Int? = null,
 			val name: String? = null,
 			val size: Int? = null,

@@ -30,14 +30,14 @@ internal const val DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 10L
  */
 internal const val MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 60L
 
-val EMPTY_WAITING_REACITON: (Long) -> Unit = { }
+val EMPTY_WAITING_REACTION: (Long) -> Unit = { }
 
 open class ApacheCommonsHttpClientTransport(
 	private val httpClient: HttpClient,
 	private val defaultRateLimitAttempts: Int = DEFAULT_RATE_LIMIT_ATTEMPTS,
 	private val defaultRateLimitRetryInterval: Long = DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 	private val maxRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
-	private val onEverySecondOfWaiting: (Long) -> Unit = EMPTY_WAITING_REACITON
+	private val onEverySecondOfWaiting: (Long) -> Unit = EMPTY_WAITING_REACTION
 ) : HttpTransport {
 
 	constructor(
@@ -48,12 +48,12 @@ open class ApacheCommonsHttpClientTransport(
 		defaultRateLimitRetryInterval: Long = DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 		maxRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 		defaultHeaders: List<Header> = emptyList(),
-		onEverySecondOfWaiting: (Long) -> Unit = EMPTY_WAITING_REACITON
+		onEverySecondOfWaiting: (Long) -> Unit = EMPTY_WAITING_REACTION
 	) : this(
 		httpClient = buildHttpClient(
 			defaultConnectionTimeout = defaultConnectionTimeout,
 			defaultReadTimeout = defaultReadTimeout,
-			defaulMaxConnections = defaultMaxConnections,
+			defaultMaxConnections = defaultMaxConnections,
 			defaultHeaders = defaultHeaders
 		),
 		defaultRateLimitAttempts = defaultRateLimitAttempts,
@@ -95,15 +95,16 @@ open class ApacheCommonsHttpClientTransport(
 	}
 
 	companion object {
+
 		private fun buildHttpClient(
 			defaultConnectionTimeout: Int,
 			defaultReadTimeout: Int,
-			defaulMaxConnections: Int,
+			defaultMaxConnections: Int,
 			defaultHeaders: List<Header>
 		): HttpClient {
 			val connectionManager = PoolingHttpClientConnectionManager().apply {
-				maxTotal = defaulMaxConnections
-				defaultMaxPerRoute = defaulMaxConnections
+				maxTotal = defaultMaxConnections
+				defaultMaxPerRoute = defaultMaxConnections
 			}
 
 			val requestConfig = RequestConfig.custom()
@@ -122,6 +123,7 @@ open class ApacheCommonsHttpClientTransport(
 			}
 			return httpClientBuilder.build()
 		}
+
 	}
 
 }

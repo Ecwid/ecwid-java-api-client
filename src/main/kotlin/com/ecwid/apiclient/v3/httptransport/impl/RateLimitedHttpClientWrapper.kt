@@ -11,7 +11,7 @@ import java.util.logging.Logger
 private val log = Logger.getLogger(RateLimitedHttpClientWrapper::class.qualifiedName)
 
 /**
- * Wrapper for httpClient'ом, which retries requests if faces 429 error response.
+ * Wrapper for httpClient, which retries requests if faces 429 error response.
  * Respects server's Retry-After header if provided.
  */
 open class RateLimitedHttpClientWrapper(
@@ -32,7 +32,7 @@ open class RateLimitedHttpClientWrapper(
 			if (response.statusLine.statusCode == 429 && attemptsLeft > 0) {
 				process429(request,
 					response,
-					attemptsLeft - 1, // decrement atttemts reminder
+					attemptsLeft - 1, // decrement attempts reminder
 					responseHandler)
 			} else {
 				responseHandler.handleResponse(response)

@@ -456,7 +456,7 @@ class CartsTest : BaseEntityTest() {
 				name = "Choice Option " + randomAlphanumeric(8),
 				selection = "Selection #1, " + randomAlphanumeric(8),
 				files = listOf(
-						OrderForCalculate.OrderItemOptinonFile(
+						OrderForCalculate.OrderItemOptionFile(
 								id = randomId(),
 								name = "Order item option file" + randomAlphanumeric(4),
 								size = randomInt(1, 10),
@@ -484,7 +484,7 @@ class CartsTest : BaseEntityTest() {
 						)
 				),
 				files = listOf(
-						OrderForCalculate.OrderItemOptinonFile(
+						OrderForCalculate.OrderItemOptionFile(
 								id = randomId(),
 								name = "Order item option file" + randomAlphanumeric(4),
 								size = randomInt(1, 10),
