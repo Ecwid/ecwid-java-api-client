@@ -293,7 +293,7 @@ class PublicationSettings {
 		const val DEVELOPER_EMAIL = "opensource-bot@ecwid.com"
 
 		const val LICENSE_NAME = "The Apache License, Version 2.0"
-		const val LICENSE_URL = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+		const val LICENSE_URL = "https://www.apache.org/licenses/LICENSE-2.0.txt"
 
 		const val SCM_CONNECTION = "scm:git:git@github.com:Ecwid/ecwid-java-api-client.git"
 		const val SCM_URL = "https://github.com/Ecwid/ecwid-java-api-client.git"
