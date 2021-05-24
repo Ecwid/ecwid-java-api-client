@@ -387,7 +387,7 @@ class CartsTest : BaseEntityTest() {
 	private fun generateTestCartForUpdate(): UpdatedCart {
 		return UpdatedCart(
 				hidden = randomBoolean(),
-				taxesOnShipping = null // TODO Discover why after each update this field resets to null
+				taxesOnShipping = listOf()
 		)
 	}
 
