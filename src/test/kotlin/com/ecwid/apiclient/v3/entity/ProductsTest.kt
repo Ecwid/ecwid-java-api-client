@@ -7,8 +7,6 @@ import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
 import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
-import com.ecwid.apiclient.v3.dto.product.enums.PriceModifierType
-import com.ecwid.apiclient.v3.dto.product.enums.RecurringSubscriptionInterval
 import com.ecwid.apiclient.v3.dto.product.enums.ShippingSettingsType
 import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest.InventoryAdjustment
@@ -90,7 +88,7 @@ class ProductsTest : BaseEntityTest() {
 
 		// Waiting till product became available for searching
 		waitForIndexedProducts(
-				productsSearchRequest = ProductsSearchRequest.ByFilters(keyword = productCreateRequest.newProduct.sku),
+				productsSearchRequest = ByFilters(keyword = productCreateRequest.newProduct.sku),
 				desiredProductCount = 1
 		)
 
@@ -100,23 +98,23 @@ class ProductsTest : BaseEntityTest() {
 
 		assertProductsSearch(
 				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ProductsSearchRequest.ByFilters(keyword = productNameSuffix),
-				negativeSearchRequest = ProductsSearchRequest.ByFilters(keyword = productNameSuffix + "foo")
+				positiveSearchRequest = ByFilters(keyword = productNameSuffix),
+				negativeSearchRequest = ByFilters(keyword = productNameSuffix + "foo")
 		)
 
 		assertProductsSearch(
 				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ProductsSearchRequest.ByFilters(sku = productCreateRequest.newProduct.sku),
-				negativeSearchRequest = ProductsSearchRequest.ByFilters(sku = productCreateRequest.newProduct.sku + "foo")
+				positiveSearchRequest = ByFilters(sku = productCreateRequest.newProduct.sku),
+				negativeSearchRequest = ByFilters(sku = productCreateRequest.newProduct.sku + "foo")
 		)
 
 		assertProductsSearch(
 				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ProductsSearchRequest.ByFilters(
+				positiveSearchRequest = ByFilters(
 						priceFrom = productCreateRequest.newProduct.price!! - 10.0,
 						priceTo = productCreateRequest.newProduct.price!! + 10.0
 				),
-				negativeSearchRequest = ProductsSearchRequest.ByFilters(
+				negativeSearchRequest = ByFilters(
 						priceFrom = productCreateRequest.newProduct.price!! - 20.0,
 						priceTo = productCreateRequest.newProduct.price!! - 10.0
 				)
@@ -124,11 +122,11 @@ class ProductsTest : BaseEntityTest() {
 
 		assertProductsSearch(
 				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ProductsSearchRequest.ByFilters(
+				positiveSearchRequest = ByFilters(
 						createdFrom = Date.from(productDetails.created.toInstant().minusSeconds(1)),
 						createdTo = Date.from(productDetails.created.toInstant().plusSeconds(1))
 				),
-				negativeSearchRequest = ProductsSearchRequest.ByFilters(
+				negativeSearchRequest = ByFilters(
 						createdFrom = Date(0),
 						createdTo = Date(0)
 				)
@@ -136,11 +134,11 @@ class ProductsTest : BaseEntityTest() {
 
 		assertProductsSearch(
 				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ProductsSearchRequest.ByFilters(
+				positiveSearchRequest = ByFilters(
 						updatedFrom = Date.from(productDetails.updated.toInstant().minusSeconds(1)),
 						updatedTo = Date.from(productDetails.updated.toInstant().plusSeconds(1))
 				),
-				negativeSearchRequest = ProductsSearchRequest.ByFilters(
+				negativeSearchRequest = ByFilters(
 						updatedFrom = Date(0),
 						updatedTo = Date(0)
 				)
@@ -148,29 +146,29 @@ class ProductsTest : BaseEntityTest() {
 
 		assertProductsSearch(
 				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ProductsSearchRequest.ByFilters(enabled = true),
-				negativeSearchRequest = ProductsSearchRequest.ByFilters(enabled = false)
+				positiveSearchRequest = ByFilters(enabled = true),
+				negativeSearchRequest = ByFilters(enabled = false)
 		)
 
 		assertProductsSearch(
 				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ProductsSearchRequest.ByFilters(inventory = true),
-				negativeSearchRequest = ProductsSearchRequest.ByFilters(inventory = false)
+				positiveSearchRequest = ByFilters(inventory = true),
+				negativeSearchRequest = ByFilters(inventory = false)
 		)
 
 		assertProductsSearch(
 				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ProductsSearchRequest.ByFilters(onSale = true),
-				negativeSearchRequest = ProductsSearchRequest.ByFilters(onSale = false)
+				positiveSearchRequest = ByFilters(onSale = true),
+				negativeSearchRequest = ByFilters(onSale = false)
 		)
 
 		assertProductsSearch(
 				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ProductsSearchRequest.ByFilters(attributes = ProductSearchAttributes(listOf(
+				positiveSearchRequest = ByFilters(attributes = ProductSearchAttributes(listOf(
 						ProductSearchAttributes.AttributeValue("Brand", brandName),
 						ProductSearchAttributes.AttributeValue("UPC", upc)
 				))),
-				negativeSearchRequest = ProductsSearchRequest.ByFilters(attributes = ProductSearchAttributes(listOf(
+				negativeSearchRequest = ByFilters(attributes = ProductSearchAttributes(listOf(
 						ProductSearchAttributes.AttributeValue("Brand", brandName + "foo"),
 						ProductSearchAttributes.AttributeValue("UPC", upc + "foo")
 				)))
@@ -178,10 +176,10 @@ class ProductsTest : BaseEntityTest() {
 
 		assertProductsSearch(
 				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ProductsSearchRequest.ByFilters(options = ProductSearchOptions(listOf(
+				positiveSearchRequest = ByFilters(options = ProductSearchOptions(listOf(
 						ProductSearchOptions.OptionValue("Color", "Yellow")
 				))),
-				negativeSearchRequest = ProductsSearchRequest.ByFilters(options = ProductSearchOptions(listOf(
+				negativeSearchRequest = ByFilters(options = ProductSearchOptions(listOf(
 						ProductSearchOptions.OptionValue("Color", "Blue")
 				)))
 		)
@@ -215,38 +213,38 @@ class ProductsTest : BaseEntityTest() {
 
 		// Waiting till product became available for searching
 		waitForIndexedProducts(
-				productsSearchRequest = ProductsSearchRequest.ByFilters(keyword = productCreateRequest.newProduct.sku),
+				productsSearchRequest = ByFilters(keyword = productCreateRequest.newProduct.sku),
 				desiredProductCount = 1
 		)
 
 		// Searching products with different combinations of baseUrl and cleanUrls parameters
 		assertProductUrlMatchesRegex(
-				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = productCreateRequest.newProduct.sku),
+				productSearchRequest = ByFilters(keyword = productCreateRequest.newProduct.sku),
 				urlPattern = "https://.*.company.site.*/Product-.*-p.*"
 		)
 		assertProductUrlMatchesRegex(
-			productSearchRequest = ProductsSearchRequest.ByFilters(
+			productSearchRequest = ByFilters(
 					cleanUrls = true,
 					keyword = productCreateRequest.newProduct.sku
 			),
 			urlPattern = "https://.*.company.site.*/Product-.*-p.*"
 		)
 		assertProductUrlMatchesRegex(
-				productSearchRequest = ProductsSearchRequest.ByFilters(
+				productSearchRequest = ByFilters(
 						cleanUrls = false,
 						keyword = productCreateRequest.newProduct.sku
 				),
 				urlPattern = "https://.*.company.site.*/#!/Product-.*/p/.*"
 		)
 		assertProductUrlMatchesRegex(
-			productSearchRequest = ProductsSearchRequest.ByFilters(
+			productSearchRequest = ByFilters(
 					baseUrl = "https://google.com/",
 					keyword = productCreateRequest.newProduct.sku
 			),
 			urlPattern = "https://google.com/#!/Product-.*/p/.*"
 		)
 		assertProductUrlMatchesRegex(
-				productSearchRequest = ProductsSearchRequest.ByFilters(
+				productSearchRequest = ByFilters(
 						baseUrl = "https://google.com/",
 						cleanUrls = true,
 						keyword = productCreateRequest.newProduct.sku
@@ -254,7 +252,7 @@ class ProductsTest : BaseEntityTest() {
 				urlPattern = "https://google.com/Product-.*-p.*"
 		)
 		assertProductUrlMatchesRegex(
-				productSearchRequest = ProductsSearchRequest.ByFilters(
+				productSearchRequest = ByFilters(
 						baseUrl = "https://google.com/",
 						cleanUrls = false,
 						keyword = productCreateRequest.newProduct.sku
@@ -307,50 +305,50 @@ class ProductsTest : BaseEntityTest() {
 
 		// Waiting till product became available for searching
 		waitForIndexedProducts(
-				productsSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName),
+				productsSearchRequest = ByFilters(keyword = testName),
 				desiredProductCount = 3
 		)
 
 		// Trying to search with different sort order
 
 		assertProductsSearch(
-				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.ADDED_TIME_ASC),
+				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.ADDED_TIME_ASC),
 				desiredSkus = listOf(productSku1, productSku2, productSku3)
 		)
 		assertProductsSearch(
-				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.ADDED_TIME_DESC),
+				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.ADDED_TIME_DESC),
 				desiredSkus = listOf(productSku3, productSku2, productSku1)
 		)
 
 		assertProductsSearch(
-				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.UPDATED_TIME_ASC),
+				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.UPDATED_TIME_ASC),
 				desiredSkus = listOf(productSku1, productSku2, productSku3)
 		)
 		assertProductsSearch(
-				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.UPDATED_TIME_DESC),
+				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.UPDATED_TIME_DESC),
 				desiredSkus = listOf(productSku3, productSku2, productSku1)
 		)
 
 		assertProductsSearch(
-				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.NAME_ASC),
+				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.NAME_ASC),
 				desiredSkus = listOf(productSku1, productSku2, productSku3)
 		)
 		assertProductsSearch(
-				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.NAME_DESC),
+				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.NAME_DESC),
 				desiredSkus = listOf(productSku3, productSku2, productSku1)
 		)
 
 		assertProductsSearch(
-				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.PRICE_ASC),
+				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.PRICE_ASC),
 				desiredSkus = listOf(productSku1, productSku2, productSku3)
 		)
 		assertProductsSearch(
-				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, sortBy = SortOrder.PRICE_DESC),
+				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.PRICE_DESC),
 				desiredSkus = listOf(productSku3, productSku2, productSku1)
 		)
 
 		assertProductsSearch(
-				productSearchRequest = ProductsSearchRequest.ByFilters(keyword = "B", sortBy = SortOrder.RELEVANCE),
+				productSearchRequest = ByFilters(keyword = "B", sortBy = SortOrder.RELEVANCE),
 				desiredSkus = listOf(productSku2, productSku1)
 		)
 	}
@@ -373,11 +371,11 @@ class ProductsTest : BaseEntityTest() {
 
 		// Waiting till product became available for searching and trying to request only one page
 		waitForIndexedProducts(
-				productsSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName),
+				productsSearchRequest = ByFilters(keyword = testName),
 				desiredProductCount = 3
 		)
 
-		val productSearchRequest = ProductsSearchRequest.ByFilters(keyword = testName, offset = 2, limit = 2)
+		val productSearchRequest = ByFilters(keyword = testName, offset = 2, limit = 2)
 		val productsSearchResult = apiClient.searchProducts(productSearchRequest)
 		assertEquals(1, productsSearchResult.count)
 		assertEquals(3, productsSearchResult.total)
@@ -1039,7 +1037,7 @@ class ProductsTest : BaseEntityTest() {
 		}
 	}
 
-	private fun assertProductUrlMatchesRegex(productSearchRequest: ProductsSearchRequest.ByFilters, urlPattern: String) {
+	private fun assertProductUrlMatchesRegex(productSearchRequest: ByFilters, urlPattern: String) {
 		val searchProducts = apiClient.searchProducts(productSearchRequest)
 		assertEquals(1, searchProducts.total)
 
@@ -1050,7 +1048,7 @@ class ProductsTest : BaseEntityTest() {
 		)
 	}
 
-	private fun assertProductsSearch(positiveProductId: Int, positiveSearchRequest: ProductsSearchRequest.ByFilters, negativeSearchRequest: ProductsSearchRequest.ByFilters) {
+	private fun assertProductsSearch(positiveProductId: Int, positiveSearchRequest: ByFilters, negativeSearchRequest: ByFilters) {
 		val positiveProductsSearchResult = apiClient.searchProducts(positiveSearchRequest)
 		assertEquals(1, positiveProductsSearchResult.total)
 		assertEquals(positiveProductId, positiveProductsSearchResult.items[0].id)
@@ -1059,7 +1057,7 @@ class ProductsTest : BaseEntityTest() {
 		assertEquals(0, negativeProductsSearchResult.total)
 	}
 
-	private fun assertProductsSearch(productSearchRequest: ProductsSearchRequest.ByFilters, desiredSkus: List<String>) {
+	private fun assertProductsSearch(productSearchRequest: ByFilters, desiredSkus: List<String>) {
 		val productsSearchResult = apiClient.searchProducts(productSearchRequest)
 		assertEquals(desiredSkus.size, productsSearchResult.items.size)
 		assertEquals(desiredSkus.toSet(), productsSearchResult.items.map(FetchedProduct::sku).toSet())
@@ -1314,7 +1312,7 @@ private fun generateProductOptionChoice(): ProductOptionChoice {
 					"en" to enText
 			),
 			priceModifier = randomModifier(),
-			priceModifierType = randomEnumValue<PriceModifierType>()
+			priceModifierType = randomEnumValue()
 	)
 }
 

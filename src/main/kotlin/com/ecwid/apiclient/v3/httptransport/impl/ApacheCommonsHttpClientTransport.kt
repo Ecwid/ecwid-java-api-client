@@ -1,22 +1,16 @@
 package com.ecwid.apiclient.v3.httptransport.impl
 
-import com.ecwid.apiclient.v3.httptransport.*
-import org.apache.http.Consts
+import com.ecwid.apiclient.v3.httptransport.HttpRequest
+import com.ecwid.apiclient.v3.httptransport.HttpResponse
+import com.ecwid.apiclient.v3.httptransport.HttpTransport
+import com.ecwid.apiclient.v3.httptransport.TransportHttpBody
 import org.apache.http.Header
-import org.apache.http.HttpEntity
 import org.apache.http.client.HttpClient
-import org.apache.http.client.ResponseHandler
 import org.apache.http.client.config.RequestConfig
 import org.apache.http.client.methods.HttpUriRequest
-import org.apache.http.client.methods.RequestBuilder
-import org.apache.http.entity.*
 import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager
-import org.apache.http.message.BasicHeader
-import org.apache.http.message.BasicNameValuePair
-import org.apache.http.util.EntityUtils
 import java.io.IOException
-import java.util.concurrent.TimeUnit
 
 private const val DEFAULT_CONNECTION_TIMEOUT = 10_000 // 10 sec
 private const val DEFAULT_READ_TIMEOUT = 60_000 // 1 min
@@ -92,9 +86,9 @@ open class ApacheCommonsHttpClientTransport(
 				maxRateLimitRetryInterval,
 				defaultRateLimitAttempts,
 				onEverySecondOfWaiting
-			).execute(request, ResponseHandler<HttpResponse> { response ->
+			).execute(request) { response ->
 				response.toApiResponse()
-			})
+			}
 		} catch (e: IOException) {
 			HttpResponse.TransportError(e)
 		}

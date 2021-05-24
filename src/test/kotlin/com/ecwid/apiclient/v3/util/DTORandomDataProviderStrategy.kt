@@ -81,9 +81,9 @@ internal class DTORandomDataProviderStrategy : AbstractRandomDataProviderStrateg
 		}
 
 		private fun sortClassesByName(classes: MutableList<Class<out T>>) {
-			classes.sortWith(Comparator { x, y ->
+			classes.sortWith { x, y ->
 				x.simpleName.compareTo(y.simpleName)
-			})
+			}
 		}
 
 		companion object {

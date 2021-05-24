@@ -11,7 +11,7 @@ data class CouponUpdateRequest(
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
 			pathSegments = listOf(
 					"discount_coupons",
-					"$couponIdentifier"
+					couponIdentifier
 			),
 			httpBody = HttpBody.JsonBody(
 					obj = updatedCoupon

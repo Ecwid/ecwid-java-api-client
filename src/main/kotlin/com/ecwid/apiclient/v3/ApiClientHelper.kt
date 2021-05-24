@@ -25,9 +25,9 @@ private const val APP_CLIENT_ID_PARAM_NAME = "appClientId"
 private const val APP_CLIENT_SECRET_PARAM_NAME = "appSecretKey"
 
 class ApiClientHelper private constructor(
-	val apiServerDomain: ApiServerDomain,
-	val credentials: ApiCredentials,
-	val loggingSettings: LoggingSettings,
+	private val apiServerDomain: ApiServerDomain,
+	private val credentials: ApiCredentials,
+	private val loggingSettings: LoggingSettings,
 	val httpTransport: HttpTransport,
 	val jsonTransformer: JsonTransformer
 ) {

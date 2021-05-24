@@ -27,7 +27,7 @@ class BatchSupportUnitTest {
 					arguments("?test=test", mapOf("test" to "test")),
 					arguments("?test=t%C3%A8st", mapOf("test" to "tèst")),
 					arguments("?test_1=1&test_2=t%C3%A9st", mapOf("test_1" to "1", "test_2" to "tést")),
-					arguments("?baseUrl=http%3A%2F%2Fexample.com%3Ftest%3Dexample&test_2=t%C3%A9st", mapOf("baseUrl" to "http://example.com?test=example", "test_2" to "tést"))
+					arguments("?baseUrl=https%3A%2F%2Fexample.com%3Ftest%3Dexample&test_2=t%C3%A9st", mapOf("baseUrl" to "https://example.com?test=example", "test_2" to "tést"))
 			)
 		}
 

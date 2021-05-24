@@ -44,15 +44,15 @@ open class RateLimitedHttpClientWrapper(
 		// server must inform how long to wait
 		val waitInterval = response.getFirstHeader("Retry-After")?.value?.toLong()
 			?: defaultRateLimitRetryInterval
-		if (waitInterval <= maxRateLimitRetryInterval) {
+		return if (waitInterval <= maxRateLimitRetryInterval) {
 			// if server requested acceptable time, we'll wait
 			log.info("Request ${request.uri.path} rate-limited: waiting $waitInterval seconds...")
 			waitSeconds(waitInterval, onEverySecondOfWaiting)
 			log.info("Retrying ${request.uri.path} after $waitInterval-s pause...")
-			return executeWithRetry(request, attemptsLeft, responseHandler)
+			executeWithRetry(request, attemptsLeft, responseHandler)
 		} else {
 			// too long to wait - let's return the original error
-			return responseHandler.handleResponse(response)
+			responseHandler.handleResponse(response)
 		}
 	}
 

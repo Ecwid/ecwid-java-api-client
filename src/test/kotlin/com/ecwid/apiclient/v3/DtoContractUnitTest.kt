@@ -241,7 +241,7 @@ class DtoContractUnitTest {
 								"Classes ${dtoClass.qualifiedName} and ${updatedDTOClass.qualifiedName} does not links to each other")
 						}
 						null -> {
-							fail<Unit>("Impossible situation")
+							fail("Impossible situation")
 						}
 					}
 				}
@@ -256,13 +256,13 @@ class DtoContractUnitTest {
 					val fetchedDtoModifyKind = fetchedDTOClassesToModifyKindMap[fetchedDTOClass]
 					val guard = when (fetchedDtoModifyKind) {
 						ApiFetchedDTO.ModifyKind.ReadOnly -> {
-							fail<Unit>("Updatable class ${dtoClass.qualifiedName} links to class ${fetchedDTOClass.qualifiedName} which is marked as read-only ")
+							fail("Updatable class ${dtoClass.qualifiedName} links to class ${fetchedDTOClass.qualifiedName} which is marked as read-only ")
 						}
 						is ApiFetchedDTO.ModifyKind.ReadWrite -> {
 							// Backlink was checked before
 						}
 						null -> {
-							fail<Unit>("Impossible situation")
+							fail("Impossible situation")
 						}
 					}
 				}
@@ -495,7 +495,7 @@ private fun isDtoShouldBeMarkedAsDataClass(dtoClass: Class<*>): Boolean {
 }
 
 private fun isDtoShouldHaveZeroArgConstructor(constructors: Array<Constructor<*>>): Boolean {
-	val maxParametersConstructor = constructors.maxBy { constructor -> constructor.parameters.size }
+	val maxParametersConstructor = constructors.maxByOrNull { constructor -> constructor.parameters.size }
 	if (maxParametersConstructor == null) {
 		// Strange things
 		return true
