@@ -114,6 +114,7 @@ sealed class ProductsSearchRequest : ApiRequestDTO {
 
 	}
 
+	@Suppress("unused")
 	enum class SortOrder {
 		RELEVANCE,
 		DEFINED_BY_STORE_OWNER,

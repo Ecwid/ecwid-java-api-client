@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.order.enums
 
+@Suppress("unused")
 enum class OrderFulfillmentStatus {
 	AWAITING_PROCESSING,
 	PROCESSING,

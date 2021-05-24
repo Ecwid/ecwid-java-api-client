@@ -85,6 +85,7 @@ class ApiClientHelper private constructor(
 		return makeRequestInt(request, ObjectResponseParser(jsonTransformer, V::class.java))
 	}
 
+	@Suppress("unused")
 	inline fun <reified VBase, reified VExt> makeObjectWithExtResultRequest(request: ApiRequest): ParsedResponseWithExt<VBase, VExt> {
 		return makeRequestInt(request, ObjectWithExtResponseParser(jsonTransformer, VBase::class.java, VExt::class.java))
 	}

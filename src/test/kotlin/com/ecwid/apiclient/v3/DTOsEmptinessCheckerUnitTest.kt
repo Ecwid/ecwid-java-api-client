@@ -284,6 +284,7 @@ class DTOsEmptinessCheckerUnitTest {
 
 }
 
+@Suppress("unused")
 private enum class EnumClass {
 	VALUE1,
 	VALUE2

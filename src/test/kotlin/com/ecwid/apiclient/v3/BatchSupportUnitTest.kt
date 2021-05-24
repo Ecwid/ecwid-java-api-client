@@ -18,6 +18,8 @@ class BatchSupportUnitTest {
 	}
 
 	companion object {
+
+		@Suppress("unused")
 		@JvmStatic
 		fun expectedQueryToParamsMapProvider(): Stream<Arguments> {
 			return Stream.of(
@@ -28,6 +30,7 @@ class BatchSupportUnitTest {
 					arguments("?baseUrl=http%3A%2F%2Fexample.com%3Ftest%3Dexample&test_2=t%C3%A9st", mapOf("baseUrl" to "http://example.com?test=example", "test_2" to "tést"))
 			)
 		}
+
 	}
 
 }

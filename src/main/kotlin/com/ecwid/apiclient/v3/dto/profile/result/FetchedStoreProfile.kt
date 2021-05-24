@@ -207,6 +207,7 @@ data class FetchedStoreProfile(
 			val pickupBusinessHours: String? = null
 	)
 
+	@Suppress("unused")
 	enum class FulfillmentType {
 		pickup, shipping
 	}
@@ -237,33 +238,43 @@ data class FetchedStoreProfile(
 			val height: Double? = null
 	)
 
+	@Suppress("unused")
 	enum class RatesCalculationType {
-		carrier_calculated, table, flat, app;
+
+		carrier_calculated,
+		table,
+		flat,
+		app;
 
 		override fun toString(): String {
 			return super.toString().replace("_", "-")
 		}
-	}
 
-	fun RatesCalculationType.valueOf(value: String?): RatesCalculationType? {
-		return RatesCalculationType.values().firstOrNull { it.toString() == value }
 	}
 
 	data class FlatRate(
 			val rateType: RateType? = null,
 			val rate: Double? = null
 	) {
+
+		@Suppress("unused")
 		enum class RateType {
-			ABSOLUTE, PERCENT
+			ABSOLUTE,
+			PERCENT
 		}
+
 	}
 
 	data class TableRatesDetails(
 			val tableBasedOn: RateBase? = null,
 			val rates: List<TableRate>? = null
 	) {
+
+		@Suppress("unused")
 		enum class RateBase {
-			subtotal, discountedSubtotal, weight
+			subtotal,
+			discountedSubtotal,
+			weight
 		}
 
 	}
