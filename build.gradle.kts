@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	java
 	signing
-	kotlin("jvm") version "1.3.72"
+	kotlin("jvm") version "1.4.32"
 	id("com.adarshr.test-logger") version "2.1.1"
 	id("io.codearte.nexus-staging") version "0.22.0"
 	id("nebula.release") version "15.2.0"
@@ -19,19 +19,16 @@ dependencies {
 	implementation(kotlin("stdlib-jdk8"))
 	implementation(kotlin("reflect"))
 
-	implementation("com.google.code.gson:gson:2.8.6")
-	implementation("org.apache.httpcomponents:httpclient:4.5.13")
+	api("com.google.code.gson:gson:2.8.6")
+	api("org.apache.httpcomponents:httpclient:4.5.13")
 
-	testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-	testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.0")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
 	testImplementation("org.reflections:reflections:0.9.11")
 	testImplementation("uk.co.jemos.podam:podam:7.2.6.RELEASE")
-
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 }
 
 configure<JavaPluginConvention> {
-	sourceCompatibility = JavaVersion.VERSION_1_8
+	sourceCompatibility = JavaVersion.VERSION_11
 }
 
 java {
@@ -40,7 +37,7 @@ java {
 }
 
 tasks.withType<KotlinCompile> {
-	kotlinOptions.jvmTarget = "1.8"
+	kotlinOptions.jvmTarget = "11"
 }
 
 tasks.withType<Test> {
@@ -57,7 +54,7 @@ tasks.withType<Test> {
 }
 
 tasks.withType<Wrapper> {
-	gradleVersion = "6.8.1"
+	gradleVersion = "7.0.2"
 }
 
 val settingsProvider = SettingsProvider()
@@ -296,7 +293,7 @@ class PublicationSettings {
 		const val DEVELOPER_EMAIL = "opensource-bot@ecwid.com"
 
 		const val LICENSE_NAME = "The Apache License, Version 2.0"
-		const val LICENSE_URL = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+		const val LICENSE_URL = "https://www.apache.org/licenses/LICENSE-2.0.txt"
 
 		const val SCM_CONNECTION = "scm:git:git@github.com:Ecwid/ecwid-java-api-client.git"
 		const val SCM_URL = "https://github.com/Ecwid/ecwid-java-api-client.git"
