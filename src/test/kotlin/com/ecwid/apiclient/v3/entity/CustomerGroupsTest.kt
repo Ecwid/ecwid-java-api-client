@@ -63,7 +63,7 @@ class CustomerGroupsTest : BaseEntityTest() {
 	@Test
 	fun testSearchPaging() {
 		// Create three customer groups additionally to always existing “General” group
-		for (i in 1..3) {
+		repeat(3) {
 			val customerGroupCreateRequest = CustomerGroupCreateRequest(
 					newCustomerGroup = generateTestCustomerGroup()
 			)
