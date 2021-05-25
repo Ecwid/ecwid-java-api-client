@@ -114,13 +114,17 @@ tasks.register("printDevSnapshotReleaseNode") {
 }
 
 detekt {
-	buildUponDefaultConfig = true
 	allRules = false
+	basePath = "$projectDir"
+	buildUponDefaultConfig = true
 	config = files("$projectDir/config/detekt.yml")
+	parallel = true
 
 	reports {
-		html.enabled = true // observe findings in your browser with structure and code snippets
-		sarif.enabled = true // standardized SARIF format (https://sarifweb.azurewebsites.net/) to support integrations with Github Code Scanning
+		html.enabled = true
+		sarif.enabled = true
+		txt.enabled = false
+		xml.enabled = false
 	}
 }
 
