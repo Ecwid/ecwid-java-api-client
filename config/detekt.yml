@@ -22,5 +22,7 @@ naming:
 style:
   MaxLineLength:
     maxLineLength: 200
+  UnnecessaryAbstractClass:
+    excludes: ['**/test/**']
   WildcardImport:
     active: false
