@@ -5,13 +5,15 @@ complexity:
     excludes: ['**/test/**']
   LongMethod:
     threshold: 300
+  LongParameterList:
+    functionThreshold: 10
+    constructorThreshold: 15
+  NestedBlockDepth:
+    excludes: ['**/test/**']
   TooManyFunctions:
     thresholdInFiles: 50
     thresholdInClasses: 50
     thresholdInInterfaces: 50
-  LongParameterList:
-    functionThreshold: 10
-    constructorThreshold: 15
 
 naming:
   EnumNaming:
