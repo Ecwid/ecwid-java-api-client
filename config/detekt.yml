@@ -22,6 +22,10 @@ naming:
 style:
   MaxLineLength:
     maxLineLength: 200
+  ThrowsCount:
+    max: 5
+  ReturnCount:
+    max: 5
   UnnecessaryAbstractClass:
     excludes: ['**/test/**']
   WildcardImport:
