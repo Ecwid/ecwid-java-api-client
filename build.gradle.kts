@@ -19,15 +19,12 @@ dependencies {
 	implementation(kotlin("stdlib-jdk8"))
 	implementation(kotlin("reflect"))
 
-	implementation("com.google.code.gson:gson:2.8.6")
-	implementation("org.apache.httpcomponents:httpclient:4.5.13")
+	api("com.google.code.gson:gson:2.8.6")
+	api("org.apache.httpcomponents:httpclient:4.5.13")
 
-	testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-	testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.0")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
 	testImplementation("org.reflections:reflections:0.9.11")
 	testImplementation("uk.co.jemos.podam:podam:7.2.6.RELEASE")
-
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 }
 
 configure<JavaPluginConvention> {
