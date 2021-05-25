@@ -36,5 +36,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       if: failure()
       with:
-        name: test-results
-        path: /home/runner/work/ecwid-java-api-client/ecwid-java-api-client/build/reports/tests/test/*
+        name: check-results
+        path: |
+          /home/runner/work/ecwid-java-api-client/ecwid-java-api-client/build/reports/tests/test/*
+          /home/runner/work/ecwid-java-api-client/ecwid-java-api-client/build/reports/detekt/detekt.html

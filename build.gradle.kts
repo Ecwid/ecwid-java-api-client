@@ -119,8 +119,10 @@ detekt {
 	config = files("$projectDir/config/detekt.yml")
 
 	reports {
-		html.enabled = true // observe findings in your browser with structure and code snippets
-		sarif.enabled = true // standardized SARIF format (https://sarifweb.azurewebsites.net/) to support integrations with Github Code Scanning
+		html.enabled = true
+		sarif.enabled = false
+		txt.enabled = false
+		xml.enabled = false
 	}
 }
 
