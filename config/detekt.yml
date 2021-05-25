@@ -1,0 +1,9 @@
+complexity:
+  LongMethod:
+    threshold: 300
+
+style:
+  MaxLineLength:
+    maxLineLength: 200
+  WildcardImport:
+    active: false
