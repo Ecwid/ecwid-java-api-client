@@ -10,6 +10,8 @@ import java.util.logging.Logger
 
 private val log = Logger.getLogger(RateLimitedHttpClientWrapper::class.qualifiedName)
 
+private const val SC_TOO_MANY_REQUESTS = 429
+
 /**
  * Wrapper for httpClient, which retries requests if faces 429 error response.
  * Respects server's Retry-After header if provided.
@@ -29,7 +31,7 @@ open class RateLimitedHttpClientWrapper(
 
 	private fun <T> executeWithRetry(request: HttpUriRequest, attemptsLeft: Int, responseHandler: ResponseHandler<T>): T {
 		return httpClient.execute(request) { response ->
-			if (response.statusLine.statusCode == 429 && attemptsLeft > 0) {
+			if (response.statusLine.statusCode == SC_TOO_MANY_REQUESTS && attemptsLeft > 0) {
 				process429(request,
 					response,
 					attemptsLeft - 1, // decrement attempts reminder
