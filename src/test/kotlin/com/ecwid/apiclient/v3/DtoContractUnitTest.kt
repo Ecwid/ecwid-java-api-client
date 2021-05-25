@@ -473,25 +473,22 @@ private fun messagesToLoggableString(messages: Collection<String>): String {
 private fun isDtoShouldBeMarkedAsDataClass(dtoClass: Class<*>): Boolean {
 	val kclass = dtoClass.kotlin
 
-	if (kclass.isSealed) {
-		// Sealed classes must not be instantiated by themself but their inheritors must be marked as data classes
-		return false
-	}
-
-	if (kclass.objectInstance != null) {
-		// Singleton classes has no explicit constructor arguments so it cannot be marked as data class
-		return false
-	}
-
-	val constructors = dtoClass.constructors
-	if (constructors.size == 1) {
-		if (constructors.first().parameters.isEmpty()) {
-			// If class has only one zero-arg constructor then it cannot be marked as data class
-			return false
+	return when {
+		kclass.isSealed -> {
+			// Sealed classes must not be instantiated by themself but their inheritors must be marked as data classes
+			false
+		}
+		kclass.objectInstance != null -> {
+			// Singleton classes has no explicit constructor arguments so it cannot be marked as data class
+			false
+		}
+		else -> {
+			// Classes that has only one zero-arg constructor cannot be marked as data class
+			val constructors = dtoClass.constructors
+			val classHasOnlyZeroArgConstructor = constructors.size == 1 && constructors.first().parameters.isEmpty()
+			!classHasOnlyZeroArgConstructor
 		}
 	}
-
-	return true
 }
 
 private fun isDtoShouldHaveZeroArgConstructor(constructors: Array<Constructor<*>>): Boolean {

@@ -31,16 +31,18 @@ object PropertiesLoader {
 	private fun fromEnv(): TestProperties? {
 		val apiHost = System.getenv("API_HOST") ?: DEFAULT_API_HOST
 		val storeId = System.getenv("STORE_ID")?.toIntOrNull()
-				?: return null
 		val apiToken = System.getenv("API_TOKEN")
-				?: return null
 
-		return TestProperties(
+		return if (storeId != null && apiToken != null) {
+			TestProperties(
 				apiHost = apiHost,
 				apiPort = DEFAULT_API_PORT,
 				storeId = storeId,
 				apiToken = apiToken
-		)
+			)
+		} else {
+			null
+		}
 	}
 
 	private fun fromResource(resourceName: String): LoadResult {
