@@ -1,4 +1,6 @@
 complexity:
+  ComplexMethod:
+    threshold: 30
   LongMethod:
     threshold: 300
   TooManyFunctions:
