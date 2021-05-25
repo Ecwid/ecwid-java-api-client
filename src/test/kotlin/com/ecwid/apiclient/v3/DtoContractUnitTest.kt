@@ -550,7 +550,7 @@ internal fun getDtoClassesToCheck() = Reflections(ApiRequest::class.java.package
 	.filterNot { clazz ->
 		try {
 			clazz.kotlin.isCompanion
-		} catch (e: UnsupportedOperationException) {
+		} catch (ignore: UnsupportedOperationException) {
 			// Filtering file facades classes (*Kt classes) and synthetic classes (i.e. when-mappings classes)
 			true
 		}

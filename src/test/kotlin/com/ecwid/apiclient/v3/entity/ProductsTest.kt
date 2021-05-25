@@ -957,7 +957,7 @@ class ProductsTest : BaseEntityTest() {
 		try {
 			apiClient.uploadProductImageAsync(requestWithBlankUrl)
 			fail("Request must return error")
-		} catch (e: EcwidApiException) {
+		} catch (ignore: EcwidApiException) {
 			// ok
 		}
 
@@ -972,7 +972,7 @@ class ProductsTest : BaseEntityTest() {
 		try {
 			apiClient.uploadProductImageAsync(requestWithWrongUrl)
 			fail("Request must return error")
-		} catch (e: EcwidApiException) {
+		} catch (ignore: EcwidApiException) {
 			// ok
 		}
 	}
@@ -1017,7 +1017,7 @@ class ProductsTest : BaseEntityTest() {
 		try {
 			apiClient.uploadProductGalleryImageAsync(requestWithBlankUrl)
 			fail("Request must return error")
-		} catch (e: EcwidApiException) {
+		} catch (ignore: EcwidApiException) {
 			// ok
 		}
 
@@ -1032,7 +1032,7 @@ class ProductsTest : BaseEntityTest() {
 		try {
 			apiClient.uploadProductGalleryImageAsync(requestWithWrongUrl)
 			fail("Request must return error")
-		} catch (e: EcwidApiException) {
+		} catch (ignore: EcwidApiException) {
 			// ok
 		}
 	}

@@ -432,7 +432,7 @@ class CategoriesTest : BaseEntityTest() {
 		try {
 			apiClient.uploadCategoryImageAsync(requestWithBlankUrl)
 			fail(message = "Request must return error")
-		} catch (e: EcwidApiException) {
+		} catch (ignore: EcwidApiException) {
 			// ok
 		}
 
@@ -447,7 +447,7 @@ class CategoriesTest : BaseEntityTest() {
 		try {
 			apiClient.uploadCategoryImageAsync(requestWithWrongUrl)
 			fail(message = "Request must return error")
-		} catch (e: EcwidApiException) {
+		} catch (ignore: EcwidApiException) {
 			// ok
 		}
 	}
