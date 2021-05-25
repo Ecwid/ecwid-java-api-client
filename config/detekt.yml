@@ -13,6 +13,10 @@ complexity:
     functionThreshold: 10
     constructorThreshold: 15
 
+naming:
+  EnumNaming:
+    active: false # We need to fix all enums before enabling this inspection
+
 style:
   MaxLineLength:
     maxLineLength: 200
