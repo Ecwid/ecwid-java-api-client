@@ -25,6 +25,7 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
 	testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.0")
 	testImplementation("org.reflections:reflections:0.9.11")
+	testImplementation("uk.co.jemos.podam:podam:7.2.6.RELEASE")
 
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 }

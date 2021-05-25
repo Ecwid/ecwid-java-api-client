@@ -87,7 +87,8 @@ data class UpdatedStoreProfile(
 	data class SalePriceSettings(
 			val displayOnProductList: Boolean? = null,
 			val oldPriceLabel: String? = null,
-			val displayDiscount: DisplayDiscount? = null) {
+			val displayDiscount: DisplayDiscount? = null
+	) {
 
 		enum class DisplayDiscount {
 			NONE, ABS, PERCENT
