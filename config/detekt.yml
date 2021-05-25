@@ -5,6 +5,9 @@ complexity:
     thresholdInFiles: 50
     thresholdInClasses: 50
     thresholdInInterfaces: 50
+  LongParameterList:
+    functionThreshold: 10
+    constructorThreshold: 15
 
 style:
   MaxLineLength:
