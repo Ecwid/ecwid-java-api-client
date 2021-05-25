@@ -1,6 +1,8 @@
 complexity:
   ComplexMethod:
     threshold: 30
+  LargeClass:
+    excludes: ['**/test/**']
   LongMethod:
     threshold: 300
   TooManyFunctions:
