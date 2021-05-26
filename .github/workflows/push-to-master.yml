@@ -24,7 +24,7 @@ jobs:
         server-id: github
 
     - name: Build, upload release version to Maven Central and create git release tag with Gradle
-      run: ./gradlew final closeAndReleaseRepository printFinalReleaseNode
+      run: ./gradlew detekt final closeAndReleaseRepository printFinalReleaseNode
       env:
         GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
         GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
@@ -32,3 +32,9 @@ jobs:
         OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         GRGIT_USER: ${{ secrets.GRGIT_USER }}
         GRGIT_PASS: ${{ secrets.GRGIT_PASS }}
+
+    - name: Upload static analysis results
+      uses: github/codeql-action/upload-sarif@v1
+      if: always()
+      with:
+        sarif_file: ${{ github.workspace }}/build/reports/detekt/detekt.sarif
