@@ -47,3 +47,4 @@ jobs:
       if: always()
       with:
         sarif_file: ${{ github.workspace }}/build/reports/detekt/detekt.sarif
+        category: "Detekt Scanning"
