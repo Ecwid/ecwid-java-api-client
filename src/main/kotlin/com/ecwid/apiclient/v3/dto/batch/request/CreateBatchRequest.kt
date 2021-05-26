@@ -63,11 +63,7 @@ private data class SingleBatchRequest(
 
 		internal fun create(id: String?, apiRequest: ApiRequest): SingleBatchRequest {
 			val requestInfo = apiRequest.toRequestInfo()
-			val path = when {
-				requestInfo.endpoint != null -> requestInfo.endpoint
-				requestInfo.pathSegments != null -> buildEndpointPath(requestInfo.pathSegments)
-				else -> throw IllegalArgumentException("At least one parameter 'endpoint' or 'pathSegments' must not be null")
-			}
+			val path = buildEndpointPath(requestInfo.pathSegments)
 			val queryString = buildQueryString(requestInfo.params)
 			return SingleBatchRequest(
 					id = id,

@@ -178,54 +178,38 @@ class ApiClientHelper private constructor(
 	@PublishedApi
 	internal fun RequestInfo.toHttpRequest(): HttpRequest = when (method) {
 		HttpMethod.GET -> HttpRequest.HttpGetRequest(
-				uri = createApiEndpointUri(endpoint, pathSegments),
+				uri = createApiEndpointUri(pathSegments),
 				params = params.withCredentialsParams(credentials)
 		)
 		HttpMethod.POST -> HttpRequest.HttpPostRequest(
-				uri = createApiEndpointUri(endpoint, pathSegments),
+				uri = createApiEndpointUri(pathSegments),
 				params = params.withCredentialsParams(credentials),
 				transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.PUT -> HttpRequest.HttpPutRequest(
-				uri = createApiEndpointUri(endpoint, pathSegments),
+				uri = createApiEndpointUri(pathSegments),
 				params = params.withCredentialsParams(credentials),
 				transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
-				uri = createApiEndpointUri(endpoint, pathSegments),
+				uri = createApiEndpointUri(pathSegments),
 				params = params.withCredentialsParams(credentials)
 		)
 	}
 
 	@PublishedApi
-	internal fun createApiEndpointUri(endpoint: String?, pathSegments: List<String>?): String = when {
-		endpoint != null -> {
-			URI(
-				"https",
-				null,
-				apiServerDomain.host,
-				if (apiServerDomain.securePort == DEFAULT_HTTPS_PORT) -1 else apiServerDomain.securePort,
-				"${buildBaseEndpointPath(credentials)}/$endpoint",
-				null,
-				null
-			).toString()
-		}
-		pathSegments != null -> {
-			val uri = URI(
-				"https",
-				null,
-				apiServerDomain.host,
-				if (apiServerDomain.securePort == DEFAULT_HTTPS_PORT) -1 else apiServerDomain.securePort,
-				null,
-				null,
-				null
-			)
-			val encodedPath = "${buildBaseEndpointPath(credentials)}/" + buildEndpointPath(pathSegments)
-			uri.toString() + encodedPath
-		}
-		else -> {
-			throw IllegalArgumentException("At least one parameter 'endpoint' or 'pathSegments' must not be null")
-		}
+	internal fun createApiEndpointUri(pathSegments: List<String>): String {
+		val uri = URI(
+			"https",
+			null,
+			apiServerDomain.host,
+			if (apiServerDomain.securePort == DEFAULT_HTTPS_PORT) -1 else apiServerDomain.securePort,
+			null,
+			null,
+			null
+		)
+		val encodedPath = buildBaseEndpointPath(credentials) + "/" + buildEndpointPath(pathSegments)
+		return uri.toString() + encodedPath
 	}
 
 	private fun logSuccessfulResponseIfNeeded(requestId: String, requestTime: Long, responseBody: String) {
