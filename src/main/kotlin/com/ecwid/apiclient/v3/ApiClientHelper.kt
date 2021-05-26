@@ -296,7 +296,7 @@ class ApiClientHelper private constructor(
 
 @PublishedApi
 internal fun generateRequestId(): String {
-	return (0 until REQUEST_ID_LENGTH)
+	return (0 until 8)
 			.map { Random.nextInt(0, REQUEST_ID_CHARACTERS.size) }
 			.map(REQUEST_ID_CHARACTERS::get)
 			.joinToString("")
