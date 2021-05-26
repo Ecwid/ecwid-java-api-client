@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponStatus
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponType
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 data class CouponSearchRequest(
 		val offset: Int = 0,
@@ -32,10 +33,10 @@ data class CouponSearchRequest(
 			request.code?.let { put("code", it) }
 			request.discountType?.let { put("discount_type", it.joinToString(separator = ",")) }
 			request.availability?.let { put("availability", it.name) }
-			request.createdFrom?.let { put("createdFrom", (it.time / 1000).toString()) }
-			request.createdTo?.let { put("createdTo", (it.time / 1000).toString()) }
-			request.updatedFrom?.let { put("updatedFrom", (it.time / 1000).toString()) }
-			request.updatedTo?.let { put("updatedTo", (it.time / 1000).toString()) }
+			request.createdFrom?.let { put("createdFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
+			request.createdTo?.let { put("createdTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
+			request.updatedFrom?.let { put("updatedFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
+			request.updatedTo?.let { put("updatedTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 		}.toMap()
 	}
 }

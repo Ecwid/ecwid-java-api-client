@@ -145,7 +145,7 @@ class ProductTypesTest : BaseEntityTest() {
 	@Test
 	fun testGetAllProductTypes() {
 		// Create three product types additionally to always existing “General” product type
-		for (i in 1..3) {
+		repeat(3) {
 			val productTypeCreateRequest = ProductTypeCreateRequest(
 					newProductType = UpdatedProductType(
 							name = "Product type " + randomAlphanumeric(8)

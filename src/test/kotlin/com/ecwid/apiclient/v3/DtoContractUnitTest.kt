@@ -241,7 +241,7 @@ class DtoContractUnitTest {
 								"Classes ${dtoClass.qualifiedName} and ${updatedDTOClass.qualifiedName} does not links to each other")
 						}
 						null -> {
-							fail<Unit>("Impossible situation")
+							fail("Impossible situation")
 						}
 					}
 				}
@@ -256,13 +256,13 @@ class DtoContractUnitTest {
 					val fetchedDtoModifyKind = fetchedDTOClassesToModifyKindMap[fetchedDTOClass]
 					val guard = when (fetchedDtoModifyKind) {
 						ApiFetchedDTO.ModifyKind.ReadOnly -> {
-							fail<Unit>("Updatable class ${dtoClass.qualifiedName} links to class ${fetchedDTOClass.qualifiedName} which is marked as read-only ")
+							fail("Updatable class ${dtoClass.qualifiedName} links to class ${fetchedDTOClass.qualifiedName} which is marked as read-only ")
 						}
 						is ApiFetchedDTO.ModifyKind.ReadWrite -> {
 							// Backlink was checked before
 						}
 						null -> {
-							fail<Unit>("Impossible situation")
+							fail("Impossible situation")
 						}
 					}
 				}
@@ -473,29 +473,26 @@ private fun messagesToLoggableString(messages: Collection<String>): String {
 private fun isDtoShouldBeMarkedAsDataClass(dtoClass: Class<*>): Boolean {
 	val kclass = dtoClass.kotlin
 
-	if (kclass.isSealed) {
-		// Sealed classes must not be instantiated by themself but their inheritors must be marked as data classes
-		return false
-	}
-
-	if (kclass.objectInstance != null) {
-		// Singleton classes has no explicit constructor arguments so it cannot be marked as data class
-		return false
-	}
-
-	val constructors = dtoClass.constructors
-	if (constructors.size == 1) {
-		if (constructors.first().parameters.isEmpty()) {
-			// If class has only one zero-arg constructor then it cannot be marked as data class
-			return false
+	return when {
+		kclass.isSealed -> {
+			// Sealed classes must not be instantiated by themself but their inheritors must be marked as data classes
+			false
+		}
+		kclass.objectInstance != null -> {
+			// Singleton classes has no explicit constructor arguments so it cannot be marked as data class
+			false
+		}
+		else -> {
+			// Classes that has only one zero-arg constructor cannot be marked as data class
+			val constructors = dtoClass.constructors
+			val classHasOnlyZeroArgConstructor = constructors.size == 1 && constructors.first().parameters.isEmpty()
+			!classHasOnlyZeroArgConstructor
 		}
 	}
-
-	return true
 }
 
 private fun isDtoShouldHaveZeroArgConstructor(constructors: Array<Constructor<*>>): Boolean {
-	val maxParametersConstructor = constructors.maxBy { constructor -> constructor.parameters.size }
+	val maxParametersConstructor = constructors.maxByOrNull { constructor -> constructor.parameters.size }
 	if (maxParametersConstructor == null) {
 		// Strange things
 		return true
@@ -553,7 +550,7 @@ internal fun getDtoClassesToCheck() = Reflections(ApiRequest::class.java.package
 	.filterNot { clazz ->
 		try {
 			clazz.kotlin.isCompanion
-		} catch (e: UnsupportedOperationException) {
+		} catch (ignore: UnsupportedOperationException) {
 			// Filtering file facades classes (*Kt classes) and synthetic classes (i.e. when-mappings classes)
 			true
 		}

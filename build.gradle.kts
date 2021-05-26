@@ -1,4 +1,5 @@
 import com.adarshr.gradle.testlogger.theme.ThemeType
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -9,6 +10,7 @@ plugins {
 	id("io.codearte.nexus-staging") version "0.22.0"
 	id("nebula.release") version "15.2.0"
 	id("maven-publish")
+	id("io.gitlab.arturbosch.detekt") version "1.17.1"
 }
 
 repositories {
@@ -55,6 +57,10 @@ tasks.withType<Test> {
 
 tasks.withType<Wrapper> {
 	gradleVersion = "7.0.2"
+}
+
+tasks.withType<Detekt>().configureEach {
+	jvmTarget = "11"
 }
 
 val settingsProvider = SettingsProvider()
@@ -104,6 +110,21 @@ tasks.register("printDevSnapshotReleaseNode") {
 				artifactId = PublicationSettings.ARTIFACT_ID,
 				sanitizedVersion = project.sanitizeVersion()
 		)
+	}
+}
+
+detekt {
+	allRules = false
+	basePath = "$projectDir"
+	buildUponDefaultConfig = true
+	config = files("$projectDir/config/detekt.yml")
+	parallel = true
+
+	reports {
+		html.enabled = true
+		sarif.enabled = true
+		txt.enabled = false
+		xml.enabled = false
 	}
 }
 

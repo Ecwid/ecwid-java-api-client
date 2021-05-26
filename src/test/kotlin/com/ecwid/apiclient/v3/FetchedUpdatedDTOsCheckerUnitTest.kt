@@ -389,6 +389,7 @@ data class SharedDTO(
 	val subField1: Int
 )
 
+@Suppress("unused")
 private enum class SharedEnum {
 	VALUE_ONE,
 	VALUE_TWO

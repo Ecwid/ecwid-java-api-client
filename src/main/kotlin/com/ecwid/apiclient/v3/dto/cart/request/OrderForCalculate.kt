@@ -93,7 +93,7 @@ data class OrderForCalculate(
 			val type: ProductOptionType? = null,
 			val value: String? = null,
 			val valuesArray: List<String>? = null,
-			val files: List<OrderItemOptinonFile>? = null,
+			val files: List<OrderItemOptionFile>? = null,
 			val selections: List<SelectionInfo>? = null
 	) {
 		companion object {
@@ -102,7 +102,7 @@ data class OrderForCalculate(
 				SimpleDateFormat("yyyy-MM-dd")
 			}
 
-			fun createForChoiceOption(name: String, selection: String, files: List<OrderItemOptinonFile>?): OrderItemOption {
+			fun createForChoiceOption(name: String, selection: String, files: List<OrderItemOptionFile>?): OrderItemOption {
 				return OrderItemOption(
 						name = name,
 						type = ProductOptionType.CHOICE,
@@ -119,7 +119,7 @@ data class OrderForCalculate(
 				)
 			}
 
-			fun createForChoicesOption(name: String, selections: List<SelectionInfo>, files: List<OrderItemOptinonFile>?): OrderItemOption {
+			fun createForChoicesOption(name: String, selections: List<SelectionInfo>, files: List<OrderItemOptionFile>?): OrderItemOption {
 				return OrderItemOption(
 						name = name,
 						type = ProductOptionType.CHOICES,
@@ -194,7 +194,7 @@ data class OrderForCalculate(
 			val total: Double? = null
 	)
 
-	data class OrderItemOptinonFile(
+	data class OrderItemOptionFile(
 			val id: Int? = null,
 			val name: String? = null,
 			val size: Int? = null,

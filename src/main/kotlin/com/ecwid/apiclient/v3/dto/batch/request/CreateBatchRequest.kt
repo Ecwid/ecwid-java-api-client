@@ -74,11 +74,17 @@ private data class SingleBatchRequest(
 					method = requestInfo.method.name,
 					path = path + queryString,
 					body = when (requestInfo.httpBody) {
-						is HttpBody.EmptyBody -> null
-						is HttpBody.JsonBody -> requestInfo.httpBody.obj
-						is HttpBody.ByteArrayBody -> throw IllegalStateException("Request type ${HttpBody.ByteArrayBody::class.java.simpleName} is not allowed in batch requests")
-						is HttpBody.InputStreamBody -> throw IllegalStateException("Request type ${HttpBody.InputStreamBody::class.java.simpleName} is not allowed in batch requests")
-						is HttpBody.LocalFileBody -> throw IllegalStateException("Request type ${HttpBody.LocalFileBody::class.java.simpleName} is not allowed in batch requests")
+						is HttpBody.EmptyBody -> {
+							null
+						}
+						is HttpBody.JsonBody -> {
+							requestInfo.httpBody.obj
+						}
+						is HttpBody.ByteArrayBody,
+						is HttpBody.InputStreamBody,
+						is HttpBody.LocalFileBody -> {
+							throw IllegalStateException("Request type ${requestInfo.httpBody.javaClass.simpleName} is not allowed in batch requests")
+						}
 					}
 			)
 		}

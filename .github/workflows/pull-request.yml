@@ -33,8 +33,17 @@ jobs:
         OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         GITHUB_HEAD_REF: ${{ github.head_ref }}
 
-    - uses: actions/upload-artifact@v2
+    - name: Upload artifacts with checks results
+      uses: actions/upload-artifact@v2
       if: failure()
       with:
-        name: test-results
-        path: /home/runner/work/ecwid-java-api-client/ecwid-java-api-client/build/reports/tests/test/*
+        name: check-results
+        path: |
+          ${{ github.workspace }}/build/reports/tests/test/*
+          ${{ github.workspace }}/build/reports/detekt/detekt.html
+
+    - name: Upload static analysis results
+      uses: github/codeql-action/upload-sarif@v1
+      if: always()
+      with:
+        sarif_file: ${{ github.workspace }}/build/reports/detekt/detekt.sarif

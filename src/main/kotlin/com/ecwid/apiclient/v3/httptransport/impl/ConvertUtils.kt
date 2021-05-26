@@ -33,7 +33,11 @@ internal fun HttpRequest.toHttpUriRequest(): HttpUriRequest {
 		}
 	}
 	return requestBuilder
-		.addParameters(*createNameValuePairs(params))
+		.apply {
+			params.map { (name, value) ->
+				BasicNameValuePair(name, value)
+			}.forEach(this::addParameter)
+		}
 		.build()
 }
 
@@ -60,8 +64,3 @@ private fun TransportHttpBody.toEntity(): HttpEntity? = when (this) {
 
 private fun String.toContentType(): ContentType = ContentType.create(this, Consts.UTF_8)
 
-private fun createNameValuePairs(params: Map<String, String>): Array<BasicNameValuePair> {
-	return params
-		.map { (name, value) -> BasicNameValuePair(name, value) }
-		.toTypedArray()
-}

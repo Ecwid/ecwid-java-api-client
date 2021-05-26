@@ -215,7 +215,7 @@ class CustomersTest : BaseEntityTest() {
 	@Test
 	fun testSearchPaging() {
 		// Create some customers
-		for (i in 1..3) {
+		repeat(3) {
 			val customerCreateRequest = CustomerCreateRequest(
 					newCustomer = generateTestCustomerForCreate(customerGroupId = null)
 			)

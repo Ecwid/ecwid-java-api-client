@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 sealed class ProductsSearchRequest : ApiRequestDTO {
 
@@ -45,10 +46,10 @@ sealed class ProductsSearchRequest : ApiRequestDTO {
 				request.sku?.let { put("sku", it) }
 				request.priceFrom?.let { put("priceFrom", it.toString()) }
 				request.priceTo?.let { put("priceTo", it.toString()) }
-				request.createdFrom?.let { put("createdFrom", (it.time / 1000).toString()) }
-				request.createdTo?.let { put("createdTo", (it.time / 1000).toString()) }
-				request.updatedFrom?.let { put("updatedFrom", (it.time / 1000).toString()) }
-				request.updatedTo?.let { put("updatedTo", (it.time / 1000).toString()) }
+				request.createdFrom?.let { put("createdFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
+				request.createdTo?.let { put("createdTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
+				request.updatedFrom?.let { put("updatedFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
+				request.updatedTo?.let { put("updatedTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 				request.enabled?.let { put("enabled", it.toString()) }
 				request.inStock?.let { put("inStock", it.toString()) }
 				request.inventory?.let { put("inventory", if (it) "instock" else "outofstock") }
@@ -114,6 +115,7 @@ sealed class ProductsSearchRequest : ApiRequestDTO {
 
 	}
 
+	@Suppress("unused")
 	enum class SortOrder {
 		RELEVANCE,
 		DEFINED_BY_STORE_OWNER,

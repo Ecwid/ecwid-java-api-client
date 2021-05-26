@@ -22,7 +22,6 @@ jobs:
       with:
         java-version: '11'
         server-id: github
-        settings-path:
 
     - name: Build, upload release version to Maven Central and create git release tag with Gradle
       run: ./gradlew final closeAndReleaseRepository printFinalReleaseNode
