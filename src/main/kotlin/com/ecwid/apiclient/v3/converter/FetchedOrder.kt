@@ -12,6 +12,7 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 			ipAddress = ipAddress,
 			hidden = hidden,
 			createDate = createDate,
+			latestShipDate = latestShipDate,
 
 			refererUrl = refererUrl,
 			globalReferer = globalReferer,
@@ -67,7 +68,8 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 
 			utmData = utmData?.toUpdated(),
 
-			pricesIncludeTax = pricesIncludeTax
+			pricesIncludeTax = pricesIncludeTax,
+			externalOrderData = externalOrderData?.toUpdated()
 	)
 }
 
@@ -240,5 +242,15 @@ private fun FetchedOrder.UtmData.toUpdated(): UpdatedOrder.UtmData {
 			medium = medium,
 			mcEid = mcEid,
 			mcCid = mcCid
+	)
+}
+
+fun FetchedOrder.ExternalOrderData.toUpdated(): UpdatedOrder.ExternalOrderData {
+	return UpdatedOrder.ExternalOrderData(
+		externalFulfillment = externalFulfillment,
+		externalOrderId = externalOrderId,
+		refererId = refererId,
+		platformSpecificFields = platformSpecificFields,
+		refererChannel = refererChannel
 	)
 }

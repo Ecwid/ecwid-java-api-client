@@ -18,6 +18,7 @@ data class FetchedOrder(
 		val createTimestamp: Int? = null, // TODO Figure out how to test
 		val updateDate: Date? = null,
 		val updateTimestamp: Int? = null, // TODO Figure out how to test
+		val latestShipDate: Date? = null,
 
 		val refererUrl: String? = null,
 		val globalReferer: String? = null,
@@ -78,7 +79,8 @@ data class FetchedOrder(
 
 		val utmData: UtmData? = null,
 
-		val pricesIncludeTax: Boolean? = null
+		val pricesIncludeTax: Boolean? = null,
+		val externalOrderData: ExternalOrderData? = null
 ) : ApiFetchedDTO {
 
 	data class CreditCardStatus(
@@ -272,4 +274,12 @@ data class FetchedOrder(
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedOrder::class)
 
+
+	data class ExternalOrderData(
+		val externalFulfillment: Boolean? = null,
+		val externalOrderId: String? = null,
+		val refererId: String? = null,
+		val platformSpecificFields: HashMap<String,String>? = null,
+		val refererChannel: String? = null
+	)
 }

@@ -15,6 +15,7 @@ data class UpdatedOrder(
 		val ipAddress: String? = null,
 		val hidden: Boolean? = null,
 		val createDate: Date? = null,
+		val latestShipDate: Date? = null,
 
 		val refererUrl: String? = null,
 		val globalReferer: String? = null,
@@ -70,7 +71,8 @@ data class UpdatedOrder(
 
 		val utmData: UtmData? = null,
 
-		val pricesIncludeTax: Boolean? = null
+		val pricesIncludeTax: Boolean? = null,
+		val externalOrderData: ExternalOrderData? = null
 ) : ApiUpdatedDTO {
 
 	data class CreditCardStatus(
@@ -283,4 +285,16 @@ data class UpdatedOrder(
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedOrder::class)
 
+
+	data class ExternalOrderData(
+		val externalFulfillment: Boolean? = null,
+		val externalOrderId: String? = null,
+		val refererId: String? = null,
+		val platformSpecificFields: HashMap<String,String>? = null,
+		val refererChannel: String? = null
+	)
+
+	companion object {
+		const val FACEBOOK_ORDER_REFERENCE_ID = "FACEBOOK"
+	}
 }

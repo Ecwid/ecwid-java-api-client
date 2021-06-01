@@ -314,6 +314,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedOrder::totalAndMembershipBasedDiscount),
 	IgnoreNullable(FetchedOrder::trackingNumber),
 	IgnoreNullable(FetchedOrder::updateDate),
+	AllowNullable(FetchedOrder::latestShipDate),
 	IgnoreNullable(FetchedOrder::updateTimestamp),
 	IgnoreNullable(FetchedOrder::usdTotal),
 	IgnoreNullable(FetchedOrder::utmData),
@@ -1046,6 +1047,13 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(StoreProfileRequest::lang),
 
 	AllowNullable(ProductVariationsRequest::lang),
+
+	AllowNullable(FetchedOrder::externalOrderData),
+	AllowNullable(FetchedOrder.ExternalOrderData::externalOrderId),
+	AllowNullable(FetchedOrder.ExternalOrderData::externalFulfillment),
+	AllowNullable(FetchedOrder.ExternalOrderData::refererId),
+	AllowNullable(FetchedOrder.ExternalOrderData::platformSpecificFields),
+	AllowNullable(FetchedOrder.ExternalOrderData::refererChannel),
 
 	IgnoreNullable(GetEscapedBatchResult::responses),
 	IgnoreNullable(GetTypedBatchResult::responses),
