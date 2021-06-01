@@ -17,6 +17,7 @@ data class EscapedSingleBatchResponse(
 		val status: BatchResponseStatus = BatchResponseStatus.NOT_EXECUTED
 ) : ApiResultDTO
 
+@Suppress("unused")
 enum class BatchStatus {
 	QUEUED,
 	IN_PROGRESS,

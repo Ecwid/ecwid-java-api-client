@@ -49,7 +49,9 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 			ribbonTranslated = ribbonTranslated,
 			subtitleTranslated = subtitleTranslated,
 			nameYourPriceEnabled = nameYourPriceEnabled,
-			subscriptionSettings = subscriptionSettings?.toUpdated()
+			subscriptionSettings = subscriptionSettings?.toUpdated(),
+			googleProductCategory = googleProductCategory,
+			productCondition = productCondition
 	)
 }
 
@@ -114,7 +116,8 @@ private fun FetchedProduct.ProductOption.RadioOption.toUpdated() = UpdatedProduc
 private fun FetchedProduct.ProductOption.CheckboxOption.toUpdated() = UpdatedProduct.ProductOption.CheckboxOption(
 		name = name,
 		nameTranslated = nameTranslated,
-		choices = choices.map { it.toUpdated() }
+		choices = choices.map { it.toUpdated() },
+		required = required
 )
 
 private fun FetchedProduct.ProductOption.TextFieldOption.toUpdated() = UpdatedProduct.ProductOption.TextFieldOption(

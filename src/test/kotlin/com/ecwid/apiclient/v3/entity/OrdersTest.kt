@@ -312,7 +312,7 @@ class OrdersTest : BaseEntityTest() {
 	@Test
 	fun testSearchPaging() {
 		// Create some orders
-		for (i in 1..3) {
+		repeat(3) {
 			val orderCreateRequest = OrderCreateRequest(newOrder = UpdatedOrder())
 			val orderCreateResult = apiClient.createOrder(orderCreateRequest)
 			assertTrue(orderCreateResult.id > 0)

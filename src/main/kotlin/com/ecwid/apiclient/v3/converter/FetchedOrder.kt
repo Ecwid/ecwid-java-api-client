@@ -61,7 +61,12 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 			shippingPerson = shippingPerson?.toUpdated(),
 
 			shippingOption = shippingOption?.toUpdated(),
+			taxesOnShipping = taxesOnShipping.map(FetchedOrder.BaseOrderItemTax::toUpdated),
 			handlingFee = handlingFee?.toUpdated(),
+
+			customSurcharges = customSurcharges.map(FetchedOrder.Surcharge::toUpdated),
+
+			utmData = utmData?.toUpdated(),
 
 			pricesIncludeTax = pricesIncludeTax,
 			externalOrderData = externalOrderData?.toUpdated()
@@ -205,7 +210,38 @@ fun FetchedOrder.HandlingFee.toUpdated(): UpdatedOrder.HandlingFee {
 	return UpdatedOrder.HandlingFee(
 			name = name,
 			value = value,
-			description = description
+			description = description,
+			taxes = taxes.map(FetchedOrder.BaseOrderItemTax::toUpdated)
+	)
+}
+
+private fun FetchedOrder.Surcharge.toUpdated(): UpdatedOrder.Surcharge {
+	return UpdatedOrder.Surcharge(
+			id = id,
+			value = value,
+			type = type,
+			total = total,
+			description = description,
+			taxable = taxable,
+			taxes = taxes.map(FetchedOrder.BaseOrderItemTax::toUpdated)
+	)
+}
+
+private fun FetchedOrder.BaseOrderItemTax.toUpdated(): UpdatedOrder.BaseOrderItemTax {
+	return UpdatedOrder.BaseOrderItemTax(
+			name = name,
+			value = value,
+			total = total
+	)
+}
+
+private fun FetchedOrder.UtmData.toUpdated(): UpdatedOrder.UtmData {
+	return UpdatedOrder.UtmData(
+			source = source,
+			campaign = campaign,
+			medium = medium,
+			mcEid = mcEid,
+			mcCid = mcCid
 	)
 }
 

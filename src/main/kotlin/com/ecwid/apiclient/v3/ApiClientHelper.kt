@@ -24,10 +24,13 @@ private const val API_TOKEN_PARAM_NAME = "token"
 private const val APP_CLIENT_ID_PARAM_NAME = "appClientId"
 private const val APP_CLIENT_SECRET_PARAM_NAME = "appSecretKey"
 
+private const val REQUEST_ID_LENGTH = 8
+private val REQUEST_ID_CHARACTERS = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+
 class ApiClientHelper private constructor(
-	val apiServerDomain: ApiServerDomain,
-	val credentials: ApiCredentials,
-	val loggingSettings: LoggingSettings,
+	private val apiServerDomain: ApiServerDomain,
+	private val credentials: ApiCredentials,
+	private val loggingSettings: LoggingSettings,
 	val httpTransport: HttpTransport,
 	val jsonTransformer: JsonTransformer
 ) {
@@ -85,6 +88,7 @@ class ApiClientHelper private constructor(
 		return makeRequestInt(request, ObjectResponseParser(jsonTransformer, V::class.java))
 	}
 
+	@Suppress("unused")
 	inline fun <reified VBase, reified VExt> makeObjectWithExtResultRequest(request: ApiRequest): ParsedResponseWithExt<VBase, VExt> {
 		return makeRequestInt(request, ObjectWithExtResponseParser(jsonTransformer, VBase::class.java, VExt::class.java))
 	}
@@ -174,54 +178,38 @@ class ApiClientHelper private constructor(
 	@PublishedApi
 	internal fun RequestInfo.toHttpRequest(): HttpRequest = when (method) {
 		HttpMethod.GET -> HttpRequest.HttpGetRequest(
-				uri = createApiEndpointUri(endpoint, pathSegments),
+				uri = createApiEndpointUri(pathSegments),
 				params = params.withCredentialsParams(credentials)
 		)
 		HttpMethod.POST -> HttpRequest.HttpPostRequest(
-				uri = createApiEndpointUri(endpoint, pathSegments),
+				uri = createApiEndpointUri(pathSegments),
 				params = params.withCredentialsParams(credentials),
 				transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.PUT -> HttpRequest.HttpPutRequest(
-				uri = createApiEndpointUri(endpoint, pathSegments),
+				uri = createApiEndpointUri(pathSegments),
 				params = params.withCredentialsParams(credentials),
 				transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
-				uri = createApiEndpointUri(endpoint, pathSegments),
+				uri = createApiEndpointUri(pathSegments),
 				params = params.withCredentialsParams(credentials)
 		)
 	}
 
 	@PublishedApi
-	internal fun createApiEndpointUri(endpoint: String?, pathSegments: List<String>?): String = when {
-		endpoint != null -> {
-			URI(
-				"https",
-				null,
-				apiServerDomain.host,
-				if (apiServerDomain.securePort == DEFAULT_HTTPS_PORT) -1 else apiServerDomain.securePort,
-				"${buildBaseEndpointPath(credentials)}/$endpoint",
-				null,
-				null
-			).toString()
-		}
-		pathSegments != null -> {
-			val uri = URI(
-				"https",
-				null,
-				apiServerDomain.host,
-				if (apiServerDomain.securePort == DEFAULT_HTTPS_PORT) -1 else apiServerDomain.securePort,
-				null,
-				null,
-				null
-			)
-			val encodedPath = "${buildBaseEndpointPath(credentials)}/" + buildEndpointPath(pathSegments)
-			uri.toString() + encodedPath
-		}
-		else -> {
-			throw IllegalArgumentException("At least one parameter 'endpoint' or 'pathSegments' must not be null")
-		}
+	internal fun createApiEndpointUri(pathSegments: List<String>): String {
+		val uri = URI(
+			"https",
+			null,
+			apiServerDomain.host,
+			if (apiServerDomain.securePort == DEFAULT_HTTPS_PORT) -1 else apiServerDomain.securePort,
+			null,
+			null,
+			null
+		)
+		val encodedPath = buildBaseEndpointPath(credentials) + "/" + buildEndpointPath(pathSegments)
+		return uri.toString() + encodedPath
 	}
 
 	private fun logSuccessfulResponseIfNeeded(requestId: String, requestTime: Long, responseBody: String) {
@@ -308,10 +296,9 @@ class ApiClientHelper private constructor(
 
 @PublishedApi
 internal fun generateRequestId(): String {
-	val characters = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-	return (1..8)
-			.map { Random.nextInt(0, characters.size) }
-			.map(characters::get)
+	return (0 until REQUEST_ID_LENGTH)
+			.map { Random.nextInt(0, REQUEST_ID_CHARACTERS.size) }
+			.map(REQUEST_ID_CHARACTERS::get)
 			.joinToString("")
 }
 

@@ -220,9 +220,9 @@ class CategoriesTest : BaseEntityTest() {
 	@Test
 	fun testSearchPaging() {
 		// Create some categories
-		for (i in 1..3) {
+		repeat(3) {
 			val categoryCreateRequest = CategoryCreateRequest(
-					newCategory = generateTestCategory(enabled = true)
+				newCategory = generateTestCategory(enabled = true)
 			)
 			val categoryCreateResult = apiClient.createCategory(categoryCreateRequest)
 			assertTrue(categoryCreateResult.id > 0)
@@ -432,7 +432,7 @@ class CategoriesTest : BaseEntityTest() {
 		try {
 			apiClient.uploadCategoryImageAsync(requestWithBlankUrl)
 			fail(message = "Request must return error")
-		} catch (e: EcwidApiException) {
+		} catch (ignore: EcwidApiException) {
 			// ok
 		}
 
@@ -447,7 +447,7 @@ class CategoriesTest : BaseEntityTest() {
 		try {
 			apiClient.uploadCategoryImageAsync(requestWithWrongUrl)
 			fail(message = "Request must return error")
-		} catch (e: EcwidApiException) {
+		} catch (ignore: EcwidApiException) {
 			// ok
 		}
 	}

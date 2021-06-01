@@ -63,22 +63,24 @@ private data class SingleBatchRequest(
 
 		internal fun create(id: String?, apiRequest: ApiRequest): SingleBatchRequest {
 			val requestInfo = apiRequest.toRequestInfo()
-			val path = when {
-				requestInfo.endpoint != null -> requestInfo.endpoint
-				requestInfo.pathSegments != null -> buildEndpointPath(requestInfo.pathSegments)
-				else -> throw IllegalArgumentException("At least one parameter 'endpoint' or 'pathSegments' must not be null")
-			}
+			val path = buildEndpointPath(requestInfo.pathSegments)
 			val queryString = buildQueryString(requestInfo.params)
 			return SingleBatchRequest(
 					id = id,
 					method = requestInfo.method.name,
 					path = path + queryString,
 					body = when (requestInfo.httpBody) {
-						is HttpBody.EmptyBody -> null
-						is HttpBody.JsonBody -> requestInfo.httpBody.obj
-						is HttpBody.ByteArrayBody -> throw IllegalStateException("Request type ${HttpBody.ByteArrayBody::class.java.simpleName} is not allowed in batch requests")
-						is HttpBody.InputStreamBody -> throw IllegalStateException("Request type ${HttpBody.InputStreamBody::class.java.simpleName} is not allowed in batch requests")
-						is HttpBody.LocalFileBody -> throw IllegalStateException("Request type ${HttpBody.LocalFileBody::class.java.simpleName} is not allowed in batch requests")
+						is HttpBody.EmptyBody -> {
+							null
+						}
+						is HttpBody.JsonBody -> {
+							requestInfo.httpBody.obj
+						}
+						is HttpBody.ByteArrayBody,
+						is HttpBody.InputStreamBody,
+						is HttpBody.LocalFileBody -> {
+							throw IllegalStateException("Request type ${requestInfo.httpBody.javaClass.simpleName} is not allowed in batch requests")
+						}
 					}
 			)
 		}

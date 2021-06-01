@@ -148,7 +148,8 @@ data class FetchedProduct(
 		data class CheckboxOption(
 				val name: String = "",
 				val nameTranslated: LocalizedValueMap? = null,
-				val choices: List<ProductOptionChoice> = listOf()
+				val choices: List<ProductOptionChoice> = listOf(),
+				val required: Boolean = false
 		) : ProductOption(ProductOptionType.CHECKBOX)
 
 		data class TextFieldOption(

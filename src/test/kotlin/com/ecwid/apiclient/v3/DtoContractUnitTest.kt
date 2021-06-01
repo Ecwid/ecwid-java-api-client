@@ -6,17 +6,16 @@ import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
 import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
-import com.ecwid.apiclient.v3.rule.NonUpdatablePropertyRule
+import com.ecwid.apiclient.v3.rule.*
 import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.AllowNonnull
 import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.IgnoreNonnull
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
-import com.ecwid.apiclient.v3.rule.nonUpdatablePropertyRules
-import com.ecwid.apiclient.v3.rule.nonnullPropertyRules
-import com.ecwid.apiclient.v3.rule.nullablePropertyRules
-import com.ecwid.apiclient.v3.util.FetchedUpdatedDTO
+import com.ecwid.apiclient.v3.util.*
+import com.ecwid.apiclient.v3.util.DTORandomDataProviderStrategy
 import com.ecwid.apiclient.v3.util.FieldProblem
 import com.ecwid.apiclient.v3.util.FieldProblemKind
+import com.ecwid.apiclient.v3.util.checkDTOFieldsEmptiness
 import com.ecwid.apiclient.v3.util.checkFetchedUpdatedDTOsFields
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
@@ -24,7 +23,12 @@ import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
 import org.reflections.Reflections
+import org.reflections.scanners.MethodParameterScanner
 import org.reflections.scanners.SubTypesScanner
+import org.reflections.util.ClasspathHelper
+import org.reflections.util.ConfigurationBuilder
+import org.reflections.util.FilterBuilder
+import uk.co.jemos.podam.api.PodamFactoryImpl
 import java.io.File
 import java.io.InputStream
 import java.lang.reflect.*
@@ -36,6 +40,14 @@ import kotlin.reflect.jvm.javaGetter
 
 @TestMethodOrder(OrderAnnotation::class)
 class DtoContractUnitTest {
+
+	private val convertersReflections =
+		Reflections(
+			ConfigurationBuilder()
+				.filterInputsBy(FilterBuilder().includePackage("com.ecwid.apiclient.v3.converter"))
+				.setUrls(ClasspathHelper.forPackage(""))
+				.setScanners(MethodParameterScanner())
+		)
 
 	@Test
 	@Order(0)
@@ -199,7 +211,7 @@ class DtoContractUnitTest {
 		val ignoreNullablePropertiesCount = nonnullPropertyRules
 			.filterIsInstance<IgnoreNonnull<*, *>>()
 			.size
-		assertTrue(ignoreNullablePropertiesCount <= 43) {
+		assertTrue(ignoreNullablePropertiesCount <= 42) {
 			"You MUST NOT add exclusion with type IgnoreNonnull() which is used only for old fields until they are fixed.\n" +
 					"Please make this properties nonnull if possible.\n" +
 					"If Ecwid API requires value for this property to be passed you CAN add it to as `AllowNonnull()` exclusion in file `NonnullPropertyRules.kt`"
@@ -210,23 +222,10 @@ class DtoContractUnitTest {
 	@Order(8)
 	fun `test fetched and updated DTOs correctly linked to each other`() {
 		val dtoClassesToCheck = getDtoClassesToCheck()
+		val fetchedDTOClassesToModifyKindMap = getFetchedDTOClassesToModifyKindMap(dtoClassesToCheck)
+		val updatedDTOClassesToModifyKindMap = getUpdatedDTOClassesToModifyKindMap(dtoClassesToCheck)
 
-		val fetchedDTOClassesMap = dtoClassesToCheck
-			.filter { dtoClass ->
-				ApiFetchedDTO::class.java.isAssignableFrom(dtoClass)
-			}.associate { dtoClass ->
-				val instance = dtoClass.getConstructor().newInstance() as ApiFetchedDTO
-				dtoClass.kotlin as KClass<*> to instance.getModifyKind()
-			}
-		val updatedDTOClassesMap = dtoClassesToCheck
-			.filter { dtoClass ->
-				ApiUpdatedDTO::class.java.isAssignableFrom(dtoClass)
-			}.associate { dtoClass ->
-				val instance = dtoClass.getConstructor().newInstance() as ApiUpdatedDTO
-				dtoClass.kotlin as KClass<*> to instance.getModifyKind()
-			}
-
-		fetchedDTOClassesMap.forEach { (dtoClass, kind) ->
+		fetchedDTOClassesToModifyKindMap.forEach { (dtoClass, kind) ->
 			@Suppress("UNUSED_VARIABLE")
 			val guard = when (kind) {
 				ApiFetchedDTO.ModifyKind.ReadOnly -> {
@@ -234,7 +233,7 @@ class DtoContractUnitTest {
 				}
 				is ApiFetchedDTO.ModifyKind.ReadWrite -> {
 					val updatedDTOClass = kind.updatedDTOClass
-					val updatedDtoModifyKind = updatedDTOClassesMap[updatedDTOClass]
+					val updatedDtoModifyKind = updatedDTOClassesToModifyKindMap[updatedDTOClass]
 					val guard = when (updatedDtoModifyKind) {
 						is ApiUpdatedDTO.ModifyKind.ReadWrite -> {
 							assertEquals(
@@ -242,28 +241,28 @@ class DtoContractUnitTest {
 								"Classes ${dtoClass.qualifiedName} and ${updatedDTOClass.qualifiedName} does not links to each other")
 						}
 						null -> {
-							fail<Unit>("Impossible situation")
+							fail("Impossible situation")
 						}
 					}
 				}
 			}
 		}
 
-		updatedDTOClassesMap.forEach { (dtoClass, kind) ->
+		updatedDTOClassesToModifyKindMap.forEach { (dtoClass, kind) ->
 			@Suppress("UNUSED_VARIABLE")
 			val guard = when (kind) {
 				is ApiUpdatedDTO.ModifyKind.ReadWrite -> {
 					val fetchedDTOClass = kind.fetchedDTOClass
-					val fetchedDtoModifyKind = fetchedDTOClassesMap[fetchedDTOClass]
+					val fetchedDtoModifyKind = fetchedDTOClassesToModifyKindMap[fetchedDTOClass]
 					val guard = when (fetchedDtoModifyKind) {
 						ApiFetchedDTO.ModifyKind.ReadOnly -> {
-							fail<Unit>("Updatable class ${dtoClass.qualifiedName} links to class ${fetchedDTOClass.qualifiedName} which is marked as read-only ")
+							fail("Updatable class ${dtoClass.qualifiedName} links to class ${fetchedDTOClass.qualifiedName} which is marked as read-only ")
 						}
 						is ApiFetchedDTO.ModifyKind.ReadWrite -> {
 							// Backlink was checked before
 						}
 						null -> {
-							fail<Unit>("Impossible situation")
+							fail("Impossible situation")
 						}
 					}
 				}
@@ -314,6 +313,75 @@ class DtoContractUnitTest {
 		}
 	}
 
+	@Test
+	@Order(11)
+	fun `test toUpdated extension functions are implemented correctly for all updatable FetchedDTOs`() {
+		val dataStrategy = DTORandomDataProviderStrategy()
+		val factory = PodamFactoryImpl(dataStrategy)
+
+		val dtoClassesToCheck = getDtoClassesToCheck()
+		val fetchedDTOClassesToModifyKindMap = getFetchedDTOClassesToModifyKindMap(dtoClassesToCheck)
+
+		val problemMessages = mutableListOf<String>()
+
+		val updatedDTOs = fetchedDTOClassesToModifyKindMap.mapNotNull { (fetchedDtoClass, kind) ->
+			when (kind) {
+				ApiFetchedDTO.ModifyKind.ReadOnly -> {
+					// No UpdatedDTO to check
+					null
+				}
+				is ApiFetchedDTO.ModifyKind.ReadWrite -> {
+					@Suppress("UNCHECKED_CAST")
+					val fetchedDtoKClass = fetchedDtoClass as KClass<out ApiFetchedDTO>
+					val updatedDTOClass = kind.updatedDTOClass
+
+					val toUpdatedMethod: Method? = findToUpdatedMethod(convertersReflections, fetchedDtoKClass, updatedDTOClass)
+					if (toUpdatedMethod == null) {
+						problemMessages += "Extension function with signature `${fetchedDtoKClass.java.canonicalName}.toUpdated(): ${updatedDTOClass.java.canonicalName}` is not implemented"
+						null
+					} else {
+						val fetchedDTO = factory.manufacturePojo(fetchedDtoKClass.java)
+						try {
+							toUpdatedMethod.invoke(null, fetchedDTO) as ApiUpdatedDTO
+						} catch (e: InvocationTargetException) {
+							problemMessages += "Exception occurred during invoking method `${fetchedDtoKClass.java.canonicalName}.toUpdated(): ${e.targetException.message}"
+							null
+						}
+					}
+				}
+			}
+		}
+
+		problemMessages += checkDTOFieldsEmptiness(
+			values = updatedDTOs,
+			ignoredFields = nonDuplicablePropertyRules.map(NonDuplicablePropertyRule<*, *>::property))
+		.map(FieldEmptinessProblem::buildMessage)
+
+		if (problemMessages.isNotEmpty()) {
+			fail<Unit> {
+				"Some of Fetched DTOs' fields are not copied to Updated DTOs in proper way:\n" +
+						messagesToLoggableString(problemMessages) + "\n" +
+						"Please implement proper toUpdate() extension function for this fields.\n" +
+						"If this field is really write-only according to Ecwid API documentation you CAN add it as `WriteOnly()` exclusion in file `NonDuplicablePropertyRules.kt`.\n" +
+						"You MUST NOT add exclusion of any other type to this list.\n"
+			}
+		}
+	}
+
+	@Test
+	@Order(12)
+	fun `test no new non write-only exclusions added to file NonDuplicablePropertyRules`() {
+		val nonWriteOnlyPropertyRulesCount = nonDuplicablePropertyRules
+			.filter { it !is NonDuplicablePropertyRule.WriteOnly }
+			.size
+		if (nonWriteOnlyPropertyRulesCount > 1) {
+			fail<Unit> {
+				"You MUST NOT add exclusion with types other than `WriteOnly()` to file `NonDuplicablePropertyRules.kt`.\n" +
+						"If this field is really write-only according to Ecwid API documentation you CAN add it as `WriteOnly()` exclusion.\n" +
+						"Otherwise you MUST add proper implementation of method toUpdate() for this field."
+			}
+		}
+	}
 
 }
 
@@ -368,6 +436,17 @@ Details:
 """
 }
 
+private fun FieldEmptinessProblem.buildMessage(): String {
+	val fieldName = "${fieldClass?.canonicalName}::$fieldName"
+	val fieldProblemMessage = when (kind) {
+		FieldEmptinessProblemKind.NULL_VALUE -> "has null value"
+		FieldEmptinessProblemKind.DEFAULT_VALUE -> "has null value"
+		FieldEmptinessProblemKind.EMPTY_LIST -> "is an empty list"
+		FieldEmptinessProblemKind.EMPTY_MAP -> "is an empty map"
+	}
+	return "Field `$fieldName` $fieldProblemMessage"
+}
+
 private fun propertiesToLoggableString(properties: Collection<KProperty1<*, *>>): String {
 	return properties
 		.sortedBy { property -> property.toString() }
@@ -384,32 +463,36 @@ private fun classesToLoggableString(classes: Collection<Class<*>>): String {
 	)
 }
 
+private fun messagesToLoggableString(messages: Collection<String>): String {
+	return messages.joinToString(
+		separator = "\n",
+		transform = { message -> "\t* $message" }
+	)
+}
+
 private fun isDtoShouldBeMarkedAsDataClass(dtoClass: Class<*>): Boolean {
 	val kclass = dtoClass.kotlin
 
-	if (kclass.isSealed) {
-		// Sealed classes must not be instantiated by themself but their inheritors must be marked as data classes
-		return false
-	}
-
-	if (kclass.objectInstance != null) {
-		// Singleton classes has no explicit constructor arguments so it cannot be marked as data class
-		return false
-	}
-
-	val constructors = dtoClass.constructors
-	if (constructors.size == 1) {
-		if (constructors.first().parameters.isEmpty()) {
-			// If class has only one zero-arg constructor then it cannot be marked as data class
-			return false
+	return when {
+		kclass.isSealed -> {
+			// Sealed classes must not be instantiated by themself but their inheritors must be marked as data classes
+			false
+		}
+		kclass.objectInstance != null -> {
+			// Singleton classes has no explicit constructor arguments so it cannot be marked as data class
+			false
+		}
+		else -> {
+			// Classes that has only one zero-arg constructor cannot be marked as data class
+			val constructors = dtoClass.constructors
+			val classHasOnlyZeroArgConstructor = constructors.size == 1 && constructors.first().parameters.isEmpty()
+			!classHasOnlyZeroArgConstructor
 		}
 	}
-
-	return true
 }
 
 private fun isDtoShouldHaveZeroArgConstructor(constructors: Array<Constructor<*>>): Boolean {
-	val maxParametersConstructor = constructors.maxBy { constructor -> constructor.parameters.size }
+	val maxParametersConstructor = constructors.maxByOrNull { constructor -> constructor.parameters.size }
 	if (maxParametersConstructor == null) {
 		// Strange things
 		return true
@@ -441,18 +524,50 @@ private fun getPrimaryConstructorProperties(dtoDataClass: Class<*>): List<KPrope
 	}
 }
 
-private fun getDtoClassesToCheck() = Reflections(ApiRequest::class.java.packageName, SubTypesScanner(false))
+internal fun getFetchedDTOClassesToModifyKindMap(dtoClassesToCheck: List<Class<*>>): Map<KClass<*>, ApiFetchedDTO.ModifyKind> {
+	return dtoClassesToCheck
+		.filter { dtoClass ->
+			ApiFetchedDTO::class.java.isAssignableFrom(dtoClass)
+		}.associate { dtoClass ->
+			val instance = dtoClass.getConstructor().newInstance() as ApiFetchedDTO
+			dtoClass.kotlin to instance.getModifyKind()
+		}
+}
+
+private fun getUpdatedDTOClassesToModifyKindMap(dtoClassesToCheck: List<Class<*>>): Map<KClass<*>, ApiUpdatedDTO.ModifyKind> {
+	return dtoClassesToCheck
+		.filter { dtoClass ->
+			ApiUpdatedDTO::class.java.isAssignableFrom(dtoClass)
+		}.associate { dtoClass ->
+			val instance = dtoClass.getConstructor().newInstance() as ApiUpdatedDTO
+			dtoClass.kotlin as KClass<*> to instance.getModifyKind()
+		}
+}
+
+internal fun getDtoClassesToCheck() = Reflections(ApiRequest::class.java.packageName, SubTypesScanner(false))
 	.getSubTypesOf(Object::class.java)
 	.filterNot { clazz -> clazz.isInterface || clazz.isAnonymousClass }
 	.filterNot { clazz ->
 		try {
 			clazz.kotlin.isCompanion
-		} catch (e: UnsupportedOperationException) {
+		} catch (ignore: UnsupportedOperationException) {
 			// Filtering file facades classes (*Kt classes) and synthetic classes (i.e. when-mappings classes)
 			true
 		}
 	}
 	.sortedBy { clazz -> clazz.canonicalName }
+
+private fun findToUpdatedMethod(
+	reflections: Reflections,
+	fetchedDtoClass: KClass<out ApiFetchedDTO>,
+	updatedDtoClass: KClass<out ApiUpdatedDTO>
+): Method? {
+	return reflections
+		.getMethodsReturn(updatedDtoClass.java)
+		.filter { method -> method.name == "toUpdated" }
+		.filter { method -> method.parameterCount == 1 }
+		.firstOrNull { method -> method.parameters[0].type == fetchedDtoClass.java }
+}
 
 private fun Class<*>.isClassifiedDTOOrEnclosingClass(vararg dtoMarkerInterfaces: Class<*>): Boolean {
 	return dtoMarkerInterfaces.any { dtoMarkerInterface: Class<*> ->

@@ -1,0 +1,32 @@
+complexity:
+  ComplexMethod:
+    threshold: 30
+  LargeClass:
+    excludes: ['**/test/**']
+  LongMethod:
+    threshold: 300
+  LongParameterList:
+    functionThreshold: 10
+    constructorThreshold: 15
+  NestedBlockDepth:
+    excludes: ['**/test/**']
+  TooManyFunctions:
+    thresholdInFiles: 50
+    thresholdInClasses: 50
+    thresholdInInterfaces: 50
+
+naming:
+  EnumNaming:
+    active: false # We need to fix all enums before enabling this inspection
+
+style:
+  MaxLineLength:
+    maxLineLength: 200
+  ThrowsCount:
+    max: 5
+  ReturnCount:
+    max: 5
+  UnnecessaryAbstractClass:
+    excludes: ['**/test/**']
+  WildcardImport:
+    active: false

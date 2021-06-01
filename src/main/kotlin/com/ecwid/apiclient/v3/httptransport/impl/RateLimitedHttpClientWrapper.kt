@@ -10,8 +10,10 @@ import java.util.logging.Logger
 
 private val log = Logger.getLogger(RateLimitedHttpClientWrapper::class.qualifiedName)
 
+private const val SC_TOO_MANY_REQUESTS = 429
+
 /**
- * Wrapper for httpClient'ом, which retries requests if faces 429 error response.
+ * Wrapper for httpClient, which retries requests if faces 429 error response.
  * Respects server's Retry-After header if provided.
  */
 open class RateLimitedHttpClientWrapper(
@@ -29,10 +31,10 @@ open class RateLimitedHttpClientWrapper(
 
 	private fun <T> executeWithRetry(request: HttpUriRequest, attemptsLeft: Int, responseHandler: ResponseHandler<T>): T {
 		return httpClient.execute(request) { response ->
-			if (response.statusLine.statusCode == 429 && attemptsLeft > 0) {
+			if (response.statusLine.statusCode == SC_TOO_MANY_REQUESTS && attemptsLeft > 0) {
 				process429(request,
 					response,
-					attemptsLeft - 1, // decrement atttemts reminder
+					attemptsLeft - 1, // decrement attempts reminder
 					responseHandler)
 			} else {
 				responseHandler.handleResponse(response)
@@ -44,15 +46,15 @@ open class RateLimitedHttpClientWrapper(
 		// server must inform how long to wait
 		val waitInterval = response.getFirstHeader("Retry-After")?.value?.toLong()
 			?: defaultRateLimitRetryInterval
-		if (waitInterval <= maxRateLimitRetryInterval) {
+		return if (waitInterval <= maxRateLimitRetryInterval) {
 			// if server requested acceptable time, we'll wait
 			log.info("Request ${request.uri.path} rate-limited: waiting $waitInterval seconds...")
 			waitSeconds(waitInterval, onEverySecondOfWaiting)
 			log.info("Retrying ${request.uri.path} after $waitInterval-s pause...")
-			return executeWithRetry(request, attemptsLeft, responseHandler)
+			executeWithRetry(request, attemptsLeft, responseHandler)
 		} else {
 			// too long to wait - let's return the original error
-			return responseHandler.handleResponse(response)
+			responseHandler.handleResponse(response)
 		}
 	}
 

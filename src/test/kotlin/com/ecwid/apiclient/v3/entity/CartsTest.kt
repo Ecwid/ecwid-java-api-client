@@ -67,7 +67,8 @@ class CartsTest : BaseEntityTest() {
 		assertEquals(testOrder.discountInfo?.count(), cartDetailsResult.discountInfo?.count())
 		cartDetailsResult.discountInfo?.forEachIndexed { discountInfoIndex, cartDiscountInfo ->
 			val orderDiscountInfo = testOrder.discountInfo?.get(discountInfoIndex)
-					?: throw IllegalStateException("testOrder.discountInfo[$discountInfoIndex] not found")
+			requireNotNull(orderDiscountInfo) { "testOrder.discountInfo[$discountInfoIndex] not found" }
+
 			assertEquals(orderDiscountInfo.value, cartDiscountInfo.value)
 			assertEquals(orderDiscountInfo.type, cartDiscountInfo.type)
 			assertEquals(orderDiscountInfo.base, cartDiscountInfo.base)
@@ -78,7 +79,7 @@ class CartsTest : BaseEntityTest() {
 		assertEquals(testOrder.items?.count(), cartDetailsResult.items?.count())
 		cartDetailsResult.items?.forEachIndexed { itemIndex, cartItem ->
 			val orderItem = testOrder.items?.get(itemIndex)
-					?: throw IllegalStateException("testOrder.items[$itemIndex] not found")
+			requireNotNull(orderItem) { "testOrder.items[$itemIndex] not found" }
 			assertEquals(orderItem.categoryId, cartItem.categoryId)
 			assertEquals(orderItem.price, cartItem.price)
 			assertEquals(orderItem.productPrice, cartItem.productPrice)
@@ -105,7 +106,7 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(orderItem.selectedOptions?.count(), cartItem.selectedOptions?.count())
 			cartItem.selectedOptions?.forEachIndexed { selectedOptionIndex, cartSelectedOptions ->
 				val orderSelectedOption = orderItem.selectedOptions?.get(selectedOptionIndex)
-						?: throw IllegalStateException("testOrder.items[$itemIndex].selectedOptions[$selectedOptionIndex] not found")
+				requireNotNull(orderSelectedOption) { "testOrder.items[$itemIndex].selectedOptions[$selectedOptionIndex] not found" }
 				assertEquals(orderSelectedOption.name, cartSelectedOptions.name)
 				assertEquals(orderSelectedOption.type, cartSelectedOptions.type)
 				// TODO Discover why after each create field `valuesArray` some times resets to null
@@ -114,7 +115,7 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(orderItem.taxes?.count(), cartItem.taxes?.count())
 			cartItem.taxes?.forEachIndexed { taxIndex, cartTaxes ->
 				val orderTaxes = orderItem.taxes?.get(taxIndex)
-						?: throw IllegalStateException("testOrder.items[$itemIndex].taxes[$taxIndex] not found")
+				requireNotNull(orderTaxes) { "testOrder.items[$itemIndex].taxes[$taxIndex] not found" }
 				assertEquals(orderTaxes.name, cartTaxes.name)
 				assertEquals(orderTaxes.value, cartTaxes.value)
 				assertEquals(orderTaxes.total, cartTaxes.total)
@@ -127,7 +128,7 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(orderItem.discounts?.count(), cartItem.discounts?.count())
 			cartItem.discounts?.forEachIndexed { discountIndex, cartDiscounts ->
 				val orderDiscounts = orderItem.discounts?.get(discountIndex)
-						?: throw IllegalStateException("testOrder.items[$itemIndex].discounts[$discountIndex] not found")
+				requireNotNull(orderDiscounts) { "testOrder.items[$itemIndex].discounts[$discountIndex] not found" }
 				assertEquals(orderDiscounts.discountInfo?.value, cartDiscounts.discountInfo?.value)
 				assertEquals(orderDiscounts.discountInfo?.type, cartDiscounts.discountInfo?.type)
 				assertEquals(orderDiscounts.discountInfo?.base, cartDiscounts.discountInfo?.base)
@@ -247,7 +248,8 @@ class CartsTest : BaseEntityTest() {
 		assertEquals(orderForCalculate.items?.count(), calculatedOrder.items?.count())
 		calculatedOrder.items?.forEachIndexed { itemIndex, calculatedItem ->
 			val forCalculateItem = orderForCalculate.items?.get(itemIndex)
-					?: throw IllegalStateException("orderForCalculate.items[$itemIndex] not found")
+			requireNotNull(forCalculateItem) { "orderForCalculate.items[$itemIndex] not found" }
+
 			assertEquals(forCalculateItem.id, calculatedItem.id)
 			assertEquals(forCalculateItem.categoryId, calculatedItem.categoryId)
 			assertEquals(forCalculateItem.price, calculatedItem.price)
@@ -270,7 +272,8 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(forCalculateItem.selectedOptions?.count(), calculatedItem.selectedOptions?.count())
 			calculatedItem.selectedOptions?.forEachIndexed { selectedOptionIndex, calculatedOrderItemOptions ->
 				val forCalculateItemOption = forCalculateItem.selectedOptions?.get(selectedOptionIndex)
-						?: throw IllegalStateException("orderForCalculate.items[$itemIndex].selectedOptions[$selectedOptionIndex] not found")
+				requireNotNull(forCalculateItemOption) { "orderForCalculate.items[$itemIndex].selectedOptions[$selectedOptionIndex] not found" }
+
 				assertEquals(forCalculateItemOption.name, calculatedOrderItemOptions.name)
 				assertEquals(forCalculateItemOption.type, calculatedOrderItemOptions.type)
 				// TODO Discover why after each calculation field `valuesArray` some times resets to null
@@ -280,7 +283,8 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(forCalculateItem.files?.count(), calculatedItem.files?.count())
 			calculatedItem.files?.forEachIndexed { taxIndex, calculatedFile ->
 				val forCalculateFile = calculatedItem.files?.get(taxIndex)
-						?: throw IllegalStateException("orderForCalculate.items[$itemIndex].taxes[$taxIndex] not found")
+				requireNotNull(forCalculateFile) { "orderForCalculate.items[$itemIndex].taxes[$taxIndex] not found" }
+
 				assertEquals(forCalculateFile.productFileId, calculatedFile.productFileId)
 				assertEquals(forCalculateFile.maxDownloads, calculatedFile.maxDownloads)
 				assertEquals(forCalculateFile.remainingDownloads, calculatedFile.remainingDownloads)
@@ -330,7 +334,8 @@ class CartsTest : BaseEntityTest() {
 		val cartsSearchResult2 = apiClient.searchCarts(cartsSearchRequest2)
 		assertEquals(2, cartsSearchResult2.count)
 
-		val createDate = fetchedCart1.createDate ?: throw IllegalStateException("fetchedCart.createDate not found")
+		val createDate = fetchedCart1.createDate
+		requireNotNull(createDate) { "fetchedCart.createDate not found" }
 		val instantCreate = createDate.toInstant()
 		val instantCreateFrom = instantCreate.minusSeconds(1)
 		val instantCreateTo = instantCreate.plusSeconds(2)
@@ -341,7 +346,8 @@ class CartsTest : BaseEntityTest() {
 		val cartsSearchResult3 = apiClient.searchCarts(cartsSearchRequest3)
 		assertEquals(1, cartsSearchResult3.count)
 
-		val updateDate = fetchedCart1.updateDate ?: throw IllegalStateException("fetchedCart.updateDate not found")
+		val updateDate = fetchedCart1.updateDate
+		requireNotNull(updateDate) { "fetchedCart.updateDate not found" }
 		val instantUpdate = updateDate.toInstant()
 		val instantUpdateFrom = instantUpdate.minusSeconds(1)
 		val instantUpdateTo = instantUpdate.plusSeconds(2)
@@ -387,7 +393,7 @@ class CartsTest : BaseEntityTest() {
 	private fun generateTestCartForUpdate(): UpdatedCart {
 		return UpdatedCart(
 				hidden = randomBoolean(),
-				taxesOnShipping = null // TODO Discover why after each update this field resets to null
+				taxesOnShipping = listOf()
 		)
 	}
 
@@ -456,7 +462,7 @@ class CartsTest : BaseEntityTest() {
 				name = "Choice Option " + randomAlphanumeric(8),
 				selection = "Selection #1, " + randomAlphanumeric(8),
 				files = listOf(
-						OrderForCalculate.OrderItemOptinonFile(
+						OrderForCalculate.OrderItemOptionFile(
 								id = randomId(),
 								name = "Order item option file" + randomAlphanumeric(4),
 								size = randomInt(1, 10),
@@ -484,7 +490,7 @@ class CartsTest : BaseEntityTest() {
 						)
 				),
 				files = listOf(
-						OrderForCalculate.OrderItemOptinonFile(
+						OrderForCalculate.OrderItemOptionFile(
 								id = randomId(),
 								name = "Order item option file" + randomAlphanumeric(4),
 								size = randomInt(1, 10),

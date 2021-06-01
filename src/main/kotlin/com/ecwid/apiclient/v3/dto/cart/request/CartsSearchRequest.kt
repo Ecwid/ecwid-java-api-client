@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.dto.cart.request
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 data class CartsSearchRequest(
 		val showHidden: Boolean? = null,
@@ -30,14 +31,15 @@ data class CartsSearchRequest(
 			request.showHidden?.let { put("showHidden", it.toString()) }
 			request.totalFrom?.let { put("totalFrom", it.toString()) }
 			request.totalTo?.let { put("totalTo", it.toString()) }
-			request.createdFrom?.let { put("createdFrom", (it.time / 1000).toString()) }
-			request.createdTo?.let { put("createdTo", (it.time / 1000).toString()) }
-			request.updatedFrom?.let { put("updatedFrom", (it.time / 1000).toString()) }
-			request.updatedTo?.let { put("updatedTo", (it.time / 1000).toString()) }
+			request.createdFrom?.let { put("createdFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
+			request.createdTo?.let { put("createdTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
+			request.updatedFrom?.let { put("updatedFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
+			request.updatedTo?.let { put("updatedTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			request.couponCode?.let { put("couponCode", it) }
 			request.customer?.let { put("customer", it) }
 			put("offset", request.offset.toString())
 			put("limit", request.limit.toString())
 		}.toMap()
 	}
+
 }

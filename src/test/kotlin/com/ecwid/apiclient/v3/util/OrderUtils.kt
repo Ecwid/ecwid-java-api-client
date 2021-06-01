@@ -95,12 +95,16 @@ fun generateTestOrder(): UpdatedOrder {
 					pickupInstruction = "Instruction " + randomAlphanumeric(64),
 					fulfillmentType = FulfillmentType.SHIPPING
 			),
+			taxesOnShipping = listOf(),
 			handlingFee = UpdatedOrder.HandlingFee(
 					name = "Name " + randomAlphanumeric(8),
 					value = randomPrice(),
-					description = "Description " + randomAlphanumeric(64)
+					description = "Description " + randomAlphanumeric(64),
+					taxes = listOf()
 			),
-			pricesIncludeTax = false
+			pricesIncludeTax = false,
+
+			customSurcharges = listOf()
 	)
 }
 

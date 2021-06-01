@@ -272,6 +272,7 @@ data class UpdatedProduct(
 					value = value
 			)
 
+			@Suppress("unused")
 			fun createAttributeValue(productAttributeId: Int, value: String) = AttributeValue(
 					id = productAttributeId,
 					value = value
