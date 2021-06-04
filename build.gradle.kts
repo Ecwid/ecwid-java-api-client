@@ -1,5 +1,7 @@
 import com.adarshr.gradle.testlogger.theme.ThemeType
 import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension.Companion.DEFAULT_SRC_DIR_KOTLIN
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension.Companion.DEFAULT_TEST_SRC_DIR_KOTLIN
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -52,7 +54,7 @@ tasks.withType<Test> {
 		showPassedStandardStreams = false
 		showSkippedStandardStreams = false
 		showFailedStandardStreams = true
-		slowThreshold = 30_000
+		slowThreshold = Consts.SLOW_TESTS_LOGGING_THRESHOLD_MS
 		theme = ThemeType.STANDARD
 	}
 }
@@ -120,6 +122,11 @@ detekt {
 	basePath = "$projectDir"
 	buildUponDefaultConfig = true
 	config = files("$projectDir/config/detekt.yml")
+	input = files(
+		"build.gradle.kts",
+		DEFAULT_SRC_DIR_KOTLIN,
+		DEFAULT_TEST_SRC_DIR_KOTLIN
+	)
 	parallel = true
 
 	reports {
@@ -300,29 +307,31 @@ class SettingsProvider {
 
 }
 
-class PublicationSettings {
+object PublicationSettings {
 
-	companion object {
+	const val GROUP_ID = "com.ecwid.apiclient"
+	const val ARTIFACT_ID = "api-client"
 
-		const val GROUP_ID = "com.ecwid.apiclient"
-		const val ARTIFACT_ID = "api-client"
+	const val POM_NAME = "Ecwid Rest API wrapper"
+	const val POM_DESCRIPTION = "Ecwid Rest API wrapper"
+	const val POM_URL = "https://github.com/Ecwid/ecwid-java-api-client"
 
-		const val POM_NAME = "Ecwid Rest API wrapper"
-		const val POM_DESCRIPTION = "Ecwid Rest API wrapper"
-		const val POM_URL = "https://github.com/Ecwid/ecwid-java-api-client"
+	const val DEVELOPER_ID = "opensource-bot"
+	const val DEVELOPER_NAME = "Ecwid Opensource Bot"
+	const val DEVELOPER_EMAIL = "opensource-bot@ecwid.com"
 
-		const val DEVELOPER_ID = "opensource-bot"
-		const val DEVELOPER_NAME = "Ecwid Opensource Bot"
-		const val DEVELOPER_EMAIL = "opensource-bot@ecwid.com"
+	const val LICENSE_NAME = "The Apache License, Version 2.0"
+	const val LICENSE_URL = "https://www.apache.org/licenses/LICENSE-2.0.txt"
 
-		const val LICENSE_NAME = "The Apache License, Version 2.0"
-		const val LICENSE_URL = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+	const val SCM_CONNECTION = "scm:git:git@github.com:Ecwid/ecwid-java-api-client.git"
+	const val SCM_URL = "https://github.com/Ecwid/ecwid-java-api-client.git"
 
-		const val SCM_CONNECTION = "scm:git:git@github.com:Ecwid/ecwid-java-api-client.git"
-		const val SCM_URL = "https://github.com/Ecwid/ecwid-java-api-client.git"
+	const val STAGING_PACKAGE_GROUP = "com.ecwid"
 
-		const val STAGING_PACKAGE_GROUP = "com.ecwid"
+}
 
-	}
+object Consts {
+
+	const val SLOW_TESTS_LOGGING_THRESHOLD_MS = 30_000L
 
 }
