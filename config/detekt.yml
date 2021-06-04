@@ -21,7 +21,7 @@ naming:
 
 style:
   MaxLineLength:
-    maxLineLength: 200
+    active: false # Will user ktlint formatting.MaximumLineLength inspection instead
   ThrowsCount:
     max: 5
   ReturnCount:
@@ -38,7 +38,7 @@ formatting:
   CommentSpacing:
     active: false
   MaximumLineLength:
-    active: false
+    maxLineLength: 200
   NoBlankLineBeforeRbrace:
     active: false
   NoConsecutiveBlankLines:
