@@ -308,7 +308,6 @@ internal fun Map<String, String>.withCredentialsParams(credentials: ApiCredentia
 	is ApiAppCredentials -> withAppCredentialsParams(credentials)
 }
 
-
 @PublishedApi
 internal fun Map<String, String>.withApiTokenParam(apiToken: String): Map<String, String> {
 	return toMutableMap()

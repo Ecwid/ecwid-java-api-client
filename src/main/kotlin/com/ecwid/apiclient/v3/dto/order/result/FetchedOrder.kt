@@ -274,7 +274,6 @@ data class FetchedOrder(
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedOrder::class)
 
-
 	data class ExternalOrderData(
 		val externalFulfillment: Boolean? = null,
 		val externalOrderId: String? = null,
@@ -282,4 +281,5 @@ data class FetchedOrder(
 		val platformSpecificFields: HashMap<String, String>? = null,
 		val refererChannel: String? = null
 	)
+
 }

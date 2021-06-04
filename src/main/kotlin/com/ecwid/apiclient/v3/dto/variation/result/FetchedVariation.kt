@@ -21,7 +21,6 @@ data class FetchedVariation(
 		val imageUrl: String? = null,
 		val originalImageUrl: String? = null,
 
-
 		val price: Double? = null,
 		val defaultDisplayedPrice: Double? = null,
 		val defaultDisplayedPriceFormatted: String? = null,

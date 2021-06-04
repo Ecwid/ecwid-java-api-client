@@ -4,7 +4,6 @@ import com.ecwid.apiclient.v3.util.maskApiToken
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-
 class MaskUtilsUnitTest {
 
 	@Test

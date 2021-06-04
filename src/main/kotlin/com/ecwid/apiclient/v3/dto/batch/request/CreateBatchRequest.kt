@@ -87,4 +87,3 @@ private data class SingleBatchRequest(
 	}
 
 }
-

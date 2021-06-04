@@ -15,4 +15,3 @@ data class FetchedGoogleShoppingFeedConfig(
 	override fun getModifyKind() = ModifyKind.ReadOnly
 
 }
-

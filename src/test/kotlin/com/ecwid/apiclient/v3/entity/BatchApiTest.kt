@@ -63,7 +63,6 @@ class BatchApiTest : BaseEntityTest() {
 			is TypedBatchResponse.NotExecuted -> Assertions.fail("Not executed error is not expected")
 		}
 
-
 		val searchProductBatch = apiClient.createBatch(
 				CreateBatchRequestWithIds(
 						requests = mapOf(

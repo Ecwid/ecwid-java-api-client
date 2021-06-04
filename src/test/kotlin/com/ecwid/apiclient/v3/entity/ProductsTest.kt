@@ -22,7 +22,6 @@ import java.io.FileInputStream
 import java.nio.file.Files
 import java.util.*
 
-
 class ProductsTest : BaseEntityTest() {
 
 	@BeforeEach

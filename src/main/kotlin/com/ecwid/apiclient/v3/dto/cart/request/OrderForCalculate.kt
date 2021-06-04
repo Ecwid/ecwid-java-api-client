@@ -6,7 +6,6 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 data class OrderForCalculate(
 		val email: String? = null,
 		val ipAddress: String? = null,

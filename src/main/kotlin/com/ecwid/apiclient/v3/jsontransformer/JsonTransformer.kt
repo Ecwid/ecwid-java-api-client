@@ -4,4 +4,3 @@ interface JsonTransformer {
 	fun serialize(src: Any?, srcExt: Any? = null): String
 	fun <V> deserialize(json: String, clazz: Class<V>): V?
 }
-

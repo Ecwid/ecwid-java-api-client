@@ -39,8 +39,6 @@ formatting:
     maxLineLength: 200
   NoBlankLineBeforeRbrace:
     active: false
-  NoConsecutiveBlankLines:
-    active: false
   NoWildcardImports:
     active: false
   ParameterListWrapping:

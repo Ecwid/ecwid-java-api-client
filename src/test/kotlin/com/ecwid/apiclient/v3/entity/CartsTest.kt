@@ -124,7 +124,6 @@ class CartsTest : BaseEntityTest() {
 				assertEquals(orderTaxes.includeInPrice, cartTaxes.includeInPrice)
 			}
 
-
 			assertEquals(orderItem.discounts?.count(), cartItem.discounts?.count())
 			cartItem.discounts?.forEachIndexed { discountIndex, cartDiscounts ->
 				val orderDiscounts = orderItem.discounts?.get(discountIndex)

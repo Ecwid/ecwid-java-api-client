@@ -19,7 +19,6 @@ import org.junit.jupiter.api.assertAll
 import java.io.FileInputStream
 import java.nio.file.Files
 
-
 class CategoriesTest : BaseEntityTest() {
 
 	@BeforeEach
@@ -328,7 +327,6 @@ class CategoriesTest : BaseEntityTest() {
 		assertTrue(descriptionTranslated.size > 0)
 		assertTrue(descriptionTranslated.containsKey("ru"))
 		assertTrue(descriptionTranslated.getValue("ru").startsWith("Описание"))
-
 
 		val nameTranslated = categoryDetails.nameTranslated
 		require(nameTranslated != null)

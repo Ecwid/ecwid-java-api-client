@@ -63,5 +63,3 @@ private data class CustomerCreateRequestExt(
 			)
 	)
 }
-
-

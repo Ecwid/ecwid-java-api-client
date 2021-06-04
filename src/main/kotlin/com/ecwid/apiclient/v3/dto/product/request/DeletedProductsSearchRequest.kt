@@ -11,6 +11,7 @@ data class DeletedProductsSearchRequest(
 		val offset: Int = 0,
 		val limit: Int = 100
 ) : ApiRequest {
+
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 			pathSegments = listOf(
 				"products",
@@ -30,4 +31,3 @@ data class DeletedProductsSearchRequest(
 	}
 
 }
-

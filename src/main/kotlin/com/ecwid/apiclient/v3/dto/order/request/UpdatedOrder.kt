@@ -9,7 +9,6 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 data class UpdatedOrder(
 		val email: String? = null,
 		val ipAddress: String? = null,
@@ -285,7 +284,6 @@ data class UpdatedOrder(
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedOrder::class)
 
-
 	data class ExternalOrderData(
 		val externalFulfillment: Boolean? = null,
 		val externalOrderId: String? = null,
@@ -297,4 +295,5 @@ data class UpdatedOrder(
 	companion object {
 		const val FACEBOOK_ORDER_REFERENCE_ID = "FACEBOOK"
 	}
+
 }
