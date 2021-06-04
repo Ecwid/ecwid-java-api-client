@@ -47,5 +47,3 @@ formatting:
     active: false
   ParameterListWrapping:
     active: false
-  SpacingAroundParens:
-    active: false
