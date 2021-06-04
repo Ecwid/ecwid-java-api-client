@@ -65,9 +65,7 @@ open class ApiClient private constructor(
 		BatchApiClient by batchApiClient,
 		CouponsApiClient by discountCouponsApiClient,
 		CartsApiClient by cartsApiClient,
-		SalesChannelsApiClient by salesChannelsApiClient
-
-{
+		SalesChannelsApiClient by salesChannelsApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 			apiClientHelper = apiClientHelper,

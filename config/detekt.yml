@@ -47,8 +47,6 @@ formatting:
     active: false
   ParameterListWrapping:
     active: false
-  SpacingAroundCurly:
-    active: false
   SpacingAroundOperators:
     active: false
   SpacingAroundParens:
