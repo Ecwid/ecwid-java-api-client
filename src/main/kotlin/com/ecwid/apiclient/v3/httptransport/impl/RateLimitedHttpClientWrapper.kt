@@ -25,7 +25,7 @@ open class RateLimitedHttpClientWrapper(
 ) {
 
 	@Throws(IOException::class)
-	fun <T> execute(request: HttpUriRequest, responseHandler: ResponseHandler<T>) : T {
+	fun <T> execute(request: HttpUriRequest, responseHandler: ResponseHandler<T>): T {
 		return executeWithRetry(request, totalAttempts, responseHandler)
 	}
 

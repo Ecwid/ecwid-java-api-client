@@ -69,7 +69,7 @@ open class ApiClient private constructor(
 
 {
 
-	constructor(apiClientHelper: ApiClientHelper): this(
+	constructor(apiClientHelper: ApiClientHelper) : this(
 			apiClientHelper = apiClientHelper,
 			storeProfileApiClient = StoreProfileApiClientImpl(apiClientHelper),
 			productsApiClient = ProductsApiClientImpl(apiClientHelper),

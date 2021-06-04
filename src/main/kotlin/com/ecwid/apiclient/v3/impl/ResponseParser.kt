@@ -16,7 +16,7 @@ data class ParsedResponseWithExt<VBase, VExt>(
 )
 
 @PublishedApi
-internal class StringResponseParser: ResponseParser<String> {
+internal class StringResponseParser : ResponseParser<String> {
 
 	override fun parse(responseBytes: ByteArray): String {
 		return responseBytes.asString()
@@ -29,7 +29,7 @@ internal class StringResponseParser: ResponseParser<String> {
 }
 
 @PublishedApi
-internal class ByteArrayResponseParser: ResponseParser<ByteArray> {
+internal class ByteArrayResponseParser : ResponseParser<ByteArray> {
 
 	override fun parse(responseBytes: ByteArray): ByteArray {
 		return responseBytes
@@ -45,7 +45,7 @@ internal class ByteArrayResponseParser: ResponseParser<ByteArray> {
 internal class ObjectResponseParser<V>(
 		private val jsonTransformer: JsonTransformer,
 		private val clazz: Class<V>
-): ResponseParser<V> {
+) : ResponseParser<V> {
 
 	override fun parse(responseBytes: ByteArray): V {
 		return jsonTransformer.deserialize(responseBytes.asString(), clazz)!!
@@ -62,7 +62,7 @@ internal class ObjectWithExtResponseParser<VBase, VExt>(
 		private val jsonTransformer: JsonTransformer,
 		private val baseClass: Class<VBase>,
 		private val extClass: Class<VExt>
-): ResponseParser<ParsedResponseWithExt<VBase, VExt>> {
+) : ResponseParser<ParsedResponseWithExt<VBase, VExt>> {
 
 	override fun parse(responseBytes: ByteArray): ParsedResponseWithExt<VBase, VExt> {
 		val baseResult = jsonTransformer.deserialize(responseBytes.asString(), baseClass)!!

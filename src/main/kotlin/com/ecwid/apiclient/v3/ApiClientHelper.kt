@@ -43,7 +43,7 @@ class ApiClientHelper private constructor(
 		loggingSettings: LoggingSettings,
 		httpTransport: HttpTransport,
 		jsonTransformerProvider: JsonTransformerProvider
-	): this(
+	) : this(
 			apiServerDomain = apiServerDomain,
 			credentials = storeCredentials,
 			loggingSettings = loggingSettings,
@@ -57,7 +57,7 @@ class ApiClientHelper private constructor(
 		loggingSettings: LoggingSettings,
 		httpTransport: HttpTransport,
 		jsonTransformerProvider: JsonTransformerProvider
-	): this(
+	) : this(
 		apiServerDomain = apiServerDomain,
 		credentials = credentials,
 		loggingSettings = loggingSettings,

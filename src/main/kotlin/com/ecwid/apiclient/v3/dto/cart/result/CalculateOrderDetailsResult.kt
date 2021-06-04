@@ -46,7 +46,7 @@ data class CalculateOrderDetailsResult(
 		val shippingOption: ShippingOptionInfo? = null,
 		val availableShippingOptions: List<ShippingOptionInfo>? = null,
 		val handlingFee: HandlingFeeInfo? = null
-): ApiResultDTO {
+) : ApiResultDTO {
 
 	data class TaxInfo(
 			val id: Int? = null,
