@@ -41,8 +41,6 @@ formatting:
     active: false
   NoConsecutiveBlankLines:
     active: false
-  NoUnusedImports:
-    active: false
   NoWildcardImports:
     active: false
   ParameterListWrapping:

@@ -6,7 +6,6 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.util.buildEndpointPath
 import com.ecwid.apiclient.v3.util.buildQueryString
-import java.lang.IllegalArgumentException
 
 data class CreateBatchRequestWithIds(
 		val requests: Map<String, ApiRequest> = emptyMap(),
