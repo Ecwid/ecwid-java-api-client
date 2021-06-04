@@ -35,8 +35,6 @@ style:
 formatting:
   ChainWrapping:
     active: false
-  CommentSpacing:
-    active: false
   MaximumLineLength:
     maxLineLength: 200
   NoBlankLineBeforeRbrace:

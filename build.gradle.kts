@@ -204,10 +204,10 @@ nexusStaging {
 }
 
 // We want to change SNAPSHOT versions format from:
-//		<major>.<minor>.<patch>-dev.#+<branchname>.<hash> (local branch)
-//		<major>.<minor>.<patch>-dev.#+<hash> (github pull request)
+// 		<major>.<minor>.<patch>-dev.#+<branchname>.<hash> (local branch)
+// 		<major>.<minor>.<patch>-dev.#+<hash> (github pull request)
 // to:
-//		<major>.<minor>.<patch>-dev+<branchname>-SNAPSHOT
+// 		<major>.<minor>.<patch>-dev+<branchname>-SNAPSHOT
 fun Project.sanitizeVersion(): String {
 	val version = version.toString()
 	return if (project.isSnapshotVersion()) {

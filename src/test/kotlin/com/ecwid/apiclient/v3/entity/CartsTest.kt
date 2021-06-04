@@ -239,7 +239,7 @@ class CartsTest : BaseEntityTest() {
 		val calculateOrderDetailsRequest = CalculateOrderDetailsRequest(orderForCalculate)
 		val calculatedOrder = apiClient.calculateOrderDetails(calculateOrderDetailsRequest)
 
-		//check that all parameters of the calculated order are correct
+		// Check that all parameters of the calculated order are correct
 		assertEquals(orderForCalculate.email, calculatedOrder.email)
 		assertEquals(orderForCalculate.ipAddress, calculatedOrder.ipAddress)
 		assertEquals(orderForCalculate.customerId, calculatedOrder.customerId)

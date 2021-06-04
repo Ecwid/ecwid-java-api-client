@@ -102,10 +102,10 @@ data class UpdatedOrder(
 			// var catalogLimit: DiscountCouponCatalogLimit? = null // TODO Figure out why saving not works
 	)
 
-//	data class DiscountCouponCatalogLimit(
-//			val products: List<Int>? = null,
-//			val categories: List<Int>? = null
-//	)
+// 	data class DiscountCouponCatalogLimit(
+// 			val products: List<Int>? = null,
+// 			val categories: List<Int>? = null
+// 	)
 
 	data class OrderItem(
 			val productId: Int? = null,
