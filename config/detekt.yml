@@ -47,8 +47,6 @@ formatting:
     active: false
   ParameterListWrapping:
     active: false
-  SpacingAroundComma:
-    active: false
   SpacingAroundCurly:
     active: false
   SpacingAroundOperators:

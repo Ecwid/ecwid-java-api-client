@@ -279,7 +279,7 @@ data class FetchedOrder(
 		val externalFulfillment: Boolean? = null,
 		val externalOrderId: String? = null,
 		val refererId: String? = null,
-		val platformSpecificFields: HashMap<String,String>? = null,
+		val platformSpecificFields: HashMap<String, String>? = null,
 		val refererChannel: String? = null
 	)
 }
