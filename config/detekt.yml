@@ -30,3 +30,32 @@ style:
     excludes: ['**/test/**']
   WildcardImport:
     active: false
+
+# ktlint rules
+formatting:
+  ChainWrapping:
+    active: false
+  CommentSpacing:
+    active: false
+  MaximumLineLength:
+    active: false
+  NoBlankLineBeforeRbrace:
+    active: false
+  NoConsecutiveBlankLines:
+    active: false
+  NoUnusedImports:
+    active: false
+  NoWildcardImports:
+    active: false
+  ParameterListWrapping:
+    active: false
+  SpacingAroundColon:
+    active: false
+  SpacingAroundComma:
+    active: false
+  SpacingAroundCurly:
+    active: false
+  SpacingAroundOperators:
+    active: false
+  SpacingAroundParens:
+    active: false
