@@ -41,7 +41,7 @@ formatting:
   NoWildcardImports:
     active: false
   ParameterListWrapping:
-    active: false
+    active: false # Will be enabled after ktlint will have support of indent_style = tab
   # Initially disabled
   AnnotationOnSeparateLine:
     active: true
@@ -59,3 +59,7 @@ formatting:
     active: true
   SpacingBetweenDeclarationsWithComments:
     active: true
+  ArgumentListWrapping:
+    active: false # Will be enabled after ktlint will have support of indent_style = tab
+  Indentation:
+    active: false # Will be enabled after ktlint will have support of indent_style = tab
