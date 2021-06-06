@@ -43,7 +43,19 @@ formatting:
   ParameterListWrapping:
     active: false
   # Initially disabled
+  AnnotationOnSeparateLine:
+    active: true
+  AnnotationSpacing:
+    active: true
   ImportOrdering:
+    active: true
+  SpacingAroundAngleBrackets:
+    active: true
+  SpacingAroundDoubleColon:
+    active: true
+  SpacingAroundUnaryOperator:
+    active: true
+  SpacingBetweenDeclarationsWithAnnotations:
     active: true
   SpacingBetweenDeclarationsWithComments:
     active: true
