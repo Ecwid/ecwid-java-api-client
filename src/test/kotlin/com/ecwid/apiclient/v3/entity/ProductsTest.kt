@@ -1,12 +1,12 @@
 package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.converter.toUpdated
-import com.ecwid.apiclient.v3.dto.common.AsyncPictureData
-import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
 import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
+import com.ecwid.apiclient.v3.dto.common.AsyncPictureData
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
+import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.product.enums.ShippingSettingsType
 import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest.InventoryAdjustment

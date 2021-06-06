@@ -1,8 +1,8 @@
 package com.ecwid.apiclient.v3.dto.cart.request
 
 import com.ecwid.apiclient.v3.dto.cart.result.FetchedCart
-import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 
 data class UpdatedCart(
 		val hidden: Boolean? = null,

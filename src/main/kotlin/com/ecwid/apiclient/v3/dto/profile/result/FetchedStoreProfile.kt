@@ -1,8 +1,8 @@
 package com.ecwid.apiclient.v3.dto.profile.result
 
-import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 

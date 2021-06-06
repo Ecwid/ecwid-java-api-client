@@ -35,9 +35,13 @@ style:
 formatting:
   MaximumLineLength:
     maxLineLength: 200
+  # Initially enabled
   NoBlankLineBeforeRbrace:
     active: false
   NoWildcardImports:
     active: false
   ParameterListWrapping:
     active: false
+  # Initially disabled
+  ImportOrdering:
+    active: true
