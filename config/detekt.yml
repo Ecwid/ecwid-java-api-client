@@ -45,3 +45,5 @@ formatting:
   # Initially disabled
   ImportOrdering:
     active: true
+  SpacingBetweenDeclarationsWithComments:
+    active: true
