@@ -21,7 +21,7 @@ naming:
 
 style:
   MaxLineLength:
-    maxLineLength: 200
+    active: false # Will user ktlint formatting.MaximumLineLength inspection instead
   ThrowsCount:
     max: 5
   ReturnCount:
@@ -30,3 +30,36 @@ style:
     excludes: ['**/test/**']
   WildcardImport:
     active: false
+
+# ktlint rules
+formatting:
+  MaximumLineLength:
+    maxLineLength: 200
+  # Initially enabled
+  NoBlankLineBeforeRbrace:
+    active: false
+  NoWildcardImports:
+    active: false
+  ParameterListWrapping:
+    active: false # Will be enabled after ktlint will have support of indent_style = tab
+  # Initially disabled
+  AnnotationOnSeparateLine:
+    active: true
+  AnnotationSpacing:
+    active: true
+  ImportOrdering:
+    active: true
+  SpacingAroundAngleBrackets:
+    active: true
+  SpacingAroundDoubleColon:
+    active: true
+  SpacingAroundUnaryOperator:
+    active: true
+  SpacingBetweenDeclarationsWithAnnotations:
+    active: true
+  SpacingBetweenDeclarationsWithComments:
+    active: true
+  ArgumentListWrapping:
+    active: false # Will be enabled after ktlint will have support of indent_style = tab
+  Indentation:
+    active: false # Will be enabled after ktlint will have support of indent_style = tab

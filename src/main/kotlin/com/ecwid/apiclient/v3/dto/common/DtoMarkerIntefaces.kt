@@ -7,7 +7,7 @@ interface ApiFetchedDTO {
 	fun getModifyKind(): ModifyKind
 
 	sealed class ModifyKind {
-		object ReadOnly: ModifyKind()
+		object ReadOnly : ModifyKind()
 		data class ReadWrite(val updatedDTOClass: KClass<out ApiUpdatedDTO>) : ModifyKind()
 	}
 

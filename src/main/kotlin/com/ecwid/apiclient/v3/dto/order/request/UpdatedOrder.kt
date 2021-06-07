@@ -9,7 +9,6 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 data class UpdatedOrder(
 		val email: String? = null,
 		val ipAddress: String? = null,
@@ -102,10 +101,10 @@ data class UpdatedOrder(
 			// var catalogLimit: DiscountCouponCatalogLimit? = null // TODO Figure out why saving not works
 	)
 
-//	data class DiscountCouponCatalogLimit(
-//			val products: List<Int>? = null,
-//			val categories: List<Int>? = null
-//	)
+// 	data class DiscountCouponCatalogLimit(
+// 			val products: List<Int>? = null,
+// 			val categories: List<Int>? = null
+// 	)
 
 	data class OrderItem(
 			val productId: Int? = null,
@@ -285,16 +284,16 @@ data class UpdatedOrder(
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedOrder::class)
 
-
 	data class ExternalOrderData(
 		val externalFulfillment: Boolean? = null,
 		val externalOrderId: String? = null,
 		val refererId: String? = null,
-		val platformSpecificFields: HashMap<String,String>? = null,
+		val platformSpecificFields: HashMap<String, String>? = null,
 		val refererChannel: String? = null
 	)
 
 	companion object {
 		const val FACEBOOK_ORDER_REFERENCE_ID = "FACEBOOK"
 	}
+
 }

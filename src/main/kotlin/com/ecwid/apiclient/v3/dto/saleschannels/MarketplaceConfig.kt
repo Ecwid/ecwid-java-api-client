@@ -12,4 +12,3 @@ data class MarketplaceConfig(
 	override fun getModifyKind() = ModifyKind.ReadOnly
 
 }
-

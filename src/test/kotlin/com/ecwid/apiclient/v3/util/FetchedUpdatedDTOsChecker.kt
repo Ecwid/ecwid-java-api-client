@@ -40,7 +40,6 @@ internal fun checkFetchedUpdatedDTOsFields(
 	return problemsCollector.toList()
 }
 
-
 private fun checkClass(
 	fetchedDTOClass: Class<*>,
 	updatedDTOClass: Class<*>,

@@ -17,7 +17,6 @@ import java.io.FileInputStream
 import java.nio.file.Files
 import java.util.*
 
-
 class OrdersTest : BaseEntityTest() {
 
 	@BeforeEach
@@ -190,10 +189,10 @@ class OrdersTest : BaseEntityTest() {
 				newOrder = UpdatedOrder(
 						email = randomEmail(),
 						total = randomPrice(),
-//						discountCoupon = UpdatedOrder.DiscountCouponInfo(
-//								name = "Discount coupon " + randomAlphanumeric(16),
-//								code = randomAlphanumeric(16)
-//						),
+// 						discountCoupon = UpdatedOrder.DiscountCouponInfo(
+// 								name = "Discount coupon " + randomAlphanumeric(16),
+// 								code = randomAlphanumeric(16)
+// 						),
 						paymentMethod = "Payment method " + randomAlphanumeric(8),
 						shippingOption = UpdatedOrder.ShippingOption(
 								shippingMethodName = "Method " + randomAlphanumeric(8)
@@ -260,11 +259,11 @@ class OrdersTest : BaseEntityTest() {
 		)
 
 		// TODO We should create real discount coupon to make this search works correctly
-//		assertOrderSearch(
-//				positiveOrderNumber = createOrderResult.id,
-//				positiveSearchRequest = SearchOrdersRequest(couponCode = createOrderRequest.newOrder.discountCoupon?.code),
-//				negativeSearchRequest = SearchOrdersRequest(couponCode = createOrderRequest.newOrder.discountCoupon?.code + "foo")
-//		)
+// 		assertOrderSearch(
+// 				positiveOrderNumber = createOrderResult.id,
+// 				positiveSearchRequest = SearchOrdersRequest(couponCode = createOrderRequest.newOrder.discountCoupon?.code),
+// 				negativeSearchRequest = SearchOrdersRequest(couponCode = createOrderRequest.newOrder.discountCoupon?.code + "foo")
+// 		)
 
 		assertOrdersSearch(
 				positiveOrderNumber = orderCreateResult.id,

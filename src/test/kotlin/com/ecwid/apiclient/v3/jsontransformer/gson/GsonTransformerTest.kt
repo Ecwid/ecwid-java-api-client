@@ -5,7 +5,6 @@ import com.google.gson.JsonParser
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-
 internal class GsonTransformerTest {
 
 	private val transformer = GsonTransformer(emptyList())
@@ -189,6 +188,3 @@ private data class OrderItemExt(
 )
 
 private data class ComplexExtraField(val value: String? = null)
-
-
-

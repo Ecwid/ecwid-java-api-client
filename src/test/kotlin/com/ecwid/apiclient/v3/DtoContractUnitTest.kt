@@ -501,10 +501,10 @@ private fun isDtoShouldHaveZeroArgConstructor(constructors: Array<Constructor<*>
 	val hasSpecialParameterType = maxParametersConstructor.parameters.any { parameter ->
 		// We have some DTOs with special primary constructor parameter types.
 		// We cannot assign a default value to them so will ignore them
-		parameter.type.isAssignableFrom(JsonTransformer::class.java)
-				|| parameter.type.isAssignableFrom(File::class.java)
-				|| parameter.type.isAssignableFrom(InputStream::class.java)
-				|| parameter.type.isAssignableFrom(KClass::class.java)
+		parameter.type.isAssignableFrom(JsonTransformer::class.java) ||
+				parameter.type.isAssignableFrom(File::class.java) ||
+				parameter.type.isAssignableFrom(InputStream::class.java) ||
+				parameter.type.isAssignableFrom(KClass::class.java)
 	}
 
 	return !hasSpecialParameterType

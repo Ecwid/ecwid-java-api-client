@@ -26,4 +26,3 @@ internal class CustomerGroupsApiClientImpl(
 	override fun deleteCustomerGroup(request: CustomerGroupDeleteRequest) = apiClientHelper.makeObjectResultRequest<CustomerGroupDeleteResult>(request)
 
 }
-

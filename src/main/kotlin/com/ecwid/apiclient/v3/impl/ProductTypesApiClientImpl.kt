@@ -16,4 +16,3 @@ internal class ProductTypesApiClientImpl(
 	override fun deleteProductType(request: ProductTypeDeleteRequest) = apiClientHelper.makeObjectResultRequest<ProductTypeDeleteResult>(request)
 
 }
-

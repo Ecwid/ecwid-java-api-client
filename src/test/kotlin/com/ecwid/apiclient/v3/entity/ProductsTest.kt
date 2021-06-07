@@ -1,12 +1,12 @@
 package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.converter.toUpdated
-import com.ecwid.apiclient.v3.dto.common.AsyncPictureData
-import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
 import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
+import com.ecwid.apiclient.v3.dto.common.AsyncPictureData
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
+import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.product.enums.ShippingSettingsType
 import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest.InventoryAdjustment
@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import java.io.FileInputStream
 import java.nio.file.Files
 import java.util.*
-
 
 class ProductsTest : BaseEntityTest() {
 
@@ -1133,8 +1132,8 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 			attributes = listOf(
 					generateBrandAttributeValue(),
 					generateUpcAttributeValue()
-//					generateGeneralAttributeValue(), // TODO Send real product attribute id when api client will support product attribute creation
-//					generateGeneralAttributeValue()
+// 					generateGeneralAttributeValue(), // TODO Send real product attribute id when api client will support product attribute creation
+// 					generateGeneralAttributeValue()
 			),
 
 			weight = randomWeight(),
@@ -1155,7 +1154,7 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 					generateProductDateOption(),
 					generateProductFilesOption()
 			),
-//			tax = generateTaxInfo(), // TODO Fill with real tax ids when api client will support it
+// 			tax = generateTaxInfo(), // TODO Fill with real tax ids when api client will support it
 			relatedProducts = generateRelatedProducts(),
 
 			isSampleProduct = false,
@@ -1318,9 +1317,9 @@ private fun generateProductOptionChoice(): ProductOptionChoice {
 
 fun generateRelatedProducts() = RelatedProducts(
 		productIds = listOf(
-//				randomId(), TODO Send real related product ids
-//				randomId(),
-//				randomId()
+// 				randomId(), TODO Send real related product ids
+// 				randomId(),
+// 				randomId()
 		),
 		relatedCategory = generateRelatedCategory()
 )
@@ -1347,15 +1346,6 @@ private fun generateShippingSettings() = UpdatedProduct.ShippingSettings(
 		)
 )
 
-//private fun generateTaxInfo() = UpdatedProduct.TaxInfo(
-//		defaultLocationIncludedTaxRate = randomPrice(),
-//		enabledManualTaxes = listOf(
-//				randomId(),
-//				randomId(),
-//				randomId()
-//		)
-//)
-
 private fun generateWholesalePrice(basePrice: Double, divider: Int) = UpdatedProduct.WholesalePrice(
 		quantity = divider,
 		price = basePrice / divider
@@ -1368,14 +1358,6 @@ private fun generateBrandAttributeValue(): UpdatedProduct.AttributeValue {
 private fun generateUpcAttributeValue(): UpdatedProduct.AttributeValue {
 	return UpdatedProduct.AttributeValue.createUpcAttributeValue("Attribute value " + randomAlphanumeric(8))
 }
-
-//private fun generateGeneralAttributeValue(productAttributeId: Int): UpdatedProduct.AttributeValue {
-//	return UpdatedProduct.AttributeValue.createAttributeValue(
-//			productAttributeId,
-//			"Attribute value " + randomAlphanumeric(8),
-//			randomEnumValue()
-//	)
-//}
 
 private fun generateDimensions() = UpdatedProduct.ProductDimensions(
 		length = randomDimension(),

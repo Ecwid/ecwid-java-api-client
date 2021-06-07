@@ -21,10 +21,12 @@ private const val DEFAULT_MAX_CONNECTIONS = 10
  * Number of attempts to retry request if server responded with 429
  */
 internal const val DEFAULT_RATE_LIMIT_ATTEMPTS = 2
+
 /**
  * Number of seconds to wait until next attempt, if server didn't send Retry-After header
  */
 internal const val DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 10L
+
 /**
  * Maximal delay in seconds before next attempt
  */

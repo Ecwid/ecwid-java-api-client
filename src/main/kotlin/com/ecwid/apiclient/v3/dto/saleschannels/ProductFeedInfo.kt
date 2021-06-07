@@ -14,4 +14,3 @@ data class ProductFeedInfo(
 	override fun getModifyKind() = ModifyKind.ReadOnly
 
 }
-

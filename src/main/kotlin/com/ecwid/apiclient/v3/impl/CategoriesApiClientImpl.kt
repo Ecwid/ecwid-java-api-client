@@ -28,4 +28,3 @@ internal class CategoriesApiClientImpl(
 	override fun deleteCategoryImage(request: CategoryImageDeleteRequest) = apiClientHelper.makeObjectResultRequest<CategoryImageDeleteResult>(request)
 
 }
-

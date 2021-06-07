@@ -65,18 +65,18 @@ fun generateTestOrder(): UpdatedOrder {
 			),
 
 			// TODO Pass real discount coupon code when API client will support this
-//			discountCoupon = UpdatedOrder.DiscountCouponInfo(
-//					name = "Discount coupon " + randomAlphanumeric(8),
-//					code = randomAlphanumeric(16),
-//					discountType = randomEnumValue<DiscountCouponType>(),
-//					status = randomEnumValue<DiscountCouponStatus>(),
-//					discount = randomPrice(),
-//					launchDate = randomDate(),
-//					expirationDate = randomDate(),
-//					totalLimit = randomPrice(),
-//					usesLimit = randomEnumValue<DiscountCouponUsesLimit>(),
-//					repeatCustomerOnly = randomBoolean()
-//			),
+// 			discountCoupon = UpdatedOrder.DiscountCouponInfo(
+// 					name = "Discount coupon " + randomAlphanumeric(8),
+// 					code = randomAlphanumeric(16),
+// 					discountType = randomEnumValue<DiscountCouponType>(),
+// 					status = randomEnumValue<DiscountCouponStatus>(),
+// 					discount = randomPrice(),
+// 					launchDate = randomDate(),
+// 					expirationDate = randomDate(),
+// 					totalLimit = randomPrice(),
+// 					usesLimit = randomEnumValue<DiscountCouponUsesLimit>(),
+// 					repeatCustomerOnly = randomBoolean()
+// 			),
 
 			items = listOf(
 					generateTestOrderItem(),

@@ -124,7 +124,6 @@ class CartsTest : BaseEntityTest() {
 				assertEquals(orderTaxes.includeInPrice, cartTaxes.includeInPrice)
 			}
 
-
 			assertEquals(orderItem.discounts?.count(), cartItem.discounts?.count())
 			cartItem.discounts?.forEachIndexed { discountIndex, cartDiscounts ->
 				val orderDiscounts = orderItem.discounts?.get(discountIndex)
@@ -239,7 +238,7 @@ class CartsTest : BaseEntityTest() {
 		val calculateOrderDetailsRequest = CalculateOrderDetailsRequest(orderForCalculate)
 		val calculatedOrder = apiClient.calculateOrderDetails(calculateOrderDetailsRequest)
 
-		//check that all parameters of the calculated order are correct
+		// Check that all parameters of the calculated order are correct
 		assertEquals(orderForCalculate.email, calculatedOrder.email)
 		assertEquals(orderForCalculate.ipAddress, calculatedOrder.ipAddress)
 		assertEquals(orderForCalculate.customerId, calculatedOrder.customerId)

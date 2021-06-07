@@ -239,7 +239,6 @@ class VariationsTest : BaseEntityTest() {
 		val deleteProductVariationImageResult = apiClient.deleteVariationImage(deleteProductVariationImageRequest)
 		assertTrue(deleteProductVariationImageResult.deleteCount > 0)
 
-
 		// Check that category has now no main image now
 		val fetchedVariation2 = apiClient.getProductVariation(productVariationDetailsRequest)
 		Assertions.assertNull(fetchedVariation2.imageUrl)

@@ -37,7 +37,7 @@ data class TypedSingleBatchResponse(
 	internal constructor(
 			escapedSingleBatchResponse: EscapedSingleBatchResponse,
 			jsonTransformer: JsonTransformer
-	): this(
+	) : this(
 			id = escapedSingleBatchResponse.id,
 			escapedHttpBody = escapedSingleBatchResponse.escapedHttpBody,
 			httpStatusCode = escapedSingleBatchResponse.httpStatusCode,

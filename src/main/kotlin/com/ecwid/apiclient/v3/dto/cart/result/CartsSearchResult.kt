@@ -8,4 +8,4 @@ data class CartsSearchResult(
 		val offset: Int = 0,
 		val limit: Int = 0,
 		val items: List<FetchedCart> = listOf()
-): ApiResultDTO
+) : ApiResultDTO

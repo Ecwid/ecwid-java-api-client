@@ -44,4 +44,3 @@ data class UpdatedVariation(
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedVariation::class)
 
 }
-

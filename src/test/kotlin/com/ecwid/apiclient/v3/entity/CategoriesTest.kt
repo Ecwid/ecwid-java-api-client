@@ -1,24 +1,22 @@
 package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.converter.toUpdated
-import com.ecwid.apiclient.v3.dto.common.AsyncPictureData
-import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest.ParentCategory
 import com.ecwid.apiclient.v3.dto.category.result.CategoriesSearchResult
 import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
+import com.ecwid.apiclient.v3.dto.common.AsyncPictureData
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
+import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.randomAlphanumeric
 import com.ecwid.apiclient.v3.util.randomBoolean
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.*
-import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.Assertions.*
 import java.io.FileInputStream
 import java.nio.file.Files
-
 
 class CategoriesTest : BaseEntityTest() {
 
@@ -328,7 +326,6 @@ class CategoriesTest : BaseEntityTest() {
 		assertTrue(descriptionTranslated.size > 0)
 		assertTrue(descriptionTranslated.containsKey("ru"))
 		assertTrue(descriptionTranslated.getValue("ru").startsWith("Описание"))
-
 
 		val nameTranslated = categoryDetails.nameTranslated
 		require(nameTranslated != null)

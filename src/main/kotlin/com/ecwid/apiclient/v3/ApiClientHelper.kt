@@ -8,12 +8,11 @@ import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.httptransport.*
 import com.ecwid.apiclient.v3.impl.*
-import com.ecwid.apiclient.v3.impl.MIME_TYPE_APPLICATION_JSON
-import com.ecwid.apiclient.v3.util.maskApiToken
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
 import com.ecwid.apiclient.v3.util.buildEndpointPath
+import com.ecwid.apiclient.v3.util.maskApiToken
 import java.net.URI
 import java.util.*
 import java.util.logging.Level
@@ -43,7 +42,7 @@ class ApiClientHelper private constructor(
 		loggingSettings: LoggingSettings,
 		httpTransport: HttpTransport,
 		jsonTransformerProvider: JsonTransformerProvider
-	): this(
+	) : this(
 			apiServerDomain = apiServerDomain,
 			credentials = storeCredentials,
 			loggingSettings = loggingSettings,
@@ -57,7 +56,7 @@ class ApiClientHelper private constructor(
 		loggingSettings: LoggingSettings,
 		httpTransport: HttpTransport,
 		jsonTransformerProvider: JsonTransformerProvider
-	): this(
+	) : this(
 		apiServerDomain = apiServerDomain,
 		credentials = credentials,
 		loggingSettings = loggingSettings,
@@ -307,7 +306,6 @@ internal fun Map<String, String>.withCredentialsParams(credentials: ApiCredentia
 	is ApiStoreCredentials -> this.withApiTokenParam(credentials.apiToken)
 	is ApiAppCredentials -> withAppCredentialsParams(credentials)
 }
-
 
 @PublishedApi
 internal fun Map<String, String>.withApiTokenParam(apiToken: String): Map<String, String> {

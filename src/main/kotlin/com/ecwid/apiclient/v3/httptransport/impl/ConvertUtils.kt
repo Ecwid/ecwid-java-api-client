@@ -12,7 +12,6 @@ import org.apache.http.entity.*
 import org.apache.http.message.BasicNameValuePair
 import org.apache.http.util.EntityUtils
 
-
 internal fun HttpRequest.toHttpUriRequest(): HttpUriRequest {
 	val requestBuilder = when (this) {
 		is HttpRequest.HttpGetRequest -> {
@@ -63,4 +62,3 @@ private fun TransportHttpBody.toEntity(): HttpEntity? = when (this) {
 }
 
 private fun String.toContentType(): ContentType = ContentType.create(this, Consts.UTF_8)
-

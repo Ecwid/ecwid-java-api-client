@@ -344,9 +344,9 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 	@Test
 	fun `test success`() {
 
-		class FetchedListWrapper: ArrayList<Float>()
+		class FetchedListWrapper : ArrayList<Float>()
 
-		class FetchedMapWrapper: HashMap<Double, String>()
+		class FetchedMapWrapper : HashMap<Double, String>()
 
 		data class FetchedSubDTO(
 			val subField1: List<Int>,
@@ -361,9 +361,9 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			val field3: FetchedSubDTO
 		)
 
-		class UpdatedListWrapper: ArrayList<Float>()
+		class UpdatedListWrapper : ArrayList<Float>()
 
-		class UpdatedMapWrapper: HashMap<Double, String>()
+		class UpdatedMapWrapper : HashMap<Double, String>()
 
 		data class UpdatedSubDTO(
 			val subField1: List<Int>,

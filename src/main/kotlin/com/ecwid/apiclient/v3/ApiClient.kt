@@ -65,11 +65,9 @@ open class ApiClient private constructor(
 		BatchApiClient by batchApiClient,
 		CouponsApiClient by discountCouponsApiClient,
 		CartsApiClient by cartsApiClient,
-		SalesChannelsApiClient by salesChannelsApiClient
+		SalesChannelsApiClient by salesChannelsApiClient {
 
-{
-
-	constructor(apiClientHelper: ApiClientHelper): this(
+	constructor(apiClientHelper: ApiClientHelper) : this(
 			apiClientHelper = apiClientHelper,
 			storeProfileApiClient = StoreProfileApiClientImpl(apiClientHelper),
 			productsApiClient = ProductsApiClientImpl(apiClientHelper),
@@ -113,18 +111,18 @@ interface StoreProfileApiClient {
 	fun getStoreProfile(request: StoreProfileRequest): FetchedStoreProfile
 	fun updateStoreProfile(request: StoreProfileUpdateRequest): StoreProfileUpdateResult
 	fun getLatestStats(request: LatestStatsRequest): FetchedLatestStats
-//	fun getShippingOptions()
-//	fun addShippingOption()
-//	fun updateShippingOption()
-//	fun getPaymentOptions()
-//	fun addPaymentOption()
-//	fun updatePaymentOption()
-//	fun updateStoreLogo()
-//	fun removeStoreLogo()
-//	fun updateInvoiceLogo()
-//	fun removeInvoiceLogo()
-//	fun updateEmailLogo()
-//	fun removeEmailLogo()
+// 	fun getShippingOptions()
+// 	fun addShippingOption()
+// 	fun updateShippingOption()
+// 	fun getPaymentOptions()
+// 	fun addPaymentOption()
+// 	fun updatePaymentOption()
+// 	fun updateStoreLogo()
+// 	fun removeStoreLogo()
+// 	fun updateInvoiceLogo()
+// 	fun removeInvoiceLogo()
+// 	fun updateEmailLogo()
+// 	fun removeEmailLogo()
 }
 
 // Products
