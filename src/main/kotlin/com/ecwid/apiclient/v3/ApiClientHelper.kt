@@ -167,6 +167,7 @@ class ApiClientHelper private constructor(
 				sections = mutableListOf<String>().apply {
 					add("${httpRequest.method} ${httpRequest.uri}")
 					add(params.dumpToString())
+					add("headers: ${httpRequest.headers.dumpToString()}")
 					if (loggingSettings.logRequestBody) {
 						httpBody.asString()?.let { add(it) }
 					}
@@ -178,21 +179,25 @@ class ApiClientHelper private constructor(
 	internal fun RequestInfo.toHttpRequest(): HttpRequest = when (method) {
 		HttpMethod.GET -> HttpRequest.HttpGetRequest(
 				uri = createApiEndpointUri(pathSegments),
-				params = params.withCredentialsParams(credentials)
+				params = params.withCredentialsParams(credentials),
+				headers = headers
 		)
 		HttpMethod.POST -> HttpRequest.HttpPostRequest(
 				uri = createApiEndpointUri(pathSegments),
 				params = params.withCredentialsParams(credentials),
-				transportHttpBody = httpBody.prepare(jsonTransformer)
+				transportHttpBody = httpBody.prepare(jsonTransformer),
+				headers = headers
 		)
 		HttpMethod.PUT -> HttpRequest.HttpPutRequest(
 				uri = createApiEndpointUri(pathSegments),
 				params = params.withCredentialsParams(credentials),
-				transportHttpBody = httpBody.prepare(jsonTransformer)
+				transportHttpBody = httpBody.prepare(jsonTransformer),
+				headers = headers
 		)
 		HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
 				uri = createApiEndpointUri(pathSegments),
-				params = params.withCredentialsParams(credentials)
+				params = params.withCredentialsParams(credentials),
+				headers = headers
 		)
 	}
 
