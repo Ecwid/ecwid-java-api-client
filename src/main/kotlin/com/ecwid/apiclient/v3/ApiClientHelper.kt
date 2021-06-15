@@ -167,7 +167,7 @@ class ApiClientHelper private constructor(
 				sections = mutableListOf<String>().apply {
 					add("${httpRequest.method} ${httpRequest.uri}")
 					add(params.dumpToString())
-					add("headers: ${httpRequest.headers.dumpToString()}")
+					add(if (httpRequest.headers.isNotEmpty()) "headers: ${httpRequest.headers.dumpToString()}" else "")
 					if (loggingSettings.logRequestBody) {
 						httpBody.asString()?.let { add(it) }
 					}
