@@ -1,21 +1,22 @@
 package com.ecwid.apiclient.v3.dto.payment
 
+import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 
 data class PaymentAppRequest(
-	val storeId: Int,
-	val returnUrl: String,
-	val merchantAppSettings: MerchantAppSettings,
-	val cart: Cart,
-	var token: String,
-	val lang: String
+	val storeId: Int? = null,
+	val returnUrl: String? = null,
+	val merchantAppSettings: MerchantAppSettings? = null,
+	val cart: Cart? = null,
+	var token: String? = null,
+	val lang: String? = null
 ) {
 	data class MerchantAppSettings(
-		val settings : Map<String, String?>?
+		val settings : OrderedStringToStringMap? = null
 	)
 
 	data class Cart(
-		val currency: String,
-		val order: FetchedOrder
+		val currency: String? = null,
+		val order: FetchedOrder? = null
 	)
 }
