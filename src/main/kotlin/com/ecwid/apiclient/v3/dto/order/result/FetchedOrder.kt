@@ -18,10 +18,9 @@ data class FetchedOrder(
 		val ipAddress: String? = null,
 		val hidden: Boolean? = null,
 		val createDate: Date? = null,
-		val createTimestamp: Int? = null, // TODO Figure out how to test
+		val createTimestamp: Long? = null, // TODO Figure out how to test
 		val updateDate: Date? = null,
-		val updateTimestamp: Int? = null, // TODO Figure out how to test
-		val latestShipDate: Date? = null,
+		val updateTimestamp: Long? = null, // TODO Figure out how to test
 
 		val refererUrl: String? = null,
 		val refererId: String? = null,
@@ -146,7 +145,7 @@ data class FetchedOrder(
 	)
 
 	data class OrderItem(
-			val id: Int? = null, // TODO Figure out how to test
+			val id: Long? = null, // TODO Figure out how to test
 
 			val productId: Int? = null,
 			val categoryId: Int? = null,
