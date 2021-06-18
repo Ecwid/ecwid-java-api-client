@@ -6,7 +6,6 @@ import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
-import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 import java.util.*
 
 data class FetchedOrder(
@@ -69,7 +68,7 @@ data class FetchedOrder(
 		val usdTotal: Double? = null, // TODO Figure out how to test
 
 		val tax: Double? = null,
-		val availableTaxes: List<FetchedStoreProfile.TaxSettings.Taxes>? = null,
+		val availableTaxes: List<Taxes>? = null,
 		val customerTaxExempt: Boolean? = null,
 		val customerTaxId: String? = null,
 		val customerTaxIdValid: Boolean? = null,
@@ -407,6 +406,23 @@ data class FetchedOrder(
 		val value: String? = null,
 		val orderDetailsDisplaySection: String? = null,
 		val orderBy: String? = null
+	)
+
+	data class Taxes(
+		val id: Int? = null,
+		val name: String? = null,
+		val enabled: Boolean? = null,
+		val includeInPrice: Boolean? = null,
+		val useShippingAddress: Boolean? = null,
+		val taxShipping: Boolean? = null,
+		val appliedByDefault: Boolean? = null,
+		val defaultTax: Double? = null,
+		val rules: List<TaxRule>? = null
+	)
+
+	data class TaxRule(
+		val zoneId: String? = null,
+		val tax: Double? = null
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedOrder::class)
