@@ -8,7 +8,7 @@ data class PaymentAppRequest(
 	val returnUrl: String? = null,
 	val merchantAppSettings: MerchantAppSettings? = null,
 	val cart: Cart? = null,
-	var token: String? = null,
+	val token: String? = null,
 	val lang: String? = null
 ) {
 	data class MerchantAppSettings(
@@ -19,4 +19,9 @@ data class PaymentAppRequest(
 		val currency: String? = null,
 		val order: FetchedOrder? = null
 	)
+
+	fun forLogging() : PaymentAppRequest {
+		// we must remove secure data when logging this object
+		return this.copy(token = "")
+	}
 }
