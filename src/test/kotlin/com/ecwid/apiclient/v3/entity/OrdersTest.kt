@@ -390,7 +390,7 @@ class OrdersTest : BaseEntityTest() {
 	}
 }
 
-private fun assertFileOption(orderItemProductFile: FetchedOrder.OrderItemProductFile, fileName: String) {
+private fun assertFileOption(orderItemProductFile: FetchedOrder.OrderItemOptionFile, fileName: String) {
 	assertAll(
 			{ assertTrue(orderItemProductFile.id ?: 0 > 0) },
 			{ assertEquals(fileName, orderItemProductFile.name) },
