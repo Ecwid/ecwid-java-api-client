@@ -70,7 +70,6 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 			utmData = utmData?.toUpdated(),
 
 			customDiscount = customDiscount,
-			customerGroupId = customerGroupId,
 			disableAllCustomerNotifications = disableAllCustomerNotifications,
 			ebayId = ebayId,
 			externalFulfillment = externalFulfillment,
