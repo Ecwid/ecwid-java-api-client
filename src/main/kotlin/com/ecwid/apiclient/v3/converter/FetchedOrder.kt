@@ -69,7 +69,6 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 
 			utmData = utmData?.toUpdated(),
 
-			vendorOrderNumber = vendorOrderNumber,
 			customDiscount = customDiscount,
 			customerGroupId = customerGroupId,
 			disableAllCustomerNotifications = disableAllCustomerNotifications,

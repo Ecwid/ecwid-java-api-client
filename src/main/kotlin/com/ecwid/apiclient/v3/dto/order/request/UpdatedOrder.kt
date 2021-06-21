@@ -11,8 +11,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 data class UpdatedOrder(
-		val vendorOrderNumber: String? = null,
-
 		val email: String? = null,
 		val ipAddress: String? = null,
 		val hidden: Boolean? = null,

@@ -127,6 +127,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedCustomerGroup::id),
 
 	ReadOnly(FetchedOrder::id),
+	ReadOnly(FetchedOrder::orderNumber),
+	ReadOnly(FetchedOrder::vendorOrderNumber),
 	ReadOnly(FetchedOrder::orderExtraFields),
 	ReadOnly(FetchedOrder::giftCardCode),
 	ReadOnly(FetchedOrder::giftCardDoubleSpending),
@@ -137,7 +139,6 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrder::availableTaxes),
 	ReadOnly(FetchedOrder::availableShippingOptions),
 	ReadOnly(FetchedOrder::shipments),
-	Ignored(FetchedOrder::orderNumber),
 	Ignored(FetchedOrder::createTimestamp),
 	Ignored(FetchedOrder::updateDate),
 	Ignored(FetchedOrder::updateTimestamp),
