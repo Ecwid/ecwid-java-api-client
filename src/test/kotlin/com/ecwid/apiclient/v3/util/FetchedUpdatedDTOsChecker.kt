@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.util
 import com.ecwid.apiclient.v3.rule.NonUpdatablePropertyRule
 import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 import kotlin.reflect.jvm.kotlinProperty
 
 data class FetchedUpdatedDTO(
@@ -246,20 +247,28 @@ private fun Field.extractMapGenericArgumentClasses(): Pair<Class<*>, Class<*>> {
 	return if (genericType is ParameterizedType) {
 		// val foo: Map<K, V>
 		Pair(
-			first = genericType.actualTypeArguments[0] as Class<*>,
-			second = genericType.actualTypeArguments[1] as Class<*>
+			first = toClass(genericType.actualTypeArguments[0]),
+			second = toClass(genericType.actualTypeArguments[1])
 		)
 	} else {
 		val genericSuperclass = type.genericSuperclass
 		if (genericSuperclass is ParameterizedType) {
 			// val foo: T; T : Map<K, V>
 			Pair(
-				first = genericSuperclass.actualTypeArguments[0] as Class<*>,
-				second = genericSuperclass.actualTypeArguments[1] as Class<*>
+				first = toClass(genericSuperclass.actualTypeArguments[0]),
+				second = toClass(genericSuperclass.actualTypeArguments[1])
 			)
 		} else {
 			throw NotImplementedError("Implement if necessary")
 		}
+	}
+}
+
+private tailrec fun toClass(type: Type?): Class<*> {
+	return when (type) {
+		is Class<*> -> type
+		is ParameterizedType -> toClass(type.actualTypeArguments[0])
+		else -> throw NotImplementedError("Type $type is not supported")
 	}
 }
 
