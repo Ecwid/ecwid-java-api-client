@@ -4,7 +4,6 @@ import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.order.enums.OrderFulfillmentStatus
 import com.ecwid.apiclient.v3.dto.order.enums.OrderPaymentStatus
-import com.ecwid.apiclient.v3.dto.order.enums.ProductOptionType
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.exception.EcwidApiException
@@ -415,13 +414,12 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 
 private fun UpdatedOrder.OrderItem.cleanupForComparison(orderItem: UpdatedOrder.OrderItem?): UpdatedOrder.OrderItem {
 	return copy(
+		nameTranslated = orderItem?.nameTranslated,
+		shortDescriptionTranslated = orderItem?.shortDescriptionTranslated,
+		selectedPrice = orderItem?.selectedPrice,
 		selectedOptions = selectedOptions?.mapIndexed { index, option ->
-			if (option.type == ProductOptionType.CHOICES) {
-				val requestOption = orderItem?.selectedOptions?.get(index)
-				option.cleanupForComparison(requestOption)
-			} else {
-				option
-			}
+			val requestOption = orderItem?.selectedOptions?.get(index)
+			option.cleanupForComparison(requestOption)
 		}
 	)
 }
@@ -429,6 +427,7 @@ private fun UpdatedOrder.OrderItem.cleanupForComparison(orderItem: UpdatedOrder.
 private fun UpdatedOrder.OrderItemSelectedOption.cleanupForComparison(orderItemSelectedOption: UpdatedOrder.OrderItemSelectedOption?): UpdatedOrder.OrderItemSelectedOption {
 	return copy(
 		valuesArray = orderItemSelectedOption?.valuesArray,
+		valueTranslated = orderItemSelectedOption?.valueTranslated,
 		selections = orderItemSelectedOption?.selections?.map { selectionInfo ->
 			selectionInfo.copy()
 		}
