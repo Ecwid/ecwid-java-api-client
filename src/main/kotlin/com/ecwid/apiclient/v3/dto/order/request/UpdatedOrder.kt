@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.order.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
@@ -10,6 +11,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 data class UpdatedOrder(
+		val vendorOrderNumber: String? = null,
+
 		val email: String? = null,
 		val ipAddress: String? = null,
 		val hidden: Boolean? = null,
@@ -156,9 +159,12 @@ data class UpdatedOrder(
 
 	data class OrderItemSelectedOption(
 			val name: String? = null,
+			val nameTranslated: OrderedStringToStringMap? = null,
 			val type: ProductOptionType? = null,
 			val value: String? = null,
+			val valueTranslated: OrderedStringToStringMap? = null,
 			val valuesArray: List<String>? = null,
+			val valuesArrayTranslated: OrderedStringToListStringMap? = null,
 			val selections: List<OrderItemSelectionInfo>? = null
 	) {
 
@@ -296,6 +302,7 @@ data class UpdatedOrder(
 		val type: SurchargeType? = null,
 		val total: Double? = null,
 		val description: String? = null,
+		val descriptionTranslated: String? = null,
 		val taxable: Boolean? = null,
 		val taxes: List<BaseOrderItemTax>? = null
 	)
