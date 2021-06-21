@@ -77,6 +77,7 @@ fun generateTestOrder(): UpdatedOrder {
 // 					usesLimit = randomEnumValue<DiscountCouponUsesLimit>(),
 // 					repeatCustomerOnly = randomBoolean()
 // 			),
+			customDiscount = listOf(),
 
 			items = listOf(
 					generateTestOrderItem(),
