@@ -20,6 +20,7 @@ import com.ecwid.apiclient.v3.dto.order.request.DeletedOrdersSearchRequest
 import com.ecwid.apiclient.v3.dto.order.request.OrdersSearchRequest
 import com.ecwid.apiclient.v3.dto.order.result.DeletedOrder
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
+import com.ecwid.apiclient.v3.dto.payment.PaymentAppRequest
 import com.ecwid.apiclient.v3.dto.product.request.DeletedProductsSearchRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductDetailsRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest
@@ -1306,6 +1307,16 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 
 	AllowNullable(FetchedStoreProfile.Settings::googleProductCategory),
 	AllowNullable(FetchedStoreProfile.Settings::googleProductCategoryName),
+
+	AllowNullable(PaymentAppRequest.Cart::currency),
+	AllowNullable(PaymentAppRequest.Cart::order),
+	AllowNullable(PaymentAppRequest.MerchantAppSettings::settings),
+	AllowNullable(PaymentAppRequest::cart),
+	AllowNullable(PaymentAppRequest::lang),
+	AllowNullable(PaymentAppRequest::merchantAppSettings),
+	AllowNullable(PaymentAppRequest::returnUrl),
+	AllowNullable(PaymentAppRequest::storeId),
+	AllowNullable(PaymentAppRequest::token),
 
 	IgnoreNullable(ProductInventoryUpdateResult::warning)
 
