@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.payment
 
+import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 
@@ -10,7 +11,7 @@ data class PaymentAppRequest(
 	val cart: Cart? = null,
 	val token: String? = null,
 	val lang: String? = null
-) {
+) : ApiRequestDTO {
 	data class MerchantAppSettings(
 		val settings: OrderedStringToStringMap? = null
 	)
