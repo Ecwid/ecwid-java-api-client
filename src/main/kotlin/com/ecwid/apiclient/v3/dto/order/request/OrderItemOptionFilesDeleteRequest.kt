@@ -6,13 +6,13 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 data class OrderItemOptionFilesDeleteRequest(
 		val orderNumber: Int = 0,
 		val orderIdentity: String = "",
-		val orderItemId: Int = 0,
+		val orderItemId: Long = 0,
 		val optionName: String = ""
 ) : ApiRequest {
 
 	constructor(
 			orderNumber: Int = 0,
-			orderItemId: Int = 0,
+			orderItemId: Long = 0,
 			optionName: String = ""
 	) : this(
 			orderNumber = orderNumber,

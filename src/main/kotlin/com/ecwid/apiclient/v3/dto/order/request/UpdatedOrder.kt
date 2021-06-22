@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.order.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
@@ -15,6 +16,7 @@ data class UpdatedOrder(
 		val hidden: Boolean? = null,
 		val createDate: Date? = null,
 		val latestShipDate: Date? = null,
+		val latestDeliveryDate: Date? = null,
 
 		val refererUrl: String? = null,
 		val globalReferer: String? = null,
@@ -56,6 +58,7 @@ data class UpdatedOrder(
 		val discount: Double? = null,
 		val discountInfo: List<DiscountInfo>? = null,
 		val discountCoupon: DiscountCouponInfo? = null,
+		val customDiscount: List<Double>? = null,
 
 		val items: List<OrderItem>? = null,
 
@@ -65,12 +68,20 @@ data class UpdatedOrder(
 		val shippingOption: ShippingOption? = null,
 		val taxesOnShipping: List<BaseOrderItemTax>? = null,
 		val handlingFee: HandlingFee? = null,
+		val externalFulfillment: Boolean? = null,
+		val externalOrderId: String? = null,
+		val externalTransactionUrl: String? = null,
+		val referenceTransactionId: String? = null,
+		val ebayId: String? = null,
 
 		val customSurcharges: List<Surcharge>? = null,
+
+		val refererId: String? = null,
 
 		val utmData: UtmData? = null,
 
 		val pricesIncludeTax: Boolean? = null,
+		val disableAllCustomerNotifications: Boolean? = null,
 		val externalOrderData: ExternalOrderData? = null
 ) : ApiUpdatedDTO {
 
@@ -112,14 +123,19 @@ data class UpdatedOrder(
 
 			val price: Double? = null,
 			val productPrice: Double? = null,
+			val isCustomerSetPrice: Boolean? = null,
+			val selectedPrice: SelectedPrice? = null,
 			val shipping: Double? = null,
 			val tax: Double? = null,
+			val taxable: Boolean? = null,
 			val fixedShippingRate: Double? = null,
 			val couponAmount: Double? = null,
 
 			val sku: String? = null,
 			val name: String? = null,
+			val nameTranslated: OrderedStringToStringMap? = null,
 			val shortDescription: String? = null,
+			val shortDescriptionTranslated: OrderedStringToStringMap? = null,
 			val quantity: Int? = null,
 			val quantityInStock: Int? = null,
 			val weight: Double? = null,
@@ -129,18 +145,23 @@ data class UpdatedOrder(
 			val fixedShippingRateOnly: Boolean? = null,
 			val digital: Boolean? = null,
 			val couponApplied: Boolean? = null,
+			val isGiftCard: Boolean? = null,
 
 			val selectedOptions: List<OrderItemSelectedOption>? = null,
 			val taxes: List<OrderItemTax>? = null,
 			val dimensions: ProductDimensions? = null,
+			val discountsAllowed: Boolean? = null,
 			val discounts: List<OrderItemDiscounts>? = null
 	)
 
 	data class OrderItemSelectedOption(
 			val name: String? = null,
+			val nameTranslated: OrderedStringToStringMap? = null,
 			val type: ProductOptionType? = null,
 			val value: String? = null,
+			val valueTranslated: OrderedStringToStringMap? = null,
 			val valuesArray: List<String>? = null,
+			val valuesArrayTranslated: OrderedStringToListStringMap? = null,
 			val selections: List<OrderItemSelectionInfo>? = null
 	) {
 
@@ -278,8 +299,13 @@ data class UpdatedOrder(
 		val type: SurchargeType? = null,
 		val total: Double? = null,
 		val description: String? = null,
+		val descriptionTranslated: String? = null,
 		val taxable: Boolean? = null,
 		val taxes: List<BaseOrderItemTax>? = null
+	)
+
+	data class SelectedPrice(
+		val value: Double? = null
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedOrder::class)

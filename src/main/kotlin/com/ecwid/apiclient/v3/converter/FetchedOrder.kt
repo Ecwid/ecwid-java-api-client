@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.converter
 
+import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.ProductOptionType
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
@@ -68,6 +69,16 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 
 			utmData = utmData?.toUpdated(),
 
+			customDiscount = customDiscount,
+			disableAllCustomerNotifications = disableAllCustomerNotifications,
+			ebayId = ebayId,
+			externalFulfillment = externalFulfillment,
+			externalOrderId = externalOrderId,
+			externalTransactionUrl = externalTransactionUrl,
+			latestDeliveryDate = latestDeliveryDate,
+			referenceTransactionId = referenceTransactionId,
+			refererId = refererId,
+
 			pricesIncludeTax = pricesIncludeTax,
 			externalOrderData = externalOrderData?.toUpdated()
 	)
@@ -130,6 +141,14 @@ fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 			digital = digital,
 			couponApplied = couponApplied,
 
+			discountsAllowed = discountsAllowed,
+			isCustomerSetPrice = isCustomerSetPrice,
+			isGiftCard = isGiftCard,
+			nameTranslated = nameTranslated,
+			selectedPrice = selectedPrice?.toUpdated(),
+			shortDescriptionTranslated = shortDescriptionTranslated,
+			taxable = taxable,
+
 			selectedOptions = selectedOptions?.map(FetchedOrder.OrderItemSelectedOption::toUpdated),
 			taxes = taxes?.map(FetchedOrder.OrderItemTax::toUpdated),
 			dimensions = dimensions?.toUpdated(),
@@ -140,9 +159,12 @@ fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 fun FetchedOrder.OrderItemSelectedOption.toUpdated(): UpdatedOrder.OrderItemSelectedOption {
 	return UpdatedOrder.OrderItemSelectedOption(
 			name = name,
+			nameTranslated = nameTranslated?.let { OrderedStringToStringMap(it) },
 			type = type,
 			value = if (type == ProductOptionType.CHOICES) null else value,
+			valueTranslated = valueTranslated?.let { OrderedStringToStringMap(it) },
 			valuesArray = valuesArray?.let { ArrayList(it) },
+			valuesArrayTranslated = valuesArrayTranslated?.let { OrderedStringToListStringMap(it) },
 			selections = selections?.map(FetchedOrder.OrderItemSelectionInfo::toUpdated)
 	)
 }
@@ -222,6 +244,7 @@ private fun FetchedOrder.Surcharge.toUpdated(): UpdatedOrder.Surcharge {
 			type = type,
 			total = total,
 			description = description,
+			descriptionTranslated = descriptionTranslated,
 			taxable = taxable,
 			taxes = taxes.map(FetchedOrder.BaseOrderItemTax::toUpdated)
 	)
@@ -252,5 +275,11 @@ fun FetchedOrder.ExternalOrderData.toUpdated(): UpdatedOrder.ExternalOrderData {
 		refererId = refererId,
 		platformSpecificFields = platformSpecificFields,
 		refererChannel = refererChannel
+	)
+}
+
+fun FetchedOrder.SelectedPrice.toUpdated(): UpdatedOrder.SelectedPrice {
+	return UpdatedOrder.SelectedPrice(
+		value = this.value
 	)
 }

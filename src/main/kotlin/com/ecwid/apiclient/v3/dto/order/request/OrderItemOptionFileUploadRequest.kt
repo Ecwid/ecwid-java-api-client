@@ -9,7 +9,7 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 data class OrderItemOptionFileUploadRequest(
 		val orderNumber: Int = 0,
 		val orderIdentity: String = "",
-		val orderItemId: Int = 0,
+		val orderItemId: Long = 0,
 		val optionName: String = "",
 		val fileName: String = "",
 		val fileData: UploadFileData = UploadFileData.ExternalUrlData("")
@@ -17,7 +17,7 @@ data class OrderItemOptionFileUploadRequest(
 
 	constructor(
 			orderNumber: Int = 0,
-			orderItemId: Int = 0,
+			orderItemId: Long = 0,
 			optionName: String = "",
 			fileName: String = "",
 			fileData: UploadFileData = UploadFileData.ExternalUrlData("")

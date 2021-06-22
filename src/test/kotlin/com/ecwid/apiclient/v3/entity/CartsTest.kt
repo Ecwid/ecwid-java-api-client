@@ -625,6 +625,18 @@ class CartsTest : BaseEntityTest() {
 private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder {
 	return copy(
 		pickupTime = order.pickupTime,
-		customerId = order.customerId
+		customerId = order.customerId,
+		items = this.items?.mapIndexed { index, item ->
+			item.copy(
+				nameTranslated = order.items?.get(index)?.nameTranslated,
+				shortDescriptionTranslated = order.items?.get(index)?.shortDescriptionTranslated,
+				selectedPrice = order.items?.get(index)?.selectedPrice,
+				selectedOptions = this.items?.get(index)?.selectedOptions?.mapIndexed { optIndex, option ->
+					option.copy(
+						valueTranslated = order.items?.get(index)?.selectedOptions?.get(optIndex)?.valueTranslated
+					)
+				}
+			)
+		}
 	)
 }

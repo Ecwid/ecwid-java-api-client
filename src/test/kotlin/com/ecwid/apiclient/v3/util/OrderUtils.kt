@@ -77,6 +77,7 @@ fun generateTestOrder(): UpdatedOrder {
 // 					usesLimit = randomEnumValue<DiscountCouponUsesLimit>(),
 // 					repeatCustomerOnly = randomBoolean()
 // 			),
+			customDiscount = listOf(),
 
 			items = listOf(
 					generateTestOrderItem(),
@@ -103,6 +104,8 @@ fun generateTestOrder(): UpdatedOrder {
 					taxes = listOf()
 			),
 			pricesIncludeTax = false,
+			externalFulfillment = randomBoolean(),
+			disableAllCustomerNotifications = randomBoolean(),
 
 			customSurcharges = listOf()
 	)
@@ -163,6 +166,8 @@ private fun generateTestOrderItem() = UpdatedOrder.OrderItem(
 		fixedShippingRateOnly = randomBoolean(),
 		digital = randomBoolean(),
 		couponApplied = randomBoolean(),
+		isCustomerSetPrice = randomBoolean(),
+		taxable = randomBoolean(),
 
 		selectedOptions = listOf(
 				generateChoiceSelectedOption(),

@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.order.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
@@ -11,25 +12,31 @@ data class FetchedOrder(
 		val id: String? = null,
 
 		val orderNumber: Int = 0,
+		val vendorOrderNumber: String? = null,
 		val email: String? = null,
 		val ipAddress: String? = null,
 		val hidden: Boolean? = null,
 		val createDate: Date? = null,
-		val createTimestamp: Int? = null, // TODO Figure out how to test
+		val createTimestamp: Long? = null, // TODO Figure out how to test
 		val updateDate: Date? = null,
-		val updateTimestamp: Int? = null, // TODO Figure out how to test
-		val latestShipDate: Date? = null,
+		val updateTimestamp: Long? = null, // TODO Figure out how to test
 
 		val refererUrl: String? = null,
+		val refererId: String? = null,
 		val globalReferer: String? = null,
 		val affiliateId: String? = null,
 		val additionalInfo: OrderedStringToStringMap? = null,
 		val extraFields: OrderedStringToStringMap? = null, // TODO Figure out how to test
+		val orderExtraFields: List<ExtraFieldsInfo>? = null,
 
 		val orderComments: String? = null,
 		val privateAdminNotes: String? = null,
 
 		val fulfillmentStatus: OrderFulfillmentStatus? = null,
+		val externalFulfillment: Boolean? = null,
+		val externalOrderId: String? = null,
+		val latestShipDate: Date? = null,
+		val latestDeliveryDate: Date? = null,
 		val trackingNumber: String? = null,
 		val pickupTime: Date? = null,
 
@@ -40,16 +47,28 @@ data class FetchedOrder(
 		val paymentMessage: String? = null,
 		val creditCardStatus: CreditCardStatus? = null,
 		val externalTransactionId: String? = null,
+		val externalTransactionUrl: String? = null,
+		val referenceTransactionId: String? = null,
+		val ebayId: String? = null,
 
 		val customerId: Int? = null, // TODO Figure out how to test
 		val customerGroup: String? = null,
+		val customerGroupId: Long? = null,
 		val acceptMarketing: Boolean? = null,
 
+		val giftCardRedemption: Double? = null,
+		val totalBeforeGiftCardRedemption: Double? = null,
+		val giftCardDoubleSpending: Boolean? = null,
+		val giftCardCode: String? = null,
+
 		val total: Double? = null,
+		val totalWithoutTax: Double? = null,
 		val subtotal: Double? = null,
+		val subtotalWithoutTax: Double? = null,
 		val usdTotal: Double? = null, // TODO Figure out how to test
 
 		val tax: Double? = null,
+		val availableTaxes: List<Taxes>? = null,
 		val customerTaxExempt: Boolean? = null,
 		val customerTaxId: String? = null,
 		val customerTaxIdValid: Boolean? = null,
@@ -62,6 +81,7 @@ data class FetchedOrder(
 		val discount: Double? = null,
 		val discountInfo: List<DiscountInfo>? = null,
 		val discountCoupon: DiscountCouponInfo? = null,
+		val customDiscount: List<Double>? = null,
 
 		val items: List<OrderItem>? = null,
 
@@ -69,8 +89,10 @@ data class FetchedOrder(
 		val shippingPerson: PersonInfo? = null,
 
 		val shippingOption: ShippingOption? = null,
+		val availableShippingOptions: List<ShippingOption>? = null,
 		val taxesOnShipping: List<BaseOrderItemTax> = listOf(),
 		val handlingFee: HandlingFee? = null,
+		val shipments: List<Shipment>? = null,
 
 		val customSurcharges: List<Surcharge> = listOf(),
 
@@ -80,6 +102,7 @@ data class FetchedOrder(
 		val utmData: UtmData? = null,
 
 		val pricesIncludeTax: Boolean? = null,
+		val disableAllCustomerNotifications: Boolean? = null,
 		val externalOrderData: ExternalOrderData? = null
 ) : ApiFetchedDTO {
 
@@ -121,13 +144,16 @@ data class FetchedOrder(
 	)
 
 	data class OrderItem(
-			val id: Int? = null, // TODO Figure out how to test
+			val id: Long? = null, // TODO Figure out how to test
 
 			val productId: Int? = null,
 			val categoryId: Int? = null,
 
 			val price: Double? = null,
 			val productPrice: Double? = null,
+			val isCustomerSetPrice: Boolean? = null,
+			val selectedPrice: SelectedPrice? = null,
+			val priceWithoutTax: Double? = null,
 			val shipping: Double? = null,
 			val tax: Double? = null,
 			val fixedShippingRate: Double? = null,
@@ -135,7 +161,9 @@ data class FetchedOrder(
 
 			val sku: String? = null,
 			val name: String? = null,
+			val nameTranslated: OrderedStringToStringMap? = null,
 			val shortDescription: String? = null,
+			val shortDescriptionTranslated: OrderedStringToStringMap? = null,
 			val quantity: Int? = null,
 			val quantityInStock: Int? = null,
 			val weight: Double? = null,
@@ -149,13 +177,17 @@ data class FetchedOrder(
 			val digital: Boolean? = null,
 			val productAvailable: Boolean? = null, // TODO Probably this field is always true
 			val couponApplied: Boolean? = null,
+			val isGiftCard: Boolean? = null,
 
 			val recurringChargeSettings: RecurringChargeSettings? = null,
 			val subscriptionId: Long? = null,
 
 			val selectedOptions: List<OrderItemSelectedOption>? = null,
+			val files: List<OrderItemProductFile>? = null,
+			val taxable: Boolean? = null,
 			val taxes: List<OrderItemTax>? = null,
 			val dimensions: ProductDimensions? = null,
+			val discountsAllowed: Boolean? = null,
 			val discounts: List<OrderItemDiscounts>? = null
 	)
 
@@ -166,11 +198,14 @@ data class FetchedOrder(
 
 	data class OrderItemSelectedOption(
 			val name: String? = null,
+			val nameTranslated: OrderedStringToStringMap? = null,
 			val type: ProductOptionType? = null,
 			val value: String? = null,
+			val valueTranslated: OrderedStringToStringMap? = null,
 			val valuesArray: List<String>? = null,
+			val valuesArrayTranslated: OrderedStringToListStringMap? = null,
 			val selections: List<OrderItemSelectionInfo>? = null,
-			val files: List<OrderItemProductFile>? = null
+			val files: List<OrderItemOptionFile>? = null
 	)
 
 	data class OrderItemSelectionInfo(
@@ -205,11 +240,23 @@ data class FetchedOrder(
 			val total: Double? = null
 	)
 
-	data class OrderItemProductFile(
+	data class OrderItemOptionFile(
 			val id: Int? = null,
 			val name: String? = null,
 			val size: Int? = null,
 			val url: String? = null
+	)
+
+	data class OrderItemProductFile(
+		val productFileId: Long? = null,
+		val maxDownloads: Int? = null,
+		val remainingDownloads: Int? = null,
+		val expire: String? = null,
+		val name: String? = null,
+		val description: String? = null,
+		val size: Long? = null,
+		val adminUrl: String? = null,
+		val customerUrl: String? = null
 	)
 
 	data class PersonInfo(
@@ -268,8 +315,114 @@ data class FetchedOrder(
 		val total: Double = 0.0,
 		val totalWithoutTax: Double = 0.0,
 		val description: String = "",
+		val descriptionTranslated: String? = null,
 		val taxable: Boolean = true,
 		val taxes: List<BaseOrderItemTax> = listOf()
+	)
+
+	data class SelectedPrice(
+		val value: Double? = null
+	)
+
+	data class Shipment(
+		val id: String? = null,
+		val created: String? = null,
+		val shipFrom: PersonInfo? = null,
+		val shipTo: PersonInfo? = null,
+		val parcel: Parcel? = null,
+		val shippingService: ShippingServiceInfo? = null,
+		val tracking: TrackingInfo? = null,
+		val label: ShippingLabelInfo? = null
+	)
+
+	data class Parcel(
+		val length: Double? = null,
+		val width: Double? = null,
+		val height: Double? = null,
+		val weight: Double? = null,
+		val dimensionUnit: DimensionUnit? = null,
+		val weightUnit: WeightUnit? = null,
+		val template: ParcelTemplate? = null
+	)
+
+	enum class WeightUnit {
+		CARAT, GRAM, OUNCE, POUND, KILOGRAM
+	}
+
+	enum class DimensionUnit {
+		MM, CM, IN, YD
+	}
+
+	enum class ParcelTemplate {
+		USPS_FlatRateEnvelope,
+		USPS_FlatRatePaddedEnvelope,
+		USPS_FlatRateLegalEnvelope,
+		USPS_FlatRateWindowEnvelope,
+		USPS_FlatRateGiftCardEnvelope,
+		USPS_FlatRateCardboardEnvelope,
+		USPS_SmallFlatRateBox,
+		USPS_SmallFlatRateEnvelope,
+		USPS_MediumFlatRateBox1,
+		USPS_MediumFlatRateBox2,
+		USPS_LargeFlatRateBox,
+		USPS_LargeFlatRateBoardGameBox,
+		USPS_LargeVideoFlatRateBox,
+		USPS_APOFlatRateBox,
+		USPS_RegionalRateBoxA1,
+		USPS_RegionalRateBoxA2,
+		USPS_RegionalRateBoxB1,
+		USPS_RegionalRateBoxB2,
+		USPS_SoftPack
+	}
+
+	data class ShippingServiceInfo(
+		val carrier: String? = null,
+		val carrierName: String? = null,
+		val carrierServiceCode: String? = null,
+		val carrierServiceName: String? = null
+	)
+
+	data class TrackingInfo(
+		val trackingNumber: String? = null,
+		val trackingUrl: String? = null,
+		val estimatedDays: Int? = null
+	)
+
+	data class ShippingLabelInfo(
+		val labelUrl: String? = null,
+		val labelFileType: LabelFileType? = null,
+		val commercialInvoiceUrl: String? = null,
+		val billingTransactionId: String? = null
+	)
+
+	enum class LabelFileType {
+		PNG, PDF, PDF_4x6, ZPLII
+	}
+
+	data class ExtraFieldsInfo(
+		val customerInputType: String? = null,
+		val title: String? = null,
+		val id: String? = null,
+		val value: String? = null,
+		val orderDetailsDisplaySection: String? = null,
+		val orderBy: String? = null
+	)
+
+	data class Taxes(
+		val id: Int? = null,
+		val name: String? = null,
+		val enabled: Boolean? = null,
+		val includeInPrice: Boolean? = null,
+		val useShippingAddress: Boolean? = null,
+		val taxShipping: Boolean? = null,
+		val appliedByDefault: Boolean? = null,
+		val defaultTax: Double? = null,
+		val rules: List<TaxRule>? = null
+	)
+
+	data class TaxRule(
+		val zoneId: String? = null,
+		val tax: Double? = null
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedOrder::class)
