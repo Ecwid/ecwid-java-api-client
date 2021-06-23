@@ -139,6 +139,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrder::availableTaxes),
 	ReadOnly(FetchedOrder::availableShippingOptions),
 	ReadOnly(FetchedOrder::shipments),
+	ReadOnly(FetchedOrder::invoices),
+	ReadOnly(FetchedOrder::predictedPackage),
 	ReadOnly(FetchedOrder::customerGroupId),
 	Ignored(FetchedOrder::createTimestamp),
 	Ignored(FetchedOrder::updateDate),

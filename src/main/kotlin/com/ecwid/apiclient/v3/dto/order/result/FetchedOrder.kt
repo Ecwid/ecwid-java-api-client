@@ -100,6 +100,8 @@ data class FetchedOrder(
 		val refunds: List<RefundInfo>? = null,
 
 		val utmData: UtmData? = null,
+		val invoices: List<TaxInvoice>? = null,
+		val predictedPackage: List<PredictedPackage>? = null,
 
 		val pricesIncludeTax: Boolean? = null,
 		val disableAllCustomerNotifications: Boolean? = null,
@@ -423,6 +425,27 @@ data class FetchedOrder(
 	data class TaxRule(
 		val zoneId: String? = null,
 		val tax: Double? = null
+	)
+
+	data class TaxInvoice(
+		val internalId: Long? = null,
+		val id: String? = null,
+		val created: String? = null,
+		val link: String? = null,
+		val type: Type? = null
+	) {
+		enum class Type {
+			SALE,
+			FULL_CANCEL
+		}
+	}
+
+	data class PredictedPackage(
+		val height: Double? = null,
+		val width: Double? = null,
+		val length: Double? = null,
+		val weight: Double? = null,
+		val declaredValue: Double? = null
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedOrder::class)
