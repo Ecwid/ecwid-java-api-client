@@ -9,7 +9,8 @@ import com.ecwid.apiclient.v3.dto.saleschannels.enums.MarketplaceCondition
 data class FetchedYahooShoppingFeedConfig(
 		val marketplaceConfig: MarketplaceConfig = MarketplaceConfig(),
 		val condition: MarketplaceCondition = MarketplaceCondition.NEW,
-		val productFeedInfo: ProductFeedInfo = ProductFeedInfo()
+		val productFeedInfo: ProductFeedInfo = ProductFeedInfo(),
+		val taxonomy: String = ""
 ) : ApiFetchedDTO {
 
 	override fun getModifyKind() = ModifyKind.ReadOnly
