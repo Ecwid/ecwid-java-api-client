@@ -4,7 +4,8 @@ complexity:
   LargeClass:
     excludes: ['**/test/**']
   LongMethod:
-    threshold: 300
+    threshold: 100
+    excludes: ['**/test/**']
   LongParameterList:
     functionThreshold: 10
     constructorThreshold: 15
@@ -34,7 +35,7 @@ style:
 # ktlint rules
 formatting:
   MaximumLineLength:
-    maxLineLength: 200
+    maxLineLength: 180
   # Initially enabled
   NoBlankLineBeforeRbrace:
     active: false
