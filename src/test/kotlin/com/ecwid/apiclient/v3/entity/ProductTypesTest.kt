@@ -27,61 +27,61 @@ class ProductTypesTest : BaseEntityTest() {
 	@Test
 	fun testGeneralProductTypeLifecycle() {
 		val productTypeCreateRequest = ProductTypeCreateRequest(
-				newProductType = UpdatedProductType(
-						name = randomOf("Shirts & Tops", "Books", "Tablet Computers"),
-						attributes = listOf(
-								UpdatedProductType.Attribute(
-										name = "Attribute Upc",
-										type = AttributeType.UPC,
-										show = AttributeDisplayType.DESCR
-								),
-								UpdatedProductType.Attribute(
-										name = "Attribute Brand",
-										type = AttributeType.BRAND,
-										show = AttributeDisplayType.DESCR
-								),
-								UpdatedProductType.Attribute(
-										name = "Attribute Gender",
-										type = AttributeType.GENDER,
-										show = AttributeDisplayType.PRICE
-								),
-								UpdatedProductType.Attribute(
-										name = "Attribute Age Group",
-										type = AttributeType.AGE_GROUP,
-										show = AttributeDisplayType.PRICE
-								),
-								UpdatedProductType.Attribute(
-										name = "Attribute Color",
-										type = AttributeType.COLOR,
-										show = AttributeDisplayType.DESCR
-								),
-								UpdatedProductType.Attribute(
-										name = "Attribute Size",
-										type = AttributeType.SIZE,
-										show = AttributeDisplayType.NOTSHOW
-								),
-								UpdatedProductType.Attribute(
-										name = "Attribute Ebay",
-										type = AttributeType.EBAY,
-										show = AttributeDisplayType.DESCR
-								),
-								UpdatedProductType.Attribute(
-										name = "Attribute Ebay required",
-										type = AttributeType.EBAY_REQUIRED,
-										show = AttributeDisplayType.NOTSHOW
-								),
-								UpdatedProductType.Attribute(
-										name = "Attribute Price Per Unit",
-										type = AttributeType.PRICE_PER_UNIT,
-										show = AttributeDisplayType.DESCR
-								),
-								UpdatedProductType.Attribute(
-										name = "Attribute Units in product",
-										type = AttributeType.UNITS_IN_PRODUCT,
-										show = AttributeDisplayType.NOTSHOW
-								)
-						)
+			newProductType = UpdatedProductType(
+				name = randomOf("Shirts & Tops", "Books", "Tablet Computers"),
+				attributes = listOf(
+					UpdatedProductType.Attribute(
+						name = "Attribute Upc",
+						type = AttributeType.UPC,
+						show = AttributeDisplayType.DESCR
+					),
+					UpdatedProductType.Attribute(
+						name = "Attribute Brand",
+						type = AttributeType.BRAND,
+						show = AttributeDisplayType.DESCR
+					),
+					UpdatedProductType.Attribute(
+						name = "Attribute Gender",
+						type = AttributeType.GENDER,
+						show = AttributeDisplayType.PRICE
+					),
+					UpdatedProductType.Attribute(
+						name = "Attribute Age Group",
+						type = AttributeType.AGE_GROUP,
+						show = AttributeDisplayType.PRICE
+					),
+					UpdatedProductType.Attribute(
+						name = "Attribute Color",
+						type = AttributeType.COLOR,
+						show = AttributeDisplayType.DESCR
+					),
+					UpdatedProductType.Attribute(
+						name = "Attribute Size",
+						type = AttributeType.SIZE,
+						show = AttributeDisplayType.NOTSHOW
+					),
+					UpdatedProductType.Attribute(
+						name = "Attribute Ebay",
+						type = AttributeType.EBAY,
+						show = AttributeDisplayType.DESCR
+					),
+					UpdatedProductType.Attribute(
+						name = "Attribute Ebay required",
+						type = AttributeType.EBAY_REQUIRED,
+						show = AttributeDisplayType.NOTSHOW
+					),
+					UpdatedProductType.Attribute(
+						name = "Attribute Price Per Unit",
+						type = AttributeType.PRICE_PER_UNIT,
+						show = AttributeDisplayType.DESCR
+					),
+					UpdatedProductType.Attribute(
+						name = "Attribute Units in product",
+						type = AttributeType.UNITS_IN_PRODUCT,
+						show = AttributeDisplayType.NOTSHOW
+					)
 				)
+			)
 		)
 
 		val productTypeCreateResult = apiClient.createProductType(productTypeCreateRequest)
@@ -92,7 +92,7 @@ class ProductTypesTest : BaseEntityTest() {
 		val productTypeDetails1 = apiClient.getProductTypeDetails(productTypeDetailsRequest)
 
 		val cleanedDetails = productTypeDetails1.toUpdated()
-				.cleanupAttributeIds()
+			.cleanupAttributeIds()
 
 		assertEquals(productTypeCreateRequest.newProductType, cleanedDetails)
 	}
@@ -101,7 +101,7 @@ class ProductTypesTest : BaseEntityTest() {
 	fun testProductTypeLifecycle() {
 		// Creating new product type
 		val productTypeCreateRequest = ProductTypeCreateRequest(
-				newProductType = generateTestProductTypeForCreate()
+			newProductType = generateTestProductTypeForCreate()
 		)
 		val productTypeCreateResult = apiClient.createProductType(productTypeCreateRequest)
 		assertTrue(productTypeCreateResult.id > 0)
@@ -113,8 +113,8 @@ class ProductTypesTest : BaseEntityTest() {
 
 		// Renaming and replacing all product type attributes
 		val productTypeUpdateRequest = ProductTypeUpdateRequest(
-				productTypeId = productTypeDetails1.id,
-				updatedProductType = generateTestProductTypeForUpdate(productTypeDetails1)
+			productTypeId = productTypeDetails1.id,
+			updatedProductType = generateTestProductTypeForUpdate(productTypeDetails1)
 		)
 		val productTypeUpdateResult1 = apiClient.updateProductType(productTypeUpdateRequest)
 		assertEquals(1, productTypeUpdateResult1.updateCount)
@@ -146,9 +146,9 @@ class ProductTypesTest : BaseEntityTest() {
 		// Create three product types additionally to always existing “General” product type
 		repeat(3) {
 			val productTypeCreateRequest = ProductTypeCreateRequest(
-					newProductType = UpdatedProductType(
-							name = "Product type " + randomAlphanumeric(8)
-					)
+				newProductType = UpdatedProductType(
+					name = "Product type " + randomAlphanumeric(8)
+				)
 			)
 			val productTypeCreateResult = apiClient.createProductType(productTypeCreateRequest)
 			assertTrue(productTypeCreateResult.id > 0)
@@ -158,37 +158,36 @@ class ProductTypesTest : BaseEntityTest() {
 		val customerGroupsSearchResult = apiClient.getAllProductTypes(ProductTypesGetAllRequest())
 		assertEquals(3 + 1, customerGroupsSearchResult.size) // “General” product type always exists in every store
 	}
-
 }
 
 private fun generateTestProductTypeForCreate(): UpdatedProductType {
 	return UpdatedProductType(
-			name = randomOf("Shirts & Tops", "Books", "Tablet Computers"),
-			attributes = AttributeType.values().map(::generateProductAttribute)
+		name = randomOf("Shirts & Tops", "Books", "Tablet Computers"),
+		attributes = AttributeType.values().map(::generateProductAttribute)
 	)
 }
 
 private fun generateTestProductTypeForUpdate(source: FetchedProductType): UpdatedProductType {
 	return UpdatedProductType(
-			name = "Product type " + randomAlphanumeric(8),
-			attributes = source.attributes?.map { attribute ->
-				attribute.toUpdated().copy(
-						name = "Updated " + attribute.name
-				)
-			}
+		name = "Product type " + randomAlphanumeric(8),
+		attributes = source.attributes?.map { attribute ->
+			attribute.toUpdated().copy(
+				name = "Updated " + attribute.name
+			)
+		}
 	)
 }
 
 private fun generateProductAttribute(attributeType: AttributeType): UpdatedProductType.Attribute {
 	return UpdatedProductType.Attribute(
-			name = "Attribute ${attributeType.name}: ${randomAlphanumeric(8)}",
-			type = attributeType,
-			show = randomEnumValue<AttributeDisplayType>()
+		name = "Attribute ${attributeType.name}: ${randomAlphanumeric(8)}",
+		type = attributeType,
+		show = randomEnumValue<AttributeDisplayType>()
 	)
 }
 
 private fun UpdatedProductType.cleanupAttributeIds(): UpdatedProductType {
 	return this.copy(
-			attributes = attributes?.map { attribute -> attribute.copy(id = null) }
+		attributes = attributes?.map { attribute -> attribute.copy(id = null) }
 	)
 }

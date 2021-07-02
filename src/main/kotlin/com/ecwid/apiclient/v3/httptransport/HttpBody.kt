@@ -19,7 +19,6 @@ sealed class HttpBody(val mimeType: String) {
 		is InputStreamBody -> "[Binary data: from stream]"
 		is LocalFileBody -> "[Binary data: from file '${file.absolutePath}']"
 	}
-
 }
 
 sealed class TransportHttpBody(val mimeType: String) {

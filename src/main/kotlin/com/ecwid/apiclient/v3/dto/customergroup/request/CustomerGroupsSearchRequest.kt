@@ -4,14 +4,14 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class CustomerGroupsSearchRequest(
-		val offset: Int = 0,
-		val limit: Int = 100
+	val offset: Int = 0,
+	val limit: Int = 100
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			pathSegments = listOf(
-				"customer_groups"
-			),
-			params = toParams()
+		pathSegments = listOf(
+			"customer_groups"
+		),
+		params = toParams()
 	)
 
 	private fun toParams(): Map<String, String> {
@@ -21,5 +21,4 @@ data class CustomerGroupsSearchRequest(
 			put("limit", request.limit.toString())
 		}.toMap()
 	}
-
 }

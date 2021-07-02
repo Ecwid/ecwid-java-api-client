@@ -8,21 +8,21 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 data class CouponSearchRequest(
-		val offset: Int = 0,
-		val limit: Int = 100,
-		val code: String? = null,
-		val discountType: Set<DiscountCouponType>? = null,
-		val availability: DiscountCouponStatus? = null,
-		val createdFrom: Date? = null,
-		val createdTo: Date? = null,
-		val updatedFrom: Date? = null,
-		val updatedTo: Date? = null
+	val offset: Int = 0,
+	val limit: Int = 100,
+	val code: String? = null,
+	val discountType: Set<DiscountCouponType>? = null,
+	val availability: DiscountCouponStatus? = null,
+	val createdFrom: Date? = null,
+	val createdTo: Date? = null,
+	val updatedFrom: Date? = null,
+	val updatedTo: Date? = null
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			pathSegments = listOf(
-				"discount_coupons"
-			),
-			params = toParams()
+		pathSegments = listOf(
+			"discount_coupons"
+		),
+		params = toParams()
 	)
 
 	private fun toParams(): Map<String, String> {

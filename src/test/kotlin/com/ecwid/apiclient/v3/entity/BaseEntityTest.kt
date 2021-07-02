@@ -46,21 +46,21 @@ abstract class BaseEntityTest {
 	protected open fun beforeEach() {
 		val properties = PropertiesLoader.load()
 		apiClientHelper = ApiClientHelper(
-				apiServerDomain = ApiServerDomain(
-						host = properties.apiHost,
-						securePort = properties.apiPort
-				),
-				credentials = ApiStoreCredentials(
-						storeId = properties.storeId,
-						apiToken = properties.apiToken
-				),
-				loggingSettings = LoggingSettings().copy(
-						logRequest = true,
-						logRequestBody = true,
-						logSuccessfulResponseBody = true
-				),
-				httpTransport = ApacheCommonsHttpClientTransport(defaultHeaders = emptyList()),
-				jsonTransformerProvider = GsonTransformerProvider()
+			apiServerDomain = ApiServerDomain(
+				host = properties.apiHost,
+				securePort = properties.apiPort
+			),
+			credentials = ApiStoreCredentials(
+				storeId = properties.storeId,
+				apiToken = properties.apiToken
+			),
+			loggingSettings = LoggingSettings().copy(
+				logRequest = true,
+				logRequestBody = true,
+				logSuccessfulResponseBody = true
+			),
+			httpTransport = ApacheCommonsHttpClientTransport(defaultHeaders = emptyList()),
+			jsonTransformerProvider = GsonTransformerProvider()
 		)
 		apiClient = ApiClient(apiClientHelper)
 	}
@@ -90,32 +90,32 @@ abstract class BaseEntityTest {
 
 	protected fun removeAllVariations() {
 		apiClient
-				.searchProductsAsSequence(ProductsSearchRequest.ByFilters())
-				.map(FetchedProduct::id)
-				.filterNotNull()
-				.forEach { productId ->
-					apiClient.deleteAllProductVariations(DeleteAllProductVariationsRequest(productId))
-				}
+			.searchProductsAsSequence(ProductsSearchRequest.ByFilters())
+			.map(FetchedProduct::id)
+			.filterNotNull()
+			.forEach { productId ->
+				apiClient.deleteAllProductVariations(DeleteAllProductVariationsRequest(productId))
+			}
 	}
 
 	protected fun removeAllProducts() {
 		apiClient
-				.searchProductsAsSequence(ProductsSearchRequest.ByFilters())
-				.map(FetchedProduct::id)
-				.filterNotNull()
-				.forEach { productId ->
-					apiClient.deleteProduct(ProductDeleteRequest(productId))
-				}
+			.searchProductsAsSequence(ProductsSearchRequest.ByFilters())
+			.map(FetchedProduct::id)
+			.filterNotNull()
+			.forEach { productId ->
+				apiClient.deleteProduct(ProductDeleteRequest(productId))
+			}
 	}
 
 	protected fun removeAllCategories() {
 		apiClient
-				.searchCategoriesAsSequence(CategoriesSearchRequest(hiddenCategories = true))
-				.map(FetchedCategory::id)
-				.filterNotNull()
-				.forEach { categoryId ->
-					apiClient.deleteCategory(CategoryDeleteRequest(categoryId))
-				}
+			.searchCategoriesAsSequence(CategoriesSearchRequest(hiddenCategories = true))
+			.map(FetchedCategory::id)
+			.filterNotNull()
+			.forEach { categoryId ->
+				apiClient.deleteCategory(CategoryDeleteRequest(categoryId))
+			}
 	}
 
 	protected fun removeAllOrders() {
@@ -124,65 +124,71 @@ abstract class BaseEntityTest {
 		Thread.sleep(1000)
 
 		apiClient
-				.searchOrdersAsSequence(OrdersSearchRequest())
-				.map(FetchedOrder::orderNumber)
-				.filterNotNull()
-				.forEach { orderNumber ->
-					apiClient.deleteOrder(OrderDeleteRequest(orderNumber))
-				}
+			.searchOrdersAsSequence(OrdersSearchRequest())
+			.map(FetchedOrder::orderNumber)
+			.filterNotNull()
+			.forEach { orderNumber ->
+				apiClient.deleteOrder(OrderDeleteRequest(orderNumber))
+			}
 	}
 
 	protected fun removeAllProductTypes() {
 		apiClient
-				.getAllProductTypes(ProductTypesGetAllRequest())
-				.map(FetchedProductType::id)
-				.filter { productTypeId -> productTypeId > 0 } // We cannot delete “General” product type
-				.forEach { productTypeId ->
-					apiClient.deleteProductType(ProductTypeDeleteRequest(productTypeId))
-				}
+			.getAllProductTypes(ProductTypesGetAllRequest())
+			.map(FetchedProductType::id)
+			.filter { productTypeId -> productTypeId > 0 } // We cannot delete “General” product type
+			.forEach { productTypeId ->
+				apiClient.deleteProductType(ProductTypeDeleteRequest(productTypeId))
+			}
 	}
 
 	protected fun removeAllCustomers() {
 		apiClient
-				.searchCustomersAsSequence(CustomersSearchRequest())
-				.map(FetchedCustomer::id)
-				.filterNotNull()
-				.forEach { customerId ->
-					apiClient.deleteCustomer(CustomerDeleteRequest(customerId))
-				}
+			.searchCustomersAsSequence(CustomersSearchRequest())
+			.map(FetchedCustomer::id)
+			.filterNotNull()
+			.forEach { customerId ->
+				apiClient.deleteCustomer(CustomerDeleteRequest(customerId))
+			}
 	}
 
 	protected fun removeAllCustomerGroups() {
 		apiClient
-				.searchCustomerGroupsAsSequence(CustomerGroupsSearchRequest())
-				.map(FetchedCustomerGroup::id)
-				.filterNotNull()
-				.filter { customerGroupId -> customerGroupId > 0 } // We cannot delete “General” customer group
-				.forEach { customerGroupId ->
-					apiClient.deleteCustomerGroup(CustomerGroupDeleteRequest(customerGroupId))
-				}
+			.searchCustomerGroupsAsSequence(CustomerGroupsSearchRequest())
+			.map(FetchedCustomerGroup::id)
+			.filterNotNull()
+			.filter { customerGroupId -> customerGroupId > 0 } // We cannot delete “General” customer group
+			.forEach { customerGroupId ->
+				apiClient.deleteCustomerGroup(CustomerGroupDeleteRequest(customerGroupId))
+			}
 	}
 
 	protected fun removeAllCoupons() {
 		apiClient
-				.searchCouponsAsSequence(CouponSearchRequest())
-				.map(FetchedCoupon::code)
-				.filterNotNull()
-				.forEach { couponIdentifier ->
-					apiClient.deleteCoupon(CouponDeleteRequest(couponIdentifier))
-				}
+			.searchCouponsAsSequence(CouponSearchRequest())
+			.map(FetchedCoupon::code)
+			.filterNotNull()
+			.forEach { couponIdentifier ->
+				apiClient.deleteCoupon(CouponDeleteRequest(couponIdentifier))
+			}
 	}
 
 	protected fun getTestPngFilePath(): Path = Paths.get(javaClass.getResource("/logo-ecwid-small.png").toURI())
 
-	protected fun waitForIndexedProducts(productsSearchRequest: ProductsSearchRequest.ByFilters, desiredProductCount: Int): ProductsSearchResult {
+	protected fun waitForIndexedProducts(
+		productsSearchRequest: ProductsSearchRequest.ByFilters,
+		desiredProductCount: Int
+	): ProductsSearchResult {
 		return processDelay(500L, 10) {
 			val productsSearchResult = apiClient.searchProducts(productsSearchRequest)
 			if (productsSearchResult.items.size == desiredProductCount) productsSearchResult else null
 		}
 	}
 
-	protected fun waitForIndexedCategories(categoriesSearchRequest: CategoriesSearchRequest, desiredCategoriesCount: Int): CategoriesSearchResult {
+	protected fun waitForIndexedCategories(
+		categoriesSearchRequest: CategoriesSearchRequest,
+		desiredCategoriesCount: Int
+	): CategoriesSearchResult {
 		return processDelay(500L, 10) {
 			val productsSearchResult = apiClient.searchCategories(categoriesSearchRequest)
 			if (productsSearchResult.items.size == desiredCategoriesCount) productsSearchResult else null
@@ -200,5 +206,4 @@ abstract class BaseEntityTest {
 		} while (tries < totalTries)
 		return Assertions.fail("After $tries tries, item was not processed")
 	}
-
 }

@@ -5,14 +5,14 @@ import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 
 fun FetchedCategory.toUpdated(): UpdatedCategory {
 	return UpdatedCategory(
-			parentId = parentId,
-			orderBy = orderBy,
-			isSampleCategory = isSampleCategory,
-			name = name,
-			nameTranslated = nameTranslated,
-			description = description,
-			descriptionTranslated = descriptionTranslated,
-			enabled = enabled,
-			productIds = productIds
+		parentId = parentId,
+		orderBy = orderBy,
+		isSampleCategory = isSampleCategory,
+		name = name,
+		nameTranslated = nameTranslated,
+		description = description,
+		descriptionTranslated = descriptionTranslated,
+		enabled = enabled,
+		productIds = productIds
 	)
 }

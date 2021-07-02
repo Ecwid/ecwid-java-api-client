@@ -5,16 +5,16 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class ProductTypeUpdateRequest(
-		val productTypeId: Int = 0,
-		val updatedProductType: UpdatedProductType = UpdatedProductType()
+	val productTypeId: Int = 0,
+	val updatedProductType: UpdatedProductType = UpdatedProductType()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			pathSegments = listOf(
-					"classes",
-					"$productTypeId"
-			),
-			httpBody = HttpBody.JsonBody(
-					obj = updatedProductType
-			)
+		pathSegments = listOf(
+			"classes",
+			"$productTypeId"
+		),
+		httpBody = HttpBody.JsonBody(
+			obj = updatedProductType
+		)
 	)
 }

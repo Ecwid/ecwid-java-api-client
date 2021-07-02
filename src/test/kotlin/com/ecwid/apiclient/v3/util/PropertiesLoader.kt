@@ -47,7 +47,7 @@ object PropertiesLoader {
 
 	private fun fromResource(resourceName: String): LoadResult {
 		val resource = PropertiesLoader::class.java.getResourceAsStream(resourceName)
-				?: return LoadResult.Failed("File $resourceName not found in test/resources dir. Please copy test/resources/test.properties.sample and configure it")
+			?: return LoadResult.Failed("File $resourceName not found in test/resources dir. Please copy test/resources/test.properties.sample and configure it")
 
 		val p = Properties()
 		p.load(resource)
@@ -77,13 +77,12 @@ object PropertiesLoader {
 		}
 
 		val testProperties = TestProperties(
-				apiHost = apiHost,
-				apiPort = apiPort,
-				storeId = storeId,
-				apiToken = apiToken
+			apiHost = apiHost,
+			apiPort = apiPort,
+			storeId = storeId,
+			apiToken = apiToken
 		)
 
 		return LoadResult.Success(testProperties)
 	}
-
 }

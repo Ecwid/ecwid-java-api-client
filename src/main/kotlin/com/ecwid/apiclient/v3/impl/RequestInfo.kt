@@ -51,9 +51,7 @@ class RequestInfo private constructor(
 			params = params,
 			httpBody = httpBody
 		)
-
 	}
-
 }
 
 enum class HttpMethod {

@@ -4,21 +4,21 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class CategoriesSearchRequest(
-		val parentCategoryId: ParentCategory = ParentCategory.Any,
-		val hiddenCategories: Boolean? = null,
-		val returnProductIds: Boolean? = null,
-		val baseUrl: String? = null,
-		val cleanUrls: Boolean? = null,
-		val offset: Int = 0,
-		val limit: Int = 100,
-		val lang: String? = null
+	val parentCategoryId: ParentCategory = ParentCategory.Any,
+	val hiddenCategories: Boolean? = null,
+	val returnProductIds: Boolean? = null,
+	val baseUrl: String? = null,
+	val cleanUrls: Boolean? = null,
+	val offset: Int = 0,
+	val limit: Int = 100,
+	val lang: String? = null
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			pathSegments = listOf(
-				"categories"
-			),
-			params = toParams()
+		pathSegments = listOf(
+			"categories"
+		),
+		params = toParams()
 	)
 
 	sealed class ParentCategory {
@@ -49,5 +49,4 @@ data class CategoriesSearchRequest(
 			request.lang?.let { put("lang", it) }
 		}.toMap()
 	}
-
 }

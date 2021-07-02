@@ -6,25 +6,25 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 data class CustomersSearchRequest(
-		val keyword: String? = null,
-		val name: String? = null,
-		val email: String? = null,
-		val customerGroupId: Int? = null,
-		val minOrderCount: Int? = null,
-		val maxOrderCount: Int? = null,
-		val createdFrom: Date? = null,
-		val createdTo: Date? = null,
-		val updatedFrom: Date? = null,
-		val updatedTo: Date? = null,
-		val sortBy: SortOrder? = null,
-		val offset: Int = 0,
-		val limit: Int = 100
+	val keyword: String? = null,
+	val name: String? = null,
+	val email: String? = null,
+	val customerGroupId: Int? = null,
+	val minOrderCount: Int? = null,
+	val maxOrderCount: Int? = null,
+	val createdFrom: Date? = null,
+	val createdTo: Date? = null,
+	val updatedFrom: Date? = null,
+	val updatedTo: Date? = null,
+	val sortBy: SortOrder? = null,
+	val offset: Int = 0,
+	val limit: Int = 100
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			pathSegments = listOf(
-				"customers"
-			),
-			params = toParams()
+		pathSegments = listOf(
+			"customers"
+		),
+		params = toParams()
 	)
 
 	enum class SortOrder {

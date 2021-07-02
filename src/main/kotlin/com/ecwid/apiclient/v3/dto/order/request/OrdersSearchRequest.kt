@@ -8,30 +8,30 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 data class OrdersSearchRequest(
-		val ids: String? = null,
-		val keywords: String? = null,
-		val totalFrom: Double? = null,
-		val totalTo: Double? = null,
-		val createdFrom: Date? = null,
-		val createdTo: Date? = null,
-		val updatedFrom: Date? = null,
-		val updatedTo: Date? = null,
-		val couponCode: String? = null,
-		val orderNumber: Int? = null,
-		val vendorOrderNumber: String? = null,
-		val customer: String? = null,
-		val paymentMethod: String? = null,
-		val shippingMethod: String? = null,
-		val paymentStatus: OrderPaymentStatus? = null,
-		val fulfillmentStatus: OrderFulfillmentStatus? = null,
-		val offset: Int = 0,
-		val limit: Int = 100
+	val ids: String? = null,
+	val keywords: String? = null,
+	val totalFrom: Double? = null,
+	val totalTo: Double? = null,
+	val createdFrom: Date? = null,
+	val createdTo: Date? = null,
+	val updatedFrom: Date? = null,
+	val updatedTo: Date? = null,
+	val couponCode: String? = null,
+	val orderNumber: Int? = null,
+	val vendorOrderNumber: String? = null,
+	val customer: String? = null,
+	val paymentMethod: String? = null,
+	val shippingMethod: String? = null,
+	val paymentStatus: OrderPaymentStatus? = null,
+	val fulfillmentStatus: OrderFulfillmentStatus? = null,
+	val offset: Int = 0,
+	val limit: Int = 100
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			pathSegments = listOf(
-				"orders"
-			),
-			params = toParams()
+		pathSegments = listOf(
+			"orders"
+		),
+		params = toParams()
 	)
 
 	private fun toParams(): Map<String, String> {

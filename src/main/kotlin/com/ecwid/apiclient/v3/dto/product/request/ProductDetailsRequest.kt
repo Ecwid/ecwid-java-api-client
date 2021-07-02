@@ -4,17 +4,17 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class ProductDetailsRequest(
-		val productId: Int = 0,
-		val baseUrl: String? = null,
-		val cleanUrls: Boolean? = null,
-		val lang: String? = null
+	val productId: Int = 0,
+	val baseUrl: String? = null,
+	val cleanUrls: Boolean? = null,
+	val lang: String? = null
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			pathSegments = listOf(
-				"products",
-				"$productId"
-			),
-			params = toParams()
+		pathSegments = listOf(
+			"products",
+			"$productId"
+		),
+		params = toParams()
 	)
 
 	private fun toParams(): Map<String, String> {

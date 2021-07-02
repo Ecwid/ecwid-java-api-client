@@ -10,7 +10,6 @@ interface ApiFetchedDTO {
 		object ReadOnly : ModifyKind()
 		data class ReadWrite(val updatedDTOClass: KClass<out ApiUpdatedDTO>) : ModifyKind()
 	}
-
 }
 
 interface ApiUpdatedDTO {
@@ -20,7 +19,6 @@ interface ApiUpdatedDTO {
 	sealed class ModifyKind {
 		data class ReadWrite(val fetchedDTOClass: KClass<out ApiFetchedDTO>) : ModifyKind()
 	}
-
 }
 
 interface ApiRequestDTO

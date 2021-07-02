@@ -5,9 +5,9 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 
 class ShopzillaFeedConfigGetRequest : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			pathSegments = listOf(
-				"saleschannels",
-				"shopzilla"
-			)
+		pathSegments = listOf(
+			"saleschannels",
+			"shopzilla"
+		)
 	)
 }

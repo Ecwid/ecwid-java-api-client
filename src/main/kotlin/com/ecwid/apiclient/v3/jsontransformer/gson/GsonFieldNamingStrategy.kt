@@ -10,5 +10,4 @@ class GsonFieldNamingStrategy : FieldNamingStrategy {
 		val annotation = f.getAnnotation(JsonFieldName::class.java)
 		return annotation?.fieldName ?: f.name
 	}
-
 }

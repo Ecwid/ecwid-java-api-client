@@ -5,16 +5,16 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class CouponUpdateRequest(
-		val couponIdentifier: String = "",
-		val updatedCoupon: UpdatedCoupon = UpdatedCoupon()
+	val couponIdentifier: String = "",
+	val updatedCoupon: UpdatedCoupon = UpdatedCoupon()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
-			pathSegments = listOf(
-					"discount_coupons",
-					couponIdentifier
-			),
-			httpBody = HttpBody.JsonBody(
-					obj = updatedCoupon
-			)
+		pathSegments = listOf(
+			"discount_coupons",
+			couponIdentifier
+		),
+		httpBody = HttpBody.JsonBody(
+			obj = updatedCoupon
+		)
 	)
 }

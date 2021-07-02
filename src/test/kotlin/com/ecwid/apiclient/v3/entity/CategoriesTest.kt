@@ -35,36 +35,36 @@ class CategoriesTest : BaseEntityTest() {
 		// Creating some products to put into new categories
 
 		val productCreateRequest1 = ProductCreateRequest(
-				newProduct = generateTestProduct(nameSuffix = "testSearchByFilters", enabled = true)
+			newProduct = generateTestProduct(nameSuffix = "testSearchByFilters", enabled = true)
 		)
 		val productCreateResult1 = apiClient.createProduct(productCreateRequest1)
 		assertTrue(productCreateResult1.id > 0)
 
 		val productCreateRequest2 = ProductCreateRequest(
-				newProduct = generateTestProduct(nameSuffix = "testSearchByFilters", enabled = false)
+			newProduct = generateTestProduct(nameSuffix = "testSearchByFilters", enabled = false)
 		)
 		val productCreateResult2 = apiClient.createProduct(productCreateRequest2)
 		assertTrue(productCreateResult2.id > 0)
 
 		// Creating some categories
 		val categoryCreateRequest1 = CategoryCreateRequest(
-				newCategory = generateTestCategory(enabled = true)
+			newCategory = generateTestCategory(enabled = true)
 		)
 		val categoryCreateResult1 = apiClient.createCategory(categoryCreateRequest1)
 		assertTrue(categoryCreateResult1.id > 0)
 
 		val categoryCreateRequest2 = CategoryCreateRequest(
-				newCategory = generateTestCategory(enabled = false)
+			newCategory = generateTestCategory(enabled = false)
 		)
 		val categoryCreateResult2 = apiClient.createCategory(categoryCreateRequest2)
 		assertTrue(categoryCreateResult2.id > 0)
 
 		val categoryCreateRequest3 = CategoryCreateRequest(
-				newCategory = generateTestCategory(
-						parentCategoryId = categoryCreateResult2.id,
-						productIds = listOf(productCreateResult1.id, productCreateResult2.id),
-						enabled = false
-				)
+			newCategory = generateTestCategory(
+				parentCategoryId = categoryCreateResult2.id,
+				productIds = listOf(productCreateResult1.id, productCreateResult2.id),
+				enabled = false
+			)
 		)
 		val categoryCreateResult3 = apiClient.createCategory(categoryCreateRequest3)
 		assertTrue(categoryCreateResult3.id > 0)
@@ -171,15 +171,15 @@ class CategoriesTest : BaseEntityTest() {
 	fun testSearchUrls() {
 		// Create one category
 		val categoryCreateRequest = CategoryCreateRequest(
-				newCategory = generateTestCategory(enabled = true)
+			newCategory = generateTestCategory(enabled = true)
 		)
 		val categoryCreateResult = apiClient.createCategory(categoryCreateRequest)
 		assertTrue(categoryCreateResult.id > 0)
 
 		// Searching categories with different combinations of baseUrl and cleanUrls parameters
 		assertCategoryUrlMatchesRegex(
-				categorySearchRequest = CategoriesSearchRequest(),
-				urlPattern = "https://.*.company.site.*/Category-.*-c.*"
+			categorySearchRequest = CategoriesSearchRequest(),
+			urlPattern = "https://.*.company.site.*/Category-.*-c.*"
 		)
 		assertCategoryUrlMatchesRegex(
 			categorySearchRequest = CategoriesSearchRequest(
@@ -188,10 +188,10 @@ class CategoriesTest : BaseEntityTest() {
 			urlPattern = "https://.*.company.site.*/Category-.*-c.*"
 		)
 		assertCategoryUrlMatchesRegex(
-				categorySearchRequest = CategoriesSearchRequest(
-						cleanUrls = false
-				),
-				urlPattern = "https://.*.company.site.*/#!/Category-.*/c/.*"
+			categorySearchRequest = CategoriesSearchRequest(
+				cleanUrls = false
+			),
+			urlPattern = "https://.*.company.site.*/#!/Category-.*/c/.*"
 		)
 		assertCategoryUrlMatchesRegex(
 			categorySearchRequest = CategoriesSearchRequest(
@@ -207,11 +207,11 @@ class CategoriesTest : BaseEntityTest() {
 			urlPattern = "https://google.com/Category-.*-c.*"
 		)
 		assertCategoryUrlMatchesRegex(
-				categorySearchRequest = CategoriesSearchRequest(
-						baseUrl = "https://google.com/",
-						cleanUrls = false
-				),
-				urlPattern = "https://google.com/#!/Category-.*/c/.*"
+			categorySearchRequest = CategoriesSearchRequest(
+				baseUrl = "https://google.com/",
+				cleanUrls = false
+			),
+			urlPattern = "https://google.com/#!/Category-.*/c/.*"
 		)
 	}
 
@@ -239,13 +239,13 @@ class CategoriesTest : BaseEntityTest() {
 		// Creating some products to put into new categories
 
 		val productCreateRequest1 = ProductCreateRequest(
-				newProduct = generateTestProduct(nameSuffix = nameSuffix)
+			newProduct = generateTestProduct(nameSuffix = nameSuffix)
 		)
 		val productCreateResult1 = apiClient.createProduct(productCreateRequest1)
 		assertTrue(productCreateResult1.id > 0)
 
 		val productCreateRequest2 = ProductCreateRequest(
-				newProduct = generateTestProduct(nameSuffix = nameSuffix)
+			newProduct = generateTestProduct(nameSuffix = nameSuffix)
 		)
 		val productCreateResult2 = apiClient.createProduct(productCreateRequest2)
 		assertTrue(productCreateResult2.id > 0)
@@ -253,16 +253,16 @@ class CategoriesTest : BaseEntityTest() {
 		// Creating two categories in hierarchy
 
 		val categoryCreateRequest1 = CategoryCreateRequest(
-				newCategory = generateTestCategory()
+			newCategory = generateTestCategory()
 		)
 		val categoryCreateResult1 = apiClient.createCategory(categoryCreateRequest1)
 		assertTrue(categoryCreateResult1.id > 0)
 
 		val categoryCreateRequest2 = CategoryCreateRequest(
-				newCategory = generateTestCategory(
-						parentCategoryId = categoryCreateResult1.id,
-						productIds = listOf(productCreateResult1.id, productCreateResult2.id)
-				)
+			newCategory = generateTestCategory(
+				parentCategoryId = categoryCreateResult1.id,
+				productIds = listOf(productCreateResult1.id, productCreateResult2.id)
+			)
 		)
 		val categoryCreateResult2 = apiClient.createCategory(categoryCreateRequest2)
 		assertTrue(categoryCreateResult2.id > 0)
@@ -271,17 +271,17 @@ class CategoriesTest : BaseEntityTest() {
 		val categoryDetailsRequest = CategoryDetailsRequest(categoryId = categoryCreateResult2.id)
 		val categoryDetails1 = apiClient.getCategoryDetails(categoryDetailsRequest)
 		assertEquals(
-				categoryCreateRequest2.newCategory,
-				categoryDetails1.toUpdated()
+			categoryCreateRequest2.newCategory,
+			categoryDetails1.toUpdated()
 		)
 
 		// Completely updating newly created category
 		val categoryUpdateRequest = CategoryUpdateRequest(
-				categoryId = categoryDetails1.id,
-				updatedCategory = generateTestCategory(
-						parentCategoryId = 0,
-						productIds = listOf(productCreateResult2.id)
-				)
+			categoryId = categoryDetails1.id,
+			updatedCategory = generateTestCategory(
+				parentCategoryId = 0,
+				productIds = listOf(productCreateResult2.id)
+			)
 		)
 		val categoryUpdateResult1 = apiClient.updateCategory(categoryUpdateRequest)
 		assertEquals(1, categoryUpdateResult1.updateCount)
@@ -289,8 +289,8 @@ class CategoriesTest : BaseEntityTest() {
 		// Checking that category was successfully updated with necessary parameters
 		val categoryDetails2 = apiClient.getCategoryDetails(categoryDetailsRequest)
 		assertEquals(
-				categoryUpdateRequest.updatedCategory,
-				categoryDetails2.toUpdated().cleanupForComparison()
+			categoryUpdateRequest.updatedCategory,
+			categoryDetails2.toUpdated().cleanupForComparison()
 		)
 
 		// Deleting category
@@ -311,15 +311,15 @@ class CategoriesTest : BaseEntityTest() {
 	fun testTranslations() {
 		// Creating new category
 		val categoryCreateRequest = CategoryCreateRequest(
-				newCategory = generateTestCategory()
+			newCategory = generateTestCategory()
 		)
 		val categoryCreateResult = apiClient.createCategory(categoryCreateRequest)
 		assertTrue(categoryCreateResult.id > 0)
 
 		val categoryDetails = apiClient.getCategoryDetails(
-				CategoryDetailsRequest(
-						categoryId = categoryCreateResult.id
-				)
+			CategoryDetailsRequest(
+				categoryId = categoryCreateResult.id
+			)
 		)
 		val descriptionTranslated = categoryDetails.descriptionTranslated
 		require(descriptionTranslated != null)
@@ -338,7 +338,7 @@ class CategoriesTest : BaseEntityTest() {
 	fun testManipulateCategoryImage() {
 		// Creating new category
 		val categoryCreateRequest = CategoryCreateRequest(
-				newCategory = generateTestCategory()
+			newCategory = generateTestCategory()
 		)
 		val categoryCreateResult = apiClient.createCategory(categoryCreateRequest)
 		assertTrue(categoryCreateResult.id > 0)
@@ -346,29 +346,29 @@ class CategoriesTest : BaseEntityTest() {
 		// Upload some images from different sources
 
 		val categoryImageUploadRequest1 = CategoryImageUploadRequest(
-				categoryId = categoryCreateResult.id,
-				fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
+			categoryId = categoryCreateResult.id,
+			fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
 		)
 		val categoryImageUploadResult1 = apiClient.uploadCategoryImage(categoryImageUploadRequest1)
 		assertTrue(categoryImageUploadResult1.id > 0)
 
 		val categoryImageUploadRequest2 = CategoryImageUploadRequest(
-				categoryId = categoryCreateResult.id,
-				fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
+			categoryId = categoryCreateResult.id,
+			fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
 		)
 		val categoryImageUploadResult2 = apiClient.uploadCategoryImage(categoryImageUploadRequest2)
 		assertTrue(categoryImageUploadResult2.id > 0)
 
 		val categoryImageUploadRequest3 = CategoryImageUploadRequest(
-				categoryId = categoryCreateResult.id,
-				fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
+			categoryId = categoryCreateResult.id,
+			fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
 		)
 		val categoryImageUploadResult3 = apiClient.uploadCategoryImage(categoryImageUploadRequest3)
 		assertTrue(categoryImageUploadResult3.id > 0)
 
 		val categoryImageUploadRequest4 = CategoryImageUploadRequest(
-				categoryId = categoryCreateResult.id,
-				fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
+			categoryId = categoryCreateResult.id,
+			fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
 		)
 		val categoryImageUploadResult4 = apiClient.uploadCategoryImage(categoryImageUploadRequest4)
 		assertTrue(categoryImageUploadResult4.id > 0)
@@ -377,8 +377,8 @@ class CategoriesTest : BaseEntityTest() {
 		val categoryDetailsRequest = CategoryDetailsRequest(categoryId = categoryCreateResult.id)
 		val categoryDetails1 = apiClient.getCategoryDetails(categoryDetailsRequest)
 		assertCategoryImage(
-				expectedThumbnailImageId = categoryImageUploadResult4.id,
-				categoryDetails = categoryDetails1
+			expectedThumbnailImageId = categoryImageUploadResult4.id,
+			categoryDetails = categoryDetails1
 		)
 
 		// Now delete category image
@@ -395,7 +395,7 @@ class CategoriesTest : BaseEntityTest() {
 	fun testUploadCategoryImageAsync() {
 		// Creating new category
 		val categoryCreateRequest = CategoryCreateRequest(
-				newCategory = generateTestCategory()
+			newCategory = generateTestCategory()
 		)
 		val categoryCreateResult = apiClient.createCategory(categoryCreateRequest)
 		assertTrue(categoryCreateResult.id > 0)
@@ -406,12 +406,12 @@ class CategoriesTest : BaseEntityTest() {
 
 		// Try to send async image upload request
 		val request = CategoryImageAsyncUploadRequest(
-				categoryId = categoryCreateResult.id,
-				asyncPictureData = AsyncPictureData(
-						url = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png",
-						width = 180,
-						height = 180
-				)
+			categoryId = categoryCreateResult.id,
+			asyncPictureData = AsyncPictureData(
+				url = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png",
+				width = 180,
+				height = 180
+			)
 		)
 		apiClient.uploadCategoryImageAsync(request)
 
@@ -419,12 +419,12 @@ class CategoriesTest : BaseEntityTest() {
 		assertNotNull(categoryDetailsAfterUpload.imageUrl)
 
 		val requestWithBlankUrl = CategoryImageAsyncUploadRequest(
-				categoryId = categoryCreateResult.id,
-				asyncPictureData = AsyncPictureData(
-						url = "  ",
-						width = 180,
-						height = 180
-				)
+			categoryId = categoryCreateResult.id,
+			asyncPictureData = AsyncPictureData(
+				url = "  ",
+				width = 180,
+				height = 180
+			)
 		)
 		try {
 			apiClient.uploadCategoryImageAsync(requestWithBlankUrl)
@@ -434,12 +434,12 @@ class CategoriesTest : BaseEntityTest() {
 		}
 
 		val requestWithWrongUrl = CategoryImageAsyncUploadRequest(
-				categoryId = categoryCreateResult.id,
-				asyncPictureData = AsyncPictureData(
-						url = "htt://sssss",
-						width = 180,
-						height = 180
-				)
+			categoryId = categoryCreateResult.id,
+			asyncPictureData = AsyncPictureData(
+				url = "htt://sssss",
+				width = 180,
+				height = 180
+			)
 		)
 		try {
 			apiClient.uploadCategoryImageAsync(requestWithWrongUrl)
@@ -449,7 +449,11 @@ class CategoriesTest : BaseEntityTest() {
 		}
 	}
 
-	private fun assertCategory(desiredId: Int, desiredProductIds: List<Int>?, categoriesSearchResult: CategoriesSearchResult) {
+	private fun assertCategory(
+		desiredId: Int,
+		desiredProductIds: List<Int>?,
+		categoriesSearchResult: CategoriesSearchResult
+	) {
 		val category = categoriesSearchResult.items.find { category ->
 			category.id == desiredId
 		} ?: fail("Category with id $desiredId not found")
@@ -466,77 +470,79 @@ class CategoriesTest : BaseEntityTest() {
 
 		val url = searchCategories.items[0].url ?: ""
 		assertTrue(
-				url.matches(Regex(urlPattern)),
-				"Url '$url' is not matching regex pattern '$urlPattern'"
+			url.matches(Regex(urlPattern)),
+			"Url '$url' is not matching regex pattern '$urlPattern'"
 		)
 	}
 
 	private fun assertCategoryImage(expectedThumbnailImageId: Long, categoryDetails: FetchedCategory) {
 		assertAll(
-				{
-					assertTrue(categoryDetails.thumbnailUrl?.endsWith("/$expectedThumbnailImageId.jpg")
-							?: false, "thumbnailUrl mismatch")
-				},
-				{ assertFalse(categoryDetails.hdThumbnailUrl.isNullOrEmpty(), "hdThumbnailUrl is empty") },
-				// { assertFalse(categoryDetails.imageUrl.isNullOrEmpty(), "imageUrl is empty") }, // TODO Cannot test due to bug https://track.ecwid.com/youtrack/issue/ECWID-53222
-				{ assertFalse(categoryDetails.originalImageUrl.isNullOrEmpty(), "originalImageUrl is empty") },
-				{ assertFalse(categoryDetails.originalImage?.url.isNullOrEmpty(), "originalImage.url is empty") },
-				{ assertTrue((categoryDetails.originalImage?.width ?: 0) > 0, "originalImage.width is zero") },
-				{ assertTrue((categoryDetails.originalImage?.height ?: 0) > 0, "originalImage.height is zero") }
+			{
+				assertTrue(
+					categoryDetails.thumbnailUrl?.endsWith("/$expectedThumbnailImageId.jpg")
+						?: false,
+					"thumbnailUrl mismatch"
+				)
+			},
+			{ assertFalse(categoryDetails.hdThumbnailUrl.isNullOrEmpty(), "hdThumbnailUrl is empty") },
+			// { assertFalse(categoryDetails.imageUrl.isNullOrEmpty(), "imageUrl is empty") }, // TODO Cannot test due to bug https://track.ecwid.com/youtrack/issue/ECWID-53222
+			{ assertFalse(categoryDetails.originalImageUrl.isNullOrEmpty(), "originalImageUrl is empty") },
+			{ assertFalse(categoryDetails.originalImage?.url.isNullOrEmpty(), "originalImage.url is empty") },
+			{ assertTrue((categoryDetails.originalImage?.width ?: 0) > 0, "originalImage.width is zero") },
+			{ assertTrue((categoryDetails.originalImage?.height ?: 0) > 0, "originalImage.height is zero") }
 		)
 	}
 
 	private fun assertNoCategoryImage(categoryDetails: FetchedCategory) {
 		assertAll(
-				{ assertNull(categoryDetails.thumbnailUrl, "thumbnailUrl not empty") },
-				{ assertNull(categoryDetails.hdThumbnailUrl, "hdThumbnailUrl is not empty") },
-				// { assertNull(categoryDetails.imageUrl, "imageUrl is not empty") }, // TODO Cannot test due to bug https://track.ecwid.com/youtrack/issue/ECWID-53222
-				{ assertNull(categoryDetails.originalImageUrl, "originalImageUrl is not empty") },
-				{ assertNull(categoryDetails.originalImage, "originalImage is not null") }
+			{ assertNull(categoryDetails.thumbnailUrl, "thumbnailUrl not empty") },
+			{ assertNull(categoryDetails.hdThumbnailUrl, "hdThumbnailUrl is not empty") },
+			// { assertNull(categoryDetails.imageUrl, "imageUrl is not empty") }, // TODO Cannot test due to bug https://track.ecwid.com/youtrack/issue/ECWID-53222
+			{ assertNull(categoryDetails.originalImageUrl, "originalImageUrl is not empty") },
+			{ assertNull(categoryDetails.originalImage, "originalImage is not null") }
 		)
 	}
-
 }
 
 private fun generateTestProduct(
-		nameSuffix: String,
-		enabled: Boolean = randomBoolean()
+	nameSuffix: String,
+	enabled: Boolean = randomBoolean()
 ): UpdatedProduct {
 	return UpdatedProduct(
-			name = "Product $nameSuffix: ${randomAlphanumeric(8)}",
-			enabled = enabled
+		name = "Product $nameSuffix: ${randomAlphanumeric(8)}",
+		enabled = enabled
 	)
 }
 
 private fun generateTestCategory(
-		parentCategoryId: Int? = null,
-		productIds: List<Int> = listOf(),
-		enabled: Boolean = randomBoolean()
+	parentCategoryId: Int? = null,
+	productIds: List<Int> = listOf(),
+	enabled: Boolean = randomBoolean()
 ): UpdatedCategory {
 	val name = "Category " + randomAlphanumeric(8)
 	val description = "Description " + randomAlphanumeric(16)
 
 	return UpdatedCategory(
-			parentId = parentCategoryId,
-			orderBy = 10,
-			name = name,
-			nameTranslated = LocalizedValueMap(
-					"ru" to "Категория " + randomAlphanumeric(8),
-					"en" to name
-			),
-			description = description,
-			descriptionTranslated = LocalizedValueMap(
-					"ru" to "Описание " + randomAlphanumeric(16),
-					"en" to description
-			),
-			enabled = enabled,
-			productIds = productIds,
-			isSampleCategory = false
+		parentId = parentCategoryId,
+		orderBy = 10,
+		name = name,
+		nameTranslated = LocalizedValueMap(
+			"ru" to "Категория " + randomAlphanumeric(8),
+			"en" to name
+		),
+		description = description,
+		descriptionTranslated = LocalizedValueMap(
+			"ru" to "Описание " + randomAlphanumeric(16),
+			"en" to description
+		),
+		enabled = enabled,
+		productIds = productIds,
+		isSampleCategory = false
 	)
 }
 
 private fun UpdatedCategory.cleanupForComparison(): UpdatedCategory {
 	return copy(
-			parentId = parentId ?: 0
+		parentId = parentId ?: 0
 	)
 }

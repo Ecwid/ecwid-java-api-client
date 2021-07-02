@@ -43,11 +43,11 @@ class ApiClientHelper private constructor(
 		httpTransport: HttpTransport,
 		jsonTransformerProvider: JsonTransformerProvider
 	) : this(
-			apiServerDomain = apiServerDomain,
-			credentials = storeCredentials,
-			loggingSettings = loggingSettings,
-			httpTransport = httpTransport,
-			jsonTransformer = jsonTransformerProvider.build(listOf(createProductOptionsPolymorphicType()))
+		apiServerDomain = apiServerDomain,
+		credentials = storeCredentials,
+		loggingSettings = loggingSettings,
+		httpTransport = httpTransport,
+		jsonTransformer = jsonTransformerProvider.build(listOf(createProductOptionsPolymorphicType()))
 	)
 
 	constructor(
@@ -76,10 +76,10 @@ class ApiClientHelper private constructor(
 		val httpResponse = httpTransport.makeHttpRequest(httpRequest)
 
 		return processHttpResponse(
-				httpResponse = httpResponse,
-				requestId = requestId,
-				requestTime = Date().time - startTime,
-				responseParser = responseParser
+			httpResponse = httpResponse,
+			requestId = requestId,
+			requestTime = Date().time - startTime,
+			responseParser = responseParser
 		)
 	}
 
@@ -89,7 +89,10 @@ class ApiClientHelper private constructor(
 
 	@Suppress("unused")
 	inline fun <reified VBase, reified VExt> makeObjectWithExtResultRequest(request: ApiRequest): ParsedResponseWithExt<VBase, VExt> {
-		return makeRequestInt(request, ObjectWithExtResponseParser(jsonTransformer, VBase::class.java, VExt::class.java))
+		return makeRequestInt(
+			request,
+			ObjectWithExtResponseParser(jsonTransformer, VBase::class.java, VExt::class.java)
+		)
 	}
 
 	@Suppress("NOTHING_TO_INLINE")
@@ -103,7 +106,12 @@ class ApiClientHelper private constructor(
 	}
 
 	@PublishedApi
-	internal fun <V> processHttpResponse(httpResponse: HttpResponse, requestId: String, requestTime: Long, responseParser: ResponseParser<V>): V {
+	internal fun <V> processHttpResponse(
+		httpResponse: HttpResponse,
+		requestId: String,
+		requestTime: Long,
+		responseParser: ResponseParser<V>
+	): V {
 		val responseBytes = httpResponse.responseBytes
 		return when (httpResponse) {
 			is HttpResponse.Success -> {
@@ -115,8 +123,8 @@ class ApiClientHelper private constructor(
 				} catch (e: JsonDeserializationException) {
 					logCannotParseResponseError(requestId, requestTime, responseBytes.asString(), e)
 					throw EcwidApiException(
-							message = e.message,
-							cause = e
+						message = e.message,
+						cause = e
 					)
 				}
 			}
@@ -126,25 +134,30 @@ class ApiClientHelper private constructor(
 					logErrorResponseIfNeeded(requestId, requestTime, httpResponse.statusCode, responseBody)
 					val ecwidError = jsonTransformer.deserialize(responseBody, EcwidApiError::class.java)
 					throw EcwidApiException(
-							statusCode = httpResponse.statusCode,
-							reasonPhrase = httpResponse.reasonPhrase,
-							code = ecwidError?.errorCode,
-							message = ecwidError?.errorMessage
+						statusCode = httpResponse.statusCode,
+						reasonPhrase = httpResponse.reasonPhrase,
+						code = ecwidError?.errorCode,
+						message = ecwidError?.errorMessage
 					)
 				} catch (e: JsonDeserializationException) {
 					throw EcwidApiException(
-							statusCode = httpResponse.statusCode,
-							reasonPhrase = httpResponse.reasonPhrase,
-							message = e.message,
-							cause = e
+						statusCode = httpResponse.statusCode,
+						reasonPhrase = httpResponse.reasonPhrase,
+						message = e.message,
+						cause = e
 					)
 				}
 			}
 			is HttpResponse.TransportError -> {
-				logTransportErrorResponseIfNeeded(requestId, requestTime, httpResponse.exception.message, httpResponse.exception)
+				logTransportErrorResponseIfNeeded(
+					requestId,
+					requestTime,
+					httpResponse.exception.message,
+					httpResponse.exception
+				)
 				throw EcwidApiException(
-						message = httpResponse.exception.message,
-						cause = httpResponse.exception
+					message = httpResponse.exception.message,
+					cause = httpResponse.exception
 				)
 			}
 		}
@@ -161,38 +174,38 @@ class ApiClientHelper private constructor(
 		}
 
 		logEntry(
-				prefix = "Request",
-				logLevel = Level.INFO,
-				requestId = requestId,
-				sections = mutableListOf<String>().apply {
-					add("${httpRequest.method} ${httpRequest.uri}")
-					add(params.dumpToString())
-					if (loggingSettings.logRequestBody) {
-						httpBody.asString()?.let { add(it) }
-					}
+			prefix = "Request",
+			logLevel = Level.INFO,
+			requestId = requestId,
+			sections = mutableListOf<String>().apply {
+				add("${httpRequest.method} ${httpRequest.uri}")
+				add(params.dumpToString())
+				if (loggingSettings.logRequestBody) {
+					httpBody.asString()?.let { add(it) }
 				}
+			}
 		)
 	}
 
 	@PublishedApi
 	internal fun RequestInfo.toHttpRequest(): HttpRequest = when (method) {
 		HttpMethod.GET -> HttpRequest.HttpGetRequest(
-				uri = createApiEndpointUri(pathSegments),
-				params = params.withCredentialsParams(credentials)
+			uri = createApiEndpointUri(pathSegments),
+			params = params.withCredentialsParams(credentials)
 		)
 		HttpMethod.POST -> HttpRequest.HttpPostRequest(
-				uri = createApiEndpointUri(pathSegments),
-				params = params.withCredentialsParams(credentials),
-				transportHttpBody = httpBody.prepare(jsonTransformer)
+			uri = createApiEndpointUri(pathSegments),
+			params = params.withCredentialsParams(credentials),
+			transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.PUT -> HttpRequest.HttpPutRequest(
-				uri = createApiEndpointUri(pathSegments),
-				params = params.withCredentialsParams(credentials),
-				transportHttpBody = httpBody.prepare(jsonTransformer)
+			uri = createApiEndpointUri(pathSegments),
+			params = params.withCredentialsParams(credentials),
+			transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 		HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
-				uri = createApiEndpointUri(pathSegments),
-				params = params.withCredentialsParams(credentials)
+			uri = createApiEndpointUri(pathSegments),
+			params = params.withCredentialsParams(credentials)
 		)
 	}
 
@@ -214,70 +227,91 @@ class ApiClientHelper private constructor(
 	private fun logSuccessfulResponseIfNeeded(requestId: String, requestTime: Long, responseBody: String) {
 		if (!loggingSettings.logResponse) return
 		logEntry(
-				prefix = "Response",
-				logLevel = Level.INFO,
-				requestId = requestId,
-				sections = mutableListOf<String>().apply {
-					add("OK")
-					add("$requestTime ms")
-					if (loggingSettings.logSuccessfulResponseBody) {
-						add(responseBody)
-					}
+			prefix = "Response",
+			logLevel = Level.INFO,
+			requestId = requestId,
+			sections = mutableListOf<String>().apply {
+				add("OK")
+				add("$requestTime ms")
+				if (loggingSettings.logSuccessfulResponseBody) {
+					add(responseBody)
 				}
+			}
 		)
 	}
 
-	private fun logErrorResponseIfNeeded(requestId: String, requestTime: Long, httpStatusCode: Int, responseBody: String) {
+	private fun logErrorResponseIfNeeded(
+		requestId: String,
+		requestTime: Long,
+		httpStatusCode: Int,
+		responseBody: String
+	) {
 		if (!loggingSettings.logResponse) return
 		logEntry(
-				prefix = "Response",
-				logLevel = Level.INFO,
-				requestId = requestId,
-				sections = mutableListOf<String>().apply {
-					add("ERR $httpStatusCode")
-					add("$requestTime ms")
-					if (loggingSettings.logFailedResponseBody) {
-						add(responseBody)
-					}
+			prefix = "Response",
+			logLevel = Level.INFO,
+			requestId = requestId,
+			sections = mutableListOf<String>().apply {
+				add("ERR $httpStatusCode")
+				add("$requestTime ms")
+				if (loggingSettings.logFailedResponseBody) {
+					add(responseBody)
 				}
+			}
 		)
 	}
 
-	private fun logTransportErrorResponseIfNeeded(requestId: String, requestTime: Long, errorMessage: String?, exception: Exception) {
+	private fun logTransportErrorResponseIfNeeded(
+		requestId: String,
+		requestTime: Long,
+		errorMessage: String?,
+		exception: Exception
+	) {
 		if (!loggingSettings.logResponse) return
 		logEntry(
-				prefix = "Response",
-				logLevel = Level.WARNING,
-				requestId = requestId,
-				sections = mutableListOf<String>().apply {
-					add("ERR")
-					add("$requestTime ms")
-					if (errorMessage != null) {
-						add(errorMessage)
-					}
-				},
-				exception = exception
+			prefix = "Response",
+			logLevel = Level.WARNING,
+			requestId = requestId,
+			sections = mutableListOf<String>().apply {
+				add("ERR")
+				add("$requestTime ms")
+				if (errorMessage != null) {
+					add(errorMessage)
+				}
+			},
+			exception = exception
 		)
 	}
 
-	private fun logCannotParseResponseError(requestId: String, requestTime: Long, responseBody: String, exception: Exception) {
+	private fun logCannotParseResponseError(
+		requestId: String,
+		requestTime: Long,
+		responseBody: String,
+		exception: Exception
+	) {
 		if (!loggingSettings.logResponse) return
 		logEntry(
-				prefix = "Response",
-				logLevel = Level.WARNING,
-				requestId = requestId,
-				sections = mutableListOf<String>().apply {
-					add("ERR")
-					add("$requestTime ms")
-					if (loggingSettings.logFailedResponseBody) {
-						add(responseBody)
-					}
-				},
-				exception = exception
+			prefix = "Response",
+			logLevel = Level.WARNING,
+			requestId = requestId,
+			sections = mutableListOf<String>().apply {
+				add("ERR")
+				add("$requestTime ms")
+				if (loggingSettings.logFailedResponseBody) {
+					add(responseBody)
+				}
+			},
+			exception = exception
 		)
 	}
 
-	private fun logEntry(prefix: String, logLevel: Level?, requestId: String, sections: List<String>, exception: Exception? = null) {
+	private fun logEntry(
+		prefix: String,
+		logLevel: Level?,
+		requestId: String,
+		sections: List<String>,
+		exception: Exception? = null
+	) {
 		val logMessage = "$prefix [$requestId]: " + sections.joinToString(separator = "; ")
 		if (exception != null) {
 			log.log(logLevel, logMessage, exception)
@@ -290,15 +324,14 @@ class ApiClientHelper private constructor(
 		is ApiStoreCredentials -> "/api/v3/${credentials.storeId}"
 		is ApiAppCredentials -> "/api/v3"
 	}
-
 }
 
 @PublishedApi
 internal fun generateRequestId(): String {
 	return (0 until REQUEST_ID_LENGTH)
-			.map { Random.nextInt(0, REQUEST_ID_CHARACTERS.size) }
-			.map(REQUEST_ID_CHARACTERS::get)
-			.joinToString("")
+		.map { Random.nextInt(0, REQUEST_ID_CHARACTERS.size) }
+		.map(REQUEST_ID_CHARACTERS::get)
+		.joinToString("")
 }
 
 @PublishedApi
@@ -310,10 +343,10 @@ internal fun Map<String, String>.withCredentialsParams(credentials: ApiCredentia
 @PublishedApi
 internal fun Map<String, String>.withApiTokenParam(apiToken: String): Map<String, String> {
 	return toMutableMap()
-			.apply {
-				put(API_TOKEN_PARAM_NAME, apiToken)
-			}
-			.toMap()
+		.apply {
+			put(API_TOKEN_PARAM_NAME, apiToken)
+		}
+		.toMap()
 }
 
 @PublishedApi
@@ -328,19 +361,19 @@ internal fun Map<String, String>.withAppCredentialsParams(appCredentials: ApiApp
 
 private fun Map<String, String>.withMaskedApiTokenParam(): Map<String, String> {
 	return toMutableMap()
-			.apply {
-				val apiTokenParam = get(API_TOKEN_PARAM_NAME)
-				if (apiTokenParam != null) {
-					put(API_TOKEN_PARAM_NAME, maskApiToken(apiTokenParam))
-				}
+		.apply {
+			val apiTokenParam = get(API_TOKEN_PARAM_NAME)
+			if (apiTokenParam != null) {
+				put(API_TOKEN_PARAM_NAME, maskApiToken(apiTokenParam))
 			}
-			.toMap()
+		}
+		.toMap()
 }
 
 private fun Map<String, String>.dumpToString(): String {
 	return this
-			.map { (key, value) -> "$key=$value" }
-			.joinToString(separator = ", ")
+		.map { (key, value) -> "$key=$value" }
+		.joinToString(separator = ", ")
 }
 
 fun ByteArray.asString() = String(this, Charsets.UTF_8)
@@ -367,17 +400,17 @@ internal fun HttpBody.prepare(jsonTransformer: JsonTransformer): TransportHttpBo
 
 private fun createProductOptionsPolymorphicType(): PolymorphicType<ProductOption> {
 	return PolymorphicType(
-			rootClass = ProductOption::class.java,
-			jsonFieldName = "type",
-			childClasses = mapOf(
-					"select" to ProductOption.SelectOption::class.java,
-					"size" to ProductOption.SizeOption::class.java,
-					"radio" to ProductOption.RadioOption::class.java,
-					"checkbox" to ProductOption.CheckboxOption::class.java,
-					"textfield" to ProductOption.TextFieldOption::class.java,
-					"textarea" to ProductOption.TextAreaOption::class.java,
-					"date" to ProductOption.DateOption::class.java,
-					"files" to ProductOption.FilesOption::class.java
-			)
+		rootClass = ProductOption::class.java,
+		jsonFieldName = "type",
+		childClasses = mapOf(
+			"select" to ProductOption.SelectOption::class.java,
+			"size" to ProductOption.SizeOption::class.java,
+			"radio" to ProductOption.RadioOption::class.java,
+			"checkbox" to ProductOption.CheckboxOption::class.java,
+			"textfield" to ProductOption.TextFieldOption::class.java,
+			"textarea" to ProductOption.TextAreaOption::class.java,
+			"date" to ProductOption.DateOption::class.java,
+			"files" to ProductOption.FilesOption::class.java
+		)
 	)
 }

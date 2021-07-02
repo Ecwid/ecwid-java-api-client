@@ -1,7 +1,6 @@
 package com.ecwid.apiclient.v3.dto.common
 
 import java.util.*
-import kotlin.collections.ArrayList
 
 class OrderedStringToListStringMap : TreeMap<String, ArrayList<String>> {
 	@Suppress("unused")

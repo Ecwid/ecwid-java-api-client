@@ -17,5 +17,4 @@ class LocalizedValueMap() : HashMap<LocaleName, String>() {
 	constructor(other: Map<String, String>) : this() {
 		this.putAll(other)
 	}
-
 }
