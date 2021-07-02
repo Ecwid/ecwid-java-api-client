@@ -82,7 +82,6 @@ tasks {
 	named("release").get().apply {
 		dependsOn(named("publish").get())
 	}
-
 }
 
 tasks.withType<Sign> {
@@ -100,9 +99,9 @@ tasks.withType<PublishToMavenRepository> {
 tasks.register("printFinalReleaseNode") {
 	doLast {
 		printFinalReleaseNode(
-				groupId = PublicationSettings.GROUP_ID,
-				artifactId = PublicationSettings.ARTIFACT_ID,
-				sanitizedVersion = project.sanitizeVersion()
+			groupId = PublicationSettings.GROUP_ID,
+			artifactId = PublicationSettings.ARTIFACT_ID,
+			sanitizedVersion = project.sanitizeVersion()
 		)
 	}
 }
@@ -110,9 +109,9 @@ tasks.register("printFinalReleaseNode") {
 tasks.register("printDevSnapshotReleaseNode") {
 	doLast {
 		printDevSnapshotReleaseNode(
-				groupId = PublicationSettings.GROUP_ID,
-				artifactId = PublicationSettings.ARTIFACT_ID,
-				sanitizedVersion = project.sanitizeVersion()
+			groupId = PublicationSettings.GROUP_ID,
+			artifactId = PublicationSettings.ARTIFACT_ID,
+			sanitizedVersion = project.sanitizeVersion()
 		)
 	}
 }
@@ -215,12 +214,12 @@ fun Project.sanitizeVersion(): String {
 		if (githubHeadRef != null) {
 			// github pull request
 			version
-					.replace(Regex("-dev\\.\\d+\\+[a-f0-9]+$"), "-dev+$githubHeadRef-SNAPSHOT")
+				.replace(Regex("-dev\\.\\d+\\+[a-f0-9]+$"), "-dev+$githubHeadRef-SNAPSHOT")
 		} else {
 			// local branch
 			version
-					.replace(Regex("-dev\\.\\d+\\+"), "-dev+")
-					.replace(Regex("\\.[a-f0-9]+$"), "-SNAPSHOT")
+				.replace(Regex("-dev\\.\\d+\\+"), "-dev+")
+				.replace(Regex("\\.[a-f0-9]+$"), "-SNAPSHOT")
 		}
 	} else {
 		version
@@ -293,8 +292,8 @@ class SettingsProvider {
 	)
 
 	fun validateOssrhCredentials() = require(
-			value = !ossrhUsername.isNullOrBlank() && !ossrhPassword.isNullOrBlank(),
-			lazyMessage = { "Both $OSSRH_USERNAME_PROPERTY and $OSSRH_PASSWORD_PROPERTY environment variables must not be empty" }
+		value = !ossrhUsername.isNullOrBlank() && !ossrhPassword.isNullOrBlank(),
+		lazyMessage = { "Both $OSSRH_USERNAME_PROPERTY and $OSSRH_PASSWORD_PROPERTY environment variables must not be empty" }
 	)
 
 	companion object {
@@ -304,7 +303,6 @@ class SettingsProvider {
 		private const val OSSRH_PASSWORD_PROPERTY = "OSSRH_PASSWORD"
 		private const val GITHUB_HEAD_REF_PROPERTY = "GITHUB_HEAD_REF"
 	}
-
 }
 
 object PublicationSettings {
@@ -327,11 +325,9 @@ object PublicationSettings {
 	const val SCM_URL = "https://github.com/Ecwid/ecwid-java-api-client.git"
 
 	const val STAGING_PACKAGE_GROUP = "com.ecwid"
-
 }
 
 object Consts {
 
 	const val SLOW_TESTS_LOGGING_THRESHOLD_MS = 30_000L
-
 }

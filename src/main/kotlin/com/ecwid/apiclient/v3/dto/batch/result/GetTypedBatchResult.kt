@@ -7,43 +7,42 @@ import com.ecwid.apiclient.v3.impl.TypedBatchResponse
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 
 data class GetTypedBatchResult(
-		val status: BatchStatus = BatchStatus.QUEUED,
-		val totalRequests: Int = 0,
-		val completedRequests: Int = 0,
-		val responses: List<TypedSingleBatchResponse>? = null
+	val status: BatchStatus = BatchStatus.QUEUED,
+	val totalRequests: Int = 0,
+	val completedRequests: Int = 0,
+	val responses: List<TypedSingleBatchResponse>? = null
 ) : ApiResultDTO {
 
 	internal constructor(
-			escapedBatchResult: GetEscapedBatchResult,
-			jsonTransformer: JsonTransformer
+		escapedBatchResult: GetEscapedBatchResult,
+		jsonTransformer: JsonTransformer
 	) : this(
-			status = escapedBatchResult.status,
-			totalRequests = escapedBatchResult.totalRequests,
-			completedRequests = escapedBatchResult.completedRequests,
-			responses = escapedBatchResult.responses?.map { TypedSingleBatchResponse(it, jsonTransformer) }
+		status = escapedBatchResult.status,
+		totalRequests = escapedBatchResult.totalRequests,
+		completedRequests = escapedBatchResult.completedRequests,
+		responses = escapedBatchResult.responses?.map { TypedSingleBatchResponse(it, jsonTransformer) }
 	)
-
 }
 
 data class TypedSingleBatchResponse(
-		val id: String = "",
-		val escapedHttpBody: String = "",
-		val httpStatusCode: Int = 0,
-		val httpStatusLine: String = "",
-		val status: BatchResponseStatus = BatchResponseStatus.NOT_EXECUTED,
-		val jsonTransformer: JsonTransformer
+	val id: String = "",
+	val escapedHttpBody: String = "",
+	val httpStatusCode: Int = 0,
+	val httpStatusLine: String = "",
+	val status: BatchResponseStatus = BatchResponseStatus.NOT_EXECUTED,
+	val jsonTransformer: JsonTransformer
 ) : ApiResultDTO {
 
 	internal constructor(
-			escapedSingleBatchResponse: EscapedSingleBatchResponse,
-			jsonTransformer: JsonTransformer
+		escapedSingleBatchResponse: EscapedSingleBatchResponse,
+		jsonTransformer: JsonTransformer
 	) : this(
-			id = escapedSingleBatchResponse.id,
-			escapedHttpBody = escapedSingleBatchResponse.escapedHttpBody,
-			httpStatusCode = escapedSingleBatchResponse.httpStatusCode,
-			httpStatusLine = escapedSingleBatchResponse.httpStatusLine,
-			status = escapedSingleBatchResponse.status,
-			jsonTransformer = jsonTransformer
+		id = escapedSingleBatchResponse.id,
+		escapedHttpBody = escapedSingleBatchResponse.escapedHttpBody,
+		httpStatusCode = escapedSingleBatchResponse.httpStatusCode,
+		httpStatusLine = escapedSingleBatchResponse.httpStatusLine,
+		status = escapedSingleBatchResponse.status,
+		jsonTransformer = jsonTransformer
 	)
 
 	fun <T> toTypedResponse(clazz: Class<T>): TypedBatchResponse<T> {
@@ -68,5 +67,4 @@ data class TypedSingleBatchResponse(
 			}
 		}
 	}
-
 }

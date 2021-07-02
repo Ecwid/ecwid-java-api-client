@@ -25,35 +25,37 @@ class BatchApiTest : BaseEntityTest() {
 	fun `Create a product with batch API and search it`() {
 		val name = randomAlphanumeric(8)
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = name
-				)
+			newProduct = UpdatedProduct(
+				name = name
+			)
 		)
 
 		val productSearchRequest = ProductsSearchRequest.ByFilters(
-				keyword = name
+			keyword = name
 		)
 
 		val createProductBatch = apiClient.createBatch(
-				CreateBatchRequestWithIds(
-						requests = mapOf(
-								"test_product" to productCreateRequest
-						)
+			CreateBatchRequestWithIds(
+				requests = mapOf(
+					"test_product" to productCreateRequest
 				)
+			)
 		)
 
 		waitForIndexedProducts(productSearchRequest, 1)
 
 		val createProductBatchResult = apiClient.getTypedBatch(
-				GetEscapedBatchRequest(
-						ticket = createProductBatch.ticket
-				)
+			GetEscapedBatchRequest(
+				ticket = createProductBatch.ticket
+			)
 		)
 
 		val createResponses = createProductBatchResult.responses
 		require(createResponses != null)
-		when (val productCreateResult =
-				createResponses.first().toTypedResponse(ProductCreateResult::class.java)) {
+		when (
+			val productCreateResult =
+				createResponses.first().toTypedResponse(ProductCreateResult::class.java)
+		) {
 
 			is TypedBatchResponse.Ok -> {
 				Assertions.assertTrue(productCreateResult.value.id > 0)
@@ -64,26 +66,28 @@ class BatchApiTest : BaseEntityTest() {
 		}
 
 		val searchProductBatch = apiClient.createBatch(
-				CreateBatchRequestWithIds(
-						requests = mapOf(
-								"search_product" to productSearchRequest
-						)
+			CreateBatchRequestWithIds(
+				requests = mapOf(
+					"search_product" to productSearchRequest
 				)
+			)
 		)
 
 		// No way to predict when this query will be executed, let's simply wait
 		awaitBatchExecution(searchProductBatch.ticket)
 
 		val searchProductBatchResult = apiClient.getTypedBatch(
-				GetEscapedBatchRequest(
-						ticket = searchProductBatch.ticket
-				)
+			GetEscapedBatchRequest(
+				ticket = searchProductBatch.ticket
+			)
 		)
 
 		val searchResponses = searchProductBatchResult.responses
 		require(searchResponses != null)
-		when (val productsSearchResult =
-				searchResponses.first().toTypedResponse(ProductsSearchResult::class.java)) {
+		when (
+			val productsSearchResult =
+				searchResponses.first().toTypedResponse(ProductsSearchResult::class.java)
+		) {
 
 			is TypedBatchResponse.Ok -> {
 				Assertions.assertTrue(productsSearchResult.value.count > 0)
@@ -108,5 +112,4 @@ class BatchApiTest : BaseEntityTest() {
 
 		return Assertions.fail("Failed to await for batch completion")
 	}
-
 }

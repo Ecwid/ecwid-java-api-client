@@ -227,5 +227,4 @@ sealed class NonUpdatablePropertyRule<T, R>(
 	class Ignored<T, R> internal constructor(
 		property: KProperty1<T, R>
 	) : NonUpdatablePropertyRule<T, R>(property)
-
 }

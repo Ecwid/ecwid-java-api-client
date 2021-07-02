@@ -31,7 +31,7 @@ class OrdersTest : BaseEntityTest() {
 	fun testOrderLifecycle() {
 		// Creating new order
 		val orderCreateRequest = OrderCreateRequest(
-				newOrder = generateTestOrder()
+			newOrder = generateTestOrder()
 		)
 		val orderCreateResult = apiClient.createOrder(orderCreateRequest)
 		assertTrue(orderCreateResult.id > 0)
@@ -39,21 +39,27 @@ class OrdersTest : BaseEntityTest() {
 		// Checking that order was successfully created with necessary parameters
 		val orderDetailsRequest = OrderDetailsRequest(orderNumber = orderCreateResult.id)
 		val orderDetails1 = apiClient.getOrderDetails(orderDetailsRequest)
-		assertEquals(orderCreateRequest.newOrder, orderDetails1.toUpdated().cleanupForComparison(orderCreateRequest.newOrder))
+		assertEquals(
+			orderCreateRequest.newOrder,
+			orderDetails1.toUpdated().cleanupForComparison(orderCreateRequest.newOrder)
+		)
 
 		// Completely updating newly created order
 		val orderUpdateRequest = OrderUpdateRequest(
-				orderNumber = orderDetails1.orderNumber,
-				updatedOrder = generateTestOrder().copy(
-						customerGroup = null // TODO Discover why after each update this field resets to null
-				)
+			orderNumber = orderDetails1.orderNumber,
+			updatedOrder = generateTestOrder().copy(
+				customerGroup = null // TODO Discover why after each update this field resets to null
+			)
 		)
 		val orderUpdateResult1 = apiClient.updateOrder(orderUpdateRequest)
 		assertEquals(1, orderUpdateResult1.updateCount)
 
 		// Checking that order was successfully updated with necessary parameters
 		val orderDetails2 = apiClient.getOrderDetails(orderDetailsRequest)
-		assertEquals(orderUpdateRequest.updatedOrder, orderDetails2.toUpdated().cleanupForComparison(orderUpdateRequest.updatedOrder))
+		assertEquals(
+			orderUpdateRequest.updatedOrder,
+			orderDetails2.toUpdated().cleanupForComparison(orderUpdateRequest.updatedOrder)
+		)
 
 		// Deleting order
 		val orderDeleteRequest = OrderDeleteRequest(orderNumber = orderDetails1.orderNumber)
@@ -75,19 +81,19 @@ class OrdersTest : BaseEntityTest() {
 		val filesOptionName = "File option / With Slashes / НеЛатиНсКиМи СиМвОлАМи / !@#\$%^&*()+"
 
 		val orderCreateRequest = OrderCreateRequest(
-				newOrder = UpdatedOrder(
-						email = randomEmail(),
-						items = listOf(
-								UpdatedOrder.OrderItem(
-										name = "Order item with files",
-										selectedOptions = listOf(
-												UpdatedOrder.OrderItemSelectedOption.createForFilesOption(
-														name = filesOptionName
-												)
-										)
-								)
+			newOrder = UpdatedOrder(
+				email = randomEmail(),
+				items = listOf(
+					UpdatedOrder.OrderItem(
+						name = "Order item with files",
+						selectedOptions = listOf(
+							UpdatedOrder.OrderItemSelectedOption.createForFilesOption(
+								name = filesOptionName
+							)
 						)
+					)
 				)
+			)
 		)
 		val orderCreateResult = apiClient.createOrder(orderCreateRequest)
 		val orderNumber = orderCreateResult.id
@@ -101,32 +107,32 @@ class OrdersTest : BaseEntityTest() {
 
 		// Upload some order files from different sources
 		val orderItemOptionFileUploadRequest1 = OrderItemOptionFileUploadRequest(
-				orderNumber = orderNumber,
-				orderItemId = orderItemId,
-				optionName = filesOptionName,
-				fileName = randomFileName("test", "png"),
-				fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
+			orderNumber = orderNumber,
+			orderItemId = orderItemId,
+			optionName = filesOptionName,
+			fileName = randomFileName("test", "png"),
+			fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
 		)
 		val orderItemOptionFileUploadRequest2 = OrderItemOptionFileUploadRequest(
-				orderNumber = orderNumber,
-				orderItemId = orderItemId,
-				optionName = filesOptionName,
-				fileName = randomFileName("test", "png"),
-				fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
+			orderNumber = orderNumber,
+			orderItemId = orderItemId,
+			optionName = filesOptionName,
+			fileName = randomFileName("test", "png"),
+			fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
 		)
 		val orderItemOptionFileUploadRequest3 = OrderItemOptionFileUploadRequest(
-				orderNumber = orderNumber,
-				orderItemId = orderItemId,
-				optionName = filesOptionName,
-				fileName = randomFileName("test", "png"),
-				fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
+			orderNumber = orderNumber,
+			orderItemId = orderItemId,
+			optionName = filesOptionName,
+			fileName = randomFileName("test", "png"),
+			fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
 		)
 		val orderItemOptionFileUploadRequest4 = OrderItemOptionFileUploadRequest(
-				orderNumber = orderNumber,
-				orderItemId = orderItemId,
-				optionName = filesOptionName,
-				fileName = randomFileName("test", "png"),
-				fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
+			orderNumber = orderNumber,
+			orderItemId = orderItemId,
+			optionName = filesOptionName,
+			fileName = randomFileName("test", "png"),
+			fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
 		)
 
 		val orderItemOptionFileUploadResult1 = apiClient.uploadOrderItemOptionFile(orderItemOptionFileUploadRequest1)
@@ -135,10 +141,10 @@ class OrdersTest : BaseEntityTest() {
 		val orderItemOptionFileUploadResult4 = apiClient.uploadOrderItemOptionFile(orderItemOptionFileUploadRequest4)
 
 		assertAll(
-				{ assertTrue(orderItemOptionFileUploadResult1.id > 0) },
-				{ assertTrue(orderItemOptionFileUploadResult2.id > 0) },
-				{ assertTrue(orderItemOptionFileUploadResult3.id > 0) },
-				{ assertTrue(orderItemOptionFileUploadResult4.id > 0) }
+			{ assertTrue(orderItemOptionFileUploadResult1.id > 0) },
+			{ assertTrue(orderItemOptionFileUploadResult2.id > 0) },
+			{ assertTrue(orderItemOptionFileUploadResult3.id > 0) },
+			{ assertTrue(orderItemOptionFileUploadResult4.id > 0) }
 		)
 
 		// Check that files option has accurate 4 attached files
@@ -153,10 +159,10 @@ class OrdersTest : BaseEntityTest() {
 
 		// Now delete first attached to option file
 		val deleteOrderItemOptionFileRequest = OrderItemOptionFileDeleteRequest(
-				orderNumber = orderNumber,
-				orderItemId = orderItemId,
-				optionName = filesOptionName,
-				fileId = orderItemOptionFileUploadResult1.id
+			orderNumber = orderNumber,
+			orderItemId = orderItemId,
+			optionName = filesOptionName,
+			fileId = orderItemOptionFileUploadResult1.id
 		)
 		val orderItemOptionFileDeleteResult = apiClient.deleteOrderItemOptionFile(deleteOrderItemOptionFileRequest)
 		assertEquals(1, orderItemOptionFileDeleteResult.deleteCount)
@@ -168,9 +174,9 @@ class OrdersTest : BaseEntityTest() {
 
 		// Now delete the rest attached to option files
 		val deleteOrderItemOptionFilesRequest = OrderItemOptionFilesDeleteRequest(
-				orderNumber = orderNumber,
-				orderItemId = orderItemId,
-				optionName = filesOptionName
+			orderNumber = orderNumber,
+			orderItemId = orderItemId,
+			optionName = filesOptionName
 		)
 		val orderItemOptionFilesDeleteResult = apiClient.deleteOrderItemOptionFiles(deleteOrderItemOptionFilesRequest)
 		assertEquals(3, orderItemOptionFilesDeleteResult.deleteCount)
@@ -185,24 +191,24 @@ class OrdersTest : BaseEntityTest() {
 	fun testSearchFields() {
 		// Creating new order
 		val orderCreateRequest = OrderCreateRequest(
-				newOrder = UpdatedOrder(
-						email = randomEmail(),
-						total = randomPrice(),
+			newOrder = UpdatedOrder(
+				email = randomEmail(),
+				total = randomPrice(),
 // 						discountCoupon = UpdatedOrder.DiscountCouponInfo(
 // 								name = "Discount coupon " + randomAlphanumeric(16),
 // 								code = randomAlphanumeric(16)
 // 						),
-						paymentMethod = "Payment method " + randomAlphanumeric(8),
-						shippingOption = UpdatedOrder.ShippingOption(
-								shippingMethodName = "Method " + randomAlphanumeric(8)
-						),
-						paymentStatus = OrderPaymentStatus.AWAITING_PAYMENT,
-						fulfillmentStatus = OrderFulfillmentStatus.AWAITING_PROCESSING,
-						orderComments = randomAlphanumeric(16),
-						billingPerson = UpdatedOrder.PersonInfo(
-								name = randomAlphanumeric(16)
-						)
+				paymentMethod = "Payment method " + randomAlphanumeric(8),
+				shippingOption = UpdatedOrder.ShippingOption(
+					shippingMethodName = "Method " + randomAlphanumeric(8)
+				),
+				paymentStatus = OrderPaymentStatus.AWAITING_PAYMENT,
+				fulfillmentStatus = OrderFulfillmentStatus.AWAITING_PROCESSING,
+				orderComments = randomAlphanumeric(16),
+				billingPerson = UpdatedOrder.PersonInfo(
+					name = randomAlphanumeric(16)
 				)
+			)
 		)
 		val orderCreateResult = apiClient.createOrder(orderCreateRequest)
 		assertTrue(orderCreateResult.id > 0)
@@ -216,45 +222,45 @@ class OrdersTest : BaseEntityTest() {
 
 		// Trying to search by different fields
 		assertOrdersSearch(
-				positiveOrderNumber = orderCreateResult.id,
-				positiveSearchRequest = OrdersSearchRequest(keywords = orderCreateRequest.newOrder.orderComments),
-				negativeSearchRequest = OrdersSearchRequest(keywords = orderCreateRequest.newOrder.orderComments + "foo")
+			positiveOrderNumber = orderCreateResult.id,
+			positiveSearchRequest = OrdersSearchRequest(keywords = orderCreateRequest.newOrder.orderComments),
+			negativeSearchRequest = OrdersSearchRequest(keywords = orderCreateRequest.newOrder.orderComments + "foo")
 		)
 
 		assertOrdersSearch(
-				positiveOrderNumber = orderCreateResult.id,
-				positiveSearchRequest = OrdersSearchRequest(
-						totalFrom = orderCreateRequest.newOrder.total!! - 10.0,
-						totalTo = orderCreateRequest.newOrder.total!! + 10.0
-				),
-				negativeSearchRequest = OrdersSearchRequest(
-						totalFrom = orderCreateRequest.newOrder.total!! - 20.0,
-						totalTo = orderCreateRequest.newOrder.total!! - 10.0
-				)
+			positiveOrderNumber = orderCreateResult.id,
+			positiveSearchRequest = OrdersSearchRequest(
+				totalFrom = orderCreateRequest.newOrder.total!! - 10.0,
+				totalTo = orderCreateRequest.newOrder.total!! + 10.0
+			),
+			negativeSearchRequest = OrdersSearchRequest(
+				totalFrom = orderCreateRequest.newOrder.total!! - 20.0,
+				totalTo = orderCreateRequest.newOrder.total!! - 10.0
+			)
 		)
 
 		assertOrdersSearch(
-				positiveOrderNumber = orderCreateResult.id,
-				positiveSearchRequest = OrdersSearchRequest(
-						createdFrom = Date.from(Date().toInstant().minusSeconds(60)),
-						createdTo = Date.from(Date().toInstant().plusSeconds(60))
-				),
-				negativeSearchRequest = OrdersSearchRequest(
-						createdFrom = Date(0),
-						createdTo = Date(0)
-				)
+			positiveOrderNumber = orderCreateResult.id,
+			positiveSearchRequest = OrdersSearchRequest(
+				createdFrom = Date.from(Date().toInstant().minusSeconds(60)),
+				createdTo = Date.from(Date().toInstant().plusSeconds(60))
+			),
+			negativeSearchRequest = OrdersSearchRequest(
+				createdFrom = Date(0),
+				createdTo = Date(0)
+			)
 		)
 
 		assertOrdersSearch(
-				positiveOrderNumber = orderCreateResult.id,
-				positiveSearchRequest = OrdersSearchRequest(
-						updatedFrom = Date.from(Date().toInstant().minusSeconds(60)),
-						updatedTo = Date.from(Date().toInstant().plusSeconds(60))
-				),
-				negativeSearchRequest = OrdersSearchRequest(
-						updatedFrom = Date(0),
-						updatedTo = Date(0)
-				)
+			positiveOrderNumber = orderCreateResult.id,
+			positiveSearchRequest = OrdersSearchRequest(
+				updatedFrom = Date.from(Date().toInstant().minusSeconds(60)),
+				updatedTo = Date.from(Date().toInstant().plusSeconds(60))
+			),
+			negativeSearchRequest = OrdersSearchRequest(
+				updatedFrom = Date(0),
+				updatedTo = Date(0)
+			)
 		)
 
 		// TODO We should create real discount coupon to make this search works correctly
@@ -265,45 +271,45 @@ class OrdersTest : BaseEntityTest() {
 // 		)
 
 		assertOrdersSearch(
-				positiveOrderNumber = orderCreateResult.id,
-				positiveSearchRequest = OrdersSearchRequest(orderNumber = orderCreateResult.id),
-				negativeSearchRequest = OrdersSearchRequest(orderNumber = Int.MAX_VALUE)
+			positiveOrderNumber = orderCreateResult.id,
+			positiveSearchRequest = OrdersSearchRequest(orderNumber = orderCreateResult.id),
+			negativeSearchRequest = OrdersSearchRequest(orderNumber = Int.MAX_VALUE)
 		)
 
 		assertOrdersSearch(
-				positiveOrderNumber = orderCreateResult.id,
-				positiveSearchRequest = OrdersSearchRequest(vendorOrderNumber = orderCreateResult.id.toString()),
-				negativeSearchRequest = OrdersSearchRequest(vendorOrderNumber = "foo")
+			positiveOrderNumber = orderCreateResult.id,
+			positiveSearchRequest = OrdersSearchRequest(vendorOrderNumber = orderCreateResult.id.toString()),
+			negativeSearchRequest = OrdersSearchRequest(vendorOrderNumber = "foo")
 		)
 
 		assertOrdersSearch(
-				positiveOrderNumber = orderCreateResult.id,
-				positiveSearchRequest = OrdersSearchRequest(customer = orderCreateRequest.newOrder.billingPerson?.name),
-				negativeSearchRequest = OrdersSearchRequest(customer = "foo")
+			positiveOrderNumber = orderCreateResult.id,
+			positiveSearchRequest = OrdersSearchRequest(customer = orderCreateRequest.newOrder.billingPerson?.name),
+			negativeSearchRequest = OrdersSearchRequest(customer = "foo")
 		)
 
 		assertOrdersSearch(
-				positiveOrderNumber = orderCreateResult.id,
-				positiveSearchRequest = OrdersSearchRequest(paymentMethod = orderCreateRequest.newOrder.paymentMethod),
-				negativeSearchRequest = OrdersSearchRequest(paymentMethod = "foo")
+			positiveOrderNumber = orderCreateResult.id,
+			positiveSearchRequest = OrdersSearchRequest(paymentMethod = orderCreateRequest.newOrder.paymentMethod),
+			negativeSearchRequest = OrdersSearchRequest(paymentMethod = "foo")
 		)
 
 		assertOrdersSearch(
-				positiveOrderNumber = orderCreateResult.id,
-				positiveSearchRequest = OrdersSearchRequest(shippingMethod = orderCreateRequest.newOrder.shippingOption?.shippingMethodName),
-				negativeSearchRequest = OrdersSearchRequest(shippingMethod = "foo")
+			positiveOrderNumber = orderCreateResult.id,
+			positiveSearchRequest = OrdersSearchRequest(shippingMethod = orderCreateRequest.newOrder.shippingOption?.shippingMethodName),
+			negativeSearchRequest = OrdersSearchRequest(shippingMethod = "foo")
 		)
 
 		assertOrdersSearch(
-				positiveOrderNumber = orderCreateResult.id,
-				positiveSearchRequest = OrdersSearchRequest(paymentStatus = OrderPaymentStatus.AWAITING_PAYMENT),
-				negativeSearchRequest = OrdersSearchRequest(paymentStatus = OrderPaymentStatus.PAID)
+			positiveOrderNumber = orderCreateResult.id,
+			positiveSearchRequest = OrdersSearchRequest(paymentStatus = OrderPaymentStatus.AWAITING_PAYMENT),
+			negativeSearchRequest = OrdersSearchRequest(paymentStatus = OrderPaymentStatus.PAID)
 		)
 
 		assertOrdersSearch(
-				positiveOrderNumber = orderCreateResult.id,
-				positiveSearchRequest = OrdersSearchRequest(fulfillmentStatus = OrderFulfillmentStatus.AWAITING_PROCESSING),
-				negativeSearchRequest = OrdersSearchRequest(fulfillmentStatus = OrderFulfillmentStatus.SHIPPED)
+			positiveOrderNumber = orderCreateResult.id,
+			positiveSearchRequest = OrdersSearchRequest(fulfillmentStatus = OrderFulfillmentStatus.AWAITING_PROCESSING),
+			negativeSearchRequest = OrdersSearchRequest(fulfillmentStatus = OrderFulfillmentStatus.SHIPPED)
 		)
 	}
 
@@ -330,9 +336,9 @@ class OrdersTest : BaseEntityTest() {
 	@Test
 	fun testGetOrderInvoice() {
 		val orderCreateRequest = OrderCreateRequest(
-				newOrder = UpdatedOrder(
-						email = randomEmail()
-				)
+			newOrder = UpdatedOrder(
+				email = randomEmail()
+			)
 		)
 		val orderCreateResult = apiClient.createOrder(orderCreateRequest)
 		assertTrue(orderCreateResult.id > 0)
@@ -353,7 +359,7 @@ class OrdersTest : BaseEntityTest() {
 	fun testDeletedOrders() {
 		// Creating new order
 		val orderCreateRequest = OrderCreateRequest(
-				newOrder = generateTestOrder()
+			newOrder = generateTestOrder()
 		)
 		val orderCreateResult = apiClient.createOrder(orderCreateRequest)
 		assertTrue(orderCreateResult.id > 0)
@@ -369,8 +375,8 @@ class OrdersTest : BaseEntityTest() {
 
 		// Checking that just deleted order returned from api
 		val deletedOrdersSearchRequest = DeletedOrdersSearchRequest(
-				deletedFrom = Date.from(instantFrom),
-				deletedTo = Date.from(instantTo)
+			deletedFrom = Date.from(instantFrom),
+			deletedTo = Date.from(instantTo)
 		)
 		val deletedOrders = apiClient.searchDeletedOrdersAsSequence(deletedOrdersSearchRequest)
 		val deletedOrder = deletedOrders.firstOrNull { deletedOrder -> deletedOrder.id == orderCreateResult.id }
@@ -379,7 +385,11 @@ class OrdersTest : BaseEntityTest() {
 		assertTrue(instantTo.isAfter(deletedOrder.date.toInstant()))
 	}
 
-	private fun assertOrdersSearch(positiveOrderNumber: Int, positiveSearchRequest: OrdersSearchRequest, negativeSearchRequest: OrdersSearchRequest) {
+	private fun assertOrdersSearch(
+		positiveOrderNumber: Int,
+		positiveSearchRequest: OrdersSearchRequest,
+		negativeSearchRequest: OrdersSearchRequest
+	) {
 		val positiveOrdersSearchResult = apiClient.searchOrders(positiveSearchRequest)
 		assertEquals(1, positiveOrdersSearchResult.total)
 		assertEquals(positiveOrderNumber, positiveOrdersSearchResult.items[0].orderNumber)
@@ -391,10 +401,10 @@ class OrdersTest : BaseEntityTest() {
 
 private fun assertFileOption(orderItemProductFile: FetchedOrder.OrderItemOptionFile, fileName: String) {
 	assertAll(
-			{ assertTrue(orderItemProductFile.id ?: 0 > 0) },
-			{ assertEquals(fileName, orderItemProductFile.name) },
-			{ assertTrue(orderItemProductFile.size ?: 0 > 0) },
-			{ assertTrue(orderItemProductFile.url?.contains(fileName) ?: false) }
+		{ assertTrue(orderItemProductFile.id ?: 0 > 0) },
+		{ assertEquals(fileName, orderItemProductFile.name) },
+		{ assertTrue(orderItemProductFile.size ?: 0 > 0) },
+		{ assertTrue(orderItemProductFile.url?.contains(fileName) ?: false) }
 	)
 }
 

@@ -1344,5 +1344,4 @@ sealed class NullablePropertyRule<T, R>(
 	class IgnoreNullable<T, R> internal constructor(
 		property: KProperty1<T, R>
 	) : NullablePropertyRule<T, R>(property)
-
 }

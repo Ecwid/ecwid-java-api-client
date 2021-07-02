@@ -34,7 +34,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			)
 		)
 		Assertions.assertEquals(expectedProblems, problems)
-
 	}
 
 	@Test
@@ -72,7 +71,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			)
 		)
 		Assertions.assertEquals(expectedProblems, problems)
-
 	}
 
 	@Test
@@ -221,7 +219,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			)
 		)
 		Assertions.assertEquals(expectedProblems, problems)
-
 	}
 
 	@Test
@@ -285,7 +282,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			)
 		)
 		Assertions.assertEquals(expectedProblems, problems)
-
 	}
 
 	@Test
@@ -338,7 +334,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 			)
 		)
 		Assertions.assertEquals(listOf<FieldProblem>(), problems)
-
 	}
 
 	@Test
@@ -380,9 +375,7 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 
 		val problems = checkFetchedUpdatedDTOsFields(FetchedDTO::class.java, UpdatedDTO::class.java, listOf())
 		Assertions.assertEquals(listOf<FieldProblem>(), problems)
-
 	}
-
 }
 
 data class SharedDTO(

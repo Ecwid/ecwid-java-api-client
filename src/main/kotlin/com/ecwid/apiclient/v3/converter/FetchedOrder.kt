@@ -5,266 +5,265 @@ import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.ProductOptionType
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
-import java.util.*
 
 fun FetchedOrder.toUpdated(): UpdatedOrder {
 	return UpdatedOrder(
-			email = email,
-			ipAddress = ipAddress,
-			hidden = hidden,
-			createDate = createDate,
-			latestShipDate = latestShipDate,
+		email = email,
+		ipAddress = ipAddress,
+		hidden = hidden,
+		createDate = createDate,
+		latestShipDate = latestShipDate,
 
-			refererUrl = refererUrl,
-			globalReferer = globalReferer,
-			affiliateId = affiliateId,
-			additionalInfo = OrderedStringToStringMap(additionalInfo),
+		refererUrl = refererUrl,
+		globalReferer = globalReferer,
+		affiliateId = affiliateId,
+		additionalInfo = OrderedStringToStringMap(additionalInfo),
 
-			orderComments = orderComments,
-			privateAdminNotes = privateAdminNotes,
+		orderComments = orderComments,
+		privateAdminNotes = privateAdminNotes,
 
-			fulfillmentStatus = fulfillmentStatus,
-			trackingNumber = trackingNumber,
-			pickupTime = pickupTime,
+		fulfillmentStatus = fulfillmentStatus,
+		trackingNumber = trackingNumber,
+		pickupTime = pickupTime,
 
-			paymentStatus = paymentStatus,
-			paymentMethod = paymentMethod,
-			paymentModule = paymentModule,
-			paymentParams = OrderedStringToStringMap(paymentParams),
-			paymentMessage = paymentMessage,
-			creditCardStatus = creditCardStatus?.toUpdated(),
-			externalTransactionId = externalTransactionId,
+		paymentStatus = paymentStatus,
+		paymentMethod = paymentMethod,
+		paymentModule = paymentModule,
+		paymentParams = OrderedStringToStringMap(paymentParams),
+		paymentMessage = paymentMessage,
+		creditCardStatus = creditCardStatus?.toUpdated(),
+		externalTransactionId = externalTransactionId,
 
-			customerId = customerId,
-			customerGroup = customerGroup,
-			acceptMarketing = acceptMarketing,
+		customerId = customerId,
+		customerGroup = customerGroup,
+		acceptMarketing = acceptMarketing,
 
-			total = total,
-			subtotal = subtotal,
+		total = total,
+		subtotal = subtotal,
 
-			tax = tax,
-			customerTaxExempt = customerTaxExempt,
-			customerTaxId = customerTaxId,
-			customerTaxIdValid = customerTaxIdValid,
-			reversedTaxApplied = reversedTaxApplied,
+		tax = tax,
+		customerTaxExempt = customerTaxExempt,
+		customerTaxId = customerTaxId,
+		customerTaxIdValid = customerTaxIdValid,
+		reversedTaxApplied = reversedTaxApplied,
 
-			couponDiscount = couponDiscount,
-			volumeDiscount = volumeDiscount,
-			membershipBasedDiscount = membershipBasedDiscount,
-			totalAndMembershipBasedDiscount = totalAndMembershipBasedDiscount,
-			discount = discount,
-			discountInfo = discountInfo?.map(FetchedOrder.DiscountInfo::toUpdated),
-			discountCoupon = discountCoupon?.toUpdated(),
+		couponDiscount = couponDiscount,
+		volumeDiscount = volumeDiscount,
+		membershipBasedDiscount = membershipBasedDiscount,
+		totalAndMembershipBasedDiscount = totalAndMembershipBasedDiscount,
+		discount = discount,
+		discountInfo = discountInfo?.map(FetchedOrder.DiscountInfo::toUpdated),
+		discountCoupon = discountCoupon?.toUpdated(),
 
-			items = items?.map(FetchedOrder.OrderItem::toUpdated),
+		items = items?.map(FetchedOrder.OrderItem::toUpdated),
 
-			billingPerson = billingPerson?.toUpdated(),
-			shippingPerson = shippingPerson?.toUpdated(),
+		billingPerson = billingPerson?.toUpdated(),
+		shippingPerson = shippingPerson?.toUpdated(),
 
-			shippingOption = shippingOption?.toUpdated(),
-			taxesOnShipping = taxesOnShipping.map(FetchedOrder.BaseOrderItemTax::toUpdated),
-			handlingFee = handlingFee?.toUpdated(),
+		shippingOption = shippingOption?.toUpdated(),
+		taxesOnShipping = taxesOnShipping.map(FetchedOrder.BaseOrderItemTax::toUpdated),
+		handlingFee = handlingFee?.toUpdated(),
 
-			customSurcharges = customSurcharges.map(FetchedOrder.Surcharge::toUpdated),
+		customSurcharges = customSurcharges.map(FetchedOrder.Surcharge::toUpdated),
 
-			utmData = utmData?.toUpdated(),
+		utmData = utmData?.toUpdated(),
 
-			customDiscount = customDiscount,
-			disableAllCustomerNotifications = disableAllCustomerNotifications,
-			ebayId = ebayId,
-			externalFulfillment = externalFulfillment,
-			externalOrderId = externalOrderId,
-			externalTransactionUrl = externalTransactionUrl,
-			latestDeliveryDate = latestDeliveryDate,
-			referenceTransactionId = referenceTransactionId,
-			refererId = refererId,
+		customDiscount = customDiscount,
+		disableAllCustomerNotifications = disableAllCustomerNotifications,
+		ebayId = ebayId,
+		externalFulfillment = externalFulfillment,
+		externalOrderId = externalOrderId,
+		externalTransactionUrl = externalTransactionUrl,
+		latestDeliveryDate = latestDeliveryDate,
+		referenceTransactionId = referenceTransactionId,
+		refererId = refererId,
 
-			pricesIncludeTax = pricesIncludeTax,
-			externalOrderData = externalOrderData?.toUpdated()
+		pricesIncludeTax = pricesIncludeTax,
+		externalOrderData = externalOrderData?.toUpdated()
 	)
 }
 
 fun FetchedOrder.CreditCardStatus.toUpdated(): UpdatedOrder.CreditCardStatus {
 	return UpdatedOrder.CreditCardStatus(
-			avsMessage = avsMessage,
-			cvvMessage = cvvMessage
+		avsMessage = avsMessage,
+		cvvMessage = cvvMessage
 	)
 }
 
 fun FetchedOrder.DiscountInfo.toUpdated(): UpdatedOrder.DiscountInfo {
 	return UpdatedOrder.DiscountInfo(
-			value = value,
-			type = type,
-			base = base,
-			orderTotal = orderTotal,
-			description = description
+		value = value,
+		type = type,
+		base = base,
+		orderTotal = orderTotal,
+		description = description
 	)
 }
 
 fun FetchedOrder.DiscountCouponInfo.toUpdated(): UpdatedOrder.DiscountCouponInfo {
 	return UpdatedOrder.DiscountCouponInfo(
-			name = name,
-			code = code,
-			discountType = discountType,
-			status = status,
-			discount = discount,
-			launchDate = launchDate,
-			expirationDate = expirationDate,
-			totalLimit = totalLimit,
-			usesLimit = usesLimit,
-			repeatCustomerOnly = repeatCustomerOnly
+		name = name,
+		code = code,
+		discountType = discountType,
+		status = status,
+		discount = discount,
+		launchDate = launchDate,
+		expirationDate = expirationDate,
+		totalLimit = totalLimit,
+		usesLimit = usesLimit,
+		repeatCustomerOnly = repeatCustomerOnly
 	)
 }
 
 fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 	return UpdatedOrder.OrderItem(
-			productId = if (productId == 0) null else productId,
-			categoryId = categoryId,
+		productId = if (productId == 0) null else productId,
+		categoryId = categoryId,
 
-			price = price,
-			productPrice = productPrice,
-			shipping = shipping,
-			tax = tax,
-			fixedShippingRate = fixedShippingRate,
-			couponAmount = couponAmount,
+		price = price,
+		productPrice = productPrice,
+		shipping = shipping,
+		tax = tax,
+		fixedShippingRate = fixedShippingRate,
+		couponAmount = couponAmount,
 
-			sku = sku,
-			name = name,
-			shortDescription = shortDescription,
-			quantity = quantity,
-			quantityInStock = quantityInStock,
-			weight = weight,
+		sku = sku,
+		name = name,
+		shortDescription = shortDescription,
+		quantity = quantity,
+		quantityInStock = quantityInStock,
+		weight = weight,
 
-			isShippingRequired = isShippingRequired,
-			trackQuantity = trackQuantity,
-			fixedShippingRateOnly = fixedShippingRateOnly,
-			digital = digital,
-			couponApplied = couponApplied,
+		isShippingRequired = isShippingRequired,
+		trackQuantity = trackQuantity,
+		fixedShippingRateOnly = fixedShippingRateOnly,
+		digital = digital,
+		couponApplied = couponApplied,
 
-			discountsAllowed = discountsAllowed,
-			isCustomerSetPrice = isCustomerSetPrice,
-			isGiftCard = isGiftCard,
-			nameTranslated = nameTranslated,
-			selectedPrice = selectedPrice?.toUpdated(),
-			shortDescriptionTranslated = shortDescriptionTranslated,
-			taxable = taxable,
+		discountsAllowed = discountsAllowed,
+		isCustomerSetPrice = isCustomerSetPrice,
+		isGiftCard = isGiftCard,
+		nameTranslated = nameTranslated,
+		selectedPrice = selectedPrice?.toUpdated(),
+		shortDescriptionTranslated = shortDescriptionTranslated,
+		taxable = taxable,
 
-			selectedOptions = selectedOptions?.map(FetchedOrder.OrderItemSelectedOption::toUpdated),
-			taxes = taxes?.map(FetchedOrder.OrderItemTax::toUpdated),
-			dimensions = dimensions?.toUpdated(),
-			discounts = discounts?.map(FetchedOrder.OrderItemDiscounts::toUpdated)
+		selectedOptions = selectedOptions?.map(FetchedOrder.OrderItemSelectedOption::toUpdated),
+		taxes = taxes?.map(FetchedOrder.OrderItemTax::toUpdated),
+		dimensions = dimensions?.toUpdated(),
+		discounts = discounts?.map(FetchedOrder.OrderItemDiscounts::toUpdated)
 	)
 }
 
 fun FetchedOrder.OrderItemSelectedOption.toUpdated(): UpdatedOrder.OrderItemSelectedOption {
 	return UpdatedOrder.OrderItemSelectedOption(
-			name = name,
-			nameTranslated = nameTranslated?.let { OrderedStringToStringMap(it) },
-			type = type,
-			value = if (type == ProductOptionType.CHOICES) null else value,
-			valueTranslated = valueTranslated?.let { OrderedStringToStringMap(it) },
-			valuesArray = valuesArray?.let { ArrayList(it) },
-			valuesArrayTranslated = valuesArrayTranslated?.let { OrderedStringToListStringMap(it) },
-			selections = selections?.map(FetchedOrder.OrderItemSelectionInfo::toUpdated)
+		name = name,
+		nameTranslated = nameTranslated?.let { OrderedStringToStringMap(it) },
+		type = type,
+		value = if (type == ProductOptionType.CHOICES) null else value,
+		valueTranslated = valueTranslated?.let { OrderedStringToStringMap(it) },
+		valuesArray = valuesArray?.let { ArrayList(it) },
+		valuesArrayTranslated = valuesArrayTranslated?.let { OrderedStringToListStringMap(it) },
+		selections = selections?.map(FetchedOrder.OrderItemSelectionInfo::toUpdated)
 	)
 }
 
 fun FetchedOrder.OrderItemSelectionInfo.toUpdated(): UpdatedOrder.OrderItemSelectionInfo {
 	return UpdatedOrder.OrderItemSelectionInfo(
-			selectionTitle = selectionTitle,
-			selectionModifier = selectionModifier,
-			selectionModifierType = selectionModifierType
+		selectionTitle = selectionTitle,
+		selectionModifier = selectionModifier,
+		selectionModifierType = selectionModifierType
 	)
 }
 
 fun FetchedOrder.OrderItemTax.toUpdated(): UpdatedOrder.OrderItemTax {
 	return UpdatedOrder.OrderItemTax(
-			name = name,
-			value = value,
-			total = total,
-			taxOnDiscountedSubtotal = taxOnDiscountedSubtotal,
-			taxOnShipping = taxOnShipping,
-			includeInPrice = includeInPrice
+		name = name,
+		value = value,
+		total = total,
+		taxOnDiscountedSubtotal = taxOnDiscountedSubtotal,
+		taxOnShipping = taxOnShipping,
+		includeInPrice = includeInPrice
 	)
 }
 
 fun FetchedOrder.ProductDimensions.toUpdated(): UpdatedOrder.ProductDimensions {
 	return UpdatedOrder.ProductDimensions(
-			length = length,
-			width = width,
-			height = height
+		length = length,
+		width = width,
+		height = height
 	)
 }
 
 fun FetchedOrder.OrderItemDiscounts.toUpdated(): UpdatedOrder.OrderItemDiscounts {
 	return UpdatedOrder.OrderItemDiscounts(
-			discountInfo = discountInfo?.toUpdated(),
-			total = total
+		discountInfo = discountInfo?.toUpdated(),
+		total = total
 	)
 }
 
 fun FetchedOrder.PersonInfo.toUpdated(): UpdatedOrder.PersonInfo {
 	return UpdatedOrder.PersonInfo(
-			name = name,
-			companyName = companyName,
-			street = street,
-			city = city,
-			countryCode = countryCode,
-			postalCode = postalCode,
-			stateOrProvinceCode = stateOrProvinceCode,
-			phone = phone
+		name = name,
+		companyName = companyName,
+		street = street,
+		city = city,
+		countryCode = countryCode,
+		postalCode = postalCode,
+		stateOrProvinceCode = stateOrProvinceCode,
+		phone = phone
 	)
 }
 
 fun FetchedOrder.ShippingOption.toUpdated(): UpdatedOrder.ShippingOption {
 	return UpdatedOrder.ShippingOption(
-			shippingCarrierName = shippingCarrierName,
-			shippingMethodName = shippingMethodName,
-			shippingRate = shippingRate,
-			estimatedTransitTime = estimatedTransitTime,
-			isPickup = isPickup,
-			pickupInstruction = pickupInstruction,
-			fulfillmentType = fulfillmentType
+		shippingCarrierName = shippingCarrierName,
+		shippingMethodName = shippingMethodName,
+		shippingRate = shippingRate,
+		estimatedTransitTime = estimatedTransitTime,
+		isPickup = isPickup,
+		pickupInstruction = pickupInstruction,
+		fulfillmentType = fulfillmentType
 	)
 }
 
 fun FetchedOrder.HandlingFee.toUpdated(): UpdatedOrder.HandlingFee {
 	return UpdatedOrder.HandlingFee(
-			name = name,
-			value = value,
-			description = description,
-			taxes = taxes.map(FetchedOrder.BaseOrderItemTax::toUpdated)
+		name = name,
+		value = value,
+		description = description,
+		taxes = taxes.map(FetchedOrder.BaseOrderItemTax::toUpdated)
 	)
 }
 
 private fun FetchedOrder.Surcharge.toUpdated(): UpdatedOrder.Surcharge {
 	return UpdatedOrder.Surcharge(
-			id = id,
-			value = value,
-			type = type,
-			total = total,
-			description = description,
-			descriptionTranslated = descriptionTranslated,
-			taxable = taxable,
-			taxes = taxes.map(FetchedOrder.BaseOrderItemTax::toUpdated)
+		id = id,
+		value = value,
+		type = type,
+		total = total,
+		description = description,
+		descriptionTranslated = descriptionTranslated,
+		taxable = taxable,
+		taxes = taxes.map(FetchedOrder.BaseOrderItemTax::toUpdated)
 	)
 }
 
 private fun FetchedOrder.BaseOrderItemTax.toUpdated(): UpdatedOrder.BaseOrderItemTax {
 	return UpdatedOrder.BaseOrderItemTax(
-			name = name,
-			value = value,
-			total = total
+		name = name,
+		value = value,
+		total = total
 	)
 }
 
 private fun FetchedOrder.UtmData.toUpdated(): UpdatedOrder.UtmData {
 	return UpdatedOrder.UtmData(
-			source = source,
-			campaign = campaign,
-			medium = medium,
-			mcEid = mcEid,
-			mcCid = mcCid
+		source = source,
+		campaign = campaign,
+		medium = medium,
+		mcEid = mcEid,
+		mcCid = mcCid
 	)
 }
 

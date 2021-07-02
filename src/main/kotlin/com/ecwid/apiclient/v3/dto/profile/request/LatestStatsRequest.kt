@@ -6,9 +6,8 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 class LatestStatsRequest : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			pathSegments = listOf(
-				"latest-stats"
-			)
+		pathSegments = listOf(
+			"latest-stats"
+		)
 	)
-
 }

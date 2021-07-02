@@ -98,8 +98,6 @@ internal class DTORandomDataProviderStrategy : AbstractRandomDataProviderStrateg
 			private val IS_SUBCLASS_OF_ENUM = Predicate<Class<*>> { clazz ->
 				clazz?.superclass?.isEnum == true
 			}
-
 		}
 	}
-
 }

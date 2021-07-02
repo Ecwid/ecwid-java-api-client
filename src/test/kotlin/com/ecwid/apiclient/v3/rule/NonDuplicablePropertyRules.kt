@@ -30,5 +30,4 @@ sealed class NonDuplicablePropertyRule<T, R>(
 	class PartialDuplicable<T, R> internal constructor(
 		property: KProperty1<T, R>
 	) : NonDuplicablePropertyRule<T, R>(property)
-
 }

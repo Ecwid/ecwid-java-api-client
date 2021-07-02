@@ -23,16 +23,16 @@ fun FetchedStoreProfile.toUpdated(): UpdatedStoreProfile {
 
 private fun FetchedStoreProfile.GeneralInfo.toUpdated(): UpdatedStoreProfile.GeneralInfo {
 	return UpdatedStoreProfile.GeneralInfo(
-			storeUrl = storeUrl,
-			starterSite = starterSite?.toUpdated(),
-			websitePlatform = websitePlatform?.toUpdated()
+		storeUrl = storeUrl,
+		starterSite = starterSite?.toUpdated(),
+		websitePlatform = websitePlatform?.toUpdated()
 	)
 }
 
 private fun FetchedStoreProfile.InstantSiteInfo.toUpdated(): UpdatedStoreProfile.InstantSiteInfo {
 	return UpdatedStoreProfile.InstantSiteInfo(
-			ecwidSubdomain = ecwidSubdomain,
-			customDomain = customDomain
+		ecwidSubdomain = ecwidSubdomain,
+		customDomain = customDomain
 	)
 }
 
@@ -49,40 +49,40 @@ private fun FetchedStoreProfile.WebsitePlatform.toUpdated(): UpdatedStoreProfile
 
 private fun FetchedStoreProfile.Account.toUpdated(): UpdatedStoreProfile.Account {
 	return UpdatedStoreProfile.Account(
-			accountName = accountName,
-			accountNickName = accountNickName,
-			accountEmail = accountEmail
+		accountName = accountName,
+		accountNickName = accountNickName,
+		accountEmail = accountEmail
 	)
 }
 
 private fun FetchedStoreProfile.Settings.toUpdated(): UpdatedStoreProfile.Settings {
 	return UpdatedStoreProfile.Settings(
-			closed = closed,
-			storeName = storeName,
-			storeDescription = storeDescription,
-			googleRemarketingEnabled = googleRemarketingEnabled,
-			googleAnalyticsId = googleAnalyticsId,
-			fbPixelId = fbPixelId,
-			orderCommentsEnabled = orderCommentsEnabled,
-			orderCommentsCaption = orderCommentsCaption,
-			orderCommentsRequired = orderCommentsRequired,
-			hideOutOfStockProductsInStorefront = hideOutOfStockProductsInStorefront,
-			askCompanyName = askCompanyName,
-			favoritesEnabled = favoritesEnabled,
-			defaultProductSortOrder = defaultProductSortOrder?.toUpdated(),
-			abandonedSales = abandonedSales?.toUpdated(),
-			salePrice = salePrice?.toUpdated(),
-			showAcceptMarketingCheckbox = showAcceptMarketingCheckbox,
-			acceptMarketingCheckboxDefaultValue = acceptMarketingCheckboxDefaultValue,
-			acceptMarketingCheckboxCustomText = acceptMarketingCheckboxCustomText,
-			askConsentToTrackInStorefront = askConsentToTrackInStorefront,
-			snapPixelId = snapPixelId,
-			pinterestTagId = pinterestTagId,
-			googleTagId = googleTagId,
-			googleEventId = googleEventId,
-			showPricePerUnit = showPricePerUnit,
-			googleProductCategory = googleProductCategory,
-			productCondition = productCondition
+		closed = closed,
+		storeName = storeName,
+		storeDescription = storeDescription,
+		googleRemarketingEnabled = googleRemarketingEnabled,
+		googleAnalyticsId = googleAnalyticsId,
+		fbPixelId = fbPixelId,
+		orderCommentsEnabled = orderCommentsEnabled,
+		orderCommentsCaption = orderCommentsCaption,
+		orderCommentsRequired = orderCommentsRequired,
+		hideOutOfStockProductsInStorefront = hideOutOfStockProductsInStorefront,
+		askCompanyName = askCompanyName,
+		favoritesEnabled = favoritesEnabled,
+		defaultProductSortOrder = defaultProductSortOrder?.toUpdated(),
+		abandonedSales = abandonedSales?.toUpdated(),
+		salePrice = salePrice?.toUpdated(),
+		showAcceptMarketingCheckbox = showAcceptMarketingCheckbox,
+		acceptMarketingCheckboxDefaultValue = acceptMarketingCheckboxDefaultValue,
+		acceptMarketingCheckboxCustomText = acceptMarketingCheckboxCustomText,
+		askConsentToTrackInStorefront = askConsentToTrackInStorefront,
+		snapPixelId = snapPixelId,
+		pinterestTagId = pinterestTagId,
+		googleTagId = googleTagId,
+		googleEventId = googleEventId,
+		showPricePerUnit = showPricePerUnit,
+		googleProductCategory = googleProductCategory,
+		productCondition = productCondition
 	)
 }
 
@@ -99,15 +99,15 @@ private fun FetchedStoreProfile.ProductSortOrder.toUpdated(): UpdatedStoreProfil
 
 private fun FetchedStoreProfile.AbandonedSalesSettings.toUpdated(): UpdatedStoreProfile.AbandonedSalesSettings {
 	return UpdatedStoreProfile.AbandonedSalesSettings(
-			autoAbandonedSalesRecovery = autoAbandonedSalesRecovery
+		autoAbandonedSalesRecovery = autoAbandonedSalesRecovery
 	)
 }
 
 private fun FetchedStoreProfile.SalePriceSettings.toUpdated(): UpdatedStoreProfile.SalePriceSettings {
 	return UpdatedStoreProfile.SalePriceSettings(
-			displayOnProductList = displayOnProductList,
-			oldPriceLabel = oldPriceLabel,
-			displayDiscount = displayDiscount?.toUpdated()
+		displayOnProductList = displayOnProductList,
+		oldPriceLabel = oldPriceLabel,
+		displayDiscount = displayDiscount?.toUpdated()
 	)
 }
 
@@ -121,44 +121,44 @@ private fun FetchedStoreProfile.SalePriceSettings.DisplayDiscount.toUpdated(): U
 
 private fun FetchedStoreProfile.MailNotifications.toUpdated(): UpdatedStoreProfile.MailNotifications {
 	return UpdatedStoreProfile.MailNotifications(
-			adminNotificationEmails = adminNotificationEmails?.map { email -> email },
-			customerNotificationFromEmail = customerNotificationFromEmail
+		adminNotificationEmails = adminNotificationEmails?.map { email -> email },
+		customerNotificationFromEmail = customerNotificationFromEmail
 	)
 }
 
 private fun FetchedStoreProfile.Company.toUpdated(): UpdatedStoreProfile.Company {
 	return UpdatedStoreProfile.Company(
-			companyName = companyName,
-			email = email,
-			street = street,
-			city = city,
-			countryCode = countryCode,
-			postalCode = postalCode,
-			stateOrProvinceCode = stateOrProvinceCode,
-			phone = phone
+		companyName = companyName,
+		email = email,
+		street = street,
+		city = city,
+		countryCode = countryCode,
+		postalCode = postalCode,
+		stateOrProvinceCode = stateOrProvinceCode,
+		phone = phone
 	)
 }
 
 private fun FetchedStoreProfile.FormatsAndUnits.toUpdated(): UpdatedStoreProfile.FormatsAndUnits {
 	return UpdatedStoreProfile.FormatsAndUnits(
-			currency = currency,
-			currencyPrefix = currencyPrefix,
-			currencySuffix = currencySuffix,
-			currencyGroupSeparator = currencyGroupSeparator,
-			currencyDecimalSeparator = currencyDecimalSeparator,
-			currencyTruncateZeroFractional = currencyTruncateZeroFractional,
-			currencyRate = currencyRate,
-			weightUnit = weightUnit?.toUpdated(),
-			weightPrecision = weightPrecision,
-			weightGroupSeparator = weightGroupSeparator,
-			weightDecimalSeparator = weightDecimalSeparator,
-			weightTruncateZeroFractional = weightTruncateZeroFractional,
-			dateFormat = dateFormat,
-			timeFormat = timeFormat,
-			timezone = timezone,
-			dimensionsUnit = dimensionsUnit?.toUpdated(),
-			orderNumberPrefix = orderNumberPrefix,
-			orderNumberSuffix = orderNumberSuffix
+		currency = currency,
+		currencyPrefix = currencyPrefix,
+		currencySuffix = currencySuffix,
+		currencyGroupSeparator = currencyGroupSeparator,
+		currencyDecimalSeparator = currencyDecimalSeparator,
+		currencyTruncateZeroFractional = currencyTruncateZeroFractional,
+		currencyRate = currencyRate,
+		weightUnit = weightUnit?.toUpdated(),
+		weightPrecision = weightPrecision,
+		weightGroupSeparator = weightGroupSeparator,
+		weightDecimalSeparator = weightDecimalSeparator,
+		weightTruncateZeroFractional = weightTruncateZeroFractional,
+		dateFormat = dateFormat,
+		timeFormat = timeFormat,
+		timezone = timezone,
+		dimensionsUnit = dimensionsUnit?.toUpdated(),
+		orderNumberPrefix = orderNumberPrefix,
+		orderNumberSuffix = orderNumberSuffix
 	)
 }
 
@@ -183,87 +183,87 @@ private fun FetchedStoreProfile.DimensionUnit.toUpdated(): UpdatedStoreProfile.D
 
 private fun FetchedStoreProfile.Languages.toUpdated(): UpdatedStoreProfile.Languages {
 	return UpdatedStoreProfile.Languages(
-			enabledLanguages = enabledLanguages?.map { enabledLanguage -> enabledLanguage },
-			defaultLanguage = defaultLanguage
+		enabledLanguages = enabledLanguages?.map { enabledLanguage -> enabledLanguage },
+		defaultLanguage = defaultLanguage
 	)
 }
 
 private fun FetchedStoreProfile.Shipping.toUpdated(): UpdatedStoreProfile.Shipping {
 	return UpdatedStoreProfile.Shipping(
-			handlingFee = handlingFee?.toUpdated()
+		handlingFee = handlingFee?.toUpdated()
 	)
 }
 
 private fun FetchedStoreProfile.HandlingFee.toUpdated(): UpdatedStoreProfile.HandlingFee {
 	return UpdatedStoreProfile.HandlingFee(
-			name = name,
-			value = value,
-			description = description
+		name = name,
+		value = value,
+		description = description
 	)
 }
 
 private fun FetchedStoreProfile.TaxSettings.toUpdated(): UpdatedStoreProfile.TaxSettings {
 	return UpdatedStoreProfile.TaxSettings(
-			automaticTaxEnabled = automaticTaxEnabled,
-			taxes = taxes?.map(FetchedStoreProfile.TaxSettings.Taxes::toUpdated),
-			pricesIncludeTax = pricesIncludeTax,
-			taxExemptBusiness = taxExemptBusiness
+		automaticTaxEnabled = automaticTaxEnabled,
+		taxes = taxes?.map(FetchedStoreProfile.TaxSettings.Taxes::toUpdated),
+		pricesIncludeTax = pricesIncludeTax,
+		taxExemptBusiness = taxExemptBusiness
 	)
 }
 
 private fun FetchedStoreProfile.TaxSettings.Taxes.toUpdated(): UpdatedStoreProfile.TaxSettings.Taxes {
 	return UpdatedStoreProfile.TaxSettings.Taxes(
-			id = id,
-			name = name,
-			enabled = enabled,
-			includeInPrice = includeInPrice,
-			useShippingAddress = useShippingAddress,
-			taxShipping = taxShipping,
-			appliedByDefault = appliedByDefault,
-			defaultTax = defaultTax,
-			rules = rules?.map(FetchedStoreProfile.TaxSettings.TaxRule::toUpdated)
+		id = id,
+		name = name,
+		enabled = enabled,
+		includeInPrice = includeInPrice,
+		useShippingAddress = useShippingAddress,
+		taxShipping = taxShipping,
+		appliedByDefault = appliedByDefault,
+		defaultTax = defaultTax,
+		rules = rules?.map(FetchedStoreProfile.TaxSettings.TaxRule::toUpdated)
 	)
 }
 
 private fun FetchedStoreProfile.TaxSettings.TaxRule.toUpdated(): UpdatedStoreProfile.TaxSettings.TaxRule {
 	return UpdatedStoreProfile.TaxSettings.TaxRule(
-			zoneId = zoneId,
-			tax = tax
+		zoneId = zoneId,
+		tax = tax
 	)
 }
 
 private fun FetchedStoreProfile.Zone.toUpdated(): UpdatedStoreProfile.Zone {
 	return UpdatedStoreProfile.Zone(
-			id = id,
-			name = name,
-			countryCodes = countryCodes?.map { countryCode -> countryCode },
-			stateOrProvinceCodes = stateOrProvinceCodes?.map { stateOrProvinceCode -> stateOrProvinceCode },
-			postCodes = postCodes?.map { postCode -> postCode }
+		id = id,
+		name = name,
+		countryCodes = countryCodes?.map { countryCode -> countryCode },
+		stateOrProvinceCodes = stateOrProvinceCodes?.map { stateOrProvinceCode -> stateOrProvinceCode },
+		postCodes = postCodes?.map { postCode -> postCode }
 	)
 }
 
 private fun FetchedStoreProfile.BusinessRegistrationID.toUpdated(): UpdatedStoreProfile.BusinessRegistrationID {
 	return UpdatedStoreProfile.BusinessRegistrationID(
-			name = name,
-			value = value
+		name = name,
+		value = value
 	)
 }
 
 private fun FetchedStoreProfile.LegalPagesSettingsDetails.toUpdated(): UpdatedStoreProfile.LegalPagesSettingsDetails {
 	return UpdatedStoreProfile.LegalPagesSettingsDetails(
-			requireTermsAgreementAtCheckout = requireTermsAgreementAtCheckout,
-			legalPages = legalPages?.map(FetchedStoreProfile.LegalPagesInfo::toUpdated)
+		requireTermsAgreementAtCheckout = requireTermsAgreementAtCheckout,
+		legalPages = legalPages?.map(FetchedStoreProfile.LegalPagesInfo::toUpdated)
 	)
 }
 
 private fun FetchedStoreProfile.LegalPagesInfo.toUpdated(): UpdatedStoreProfile.LegalPagesInfo {
 	return UpdatedStoreProfile.LegalPagesInfo(
-			type = type?.toUpdated(),
-			enabled = enabled,
-			title = title,
-			display = display?.toUpdated(),
-			text = text,
-			externalUrl = externalUrl
+		type = type?.toUpdated(),
+		enabled = enabled,
+		title = title,
+		display = display?.toUpdated(),
+		text = text,
+		externalUrl = externalUrl
 	)
 }
 
@@ -286,9 +286,9 @@ private fun FetchedStoreProfile.LegalPagesInfo.Display.toUpdated(): UpdatedStore
 
 private fun FetchedStoreProfile.OrderInvoiceSettings.toUpdated(): UpdatedStoreProfile.OrderInvoiceSettings {
 	return UpdatedStoreProfile.OrderInvoiceSettings(
-			displayOrderInvoices = displayOrderInvoices,
-			attachInvoiceToOrderEmailNotifications = attachInvoiceToOrderEmailNotifications?.toUpdated(),
-			invoiceLogoUrl = invoiceLogoUrl
+		displayOrderInvoices = displayOrderInvoices,
+		attachInvoiceToOrderEmailNotifications = attachInvoiceToOrderEmailNotifications?.toUpdated(),
+		invoiceLogoUrl = invoiceLogoUrl
 	)
 }
 

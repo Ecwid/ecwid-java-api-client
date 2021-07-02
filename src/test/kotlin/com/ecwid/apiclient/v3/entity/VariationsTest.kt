@@ -29,14 +29,14 @@ class VariationsTest : BaseEntityTest() {
 		// Create one product
 		val productPrice = randomPrice()
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						price = productPrice,
-						name = "Product ${randomAlphanumeric(8)}",
-						sku = "testAddVariations",
-						options = listOf(
-								generateProductSelectOption("Size", listOf("S", "M", "L"))
-						)
+			newProduct = UpdatedProduct(
+				price = productPrice,
+				name = "Product ${randomAlphanumeric(8)}",
+				sku = "testAddVariations",
+				options = listOf(
+					generateProductSelectOption("Size", listOf("S", "M", "L"))
 				)
+			)
 		)
 
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
@@ -47,20 +47,20 @@ class VariationsTest : BaseEntityTest() {
 		val testVariationPrice = randomPrice()
 		val testVariationWeight = randomWeight()
 		val createProductVariationRequest = CreateProductVariationRequest(
-				productId = newProductId,
-				newVariation = UpdatedVariation(
-						sku = testVariationSku,
-						quantity = 2,
-						isShippingRequired = true,
-						price = testVariationPrice,
-						weight = testVariationWeight,
-						options = listOf(
-								UpdatedVariation.Option(
-										name = "Size",
-										value = "L"
-								)
-						)
+			productId = newProductId,
+			newVariation = UpdatedVariation(
+				sku = testVariationSku,
+				quantity = 2,
+				isShippingRequired = true,
+				price = testVariationPrice,
+				weight = testVariationWeight,
+				options = listOf(
+					UpdatedVariation.Option(
+						name = "Size",
+						value = "L"
+					)
 				)
+			)
 		)
 
 		val createProductVariationResult = apiClient.createProductVariation(createProductVariationRequest)
@@ -73,7 +73,6 @@ class VariationsTest : BaseEntityTest() {
 		assertEquals(testVariationPrice, variation.price)
 		assertEquals(testVariationWeight, variation.weight)
 		assertEquals(testVariationSku, variation.sku)
-
 	}
 
 	@Test
@@ -81,13 +80,16 @@ class VariationsTest : BaseEntityTest() {
 		// Create one product
 		val productPrice = randomPrice()
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						price = productPrice,
-						name = "Product ${randomAlphanumeric(8)}",
-						sku = "testVariations",
-						quantity = 10,
-						options = listOf(
-								generateProductSelectOption("Size", listOf("S", "M", "L")))))
+			newProduct = UpdatedProduct(
+				price = productPrice,
+				name = "Product ${randomAlphanumeric(8)}",
+				sku = "testVariations",
+				quantity = 10,
+				options = listOf(
+					generateProductSelectOption("Size", listOf("S", "M", "L"))
+				)
+			)
+		)
 
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
 		val newProductId = productCreateResult.id
@@ -95,52 +97,63 @@ class VariationsTest : BaseEntityTest() {
 
 		// add 1st variation
 		val createProductVariationRequest = CreateProductVariationRequest(
-				productId = newProductId,
-				newVariation = UpdatedVariation(
-						sku = "first test Variation",
-						quantity = 2,
-						isShippingRequired = true,
-						price = 51.2,
-						weight = 16.7,
-						options = listOf(
-								UpdatedVariation.Option(
-										name = "Size",
-										value = "L"))))
+			productId = newProductId,
+			newVariation = UpdatedVariation(
+				sku = "first test Variation",
+				quantity = 2,
+				isShippingRequired = true,
+				price = 51.2,
+				weight = 16.7,
+				options = listOf(
+					UpdatedVariation.Option(
+						name = "Size",
+						value = "L"
+					)
+				)
+			)
+		)
 
 		val create1stVariationResult = apiClient.createProductVariation(createProductVariationRequest)
 		assertTrue(create1stVariationResult.id > 0)
 
 		// add second variation
 		val create2ndProductVariationRequest = CreateProductVariationRequest(
-				productId = newProductId,
-				newVariation = UpdatedVariation(
-						sku = "second test Variation",
-						quantity = 9,
-						isShippingRequired = false,
-						price = 100.0,
-						weight = 15.0,
-						options = listOf(
-								UpdatedVariation.Option(
-										name = "Size",
-										value = "S"))))
+			productId = newProductId,
+			newVariation = UpdatedVariation(
+				sku = "second test Variation",
+				quantity = 9,
+				isShippingRequired = false,
+				price = 100.0,
+				weight = 15.0,
+				options = listOf(
+					UpdatedVariation.Option(
+						name = "Size",
+						value = "S"
+					)
+				)
+			)
+		)
 		val create2ndVariationResult = apiClient.createProductVariation(create2ndProductVariationRequest)
 		assertTrue(create2ndVariationResult.id > 0)
 
 		// update 1st variation
 		val update1stVariationRequest = UpdateProductVariationRequest(
-				productId = newProductId,
-				variationId = create1stVariationResult.id,
-				variation = UpdatedVariation(
-						sku = "modified first test Variation",
-						quantity = 15))
+			productId = newProductId,
+			variationId = create1stVariationResult.id,
+			variation = UpdatedVariation(
+				sku = "modified first test Variation",
+				quantity = 15
+			)
+		)
 		val updateResult = apiClient.updateProductVariation(update1stVariationRequest)
 		assertEquals(1, updateResult.updateCount)
 
 		// change inventory of 2nd variation
 		val change2ndVariationInventoryRequest = AdjustVariationInventoryRequest(
-				productId = newProductId,
-				variationId = create2ndVariationResult.id,
-				quantityDelta = -4)
+			productId = newProductId,
+			variationId = create2ndVariationResult.id,
+			quantityDelta = -4
+		)
 		val adjustResult = apiClient.adjustVariationInventory(change2ndVariationInventoryRequest)
 		assertEquals(1, adjustResult.updateCount)
 
@@ -156,12 +169,14 @@ class VariationsTest : BaseEntityTest() {
 		assertEquals(5 /* = 9 - 4 */, secondVar.quantity)
 
 		// delete 1st variation
-		val delete1stVariationRequest = DeleteProductVariationRequest(productId = newProductId, variationId = create1stVariationResult.id)
+		val delete1stVariationRequest =
+			DeleteProductVariationRequest(productId = newProductId, variationId = create1stVariationResult.id)
 		val delete1stVariationResult = apiClient.deleteProductVariation(delete1stVariationRequest)
 		assertEquals(1, delete1stVariationResult.deleteCount)
 
 		// ensure 1st variation is deleted, but 2nd is still there
-		val anotherAllVariationsResult = apiClient.getAllProductVariations(ProductVariationsRequest(productId = newProductId))
+		val anotherAllVariationsResult =
+			apiClient.getAllProductVariations(ProductVariationsRequest(productId = newProductId))
 		assertEquals(1, anotherAllVariationsResult.size)
 		assertEquals(create2ndVariationResult.id, anotherAllVariationsResult.first().id)
 	}
@@ -171,14 +186,14 @@ class VariationsTest : BaseEntityTest() {
 		// Create one product, basically, redo same test as above, but with another option type
 		val productPrice = randomPrice()
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						price = productPrice,
-						name = "Product ${randomAlphanumeric(8)}",
-						sku = "testProduct1",
-						options = listOf(
-								generateProductRadioOption("Test", listOf("1", "2", "3", "4", "5"))
-						)
+			newProduct = UpdatedProduct(
+				price = productPrice,
+				name = "Product ${randomAlphanumeric(8)}",
+				sku = "testProduct1",
+				options = listOf(
+					generateProductRadioOption("Test", listOf("1", "2", "3", "4", "5"))
 				)
+			)
 		)
 
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
@@ -188,19 +203,19 @@ class VariationsTest : BaseEntityTest() {
 		val testVariationPrice = randomPrice()
 		val testVariationWeight = randomWeight()
 		val createProductVariationRequest = CreateProductVariationRequest(
-				productId = newProductId,
-				newVariation = UpdatedVariation(
-						sku = "testVariation1",
-						quantity = 2,
-						price = testVariationPrice,
-						weight = testVariationWeight,
-						options = listOf(
-								UpdatedVariation.Option(
-										name = "Test",
-										value = "5"
-								)
-						)
+			productId = newProductId,
+			newVariation = UpdatedVariation(
+				sku = "testVariation1",
+				quantity = 2,
+				price = testVariationPrice,
+				weight = testVariationWeight,
+				options = listOf(
+					UpdatedVariation.Option(
+						name = "Test",
+						value = "5"
+					)
 				)
+			)
 		)
 
 		val createProductVariationResult = apiClient.createProductVariation(createProductVariationRequest)
@@ -217,24 +232,24 @@ class VariationsTest : BaseEntityTest() {
 
 		// Now create image for variation and then delete it
 		val createProductVariationImageRequest = ProductVariationImageUploadRequest(
-				productId = newProductId,
-				variationId = newVariationId,
-				fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
+			productId = newProductId,
+			variationId = newVariationId,
+			fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
 		)
 		val createProductVariationImageResult = apiClient.uploadVariationImage(createProductVariationImageRequest)
 		assertTrue(createProductVariationImageResult.id > 0)
 
 		val productVariationDetailsRequest = ProductVariationDetailsRequest(
-				productId = newProductId,
-				variationId = newVariationId
+			productId = newProductId,
+			variationId = newVariationId
 		)
 		val fetchedVariation1 = apiClient.getProductVariation(productVariationDetailsRequest)
 		Assertions.assertNotNull(fetchedVariation1.imageUrl)
 
 		// Now delete category image
 		val deleteProductVariationImageRequest = ProductVariationImageDeleteRequest(
-				productId = newProductId,
-				variationId = newVariationId
+			productId = newProductId,
+			variationId = newVariationId
 		)
 		val deleteProductVariationImageResult = apiClient.deleteVariationImage(deleteProductVariationImageRequest)
 		assertTrue(deleteProductVariationImageResult.deleteCount > 0)
@@ -248,23 +263,23 @@ class VariationsTest : BaseEntityTest() {
 private fun generateProductSelectOption(name: String, values: List<String>): UpdatedProduct.ProductOption {
 	val choices = values.map { generateProductOptionChoice(it) }
 	return UpdatedProduct.ProductOption.createSelectOption(
-			name = name,
-			choices = choices,
-			defaultChoice = randomIndex(choices),
-			required = randomBoolean()
+		name = name,
+		choices = choices,
+		defaultChoice = randomIndex(choices),
+		required = randomBoolean()
 	)
 }
 
 private fun generateProductOptionChoice(value: String) = UpdatedProduct.ProductOptionChoice(
-		text = value,
-		priceModifier = randomModifier(),
-		priceModifierType = randomEnumValue()
+	text = value,
+	priceModifier = randomModifier(),
+	priceModifierType = randomEnumValue()
 )
 
 private fun generateProductRadioOption(name: String, values: List<String>): UpdatedProduct.ProductOption.RadioOption {
 	val choices = values.map { generateProductOptionChoice(it) }
 	return UpdatedProduct.ProductOption.createRadioOption(
-			name = name,
-			choices = choices
+		name = name,
+		choices = choices
 	)
 }

@@ -29,20 +29,31 @@ open class RateLimitedHttpClientWrapper(
 		return executeWithRetry(request, totalAttempts, responseHandler)
 	}
 
-	private fun <T> executeWithRetry(request: HttpUriRequest, attemptsLeft: Int, responseHandler: ResponseHandler<T>): T {
+	private fun <T> executeWithRetry(
+		request: HttpUriRequest,
+		attemptsLeft: Int,
+		responseHandler: ResponseHandler<T>
+	): T {
 		return httpClient.execute(request) { response ->
 			if (response.statusLine.statusCode == SC_TOO_MANY_REQUESTS && attemptsLeft > 0) {
-				process429(request,
+				process429(
+					request,
 					response,
 					attemptsLeft - 1, // decrement attempts reminder
-					responseHandler)
+					responseHandler
+				)
 			} else {
 				responseHandler.handleResponse(response)
 			}
 		}
 	}
 
-	private fun <T> process429(request: HttpUriRequest, response: HttpResponse, attemptsLeft: Int, responseHandler: ResponseHandler<T>): T {
+	private fun <T> process429(
+		request: HttpUriRequest,
+		response: HttpResponse,
+		attemptsLeft: Int,
+		responseHandler: ResponseHandler<T>
+	): T {
 		// server must inform how long to wait
 		val waitInterval = response.getFirstHeader("Retry-After")?.value?.toLong()
 			?: defaultRateLimitRetryInterval
@@ -64,5 +75,4 @@ open class RateLimitedHttpClientWrapper(
 			onEverySecondOfWaiting(second)
 		}
 	}
-
 }

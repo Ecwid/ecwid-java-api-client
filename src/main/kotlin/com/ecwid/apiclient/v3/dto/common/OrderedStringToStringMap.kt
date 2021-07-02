@@ -12,5 +12,4 @@ open class OrderedStringToStringMap : TreeMap<String, String> {
 			super.putAll(map)
 		}
 	}
-
 }

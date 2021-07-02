@@ -6,23 +6,23 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 data class CartsSearchRequest(
-		val showHidden: Boolean? = null,
-		val totalFrom: Double? = null,
-		val totalTo: Double? = null,
-		val createdFrom: Date? = null,
-		val createdTo: Date? = null,
-		val updatedFrom: Date? = null,
-		val updatedTo: Date? = null,
-		val couponCode: String? = null,
-		val customer: String? = null,
-		val offset: Int = 0,
-		val limit: Int = 100
+	val showHidden: Boolean? = null,
+	val totalFrom: Double? = null,
+	val totalTo: Double? = null,
+	val createdFrom: Date? = null,
+	val createdTo: Date? = null,
+	val updatedFrom: Date? = null,
+	val updatedTo: Date? = null,
+	val couponCode: String? = null,
+	val customer: String? = null,
+	val offset: Int = 0,
+	val limit: Int = 100
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			pathSegments = listOf(
-				"carts"
-			),
-			params = toParams()
+		pathSegments = listOf(
+			"carts"
+		),
+		params = toParams()
 	)
 
 	private fun toParams(): Map<String, String> {
@@ -41,5 +41,4 @@ data class CartsSearchRequest(
 			put("limit", request.limit.toString())
 		}.toMap()
 	}
-
 }

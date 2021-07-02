@@ -12,12 +12,19 @@ import com.ecwid.apiclient.v3.dto.common.EcwidApiError
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 
 internal class BatchApiClientImpl(
-		private val apiClientHelper: ApiClientHelper
+	private val apiClientHelper: ApiClientHelper
 ) : BatchApiClient {
-	override fun createBatch(request: CreateBatchRequestWithIds) = apiClientHelper.makeObjectResultRequest<CreateBatchResult>(request)
-	override fun createBatch(request: CreateBatchRequest) = apiClientHelper.makeObjectResultRequest<CreateBatchResult>(request)
-	override fun getEscapedBatch(request: GetEscapedBatchRequest) = apiClientHelper.makeObjectResultRequest<GetEscapedBatchResult>(request)
-	override fun getTypedBatch(request: GetEscapedBatchRequest) = GetTypedBatchResult(getEscapedBatch(request), apiClientHelper.jsonTransformer)
+	override fun createBatch(request: CreateBatchRequestWithIds) =
+		apiClientHelper.makeObjectResultRequest<CreateBatchResult>(request)
+
+	override fun createBatch(request: CreateBatchRequest) =
+		apiClientHelper.makeObjectResultRequest<CreateBatchResult>(request)
+
+	override fun getEscapedBatch(request: GetEscapedBatchRequest) =
+		apiClientHelper.makeObjectResultRequest<GetEscapedBatchResult>(request)
+
+	override fun getTypedBatch(request: GetEscapedBatchRequest) =
+		GetTypedBatchResult(getEscapedBatch(request), apiClientHelper.jsonTransformer)
 }
 
 sealed class TypedBatchResponse<T> {

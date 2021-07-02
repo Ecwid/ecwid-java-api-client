@@ -219,60 +219,228 @@ class DTOsEmptinessCheckerUnitTest {
 
 		val expectedProblems = setOf(
 
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = BooleanDTO::class.java, fieldName = "booleanField1"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = BooleanDTO::class.java, fieldName = "booleanField2"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = BooleanDTO::class.java, fieldName = "booleanField3"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = BooleanDTO::class.java, fieldName = "booleanField4"),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = BooleanDTO::class.java,
+				fieldName = "booleanField1"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = BooleanDTO::class.java,
+				fieldName = "booleanField2"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = BooleanDTO::class.java,
+				fieldName = "booleanField3"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = BooleanDTO::class.java,
+				fieldName = "booleanField4"
+			),
 
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = ByteDTO::class.java, fieldName = "byteField1"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = ByteDTO::class.java, fieldName = "byteField2"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = ByteDTO::class.java, fieldName = "byteField3"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = ByteDTO::class.java, fieldName = "byteField4"),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = ByteDTO::class.java,
+				fieldName = "byteField1"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = ByteDTO::class.java,
+				fieldName = "byteField2"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = ByteDTO::class.java,
+				fieldName = "byteField3"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = ByteDTO::class.java,
+				fieldName = "byteField4"
+			),
 
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = ShortDTO::class.java, fieldName = "shortField1"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = ShortDTO::class.java, fieldName = "shortField2"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = ShortDTO::class.java, fieldName = "shortField3"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = ShortDTO::class.java, fieldName = "shortField4"),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = ShortDTO::class.java,
+				fieldName = "shortField1"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = ShortDTO::class.java,
+				fieldName = "shortField2"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = ShortDTO::class.java,
+				fieldName = "shortField3"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = ShortDTO::class.java,
+				fieldName = "shortField4"
+			),
 
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = IntDTO::class.java, fieldName = "intField1"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = IntDTO::class.java, fieldName = "intField2"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = IntDTO::class.java, fieldName = "intField3"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = IntDTO::class.java, fieldName = "intField4"),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = IntDTO::class.java,
+				fieldName = "intField1"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = IntDTO::class.java,
+				fieldName = "intField2"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = IntDTO::class.java,
+				fieldName = "intField3"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = IntDTO::class.java,
+				fieldName = "intField4"
+			),
 
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = LongDTO::class.java, fieldName = "longField1"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = LongDTO::class.java, fieldName = "longField2"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = LongDTO::class.java, fieldName = "longField3"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = LongDTO::class.java, fieldName = "longField4"),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = LongDTO::class.java,
+				fieldName = "longField1"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = LongDTO::class.java,
+				fieldName = "longField2"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = LongDTO::class.java,
+				fieldName = "longField3"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = LongDTO::class.java,
+				fieldName = "longField4"
+			),
 
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = FloatDTO::class.java, fieldName = "floatField1"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = FloatDTO::class.java, fieldName = "floatField2"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = FloatDTO::class.java, fieldName = "floatField3"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = FloatDTO::class.java, fieldName = "floatField4"),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = FloatDTO::class.java,
+				fieldName = "floatField1"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = FloatDTO::class.java,
+				fieldName = "floatField2"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = FloatDTO::class.java,
+				fieldName = "floatField3"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = FloatDTO::class.java,
+				fieldName = "floatField4"
+			),
 
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = DoubleDTO::class.java, fieldName = "doubleField1"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = DoubleDTO::class.java, fieldName = "doubleField2"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = DoubleDTO::class.java, fieldName = "doubleField3"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = DoubleDTO::class.java, fieldName = "doubleField4"),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = DoubleDTO::class.java,
+				fieldName = "doubleField1"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = DoubleDTO::class.java,
+				fieldName = "doubleField2"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = DoubleDTO::class.java,
+				fieldName = "doubleField3"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = DoubleDTO::class.java,
+				fieldName = "doubleField4"
+			),
 
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = StringDTO::class.java, fieldName = "stringField1"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = StringDTO::class.java, fieldName = "stringField2"),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = StringDTO::class.java,
+				fieldName = "stringField1"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = StringDTO::class.java,
+				fieldName = "stringField2"
+			),
 
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = DateDTO::class.java, fieldName = "dateField1"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = DateDTO::class.java, fieldName = "dateField2"),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = DateDTO::class.java,
+				fieldName = "dateField1"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = DateDTO::class.java,
+				fieldName = "dateField2"
+			),
 
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = EnumDTO::class.java, fieldName = "enumField1"),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = EnumDTO::class.java,
+				fieldName = "enumField1"
+			),
 
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = ListDTO::class.java, fieldName = "listField1"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.EMPTY_LIST, fieldClass = ListDTO::class.java, fieldName = "listField2"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = ListDTO::class.java, fieldName = "listField3 (list value)"),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = ListDTO::class.java,
+				fieldName = "listField1"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.EMPTY_LIST,
+				fieldClass = ListDTO::class.java,
+				fieldName = "listField2"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = ListDTO::class.java,
+				fieldName = "listField3 (list value)"
+			),
 
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = MapDTO::class.java, fieldName = "mapField1"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.EMPTY_MAP, fieldClass = MapDTO::class.java, fieldName = "mapField2"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = MapDTO::class.java, fieldName = "mapField3 (map key)"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.DEFAULT_VALUE, fieldClass = MapDTO::class.java, fieldName = "mapField4 (map value)"),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = MapDTO::class.java,
+				fieldName = "mapField1"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.EMPTY_MAP,
+				fieldClass = MapDTO::class.java,
+				fieldName = "mapField2"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = MapDTO::class.java,
+				fieldName = "mapField3 (map key)"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+				fieldClass = MapDTO::class.java,
+				fieldName = "mapField4 (map value)"
+			),
 
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = TestDTO::class.java, fieldName = "primitiveField"),
-			FieldEmptinessProblem(kind = FieldEmptinessProblemKind.NULL_VALUE, fieldClass = TestDTO::class.java, fieldName = "nullDTOField")
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = TestDTO::class.java,
+				fieldName = "primitiveField"
+			),
+			FieldEmptinessProblem(
+				kind = FieldEmptinessProblemKind.NULL_VALUE,
+				fieldClass = TestDTO::class.java,
+				fieldName = "nullDTOField"
+			)
 		)
 
 		val problems = checkDTOFieldsEmptiness(
@@ -281,7 +449,6 @@ class DTOsEmptinessCheckerUnitTest {
 		)
 		Assertions.assertEquals(expectedProblems, problems)
 	}
-
 }
 
 @Suppress("unused")

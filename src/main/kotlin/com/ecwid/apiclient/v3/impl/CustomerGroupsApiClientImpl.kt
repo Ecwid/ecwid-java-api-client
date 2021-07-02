@@ -6,10 +6,11 @@ import com.ecwid.apiclient.v3.dto.customergroup.request.*
 import com.ecwid.apiclient.v3.dto.customergroup.result.*
 
 internal class CustomerGroupsApiClientImpl(
-		private val apiClientHelper: ApiClientHelper
+	private val apiClientHelper: ApiClientHelper
 ) : CustomerGroupsApiClient {
 
-	override fun searchCustomerGroups(request: CustomerGroupsSearchRequest) = apiClientHelper.makeObjectResultRequest<CustomerGroupsSearchResult>(request)
+	override fun searchCustomerGroups(request: CustomerGroupsSearchRequest) =
+		apiClientHelper.makeObjectResultRequest<CustomerGroupsSearchResult>(request)
 
 	override fun searchCustomerGroupsAsSequence(request: CustomerGroupsSearchRequest) = sequence {
 		var offsetRequest = request
@@ -20,9 +21,15 @@ internal class CustomerGroupsApiClientImpl(
 		} while (searchResult.count >= searchResult.limit)
 	}
 
-	override fun getCustomerGroupDetails(request: CustomerGroupDetailsRequest) = apiClientHelper.makeObjectResultRequest<FetchedCustomerGroup>(request)
-	override fun createCustomerGroup(request: CustomerGroupCreateRequest) = apiClientHelper.makeObjectResultRequest<CustomerGroupCreateResult>(request)
-	override fun updateCustomerGroup(request: CustomerGroupUpdateRequest) = apiClientHelper.makeObjectResultRequest<CustomerGroupUpdateResult>(request)
-	override fun deleteCustomerGroup(request: CustomerGroupDeleteRequest) = apiClientHelper.makeObjectResultRequest<CustomerGroupDeleteResult>(request)
+	override fun getCustomerGroupDetails(request: CustomerGroupDetailsRequest) =
+		apiClientHelper.makeObjectResultRequest<FetchedCustomerGroup>(request)
 
+	override fun createCustomerGroup(request: CustomerGroupCreateRequest) =
+		apiClientHelper.makeObjectResultRequest<CustomerGroupCreateResult>(request)
+
+	override fun updateCustomerGroup(request: CustomerGroupUpdateRequest) =
+		apiClientHelper.makeObjectResultRequest<CustomerGroupUpdateResult>(request)
+
+	override fun deleteCustomerGroup(request: CustomerGroupDeleteRequest) =
+		apiClientHelper.makeObjectResultRequest<CustomerGroupDeleteResult>(request)
 }

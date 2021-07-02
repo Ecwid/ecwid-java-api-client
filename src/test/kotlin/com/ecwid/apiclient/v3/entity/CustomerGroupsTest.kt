@@ -23,7 +23,7 @@ class CustomerGroupsTest : BaseEntityTest() {
 	fun testCustomerGroupLifecycle() {
 		// Creating new customer group
 		val customerGroupCreateRequest = CustomerGroupCreateRequest(
-				newCustomerGroup = generateTestCustomerGroup()
+			newCustomerGroup = generateTestCustomerGroup()
 		)
 		val customerGroupCreateResult = apiClient.createCustomerGroup(customerGroupCreateRequest)
 		assertTrue(customerGroupCreateResult.id > 0)
@@ -35,8 +35,8 @@ class CustomerGroupsTest : BaseEntityTest() {
 
 		// Completely updating newly created customer group
 		val customerGroupUpdateRequest = CustomerGroupUpdateRequest(
-				customerGroupId = customerGroupDetails1.id,
-				updatedCustomerGroup = generateTestCustomerGroup()
+			customerGroupId = customerGroupDetails1.id,
+			updatedCustomerGroup = generateTestCustomerGroup()
 		)
 		val customerGroupUpdateResult1 = apiClient.updateCustomerGroup(customerGroupUpdateRequest)
 		assertEquals(1, customerGroupUpdateResult1.updateCount)
@@ -64,7 +64,7 @@ class CustomerGroupsTest : BaseEntityTest() {
 		// Create three customer groups additionally to always existing “General” group
 		repeat(3) {
 			val customerGroupCreateRequest = CustomerGroupCreateRequest(
-					newCustomerGroup = generateTestCustomerGroup()
+				newCustomerGroup = generateTestCustomerGroup()
 			)
 			val customerGroupCreateResult = apiClient.createCustomerGroup(customerGroupCreateRequest)
 			assertTrue(customerGroupCreateResult.id > 0)
@@ -82,11 +82,10 @@ class CustomerGroupsTest : BaseEntityTest() {
 		assertEquals(1 + 1, customerGroupsSearchResult2.count) // “General” group exists is on every page
 		assertEquals(3, customerGroupsSearchResult2.total)
 	}
-
 }
 
 private fun generateTestCustomerGroup(): UpdatedCustomerGroup {
 	return UpdatedCustomerGroup(
-			name = "Customer group " + randomAlphanumeric(8)
+		name = "Customer group " + randomAlphanumeric(8)
 	)
 }

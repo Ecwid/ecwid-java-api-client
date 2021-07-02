@@ -74,5 +74,4 @@ sealed class NonnullPropertyRule<T, R>(
 	class IgnoreNonnull<T, R> internal constructor(
 		property: KProperty1<T, R>
 	) : NonnullPropertyRule<T, R>(property)
-
 }

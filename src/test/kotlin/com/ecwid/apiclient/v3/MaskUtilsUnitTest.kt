@@ -32,5 +32,4 @@ class MaskUtilsUnitTest {
 		assertEquals("01234", maskApiToken("01234"))
 		assertEquals("012", maskApiToken("012"))
 	}
-
 }

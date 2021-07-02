@@ -1,5 +1,6 @@
 .gradle/
 .idea/
+!.idea/codeStyles/codeStyleConfig.xml
 build/
 out/
 

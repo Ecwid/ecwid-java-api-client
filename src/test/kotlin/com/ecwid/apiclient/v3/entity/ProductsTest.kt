@@ -43,7 +43,7 @@ class ProductsTest : BaseEntityTest() {
 		assertTrue(categoryCreateResult1.id > 0)
 
 		val categoryCreateRequest2 = CategoryCreateRequest(
-				newCategory = generateTestCategory(parentId = categoryCreateResult1.id)
+			newCategory = generateTestCategory(parentId = categoryCreateResult1.id)
 		)
 		val categoryCreateResult2 = apiClient.createCategory(categoryCreateRequest2)
 		assertTrue(categoryCreateResult2.id > 0)
@@ -55,40 +55,40 @@ class ProductsTest : BaseEntityTest() {
 		val upc = "UPC " + randomAlphanumeric(8)
 		val price = randomPrice()
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product $productNameSuffix",
-						sku = "testSearchByFilters",
-						price = price,
-						compareToPrice = 2 * price,
-						enabled = true,
-						quantity = 10,
-						categoryIds = listOf(categoryCreateResult2.id),
-						attributes = listOf(
-								AttributeValue.createBrandAttributeValue(brandName),
-								AttributeValue.createUpcAttributeValue(upc)
+			newProduct = UpdatedProduct(
+				name = "Product $productNameSuffix",
+				sku = "testSearchByFilters",
+				price = price,
+				compareToPrice = 2 * price,
+				enabled = true,
+				quantity = 10,
+				categoryIds = listOf(categoryCreateResult2.id),
+				attributes = listOf(
+					AttributeValue.createBrandAttributeValue(brandName),
+					AttributeValue.createUpcAttributeValue(upc)
+				),
+				options = listOf(
+					ProductOption.createSelectOption(
+						name = "Color",
+						choices = listOf(
+							ProductOptionChoice("Black"),
+							ProductOptionChoice("White"),
+							ProductOptionChoice("Yellow"),
+							ProductOptionChoice("Red")
 						),
-						options = listOf(
-								ProductOption.createSelectOption(
-										name = "Color",
-										choices = listOf(
-												ProductOptionChoice("Black"),
-												ProductOptionChoice("White"),
-												ProductOptionChoice("Yellow"),
-												ProductOptionChoice("Red")
-										),
-										defaultChoice = 0,
-										required = true
-								)
-						)
+						defaultChoice = 0,
+						required = true
+					)
 				)
+			)
 		)
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
 		assertTrue(productCreateResult.id > 0)
 
 		// Waiting till product became available for searching
 		waitForIndexedProducts(
-				productsSearchRequest = ByFilters(keyword = productCreateRequest.newProduct.sku),
-				desiredProductCount = 1
+			productsSearchRequest = ByFilters(keyword = productCreateRequest.newProduct.sku),
+			desiredProductCount = 1
 		)
 
 		val productDetails = apiClient.getProductDetails(ProductDetailsRequest(productId = productCreateResult.id))
@@ -96,105 +96,121 @@ class ProductsTest : BaseEntityTest() {
 		// Trying to search by different fields
 
 		assertProductsSearch(
-				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ByFilters(keyword = productNameSuffix),
-				negativeSearchRequest = ByFilters(keyword = productNameSuffix + "foo")
+			positiveProductId = productCreateResult.id,
+			positiveSearchRequest = ByFilters(keyword = productNameSuffix),
+			negativeSearchRequest = ByFilters(keyword = productNameSuffix + "foo")
 		)
 
 		assertProductsSearch(
-				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ByFilters(sku = productCreateRequest.newProduct.sku),
-				negativeSearchRequest = ByFilters(sku = productCreateRequest.newProduct.sku + "foo")
+			positiveProductId = productCreateResult.id,
+			positiveSearchRequest = ByFilters(sku = productCreateRequest.newProduct.sku),
+			negativeSearchRequest = ByFilters(sku = productCreateRequest.newProduct.sku + "foo")
 		)
 
 		assertProductsSearch(
-				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ByFilters(
-						priceFrom = productCreateRequest.newProduct.price!! - 10.0,
-						priceTo = productCreateRequest.newProduct.price!! + 10.0
-				),
-				negativeSearchRequest = ByFilters(
-						priceFrom = productCreateRequest.newProduct.price!! - 20.0,
-						priceTo = productCreateRequest.newProduct.price!! - 10.0
-				)
+			positiveProductId = productCreateResult.id,
+			positiveSearchRequest = ByFilters(
+				priceFrom = productCreateRequest.newProduct.price!! - 10.0,
+				priceTo = productCreateRequest.newProduct.price!! + 10.0
+			),
+			negativeSearchRequest = ByFilters(
+				priceFrom = productCreateRequest.newProduct.price!! - 20.0,
+				priceTo = productCreateRequest.newProduct.price!! - 10.0
+			)
 		)
 
 		assertProductsSearch(
-				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ByFilters(
-						createdFrom = Date.from(productDetails.created.toInstant().minusSeconds(1)),
-						createdTo = Date.from(productDetails.created.toInstant().plusSeconds(1))
-				),
-				negativeSearchRequest = ByFilters(
-						createdFrom = Date(0),
-						createdTo = Date(0)
-				)
+			positiveProductId = productCreateResult.id,
+			positiveSearchRequest = ByFilters(
+				createdFrom = Date.from(productDetails.created.toInstant().minusSeconds(1)),
+				createdTo = Date.from(productDetails.created.toInstant().plusSeconds(1))
+			),
+			negativeSearchRequest = ByFilters(
+				createdFrom = Date(0),
+				createdTo = Date(0)
+			)
 		)
 
 		assertProductsSearch(
-				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ByFilters(
-						updatedFrom = Date.from(productDetails.updated.toInstant().minusSeconds(1)),
-						updatedTo = Date.from(productDetails.updated.toInstant().plusSeconds(1))
-				),
-				negativeSearchRequest = ByFilters(
-						updatedFrom = Date(0),
-						updatedTo = Date(0)
-				)
+			positiveProductId = productCreateResult.id,
+			positiveSearchRequest = ByFilters(
+				updatedFrom = Date.from(productDetails.updated.toInstant().minusSeconds(1)),
+				updatedTo = Date.from(productDetails.updated.toInstant().plusSeconds(1))
+			),
+			negativeSearchRequest = ByFilters(
+				updatedFrom = Date(0),
+				updatedTo = Date(0)
+			)
 		)
 
 		assertProductsSearch(
-				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ByFilters(enabled = true),
-				negativeSearchRequest = ByFilters(enabled = false)
+			positiveProductId = productCreateResult.id,
+			positiveSearchRequest = ByFilters(enabled = true),
+			negativeSearchRequest = ByFilters(enabled = false)
 		)
 
 		assertProductsSearch(
-				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ByFilters(inventory = true),
-				negativeSearchRequest = ByFilters(inventory = false)
+			positiveProductId = productCreateResult.id,
+			positiveSearchRequest = ByFilters(inventory = true),
+			negativeSearchRequest = ByFilters(inventory = false)
 		)
 
 		assertProductsSearch(
-				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ByFilters(onSale = true),
-				negativeSearchRequest = ByFilters(onSale = false)
+			positiveProductId = productCreateResult.id,
+			positiveSearchRequest = ByFilters(onSale = true),
+			negativeSearchRequest = ByFilters(onSale = false)
 		)
 
 		assertProductsSearch(
-				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ByFilters(attributes = ProductSearchAttributes(listOf(
+			positiveProductId = productCreateResult.id,
+			positiveSearchRequest = ByFilters(
+				attributes = ProductSearchAttributes(
+					listOf(
 						ProductSearchAttributes.AttributeValue("Brand", brandName),
 						ProductSearchAttributes.AttributeValue("UPC", upc)
-				))),
-				negativeSearchRequest = ByFilters(attributes = ProductSearchAttributes(listOf(
+					)
+				)
+			),
+			negativeSearchRequest = ByFilters(
+				attributes = ProductSearchAttributes(
+					listOf(
 						ProductSearchAttributes.AttributeValue("Brand", brandName + "foo"),
 						ProductSearchAttributes.AttributeValue("UPC", upc + "foo")
-				)))
+					)
+				)
+			)
 		)
 
 		assertProductsSearch(
-				positiveProductId = productCreateResult.id,
-				positiveSearchRequest = ByFilters(options = ProductSearchOptions(listOf(
+			positiveProductId = productCreateResult.id,
+			positiveSearchRequest = ByFilters(
+				options = ProductSearchOptions(
+					listOf(
 						ProductSearchOptions.OptionValue("Color", "Yellow")
-				))),
-				negativeSearchRequest = ByFilters(options = ProductSearchOptions(listOf(
+					)
+				)
+			),
+			negativeSearchRequest = ByFilters(
+				options = ProductSearchOptions(
+					listOf(
 						ProductSearchOptions.OptionValue("Color", "Blue")
-				)))
+					)
+				)
+			)
 		)
 
 		assertProductsSearch(
-				productSearchRequest = ByFilters(
-						categories = listOf(categoryCreateResult1.id)
-				),
-				desiredSkus = listOf()
+			productSearchRequest = ByFilters(
+				categories = listOf(categoryCreateResult1.id)
+			),
+			desiredSkus = listOf()
 		)
 		assertProductsSearch(
-				productSearchRequest = ByFilters(
-						categories = listOf(categoryCreateResult1.id),
-						includeProductsFromSubcategories = true
-				),
-				desiredSkus = listOf(productDetails.sku)
+			productSearchRequest = ByFilters(
+				categories = listOf(categoryCreateResult1.id),
+				includeProductsFromSubcategories = true
+			),
+			desiredSkus = listOf(productDetails.sku)
 		)
 	}
 
@@ -202,61 +218,61 @@ class ProductsTest : BaseEntityTest() {
 	fun testSearchUrls() {
 		// Create one product
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product ${randomAlphanumeric(8)}",
-						sku = "testSearchUrls"
-				)
+			newProduct = UpdatedProduct(
+				name = "Product ${randomAlphanumeric(8)}",
+				sku = "testSearchUrls"
+			)
 		)
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
 		assertTrue(productCreateResult.id > 0)
 
 		// Waiting till product became available for searching
 		waitForIndexedProducts(
-				productsSearchRequest = ByFilters(keyword = productCreateRequest.newProduct.sku),
-				desiredProductCount = 1
+			productsSearchRequest = ByFilters(keyword = productCreateRequest.newProduct.sku),
+			desiredProductCount = 1
 		)
 
 		// Searching products with different combinations of baseUrl and cleanUrls parameters
 		assertProductUrlMatchesRegex(
-				productSearchRequest = ByFilters(keyword = productCreateRequest.newProduct.sku),
-				urlPattern = "https://.*.company.site.*/Product-.*-p.*"
+			productSearchRequest = ByFilters(keyword = productCreateRequest.newProduct.sku),
+			urlPattern = "https://.*.company.site.*/Product-.*-p.*"
 		)
 		assertProductUrlMatchesRegex(
 			productSearchRequest = ByFilters(
-					cleanUrls = true,
-					keyword = productCreateRequest.newProduct.sku
+				cleanUrls = true,
+				keyword = productCreateRequest.newProduct.sku
 			),
 			urlPattern = "https://.*.company.site.*/Product-.*-p.*"
 		)
 		assertProductUrlMatchesRegex(
-				productSearchRequest = ByFilters(
-						cleanUrls = false,
-						keyword = productCreateRequest.newProduct.sku
-				),
-				urlPattern = "https://.*.company.site.*/#!/Product-.*/p/.*"
+			productSearchRequest = ByFilters(
+				cleanUrls = false,
+				keyword = productCreateRequest.newProduct.sku
+			),
+			urlPattern = "https://.*.company.site.*/#!/Product-.*/p/.*"
 		)
 		assertProductUrlMatchesRegex(
 			productSearchRequest = ByFilters(
-					baseUrl = "https://google.com/",
-					keyword = productCreateRequest.newProduct.sku
+				baseUrl = "https://google.com/",
+				keyword = productCreateRequest.newProduct.sku
 			),
 			urlPattern = "https://google.com/#!/Product-.*/p/.*"
 		)
 		assertProductUrlMatchesRegex(
-				productSearchRequest = ByFilters(
-						baseUrl = "https://google.com/",
-						cleanUrls = true,
-						keyword = productCreateRequest.newProduct.sku
-					),
-				urlPattern = "https://google.com/Product-.*-p.*"
+			productSearchRequest = ByFilters(
+				baseUrl = "https://google.com/",
+				cleanUrls = true,
+				keyword = productCreateRequest.newProduct.sku
+			),
+			urlPattern = "https://google.com/Product-.*-p.*"
 		)
 		assertProductUrlMatchesRegex(
-				productSearchRequest = ByFilters(
-						baseUrl = "https://google.com/",
-						cleanUrls = false,
-						keyword = productCreateRequest.newProduct.sku
-				),
-				urlPattern = "https://google.com/#!/Product-.*/p/.*"
+			productSearchRequest = ByFilters(
+				baseUrl = "https://google.com/",
+				cleanUrls = false,
+				keyword = productCreateRequest.newProduct.sku
+			),
+			urlPattern = "https://google.com/#!/Product-.*/p/.*"
 		)
 	}
 
@@ -270,27 +286,27 @@ class ProductsTest : BaseEntityTest() {
 
 		// Create three product
 		val productCreateRequest1 = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product $testName A: ${randomAlphanumeric(8)}",
-						sku = productSku1,
-						price = 10.0,
-						description = "Description B B"
-				)
+			newProduct = UpdatedProduct(
+				name = "Product $testName A: ${randomAlphanumeric(8)}",
+				sku = productSku1,
+				price = 10.0,
+				description = "Description B B"
+			)
 		)
 		val productCreateRequest2 = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product $testName B: ${randomAlphanumeric(8)}",
-						sku = productSku2,
-						price = 20.0
-				)
+			newProduct = UpdatedProduct(
+				name = "Product $testName B: ${randomAlphanumeric(8)}",
+				sku = productSku2,
+				price = 20.0
+			)
 		)
 
 		val productCreateRequest3 = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product $testName C: ${randomAlphanumeric(8)}",
-						sku = productSku3,
-						price = 30.0
-				)
+			newProduct = UpdatedProduct(
+				name = "Product $testName C: ${randomAlphanumeric(8)}",
+				sku = productSku3,
+				price = 30.0
+			)
 		)
 
 		val productCreateResult1 = apiClient.createProduct(productCreateRequest1)
@@ -304,51 +320,51 @@ class ProductsTest : BaseEntityTest() {
 
 		// Waiting till product became available for searching
 		waitForIndexedProducts(
-				productsSearchRequest = ByFilters(keyword = testName),
-				desiredProductCount = 3
+			productsSearchRequest = ByFilters(keyword = testName),
+			desiredProductCount = 3
 		)
 
 		// Trying to search with different sort order
 
 		assertProductsSearch(
-				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.ADDED_TIME_ASC),
-				desiredSkus = listOf(productSku1, productSku2, productSku3)
+			productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.ADDED_TIME_ASC),
+			desiredSkus = listOf(productSku1, productSku2, productSku3)
 		)
 		assertProductsSearch(
-				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.ADDED_TIME_DESC),
-				desiredSkus = listOf(productSku3, productSku2, productSku1)
-		)
-
-		assertProductsSearch(
-				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.UPDATED_TIME_ASC),
-				desiredSkus = listOf(productSku1, productSku2, productSku3)
-		)
-		assertProductsSearch(
-				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.UPDATED_TIME_DESC),
-				desiredSkus = listOf(productSku3, productSku2, productSku1)
+			productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.ADDED_TIME_DESC),
+			desiredSkus = listOf(productSku3, productSku2, productSku1)
 		)
 
 		assertProductsSearch(
-				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.NAME_ASC),
-				desiredSkus = listOf(productSku1, productSku2, productSku3)
+			productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.UPDATED_TIME_ASC),
+			desiredSkus = listOf(productSku1, productSku2, productSku3)
 		)
 		assertProductsSearch(
-				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.NAME_DESC),
-				desiredSkus = listOf(productSku3, productSku2, productSku1)
-		)
-
-		assertProductsSearch(
-				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.PRICE_ASC),
-				desiredSkus = listOf(productSku1, productSku2, productSku3)
-		)
-		assertProductsSearch(
-				productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.PRICE_DESC),
-				desiredSkus = listOf(productSku3, productSku2, productSku1)
+			productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.UPDATED_TIME_DESC),
+			desiredSkus = listOf(productSku3, productSku2, productSku1)
 		)
 
 		assertProductsSearch(
-				productSearchRequest = ByFilters(keyword = "B", sortBy = SortOrder.RELEVANCE),
-				desiredSkus = listOf(productSku2, productSku1)
+			productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.NAME_ASC),
+			desiredSkus = listOf(productSku1, productSku2, productSku3)
+		)
+		assertProductsSearch(
+			productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.NAME_DESC),
+			desiredSkus = listOf(productSku3, productSku2, productSku1)
+		)
+
+		assertProductsSearch(
+			productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.PRICE_ASC),
+			desiredSkus = listOf(productSku1, productSku2, productSku3)
+		)
+		assertProductsSearch(
+			productSearchRequest = ByFilters(keyword = testName, sortBy = SortOrder.PRICE_DESC),
+			desiredSkus = listOf(productSku3, productSku2, productSku1)
+		)
+
+		assertProductsSearch(
+			productSearchRequest = ByFilters(keyword = "B", sortBy = SortOrder.RELEVANCE),
+			desiredSkus = listOf(productSku2, productSku1)
 		)
 	}
 
@@ -358,11 +374,12 @@ class ProductsTest : BaseEntityTest() {
 
 		// Create some products
 		for (i in 1..3) {
-			val productCreateRequest = ProductCreateRequest(newProduct =
-			UpdatedProduct(
+			val productCreateRequest = ProductCreateRequest(
+				newProduct =
+				UpdatedProduct(
 					name = "Product $testName " + randomAlphanumeric(8),
 					sku = "$testName$i"
-			)
+				)
 			)
 			val productCreateResult = apiClient.createProduct(productCreateRequest)
 			assertTrue(productCreateResult.id > 0)
@@ -370,8 +387,8 @@ class ProductsTest : BaseEntityTest() {
 
 		// Waiting till product became available for searching and trying to request only one page
 		waitForIndexedProducts(
-				productsSearchRequest = ByFilters(keyword = testName),
-				desiredProductCount = 3
+			productsSearchRequest = ByFilters(keyword = testName),
+			desiredProductCount = 3
 		)
 
 		val productSearchRequest = ByFilters(keyword = testName, offset = 2, limit = 2)
@@ -398,14 +415,14 @@ class ProductsTest : BaseEntityTest() {
 		assertTrue(categoryCreateResult3.id > 0)
 
 		val categoryIds = listOf(
-				categoryCreateResult1.id,
-				categoryCreateResult2.id,
-				categoryCreateResult3.id
+			categoryCreateResult1.id,
+			categoryCreateResult2.id,
+			categoryCreateResult3.id
 		)
 
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = generateTestProduct(categoryIds = categoryIds)
+			newProduct = generateTestProduct(categoryIds = categoryIds)
 		)
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
 		assertTrue(productCreateResult.id > 0)
@@ -414,14 +431,16 @@ class ProductsTest : BaseEntityTest() {
 		val productDetailsRequest = ProductDetailsRequest(productId = productCreateResult.id)
 		val productDetails1 = apiClient.getProductDetails(productDetailsRequest)
 		assertEquals(
-				productCreateRequest.newProduct,
-				productDetails1.toUpdated().cleanupForComparison(productCreateRequest)
+			productCreateRequest.newProduct,
+			productDetails1.toUpdated().cleanupForComparison(productCreateRequest)
 		)
 
 		// Completely updating newly created product
 		val productUpdateRequest = ProductUpdateRequest(
-				productId = productDetails1.id,
-				updatedProduct = generateTestProduct(categoryIds = categoryIds).withUnchangedShowOnFrontend(productCreateRequest)
+			productId = productDetails1.id,
+			updatedProduct = generateTestProduct(categoryIds = categoryIds).withUnchangedShowOnFrontend(
+				productCreateRequest
+			)
 		)
 		val productUpdateResult1 = apiClient.updateProduct(productUpdateRequest)
 		assertEquals(1, productUpdateResult1.updateCount)
@@ -429,16 +448,37 @@ class ProductsTest : BaseEntityTest() {
 		// Checking that product was successfully updated with necessary parameters
 		val productDetails2 = apiClient.getProductDetails(productDetailsRequest)
 		assertEquals(
-				productUpdateRequest.updatedProduct,
-				productDetails2.toUpdated().cleanupForComparison(productCreateRequest)
+			productUpdateRequest.updatedProduct,
+			productDetails2.toUpdated().cleanupForComparison(productCreateRequest)
 		)
 		assertEquals(3, productDetails2.categories?.size)
-		assertTrue(productDetails2.categories?.contains(FetchedProduct.CategoryInfo(id = categoryCreateResult1.id, enabled = true))
-				?: false)
-		assertTrue(productDetails2.categories?.contains(FetchedProduct.CategoryInfo(id = categoryCreateResult2.id, enabled = true))
-				?: false)
-		assertTrue(productDetails2.categories?.contains(FetchedProduct.CategoryInfo(id = categoryCreateResult3.id, enabled = true))
-				?: false)
+		assertTrue(
+			productDetails2.categories?.contains(
+				FetchedProduct.CategoryInfo(
+					id = categoryCreateResult1.id,
+					enabled = true
+				)
+			)
+				?: false
+		)
+		assertTrue(
+			productDetails2.categories?.contains(
+				FetchedProduct.CategoryInfo(
+					id = categoryCreateResult2.id,
+					enabled = true
+				)
+			)
+				?: false
+		)
+		assertTrue(
+			productDetails2.categories?.contains(
+				FetchedProduct.CategoryInfo(
+					id = categoryCreateResult3.id,
+					enabled = true
+				)
+			)
+				?: false
+		)
 
 		// Deleting product
 		val productDeleteRequest = ProductDeleteRequest(productId = productDetails1.id)
@@ -458,22 +498,22 @@ class ProductsTest : BaseEntityTest() {
 	fun testSearchByIds() {
 		// Creating three new products
 		val productCreateRequest1 = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product ${randomAlphanumeric(8)}",
-						sku = "testSearchByIds1"
-				)
+			newProduct = UpdatedProduct(
+				name = "Product ${randomAlphanumeric(8)}",
+				sku = "testSearchByIds1"
+			)
 		)
 		val productCreateRequest2 = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product ${randomAlphanumeric(8)}",
-						sku = "testSearchByIds2"
-				)
+			newProduct = UpdatedProduct(
+				name = "Product ${randomAlphanumeric(8)}",
+				sku = "testSearchByIds2"
+			)
 		)
 		val productCreateRequest3 = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product ${randomAlphanumeric(8)}",
-						sku = "testSearchByIds3"
-				)
+			newProduct = UpdatedProduct(
+				name = "Product ${randomAlphanumeric(8)}",
+				sku = "testSearchByIds3"
+			)
 		)
 
 		val productCreateResult1 = apiClient.createProduct(productCreateRequest1)
@@ -487,7 +527,7 @@ class ProductsTest : BaseEntityTest() {
 
 		// Verifying that we will get two products if search request contains two product IDs
 		val productsSearchRequest = ProductsSearchRequest.ByIds(
-				listOf(productCreateResult1.id, productCreateResult2.id)
+			listOf(productCreateResult1.id, productCreateResult2.id)
 		)
 		val productsSearchResult = apiClient.searchProducts(productsSearchRequest)
 		assertEquals(2, productsSearchResult.items.size)
@@ -497,11 +537,11 @@ class ProductsTest : BaseEntityTest() {
 	fun testUpdateProductInventory() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product " + randomAlphanumeric(8),
-						sku = "testUpdateProductInventory",
-						quantity = 10
-				)
+			newProduct = UpdatedProduct(
+				name = "Product " + randomAlphanumeric(8),
+				sku = "testUpdateProductInventory",
+				quantity = 10
+			)
 		)
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
 		assertTrue(productCreateResult.id > 0)
@@ -513,8 +553,8 @@ class ProductsTest : BaseEntityTest() {
 
 		// Increasing product quantity
 		val productInventoryUpdateRequest1 = ProductInventoryUpdateRequest(
-				productId = productCreateResult.id,
-				inventoryAdjustment = InventoryAdjustment(5)
+			productId = productCreateResult.id,
+			inventoryAdjustment = InventoryAdjustment(5)
 		)
 		val productInventoryUpdateResult1 = apiClient.updateProductInventory(productInventoryUpdateRequest1)
 		assertEquals(1, productInventoryUpdateResult1.updateCount)
@@ -525,8 +565,8 @@ class ProductsTest : BaseEntityTest() {
 
 		// Decreasing product quantity
 		val productInventoryUpdateRequest2 = ProductInventoryUpdateRequest(
-				productId = productCreateResult.id,
-				inventoryAdjustment = InventoryAdjustment(-20)
+			productId = productCreateResult.id,
+			inventoryAdjustment = InventoryAdjustment(-20)
 		)
 		val productInventoryUpdateResult2 = apiClient.updateProductInventory(productInventoryUpdateRequest2)
 		assertEquals(1, productInventoryUpdateResult2.updateCount)
@@ -541,10 +581,10 @@ class ProductsTest : BaseEntityTest() {
 	fun testManipulateProductImage() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product ${randomAlphanumeric(8)}",
-						sku = "testManipulateProductImage"
-				)
+			newProduct = UpdatedProduct(
+				name = "Product ${randomAlphanumeric(8)}",
+				sku = "testManipulateProductImage"
+			)
 		)
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
 		assertTrue(productCreateResult.id > 0)
@@ -552,29 +592,29 @@ class ProductsTest : BaseEntityTest() {
 		// Upload some images from different sources
 
 		val productImageUploadRequest1 = ProductImageUploadRequest(
-				productId = productCreateResult.id,
-				fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
+			productId = productCreateResult.id,
+			fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
 		)
 		val productImageUploadResult1 = apiClient.uploadProductImage(productImageUploadRequest1)
 		assertTrue(productImageUploadResult1.id > 0)
 
 		val productImageUploadRequest2 = ProductImageUploadRequest(
-				productId = productCreateResult.id,
-				fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
+			productId = productCreateResult.id,
+			fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
 		)
 		val productImageUploadResult2 = apiClient.uploadProductImage(productImageUploadRequest2)
 		assertTrue(productImageUploadResult2.id > 0)
 
 		val productImageUploadRequest3 = ProductImageUploadRequest(
-				productId = productCreateResult.id,
-				fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
+			productId = productCreateResult.id,
+			fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
 		)
 		val productImageUploadResult3 = apiClient.uploadProductImage(productImageUploadRequest3)
 		assertTrue(productImageUploadResult3.id > 0)
 
 		val productImageUploadRequest4 = ProductImageUploadRequest(
-				productId = productCreateResult.id,
-				fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
+			productId = productCreateResult.id,
+			fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
 		)
 		val productImageUploadResult4 = apiClient.uploadProductImage(productImageUploadRequest4)
 		assertTrue(productImageUploadResult4.id > 0)
@@ -584,11 +624,11 @@ class ProductsTest : BaseEntityTest() {
 		val productDetails1 = apiClient.getProductDetails(productDetailsRequest)
 		assertEquals(1, productDetails1.media?.images?.size)
 		assertMediaProductImage(
-				expectedId = "0",
-				expectedOrderBy = 0,
-				expectedIsMain = true,
-				expectedPathEnd = "/${productImageUploadResult4.id}.jpg",
-				productImage = productDetails1.media?.images?.get(0)
+			expectedId = "0",
+			expectedOrderBy = 0,
+			expectedIsMain = true,
+			expectedPathEnd = "/${productImageUploadResult4.id}.jpg",
+			productImage = productDetails1.media?.images?.get(0)
 		)
 
 		// Now delete product image
@@ -606,10 +646,10 @@ class ProductsTest : BaseEntityTest() {
 	fun testManipulateProductGalleryImages() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product ${randomAlphanumeric(8)}",
-						sku = "testManipulateProductGalleryImages"
-				)
+			newProduct = UpdatedProduct(
+				name = "Product ${randomAlphanumeric(8)}",
+				sku = "testManipulateProductGalleryImages"
+			)
 		)
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
 		assertTrue(productCreateResult.id > 0)
@@ -617,30 +657,30 @@ class ProductsTest : BaseEntityTest() {
 		// Upload gallery images from different sources
 
 		val productGalleryImageUploadRequest1 = ProductGalleryImageUploadRequest(
-				productId = productCreateResult.id,
-				fileName = randomFileName("test", "png"),
-				fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
+			productId = productCreateResult.id,
+			fileName = randomFileName("test", "png"),
+			fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
 		)
 		val productGalleryImageUploadResult1 = apiClient.uploadProductGalleryImage(productGalleryImageUploadRequest1)
 		assertTrue(productGalleryImageUploadResult1.id > 0)
 
 		val productGalleryImageUploadRequest2 = ProductGalleryImageUploadRequest(
-				productId = productCreateResult.id,
-				fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
+			productId = productCreateResult.id,
+			fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
 		)
 		val productGalleryImageUploadResult2 = apiClient.uploadProductGalleryImage(productGalleryImageUploadRequest2)
 		assertTrue(productGalleryImageUploadResult2.id > 0)
 
 		val productGalleryImageUploadRequest3 = ProductGalleryImageUploadRequest(
-				productId = productCreateResult.id,
-				fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
+			productId = productCreateResult.id,
+			fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
 		)
 		val productGalleryImageUploadResult3 = apiClient.uploadProductGalleryImage(productGalleryImageUploadRequest3)
 		assertTrue(productGalleryImageUploadResult3.id > 0)
 
 		val productGalleryImageUploadRequest4 = ProductGalleryImageUploadRequest(
-				productId = productCreateResult.id,
-				fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
+			productId = productCreateResult.id,
+			fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
 		)
 		val productGalleryImageUploadResult4 = apiClient.uploadProductGalleryImage(productGalleryImageUploadRequest4)
 		assertTrue(productGalleryImageUploadResult4.id > 0)
@@ -651,52 +691,52 @@ class ProductsTest : BaseEntityTest() {
 		val productDetails1 = apiClient.getProductDetails(productDetailsRequest)
 		assertEquals(4, productDetails1.media?.images?.size)
 		assertMediaProductImage(
-				expectedId = productGalleryImageUploadResult1.id.toString(),
-				expectedOrderBy = 0,
-				expectedIsMain = false,
-				expectedPathEnd = null,
-				productImage = productDetails1.media?.images?.get(0)
+			expectedId = productGalleryImageUploadResult1.id.toString(),
+			expectedOrderBy = 0,
+			expectedIsMain = false,
+			expectedPathEnd = null,
+			productImage = productDetails1.media?.images?.get(0)
 		)
 		assertMediaProductImage(
-				expectedId = productGalleryImageUploadResult2.id.toString(),
-				expectedOrderBy = 1,
-				expectedIsMain = false,
-				expectedPathEnd = null,
-				productImage = productDetails1.media?.images?.get(1)
+			expectedId = productGalleryImageUploadResult2.id.toString(),
+			expectedOrderBy = 1,
+			expectedIsMain = false,
+			expectedPathEnd = null,
+			productImage = productDetails1.media?.images?.get(1)
 		)
 		assertMediaProductImage(
-				expectedId = productGalleryImageUploadResult3.id.toString(),
-				expectedOrderBy = 2,
-				expectedIsMain = false,
-				expectedPathEnd = null,
-				productImage = productDetails1.media?.images?.get(2)
+			expectedId = productGalleryImageUploadResult3.id.toString(),
+			expectedOrderBy = 2,
+			expectedIsMain = false,
+			expectedPathEnd = null,
+			productImage = productDetails1.media?.images?.get(2)
 		)
 		assertMediaProductImage(
-				expectedId = productGalleryImageUploadResult4.id.toString(),
-				expectedOrderBy = 3,
-				expectedIsMain = false,
-				expectedPathEnd = null,
-				productImage = productDetails1.media?.images?.get(3)
+			expectedId = productGalleryImageUploadResult4.id.toString(),
+			expectedOrderBy = 3,
+			expectedIsMain = false,
+			expectedPathEnd = null,
+			productImage = productDetails1.media?.images?.get(3)
 		)
 
 		// Changing gallery images order
 
 		val newMedia = ProductMedia(
-				images = productDetails1.media?.toUpdated()?.images?.map { productImage ->
-					productImage.copy(
-							orderBy = if (productImage.id == "1") {
-								10
-							} else {
-								productImage.orderBy
-							}
-					)
-				}
+			images = productDetails1.media?.toUpdated()?.images?.map { productImage ->
+				productImage.copy(
+					orderBy = if (productImage.id == "1") {
+						10
+					} else {
+						productImage.orderBy
+					}
+				)
+			}
 		)
 		val productUpdateRequest1 = ProductUpdateRequest(
-				productId = productCreateResult.id,
-				updatedProduct = UpdatedProduct(
-						media = newMedia
-				)
+			productId = productCreateResult.id,
+			updatedProduct = UpdatedProduct(
+				media = newMedia
+			)
 		)
 		val productUpdateResult1 = apiClient.updateProduct(productUpdateRequest1)
 		assertTrue(productUpdateResult1.updateCount > 0)
@@ -704,38 +744,38 @@ class ProductsTest : BaseEntityTest() {
 		val productDetails2 = apiClient.getProductDetails(productDetailsRequest)
 		assertEquals(4, productDetails2.media?.images?.size)
 		assertMediaProductImage(
-				expectedId = "0", // First image became main
-				expectedOrderBy = 0,
-				expectedIsMain = true, // First image became main
-				expectedPathEnd = productDetails1.media?.images?.get(1)?.image1500pxUrl,
-				productImage = productDetails2.media?.images?.get(0)
+			expectedId = "0", // First image became main
+			expectedOrderBy = 0,
+			expectedIsMain = true, // First image became main
+			expectedPathEnd = productDetails1.media?.images?.get(1)?.image1500pxUrl,
+			productImage = productDetails2.media?.images?.get(0)
 		)
 		assertMediaProductImage(
-				expectedId = productGalleryImageUploadResult3.id.toString(),
-				expectedOrderBy = 1,
-				expectedIsMain = false,
-				expectedPathEnd = productDetails1.media?.images?.get(2)?.image1500pxUrl,
-				productImage = productDetails2.media?.images?.get(1)
+			expectedId = productGalleryImageUploadResult3.id.toString(),
+			expectedOrderBy = 1,
+			expectedIsMain = false,
+			expectedPathEnd = productDetails1.media?.images?.get(2)?.image1500pxUrl,
+			productImage = productDetails2.media?.images?.get(1)
 		)
 		assertMediaProductImage(
-				expectedId = productGalleryImageUploadResult4.id.toString(),
-				expectedOrderBy = 2,
-				expectedIsMain = false,
-				expectedPathEnd = productDetails1.media?.images?.get(3)?.image1500pxUrl,
-				productImage = productDetails2.media?.images?.get(2)
+			expectedId = productGalleryImageUploadResult4.id.toString(),
+			expectedOrderBy = 2,
+			expectedIsMain = false,
+			expectedPathEnd = productDetails1.media?.images?.get(3)?.image1500pxUrl,
+			productImage = productDetails2.media?.images?.get(2)
 		)
 		assertMediaProductImage(
-				expectedId = productGalleryImageUploadResult1.id.toString(), // This is the moved gallery item
-				expectedOrderBy = 3,
-				expectedIsMain = false,
-				expectedPathEnd = productDetails1.media?.images?.get(0)?.image1500pxUrl,
-				productImage = productDetails2.media?.images?.get(3)
+			expectedId = productGalleryImageUploadResult1.id.toString(), // This is the moved gallery item
+			expectedOrderBy = 3,
+			expectedIsMain = false,
+			expectedPathEnd = productDetails1.media?.images?.get(0)?.image1500pxUrl,
+			productImage = productDetails2.media?.images?.get(3)
 		)
 
 		// Now delete one gallery image
 		val productGalleryImageDeleteRequest = ProductGalleryImageDeleteRequest(
-				productId = productCreateResult.id,
-				fileId = productGalleryImageUploadResult3.id
+			productId = productCreateResult.id,
+			fileId = productGalleryImageUploadResult3.id
 		)
 		val productGalleryImageDeleteResult = apiClient.deleteProductGalleryImage(productGalleryImageDeleteRequest)
 		assertTrue(productGalleryImageDeleteResult.deleteCount > 0)
@@ -758,10 +798,10 @@ class ProductsTest : BaseEntityTest() {
 	fun testManipulateProductFiles() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product ${randomAlphanumeric(8)}",
-						sku = "testManipulateProductFiles"
-				)
+			newProduct = UpdatedProduct(
+				name = "Product ${randomAlphanumeric(8)}",
+				sku = "testManipulateProductFiles"
+			)
 		)
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
 		assertTrue(productCreateResult.id > 0)
@@ -769,37 +809,37 @@ class ProductsTest : BaseEntityTest() {
 		// Upload files from different sources
 
 		val productFileUploadRequest1 = ProductFileUploadRequest(
-				productId = productCreateResult.id,
-				fileName = randomFileName("test", "png"),
-				description = "Description ${randomAlphanumeric(32)}",
-				fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
+			productId = productCreateResult.id,
+			fileName = randomFileName("test", "png"),
+			description = "Description ${randomAlphanumeric(32)}",
+			fileData = UploadFileData.ExternalUrlData(externalUrl = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png")
 		)
 		val productFileUploadResult1 = apiClient.uploadProductFile(productFileUploadRequest1)
 		assertTrue(productFileUploadResult1.id > 0)
 
 		val productFileUploadRequest2 = ProductFileUploadRequest(
-				productId = productCreateResult.id,
-				fileName = randomFileName("test", "png"),
-				description = "Description ${randomAlphanumeric(32)}",
-				fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
+			productId = productCreateResult.id,
+			fileName = randomFileName("test", "png"),
+			description = "Description ${randomAlphanumeric(32)}",
+			fileData = UploadFileData.LocalFileData(file = getTestPngFilePath().toFile())
 		)
 		val productFileUploadResult2 = apiClient.uploadProductFile(productFileUploadRequest2)
 		assertTrue(productFileUploadResult2.id > 0)
 
 		val productFileUploadRequest3 = ProductFileUploadRequest(
-				productId = productCreateResult.id,
-				fileName = randomFileName("test", "png"),
-				description = "Description ${randomAlphanumeric(32)}",
-				fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
+			productId = productCreateResult.id,
+			fileName = randomFileName("test", "png"),
+			description = "Description ${randomAlphanumeric(32)}",
+			fileData = UploadFileData.InputStreamData(stream = FileInputStream(getTestPngFilePath().toFile()))
 		)
 		val productFileUploadResult3 = apiClient.uploadProductFile(productFileUploadRequest3)
 		assertTrue(productFileUploadResult3.id > 0)
 
 		val productFileUploadRequest4 = ProductFileUploadRequest(
-				productId = productCreateResult.id,
-				fileName = randomFileName("test", "png"),
-				description = "Description ${randomAlphanumeric(32)}",
-				fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
+			productId = productCreateResult.id,
+			fileName = randomFileName("test", "png"),
+			description = "Description ${randomAlphanumeric(32)}",
+			fileData = UploadFileData.ByteArrayData(bytes = Files.readAllBytes(getTestPngFilePath()))
 		)
 		val productFileUploadResult4 = apiClient.uploadProductFile(productFileUploadRequest4)
 		assertTrue(productFileUploadResult4.id > 0)
@@ -810,38 +850,38 @@ class ProductsTest : BaseEntityTest() {
 		val productDetails1 = apiClient.getProductDetails(productDetailsRequest)
 		assertEquals(4, productDetails1.files?.size)
 		assertFile(
-				expectedProductId = productFileUploadResult1.id,
-				expectedFileName = productFileUploadRequest1.fileName,
-				expectedDescription = productFileUploadRequest1.description,
-				productFile = productDetails1.files?.get(0)
+			expectedProductId = productFileUploadResult1.id,
+			expectedFileName = productFileUploadRequest1.fileName,
+			expectedDescription = productFileUploadRequest1.description,
+			productFile = productDetails1.files?.get(0)
 		)
 		assertFile(
-				expectedProductId = productFileUploadResult2.id,
-				expectedFileName = productFileUploadRequest2.fileName,
-				expectedDescription = productFileUploadRequest2.description,
-				productFile = productDetails1.files?.get(1)
+			expectedProductId = productFileUploadResult2.id,
+			expectedFileName = productFileUploadRequest2.fileName,
+			expectedDescription = productFileUploadRequest2.description,
+			productFile = productDetails1.files?.get(1)
 		)
 		assertFile(
-				expectedProductId = productFileUploadResult3.id,
-				expectedFileName = productFileUploadRequest3.fileName,
-				expectedDescription = productFileUploadRequest3.description,
-				productFile = productDetails1.files?.get(2)
+			expectedProductId = productFileUploadResult3.id,
+			expectedFileName = productFileUploadRequest3.fileName,
+			expectedDescription = productFileUploadRequest3.description,
+			productFile = productDetails1.files?.get(2)
 		)
 		assertFile(
-				expectedProductId = productFileUploadResult4.id,
-				expectedFileName = productFileUploadRequest4.fileName,
-				expectedDescription = productFileUploadRequest4.description,
-				productFile = productDetails1.files?.get(3)
+			expectedProductId = productFileUploadResult4.id,
+			expectedFileName = productFileUploadRequest4.fileName,
+			expectedDescription = productFileUploadRequest4.description,
+			productFile = productDetails1.files?.get(3)
 		)
 
 		// Update one product file description
 
 		val productFileUpdateRequest = ProductFileUpdateRequest(
-				productId = productCreateResult.id,
-				fileId = productFileUploadResult2.id,
-				updatedProductFile = ProductFileUpdateRequest.UpdatedProductFile(
-						description = "Description ${randomAlphanumeric(32)}"
-				)
+			productId = productCreateResult.id,
+			fileId = productFileUploadResult2.id,
+			updatedProductFile = ProductFileUpdateRequest.UpdatedProductFile(
+				description = "Description ${randomAlphanumeric(32)}"
+			)
 		)
 		val productFileUpdateResult = apiClient.updateProductFile(productFileUpdateRequest)
 		assertTrue(productFileUpdateResult.updateCount > 0)
@@ -849,24 +889,24 @@ class ProductsTest : BaseEntityTest() {
 		// Check that product was updated
 		val productDetails2 = apiClient.getProductDetails(productDetailsRequest)
 		assertFile(
-				expectedProductId = productFileUploadResult2.id,
-				expectedFileName = productFileUploadRequest2.fileName,
-				expectedDescription = productFileUpdateRequest.updatedProductFile.description,
-				productFile = productDetails2.files?.get(1)
+			expectedProductId = productFileUploadResult2.id,
+			expectedFileName = productFileUploadRequest2.fileName,
+			expectedDescription = productFileUpdateRequest.updatedProductFile.description,
+			productFile = productDetails2.files?.get(1)
 		)
 
 		// Try to download product file and check its size
 		val productFileDownloadRequest = ProductFileDownloadRequest(
-				productId = productCreateResult.id,
-				fileId = productFileUploadResult2.id
+			productId = productCreateResult.id,
+			fileId = productFileUploadResult2.id
 		)
 		val downloadedProductFileBytes = apiClient.downloadProductFile(productFileDownloadRequest)
 		assertEquals(getTestPngFilePath().toFile().length(), downloadedProductFileBytes.size.toLong())
 
 		// Now delete one product file
 		val productFileDeleteRequest = ProductFileDeleteRequest(
-				productId = productCreateResult.id,
-				fileId = productFileUploadResult2.id
+			productId = productCreateResult.id,
+			fileId = productFileUploadResult2.id
 		)
 		val productFileDeleteResult = apiClient.deleteProductFile(productFileDeleteRequest)
 		assertTrue(productFileDeleteResult.deleteCount > 0)
@@ -890,7 +930,7 @@ class ProductsTest : BaseEntityTest() {
 	fun testDeletedProducts() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = generateTestProduct()
+			newProduct = generateTestProduct()
 		)
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
 		assertTrue(productCreateResult.id > 0)
@@ -906,11 +946,12 @@ class ProductsTest : BaseEntityTest() {
 
 		// Checking that just deleted product returned from api
 		val deletedProductsSearchRequest = DeletedProductsSearchRequest(
-				deletedFrom = Date.from(instantFrom),
-				deletedTo = Date.from(instantTo)
+			deletedFrom = Date.from(instantFrom),
+			deletedTo = Date.from(instantTo)
 		)
 		val deletedProducts = apiClient.searchDeletedProductsAsSequence(deletedProductsSearchRequest)
-		val deletedProduct = deletedProducts.firstOrNull { deletedProduct -> deletedProduct.id == productCreateResult.id }
+		val deletedProduct =
+			deletedProducts.firstOrNull { deletedProduct -> deletedProduct.id == productCreateResult.id }
 		require(deletedProduct != null)
 		assertTrue(instantFrom.isBefore(deletedProduct.date.toInstant()))
 		assertTrue(instantTo.isAfter(deletedProduct.date.toInstant()))
@@ -920,10 +961,10 @@ class ProductsTest : BaseEntityTest() {
 	fun testUploadProductImageAsync() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product ${randomAlphanumeric(8)}",
-						sku = "testUploadProductImageAsync"
-				)
+			newProduct = UpdatedProduct(
+				name = "Product ${randomAlphanumeric(8)}",
+				sku = "testUploadProductImageAsync"
+			)
 		)
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
 		assertTrue(productCreateResult.id > 0)
@@ -933,12 +974,12 @@ class ProductsTest : BaseEntityTest() {
 		assertEquals(0, productDetails.media?.images?.size)
 
 		val request = ProductImageAsyncUploadRequest(
-				productId = productCreateResult.id,
-				asyncPictureData = AsyncPictureData(
-						url = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png",
-						width = 180,
-						height = 180
-				)
+			productId = productCreateResult.id,
+			asyncPictureData = AsyncPictureData(
+				url = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png",
+				width = 180,
+				height = 180
+			)
 		)
 		apiClient.uploadProductImageAsync(request)
 
@@ -946,12 +987,12 @@ class ProductsTest : BaseEntityTest() {
 		assertEquals(1, productDetailsAfterUpload.media?.images?.size)
 
 		val requestWithBlankUrl = ProductImageAsyncUploadRequest(
-				productId = productCreateResult.id,
-				asyncPictureData = AsyncPictureData(
-						url = "  ",
-						width = 180,
-						height = 180
-				)
+			productId = productCreateResult.id,
+			asyncPictureData = AsyncPictureData(
+				url = "  ",
+				width = 180,
+				height = 180
+			)
 		)
 		try {
 			apiClient.uploadProductImageAsync(requestWithBlankUrl)
@@ -961,12 +1002,12 @@ class ProductsTest : BaseEntityTest() {
 		}
 
 		val requestWithWrongUrl = ProductImageAsyncUploadRequest(
-				productId = productCreateResult.id,
-				asyncPictureData = AsyncPictureData(
-						url = "htt://sssss",
-						width = 180,
-						height = 180
-				)
+			productId = productCreateResult.id,
+			asyncPictureData = AsyncPictureData(
+				url = "htt://sssss",
+				width = 180,
+				height = 180
+			)
 		)
 		try {
 			apiClient.uploadProductImageAsync(requestWithWrongUrl)
@@ -980,10 +1021,10 @@ class ProductsTest : BaseEntityTest() {
 	fun testUploadProductGalleryImageAsync() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
-				newProduct = UpdatedProduct(
-						name = "Product ${randomAlphanumeric(8)}",
-						sku = "testUploadProductGalleryImageAsync"
-				)
+			newProduct = UpdatedProduct(
+				name = "Product ${randomAlphanumeric(8)}",
+				sku = "testUploadProductGalleryImageAsync"
+			)
 		)
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
 		assertTrue(productCreateResult.id > 0)
@@ -993,12 +1034,12 @@ class ProductsTest : BaseEntityTest() {
 		assertEquals(0, productDetails.media?.images?.size)
 
 		val request = ProductGalleryImageAsyncUploadRequest(
-				productId = productCreateResult.id,
-				asyncPictureData = AsyncPictureData(
-						url = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png",
-						width = 180,
-						height = 180
-				)
+			productId = productCreateResult.id,
+			asyncPictureData = AsyncPictureData(
+				url = "https://don16obqbay2c.cloudfront.net/favicons/apple-touch-icon-180x180.png",
+				width = 180,
+				height = 180
+			)
 		)
 		apiClient.uploadProductGalleryImageAsync(request)
 
@@ -1006,12 +1047,12 @@ class ProductsTest : BaseEntityTest() {
 		assertEquals(1, productDetailsAfterUpload.media?.images?.size)
 
 		val requestWithBlankUrl = ProductGalleryImageAsyncUploadRequest(
-				productId = productCreateResult.id,
-				asyncPictureData = AsyncPictureData(
-						url = "  ",
-						width = 180,
-						height = 180
-				)
+			productId = productCreateResult.id,
+			asyncPictureData = AsyncPictureData(
+				url = "  ",
+				width = 180,
+				height = 180
+			)
 		)
 		try {
 			apiClient.uploadProductGalleryImageAsync(requestWithBlankUrl)
@@ -1021,12 +1062,12 @@ class ProductsTest : BaseEntityTest() {
 		}
 
 		val requestWithWrongUrl = ProductGalleryImageAsyncUploadRequest(
-				productId = productCreateResult.id,
-				asyncPictureData = AsyncPictureData(
-						url = "htt://sssss",
-						width = 180,
-						height = 180
-				)
+			productId = productCreateResult.id,
+			asyncPictureData = AsyncPictureData(
+				url = "htt://sssss",
+				width = 180,
+				height = 180
+			)
 		)
 		try {
 			apiClient.uploadProductGalleryImageAsync(requestWithWrongUrl)
@@ -1042,12 +1083,16 @@ class ProductsTest : BaseEntityTest() {
 
 		val url = searchProducts.items[0].url ?: ""
 		assertTrue(
-				url.matches(Regex(urlPattern)),
-				"Url '$url' is not matching regex pattern '$urlPattern'"
+			url.matches(Regex(urlPattern)),
+			"Url '$url' is not matching regex pattern '$urlPattern'"
 		)
 	}
 
-	private fun assertProductsSearch(positiveProductId: Int, positiveSearchRequest: ByFilters, negativeSearchRequest: ByFilters) {
+	private fun assertProductsSearch(
+		positiveProductId: Int,
+		positiveSearchRequest: ByFilters,
+		negativeSearchRequest: ByFilters
+	) {
 		val positiveProductsSearchResult = apiClient.searchProducts(positiveSearchRequest)
 		assertEquals(1, positiveProductsSearchResult.total)
 		assertEquals(positiveProductId, positiveProductsSearchResult.items[0].id)
@@ -1062,36 +1107,50 @@ class ProductsTest : BaseEntityTest() {
 		assertEquals(desiredSkus.toSet(), productsSearchResult.items.map(FetchedProduct::sku).toSet())
 	}
 
-	private fun assertMediaProductImage(expectedId: String, expectedOrderBy: Int, expectedIsMain: Boolean, expectedPathEnd: String?, productImage: FetchedProduct.ProductImage?) {
+	private fun assertMediaProductImage(
+		expectedId: String,
+		expectedOrderBy: Int,
+		expectedIsMain: Boolean,
+		expectedPathEnd: String?,
+		productImage: FetchedProduct.ProductImage?
+	) {
 		assertAll(
-				{ assertEquals(expectedId, productImage?.id, "id mismatch") },
-				{ assertEquals(expectedOrderBy, productImage?.orderBy, "orderBy mismatch") },
-				{ assertEquals(expectedIsMain, productImage?.isMain, "isMain mismatch") },
-				{
-					if (expectedPathEnd != null) {
-						assertEquals(true, productImage?.image1500pxUrl?.endsWith(expectedPathEnd), "image1500pxUrl mismatch")
-					}
+			{ assertEquals(expectedId, productImage?.id, "id mismatch") },
+			{ assertEquals(expectedOrderBy, productImage?.orderBy, "orderBy mismatch") },
+			{ assertEquals(expectedIsMain, productImage?.isMain, "isMain mismatch") },
+			{
+				if (expectedPathEnd != null) {
+					assertEquals(
+						true,
+						productImage?.image1500pxUrl?.endsWith(expectedPathEnd),
+						"image1500pxUrl mismatch"
+					)
 				}
+			}
 		)
 	}
 
-	private fun assertFile(expectedProductId: Int, expectedFileName: String, expectedDescription: String, productFile: FetchedProduct.ProductFile?) {
+	private fun assertFile(
+		expectedProductId: Int,
+		expectedFileName: String,
+		expectedDescription: String,
+		productFile: FetchedProduct.ProductFile?
+	) {
 		assertAll(
-				{ assertEquals(expectedProductId, productFile?.id, "id mismatch") },
-				{ assertEquals(expectedFileName, productFile?.name, "name mismatch") },
-				{ assertEquals(expectedDescription, productFile?.description, "description mismatch") },
-				{ assertTrue((productFile?.size ?: 0) > 0, "wrong size") }
+			{ assertEquals(expectedProductId, productFile?.id, "id mismatch") },
+			{ assertEquals(expectedFileName, productFile?.name, "name mismatch") },
+			{ assertEquals(expectedDescription, productFile?.description, "description mismatch") },
+			{ assertTrue((productFile?.size ?: 0) > 0, "wrong size") }
 		)
 	}
-
 }
 
 private fun generateTestCategory(parentId: Int? = null): UpdatedCategory {
 	return UpdatedCategory(
-			name = "Category " + randomAlphanumeric(8),
-			description = "Description " + randomAlphanumeric(16),
-			parentId = parentId,
-			enabled = true
+		name = "Category " + randomAlphanumeric(8),
+		description = "Description " + randomAlphanumeric(16),
+		parentId = parentId,
+		enabled = true
 	)
 }
 
@@ -1100,180 +1159,180 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 	val enName = "Product " + randomAlphanumeric(8)
 	val enDescription = "Description " + randomAlphanumeric(16)
 	return UpdatedProduct(
-			name = enName,
-			nameTranslated = LocalizedValueMap(
-					"ru" to "Продукт " + randomAlphanumeric(8),
-					"en" to enName
-			),
-			description = enDescription,
-			descriptionTranslated = LocalizedValueMap(
-					"ru" to "Описание " + randomAlphanumeric(16),
-					"en" to enDescription
-			),
-			sku = "SKU " + randomAlphanumeric(8),
+		name = enName,
+		nameTranslated = LocalizedValueMap(
+			"ru" to "Продукт " + randomAlphanumeric(8),
+			"en" to enName
+		),
+		description = enDescription,
+		descriptionTranslated = LocalizedValueMap(
+			"ru" to "Описание " + randomAlphanumeric(16),
+			"en" to enDescription
+		),
+		sku = "SKU " + randomAlphanumeric(8),
 
-			enabled = randomBoolean(),
-			quantity = randomByte(),
-			unlimited = false, // To allow set quantity
-			warningLimit = randomByte(),
+		enabled = randomBoolean(),
+		quantity = randomByte(),
+		unlimited = false, // To allow set quantity
+		warningLimit = randomByte(),
 
-			categoryIds = categoryIds.sorted(),
-			defaultCategoryId = categoryIds.firstOrNull(),
-			showOnFrontpage = randomByte(),
+		categoryIds = categoryIds.sorted(),
+		defaultCategoryId = categoryIds.firstOrNull(),
+		showOnFrontpage = randomByte(),
 
-			price = basePrice,
-			wholesalePrices = listOf(
-					generateWholesalePrice(basePrice, 2),
-					generateWholesalePrice(basePrice, 3)
-			),
-			compareToPrice = 2 * basePrice,
+		price = basePrice,
+		wholesalePrices = listOf(
+			generateWholesalePrice(basePrice, 2),
+			generateWholesalePrice(basePrice, 3)
+		),
+		compareToPrice = 2 * basePrice,
 
-			productClassId = 0, // TODO Fill with real productClassId when api client will support it
-			attributes = listOf(
-					generateBrandAttributeValue(),
-					generateUpcAttributeValue()
+		productClassId = 0, // TODO Fill with real productClassId when api client will support it
+		attributes = listOf(
+			generateBrandAttributeValue(),
+			generateUpcAttributeValue()
 // 					generateGeneralAttributeValue(), // TODO Send real product attribute id when api client will support product attribute creation
 // 					generateGeneralAttributeValue()
-			),
+		),
 
-			weight = randomWeight(),
-			dimensions = generateDimensions(),
-			shipping = generateShippingSettings(),
-			isShippingRequired = true, // To allow set weight field
+		weight = randomWeight(),
+		dimensions = generateDimensions(),
+		shipping = generateShippingSettings(),
+		isShippingRequired = true, // To allow set weight field
 
-			seoTitle = "SEO Title " + randomAlphanumeric(16),
-			seoDescription = "SEO Description " + randomAlphanumeric(16),
+		seoTitle = "SEO Title " + randomAlphanumeric(16),
+		seoDescription = "SEO Description " + randomAlphanumeric(16),
 
-			options = listOf(
-					generateProductSelectOption(),
-					generateProductSizeOption(),
-					generateProductRadioOption(),
-					generateProductCheckboxOption(),
-					generateProductTextFieldOption(),
-					generateProductTextAreaOption(),
-					generateProductDateOption(),
-					generateProductFilesOption()
-			),
+		options = listOf(
+			generateProductSelectOption(),
+			generateProductSizeOption(),
+			generateProductRadioOption(),
+			generateProductCheckboxOption(),
+			generateProductTextFieldOption(),
+			generateProductTextAreaOption(),
+			generateProductDateOption(),
+			generateProductFilesOption()
+		),
 // 			tax = generateTaxInfo(), // TODO Fill with real tax ids when api client will support it
-			relatedProducts = generateRelatedProducts(),
+		relatedProducts = generateRelatedProducts(),
 
-			isSampleProduct = false,
+		isSampleProduct = false,
 
-			tax = TaxInfo(),
+		tax = TaxInfo(),
 
-			subtitle = "Subtitle sample",
-			ribbon = Ribbon(
-				"Ribbon",
-				"#FFFFF"
-			),
-			ribbonTranslated = LocalizedValueMap(
-					"ru" to "Лейбл",
-					"en" to "Ribbon"
-			),
-			subtitleTranslated = LocalizedValueMap(
-					"ru" to "Сабтайтл",
-					"en" to "Subtitle"
-			),
-			subscriptionSettings = SubscriptionSettings(),
-			googleProductCategory = 632,
-			productCondition = ProductCondition.USED
+		subtitle = "Subtitle sample",
+		ribbon = Ribbon(
+			"Ribbon",
+			"#FFFFF"
+		),
+		ribbonTranslated = LocalizedValueMap(
+			"ru" to "Лейбл",
+			"en" to "Ribbon"
+		),
+		subtitleTranslated = LocalizedValueMap(
+			"ru" to "Сабтайтл",
+			"en" to "Subtitle"
+		),
+		subscriptionSettings = SubscriptionSettings(),
+		googleProductCategory = 632,
+		productCondition = ProductCondition.USED
 	)
 }
 
 private fun generateProductSelectOption(): ProductOption.SelectOption {
 	val choices = listOf(
-			generateProductOptionChoice(),
-			generateProductOptionChoice(),
-			generateProductOptionChoice()
+		generateProductOptionChoice(),
+		generateProductOptionChoice(),
+		generateProductOptionChoice()
 	)
 	val enName = "Option " + randomAlphanumeric(8)
 	return ProductOption.createSelectOption(
-			name = enName,
-			nameTranslated = LocalizedValueMap(
-					"ru" to "Опция " + randomAlphanumeric(8),
-					"en" to enName
-			),
-			choices = choices,
-			defaultChoice = randomIndex(choices),
-			required = randomBoolean()
+		name = enName,
+		nameTranslated = LocalizedValueMap(
+			"ru" to "Опция " + randomAlphanumeric(8),
+			"en" to enName
+		),
+		choices = choices,
+		defaultChoice = randomIndex(choices),
+		required = randomBoolean()
 	)
 }
 
 private fun generateProductSizeOption(): ProductOption.SizeOption {
 	val choices = listOf(
-			generateProductOptionChoice(),
-			generateProductOptionChoice(),
-			generateProductOptionChoice()
+		generateProductOptionChoice(),
+		generateProductOptionChoice(),
+		generateProductOptionChoice()
 	)
 	val enName = "Option " + randomAlphanumeric(8)
 	return ProductOption.createSizeOption(
-			name = enName,
-			nameTranslated = LocalizedValueMap(
-					"ru" to "Опция " + randomAlphanumeric(8),
-					"en" to enName
-			),
-			choices = choices,
-			defaultChoice = randomIndex(choices),
-			required = randomBoolean()
+		name = enName,
+		nameTranslated = LocalizedValueMap(
+			"ru" to "Опция " + randomAlphanumeric(8),
+			"en" to enName
+		),
+		choices = choices,
+		defaultChoice = randomIndex(choices),
+		required = randomBoolean()
 	)
 }
 
 private fun generateProductRadioOption(): ProductOption.RadioOption {
 	val choices = listOf(
-			generateProductOptionChoice(),
-			generateProductOptionChoice(),
-			generateProductOptionChoice()
+		generateProductOptionChoice(),
+		generateProductOptionChoice(),
+		generateProductOptionChoice()
 	)
 	val enName = "Option " + randomAlphanumeric(8)
 	return ProductOption.createRadioOption(
-			name = enName,
-			nameTranslated = LocalizedValueMap(
-					"ru" to "Опция " + randomAlphanumeric(8),
-					"en" to enName
-			),
-			choices = choices,
-			defaultChoice = randomIndex(choices),
-			required = randomBoolean()
+		name = enName,
+		nameTranslated = LocalizedValueMap(
+			"ru" to "Опция " + randomAlphanumeric(8),
+			"en" to enName
+		),
+		choices = choices,
+		defaultChoice = randomIndex(choices),
+		required = randomBoolean()
 	)
 }
 
 private fun generateProductCheckboxOption(): ProductOption.CheckboxOption {
 	val enName = "Option " + randomAlphanumeric(8)
 	return ProductOption.createCheckboxOption(
-			name = enName,
-			nameTranslated = LocalizedValueMap(
-					"ru" to "Опция " + randomAlphanumeric(8),
-					"en" to enName
-			),
-			choices = listOf(
-					generateProductOptionChoice(),
-					generateProductOptionChoice(),
-					generateProductOptionChoice()
-			)
+		name = enName,
+		nameTranslated = LocalizedValueMap(
+			"ru" to "Опция " + randomAlphanumeric(8),
+			"en" to enName
+		),
+		choices = listOf(
+			generateProductOptionChoice(),
+			generateProductOptionChoice(),
+			generateProductOptionChoice()
+		)
 	)
 }
 
 private fun generateProductTextFieldOption(): ProductOption.TextFieldOption {
 	val enName = "Option " + randomAlphanumeric(8)
 	return ProductOption.createTextFieldOption(
-			name = enName,
-			nameTranslated = LocalizedValueMap(
-					"ru" to "Опция " + randomAlphanumeric(8),
-					"en" to enName
-			),
-			required = randomBoolean()
+		name = enName,
+		nameTranslated = LocalizedValueMap(
+			"ru" to "Опция " + randomAlphanumeric(8),
+			"en" to enName
+		),
+		required = randomBoolean()
 	)
 }
 
 private fun generateProductTextAreaOption(): ProductOption.TextAreaOption {
 	val enName = "Option " + randomAlphanumeric(8)
 	return ProductOption.createTextAreaOption(
-			name = enName,
-			nameTranslated = LocalizedValueMap(
-					"ru" to "Опция " + randomAlphanumeric(8),
-					"en" to enName
-			),
-			required = randomBoolean()
+		name = enName,
+		nameTranslated = LocalizedValueMap(
+			"ru" to "Опция " + randomAlphanumeric(8),
+			"en" to enName
+		),
+		required = randomBoolean()
 	)
 }
 
@@ -1281,74 +1340,74 @@ private fun generateProductDateOption(): ProductOption.DateOption {
 	val enName = "Option " + randomAlphanumeric(8)
 
 	return ProductOption.createDateOption(
-			name = enName,
-			nameTranslated = LocalizedValueMap(
-					"ru" to "Опция " + randomAlphanumeric(8),
-					"en" to enName
-			),
-			required = randomBoolean()
+		name = enName,
+		nameTranslated = LocalizedValueMap(
+			"ru" to "Опция " + randomAlphanumeric(8),
+			"en" to enName
+		),
+		required = randomBoolean()
 	)
 }
 
 private fun generateProductFilesOption(): ProductOption.FilesOption {
 	val enName = "Option " + randomAlphanumeric(8)
 	return ProductOption.createFilesOption(
-			name = enName,
-			nameTranslated = LocalizedValueMap(
-					"ru" to "Опция " + randomAlphanumeric(8),
-					"en" to enName
-			),
-			required = randomBoolean()
+		name = enName,
+		nameTranslated = LocalizedValueMap(
+			"ru" to "Опция " + randomAlphanumeric(8),
+			"en" to enName
+		),
+		required = randomBoolean()
 	)
 }
 
 private fun generateProductOptionChoice(): ProductOptionChoice {
 	val enText = "Option choice " + randomAlphanumeric(8)
 	return ProductOptionChoice(
-			text = enText,
-			textTranslated = LocalizedValueMap(
-					"ru" to "Выбор опции " + randomAlphanumeric(8),
-					"en" to enText
-			),
-			priceModifier = randomModifier(),
-			priceModifierType = randomEnumValue()
+		text = enText,
+		textTranslated = LocalizedValueMap(
+			"ru" to "Выбор опции " + randomAlphanumeric(8),
+			"en" to enText
+		),
+		priceModifier = randomModifier(),
+		priceModifierType = randomEnumValue()
 	)
 }
 
 fun generateRelatedProducts() = RelatedProducts(
-		productIds = listOf(
+	productIds = listOf(
 // 				randomId(), TODO Send real related product ids
 // 				randomId(),
 // 				randomId()
-		),
-		relatedCategory = generateRelatedCategory()
+	),
+	relatedCategory = generateRelatedCategory()
 )
 
 fun generateRelatedCategory(): RelatedCategory = RelatedCategory(
-		enabled = randomBoolean(),
-		categoryId = 0, // TODO Send any existing category id when api client will support its creation
-		productCount = randomByte()
+	enabled = randomBoolean(),
+	categoryId = 0, // TODO Send any existing category id when api client will support its creation
+	productCount = randomByte()
 )
 
 private fun generateShippingSettings() = UpdatedProduct.ShippingSettings(
-		type = randomEnumValue<ShippingSettingsType>(),
-		methodMarkup = randomPrice(),
-		flatRate = randomPrice(),
-		disabledMethods = listOf(
-				randomAlphanumeric(8),
-				randomAlphanumeric(8),
-				randomAlphanumeric(8)
-		),
-		enabledMethods = listOf(
-				randomAlphanumeric(8),
-				randomAlphanumeric(8),
-				randomAlphanumeric(8)
-		)
+	type = randomEnumValue<ShippingSettingsType>(),
+	methodMarkup = randomPrice(),
+	flatRate = randomPrice(),
+	disabledMethods = listOf(
+		randomAlphanumeric(8),
+		randomAlphanumeric(8),
+		randomAlphanumeric(8)
+	),
+	enabledMethods = listOf(
+		randomAlphanumeric(8),
+		randomAlphanumeric(8),
+		randomAlphanumeric(8)
+	)
 )
 
 private fun generateWholesalePrice(basePrice: Double, divider: Int) = UpdatedProduct.WholesalePrice(
-		quantity = divider,
-		price = basePrice / divider
+	quantity = divider,
+	price = basePrice / divider
 )
 
 private fun generateBrandAttributeValue(): UpdatedProduct.AttributeValue {
@@ -1360,48 +1419,48 @@ private fun generateUpcAttributeValue(): UpdatedProduct.AttributeValue {
 }
 
 private fun generateDimensions() = UpdatedProduct.ProductDimensions(
-		length = randomDimension(),
-		width = randomDimension(),
-		height = randomDimension()
+	length = randomDimension(),
+	width = randomDimension(),
+	height = randomDimension()
 )
 
 private fun UpdatedProduct.cleanupForComparison(productCreateRequest: ProductCreateRequest): UpdatedProduct {
 	return copy(
-			// Password is write only field
-			attributes = attributes?.mapIndexed { index, attribute ->
-				val attributeValue = productCreateRequest.newProduct.attributes?.get(index)
-				attribute.cleanupForComparison(attributeValue)
-			},
-			media = if (media?.images?.isEmpty() != false) null else media,
-			categoryIds = categoryIds?.sorted(),
-			subtitle = "Subtitle sample",
-			ribbon = Ribbon(
-				"Ribbon",
-				"#FFFFF"
-			),
-			ribbonTranslated = LocalizedValueMap(
-				"ru" to "Лейбл",
-				"en" to "Ribbon"
-			),
-			subtitleTranslated = LocalizedValueMap(
-				"ru" to "Сабтайтл",
-				"en" to "Subtitle"
-			)
+		// Password is write only field
+		attributes = attributes?.mapIndexed { index, attribute ->
+			val attributeValue = productCreateRequest.newProduct.attributes?.get(index)
+			attribute.cleanupForComparison(attributeValue)
+		},
+		media = if (media?.images?.isEmpty() != false) null else media,
+		categoryIds = categoryIds?.sorted(),
+		subtitle = "Subtitle sample",
+		ribbon = Ribbon(
+			"Ribbon",
+			"#FFFFF"
+		),
+		ribbonTranslated = LocalizedValueMap(
+			"ru" to "Лейбл",
+			"en" to "Ribbon"
+		),
+		subtitleTranslated = LocalizedValueMap(
+			"ru" to "Сабтайтл",
+			"en" to "Subtitle"
+		)
 	)
 }
 
 private fun UpdatedProduct.AttributeValue.cleanupForComparison(attributeValue: UpdatedProduct.AttributeValue?): UpdatedProduct.AttributeValue {
 	return copy(
-			// Id is not used for BRAND/UPC attributes and can be used for custom attributes
-			id = if (attributeValue?.alias != null) attributeValue.id else null,
-			// Alias is write only field
-			alias = attributeValue?.alias
+		// Id is not used for BRAND/UPC attributes and can be used for custom attributes
+		id = if (attributeValue?.alias != null) attributeValue.id else null,
+		// Alias is write only field
+		alias = attributeValue?.alias
 	)
 }
 
 private fun UpdatedProduct.withUnchangedShowOnFrontend(productCreateRequest: ProductCreateRequest): UpdatedProduct {
 	return copy(
-			// TODO Probably API bug (see https://track.ecwid.com/youtrack/issue/ECWID-53048)
-			showOnFrontpage = productCreateRequest.newProduct.showOnFrontpage
+		// TODO Probably API bug (see https://track.ecwid.com/youtrack/issue/ECWID-53048)
+		showOnFrontpage = productCreateRequest.newProduct.showOnFrontpage
 	)
 }

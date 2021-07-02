@@ -13,5 +13,4 @@ class CartStringToStringMap : TreeMap<String, String> {
 			putAll(map)
 		}
 	}
-
 }

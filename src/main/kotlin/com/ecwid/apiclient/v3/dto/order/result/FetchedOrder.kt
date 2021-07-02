@@ -9,211 +9,211 @@ import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import java.util.*
 
 data class FetchedOrder(
-		val id: String? = null,
+	val id: String? = null,
 
-		val orderNumber: Int = 0,
-		val vendorOrderNumber: String? = null,
-		val email: String? = null,
-		val ipAddress: String? = null,
-		val hidden: Boolean? = null,
-		val createDate: Date? = null,
-		val createTimestamp: Long? = null, // TODO Figure out how to test
-		val updateDate: Date? = null,
-		val updateTimestamp: Long? = null, // TODO Figure out how to test
+	val orderNumber: Int = 0,
+	val vendorOrderNumber: String? = null,
+	val email: String? = null,
+	val ipAddress: String? = null,
+	val hidden: Boolean? = null,
+	val createDate: Date? = null,
+	val createTimestamp: Long? = null, // TODO Figure out how to test
+	val updateDate: Date? = null,
+	val updateTimestamp: Long? = null, // TODO Figure out how to test
 
-		val refererUrl: String? = null,
-		val refererId: String? = null,
-		val globalReferer: String? = null,
-		val affiliateId: String? = null,
-		val additionalInfo: OrderedStringToStringMap? = null,
-		val extraFields: OrderedStringToStringMap? = null, // TODO Figure out how to test
-		val orderExtraFields: List<ExtraFieldsInfo>? = null,
+	val refererUrl: String? = null,
+	val refererId: String? = null,
+	val globalReferer: String? = null,
+	val affiliateId: String? = null,
+	val additionalInfo: OrderedStringToStringMap? = null,
+	val extraFields: OrderedStringToStringMap? = null, // TODO Figure out how to test
+	val orderExtraFields: List<ExtraFieldsInfo>? = null,
 
-		val orderComments: String? = null,
-		val privateAdminNotes: String? = null,
+	val orderComments: String? = null,
+	val privateAdminNotes: String? = null,
 
-		val fulfillmentStatus: OrderFulfillmentStatus? = null,
-		val externalFulfillment: Boolean? = null,
-		val externalOrderId: String? = null,
-		val latestShipDate: Date? = null,
-		val latestDeliveryDate: Date? = null,
-		val trackingNumber: String? = null,
-		val pickupTime: Date? = null,
+	val fulfillmentStatus: OrderFulfillmentStatus? = null,
+	val externalFulfillment: Boolean? = null,
+	val externalOrderId: String? = null,
+	val latestShipDate: Date? = null,
+	val latestDeliveryDate: Date? = null,
+	val trackingNumber: String? = null,
+	val pickupTime: Date? = null,
 
-		val paymentStatus: OrderPaymentStatus? = null,
-		val paymentMethod: String? = null,
-		val paymentModule: String? = null,
-		val paymentParams: OrderedStringToStringMap? = null,
-		val paymentMessage: String? = null,
-		val creditCardStatus: CreditCardStatus? = null,
-		val externalTransactionId: String? = null,
-		val externalTransactionUrl: String? = null,
-		val referenceTransactionId: String? = null,
-		val ebayId: String? = null,
+	val paymentStatus: OrderPaymentStatus? = null,
+	val paymentMethod: String? = null,
+	val paymentModule: String? = null,
+	val paymentParams: OrderedStringToStringMap? = null,
+	val paymentMessage: String? = null,
+	val creditCardStatus: CreditCardStatus? = null,
+	val externalTransactionId: String? = null,
+	val externalTransactionUrl: String? = null,
+	val referenceTransactionId: String? = null,
+	val ebayId: String? = null,
 
-		val customerId: Int? = null, // TODO Figure out how to test
-		val customerGroup: String? = null,
-		val customerGroupId: Long? = null,
-		val acceptMarketing: Boolean? = null,
+	val customerId: Int? = null, // TODO Figure out how to test
+	val customerGroup: String? = null,
+	val customerGroupId: Long? = null,
+	val acceptMarketing: Boolean? = null,
 
-		val giftCardRedemption: Double? = null,
-		val totalBeforeGiftCardRedemption: Double? = null,
-		val giftCardDoubleSpending: Boolean? = null,
-		val giftCardCode: String? = null,
+	val giftCardRedemption: Double? = null,
+	val totalBeforeGiftCardRedemption: Double? = null,
+	val giftCardDoubleSpending: Boolean? = null,
+	val giftCardCode: String? = null,
 
-		val total: Double? = null,
-		val totalWithoutTax: Double? = null,
-		val subtotal: Double? = null,
-		val subtotalWithoutTax: Double? = null,
-		val usdTotal: Double? = null, // TODO Figure out how to test
+	val total: Double? = null,
+	val totalWithoutTax: Double? = null,
+	val subtotal: Double? = null,
+	val subtotalWithoutTax: Double? = null,
+	val usdTotal: Double? = null, // TODO Figure out how to test
 
-		val tax: Double? = null,
-		val availableTaxes: List<Taxes>? = null,
-		val customerTaxExempt: Boolean? = null,
-		val customerTaxId: String? = null,
-		val customerTaxIdValid: Boolean? = null,
-		val reversedTaxApplied: Boolean? = null,
+	val tax: Double? = null,
+	val availableTaxes: List<Taxes>? = null,
+	val customerTaxExempt: Boolean? = null,
+	val customerTaxId: String? = null,
+	val customerTaxIdValid: Boolean? = null,
+	val reversedTaxApplied: Boolean? = null,
 
-		val couponDiscount: Double? = null,
-		val volumeDiscount: Double? = null,
-		val membershipBasedDiscount: Double? = null,
-		val totalAndMembershipBasedDiscount: Double? = null,
-		val discount: Double? = null,
-		val discountInfo: List<DiscountInfo>? = null,
-		val discountCoupon: DiscountCouponInfo? = null,
-		val customDiscount: List<Double>? = null,
+	val couponDiscount: Double? = null,
+	val volumeDiscount: Double? = null,
+	val membershipBasedDiscount: Double? = null,
+	val totalAndMembershipBasedDiscount: Double? = null,
+	val discount: Double? = null,
+	val discountInfo: List<DiscountInfo>? = null,
+	val discountCoupon: DiscountCouponInfo? = null,
+	val customDiscount: List<Double>? = null,
 
-		val items: List<OrderItem>? = null,
+	val items: List<OrderItem>? = null,
 
-		val billingPerson: PersonInfo? = null,
-		val shippingPerson: PersonInfo? = null,
+	val billingPerson: PersonInfo? = null,
+	val shippingPerson: PersonInfo? = null,
 
-		val shippingOption: ShippingOption? = null,
-		val availableShippingOptions: List<ShippingOption>? = null,
-		val taxesOnShipping: List<BaseOrderItemTax> = listOf(),
-		val handlingFee: HandlingFee? = null,
-		val shipments: List<Shipment>? = null,
+	val shippingOption: ShippingOption? = null,
+	val availableShippingOptions: List<ShippingOption>? = null,
+	val taxesOnShipping: List<BaseOrderItemTax> = listOf(),
+	val handlingFee: HandlingFee? = null,
+	val shipments: List<Shipment>? = null,
 
-		val customSurcharges: List<Surcharge> = listOf(),
+	val customSurcharges: List<Surcharge> = listOf(),
 
-		val refundedAmount: Double? = null,
-		val refunds: List<RefundInfo>? = null,
+	val refundedAmount: Double? = null,
+	val refunds: List<RefundInfo>? = null,
 
-		val utmData: UtmData? = null,
-		val invoices: List<TaxInvoice>? = null,
-		val predictedPackage: List<PredictedPackage>? = null,
+	val utmData: UtmData? = null,
+	val invoices: List<TaxInvoice>? = null,
+	val predictedPackage: List<PredictedPackage>? = null,
 
-		val pricesIncludeTax: Boolean? = null,
-		val disableAllCustomerNotifications: Boolean? = null,
-		val externalOrderData: ExternalOrderData? = null
+	val pricesIncludeTax: Boolean? = null,
+	val disableAllCustomerNotifications: Boolean? = null,
+	val externalOrderData: ExternalOrderData? = null
 ) : ApiFetchedDTO {
 
 	data class CreditCardStatus(
-			val avsMessage: String? = null,
-			val cvvMessage: String? = null
+		val avsMessage: String? = null,
+		val cvvMessage: String? = null
 	)
 
 	data class DiscountInfo(
-			val value: Double? = null,
-			val type: DiscountType? = null,
-			val base: DiscountBase? = null,
-			val orderTotal: Double? = null,
-			val description: String? = null
+		val value: Double? = null,
+		val type: DiscountType? = null,
+		val base: DiscountBase? = null,
+		val orderTotal: Double? = null,
+		val description: String? = null
 	)
 
 	data class DiscountCouponInfo(
-			val id: Int? = null, // TODO Figure out how to test
-			val name: String? = null,
-			val code: String? = null,
-			val discountType: DiscountCouponType? = null,
-			val status: DiscountCouponStatus? = null,
-			val discount: Double? = null,
-			val launchDate: Date? = null,
-			val expirationDate: Date? = null,
-			val totalLimit: Double? = null,
-			val usesLimit: DiscountCouponUsesLimit? = null,
-			val repeatCustomerOnly: Boolean? = null,
-			val creationDate: Date? = null,
-			val updateDate: Date? = null,
-			val orderCount: Int? = null, // TODO Figure out how to test
-			val catalogLimit: DiscountCouponCatalogLimit? = null, // TODO Figure out how to test
-			val applicationLimit: DiscountCouponApplicationLimit? = null // TODO Add to docs?
+		val id: Int? = null, // TODO Figure out how to test
+		val name: String? = null,
+		val code: String? = null,
+		val discountType: DiscountCouponType? = null,
+		val status: DiscountCouponStatus? = null,
+		val discount: Double? = null,
+		val launchDate: Date? = null,
+		val expirationDate: Date? = null,
+		val totalLimit: Double? = null,
+		val usesLimit: DiscountCouponUsesLimit? = null,
+		val repeatCustomerOnly: Boolean? = null,
+		val creationDate: Date? = null,
+		val updateDate: Date? = null,
+		val orderCount: Int? = null, // TODO Figure out how to test
+		val catalogLimit: DiscountCouponCatalogLimit? = null, // TODO Figure out how to test
+		val applicationLimit: DiscountCouponApplicationLimit? = null // TODO Add to docs?
 	)
 
 	data class DiscountCouponCatalogLimit(
-			val products: List<Int>? = null,
-			val categories: List<Int>? = null
+		val products: List<Int>? = null,
+		val categories: List<Int>? = null
 	)
 
 	data class OrderItem(
-			val id: Long? = null, // TODO Figure out how to test
+		val id: Long? = null, // TODO Figure out how to test
 
-			val productId: Int? = null,
-			val categoryId: Int? = null,
+		val productId: Int? = null,
+		val categoryId: Int? = null,
 
-			val price: Double? = null,
-			val productPrice: Double? = null,
-			val isCustomerSetPrice: Boolean? = null,
-			val selectedPrice: SelectedPrice? = null,
-			val priceWithoutTax: Double? = null,
-			val shipping: Double? = null,
-			val tax: Double? = null,
-			val fixedShippingRate: Double? = null,
-			val couponAmount: Double? = null,
+		val price: Double? = null,
+		val productPrice: Double? = null,
+		val isCustomerSetPrice: Boolean? = null,
+		val selectedPrice: SelectedPrice? = null,
+		val priceWithoutTax: Double? = null,
+		val shipping: Double? = null,
+		val tax: Double? = null,
+		val fixedShippingRate: Double? = null,
+		val couponAmount: Double? = null,
 
-			val sku: String? = null,
-			val name: String? = null,
-			val nameTranslated: OrderedStringToStringMap? = null,
-			val shortDescription: String? = null,
-			val shortDescriptionTranslated: OrderedStringToStringMap? = null,
-			val quantity: Int? = null,
-			val quantityInStock: Int? = null,
-			val weight: Double? = null,
-			val imageUrl: String? = null, // TODO Figure out how to test
-			val smallThumbnailUrl: String? = null,
-			val hdThumbnailUrl: String? = null,
+		val sku: String? = null,
+		val name: String? = null,
+		val nameTranslated: OrderedStringToStringMap? = null,
+		val shortDescription: String? = null,
+		val shortDescriptionTranslated: OrderedStringToStringMap? = null,
+		val quantity: Int? = null,
+		val quantityInStock: Int? = null,
+		val weight: Double? = null,
+		val imageUrl: String? = null, // TODO Figure out how to test
+		val smallThumbnailUrl: String? = null,
+		val hdThumbnailUrl: String? = null,
 
-			val isShippingRequired: Boolean? = null,
-			val trackQuantity: Boolean? = null,
-			val fixedShippingRateOnly: Boolean? = null,
-			val digital: Boolean? = null,
-			val productAvailable: Boolean? = null, // TODO Probably this field is always true
-			val couponApplied: Boolean? = null,
-			val isGiftCard: Boolean? = null,
+		val isShippingRequired: Boolean? = null,
+		val trackQuantity: Boolean? = null,
+		val fixedShippingRateOnly: Boolean? = null,
+		val digital: Boolean? = null,
+		val productAvailable: Boolean? = null, // TODO Probably this field is always true
+		val couponApplied: Boolean? = null,
+		val isGiftCard: Boolean? = null,
 
-			val recurringChargeSettings: RecurringChargeSettings? = null,
-			val subscriptionId: Long? = null,
+		val recurringChargeSettings: RecurringChargeSettings? = null,
+		val subscriptionId: Long? = null,
 
-			val selectedOptions: List<OrderItemSelectedOption>? = null,
-			val files: List<OrderItemProductFile>? = null,
-			val taxable: Boolean? = null,
-			val taxes: List<OrderItemTax>? = null,
-			val dimensions: ProductDimensions? = null,
-			val discountsAllowed: Boolean? = null,
-			val discounts: List<OrderItemDiscounts>? = null
+		val selectedOptions: List<OrderItemSelectedOption>? = null,
+		val files: List<OrderItemProductFile>? = null,
+		val taxable: Boolean? = null,
+		val taxes: List<OrderItemTax>? = null,
+		val dimensions: ProductDimensions? = null,
+		val discountsAllowed: Boolean? = null,
+		val discounts: List<OrderItemDiscounts>? = null
 	)
 
 	data class RecurringChargeSettings(
-			val recurringInterval: RecurringSubscriptionInterval = RecurringSubscriptionInterval.MONTH,
-			val recurringIntervalCount: Int = 1
+		val recurringInterval: RecurringSubscriptionInterval = RecurringSubscriptionInterval.MONTH,
+		val recurringIntervalCount: Int = 1
 	)
 
 	data class OrderItemSelectedOption(
-			val name: String? = null,
-			val nameTranslated: OrderedStringToStringMap? = null,
-			val type: ProductOptionType? = null,
-			val value: String? = null,
-			val valueTranslated: OrderedStringToStringMap? = null,
-			val valuesArray: List<String>? = null,
-			val valuesArrayTranslated: OrderedStringToListStringMap? = null,
-			val selections: List<OrderItemSelectionInfo>? = null,
-			val files: List<OrderItemOptionFile>? = null
+		val name: String? = null,
+		val nameTranslated: OrderedStringToStringMap? = null,
+		val type: ProductOptionType? = null,
+		val value: String? = null,
+		val valueTranslated: OrderedStringToStringMap? = null,
+		val valuesArray: List<String>? = null,
+		val valuesArrayTranslated: OrderedStringToListStringMap? = null,
+		val selections: List<OrderItemSelectionInfo>? = null,
+		val files: List<OrderItemOptionFile>? = null
 	)
 
 	data class OrderItemSelectionInfo(
-			val selectionTitle: String? = null,
-			val selectionModifier: Double? = null,
-			val selectionModifierType: PriceModifierType? = null
+		val selectionTitle: String? = null,
+		val selectionModifier: Double? = null,
+		val selectionModifierType: PriceModifierType? = null
 	)
 
 	data class BaseOrderItemTax(
@@ -223,30 +223,30 @@ data class FetchedOrder(
 	)
 
 	data class OrderItemTax(
-			val name: String? = null,
-			val value: Double? = null,
-			val total: Double? = null,
-			val taxOnDiscountedSubtotal: Double? = null,
-			val taxOnShipping: Double? = null,
-			val includeInPrice: Boolean? = null
+		val name: String? = null,
+		val value: Double? = null,
+		val total: Double? = null,
+		val taxOnDiscountedSubtotal: Double? = null,
+		val taxOnShipping: Double? = null,
+		val includeInPrice: Boolean? = null
 	)
 
 	data class ProductDimensions(
-			val length: Double? = null,
-			val width: Double? = null,
-			val height: Double? = null
+		val length: Double? = null,
+		val width: Double? = null,
+		val height: Double? = null
 	)
 
 	data class OrderItemDiscounts(
-			val discountInfo: DiscountInfo? = null,
-			val total: Double? = null
+		val discountInfo: DiscountInfo? = null,
+		val total: Double? = null
 	)
 
 	data class OrderItemOptionFile(
-			val id: Int? = null,
-			val name: String? = null,
-			val size: Int? = null,
-			val url: String? = null
+		val id: Int? = null,
+		val name: String? = null,
+		val size: Int? = null,
+		val url: String? = null
 	)
 
 	data class OrderItemProductFile(
@@ -262,52 +262,52 @@ data class FetchedOrder(
 	)
 
 	data class PersonInfo(
-			val name: String? = null,
-			val firstName: String? = null,
-			val lastName: String? = null,
-			val companyName: String? = null,
-			val street: String? = null,
-			val city: String? = null,
-			val countryCode: String? = null,
-			val countryName: String? = null, // TODO Figure out how to test
-			val postalCode: String? = null,
-			val stateOrProvinceCode: String? = null,
-			val stateOrProvinceName: String? = null, // TODO Figure out how to test
-			val phone: String? = null
+		val name: String? = null,
+		val firstName: String? = null,
+		val lastName: String? = null,
+		val companyName: String? = null,
+		val street: String? = null,
+		val city: String? = null,
+		val countryCode: String? = null,
+		val countryName: String? = null, // TODO Figure out how to test
+		val postalCode: String? = null,
+		val stateOrProvinceCode: String? = null,
+		val stateOrProvinceName: String? = null, // TODO Figure out how to test
+		val phone: String? = null
 	)
 
 	data class ShippingOption(
-			val shippingCarrierName: String? = null,
-			val shippingMethodName: String? = null,
-			val shippingRate: Double? = null,
-			val shippingRateWithoutTax: Double = 0.0,
-			val estimatedTransitTime: String? = null,
-			val isPickup: Boolean? = null,
-			val pickupInstruction: String? = null,
-			val fulfillmentType: FulfillmentType? = null
+		val shippingCarrierName: String? = null,
+		val shippingMethodName: String? = null,
+		val shippingRate: Double? = null,
+		val shippingRateWithoutTax: Double = 0.0,
+		val estimatedTransitTime: String? = null,
+		val isPickup: Boolean? = null,
+		val pickupInstruction: String? = null,
+		val fulfillmentType: FulfillmentType? = null
 	)
 
 	data class HandlingFee(
-			val name: String? = null,
-			val value: Double? = null,
-			val valueWithoutTax: Double = 0.0,
-			val description: String? = null,
-			val taxes: List<BaseOrderItemTax> = listOf()
+		val name: String? = null,
+		val value: Double? = null,
+		val valueWithoutTax: Double = 0.0,
+		val description: String? = null,
+		val taxes: List<BaseOrderItemTax> = listOf()
 	)
 
 	data class RefundInfo(
-			val date: Date? = null,
-			val source: String? = null,
-			val reason: String? = null,
-			val amount: Double? = null
+		val date: Date? = null,
+		val source: String? = null,
+		val reason: String? = null,
+		val amount: Double? = null
 	)
 
 	data class UtmData(
-			val source: String? = null,
-			val campaign: String? = null,
-			val medium: String? = null,
-			val mcEid: String? = null,
-			val mcCid: String? = null
+		val source: String? = null,
+		val campaign: String? = null,
+		val medium: String? = null,
+		val mcEid: String? = null,
+		val mcCid: String? = null
 	)
 
 	data class Surcharge(
@@ -457,5 +457,4 @@ data class FetchedOrder(
 		val platformSpecificFields: HashMap<String, String>? = null,
 		val refererChannel: String? = null
 	)
-
 }

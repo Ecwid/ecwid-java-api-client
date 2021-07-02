@@ -97,7 +97,8 @@ private fun checkClassOrPrimitive(
 ) {
 	if (fetchedDTOClass.isJreType() || fetchedDTOClass.isEnum) {
 		// Primitive type
-		val isCompatibleJreTypes = fetchedDTOClass.isJreType() && fetchedDTOClass.kotlin.javaObjectType == updatedDTOClass.kotlin.javaObjectType
+		val isCompatibleJreTypes =
+			fetchedDTOClass.isJreType() && fetchedDTOClass.kotlin.javaObjectType == updatedDTOClass.kotlin.javaObjectType
 		val isCompatibleEnumTypes = fetchedDTOClass.isEnum && updatedDTOClass.isEnum
 		if (!isCompatibleJreTypes && !isCompatibleEnumTypes) {
 			problemsCollector.add(

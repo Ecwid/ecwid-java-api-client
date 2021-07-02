@@ -6,20 +6,20 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class ProductGalleryImageAsyncUploadRequest(
-		val productId: Int = 0,
-		val asyncPictureData: AsyncPictureData = AsyncPictureData()
+	val productId: Int = 0,
+	val asyncPictureData: AsyncPictureData = AsyncPictureData()
 
 ) : ApiRequest {
 	override fun toRequestInfo(): RequestInfo {
 		return RequestInfo.createPostRequest(
-				pathSegments = listOf(
-						"products",
-						"$productId",
-						"gallery",
-						"async"
-				),
-				params = mapOf(),
-				httpBody = HttpBody.JsonBody(obj = asyncPictureData)
+			pathSegments = listOf(
+				"products",
+				"$productId",
+				"gallery",
+				"async"
+			),
+			params = mapOf(),
+			httpBody = HttpBody.JsonBody(obj = asyncPictureData)
 		)
 	}
 }

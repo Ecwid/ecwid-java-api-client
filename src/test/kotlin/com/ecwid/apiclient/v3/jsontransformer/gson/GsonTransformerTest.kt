@@ -2,7 +2,7 @@ package com.ecwid.apiclient.v3.jsontransformer.gson
 
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import com.google.gson.JsonParser
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class GsonTransformerTest {

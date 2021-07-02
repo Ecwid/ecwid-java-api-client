@@ -6,17 +6,17 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 data class DeletedOrdersSearchRequest(
-		val deletedFrom: Date? = null,
-		val deletedTo: Date? = null,
-		val offset: Int = 0,
-		val limit: Int = 100
+	val deletedFrom: Date? = null,
+	val deletedTo: Date? = null,
+	val offset: Int = 0,
+	val limit: Int = 100
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			pathSegments = listOf(
-				"orders",
-				"deleted"
-			),
-			params = toParams()
+		pathSegments = listOf(
+			"orders",
+			"deleted"
+		),
+		params = toParams()
 	)
 
 	private fun toParams(): Map<String, String> {

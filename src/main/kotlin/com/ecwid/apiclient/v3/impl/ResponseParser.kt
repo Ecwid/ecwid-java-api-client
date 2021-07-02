@@ -6,13 +6,13 @@ import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 private const val MAX_LOG_ENTRY_LENGTH = 8_192
 
 interface ResponseParser<V> {
-    fun parse(responseBytes: ByteArray): V
-    fun getLogString(responseBytes: ByteArray): String
+	fun parse(responseBytes: ByteArray): V
+	fun getLogString(responseBytes: ByteArray): String
 }
 
 data class ParsedResponseWithExt<VBase, VExt>(
-		val baseResult: VBase,
-		val extResult: VExt
+	val baseResult: VBase,
+	val extResult: VExt
 )
 
 @PublishedApi
@@ -25,7 +25,6 @@ internal class StringResponseParser : ResponseParser<String> {
 	override fun getLogString(responseBytes: ByteArray): String {
 		return responseBytes.asString().abbreviateForLog()
 	}
-
 }
 
 @PublishedApi
@@ -38,13 +37,12 @@ internal class ByteArrayResponseParser : ResponseParser<ByteArray> {
 	override fun getLogString(responseBytes: ByteArray): String {
 		return responseBytes.abbreviateForLog()
 	}
-
 }
 
 @PublishedApi
 internal class ObjectResponseParser<V>(
-		private val jsonTransformer: JsonTransformer,
-		private val clazz: Class<V>
+	private val jsonTransformer: JsonTransformer,
+	private val clazz: Class<V>
 ) : ResponseParser<V> {
 
 	override fun parse(responseBytes: ByteArray): V {
@@ -54,14 +52,13 @@ internal class ObjectResponseParser<V>(
 	override fun getLogString(responseBytes: ByteArray): String {
 		return responseBytes.asString().abbreviateForLog()
 	}
-
 }
 
 @PublishedApi
 internal class ObjectWithExtResponseParser<VBase, VExt>(
-		private val jsonTransformer: JsonTransformer,
-		private val baseClass: Class<VBase>,
-		private val extClass: Class<VExt>
+	private val jsonTransformer: JsonTransformer,
+	private val baseClass: Class<VBase>,
+	private val extClass: Class<VExt>
 ) : ResponseParser<ParsedResponseWithExt<VBase, VExt>> {
 
 	override fun parse(responseBytes: ByteArray): ParsedResponseWithExt<VBase, VExt> {
@@ -73,7 +70,6 @@ internal class ObjectWithExtResponseParser<VBase, VExt>(
 	override fun getLogString(responseBytes: ByteArray): String {
 		return responseBytes.asString().abbreviateForLog()
 	}
-
 }
 
 private fun String.abbreviateForLog(): String {

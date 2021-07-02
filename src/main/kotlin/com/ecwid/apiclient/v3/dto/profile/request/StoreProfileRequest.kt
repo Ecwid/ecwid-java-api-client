@@ -4,14 +4,14 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class StoreProfileRequest(
-		val lang: String? = null
+	val lang: String? = null
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			pathSegments = listOf(
-				"profile"
-			),
-			params = toParams()
+		pathSegments = listOf(
+			"profile"
+		),
+		params = toParams()
 	)
 
 	private fun toParams(): Map<String, String> {
@@ -20,5 +20,4 @@ data class StoreProfileRequest(
 			request.lang?.let { put("lang", it) }
 		}.toMap()
 	}
-
 }

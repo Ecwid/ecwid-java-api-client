@@ -125,7 +125,5 @@ open class ApacheCommonsHttpClientTransport(
 			}
 			return httpClientBuilder.build()
 		}
-
 	}
-
 }

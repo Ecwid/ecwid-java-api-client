@@ -7,93 +7,93 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 data class OrderForCalculate(
-		val email: String? = null,
-		val ipAddress: String? = null,
-		val customerId: Int? = null,
-		val discountCoupon: DiscountCouponInfo? = null,
-		val items: List<OrderItem>? = null,
-		val billingPerson: PersonInfo? = null,
-		val shippingPerson: PersonInfo? = null,
-		val discountInfo: List<DiscountInfo>? = null
+	val email: String? = null,
+	val ipAddress: String? = null,
+	val customerId: Int? = null,
+	val discountCoupon: DiscountCouponInfo? = null,
+	val items: List<OrderItem>? = null,
+	val billingPerson: PersonInfo? = null,
+	val shippingPerson: PersonInfo? = null,
+	val discountInfo: List<DiscountInfo>? = null
 ) : ApiRequestDTO {
 
 	data class DiscountInfo(
-			val value: Double? = null,
-			val type: DiscountType? = null,
-			val base: DiscountBase? = null,
-			val orderTotal: Double? = null,
-			val description: String? = null
+		val value: Double? = null,
+		val type: DiscountType? = null,
+		val base: DiscountBase? = null,
+		val orderTotal: Double? = null,
+		val description: String? = null
 	)
 
 	data class OrderItemDiscountInfo(
-			val value: Double? = null,
-			val type: DiscountType? = null,
-			val base: DiscountBase? = null,
-			val orderTotal: Double? = null
+		val value: Double? = null,
+		val type: DiscountType? = null,
+		val base: DiscountBase? = null,
+		val orderTotal: Double? = null
 	)
 
 	data class DiscountCouponInfo(
-			val name: String? = null,
-			val code: String? = null,
-			val discountType: DiscountCouponType? = null,
-			val status: DiscountCouponStatus? = null,
-			val discount: Double? = null,
-			val launchDate: Date? = null,
-			val expirationDate: Date? = null,
-			val totalLimit: Double? = null,
-			val usesLimit: DiscountCouponUsesLimit? = null,
-			val applicationLimit: DiscountCouponApplicationLimit? = null,
-			val creationDate: Date? = null,
-			val orderCount: Int? = null,
-			val catalogLimit: DiscountCouponCatalogLimit? = null
+		val name: String? = null,
+		val code: String? = null,
+		val discountType: DiscountCouponType? = null,
+		val status: DiscountCouponStatus? = null,
+		val discount: Double? = null,
+		val launchDate: Date? = null,
+		val expirationDate: Date? = null,
+		val totalLimit: Double? = null,
+		val usesLimit: DiscountCouponUsesLimit? = null,
+		val applicationLimit: DiscountCouponApplicationLimit? = null,
+		val creationDate: Date? = null,
+		val orderCount: Int? = null,
+		val catalogLimit: DiscountCouponCatalogLimit? = null
 	)
 
 	data class DiscountCouponCatalogLimit(
-			val products: List<Int>? = null,
-			val categories: List<Int>? = null
+		val products: List<Int>? = null,
+		val categories: List<Int>? = null
 	)
 
 	data class OrderItem(
-			val id: Int? = null,
+		val id: Int? = null,
 
-			val productId: Int? = null,
-			val categoryId: Int? = null,
+		val productId: Int? = null,
+		val categoryId: Int? = null,
 
-			val price: Double? = null,
-			val productPrice: Double? = null,
-			val shipping: Double? = null,
-			val tax: Double? = null,
-			val fixedShippingRate: Double? = null,
-			val couponAmount: Double? = null,
+		val price: Double? = null,
+		val productPrice: Double? = null,
+		val shipping: Double? = null,
+		val tax: Double? = null,
+		val fixedShippingRate: Double? = null,
+		val couponAmount: Double? = null,
 
-			val sku: String? = null,
-			val name: String? = null,
-			val shortDescription: String? = null,
-			val quantity: Int? = null,
-			val quantityInStock: Int? = null,
-			val weight: Double? = null,
-			val imageUrl: String? = null,
+		val sku: String? = null,
+		val name: String? = null,
+		val shortDescription: String? = null,
+		val quantity: Int? = null,
+		val quantityInStock: Int? = null,
+		val weight: Double? = null,
+		val imageUrl: String? = null,
 
-			val isShippingRequired: Boolean? = null,
-			val trackQuantity: Boolean? = null,
-			val fixedShippingRateOnly: Boolean? = null,
-			val digital: Boolean? = null,
-			val couponApplied: Boolean? = null,
+		val isShippingRequired: Boolean? = null,
+		val trackQuantity: Boolean? = null,
+		val fixedShippingRateOnly: Boolean? = null,
+		val digital: Boolean? = null,
+		val couponApplied: Boolean? = null,
 
-			val selectedOptions: List<OrderItemOption>? = null,
-			val taxes: List<OrderItemTax>? = null,
-			val files: List<OrderItemProductFile>? = null,
-			val dimensions: ProductDimensions? = null,
-			val discounts: List<OrderItemDiscounts>? = null
+		val selectedOptions: List<OrderItemOption>? = null,
+		val taxes: List<OrderItemTax>? = null,
+		val files: List<OrderItemProductFile>? = null,
+		val dimensions: ProductDimensions? = null,
+		val discounts: List<OrderItemDiscounts>? = null
 	)
 
 	data class OrderItemOption(
-			val name: String? = null,
-			val type: ProductOptionType? = null,
-			val value: String? = null,
-			val valuesArray: List<String>? = null,
-			val files: List<OrderItemOptionFile>? = null,
-			val selections: List<SelectionInfo>? = null
+		val name: String? = null,
+		val type: ProductOptionType? = null,
+		val value: String? = null,
+		val valuesArray: List<String>? = null,
+		val files: List<OrderItemOptionFile>? = null,
+		val selections: List<SelectionInfo>? = null
 	) {
 		companion object {
 
@@ -101,115 +101,123 @@ data class OrderForCalculate(
 				SimpleDateFormat("yyyy-MM-dd")
 			}
 
-			fun createForChoiceOption(name: String, selection: String, files: List<OrderItemOptionFile>?): OrderItemOption {
+			fun createForChoiceOption(
+				name: String,
+				selection: String,
+				files: List<OrderItemOptionFile>?
+			): OrderItemOption {
 				return OrderItemOption(
-						name = name,
-						type = ProductOptionType.CHOICE,
-						value = selection,
-						valuesArray = listOf(selection),
-						files = files,
-						selections = listOf(
-								SelectionInfo(
-										selectionTitle = selection,
-										selectionModifier = 0.0, // Does not make sense for this option type but required
-										selectionModifierType = PriceModifierType.ABSOLUTE // Does not make sense for this option type but required
-								)
+					name = name,
+					type = ProductOptionType.CHOICE,
+					value = selection,
+					valuesArray = listOf(selection),
+					files = files,
+					selections = listOf(
+						SelectionInfo(
+							selectionTitle = selection,
+							selectionModifier = 0.0, // Does not make sense for this option type but required
+							selectionModifierType = PriceModifierType.ABSOLUTE // Does not make sense for this option type but required
 						)
+					)
 				)
 			}
 
-			fun createForChoicesOption(name: String, selections: List<SelectionInfo>, files: List<OrderItemOptionFile>?): OrderItemOption {
+			fun createForChoicesOption(
+				name: String,
+				selections: List<SelectionInfo>,
+				files: List<OrderItemOptionFile>?
+			): OrderItemOption {
 				return OrderItemOption(
-						name = name,
-						type = ProductOptionType.CHOICES,
-						valuesArray = selections.map { it.selectionTitle ?: "" },
-						files = files,
-						selections = selections
+					name = name,
+					type = ProductOptionType.CHOICES,
+					valuesArray = selections.map { it.selectionTitle ?: "" },
+					files = files,
+					selections = selections
 				)
 			}
 
 			fun createForTextOption(name: String, value: String): OrderItemOption {
 				return OrderItemOption(
-						name = name,
-						type = ProductOptionType.TEXT,
-						value = value,
-						valuesArray = listOf(value),
-						selections = null
+					name = name,
+					type = ProductOptionType.TEXT,
+					value = value,
+					valuesArray = listOf(value),
+					selections = null
 				)
 			}
 
 			fun createForDateOption(name: String, date: Date): OrderItemOption {
 				return OrderItemOption(
-						name = name,
-						type = ProductOptionType.DATE,
-						value = DATE_OPTION_FORMAT.get().format(date)
+					name = name,
+					type = ProductOptionType.DATE,
+					value = DATE_OPTION_FORMAT.get().format(date)
 				)
 			}
 
 			fun createForFilesOption(name: String): OrderItemOption {
 				return OrderItemOption(
-						name = name,
-						type = ProductOptionType.FILES
+					name = name,
+					type = ProductOptionType.FILES
 				)
 			}
 		}
 	}
 
 	data class SelectionInfo(
-			val selectionTitle: String? = null,
-			val selectionModifier: Double? = null,
-			val selectionModifierType: PriceModifierType? = null
+		val selectionTitle: String? = null,
+		val selectionModifier: Double? = null,
+		val selectionModifierType: PriceModifierType? = null
 	)
 
 	data class OrderItemTax(
-			val name: String? = null,
-			val value: Double? = null,
-			val total: Double? = null,
-			val taxOnDiscountedSubtotal: Double? = null,
-			val taxOnShipping: Double? = null,
-			val includeInPrice: Boolean? = null
+		val name: String? = null,
+		val value: Double? = null,
+		val total: Double? = null,
+		val taxOnDiscountedSubtotal: Double? = null,
+		val taxOnShipping: Double? = null,
+		val includeInPrice: Boolean? = null
 	)
 
 	data class OrderItemProductFile(
-			val productFileId: Int? = null,
-			val maxDownloads: Int? = null,
-			val remainingDownloads: Int? = null,
-			val expire: Date? = null,
-			val name: String? = null,
-			val description: String? = null,
-			val size: Int? = null,
-			val adminUrl: String? = null,
-			val customerUrl: String? = null
+		val productFileId: Int? = null,
+		val maxDownloads: Int? = null,
+		val remainingDownloads: Int? = null,
+		val expire: Date? = null,
+		val name: String? = null,
+		val description: String? = null,
+		val size: Int? = null,
+		val adminUrl: String? = null,
+		val customerUrl: String? = null
 	)
 
 	data class ProductDimensions(
-			val length: Double? = null,
-			val width: Double? = null,
-			val height: Double? = null
+		val length: Double? = null,
+		val width: Double? = null,
+		val height: Double? = null
 	)
 
 	data class OrderItemDiscounts(
-			val discountInfo: OrderItemDiscountInfo? = null,
-			val total: Double? = null
+		val discountInfo: OrderItemDiscountInfo? = null,
+		val total: Double? = null
 	)
 
 	data class OrderItemOptionFile(
-			val id: Int? = null,
-			val name: String? = null,
-			val size: Int? = null,
-			val url: String? = null
+		val id: Int? = null,
+		val name: String? = null,
+		val size: Int? = null,
+		val url: String? = null
 	)
 
 	data class PersonInfo(
-			val name: String? = null,
-			val companyName: String? = null,
-			val street: String? = null,
-			val city: String? = null,
-			val countryCode: String? = null,
-			val countryName: String? = null,
-			val postalCode: String? = null,
-			val stateOrProvinceCode: String? = null,
-			val stateOrProvinceName: String? = null,
-			val phone: String? = null
+		val name: String? = null,
+		val companyName: String? = null,
+		val street: String? = null,
+		val city: String? = null,
+		val countryCode: String? = null,
+		val countryName: String? = null,
+		val postalCode: String? = null,
+		val stateOrProvinceCode: String? = null,
+		val stateOrProvinceName: String? = null,
+		val phone: String? = null
 	)
 }

@@ -12,11 +12,6 @@ import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.IgnoreNonnull
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 import com.ecwid.apiclient.v3.util.*
-import com.ecwid.apiclient.v3.util.DTORandomDataProviderStrategy
-import com.ecwid.apiclient.v3.util.FieldProblem
-import com.ecwid.apiclient.v3.util.FieldProblemKind
-import com.ecwid.apiclient.v3.util.checkDTOFieldsEmptiness
-import com.ecwid.apiclient.v3.util.checkFetchedUpdatedDTOsFields
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.Order
@@ -77,8 +72,8 @@ class DtoContractUnitTest {
 		}
 		assertTrue(problemDtoClasses.isEmpty()) {
 			"Some DTO data classes does not have zero-arg constructors " +
-					"(you need to add default values for all primary constructor arguments):\n" +
-					classesToLoggableString(problemDtoClasses)
+				"(you need to add default values for all primary constructor arguments):\n" +
+				classesToLoggableString(problemDtoClasses)
 		}
 	}
 
@@ -94,8 +89,8 @@ class DtoContractUnitTest {
 		}
 		assertTrue(problemDtoClasses.isEmpty()) {
 			"Some DTO data classes does have mutable properties in their primary constructors " +
-					"(you need to replace all parameters from `var` to `val`):\n" +
-					classesToLoggableString(problemDtoClasses)
+				"(you need to replace all parameters from `var` to `val`):\n" +
+				classesToLoggableString(problemDtoClasses)
 		}
 	}
 
@@ -119,7 +114,7 @@ class DtoContractUnitTest {
 		assertTrue(problemDtoClasses.isEmpty()) {
 			val interfacesStr = dtoMarkerInterfaces.joinToString(separator = ", ") { int -> int.simpleName }
 			"Some of top level DTO data classes does implement one of marker interfaces [$interfacesStr]:\n" +
-					classesToLoggableString(problemDtoClasses)
+				classesToLoggableString(problemDtoClasses)
 		}
 	}
 
@@ -152,10 +147,10 @@ class DtoContractUnitTest {
 		val problemProperties = nullableProperties - allowedOrIgnoredNullableProperties
 		assertTrue(problemProperties.isEmpty()) {
 			"Some of DTO data classes have nullable properties but should not:\n" +
-					propertiesToLoggableString(problemProperties) + "\n" +
-					"Please make this properties non-nullable if possible.\n" +
-					"If Ecwid API sometimes return null as value for this property you CAN add it to as `AllowNullable()` exclusion in file `NullablePropertyRules.kt`\n" +
-					"You MUST NOT add exclusion with type IgnoreNullable() which is used only for old fields until they are fixed.\n"
+				propertiesToLoggableString(problemProperties) + "\n" +
+				"Please make this properties non-nullable if possible.\n" +
+				"If Ecwid API sometimes return null as value for this property you CAN add it to as `AllowNullable()` exclusion in file `NullablePropertyRules.kt`\n" +
+				"You MUST NOT add exclusion with type IgnoreNullable() which is used only for old fields until they are fixed.\n"
 		}
 	}
 
@@ -167,8 +162,8 @@ class DtoContractUnitTest {
 			.size
 		assertTrue(ignoreNullablePropertiesCount <= 1062) {
 			"You MUST NOT add exclusion with type IgnoreNullable() which is used only for old fields until they are fixed.\n" +
-					"Please make added property non-nullable if possible.\n" +
-					"If Ecwid API sometimes return null as value for this property you CAN add it to as `AllowNullable()` exclusion type instead."
+				"Please make added property non-nullable if possible.\n" +
+				"If Ecwid API sometimes return null as value for this property you CAN add it to as `AllowNullable()` exclusion type instead."
 		}
 	}
 
@@ -198,10 +193,10 @@ class DtoContractUnitTest {
 		val problemProperties = nonnullProperties - allowedOrIgnoredNonnullProperties
 		assertTrue(problemProperties.isEmpty()) {
 			"Some of DTO data classes have nonnull properties but should not:\n" +
-					propertiesToLoggableString(problemProperties) + "\n" +
-					"Please make this properties nonnull if possible.\n" +
-					"If Ecwid API requires value for this property to be passed you CAN add it to as `AllowNonnull()` exclusion in file `NonnullPropertyRules.kt`\n" +
-					"You MUST NOT add exclusion with type IgnoreNonnull() which is used only for old fields until they are fixed.\n"
+				propertiesToLoggableString(problemProperties) + "\n" +
+				"Please make this properties nonnull if possible.\n" +
+				"If Ecwid API requires value for this property to be passed you CAN add it to as `AllowNonnull()` exclusion in file `NonnullPropertyRules.kt`\n" +
+				"You MUST NOT add exclusion with type IgnoreNonnull() which is used only for old fields until they are fixed.\n"
 		}
 	}
 
@@ -213,8 +208,8 @@ class DtoContractUnitTest {
 			.size
 		assertTrue(ignoreNullablePropertiesCount <= 42) {
 			"You MUST NOT add exclusion with type IgnoreNonnull() which is used only for old fields until they are fixed.\n" +
-					"Please make this properties nonnull if possible.\n" +
-					"If Ecwid API requires value for this property to be passed you CAN add it to as `AllowNonnull()` exclusion in file `NonnullPropertyRules.kt`"
+				"Please make this properties nonnull if possible.\n" +
+				"If Ecwid API requires value for this property to be passed you CAN add it to as `AllowNonnull()` exclusion in file `NonnullPropertyRules.kt`"
 		}
 	}
 
@@ -238,7 +233,8 @@ class DtoContractUnitTest {
 						is ApiUpdatedDTO.ModifyKind.ReadWrite -> {
 							assertEquals(
 								dtoClass, updatedDtoModifyKind.fetchedDTOClass,
-								"Classes ${dtoClass.qualifiedName} and ${updatedDTOClass.qualifiedName} does not links to each other")
+								"Classes ${dtoClass.qualifiedName} and ${updatedDTOClass.qualifiedName} does not links to each other"
+							)
 						}
 						null -> {
 							fail("Impossible situation")
@@ -308,8 +304,8 @@ class DtoContractUnitTest {
 			.size
 		assertTrue(ignoreNonUpdatablePropertyRulesCount <= 159) {
 			"You MUST NOT add exclusion with type Ignored() which is used only for old fields until they are fixed.\n" +
-					"Please add this field to Updated DTO if possible.\n" +
-					"If this field is read-only in Ecwid API you CAN add it as `ReadOnly()` exclusion to file `NonUpdatablePropertyRules.kt`."
+				"Please add this field to Updated DTO if possible.\n" +
+				"If this field is read-only in Ecwid API you CAN add it as `ReadOnly()` exclusion to file `NonUpdatablePropertyRules.kt`."
 		}
 	}
 
@@ -335,7 +331,8 @@ class DtoContractUnitTest {
 					val fetchedDtoKClass = fetchedDtoClass as KClass<out ApiFetchedDTO>
 					val updatedDTOClass = kind.updatedDTOClass
 
-					val toUpdatedMethod: Method? = findToUpdatedMethod(convertersReflections, fetchedDtoKClass, updatedDTOClass)
+					val toUpdatedMethod: Method? =
+						findToUpdatedMethod(convertersReflections, fetchedDtoKClass, updatedDTOClass)
 					if (toUpdatedMethod == null) {
 						problemMessages += "Extension function with signature `${fetchedDtoKClass.java.canonicalName}.toUpdated(): ${updatedDTOClass.java.canonicalName}` is not implemented"
 						null
@@ -354,16 +351,17 @@ class DtoContractUnitTest {
 
 		problemMessages += checkDTOFieldsEmptiness(
 			values = updatedDTOs,
-			ignoredFields = nonDuplicablePropertyRules.map(NonDuplicablePropertyRule<*, *>::property))
-		.map(FieldEmptinessProblem::buildMessage)
+			ignoredFields = nonDuplicablePropertyRules.map(NonDuplicablePropertyRule<*, *>::property)
+		)
+			.map(FieldEmptinessProblem::buildMessage)
 
 		if (problemMessages.isNotEmpty()) {
 			fail<Unit> {
 				"Some of Fetched DTOs' fields are not copied to Updated DTOs in proper way:\n" +
-						messagesToLoggableString(problemMessages) + "\n" +
-						"Please implement proper toUpdate() extension function for this fields.\n" +
-						"If this field is really write-only according to Ecwid API documentation you CAN add it as `WriteOnly()` exclusion in file `NonDuplicablePropertyRules.kt`.\n" +
-						"You MUST NOT add exclusion of any other type to this list.\n"
+					messagesToLoggableString(problemMessages) + "\n" +
+					"Please implement proper toUpdate() extension function for this fields.\n" +
+					"If this field is really write-only according to Ecwid API documentation you CAN add it as `WriteOnly()` exclusion in file `NonDuplicablePropertyRules.kt`.\n" +
+					"You MUST NOT add exclusion of any other type to this list.\n"
 			}
 		}
 	}
@@ -377,12 +375,11 @@ class DtoContractUnitTest {
 		if (nonWriteOnlyPropertyRulesCount > 1) {
 			fail<Unit> {
 				"You MUST NOT add exclusion with types other than `WriteOnly()` to file `NonDuplicablePropertyRules.kt`.\n" +
-						"If this field is really write-only according to Ecwid API documentation you CAN add it as `WriteOnly()` exclusion.\n" +
-						"Otherwise you MUST add proper implementation of method toUpdate() for this field."
+					"If this field is really write-only according to Ecwid API documentation you CAN add it as `WriteOnly()` exclusion.\n" +
+					"Otherwise you MUST add proper implementation of method toUpdate() for this field."
 			}
 		}
 	}
-
 }
 
 private fun FieldProblem.buildMessage(): String {
@@ -414,7 +411,7 @@ private fun FieldProblem.buildMessage(): String {
 
 	val problemDescription = when (problemKind) {
 		FieldProblemKind.FIELD_NOT_FOUND -> {
-				"Please add this field to Updated DTO if possible.\n" +
+			"Please add this field to Updated DTO if possible.\n" +
 				"If this field is read-only in Ecwid API you CAN add it as `ReadOnly()` exclusion to file `NonUpdatablePropertyRules.kt`.\n" +
 				"You MUST NOT add exclusion with type Ignored() which is used only for old fields until they are fixed."
 		}
@@ -502,9 +499,9 @@ private fun isDtoShouldHaveZeroArgConstructor(constructors: Array<Constructor<*>
 		// We have some DTOs with special primary constructor parameter types.
 		// We cannot assign a default value to them so will ignore them
 		parameter.type.isAssignableFrom(JsonTransformer::class.java) ||
-				parameter.type.isAssignableFrom(File::class.java) ||
-				parameter.type.isAssignableFrom(InputStream::class.java) ||
-				parameter.type.isAssignableFrom(KClass::class.java)
+			parameter.type.isAssignableFrom(File::class.java) ||
+			parameter.type.isAssignableFrom(InputStream::class.java) ||
+			parameter.type.isAssignableFrom(KClass::class.java)
 	}
 
 	return !hasSpecialParameterType

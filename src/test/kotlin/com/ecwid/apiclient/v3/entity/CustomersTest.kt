@@ -33,25 +33,25 @@ class CustomersTest : BaseEntityTest() {
 	fun testCustomerLifecycle() {
 		// Creating one customer group
 		val customerGroupCreateRequest1 = CustomerGroupCreateRequest(
-				newCustomerGroup = UpdatedCustomerGroup(
-						name = "Customer group " + randomAlphanumeric(8)
-				)
+			newCustomerGroup = UpdatedCustomerGroup(
+				name = "Customer group " + randomAlphanumeric(8)
+			)
 		)
 		val customerGroupCreateResult1 = apiClient.createCustomerGroup(customerGroupCreateRequest1)
 		assertTrue(customerGroupCreateResult1.id > 0)
 
 		// Creating another one customer group
 		val customerGroupCreateRequest2 = CustomerGroupCreateRequest(
-				newCustomerGroup = UpdatedCustomerGroup(
-						name = "Customer group " + randomAlphanumeric(8)
-				)
+			newCustomerGroup = UpdatedCustomerGroup(
+				name = "Customer group " + randomAlphanumeric(8)
+			)
 		)
 		val customerGroupCreateResult2 = apiClient.createCustomerGroup(customerGroupCreateRequest2)
 		assertTrue(customerGroupCreateResult2.id > 0)
 
 		// Creating new customer
 		val customerCreateRequest = CustomerCreateRequest(
-				newCustomer = generateTestCustomerForCreate(customerGroupId = customerGroupCreateResult1.id)
+			newCustomer = generateTestCustomerForCreate(customerGroupId = customerGroupCreateResult1.id)
 		)
 		val customerCreateResult = apiClient.createCustomer(customerCreateRequest)
 		assertTrue(customerCreateResult.id > 0)
@@ -61,8 +61,8 @@ class CustomersTest : BaseEntityTest() {
 		val customerDetailsRequest = CustomerDetailsRequest(customerId = customerCreateResult.id)
 		val customerDetails1 = apiClient.getCustomerDetails(customerDetailsRequest)
 		assertEquals(
-				customerCreateRequest.newCustomer,
-				customerDetails1.withSortedShippingAddresses().toUpdated().cleanupForComparison(customerCreateRequest)
+			customerCreateRequest.newCustomer,
+			customerDetails1.withSortedShippingAddresses().toUpdated().cleanupForComparison(customerCreateRequest)
 		)
 		assertEquals(customerGroupCreateRequest1.newCustomerGroup.name, customerDetails1.customerGroupName)
 
@@ -85,11 +85,11 @@ class CustomersTest : BaseEntityTest() {
 
 		// Completely updating newly created customer, leaving shipping addresses ids to update not recreate them
 		val customerUpdateRequest = CustomerUpdateRequest(
-				customerId = customerDetails1.id,
-				updatedCustomer = generateTestCustomerForUpdate(
-						customerGroupId = customerGroupCreateResult2.id,
-						oldShippingAddresses = customerDetails1.withSortedShippingAddresses().shippingAddresses
-				)
+			customerId = customerDetails1.id,
+			updatedCustomer = generateTestCustomerForUpdate(
+				customerGroupId = customerGroupCreateResult2.id,
+				oldShippingAddresses = customerDetails1.withSortedShippingAddresses().shippingAddresses
+			)
 		)
 		val customerUpdateResult1 = apiClient.updateCustomer(customerUpdateRequest)
 		assertEquals(1, customerUpdateResult1.updateCount)
@@ -97,8 +97,8 @@ class CustomersTest : BaseEntityTest() {
 		// Checking that customer was successfully updated with necessary parameters
 		val customerDetails2 = apiClient.getCustomerDetails(customerDetailsRequest)
 		assertEquals(
-				customerUpdateRequest.updatedCustomer,
-				customerDetails2.withSortedShippingAddresses().toUpdated()
+			customerUpdateRequest.updatedCustomer,
+			customerDetails2.withSortedShippingAddresses().toUpdated()
 		)
 
 		// Deleting customer
@@ -119,31 +119,31 @@ class CustomersTest : BaseEntityTest() {
 	fun testSearchFields() {
 		// Creating new customer group
 		val customerGroupCreateRequest = CustomerGroupCreateRequest(
-				newCustomerGroup = UpdatedCustomerGroup(
-						name = "Customer group " + randomAlphanumeric(8)
-				)
+			newCustomerGroup = UpdatedCustomerGroup(
+				name = "Customer group " + randomAlphanumeric(8)
+			)
 		)
 		val customerGroupCreateResult = apiClient.createCustomerGroup(customerGroupCreateRequest)
 		assertTrue(customerGroupCreateResult.id > 0)
 
 		// Creating new customer attached to this customer group
 		val customerCreateRequest = CustomerCreateRequest(
-				newCustomer = UpdatedCustomer(
-						email = randomEmail(),
-						billingPerson = UpdatedCustomer.BillingPerson(
-								name = randomAlphanumeric(16)
-						),
-						customerGroupId = customerGroupCreateResult.id
-				)
+			newCustomer = UpdatedCustomer(
+				email = randomEmail(),
+				billingPerson = UpdatedCustomer.BillingPerson(
+					name = randomAlphanumeric(16)
+				),
+				customerGroupId = customerGroupCreateResult.id
+			)
 		)
 		val customerCreateResult = apiClient.createCustomer(customerCreateRequest)
 		assertTrue(customerCreateResult.id > 0)
 
 		// Creating new order for this customer
 		val orderCreateRequest = OrderCreateRequest(
-				newOrder = UpdatedOrder(
-						email = customerCreateRequest.newCustomer.email
-				)
+			newOrder = UpdatedOrder(
+				email = customerCreateRequest.newCustomer.email
+			)
 		)
 		val orderCreateResult = apiClient.createOrder(orderCreateRequest)
 		assertTrue(orderCreateResult.id > 0)
@@ -151,63 +151,63 @@ class CustomersTest : BaseEntityTest() {
 		// Trying to search by different fields
 
 		assertCustomersSearch(
-				positiveCustomerId = customerCreateResult.id,
-				positiveSearchRequest = CustomersSearchRequest(keyword = customerCreateRequest.newCustomer.billingPerson?.name),
-				negativeSearchRequest = CustomersSearchRequest(keyword = customerCreateRequest.newCustomer.billingPerson?.name + "foo")
+			positiveCustomerId = customerCreateResult.id,
+			positiveSearchRequest = CustomersSearchRequest(keyword = customerCreateRequest.newCustomer.billingPerson?.name),
+			negativeSearchRequest = CustomersSearchRequest(keyword = customerCreateRequest.newCustomer.billingPerson?.name + "foo")
 		)
 
 		assertCustomersSearch(
-				positiveCustomerId = customerCreateResult.id,
-				positiveSearchRequest = CustomersSearchRequest(name = customerCreateRequest.newCustomer.billingPerson?.name),
-				negativeSearchRequest = CustomersSearchRequest(name = customerCreateRequest.newCustomer.billingPerson?.name + "foo")
+			positiveCustomerId = customerCreateResult.id,
+			positiveSearchRequest = CustomersSearchRequest(name = customerCreateRequest.newCustomer.billingPerson?.name),
+			negativeSearchRequest = CustomersSearchRequest(name = customerCreateRequest.newCustomer.billingPerson?.name + "foo")
 		)
 
 		assertCustomersSearch(
-				positiveCustomerId = customerCreateResult.id,
-				positiveSearchRequest = CustomersSearchRequest(email = customerCreateRequest.newCustomer.email),
-				negativeSearchRequest = CustomersSearchRequest(email = customerCreateRequest.newCustomer.email + "foo")
+			positiveCustomerId = customerCreateResult.id,
+			positiveSearchRequest = CustomersSearchRequest(email = customerCreateRequest.newCustomer.email),
+			negativeSearchRequest = CustomersSearchRequest(email = customerCreateRequest.newCustomer.email + "foo")
 		)
 
 		assertCustomersSearch(
-				positiveCustomerId = customerCreateResult.id,
-				positiveSearchRequest = CustomersSearchRequest(customerGroupId = customerCreateRequest.newCustomer.customerGroupId),
-				negativeSearchRequest = CustomersSearchRequest(customerGroupId = 0)
+			positiveCustomerId = customerCreateResult.id,
+			positiveSearchRequest = CustomersSearchRequest(customerGroupId = customerCreateRequest.newCustomer.customerGroupId),
+			negativeSearchRequest = CustomersSearchRequest(customerGroupId = 0)
 		)
 
 		assertCustomersSearch(
-				positiveCustomerId = customerCreateResult.id,
-				positiveSearchRequest = CustomersSearchRequest(
-						minOrderCount = 1,
-						maxOrderCount = 1
-				),
-				negativeSearchRequest = CustomersSearchRequest(
-						minOrderCount = 2,
-						maxOrderCount = 2
-				)
+			positiveCustomerId = customerCreateResult.id,
+			positiveSearchRequest = CustomersSearchRequest(
+				minOrderCount = 1,
+				maxOrderCount = 1
+			),
+			negativeSearchRequest = CustomersSearchRequest(
+				minOrderCount = 2,
+				maxOrderCount = 2
+			)
 		)
 
 		assertCustomersSearch(
-				positiveCustomerId = customerCreateResult.id,
-				positiveSearchRequest = CustomersSearchRequest(
-						createdFrom = Date.from(Date().toInstant().minusSeconds(60)),
-						createdTo = Date.from(Date().toInstant().plusSeconds(60))
-				),
-				negativeSearchRequest = CustomersSearchRequest(
-						createdFrom = Date(0),
-						createdTo = Date(0)
-				)
+			positiveCustomerId = customerCreateResult.id,
+			positiveSearchRequest = CustomersSearchRequest(
+				createdFrom = Date.from(Date().toInstant().minusSeconds(60)),
+				createdTo = Date.from(Date().toInstant().plusSeconds(60))
+			),
+			negativeSearchRequest = CustomersSearchRequest(
+				createdFrom = Date(0),
+				createdTo = Date(0)
+			)
 		)
 
 		assertCustomersSearch(
-				positiveCustomerId = customerCreateResult.id,
-				positiveSearchRequest = CustomersSearchRequest(
-						updatedFrom = Date.from(Date().toInstant().minusSeconds(60)),
-						updatedTo = Date.from(Date().toInstant().plusSeconds(60))
-				),
-				negativeSearchRequest = CustomersSearchRequest(
-						updatedFrom = Date(0),
-						updatedTo = Date(0)
-				)
+			positiveCustomerId = customerCreateResult.id,
+			positiveSearchRequest = CustomersSearchRequest(
+				updatedFrom = Date.from(Date().toInstant().minusSeconds(60)),
+				updatedTo = Date.from(Date().toInstant().plusSeconds(60))
+			),
+			negativeSearchRequest = CustomersSearchRequest(
+				updatedFrom = Date(0),
+				updatedTo = Date(0)
+			)
 		)
 	}
 
@@ -216,7 +216,7 @@ class CustomersTest : BaseEntityTest() {
 		// Create some customers
 		repeat(3) {
 			val customerCreateRequest = CustomerCreateRequest(
-					newCustomer = generateTestCustomerForCreate(customerGroupId = null)
+				newCustomer = generateTestCustomerForCreate(customerGroupId = null)
 			)
 			val customerCreateResult = apiClient.createCustomer(customerCreateRequest)
 			assertTrue(customerCreateResult.id > 0)
@@ -240,32 +240,32 @@ class CustomersTest : BaseEntityTest() {
 		// Creating some customers
 
 		val customerCreateRequest1 = CustomerCreateRequest(
-				newCustomer = UpdatedCustomer(
-						email = "aaa@example.com",
-						billingPerson = UpdatedCustomer.BillingPerson(
-								name = "aaa"
-						)
+			newCustomer = UpdatedCustomer(
+				email = "aaa@example.com",
+				billingPerson = UpdatedCustomer.BillingPerson(
+					name = "aaa"
 				)
+			)
 		)
 		val customerCreateResult1 = apiClient.createCustomer(customerCreateRequest1)
 		assertTrue(customerCreateResult1.id > 0)
 
 		val customerCreateRequest2 = CustomerCreateRequest(
-				newCustomer = UpdatedCustomer(
-						email = "bbb@example.com",
-						billingPerson = UpdatedCustomer.BillingPerson(
-								name = "bbb"
-						)
+			newCustomer = UpdatedCustomer(
+				email = "bbb@example.com",
+				billingPerson = UpdatedCustomer.BillingPerson(
+					name = "bbb"
 				)
+			)
 		)
 		val customerCreateResult2 = apiClient.createCustomer(customerCreateRequest2)
 		assertTrue(customerCreateResult2.id > 0)
 
 		// Creating order for one of those customers
 		val orderCreateRequest = OrderCreateRequest(
-				newOrder = UpdatedOrder(
-						email = customerCreateRequest2.newCustomer.email
-				)
+			newOrder = UpdatedOrder(
+				email = customerCreateRequest2.newCustomer.email
+			)
 		)
 		val orderCreateResult = apiClient.createOrder(orderCreateRequest)
 		assertTrue(orderCreateResult.id > 0)
@@ -292,9 +292,9 @@ class CustomersTest : BaseEntityTest() {
 	fun testDeletedCustomers() {
 		// Creating new customer
 		val customerCreateRequest = CustomerCreateRequest(
-				newCustomer = UpdatedCustomer(
-						email = randomEmail()
-				)
+			newCustomer = UpdatedCustomer(
+				email = randomEmail()
+			)
 		)
 		val customerCreateResult = apiClient.createCustomer(customerCreateRequest)
 		assertTrue(customerCreateResult.id > 0)
@@ -310,17 +310,22 @@ class CustomersTest : BaseEntityTest() {
 
 		// Checking that just deleted customer returned from api
 		val deletedCustomersSearchRequest = DeletedCustomersSearchRequest(
-				deletedFrom = Date.from(instantFrom),
-				deletedTo = Date.from(instantTo)
+			deletedFrom = Date.from(instantFrom),
+			deletedTo = Date.from(instantTo)
 		)
 		val deletedCustomers = apiClient.searchDeletedCustomersAsSequence(deletedCustomersSearchRequest)
-		val deletedCustomer = deletedCustomers.firstOrNull { deletedCustomer -> deletedCustomer.id == customerCreateResult.id }
+		val deletedCustomer =
+			deletedCustomers.firstOrNull { deletedCustomer -> deletedCustomer.id == customerCreateResult.id }
 		require(deletedCustomer != null)
 		assertTrue(instantFrom.isBefore(deletedCustomer.date.toInstant()))
 		assertTrue(instantTo.isAfter(deletedCustomer.date.toInstant()))
 	}
 
-	private fun assertCustomersSearch(positiveCustomerId: Int, positiveSearchRequest: CustomersSearchRequest, negativeSearchRequest: CustomersSearchRequest) {
+	private fun assertCustomersSearch(
+		positiveCustomerId: Int,
+		positiveSearchRequest: CustomersSearchRequest,
+		negativeSearchRequest: CustomersSearchRequest
+	) {
 		val positiveCustomersSearchResult = apiClient.searchCustomers(positiveSearchRequest)
 		assertEquals(1, positiveCustomersSearchResult.total)
 		assertEquals(positiveCustomerId, positiveCustomersSearchResult.items[0].id)
@@ -331,91 +336,93 @@ class CustomersTest : BaseEntityTest() {
 
 	private fun assertCustomersSortBySearch(expectedCustomerId: Int, sortBy: SortOrder) {
 		val customersSearchRequest = CustomersSearchRequest(
-				sortBy = sortBy,
-				offset = 0,
-				limit = 1
+			sortBy = sortBy,
+			offset = 0,
+			limit = 1
 		)
 		val positiveCustomersSearchResult = apiClient.searchCustomers(customersSearchRequest)
 		assertEquals(expectedCustomerId, positiveCustomersSearchResult.items[0].id)
 	}
-
 }
 
 private fun UpdatedCustomer.cleanupForComparison(customerCreateRequest: CustomerCreateRequest): UpdatedCustomer {
 	return copy(
-			// Password is write only field
-			password = customerCreateRequest.newCustomer.password,
-			// Shipping address ids were just added by server side
-			shippingAddresses = shippingAddresses?.map { shippingAddress ->
-				shippingAddress.copy(id = null)
-			}
+		// Password is write only field
+		password = customerCreateRequest.newCustomer.password,
+		// Shipping address ids were just added by server side
+		shippingAddresses = shippingAddresses?.map { shippingAddress ->
+			shippingAddress.copy(id = null)
+		}
 	)
 }
 
 private fun FetchedCustomer.withSortedShippingAddresses(): FetchedCustomer {
 	return copy(
-			// TODO Probably API bug (see https://track.ecwid.com/youtrack/issue/ECWID-49859)
-			shippingAddresses = shippingAddresses?.sortedBy(FetchedCustomer.ShippingAddress::id)
+		// TODO Probably API bug (see https://track.ecwid.com/youtrack/issue/ECWID-49859)
+		shippingAddresses = shippingAddresses?.sortedBy(FetchedCustomer.ShippingAddress::id)
 	)
 }
 
 private fun generateTestCustomerForCreate(customerGroupId: Int?): UpdatedCustomer {
 	return UpdatedCustomer(
-			email = randomEmail(),
-			password = randomAlphanumeric(8),
-			customerGroupId = customerGroupId,
-			billingPerson = generateBillingPerson(),
-			shippingAddresses = listOf(
-					generateShippingAddress(),
-					generateShippingAddress(),
-					generateShippingAddress(),
-					generateShippingAddress()
-			),
-			taxId = randomAlphanumeric(8),
-			taxIdValid = randomBoolean(),
-			taxExempt = randomBoolean(),
-			acceptMarketing = randomBoolean()
+		email = randomEmail(),
+		password = randomAlphanumeric(8),
+		customerGroupId = customerGroupId,
+		billingPerson = generateBillingPerson(),
+		shippingAddresses = listOf(
+			generateShippingAddress(),
+			generateShippingAddress(),
+			generateShippingAddress(),
+			generateShippingAddress()
+		),
+		taxId = randomAlphanumeric(8),
+		taxIdValid = randomBoolean(),
+		taxExempt = randomBoolean(),
+		acceptMarketing = randomBoolean()
 	)
 }
 
-private fun generateTestCustomerForUpdate(customerGroupId: Int, oldShippingAddresses: List<FetchedCustomer.ShippingAddress>?): UpdatedCustomer {
+private fun generateTestCustomerForUpdate(
+	customerGroupId: Int,
+	oldShippingAddresses: List<FetchedCustomer.ShippingAddress>?
+): UpdatedCustomer {
 	return UpdatedCustomer(
-			email = randomEmail(),
-			password = null,
-			customerGroupId = customerGroupId,
-			billingPerson = generateBillingPerson(),
-			shippingAddresses = listOf(
-					generateShippingAddress(oldShippingAddresses?.get(0)?.id),
-					generateShippingAddress(oldShippingAddresses?.get(1)?.id),
-					generateShippingAddress(oldShippingAddresses?.get(2)?.id),
-					generateShippingAddress(oldShippingAddresses?.get(3)?.id)
-			),
-			taxId = randomAlphanumeric(8),
-			taxIdValid = randomBoolean(),
-			taxExempt = randomBoolean(),
-			acceptMarketing = randomBoolean()
+		email = randomEmail(),
+		password = null,
+		customerGroupId = customerGroupId,
+		billingPerson = generateBillingPerson(),
+		shippingAddresses = listOf(
+			generateShippingAddress(oldShippingAddresses?.get(0)?.id),
+			generateShippingAddress(oldShippingAddresses?.get(1)?.id),
+			generateShippingAddress(oldShippingAddresses?.get(2)?.id),
+			generateShippingAddress(oldShippingAddresses?.get(3)?.id)
+		),
+		taxId = randomAlphanumeric(8),
+		taxIdValid = randomBoolean(),
+		taxExempt = randomBoolean(),
+		acceptMarketing = randomBoolean()
 	)
 }
 
 private fun generateBillingPerson() = UpdatedCustomer.BillingPerson(
-		name = "Name " + randomAlphanumeric(8),
-		companyName = "Company name " + randomAlphanumeric(8),
-		street = "Street " + randomAlphanumeric(16),
-		city = "City " + randomAlphanumeric(8),
-		countryCode = "US",
-		postalCode = randomAlphanumeric(6),
-		stateOrProvinceCode = "CA",
-		phone = randomAlphanumeric(10)
+	name = "Name " + randomAlphanumeric(8),
+	companyName = "Company name " + randomAlphanumeric(8),
+	street = "Street " + randomAlphanumeric(16),
+	city = "City " + randomAlphanumeric(8),
+	countryCode = "US",
+	postalCode = randomAlphanumeric(6),
+	stateOrProvinceCode = "CA",
+	phone = randomAlphanumeric(10)
 )
 
 private fun generateShippingAddress(id: Int? = null) = UpdatedCustomer.ShippingAddress(
-		id = id,
-		name = "Name " + randomAlphanumeric(8),
-		companyName = "Company name " + randomAlphanumeric(8),
-		street = "Street " + randomAlphanumeric(16),
-		city = "City " + randomAlphanumeric(8),
-		countryCode = "US",
-		postalCode = randomAlphanumeric(6),
-		stateOrProvinceCode = "CA",
-		phone = randomAlphanumeric(10)
+	id = id,
+	name = "Name " + randomAlphanumeric(8),
+	companyName = "Company name " + randomAlphanumeric(8),
+	street = "Street " + randomAlphanumeric(16),
+	city = "City " + randomAlphanumeric(8),
+	countryCode = "US",
+	postalCode = randomAlphanumeric(6),
+	stateOrProvinceCode = "CA",
+	phone = randomAlphanumeric(10)
 )

@@ -25,8 +25,8 @@ class ExtRequestTest : BaseEntityTest() {
 		val customerDataExt = CustomerDataExt(taxId = newTaxId)
 
 		val customerCreateRequest = CustomerCreateRequestExt(
-				newCustomer = customerData,
-				newCustomerExt = customerDataExt
+			newCustomer = customerData,
+			newCustomerExt = customerDataExt
 		)
 
 		val result = apiClientHelper.makeObjectResultRequest<CustomerCreateResult>(customerCreateRequest)
@@ -41,25 +41,25 @@ class ExtRequestTest : BaseEntityTest() {
 }
 
 private data class CustomerData(
-		var email: String? = null,
-		var taxId: String? = null
+	var email: String? = null,
+	var taxId: String? = null
 )
 
 private data class CustomerDataExt(
-		var taxId: String? = null
+	var taxId: String? = null
 )
 
 private data class CustomerCreateRequestExt(
-        var newCustomer: CustomerData = CustomerData(),
-        var newCustomerExt: CustomerDataExt = CustomerDataExt()
+	var newCustomer: CustomerData = CustomerData(),
+	var newCustomerExt: CustomerDataExt = CustomerDataExt()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
-			pathSegments = listOf(
-					"customers"
-			),
-			httpBody = HttpBody.JsonBody(
-					obj = newCustomer,
-					objExt = newCustomerExt
-			)
+		pathSegments = listOf(
+			"customers"
+		),
+		httpBody = HttpBody.JsonBody(
+			obj = newCustomer,
+			objExt = newCustomerExt
+		)
 	)
 }

@@ -151,13 +151,22 @@ class CartsTest : BaseEntityTest() {
 		assertEquals(testOrder.shippingPerson?.city, cartDetailsResult.shippingPerson?.city)
 		assertEquals(testOrder.shippingPerson?.countryCode, cartDetailsResult.shippingPerson?.countryCode)
 		assertEquals(testOrder.shippingPerson?.postalCode, cartDetailsResult.shippingPerson?.postalCode)
-		assertEquals(testOrder.shippingPerson?.stateOrProvinceCode, cartDetailsResult.shippingPerson?.stateOrProvinceCode)
+		assertEquals(
+			testOrder.shippingPerson?.stateOrProvinceCode,
+			cartDetailsResult.shippingPerson?.stateOrProvinceCode
+		)
 		assertEquals(testOrder.shippingPerson?.phone, cartDetailsResult.shippingPerson?.phone)
 
-		assertEquals(testOrder.shippingOption?.shippingCarrierName, cartDetailsResult.shippingOption?.shippingCarrierName)
+		assertEquals(
+			testOrder.shippingOption?.shippingCarrierName,
+			cartDetailsResult.shippingOption?.shippingCarrierName
+		)
 		assertEquals(testOrder.shippingOption?.shippingMethodName, cartDetailsResult.shippingOption?.shippingMethodName)
 		assertEquals(testOrder.shippingOption?.shippingRate, cartDetailsResult.shippingOption?.shippingRate)
-		assertEquals(testOrder.shippingOption?.estimatedTransitTime, cartDetailsResult.shippingOption?.estimatedTransitTime)
+		assertEquals(
+			testOrder.shippingOption?.estimatedTransitTime,
+			cartDetailsResult.shippingOption?.estimatedTransitTime
+		)
 		assertEquals(testOrder.shippingOption?.isPickup, cartDetailsResult.shippingOption?.isPickup)
 		assertEquals(testOrder.shippingOption?.pickupInstruction, cartDetailsResult.shippingOption?.pickupInstruction)
 
@@ -173,8 +182,8 @@ class CartsTest : BaseEntityTest() {
 
 		// Updating cart
 		val cartUpdateRequest = CartUpdateRequest(
-				cartId = newCartId,
-				updatedCart = generateTestCartForUpdate()
+			cartId = newCartId,
+			updatedCart = generateTestCartForUpdate()
 		)
 		val cartUpdateResult = apiClient.updateCart(cartUpdateRequest)
 		assertEquals(1, cartUpdateResult.updateCount)
@@ -183,8 +192,8 @@ class CartsTest : BaseEntityTest() {
 		val cartDetailsRequest1 = CartDetailsRequest(newCartId)
 		val cartDetailsResult1 = apiClient.getCartDetails(cartDetailsRequest1)
 		assertEquals(
-				cartUpdateRequest.updatedCart,
-				cartDetailsResult1.toUpdated()
+			cartUpdateRequest.updatedCart,
+			cartDetailsResult1.toUpdated()
 		)
 	}
 
@@ -207,27 +216,28 @@ class CartsTest : BaseEntityTest() {
 		val createdOrder = apiClient.getOrderDetails(orderDetailsRequest).toUpdated()
 
 		val testOrderCopy = testOrder.copy(
-				createDate = createdOrder.createDate,
-				paymentStatus = OrderPaymentStatus.AWAITING_PAYMENT,
-				paymentMessage = null, // TODO Discover why after each create this field resets to null
-				items = testOrder.items?.mapIndexed { itemIndex, item ->
-					val selectedOptions2 = item.selectedOptions?.mapIndexed { selectedOptionIndex, selectedOption ->
-						// TODO Discover why after create these two fields some times resets to null
-						val createdOptionSelectedOption = createdOrder.items?.get(itemIndex)?.selectedOptions?.get(selectedOptionIndex)
-						selectedOption.copy(
-								valuesArray = createdOptionSelectedOption?.valuesArray,
-								selections = createdOptionSelectedOption?.selections
-						)
-					}
-					item.copy(
-							selectedOptions = selectedOptions2
+			createDate = createdOrder.createDate,
+			paymentStatus = OrderPaymentStatus.AWAITING_PAYMENT,
+			paymentMessage = null, // TODO Discover why after each create this field resets to null
+			items = testOrder.items?.mapIndexed { itemIndex, item ->
+				val selectedOptions2 = item.selectedOptions?.mapIndexed { selectedOptionIndex, selectedOption ->
+					// TODO Discover why after create these two fields some times resets to null
+					val createdOptionSelectedOption =
+						createdOrder.items?.get(itemIndex)?.selectedOptions?.get(selectedOptionIndex)
+					selectedOption.copy(
+						valuesArray = createdOptionSelectedOption?.valuesArray,
+						selections = createdOptionSelectedOption?.selections
 					)
 				}
+				item.copy(
+					selectedOptions = selectedOptions2
+				)
+			}
 		)
 
 		assertEquals(
-				testOrderCopy,
-				createdOrder.cleanupForComparison(testOrderCopy)
+			testOrderCopy,
+			createdOrder.cleanupForComparison(testOrderCopy)
 		)
 	}
 
@@ -242,7 +252,10 @@ class CartsTest : BaseEntityTest() {
 		assertEquals(orderForCalculate.email, calculatedOrder.email)
 		assertEquals(orderForCalculate.ipAddress, calculatedOrder.ipAddress)
 		assertEquals(orderForCalculate.customerId, calculatedOrder.customerId)
-		assertEquals(null, calculatedOrder.discountCoupon) // TODO Discover why after each calculation this field resets to null
+		assertEquals(
+			null,
+			calculatedOrder.discountCoupon
+		) // TODO Discover why after each calculation this field resets to null
 
 		assertEquals(orderForCalculate.items?.count(), calculatedOrder.items?.count())
 		calculatedOrder.items?.forEachIndexed { itemIndex, calculatedItem ->
@@ -255,7 +268,10 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(forCalculateItem.productPrice, calculatedItem.productPrice)
 			assertEquals(133.2, calculatedItem.shipping)
 			assertEquals(forCalculateItem.fixedShippingRate, calculatedItem.fixedShippingRate)
-			assertEquals(null, calculatedItem.couponAmount) // TODO Discover why after each calculation this field resets to null
+			assertEquals(
+				null,
+				calculatedItem.couponAmount
+			) // TODO Discover why after each calculation this field resets to null
 			assertEquals(forCalculateItem.sku, calculatedItem.sku)
 			assertEquals(forCalculateItem.name, calculatedItem.name)
 			assertEquals(forCalculateItem.shortDescription, calculatedItem.shortDescription)
@@ -276,7 +292,10 @@ class CartsTest : BaseEntityTest() {
 				assertEquals(forCalculateItemOption.name, calculatedOrderItemOptions.name)
 				assertEquals(forCalculateItemOption.type, calculatedOrderItemOptions.type)
 				// TODO Discover why after each calculation field `valuesArray` some times resets to null
-				assertEquals(null, calculatedOrderItemOptions.files?.count()) // TODO Discover why after each calculation this field resets to null
+				assertEquals(
+					null,
+					calculatedOrderItemOptions.files?.count()
+				) // TODO Discover why after each calculation this field resets to null
 			}
 
 			assertEquals(forCalculateItem.files?.count(), calculatedItem.files?.count())
@@ -295,12 +314,18 @@ class CartsTest : BaseEntityTest() {
 				assertEquals(forCalculateFile.customerUrl, calculatedFile.customerUrl)
 			}
 
-			assertEquals(null, calculatedItem.discounts?.count()) // TODO Discover why after each calculation this field resets to null
+			assertEquals(
+				null,
+				calculatedItem.discounts?.count()
+			) // TODO Discover why after each calculation this field resets to null
 		}
 
 		checkPersonsEquals(orderForCalculate.billingPerson, calculatedOrder.billingPerson)
 		checkPersonsEquals(orderForCalculate.shippingPerson, calculatedOrder.shippingPerson)
-		assertEquals(null, calculatedOrder.discountInfo) // TODO Discover why after each calculation this field resets to null
+		assertEquals(
+			null,
+			calculatedOrder.discountInfo
+		) // TODO Discover why after each calculation this field resets to null
 	}
 
 	@Test
@@ -318,17 +343,17 @@ class CartsTest : BaseEntityTest() {
 		createNewCart(cartForSearch2)
 
 		val cartsSearchRequest1 = CartsSearchRequest(
-				totalFrom = totalPrice - 1,
-				totalTo = totalPrice + 1,
-				showHidden = false
+			totalFrom = totalPrice - 1,
+			totalTo = totalPrice + 1,
+			showHidden = false
 		)
 		val cartsSearchResult1 = apiClient.searchCarts(cartsSearchRequest1)
 		assertEquals(1, cartsSearchResult1.count)
 
 		val cartsSearchRequest2 = CartsSearchRequest(
-				totalFrom = totalPrice - 1,
-				totalTo = totalPrice + 1,
-				showHidden = true
+			totalFrom = totalPrice - 1,
+			totalTo = totalPrice + 1,
+			showHidden = true
 		)
 		val cartsSearchResult2 = apiClient.searchCarts(cartsSearchRequest2)
 		assertEquals(2, cartsSearchResult2.count)
@@ -339,8 +364,8 @@ class CartsTest : BaseEntityTest() {
 		val instantCreateFrom = instantCreate.minusSeconds(1)
 		val instantCreateTo = instantCreate.plusSeconds(2)
 		val cartsSearchRequest3 = CartsSearchRequest(
-				createdFrom = Date.from(instantCreateFrom),
-				createdTo = Date.from(instantCreateTo)
+			createdFrom = Date.from(instantCreateFrom),
+			createdTo = Date.from(instantCreateTo)
 		)
 		val cartsSearchResult3 = apiClient.searchCarts(cartsSearchRequest3)
 		assertEquals(1, cartsSearchResult3.count)
@@ -351,8 +376,8 @@ class CartsTest : BaseEntityTest() {
 		val instantUpdateFrom = instantUpdate.minusSeconds(1)
 		val instantUpdateTo = instantUpdate.plusSeconds(2)
 		val cartsSearchRequest4 = CartsSearchRequest(
-				updatedFrom = Date.from(instantUpdateFrom),
-				updatedTo = Date.from(instantUpdateTo)
+			updatedFrom = Date.from(instantUpdateFrom),
+			updatedTo = Date.from(instantUpdateTo)
 		)
 		val cartsSearchResult4 = apiClient.searchCarts(cartsSearchRequest4)
 		assertEquals(1, cartsSearchResult4.count)
@@ -362,9 +387,9 @@ class CartsTest : BaseEntityTest() {
 		val cartsSearchRequest = CartsSearchRequest()
 		val cartsSearchResult1 = apiClient.searchCartsAsSequence(cartsSearchRequest)
 		val orderCreateRequest = OrderCreateRequest(
-				newOrder = updatedOrder.copy(
-						paymentStatus = OrderPaymentStatus.INCOMPLETE
-				)
+			newOrder = updatedOrder.copy(
+				paymentStatus = OrderPaymentStatus.INCOMPLETE
+			)
 		)
 
 		apiClient.createOrder(orderCreateRequest)
@@ -376,7 +401,10 @@ class CartsTest : BaseEntityTest() {
 		}
 	}
 
-	private fun checkPersonsEquals(billingPerson1: OrderForCalculate.PersonInfo?, billingPerson2: CalculateOrderDetailsResult.PersonInfo?) {
+	private fun checkPersonsEquals(
+		billingPerson1: OrderForCalculate.PersonInfo?,
+		billingPerson2: CalculateOrderDetailsResult.PersonInfo?
+	) {
 		assertEquals(billingPerson1?.name, billingPerson2?.name)
 		assertEquals(billingPerson1?.companyName, billingPerson2?.companyName)
 		assertEquals(billingPerson1?.street, billingPerson2?.street)
@@ -391,83 +419,83 @@ class CartsTest : BaseEntityTest() {
 
 	private fun generateTestCartForUpdate(): UpdatedCart {
 		return UpdatedCart(
-				hidden = randomBoolean(),
-				taxesOnShipping = listOf()
+			hidden = randomBoolean(),
+			taxesOnShipping = listOf()
 		)
 	}
 
 	private fun generateTestOrderForCalculate(): OrderForCalculate {
 		return OrderForCalculate(
-				email = randomEmail(),
-				ipAddress = randomIp(),
-				customerId = randomId(),
-				discountCoupon = generateTestDiscountCoupon(),
-				items = listOf(generateTestItem()),
-				billingPerson = generatePersonInfo(),
-				shippingPerson = generatePersonInfo(),
-				discountInfo = listOf(
-						generateTestDiscountInfo(),
-						generateTestDiscountInfo()
-				)
+			email = randomEmail(),
+			ipAddress = randomIp(),
+			customerId = randomId(),
+			discountCoupon = generateTestDiscountCoupon(),
+			items = listOf(generateTestItem()),
+			billingPerson = generatePersonInfo(),
+			shippingPerson = generatePersonInfo(),
+			discountInfo = listOf(
+				generateTestDiscountInfo(),
+				generateTestDiscountInfo()
+			)
 		)
 	}
 
 	private fun generateTestItem(): OrderForCalculate.OrderItem {
 		return OrderForCalculate.OrderItem(
-				id = randomId(),
-				productId = randomId(),
-				categoryId = randomId(),
-				price = 22.2,
-				productPrice = 33.3,
-				shipping = 44.4,
-				tax = 55.5,
-				fixedShippingRate = 66.6,
-				couponAmount = 15.0,
-				sku = randomAlphanumeric(16),
-				name = "Order item " + randomAlphanumeric(8),
-				shortDescription = "Order item description " + randomAlphanumeric(32),
-				quantity = 2,
-				quantityInStock = 10,
-				weight = 3.0,
-				imageUrl = randomUrl(),
-				isShippingRequired = true, // true for weight field
-				trackQuantity = true,
-				fixedShippingRateOnly = true,
-				digital = true,
-				couponApplied = true,
-				selectedOptions = listOf(
-						generateChoiceSelectedOption(),
-						generateChoicesSelectedOption(),
-						generateTextSelectedOption(),
-						generateDateSelectedOption(),
-						generateFilesSelectedOption()
-				),
-				taxes = listOf(
-						generateTestOrderItemTax()
-				),
-				dimensions = OrderForCalculate.ProductDimensions(
-						length = 12.0,
-						width = 5.2,
-						height = 6.6
-				),
-				discounts = listOf(
-						generateOrderItemDiscounts()
-				)
+			id = randomId(),
+			productId = randomId(),
+			categoryId = randomId(),
+			price = 22.2,
+			productPrice = 33.3,
+			shipping = 44.4,
+			tax = 55.5,
+			fixedShippingRate = 66.6,
+			couponAmount = 15.0,
+			sku = randomAlphanumeric(16),
+			name = "Order item " + randomAlphanumeric(8),
+			shortDescription = "Order item description " + randomAlphanumeric(32),
+			quantity = 2,
+			quantityInStock = 10,
+			weight = 3.0,
+			imageUrl = randomUrl(),
+			isShippingRequired = true, // true for weight field
+			trackQuantity = true,
+			fixedShippingRateOnly = true,
+			digital = true,
+			couponApplied = true,
+			selectedOptions = listOf(
+				generateChoiceSelectedOption(),
+				generateChoicesSelectedOption(),
+				generateTextSelectedOption(),
+				generateDateSelectedOption(),
+				generateFilesSelectedOption()
+			),
+			taxes = listOf(
+				generateTestOrderItemTax()
+			),
+			dimensions = OrderForCalculate.ProductDimensions(
+				length = 12.0,
+				width = 5.2,
+				height = 6.6
+			),
+			discounts = listOf(
+				generateOrderItemDiscounts()
+			)
 		)
 	}
 
 	private fun generateChoiceSelectedOption(): OrderForCalculate.OrderItemOption {
 		return OrderForCalculate.OrderItemOption.createForChoiceOption(
-				name = "Choice Option " + randomAlphanumeric(8),
-				selection = "Selection #1, " + randomAlphanumeric(8),
-				files = listOf(
-						OrderForCalculate.OrderItemOptionFile(
-								id = randomId(),
-								name = "Order item option file" + randomAlphanumeric(4),
-								size = randomInt(1, 10),
-								url = randomUrl()
-						)
+			name = "Choice Option " + randomAlphanumeric(8),
+			selection = "Selection #1, " + randomAlphanumeric(8),
+			files = listOf(
+				OrderForCalculate.OrderItemOptionFile(
+					id = randomId(),
+					name = "Order item option file" + randomAlphanumeric(4),
+					size = randomInt(1, 10),
+					url = randomUrl()
 				)
+			)
 		)
 	}
 
@@ -475,41 +503,41 @@ class CartsTest : BaseEntityTest() {
 		val value1 = "Selection #1, " + randomAlphanumeric(8)
 		val value3 = "Selection #3, " + randomAlphanumeric(8)
 		return OrderForCalculate.OrderItemOption.createForChoicesOption(
-				name = "Choices Option " + randomAlphanumeric(8),
-				selections = listOf(
-						OrderForCalculate.SelectionInfo(
-								selectionTitle = value1,
-								selectionModifier = 10.0,
-								selectionModifierType = PriceModifierType.ABSOLUTE
-						),
-						OrderForCalculate.SelectionInfo(
-								selectionTitle = value3,
-								selectionModifier = 5.5,
-								selectionModifierType = PriceModifierType.ABSOLUTE
-						)
+			name = "Choices Option " + randomAlphanumeric(8),
+			selections = listOf(
+				OrderForCalculate.SelectionInfo(
+					selectionTitle = value1,
+					selectionModifier = 10.0,
+					selectionModifierType = PriceModifierType.ABSOLUTE
 				),
-				files = listOf(
-						OrderForCalculate.OrderItemOptionFile(
-								id = randomId(),
-								name = "Order item option file" + randomAlphanumeric(4),
-								size = randomInt(1, 10),
-								url = randomUrl()
-						)
+				OrderForCalculate.SelectionInfo(
+					selectionTitle = value3,
+					selectionModifier = 5.5,
+					selectionModifierType = PriceModifierType.ABSOLUTE
 				)
+			),
+			files = listOf(
+				OrderForCalculate.OrderItemOptionFile(
+					id = randomId(),
+					name = "Order item option file" + randomAlphanumeric(4),
+					size = randomInt(1, 10),
+					url = randomUrl()
+				)
+			)
 		)
 	}
 
 	private fun generateTextSelectedOption(): OrderForCalculate.OrderItemOption {
 		return OrderForCalculate.OrderItemOption.createForTextOption(
-				name = "Text Option " + randomAlphanumeric(8),
-				value = randomAlphanumeric(8)
+			name = "Text Option " + randomAlphanumeric(8),
+			value = randomAlphanumeric(8)
 		)
 	}
 
 	private fun generateDateSelectedOption(): OrderForCalculate.OrderItemOption {
 		return OrderForCalculate.OrderItemOption.createForDateOption(
-				name = "Date Option " + randomAlphanumeric(8),
-				date = randomDate()
+			name = "Date Option " + randomAlphanumeric(8),
+			date = randomDate()
 		)
 	}
 
@@ -519,34 +547,34 @@ class CartsTest : BaseEntityTest() {
 
 	private fun generateTestOrderItemTax(): OrderForCalculate.OrderItemTax {
 		return OrderForCalculate.OrderItemTax(
-				name = "Tax " + randomAlphanumeric(8),
-				value = 12.2,
-				total = 22.6,
-				taxOnDiscountedSubtotal = 4.4,
-				taxOnShipping = 3.3,
-				includeInPrice = true
+			name = "Tax " + randomAlphanumeric(8),
+			value = 12.2,
+			total = 22.6,
+			taxOnDiscountedSubtotal = 4.4,
+			taxOnShipping = 3.3,
+			includeInPrice = true
 		)
 	}
 
 	private fun generatePersonInfo(): OrderForCalculate.PersonInfo {
 		return OrderForCalculate.PersonInfo(
-				name = "Name " + randomAlphanumeric(8),
-				companyName = "Company " + randomAlphanumeric(8),
-				street = "Line 1 " + randomAlphanumeric(8) + "\nLine 2 " + randomAlphanumeric(8),
-				city = "City " + randomAlphanumeric(8),
-				countryCode = "US",
-				countryName = "United States",
-				postalCode = randomAlphanumeric(5),
-				stateOrProvinceCode = "CA",
-				stateOrProvinceName = "California",
-				phone = randomAlphanumeric(10)
+			name = "Name " + randomAlphanumeric(8),
+			companyName = "Company " + randomAlphanumeric(8),
+			street = "Line 1 " + randomAlphanumeric(8) + "\nLine 2 " + randomAlphanumeric(8),
+			city = "City " + randomAlphanumeric(8),
+			countryCode = "US",
+			countryName = "United States",
+			postalCode = randomAlphanumeric(5),
+			stateOrProvinceCode = "CA",
+			stateOrProvinceName = "California",
+			phone = randomAlphanumeric(10)
 		)
 	}
 
 	private fun generateOrderItemDiscounts(): OrderForCalculate.OrderItemDiscounts {
 		return OrderForCalculate.OrderItemDiscounts(
-				discountInfo = generateTestCustomDiscountInfo(),
-				total = 12.5
+			discountInfo = generateTestCustomDiscountInfo(),
+			total = 12.5
 		)
 	}
 
@@ -555,69 +583,69 @@ class CartsTest : BaseEntityTest() {
 		val launchDate = randomDateFrom(creationDate)
 		val expirationDate = randomDateFrom(launchDate)
 		return OrderForCalculate.DiscountCouponInfo(
-				name = "Discount Coupon " + randomAlphanumeric(8),
-				code = randomAlphanumeric(16),
-				discountType = DiscountCouponType.ABS_AND_SHIPPING,
-				status = DiscountCouponStatus.ACTIVE,
-				discount = 50.0,
-				launchDate = launchDate,
-				expirationDate = expirationDate,
-				totalLimit = 5555.5,
-				usesLimit = DiscountCouponUsesLimit.UNLIMITED,
-				applicationLimit = DiscountCouponApplicationLimit.UNLIMITED,
-				creationDate = creationDate,
-				orderCount = 1,
-				catalogLimit = generateTestDiscountCouponCatalogLimit()
+			name = "Discount Coupon " + randomAlphanumeric(8),
+			code = randomAlphanumeric(16),
+			discountType = DiscountCouponType.ABS_AND_SHIPPING,
+			status = DiscountCouponStatus.ACTIVE,
+			discount = 50.0,
+			launchDate = launchDate,
+			expirationDate = expirationDate,
+			totalLimit = 5555.5,
+			usesLimit = DiscountCouponUsesLimit.UNLIMITED,
+			applicationLimit = DiscountCouponApplicationLimit.UNLIMITED,
+			creationDate = creationDate,
+			orderCount = 1,
+			catalogLimit = generateTestDiscountCouponCatalogLimit()
 		)
 	}
 
 	private fun generateTestCustomDiscountInfo() = OrderForCalculate.OrderItemDiscountInfo(
-			value = 22.2,
-			type = DiscountType.ABS,
-			base = DiscountBase.CUSTOM,
-			orderTotal = 33.3
+		value = 22.2,
+		type = DiscountType.ABS,
+		base = DiscountBase.CUSTOM,
+		orderTotal = 33.3
 	)
 
 	private fun generateTestDiscountInfo() = OrderForCalculate.DiscountInfo(
-			value = 55.3,
-			type = DiscountType.ABS,
-			base = DiscountBase.ON_TOTAL,
-			orderTotal = 66.6,
-			description = "On total discount " + randomAlphanumeric(8)
+		value = 55.3,
+		type = DiscountType.ABS,
+		base = DiscountBase.ON_TOTAL,
+		orderTotal = 66.6,
+		description = "On total discount " + randomAlphanumeric(8)
 	)
 
 	private fun generateTestDiscountCouponCatalogLimit(): OrderForCalculate.DiscountCouponCatalogLimit {
 		return OrderForCalculate.DiscountCouponCatalogLimit(
-				products = listOf(1, 2, 3),
-				categories = listOf(1)
+			products = listOf(1, 2, 3),
+			categories = listOf(1)
 		)
 	}
 
 	private fun generateCartForTestingSearch(price: Double, hidden: Boolean): UpdatedOrder {
 		return UpdatedOrder(
-				paymentStatus = OrderPaymentStatus.INCOMPLETE,
-				fulfillmentStatus = OrderFulfillmentStatus.PROCESSING,
-				items = generateItemsForTestingSearch(),
-				discountCoupon = UpdatedOrder.DiscountCouponInfo(
-						name = "testCoupon",
-						code = "123abc555"
-				),
-				// customerId = TODO Discover why this field not specified when creating an order
-				hidden = hidden,
-				total = price
+			paymentStatus = OrderPaymentStatus.INCOMPLETE,
+			fulfillmentStatus = OrderFulfillmentStatus.PROCESSING,
+			items = generateItemsForTestingSearch(),
+			discountCoupon = UpdatedOrder.DiscountCouponInfo(
+				name = "testCoupon",
+				code = "123abc555"
+			),
+			// customerId = TODO Discover why this field not specified when creating an order
+			hidden = hidden,
+			total = price
 		)
 	}
 
 	private fun generateItemsForTestingSearch(): List<UpdatedOrder.OrderItem> {
 		return listOf(
-				UpdatedOrder.OrderItem(
-						name = "AAA",
-						price = 200.0
-				),
-				UpdatedOrder.OrderItem(
-						name = "BBB",
-						price = 300.0
-				)
+			UpdatedOrder.OrderItem(
+				name = "AAA",
+				price = 200.0
+			),
+			UpdatedOrder.OrderItem(
+				name = "BBB",
+				price = 300.0
+			)
 		)
 	}
 }

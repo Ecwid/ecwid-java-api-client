@@ -5,6 +5,6 @@ import com.ecwid.apiclient.v3.dto.customergroup.result.FetchedCustomerGroup
 
 fun FetchedCustomerGroup.toUpdated(): UpdatedCustomerGroup {
 	return UpdatedCustomerGroup(
-			name = name
+		name = name
 	)
 }

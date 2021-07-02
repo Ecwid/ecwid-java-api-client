@@ -31,8 +31,14 @@ import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedLatestStats
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 import com.ecwid.apiclient.v3.dto.profile.result.StoreProfileUpdateResult
-import com.ecwid.apiclient.v3.dto.saleschannels.request.*
-import com.ecwid.apiclient.v3.dto.saleschannels.response.*
+import com.ecwid.apiclient.v3.dto.saleschannels.request.GoogleShoppingFeedConfigGetRequest
+import com.ecwid.apiclient.v3.dto.saleschannels.request.ShopzillaFeedConfigGetRequest
+import com.ecwid.apiclient.v3.dto.saleschannels.request.YahooShoppingFeedConfigGetRequest
+import com.ecwid.apiclient.v3.dto.saleschannels.request.YandexMarketFeedConfigGetRequest
+import com.ecwid.apiclient.v3.dto.saleschannels.response.FetchedGoogleShoppingFeedConfig
+import com.ecwid.apiclient.v3.dto.saleschannels.response.FetchedShopzillaFeedConfig
+import com.ecwid.apiclient.v3.dto.saleschannels.response.FetchedYahooShoppingFeedConfig
+import com.ecwid.apiclient.v3.dto.saleschannels.response.FetchedYandexMarketFeedConfig
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
@@ -40,68 +46,67 @@ import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 
 open class ApiClient private constructor(
-		protected val apiClientHelper: ApiClientHelper,
-		storeProfileApiClient: StoreProfileApiClient,
-		productsApiClient: ProductsApiClient,
-		categoriesApiClient: CategoriesApiClient,
-		ordersApiClient: OrdersApiClient,
-		productTypesApiClient: ProductTypesApiClient,
-		customersApiClient: CustomersApiClient,
-		customerGroupsApiClient: CustomerGroupsApiClient,
-		productVariationsApiClient: ProductVariationsApiClient,
-		batchApiClient: BatchApiClient,
-		discountCouponsApiClient: CouponsApiClient,
-		cartsApiClient: CartsApiClient,
-		salesChannelsApiClient: SalesChannelsApiClient
+	protected val apiClientHelper: ApiClientHelper,
+	storeProfileApiClient: StoreProfileApiClient,
+	productsApiClient: ProductsApiClient,
+	categoriesApiClient: CategoriesApiClient,
+	ordersApiClient: OrdersApiClient,
+	productTypesApiClient: ProductTypesApiClient,
+	customersApiClient: CustomersApiClient,
+	customerGroupsApiClient: CustomerGroupsApiClient,
+	productVariationsApiClient: ProductVariationsApiClient,
+	batchApiClient: BatchApiClient,
+	discountCouponsApiClient: CouponsApiClient,
+	cartsApiClient: CartsApiClient,
+	salesChannelsApiClient: SalesChannelsApiClient
 ) :
-		StoreProfileApiClient by storeProfileApiClient,
-		ProductsApiClient by productsApiClient,
-		CategoriesApiClient by categoriesApiClient,
-		OrdersApiClient by ordersApiClient,
-		ProductTypesApiClient by productTypesApiClient,
-		CustomersApiClient by customersApiClient,
-		CustomerGroupsApiClient by customerGroupsApiClient,
-		ProductVariationsApiClient by productVariationsApiClient,
-		BatchApiClient by batchApiClient,
-		CouponsApiClient by discountCouponsApiClient,
-		CartsApiClient by cartsApiClient,
-		SalesChannelsApiClient by salesChannelsApiClient {
+	StoreProfileApiClient by storeProfileApiClient,
+	ProductsApiClient by productsApiClient,
+	CategoriesApiClient by categoriesApiClient,
+	OrdersApiClient by ordersApiClient,
+	ProductTypesApiClient by productTypesApiClient,
+	CustomersApiClient by customersApiClient,
+	CustomerGroupsApiClient by customerGroupsApiClient,
+	ProductVariationsApiClient by productVariationsApiClient,
+	BatchApiClient by batchApiClient,
+	CouponsApiClient by discountCouponsApiClient,
+	CartsApiClient by cartsApiClient,
+	SalesChannelsApiClient by salesChannelsApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
-			apiClientHelper = apiClientHelper,
-			storeProfileApiClient = StoreProfileApiClientImpl(apiClientHelper),
-			productsApiClient = ProductsApiClientImpl(apiClientHelper),
-			categoriesApiClient = CategoriesApiClientImpl(apiClientHelper),
-			ordersApiClient = OrdersApiClientImpl(apiClientHelper),
-			productTypesApiClient = ProductTypesApiClientImpl(apiClientHelper),
-			customersApiClient = CustomersApiClientImpl(apiClientHelper),
-			customerGroupsApiClient = CustomerGroupsApiClientImpl(apiClientHelper),
-			productVariationsApiClient = ProductVariationsApiClientImpl(apiClientHelper),
-			batchApiClient = BatchApiClientImpl(apiClientHelper),
-			discountCouponsApiClient = CouponsApiClientImpl(apiClientHelper),
-			cartsApiClient = CartsApiClientImpl(apiClientHelper),
-			salesChannelsApiClient = SalesChannelsApiClientImpl(apiClientHelper)
+		apiClientHelper = apiClientHelper,
+		storeProfileApiClient = StoreProfileApiClientImpl(apiClientHelper),
+		productsApiClient = ProductsApiClientImpl(apiClientHelper),
+		categoriesApiClient = CategoriesApiClientImpl(apiClientHelper),
+		ordersApiClient = OrdersApiClientImpl(apiClientHelper),
+		productTypesApiClient = ProductTypesApiClientImpl(apiClientHelper),
+		customersApiClient = CustomersApiClientImpl(apiClientHelper),
+		customerGroupsApiClient = CustomerGroupsApiClientImpl(apiClientHelper),
+		productVariationsApiClient = ProductVariationsApiClientImpl(apiClientHelper),
+		batchApiClient = BatchApiClientImpl(apiClientHelper),
+		discountCouponsApiClient = CouponsApiClientImpl(apiClientHelper),
+		cartsApiClient = CartsApiClientImpl(apiClientHelper),
+		salesChannelsApiClient = SalesChannelsApiClientImpl(apiClientHelper)
 	)
 
 	companion object {
 
 		fun create(
-				apiServerDomain: ApiServerDomain,
-				storeCredentials: ApiStoreCredentials,
-				loggingSettings: LoggingSettings = LoggingSettings(),
-				httpTransport: HttpTransport,
-				jsonTransformerProvider: JsonTransformerProvider
+			apiServerDomain: ApiServerDomain,
+			storeCredentials: ApiStoreCredentials,
+			loggingSettings: LoggingSettings = LoggingSettings(),
+			httpTransport: HttpTransport,
+			jsonTransformerProvider: JsonTransformerProvider
 		): ApiClient {
 			val apiClientHelper = ApiClientHelper(
-					apiServerDomain = apiServerDomain,
-					storeCredentials = storeCredentials,
-					loggingSettings = loggingSettings,
-					httpTransport = httpTransport,
-					jsonTransformerProvider = jsonTransformerProvider
+				apiServerDomain = apiServerDomain,
+				storeCredentials = storeCredentials,
+				loggingSettings = loggingSettings,
+				httpTransport = httpTransport,
+				jsonTransformerProvider = jsonTransformerProvider
 			)
 			return ApiClient(apiClientHelper)
 		}
-
 	}
 }
 

@@ -31,41 +31,49 @@ private fun checkFieldEmptiness(
 ) {
 	when {
 		value == null -> {
-			problemsCollector.add(FieldEmptinessProblem(
-				kind = FieldEmptinessProblemKind.NULL_VALUE,
-				fieldClass = declaringClass,
-				fieldName = fieldName
-			))
+			problemsCollector.add(
+				FieldEmptinessProblem(
+					kind = FieldEmptinessProblemKind.NULL_VALUE,
+					fieldClass = declaringClass,
+					fieldName = fieldName
+				)
+			)
 		}
 		value.javaClass.kotlin.javaPrimitiveType != null -> {
 			if (isPrimitiveAndHasDefaultValue(value)) {
-				problemsCollector.add(FieldEmptinessProblem(
-					kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
-					fieldClass = declaringClass,
-					fieldName = fieldName
-				))
+				problemsCollector.add(
+					FieldEmptinessProblem(
+						kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+						fieldClass = declaringClass,
+						fieldName = fieldName
+					)
+				)
 			} else {
 				// That's fine
 			}
 		}
 		value is String -> {
 			if (value == "") {
-				problemsCollector.add(FieldEmptinessProblem(
-					kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
-					fieldClass = declaringClass,
-					fieldName = fieldName
-				))
+				problemsCollector.add(
+					FieldEmptinessProblem(
+						kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+						fieldClass = declaringClass,
+						fieldName = fieldName
+					)
+				)
 			} else {
 				// Any non-empty string is fine
 			}
 		}
 		value is Date -> {
 			if (value == Date(0)) {
-				problemsCollector.add(FieldEmptinessProblem(
-					kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
-					fieldClass = declaringClass,
-					fieldName = fieldName
-				))
+				problemsCollector.add(
+					FieldEmptinessProblem(
+						kind = FieldEmptinessProblemKind.DEFAULT_VALUE,
+						fieldClass = declaringClass,
+						fieldName = fieldName
+					)
+				)
 			} else {
 				// Any nonnull dates and dates not equal to epoch timestamp are fine
 			}
@@ -77,11 +85,13 @@ private fun checkFieldEmptiness(
 			value.filterNotNull()
 				.apply {
 					if (isEmpty()) {
-						problemsCollector.add(FieldEmptinessProblem(
-							kind = FieldEmptinessProblemKind.EMPTY_LIST,
-							fieldClass = declaringClass,
-							fieldName = fieldName
-						))
+						problemsCollector.add(
+							FieldEmptinessProblem(
+								kind = FieldEmptinessProblemKind.EMPTY_LIST,
+								fieldClass = declaringClass,
+								fieldName = fieldName
+							)
+						)
 					}
 				}
 				.forEach { listValue ->
@@ -105,11 +115,13 @@ private fun checkFieldEmptiness(
 				}
 				.apply {
 					if (isEmpty()) {
-						problemsCollector.add(FieldEmptinessProblem(
-							kind = FieldEmptinessProblemKind.EMPTY_MAP,
-							fieldClass = declaringClass,
-							fieldName = fieldName
-						))
+						problemsCollector.add(
+							FieldEmptinessProblem(
+								kind = FieldEmptinessProblemKind.EMPTY_MAP,
+								fieldClass = declaringClass,
+								fieldName = fieldName
+							)
+						)
 					}
 				}
 				.forEach { (k, v) ->
