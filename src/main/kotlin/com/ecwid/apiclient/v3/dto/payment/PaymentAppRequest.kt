@@ -14,7 +14,7 @@ data class PaymentAppRequest(
 ) : ApiRequestDTO {
 	class MerchantAppSettings(
 		settings: Map<String, String>? = null
-	): OrderedStringToStringMap(settings)
+	) : OrderedStringToStringMap(settings)
 
 	data class Cart(
 		val currency: String? = null,

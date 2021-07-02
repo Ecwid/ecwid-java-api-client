@@ -1322,7 +1322,6 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 
 	AllowNullable(PaymentAppRequest.Cart::currency),
 	AllowNullable(PaymentAppRequest.Cart::order),
-	AllowNullable(PaymentAppRequest.MerchantAppSettings::settings),
 	AllowNullable(PaymentAppRequest::cart),
 	AllowNullable(PaymentAppRequest::lang),
 	AllowNullable(PaymentAppRequest::merchantAppSettings),
