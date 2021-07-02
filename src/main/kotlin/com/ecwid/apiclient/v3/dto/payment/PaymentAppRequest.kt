@@ -12,9 +12,9 @@ data class PaymentAppRequest(
 	val token: String? = null,
 	val lang: String? = null
 ) : ApiRequestDTO {
-	data class MerchantAppSettings(
-		val settings: OrderedStringToStringMap? = null
-	)
+	class MerchantAppSettings(
+		settings: Map<String, String>? = null
+	): OrderedStringToStringMap(settings)
 
 	data class Cart(
 		val currency: String? = null,
