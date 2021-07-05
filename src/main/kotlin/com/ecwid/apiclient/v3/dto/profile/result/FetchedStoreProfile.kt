@@ -83,7 +83,13 @@ data class FetchedStoreProfile(
 		val showPricePerUnit: Boolean = false,
 		val googleProductCategory: Int? = null,
 		val googleProductCategoryName: String? = null,
-		val productCondition: ProductCondition = ProductCondition.NEW
+		val productCondition: ProductCondition = ProductCondition.NEW,
+		val tikTokPixel: TikTokPixelSettings? = null
+	)
+
+	data class TikTokPixelSettings(
+		val code: String? = null,
+		val advancedMatching: Boolean = false
 	)
 
 	enum class ProductSortOrder {
