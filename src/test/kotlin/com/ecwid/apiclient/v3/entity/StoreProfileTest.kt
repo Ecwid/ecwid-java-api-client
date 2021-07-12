@@ -68,7 +68,10 @@ class StoreProfileTest : BaseEntityTest() {
 				googleEventId = "googleEventId",
 				showPricePerUnit = true,
 				googleProductCategory = 632,
-				productCondition = ProductCondition.USED
+				productCondition = ProductCondition.USED,
+				tikTokPixel = UpdatedStoreProfile.TikTokPixelSettings(
+					advancedMatching = true
+				)
 			),
 			mailNotifications = UpdatedStoreProfile.MailNotifications(
 				adminNotificationEmails = listOf("admin@example.com", "admin2@example.com"),
@@ -250,5 +253,9 @@ class StoreProfileTest : BaseEntityTest() {
 
 		assertEquals(632, settings.googleProductCategory)
 		assertEquals(ProductCondition.USED, settings.productCondition)
+
+		val tikTokPixel = settings.tikTokPixel
+		require(tikTokPixel != null)
+		assertTrue(tikTokPixel.advancedMatching)
 	}
 }

@@ -82,7 +82,14 @@ private fun FetchedStoreProfile.Settings.toUpdated(): UpdatedStoreProfile.Settin
 		googleEventId = googleEventId,
 		showPricePerUnit = showPricePerUnit,
 		googleProductCategory = googleProductCategory,
-		productCondition = productCondition
+		productCondition = productCondition,
+		tikTokPixel = tikTokPixel?.toUpdated()
+	)
+}
+
+private fun FetchedStoreProfile.TikTokPixelSettings.toUpdated(): UpdatedStoreProfile.TikTokPixelSettings? {
+	return UpdatedStoreProfile.TikTokPixelSettings(
+		advancedMatching = advancedMatching
 	)
 }
 
