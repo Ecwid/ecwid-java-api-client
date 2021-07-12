@@ -26,7 +26,6 @@ fun generateTestOrder(): UpdatedOrder {
 
 		fulfillmentStatus = randomEnumValue<OrderFulfillmentStatus>(),
 		trackingNumber = randomAlphanumeric(16),
-		pickupTime = randomDate(),
 
 		paymentStatus = randomEnumValue(OrderPaymentStatus.INCOMPLETE),
 		paymentMethod = "Payment method " + randomAlphanumeric(8),
@@ -111,7 +110,26 @@ fun generateTestOrder(): UpdatedOrder {
 		externalFulfillment = randomBoolean(),
 		disableAllCustomerNotifications = randomBoolean(),
 
-		customSurcharges = listOf()
+		customSurcharges = listOf(),
+
+		orderExtraFields = listOf(
+			UpdatedOrder.OrderExtraFields(
+				customerInputType = "TEXT",
+				title = "text 1",
+				id = "first_id",
+				value = "text value one",
+				orderDetailsDisplaySection = "text_info_one",
+				orderBy = "1"
+			),
+			UpdatedOrder.OrderExtraFields(
+				customerInputType = "TEXT",
+				title = "text 2",
+				id = "second_id",
+				value = "text value two",
+				orderDetailsDisplaySection = "text_info_two",
+				orderBy = "2"
+			)
+		)
 	)
 }
 
