@@ -543,6 +543,8 @@ private fun generateTestCategory(
 
 private fun UpdatedCategory.cleanupForComparison(): UpdatedCategory {
 	return copy(
-		parentId = parentId ?: 0
+		parentId = parentId ?: 0,
+		// orderBy can be changed by internal ecwid rules so reset it
+		orderBy = 10
 	)
 }
