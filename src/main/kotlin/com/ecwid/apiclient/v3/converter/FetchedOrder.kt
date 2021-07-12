@@ -79,7 +79,9 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 		refererId = refererId,
 
 		pricesIncludeTax = pricesIncludeTax,
-		externalOrderData = externalOrderData?.toUpdated()
+		externalOrderData = externalOrderData?.toUpdated(),
+
+		orderExtraFields = orderExtraFields?.map(FetchedOrder.ExtraFieldsInfo::toUpdated)
 	)
 }
 
@@ -280,5 +282,16 @@ fun FetchedOrder.ExternalOrderData.toUpdated(): UpdatedOrder.ExternalOrderData {
 fun FetchedOrder.SelectedPrice.toUpdated(): UpdatedOrder.SelectedPrice {
 	return UpdatedOrder.SelectedPrice(
 		value = this.value
+	)
+}
+
+fun FetchedOrder.ExtraFieldsInfo.toUpdated(): UpdatedOrder.OrderExtraFields {
+	return UpdatedOrder.OrderExtraFields(
+		customerInputType = this.customerInputType,
+		title = this.title,
+		id = this.id,
+		value = this.value,
+		orderDetailsDisplaySection = this.orderDetailsDisplaySection,
+		orderBy = this.orderBy
 	)
 }
