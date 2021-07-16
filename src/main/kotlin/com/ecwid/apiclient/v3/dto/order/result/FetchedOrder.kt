@@ -322,9 +322,7 @@ data class FetchedOrder(
 		val taxes: List<BaseOrderItemTax> = listOf()
 	)
 
-	data class SelectedPrice(
-		val value: Double? = null
-	)
+	data class SelectedPrice(val value: Double? = null)
 
 	data class Shipment(
 		val id: String? = null,
@@ -334,7 +332,7 @@ data class FetchedOrder(
 		val parcel: Parcel? = null,
 		val shippingService: ShippingServiceInfo? = null,
 		val tracking: TrackingInfo? = null,
-		val label: ShippingLabelInfo? = null
+		val label: ShippingLabelInfo? = null,
 	)
 
 	data class Parcel(
