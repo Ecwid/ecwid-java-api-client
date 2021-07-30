@@ -45,11 +45,15 @@ data class GetProductFiltersRequest(
 			override fun getFilterFieldName() = "categories"
 		}
 
-		class Option(private val optionName: String) : FilterFieldType() {
+		data class Option(
+			private val optionName: String = ""
+		) : FilterFieldType() {
 			override fun getFilterFieldName() = "option_" + escapeName(optionName)
 		}
 
-		class Attribute(private val attributeName: String) : FilterFieldType() {
+		data class Attribute(
+			private val attributeName: String = ""
+		) : FilterFieldType() {
 			override fun getFilterFieldName() = "attribute_" + escapeName(attributeName)
 		}
 
@@ -64,7 +68,9 @@ data class GetProductFiltersRequest(
 	@Suppress("unused")
 	sealed class FilterFacetLimit {
 
-		class Limit(private val limit: Int) : FilterFacetLimit() {
+		data class Limit(
+			private val limit: Int = 0
+		) : FilterFacetLimit() {
 			override fun getFilterFacetLimitValue() = limit.toString()
 		}
 
@@ -79,7 +85,9 @@ data class GetProductFiltersRequest(
 	@Suppress("unused")
 	sealed class FilterCategoryId {
 
-		class Category(private val categoryId: Long) : FilterCategoryId() {
+		data class Category(
+			private val categoryId: Long = 0
+		) : FilterCategoryId() {
 			override fun getFilterParentCategoryIdValue() = categoryId.toString()
 		}
 

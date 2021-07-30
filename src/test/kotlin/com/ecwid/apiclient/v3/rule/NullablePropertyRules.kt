@@ -21,11 +21,9 @@ import com.ecwid.apiclient.v3.dto.order.request.OrdersSearchRequest
 import com.ecwid.apiclient.v3.dto.order.result.DeletedOrder
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.dto.payment.PaymentAppRequest
-import com.ecwid.apiclient.v3.dto.product.request.DeletedProductsSearchRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductDetailsRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest
-import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest
+import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
+import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult
 import com.ecwid.apiclient.v3.dto.product.result.ProductInventoryUpdateResult
 import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
@@ -1125,6 +1123,24 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 
 	AllowNullable(ProductInventoryUpdateRequest::checkLowStockNotification),
 
+	AllowNullable(GetProductFiltersRequest::attributes),
+	AllowNullable(GetProductFiltersRequest::categories),
+	AllowNullable(GetProductFiltersRequest::createdFrom),
+	AllowNullable(GetProductFiltersRequest::createdTo),
+	AllowNullable(GetProductFiltersRequest::enabled),
+	AllowNullable(GetProductFiltersRequest::filterFacetLimits),
+	AllowNullable(GetProductFiltersRequest::filterParentCategoryId),
+	AllowNullable(GetProductFiltersRequest::includeProductsFromSubcategories),
+	AllowNullable(GetProductFiltersRequest::inventory),
+	AllowNullable(GetProductFiltersRequest::keyword),
+	AllowNullable(GetProductFiltersRequest::lang),
+	AllowNullable(GetProductFiltersRequest::onSale),
+	AllowNullable(GetProductFiltersRequest::options),
+	AllowNullable(GetProductFiltersRequest::priceFrom),
+	AllowNullable(GetProductFiltersRequest::priceTo),
+	AllowNullable(GetProductFiltersRequest::updatedFrom),
+	AllowNullable(GetProductFiltersRequest::updatedTo),
+
 	AllowNullable(ProductsSearchRequest.ByFilters::attributes),
 	AllowNullable(ProductsSearchRequest.ByFilters::baseUrl),
 	AllowNullable(ProductsSearchRequest.ByFilters::categories),
@@ -1159,6 +1175,13 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 
 	IgnoreNullable(GetEscapedBatchResult::responses),
 	IgnoreNullable(GetTypedBatchResult::responses),
+
+	AllowNullable(GetProductFiltersResult.ProductFilters::attributes),
+	AllowNullable(GetProductFiltersResult.ProductFilters::categories),
+	AllowNullable(GetProductFiltersResult.ProductFilters::inventory),
+	AllowNullable(GetProductFiltersResult.ProductFilters::onsale),
+	AllowNullable(GetProductFiltersResult.ProductFilters::options),
+	AllowNullable(GetProductFiltersResult.ProductFilters::price),
 
 	IgnoreNullable(CalculateOrderDetailsResult.DiscountCouponCatalogLimit::categories),
 	IgnoreNullable(CalculateOrderDetailsResult.DiscountCouponCatalogLimit::products),

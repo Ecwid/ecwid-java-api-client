@@ -82,8 +82,12 @@ data class GetProductFiltersResult(
 
 	}
 
-	data class Option(val optionName: String)
+	data class Option(
+		val optionName: String = ""
+	)
 
-	data class Attribute(val attributeName: String)
+	data class Attribute(
+		val attributeName: String = ""
+	)
 
 }
