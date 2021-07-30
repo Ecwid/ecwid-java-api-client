@@ -526,7 +526,7 @@ class ProductsTest : BaseEntityTest() {
 		assertTrue(productCreateResult3.id > 0)
 
 		// Verifying that we will get two products if search request contains two product IDs
-		val productsSearchRequest = ProductsSearchRequest.ByIds(
+		val productsSearchRequest = ByIds(
 			listOf(productCreateResult1.id, productCreateResult2.id)
 		)
 		val productsSearchResult = apiClient.searchProducts(productsSearchRequest)
@@ -1389,7 +1389,7 @@ fun generateRelatedCategory(): RelatedCategory = RelatedCategory(
 	productCount = randomByte()
 )
 
-private fun generateShippingSettings() = UpdatedProduct.ShippingSettings(
+private fun generateShippingSettings() = ShippingSettings(
 	type = randomEnumValue<ShippingSettingsType>(),
 	methodMarkup = randomPrice(),
 	flatRate = randomPrice(),
@@ -1405,20 +1405,20 @@ private fun generateShippingSettings() = UpdatedProduct.ShippingSettings(
 	)
 )
 
-private fun generateWholesalePrice(basePrice: Double, divider: Int) = UpdatedProduct.WholesalePrice(
+private fun generateWholesalePrice(basePrice: Double, divider: Int) = WholesalePrice(
 	quantity = divider,
 	price = basePrice / divider
 )
 
-private fun generateBrandAttributeValue(): UpdatedProduct.AttributeValue {
-	return UpdatedProduct.AttributeValue.createBrandAttributeValue("Attribute value " + randomAlphanumeric(8))
+private fun generateBrandAttributeValue(): AttributeValue {
+	return AttributeValue.createBrandAttributeValue("Attribute value " + randomAlphanumeric(8))
 }
 
-private fun generateUpcAttributeValue(): UpdatedProduct.AttributeValue {
-	return UpdatedProduct.AttributeValue.createUpcAttributeValue("Attribute value " + randomAlphanumeric(8))
+private fun generateUpcAttributeValue(): AttributeValue {
+	return AttributeValue.createUpcAttributeValue("Attribute value " + randomAlphanumeric(8))
 }
 
-private fun generateDimensions() = UpdatedProduct.ProductDimensions(
+private fun generateDimensions() = ProductDimensions(
 	length = randomDimension(),
 	width = randomDimension(),
 	height = randomDimension()
@@ -1449,7 +1449,7 @@ private fun UpdatedProduct.cleanupForComparison(productCreateRequest: ProductCre
 	)
 }
 
-private fun UpdatedProduct.AttributeValue.cleanupForComparison(attributeValue: UpdatedProduct.AttributeValue?): UpdatedProduct.AttributeValue {
+private fun AttributeValue.cleanupForComparison(attributeValue: AttributeValue?): AttributeValue {
 	return copy(
 		// Id is not used for BRAND/UPC attributes and can be used for custom attributes
 		id = if (attributeValue?.alias != null) attributeValue.id else null,
