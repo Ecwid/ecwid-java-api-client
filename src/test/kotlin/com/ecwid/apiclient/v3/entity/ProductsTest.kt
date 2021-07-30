@@ -881,28 +881,28 @@ class ProductsTest : BaseEntityTest() {
 		assertEquals(4, productDetails1.media?.images?.size)
 		assertMediaProductImage(
 			expectedId = productGalleryImageUploadResult1.id.toString(),
-			expectedOrderBy = 0,
+			expectedOrderBy = 1,
 			expectedIsMain = false,
 			expectedPathEnd = null,
 			productImage = productDetails1.media?.images?.get(0)
 		)
 		assertMediaProductImage(
 			expectedId = productGalleryImageUploadResult2.id.toString(),
-			expectedOrderBy = 1,
+			expectedOrderBy = 2,
 			expectedIsMain = false,
 			expectedPathEnd = null,
 			productImage = productDetails1.media?.images?.get(1)
 		)
 		assertMediaProductImage(
 			expectedId = productGalleryImageUploadResult3.id.toString(),
-			expectedOrderBy = 2,
+			expectedOrderBy = 3,
 			expectedIsMain = false,
 			expectedPathEnd = null,
 			productImage = productDetails1.media?.images?.get(2)
 		)
 		assertMediaProductImage(
 			expectedId = productGalleryImageUploadResult4.id.toString(),
-			expectedOrderBy = 3,
+			expectedOrderBy = 4,
 			expectedIsMain = false,
 			expectedPathEnd = null,
 			productImage = productDetails1.media?.images?.get(3)
