@@ -40,6 +40,9 @@ internal class ProductsApiClientImpl(
 	override fun updateProductInventory(request: ProductInventoryUpdateRequest) =
 		apiClientHelper.makeObjectResultRequest<ProductInventoryUpdateResult>(request)
 
+	override fun getProductFilters(request: GetProductFiltersRequest) =
+		apiClientHelper.makeObjectResultRequest<GetProductFiltersResult>(request)
+
 	override fun deleteProduct(request: ProductDeleteRequest) =
 		apiClientHelper.makeObjectResultRequest<ProductDeleteResult>(request)
 
@@ -91,4 +94,5 @@ internal class ProductsApiClientImpl(
 				offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
 			} while (searchResult.count >= searchResult.limit)
 		}
+
 }

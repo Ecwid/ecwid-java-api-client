@@ -1,0 +1,161 @@
+package com.ecwid.apiclient.v3.dto.product.request
+
+import com.ecwid.apiclient.v3.dto.ApiRequest
+import com.ecwid.apiclient.v3.impl.RequestInfo
+import java.util.*
+import java.util.concurrent.TimeUnit
+
+data class GetProductFiltersRequest(
+	val filterFields: List<FilterFieldType> = listOf(),
+	val filterFacetLimits: Map<FilterFieldType, FilterFacetLimit>? = null,
+	val filterParentCategoryId: FilterCategoryId? = null,
+	val keyword: String? = null,
+	val priceFrom: Double? = null,
+	val priceTo: Double? = null,
+	val categories: List<FilterCategoryId>? = null,
+	val includeProductsFromSubcategories: Boolean? = null,
+	val createdFrom: Date? = null,
+	val createdTo: Date? = null,
+	val updatedFrom: Date? = null,
+	val updatedTo: Date? = null,
+	val enabled: Boolean? = null,
+	val options: Map<FilterFieldType.Option, List<String>>? = null,
+	val attributes: Map<FilterFieldType.Attribute, List<String>>? = null,
+	val inventory: Boolean? = null,
+	val onSale: Boolean? = null,
+	val lang: String? = null
+) : ApiRequest {
+
+	@Suppress("unused")
+	sealed class FilterFieldType {
+
+		object Price : FilterFieldType() {
+			override fun getFilterFieldName() = "price"
+		}
+
+		object Inventory : FilterFieldType() {
+			override fun getFilterFieldName() = "inventory"
+		}
+
+		object OnSale : FilterFieldType() {
+			override fun getFilterFieldName() = "onsale"
+		}
+
+		object Categories : FilterFieldType() {
+			override fun getFilterFieldName() = "categories"
+		}
+
+		class Option(private val optionName: String) : FilterFieldType() {
+			override fun getFilterFieldName() = "option_" + escapeName(optionName)
+		}
+
+		class Attribute(private val attributeName: String) : FilterFieldType() {
+			override fun getFilterFieldName() = "attribute_" + escapeName(attributeName)
+		}
+
+		abstract fun getFilterFieldName(): String
+
+		protected fun escapeName(name: String): String {
+			return name.replace(",", "\\,").replace("\\", "\\\\")
+		}
+
+	}
+
+	@Suppress("unused")
+	sealed class FilterFacetLimit {
+
+		class Limit(private val limit: Int) : FilterFacetLimit() {
+			override fun getFilterFacetLimitValue() = limit.toString()
+		}
+
+		object All : FilterFacetLimit() {
+			override fun getFilterFacetLimitValue() = "all"
+		}
+
+		abstract fun getFilterFacetLimitValue(): String
+
+	}
+
+	@Suppress("unused")
+	sealed class FilterCategoryId {
+
+		class Category(private val categoryId: Long) : FilterCategoryId() {
+			override fun getFilterParentCategoryIdValue() = categoryId.toString()
+		}
+
+		object Home : FilterCategoryId() {
+			override fun getFilterParentCategoryIdValue() = "home"
+		}
+
+		abstract fun getFilterParentCategoryIdValue(): String
+
+	}
+
+	override fun toRequestInfo() = RequestInfo.createGetRequest(
+		pathSegments = listOf(
+			"products",
+			"filters"
+		),
+		params = toParams()
+	)
+
+	private fun toParams(): Map<String, String> {
+		val request = this
+		return mutableMapOf<String, String>().apply {
+			put("filterFields", request.filterFields.joinToString(separator = ",") { filterFieldType ->
+				filterFieldType.getFilterFieldName()
+			})
+			request.filterFacetLimits?.let { filterFacetLimits ->
+				val filterFacetLimitValue = filterFacetLimits
+					.toList()
+					.joinToString(separator = ",") { (filterFieldType, filterFacetLimit) ->
+						"${filterFieldType.getFilterFieldName()}:${filterFacetLimit.getFilterFacetLimitValue()}"
+					}
+				put("filterFacetLimit", filterFacetLimitValue)
+			}
+			request.filterParentCategoryId?.let { filterParentCategoryId ->
+				put("filterParentCategoryId", filterParentCategoryId.getFilterParentCategoryIdValue())
+			}
+			request.keyword?.let { keyword -> put("keyword", keyword) }
+			request.priceFrom?.let { priceFrom -> put("priceFrom", "$priceFrom") }
+			request.priceTo?.let { priceTo -> put("priceTo", "$priceTo") }
+			request.categories?.let { categories ->
+				val categoriesValue = categories.joinToString(separator = ",") { categoryId ->
+					categoryId.getFilterParentCategoryIdValue()
+				}
+				put("categories", categoriesValue)
+			}
+			request.includeProductsFromSubcategories?.let { includeProductsFromSubcategories ->
+				put("includeProductsFromSubcategories", "$includeProductsFromSubcategories")
+			}
+			request.createdFrom?.let { createdFrom ->
+				put("createdFrom", TimeUnit.MILLISECONDS.toSeconds(createdFrom.time).toString())
+			}
+			request.createdTo?.let { createdTo ->
+				put("createdTo", TimeUnit.MILLISECONDS.toSeconds(createdTo.time).toString())
+			}
+			request.updatedFrom?.let { updatedFrom ->
+				put("updatedFrom", TimeUnit.MILLISECONDS.toSeconds(updatedFrom.time).toString())
+			}
+			request.updatedTo?.let { updatedTo ->
+				put("updatedTo", TimeUnit.MILLISECONDS.toSeconds(updatedTo.time).toString())
+			}
+			request.enabled?.let { enabled ->
+				put("enabled", "$enabled")
+			}
+			request.options?.let { options ->
+				options.forEach { (optionField, optionValues) ->
+					put(optionField.getFilterFieldName(), optionValues.joinToString(separator = ","))
+				}
+			}
+			request.attributes?.let { attributes ->
+				attributes.forEach { (attributeField, attributeValues) ->
+					put(attributeField.getFilterFieldName(), attributeValues.joinToString(separator = ","))
+				}
+			}
+			request.inventory?.let { inventory -> put("inventory", if (inventory) "instock" else "outofstock") }
+			request.onSale?.let { onSale -> put("onsale", if (onSale) "onsale" else "notonsale") }
+			request.lang?.let { lang -> put("lang", lang) }
+		}.toMap()
+	}
+}
