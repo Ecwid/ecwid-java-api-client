@@ -272,7 +272,7 @@ fun FetchedOrder.ExternalOrderData.toUpdated(): UpdatedOrder.ExternalOrderData {
 		externalFulfillment = externalFulfillment,
 		externalOrderId = externalOrderId,
 		refererId = refererId,
-		platformSpecificFields = platformSpecificFields,
+		platformSpecificFields = HashMap(platformSpecificFields),
 		refererChannel = refererChannel
 	)
 }

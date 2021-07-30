@@ -5,6 +5,9 @@ import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 
 fun generateTestOrder(): UpdatedOrder {
+	val externalOrderId = "Order #" + randomAlphanumeric(8)
+	val externalFulfillment = randomBoolean()
+	val refererId = "Referer " + randomAlphanumeric(8)
 	return UpdatedOrder(
 		email = randomEmail(),
 		ipAddress = randomIp(),
@@ -108,10 +111,26 @@ fun generateTestOrder(): UpdatedOrder {
 			taxes = listOf()
 		),
 		pricesIncludeTax = false,
-		externalFulfillment = randomBoolean(),
 		disableAllCustomerNotifications = randomBoolean(),
 
-		customSurcharges = listOf()
+		customSurcharges = listOf(),
+
+		externalFulfillment = externalFulfillment,
+		refererId = refererId,
+		externalOrderId = externalOrderId,
+
+		externalOrderData = UpdatedOrder.ExternalOrderData(
+			externalFulfillment = externalFulfillment,
+			externalOrderId = externalOrderId,
+			refererId = refererId,
+			platformSpecificFields = HashMap(
+				mapOf(
+					"field1" to randomAlphanumeric(8),
+					"field2" to randomAlphanumeric(8),
+				)
+			),
+			refererChannel = "Referer channel " + randomAlphanumeric(8),
+		)
 	)
 }
 
