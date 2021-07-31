@@ -141,6 +141,7 @@ interface ProductsApiClient {
 	fun createProduct(request: ProductCreateRequest): ProductCreateResult
 	fun updateProduct(request: ProductUpdateRequest): ProductUpdateResult
 	fun updateProductInventory(request: ProductInventoryUpdateRequest): ProductInventoryUpdateResult
+	fun getProductFilters(request: GetProductFiltersRequest): GetProductFiltersResult
 	fun deleteProduct(request: ProductDeleteRequest): ProductDeleteResult
 	fun uploadProductImage(request: ProductImageUploadRequest): ProductImageUploadResult
 	fun uploadProductImageAsync(request: ProductImageAsyncUploadRequest): ProductImageAsyncUploadResult

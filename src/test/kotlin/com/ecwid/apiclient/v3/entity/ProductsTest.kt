@@ -1,6 +1,8 @@
 package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.converter.toUpdated
+import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest
+import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest.ParentCategory
 import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
 import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
 import com.ecwid.apiclient.v3.dto.common.AsyncPictureData
@@ -9,10 +11,17 @@ import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.product.enums.ShippingSettingsType
 import com.ecwid.apiclient.v3.dto.product.request.*
+import com.ecwid.apiclient.v3.dto.product.request.GetProductFiltersRequest.*
 import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest.InventoryAdjustment
 import com.ecwid.apiclient.v3.dto.product.request.ProductsSearchRequest.*
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct.*
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
+import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult
+import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult.AttributeFilterValues
+import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult.CategoriesFilterValues.CategoriesFilterValue
+import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult.InventoryFilterValues.InventoryFilterValue
+import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult.OnSaleFilterValues.OnSaleFilterValue
+import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult.OptionFilterValues
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.*
@@ -526,7 +535,7 @@ class ProductsTest : BaseEntityTest() {
 		assertTrue(productCreateResult3.id > 0)
 
 		// Verifying that we will get two products if search request contains two product IDs
-		val productsSearchRequest = ProductsSearchRequest.ByIds(
+		val productsSearchRequest = ByIds(
 			listOf(productCreateResult1.id, productCreateResult2.id)
 		)
 		val productsSearchResult = apiClient.searchProducts(productsSearchRequest)
@@ -575,6 +584,186 @@ class ProductsTest : BaseEntityTest() {
 		// Checking that product quantity was successfully updated
 		val productDetails3 = apiClient.getProductDetails(productDetailsRequest)
 		assertEquals(-5, productDetails3.quantity)
+	}
+
+	@Test
+	fun testGetProductFilters() {
+		// Create one category
+
+		val categoryCreateRequest = CategoryCreateRequest(newCategory = generateTestCategory())
+		val categoryCreateResult = apiClient.createCategory(categoryCreateRequest)
+		assertTrue(categoryCreateResult.id > 0)
+
+		// Creating some products
+
+		val baseProductSku = "testGetProductFilters"
+
+		val productCreateRequest1 = ProductCreateRequest(
+			newProduct = UpdatedProduct(
+				name = "Product " + randomAlphanumeric(8),
+				sku = "$baseProductSku 1",
+				price = 10.0,
+				quantity = 5,
+				compareToPrice = 12.0,
+				categoryIds = listOf(
+					categoryCreateResult.id
+				),
+				options = listOf(
+					ProductOption.createSelectOption(
+						name = "Color",
+						choices = listOf(
+							ProductOptionChoice("Red"),
+							ProductOptionChoice("Green"),
+						)
+					)
+				),
+				attributes = listOf(
+					AttributeValue.createBrandAttributeValue("MyBrandName"),
+					AttributeValue.createUpcAttributeValue("UpcValue1")
+				)
+			)
+		)
+		val productCreateResult1 = apiClient.createProduct(productCreateRequest1)
+		assertTrue(productCreateResult1.id > 0)
+
+		val productCreateRequest2 = ProductCreateRequest(
+			newProduct = UpdatedProduct(
+				name = "Product " + randomAlphanumeric(8),
+				sku = "$baseProductSku 2",
+				price = 5.0,
+				quantity = 0,
+				options = listOf(
+					ProductOption.createSelectOption(
+						name = "Color",
+						choices = listOf(
+							ProductOptionChoice("Yellow"),
+							ProductOptionChoice("Green"),
+						)
+					)
+				),
+				attributes = listOf(
+					AttributeValue.createBrandAttributeValue("MyBrandName"),
+					AttributeValue.createUpcAttributeValue("UpcValue2")
+				)
+			)
+		)
+		val productCreateResult2 = apiClient.createProduct(productCreateRequest2)
+		assertTrue(productCreateResult2.id > 0)
+
+		// Waiting till product and categories became available for searching
+
+		waitForIndexedCategories(
+			categoriesSearchRequest = CategoriesSearchRequest(
+				parentCategoryId = ParentCategory.Root,
+			),
+			desiredCategoriesCount = 1
+		)
+		waitForIndexedProducts(
+			productsSearchRequest = ByFilters(keyword = baseProductSku),
+			desiredProductCount = 2
+		)
+
+		// Perform faceted search
+
+		val getProductFiltersRequest = GetProductFiltersRequest(
+			filterFields = listOf(
+				FilterFieldType.Price,
+				FilterFieldType.Inventory,
+				FilterFieldType.OnSale,
+				FilterFieldType.Categories,
+				FilterFieldType.Option("Color"),
+				FilterFieldType.Attribute("Brand"),
+				FilterFieldType.Attribute("UPC"),
+			),
+			filterFacetLimits = mapOf(
+				FilterFieldType.Option("Color") to FilterFacetLimit.Limit(2)
+			),
+			filterParentCategoryId = FilterCategoryId.Home,
+			keyword = baseProductSku
+		)
+		val getProductFiltersResult = apiClient.getProductFilters(getProductFiltersRequest)
+
+		// Validate faceted search result
+
+		assertEquals(2, getProductFiltersResult.productCount)
+
+		val filters = getProductFiltersResult.filters
+
+		val priceFilter = filters.price
+		requireNotNull(priceFilter)
+		assertEquals(5.0, priceFilter.minValue, 1e-5)
+		assertEquals(10.0, priceFilter.maxValue, 1e-5)
+
+		val inventoryFilterValues = filters.inventory
+		requireNotNull(inventoryFilterValues)
+		assertEquals(2, inventoryFilterValues.values.size)
+		assertEquals(
+			InventoryFilterValue(id = "instock", title = "In stock", productCount = 1),
+			inventoryFilterValues.values[0]
+		)
+		assertEquals(
+			InventoryFilterValue(id = "outofstock", title = "Out of stock", productCount = 1),
+			inventoryFilterValues.values[1]
+		)
+
+		val onSaleFilterValues = filters.onsale
+		requireNotNull(onSaleFilterValues)
+		assertEquals(2, onSaleFilterValues.values.size)
+		assertEquals(
+			OnSaleFilterValue(id = "onsale", title = "On sale", productCount = 1),
+			onSaleFilterValues.values[0]
+		)
+		assertEquals(
+			OnSaleFilterValue(id = "notonsale", title = "Regular price", productCount = 1),
+			onSaleFilterValues.values[1]
+		)
+
+		val categoriesFilterValues = filters.categories
+		requireNotNull(categoriesFilterValues)
+		assertEquals(1, categoriesFilterValues.values.size)
+		assertEquals(
+			CategoriesFilterValue(
+				id = categoryCreateResult.id.toLong(),
+				title = categoryCreateRequest.newCategory.name ?: "",
+				productCount = 1
+			),
+			categoriesFilterValues.values[0]
+		)
+
+		val options = filters.options
+		requireNotNull(options)
+		assertEquals(1, options.size)
+		assertEquals(
+			OptionFilterValues(
+				title = "Color",
+				values = listOf(
+					OptionFilterValues.OptionFilterValue(title = "Green", productCount = 2),
+					OptionFilterValues.OptionFilterValue(title = "Red", productCount = 1),
+				)
+			),
+			options[GetProductFiltersResult.Option("Color")]
+		)
+
+		val attributes = filters.attributes
+		requireNotNull(attributes)
+		assertEquals(2, attributes.size)
+		assertEquals(
+			AttributeFilterValues(
+				values = listOf(
+					AttributeFilterValues.AttributeFilterValue(title = "MyBrandName", productCount = 2),
+				)
+			),
+			attributes[GetProductFiltersResult.Attribute("Brand")]
+		)
+		assertEquals(
+			AttributeFilterValues(
+				values = listOf(
+					AttributeFilterValues.AttributeFilterValue(title = "UpcValue1", productCount = 1),
+					AttributeFilterValues.AttributeFilterValue(title = "UpcValue2", productCount = 1),
+				)
+			),
+			attributes[GetProductFiltersResult.Attribute("UPC")]
+		)
 	}
 
 	@Test
@@ -692,28 +881,28 @@ class ProductsTest : BaseEntityTest() {
 		assertEquals(4, productDetails1.media?.images?.size)
 		assertMediaProductImage(
 			expectedId = productGalleryImageUploadResult1.id.toString(),
-			expectedOrderBy = 0,
+			expectedOrderBy = 1,
 			expectedIsMain = false,
 			expectedPathEnd = null,
 			productImage = productDetails1.media?.images?.get(0)
 		)
 		assertMediaProductImage(
 			expectedId = productGalleryImageUploadResult2.id.toString(),
-			expectedOrderBy = 1,
+			expectedOrderBy = 2,
 			expectedIsMain = false,
 			expectedPathEnd = null,
 			productImage = productDetails1.media?.images?.get(1)
 		)
 		assertMediaProductImage(
 			expectedId = productGalleryImageUploadResult3.id.toString(),
-			expectedOrderBy = 2,
+			expectedOrderBy = 3,
 			expectedIsMain = false,
 			expectedPathEnd = null,
 			productImage = productDetails1.media?.images?.get(2)
 		)
 		assertMediaProductImage(
 			expectedId = productGalleryImageUploadResult4.id.toString(),
-			expectedOrderBy = 3,
+			expectedOrderBy = 4,
 			expectedIsMain = false,
 			expectedPathEnd = null,
 			productImage = productDetails1.media?.images?.get(3)
@@ -1389,7 +1578,7 @@ fun generateRelatedCategory(): RelatedCategory = RelatedCategory(
 	productCount = randomByte()
 )
 
-private fun generateShippingSettings() = UpdatedProduct.ShippingSettings(
+private fun generateShippingSettings() = ShippingSettings(
 	type = randomEnumValue<ShippingSettingsType>(),
 	methodMarkup = randomPrice(),
 	flatRate = randomPrice(),
@@ -1405,20 +1594,20 @@ private fun generateShippingSettings() = UpdatedProduct.ShippingSettings(
 	)
 )
 
-private fun generateWholesalePrice(basePrice: Double, divider: Int) = UpdatedProduct.WholesalePrice(
+private fun generateWholesalePrice(basePrice: Double, divider: Int) = WholesalePrice(
 	quantity = divider,
 	price = basePrice / divider
 )
 
-private fun generateBrandAttributeValue(): UpdatedProduct.AttributeValue {
-	return UpdatedProduct.AttributeValue.createBrandAttributeValue("Attribute value " + randomAlphanumeric(8))
+private fun generateBrandAttributeValue(): AttributeValue {
+	return AttributeValue.createBrandAttributeValue("Attribute value " + randomAlphanumeric(8))
 }
 
-private fun generateUpcAttributeValue(): UpdatedProduct.AttributeValue {
-	return UpdatedProduct.AttributeValue.createUpcAttributeValue("Attribute value " + randomAlphanumeric(8))
+private fun generateUpcAttributeValue(): AttributeValue {
+	return AttributeValue.createUpcAttributeValue("Attribute value " + randomAlphanumeric(8))
 }
 
-private fun generateDimensions() = UpdatedProduct.ProductDimensions(
+private fun generateDimensions() = ProductDimensions(
 	length = randomDimension(),
 	width = randomDimension(),
 	height = randomDimension()
@@ -1449,7 +1638,7 @@ private fun UpdatedProduct.cleanupForComparison(productCreateRequest: ProductCre
 	)
 }
 
-private fun UpdatedProduct.AttributeValue.cleanupForComparison(attributeValue: UpdatedProduct.AttributeValue?): UpdatedProduct.AttributeValue {
+private fun AttributeValue.cleanupForComparison(attributeValue: AttributeValue?): AttributeValue {
 	return copy(
 		// Id is not used for BRAND/UPC attributes and can be used for custom attributes
 		id = if (attributeValue?.alias != null) attributeValue.id else null,
