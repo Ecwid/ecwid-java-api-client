@@ -130,7 +130,6 @@ fun generateTestOrder(): UpdatedOrder {
 			),
 			refererChannel = "Referer channel " + randomAlphanumeric(8),
 		),
-		
 		orderExtraFields = listOf(
 			UpdatedOrder.OrderExtraFields(
 				customerInputType = "TEXT",
