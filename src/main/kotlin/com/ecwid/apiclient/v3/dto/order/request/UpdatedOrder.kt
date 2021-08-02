@@ -82,7 +82,10 @@ data class UpdatedOrder(
 
 	val pricesIncludeTax: Boolean? = null,
 	val disableAllCustomerNotifications: Boolean? = null,
-	val externalOrderData: ExternalOrderData? = null
+	val externalOrderData: ExternalOrderData? = null,
+
+	val orderExtraFields: List<OrderExtraFields>? = null
+
 ) : ApiUpdatedDTO {
 
 	data class CreditCardStatus(
@@ -317,6 +320,15 @@ data class UpdatedOrder(
 		val refererId: String? = null,
 		val platformSpecificFields: HashMap<String, String>? = null,
 		val refererChannel: String? = null
+	)
+
+	data class OrderExtraFields(
+		val customerInputType: String? = null,
+		val title: String? = null,
+		val id: String? = null,
+		val value: String? = null,
+		val orderDetailsDisplaySection: String? = null,
+		val orderBy: String? = null
 	)
 
 	companion object {

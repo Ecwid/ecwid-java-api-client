@@ -48,7 +48,17 @@ class OrdersTest : BaseEntityTest() {
 		val orderUpdateRequest = OrderUpdateRequest(
 			orderNumber = orderDetails1.orderNumber,
 			updatedOrder = generateTestOrder().copy(
-				customerGroup = null // TODO Discover why after each update this field resets to null
+				customerGroup = null, // TODO Discover why after each update this field resets to null
+				orderExtraFields = listOf(
+					UpdatedOrder.OrderExtraFields(
+						customerInputType = "DATETIME",
+						title = "Pickup date and time",
+						id = "pickup_time",
+						value = "2020-11-22 17:30:00 +0000",
+						orderDetailsDisplaySection = "shipping_info",
+						orderBy = "3"
+					)
+				)
 			)
 		)
 		val orderUpdateResult1 = apiClient.updateOrder(orderUpdateRequest)
