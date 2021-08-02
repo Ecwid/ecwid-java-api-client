@@ -114,23 +114,6 @@ fun generateTestOrder(): UpdatedOrder {
 
 		customSurcharges = listOf(),
 
-		externalFulfillment = externalFulfillment,
-		refererId = refererId,
-		externalOrderId = externalOrderId,
-
-		externalOrderData = UpdatedOrder.ExternalOrderData(
-			externalFulfillment = externalFulfillment,
-			externalOrderId = externalOrderId,
-			refererId = refererId,
-			platformSpecificFields = HashMap(
-				mapOf(
-					"field1" to randomAlphanumeric(8),
-					"field2" to randomAlphanumeric(8),
-				)
-			),
-			refererChannel = "Referer channel " + randomAlphanumeric(8),
-		),
-		
 		orderExtraFields = listOf(
 			UpdatedOrder.OrderExtraFields(
 				customerInputType = "TEXT",
@@ -148,6 +131,23 @@ fun generateTestOrder(): UpdatedOrder {
 				orderDetailsDisplaySection = "customer_info",
 				orderBy = "2"
 			)
+		),
+		
+		externalFulfillment = externalFulfillment,
+		refererId = refererId,
+		externalOrderId = externalOrderId,
+
+		externalOrderData = UpdatedOrder.ExternalOrderData(
+			externalFulfillment = externalFulfillment,
+			externalOrderId = externalOrderId,
+			refererId = refererId,
+			platformSpecificFields = HashMap(
+				mapOf(
+					"field1" to randomAlphanumeric(8),
+					"field2" to randomAlphanumeric(8),
+				)
+			),
+			refererChannel = "Referer channel " + randomAlphanumeric(8),
 		)
 	)
 }
