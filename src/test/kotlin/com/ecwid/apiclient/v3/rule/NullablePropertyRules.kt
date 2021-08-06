@@ -13,6 +13,7 @@ import com.ecwid.apiclient.v3.dto.category.request.CategoryDetailsRequest
 import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 import com.ecwid.apiclient.v3.dto.coupon.request.CouponSearchRequest
 import com.ecwid.apiclient.v3.dto.coupon.result.FetchedCoupon
+import com.ecwid.apiclient.v3.dto.custom.CustomAppRequest
 import com.ecwid.apiclient.v3.dto.customer.request.CustomersSearchRequest
 import com.ecwid.apiclient.v3.dto.customer.request.DeletedCustomersSearchRequest
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
@@ -21,7 +22,6 @@ import com.ecwid.apiclient.v3.dto.order.request.OrdersSearchRequest
 import com.ecwid.apiclient.v3.dto.order.result.DeletedOrder
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.dto.payment.PaymentAppRequest
-import com.ecwid.apiclient.v3.dto.custom.CustomAppRequest
 import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult
