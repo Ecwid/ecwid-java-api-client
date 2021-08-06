@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.custom
 
 import com.ecwid.apiclient.v3.dto.cart.result.FetchedCart
+import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.common.PictureInfo
@@ -14,7 +15,7 @@ data class CustomAppRequest(
 	val storeId: Int? = null,
 	val merchantAppSettings: MerchantAppSettings? = null,
 	val cart: Cart? = null
-) {
+) : ApiRequestDTO {
 	data class Cart(
 		val id: String? = null,
 		val orderNumber: Int? = null,
@@ -230,6 +231,11 @@ data class CustomAppRequest(
 		val customerId: Long? = null,
 		val cartId: Int? = null,
 		val updateDate: Date? = null,
+	)
+
+	data class DiscountCouponCatalogLimit(
+		val products: List<Int>? = null,
+		val categories: List<Int>? = null
 	)
 
 	data class HandlingFeeInfo(
