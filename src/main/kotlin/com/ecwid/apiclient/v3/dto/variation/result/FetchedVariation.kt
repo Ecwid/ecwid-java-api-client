@@ -29,9 +29,11 @@ data class FetchedVariation(
 
 	val quantity: Int? = null,
 	val unlimited: Boolean? = null,
+	val inStock: Boolean? = null,
 	val warningLimit: Int? = null,
 
 	val weight: Double? = null,
+	val borderInfo: BorderInfo? = null,
 
 	val attributes: List<AttributeValue>? = null,
 
@@ -57,6 +59,18 @@ data class FetchedVariation(
 		val nameTranslated: LocalizedValueMap? = null,
 		val value: String? = null,
 		val valueTranslated: LocalizedValueMap? = null
+	)
+
+	data class BorderInfo(
+		val dominatingColor: Color? = null,
+		val homogeneity: Boolean? = false
+	)
+
+	data class Color(
+		val red: Int? = null,
+		val green: Int? = null,
+		val blue: Int? = null,
+		val alpha: Int? = null
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedVariation::class)
