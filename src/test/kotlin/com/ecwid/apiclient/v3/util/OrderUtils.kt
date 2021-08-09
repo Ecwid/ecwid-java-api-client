@@ -29,7 +29,6 @@ fun generateTestOrder(): UpdatedOrder {
 
 		fulfillmentStatus = randomEnumValue<OrderFulfillmentStatus>(),
 		trackingNumber = randomAlphanumeric(16),
-		pickupTime = randomDate(),
 
 		paymentStatus = randomEnumValue(OrderPaymentStatus.INCOMPLETE),
 		paymentMethod = "Payment method " + randomAlphanumeric(8),
@@ -130,6 +129,24 @@ fun generateTestOrder(): UpdatedOrder {
 				)
 			),
 			refererChannel = "Referer channel " + randomAlphanumeric(8),
+		),
+		orderExtraFields = listOf(
+			UpdatedOrder.OrderExtraFields(
+				customerInputType = "TEXT",
+				title = "text 1",
+				id = "first_id",
+				value = "text value one",
+				orderDetailsDisplaySection = "customer_info",
+				orderBy = "1"
+			),
+			UpdatedOrder.OrderExtraFields(
+				customerInputType = "TEXT",
+				title = "text 2",
+				id = "second_id",
+				value = "text value two",
+				orderDetailsDisplaySection = "customer_info",
+				orderBy = "2"
+			)
 		)
 	)
 }

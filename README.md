@@ -2,6 +2,19 @@
 
 API documentation: https://api-docs.ecwid.com/reference/overview 
 
+#### Configure client library:
+You can test this api client library on you local storage. 
+For this you need to copy test/resources/test.properties.sample renamed to test.properties
+and configure it
+
+For example: `test.properties`
+```
+storeId=2
+apiToken=secret_4T6z...
+apiHost=app.local.ecwid.com
+apiPort=8443
+```
+
 ## Examples
 
 #### Simple example:
