@@ -312,7 +312,10 @@ class ApiClientHelper private constructor(
 		sections: List<String>,
 		exception: Exception? = null
 	) {
-		val logMessage = "$prefix [$requestId]: " + sections.joinToString(separator = "; ")
+		val sectionsString = sections.joinToString(separator = "; ") {
+			if (it.length > 200) it.take(200) + "…" else it
+		}
+		val logMessage = "$prefix [$requestId]: $sectionsString"
 		if (exception != null) {
 			log.log(logLevel, logMessage, exception)
 		} else {
