@@ -246,6 +246,7 @@ data class CustomAppRequest(
 
 	data class OrderItemOption(
 		val name: String? = null,
+		val nameTranslated: OrderedStringToStringMap? = null,
 		val type: ProductOptionType? = null,
 		val value: String? = null,
 		val valueTranslated: OrderedStringToStringMap? = null,

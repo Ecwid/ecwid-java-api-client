@@ -1494,6 +1494,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(CustomAppRequest.OrderItem::wholesalePrices),
 	AllowNullable(CustomAppRequest.OrderItemOption::files),
 	AllowNullable(CustomAppRequest.OrderItemOption::name),
+	AllowNullable(CustomAppRequest.OrderItemOption::nameTranslated),
 	AllowNullable(CustomAppRequest.OrderItemOption::selections),
 	AllowNullable(CustomAppRequest.OrderItemOption::type),
 	AllowNullable(CustomAppRequest.OrderItemOption::value),
