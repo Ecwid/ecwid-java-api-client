@@ -286,4 +286,25 @@ data class CustomAppRequest(
 		val height: Double? = null
 	)
 
+	fun forLogging(): CustomAppRequest {
+		return this.copy(merchantAppSettings = merchantAppSettings?.let {
+			MerchantAppSettings(it.map { (key, value) -> key to formatSettingValue(key, value) }.toMap())
+		})
+	}
+
+	private fun formatSettingValue(key: String, value: String): String {
+		if (key == STORAGE_PUBLIC_CONFIG_KEY) {
+			return value
+		}
+		if (value.length <= 2) {
+			return SECRET_KEYS_PLACEHOLDER
+		}
+		return value.first() + SECRET_KEYS_PLACEHOLDER + value.last()
+	}
+
+	companion object {
+		private const val STORAGE_PUBLIC_CONFIG_KEY = "public"
+		private const val SECRET_KEYS_PLACEHOLDER = "XXX"
+	}
+
 }
