@@ -294,7 +294,7 @@ data class CustomAppRequest(
 
 	private fun formatSettingValue(key: String, value: String): String {
 		if (key == STORAGE_PUBLIC_CONFIG_KEY) {
-			return value;
+			return value
 		}
 		if (value.length <= 2) {
 			return SECRET_KEYS_PLACEHOLDER
