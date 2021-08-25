@@ -224,6 +224,8 @@ data class CustomAppRequest(
 		val applicationLimit: DiscountCouponApplicationLimit? = null,
 		val creationDate: Date? = null,
 		val orderCount: Int? = null,
+		@Deprecated("This field is added for backward compatibility only. Don't use it.", replaceWith = ReplaceWith("catalogLimit"))
+		val legacyCatalogLimit: DiscountCouponCatalogLimit? = null,
 		val catalogLimit: DiscountCouponCatalogLimit? = null,
 		val repeatCustomerOnly: Boolean? = null,
 		val newCustomerOnly: Boolean? = null,

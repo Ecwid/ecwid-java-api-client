@@ -1418,6 +1418,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(CustomAppRequest.DiscountCouponCatalogLimit::products),
 	AllowNullable(CustomAppRequest.DiscountCouponInfo::applicationLimit),
 	AllowNullable(CustomAppRequest.DiscountCouponInfo::cartId),
+	AllowNullable(CustomAppRequest.DiscountCouponInfo::legacyCatalogLimit),
 	AllowNullable(CustomAppRequest.DiscountCouponInfo::catalogLimit),
 	AllowNullable(CustomAppRequest.DiscountCouponInfo::code),
 	AllowNullable(CustomAppRequest.DiscountCouponInfo::creationDate),
