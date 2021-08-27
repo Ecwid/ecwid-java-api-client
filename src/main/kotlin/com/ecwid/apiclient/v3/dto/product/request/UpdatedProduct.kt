@@ -270,6 +270,18 @@ data class UpdatedProduct(
 				value = value
 			)
 
+			fun createPricePerUnitAttributeValue(value: String) = AttributeValue(
+				id = null,
+				alias = AttributeValueAlias.PRICE_PER_UNIT,
+				value = value
+			)
+
+			fun createUnitsInProductAttributeValue(value: String) = AttributeValue(
+				id = null,
+				alias = AttributeValueAlias.UNITS_IN_PRODUCT,
+				value = value
+			)
+
 			@Suppress("unused")
 			fun createAttributeValue(productAttributeId: Int, value: String) = AttributeValue(
 				id = productAttributeId,
