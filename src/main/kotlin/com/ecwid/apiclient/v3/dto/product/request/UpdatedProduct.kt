@@ -253,6 +253,7 @@ data class UpdatedProduct(
 	data class AttributeValue internal constructor(
 		val id: Int? = null,
 		val alias: AttributeValueAlias? = null,
+		val name: String? = null,
 		val value: String? = null
 	) {
 
@@ -285,6 +286,12 @@ data class UpdatedProduct(
 			@Suppress("unused")
 			fun createAttributeValue(productAttributeId: Int, value: String) = AttributeValue(
 				id = productAttributeId,
+				value = value
+			)
+
+			@Suppress("unused")
+			fun createAttributeValue(name: String, value: String) = AttributeValue(
+				name = name,
 				value = value
 			)
 		}
