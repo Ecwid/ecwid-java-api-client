@@ -15,7 +15,9 @@ val nonDuplicablePropertyRules: List<NonDuplicablePropertyRule<*, *>> = listOf(
 
 	WriteOnly(UpdatedCustomer::password),
 	WriteOnly(UpdatedProduct.AttributeValue::alias),
-	WriteOnly(UpdatedVariation.AttributeValue::alias)
+	WriteOnly(UpdatedProduct.AttributeValue::name),
+	WriteOnly(UpdatedVariation.AttributeValue::alias),
+	WriteOnly(UpdatedVariation.AttributeValue::name),
 
 )
 
