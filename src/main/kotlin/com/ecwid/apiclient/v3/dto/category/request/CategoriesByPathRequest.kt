@@ -8,7 +8,7 @@ data class CategoriesByPathRequest(
 	val offset: Int = 0,
 	val limit: Int = 100,
 	val lang: String? = null
-): ApiRequest {
+) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 		pathSegments = listOf(
@@ -32,7 +32,7 @@ data class CategoriesByPathRequest(
 	}
 }
 
-private fun generateRandomUID(length : Int): String {
+private fun generateRandomUID(length : Int) : String {
 	val alphabet = "0123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"
 	return (1..length).joinToString("") { alphabet.random().toString() }
 }
