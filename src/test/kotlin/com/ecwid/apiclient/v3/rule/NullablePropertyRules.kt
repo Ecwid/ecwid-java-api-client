@@ -9,6 +9,7 @@ import com.ecwid.apiclient.v3.dto.cart.result.CartUpdateResult
 import com.ecwid.apiclient.v3.dto.cart.result.ConvertCartToOrderResult
 import com.ecwid.apiclient.v3.dto.cart.result.FetchedCart
 import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest
+import com.ecwid.apiclient.v3.dto.category.request.CategoriesByPathRequest
 import com.ecwid.apiclient.v3.dto.category.request.CategoryDetailsRequest
 import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 import com.ecwid.apiclient.v3.dto.coupon.request.CouponSearchRequest
@@ -1079,6 +1080,8 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(CategoryDetailsRequest::baseUrl),
 	AllowNullable(CategoryDetailsRequest::cleanUrls),
 	AllowNullable(CategoryDetailsRequest::lang),
+
+	AllowNullable(CategoriesByPathRequest::lang),
 
 	AllowNullable(CouponSearchRequest::availability),
 	AllowNullable(CouponSearchRequest::code),

@@ -6,7 +6,7 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 const val DELIMITER_LENGTH = 6
 
 data class CategoriesByPathRequest(
-	val path: List<String>,
+	val path: List<String> = listOf(),
 	val offset: Int = 0,
 	val limit: Int = 100,
 	val lang: String? = null
