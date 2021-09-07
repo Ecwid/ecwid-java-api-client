@@ -3,6 +3,8 @@ package com.ecwid.apiclient.v3.dto.category.request
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
+private const val DELIMITER_LENGTH = 6
+
 /**
  * path - List of category path elements
  */
@@ -21,8 +23,7 @@ data class CategoriesByPathRequest(
 
 	private fun toParams(): Map<String, String> {
 		val request = this
-		val delimiterLength = 6
-		val randomDelimiter = "{" + generateRandomUID(delimiterLength) + "}"
+		val randomDelimiter = "{" + generateRandomUID(DELIMITER_LENGTH) + "}"
 		val generatedPath = path.joinToString(randomDelimiter)
 
 		return mutableMapOf<String, String>().apply {
