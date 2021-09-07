@@ -171,6 +171,7 @@ interface CategoriesApiClient {
 	fun uploadCategoryImage(request: CategoryImageUploadRequest): CategoryImageUploadResult
 	fun uploadCategoryImageAsync(request: CategoryImageAsyncUploadRequest): CategoryImageAsyncUploadResult
 	fun deleteCategoryImage(request: CategoryImageDeleteRequest): CategoryImageDeleteResult
+	fun searchCategoriesByPath(request: CategoriesByPathRequest): CategoriesSearchResult
 }
 
 // Orders
