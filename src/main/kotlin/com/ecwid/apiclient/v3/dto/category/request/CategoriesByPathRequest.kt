@@ -5,10 +5,10 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 
 private const val DELIMITER_LENGTH = 6
 
-/**
- * path - List of category path elements
- */
 data class CategoriesByPathRequest(
+	/**
+	 * List of category path elements
+	 */
 	val path: List<String> = listOf(),
 	val offset: Int = 0,
 	val limit: Int = 100,
