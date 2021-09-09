@@ -21,6 +21,18 @@ internal class CategoriesApiClientImpl(
 		} while (searchResult.count >= searchResult.limit)
 	}
 
+	override fun searchCategoriesByPath(request: CategoriesByPathRequest) =
+		apiClientHelper.makeObjectResultRequest<CategoriesSearchResult>(request)
+
+	override fun searchCategoriesByPathAsSequence(request: CategoriesByPathRequest) = sequence {
+		var offsetRequest = request
+		do {
+			val searchResult = searchCategoriesByPath(offsetRequest)
+			yieldAll(searchResult.items)
+			offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
+		} while (searchResult.count >= searchResult.limit)
+	}
+
 	override fun getCategoryDetails(request: CategoryDetailsRequest) =
 		apiClientHelper.makeObjectResultRequest<FetchedCategory>(request)
 
@@ -41,4 +53,5 @@ internal class CategoriesApiClientImpl(
 
 	override fun deleteCategoryImage(request: CategoryImageDeleteRequest) =
 		apiClientHelper.makeObjectResultRequest<CategoryImageDeleteResult>(request)
+
 }

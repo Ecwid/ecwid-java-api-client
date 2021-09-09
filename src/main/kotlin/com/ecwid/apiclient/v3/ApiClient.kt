@@ -164,6 +164,8 @@ interface ProductsApiClient {
 interface CategoriesApiClient {
 	fun searchCategories(request: CategoriesSearchRequest): CategoriesSearchResult
 	fun searchCategoriesAsSequence(request: CategoriesSearchRequest): Sequence<FetchedCategory>
+	fun searchCategoriesByPath(request: CategoriesByPathRequest): CategoriesSearchResult
+	fun searchCategoriesByPathAsSequence(request: CategoriesByPathRequest): Sequence<FetchedCategory>
 	fun getCategoryDetails(request: CategoryDetailsRequest): FetchedCategory
 	fun createCategory(request: CategoryCreateRequest): CategoryCreateResult
 	fun updateCategory(request: CategoryUpdateRequest): CategoryUpdateResult
