@@ -1,23 +1,16 @@
-package com.ecwid.apiclient.v3.dto.product.request
+package com.ecwid.apiclient.v3.dto.profile.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
-data class ProductGalleryImageUploadRequest(
-	val productId: Int = 0,
-	val fileName: String = "",
+data class EmailLogoUploadRequest(
 	val fileData: UploadFileData = UploadFileData.ExternalUrlData("")
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.buildUploadRequestInfo(
-		pathSegments,
-		mapOf("fileName" to fileName),
+		listOf("profile", "emaillogo"),
+		emptyMap(),
 		fileData
 	)
 
-	private val pathSegments = listOf(
-		"products",
-		"$productId",
-		"gallery"
-	)
 }

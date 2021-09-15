@@ -2,12 +2,8 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.StoreProfileApiClient
-import com.ecwid.apiclient.v3.dto.profile.request.LatestStatsRequest
-import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
-import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
-import com.ecwid.apiclient.v3.dto.profile.result.FetchedLatestStats
-import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
-import com.ecwid.apiclient.v3.dto.profile.result.StoreProfileUpdateResult
+import com.ecwid.apiclient.v3.dto.profile.request.*
+import com.ecwid.apiclient.v3.dto.profile.result.*
 
 internal class StoreProfileApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -20,4 +16,22 @@ internal class StoreProfileApiClientImpl(
 
 	override fun getLatestStats(request: LatestStatsRequest) =
 		apiClientHelper.makeObjectResultRequest<FetchedLatestStats>(request)
+
+	override fun uploadStoreLogo(request: StoreLogoUploadRequest): StoreLogoUploadResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun removeStoreLogo(request: StoreLogoRemoveRequest): StoreLogoRemoveResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun uploadInvoiceLogo(request: InvoiceLogoUploadRequest): InvoiceLogoUploadResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun removeInvoiceLogo(request: InvoiceLogoRemoveRequest): InvoiceLogoRemoveResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun uploadEmailLogo(request: EmailLogoUploadRequest): EmailLogoUploadResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun removeEmailLogo(request: EmailLogoRemoveRequest): EmailLogoRemoveResult =
+		apiClientHelper.makeObjectResultRequest(request)
 }

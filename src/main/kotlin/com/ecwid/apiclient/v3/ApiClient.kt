@@ -25,12 +25,8 @@ import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
-import com.ecwid.apiclient.v3.dto.profile.request.LatestStatsRequest
-import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
-import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
-import com.ecwid.apiclient.v3.dto.profile.result.FetchedLatestStats
-import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
-import com.ecwid.apiclient.v3.dto.profile.result.StoreProfileUpdateResult
+import com.ecwid.apiclient.v3.dto.profile.request.*
+import com.ecwid.apiclient.v3.dto.profile.result.*
 import com.ecwid.apiclient.v3.dto.saleschannels.request.GoogleShoppingFeedConfigGetRequest
 import com.ecwid.apiclient.v3.dto.saleschannels.request.ShopzillaFeedConfigGetRequest
 import com.ecwid.apiclient.v3.dto.saleschannels.request.YahooShoppingFeedConfigGetRequest
@@ -122,12 +118,12 @@ interface StoreProfileApiClient {
 // 	fun getPaymentOptions()
 // 	fun addPaymentOption()
 // 	fun updatePaymentOption()
-// 	fun updateStoreLogo()
-// 	fun removeStoreLogo()
-// 	fun updateInvoiceLogo()
-// 	fun removeInvoiceLogo()
-// 	fun updateEmailLogo()
-// 	fun removeEmailLogo()
+	fun uploadStoreLogo(request: StoreLogoUploadRequest): StoreLogoUploadResult
+	fun removeStoreLogo(request: StoreLogoRemoveRequest): StoreLogoRemoveResult
+	fun uploadInvoiceLogo(request: InvoiceLogoUploadRequest): InvoiceLogoUploadResult
+	fun removeInvoiceLogo(request: InvoiceLogoRemoveRequest): InvoiceLogoRemoveResult
+	fun uploadEmailLogo(request: EmailLogoUploadRequest): EmailLogoUploadResult
+	fun removeEmailLogo(request: EmailLogoRemoveRequest): EmailLogoRemoveResult
 }
 
 // Products
