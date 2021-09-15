@@ -10,17 +10,14 @@ data class ProductFileUploadRequest(
 	val description: String = "",
 	val fileData: UploadFileData = UploadFileData.ExternalUrlData("")
 ) : ApiRequest {
-	override fun toRequestInfo(): RequestInfo {
-
-		return RequestInfo.buildUploadRequestInfo(
-			pathSegments,
-			mapOf(
-				"fileName" to fileName,
-				"description" to description
-			),
-			fileData
-		)
-	}
+	override fun toRequestInfo() = RequestInfo.buildUploadRequestInfo(
+		pathSegments,
+		mapOf(
+			"fileName" to fileName,
+			"description" to description
+		),
+		fileData
+	)
 
 	private val pathSegments = listOf(
 		"products",

@@ -7,12 +7,10 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 data class InvoiceLogoUploadRequest(
 	val fileData: UploadFileData = UploadFileData.ExternalUrlData("")
 ) : ApiRequest {
-	override fun toRequestInfo(): RequestInfo {
-		return RequestInfo.buildUploadRequestInfo(
-			listOf("profile", "invoicelogo"),
-			emptyMap(),
-			fileData
-		)
-	}
+	override fun toRequestInfo() = RequestInfo.buildUploadRequestInfo(
+		listOf("profile", "invoicelogo"),
+		emptyMap(),
+		fileData
+	)
 
 }

@@ -28,13 +28,11 @@ data class OrderItemOptionFileUploadRequest(
 		fileData = fileData
 	)
 
-	override fun toRequestInfo(): RequestInfo {
-		return RequestInfo.buildUploadRequestInfo(
-			pathSegments,
-			mapOf("fileName" to fileName),
-			fileData
-		)
-	}
+	override fun toRequestInfo() = RequestInfo.buildUploadRequestInfo(
+		pathSegments,
+		mapOf("fileName" to fileName),
+		fileData
+	)
 
 	private val pathSegments = listOf(
 		"orders",
