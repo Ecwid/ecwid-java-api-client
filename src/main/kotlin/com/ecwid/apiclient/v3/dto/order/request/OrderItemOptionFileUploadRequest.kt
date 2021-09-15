@@ -2,7 +2,6 @@ package com.ecwid.apiclient.v3.dto.order.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.common.UploadFileData
-import com.ecwid.apiclient.v3.dto.common.buildUploadRequestInfo
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class OrderItemOptionFileUploadRequest(
@@ -30,10 +29,11 @@ data class OrderItemOptionFileUploadRequest(
 	)
 
 	override fun toRequestInfo(): RequestInfo {
-		val commonParams = mapOf(
-			"fileName" to fileName
+		return RequestInfo.buildUploadRequestInfo(
+			pathSegments,
+			mapOf("fileName" to fileName),
+			fileData
 		)
-		return buildUploadRequestInfo(pathSegments, commonParams, fileData)
 	}
 
 	private val pathSegments = listOf(
