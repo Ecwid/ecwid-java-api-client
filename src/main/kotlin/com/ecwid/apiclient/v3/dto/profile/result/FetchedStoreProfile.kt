@@ -56,7 +56,7 @@ data class FetchedStoreProfile(
 
 	data class Settings(
 		val closed: Boolean? = null,
-		val storeName: String? = null,
+		val storeName: String? = "",
 		val storeDescription: String? = null,
 		val invoiceLogoUrl: String? = null,
 		val emailLogoUrl: String? = null,
