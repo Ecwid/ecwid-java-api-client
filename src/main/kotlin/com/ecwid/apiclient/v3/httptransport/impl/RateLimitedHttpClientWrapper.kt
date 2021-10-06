@@ -42,6 +42,9 @@ open class RateLimitedHttpClientWrapper(
 					attemptsLeft - 1, // decrement attempts reminder
 					responseHandler
 				)
+			} else if (response.statusLine.statusCode == 429 && attemptsLeft <= 0) {
+				log.warning("Request ${request.uri.path} rate-limited: no more attempts.")
+				responseHandler.handleResponse(response)
 			} else {
 				responseHandler.handleResponse(response)
 			}
@@ -65,6 +68,7 @@ open class RateLimitedHttpClientWrapper(
 			executeWithRetry(request, attemptsLeft, responseHandler)
 		} else {
 			// too long to wait - let's return the original error
+			log.warning("Request ${request.uri.path} rate-limited: too long to wait ($waitInterval).")
 			responseHandler.handleResponse(response)
 		}
 	}
