@@ -21,7 +21,8 @@ open class RateLimitedHttpClientWrapper(
 	private val defaultRateLimitRetryInterval: Long = DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 	private val maxRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 	private val totalAttempts: Int = DEFAULT_RATE_LIMIT_ATTEMPTS,
-	private val onEverySecondOfWaiting: (Long) -> Unit = { }
+	private val onEverySecondOfWaiting: (Long) -> Unit = { },
+	private val beforeEachRequestAttempt: () -> Unit = { },
 ) {
 
 	@Throws(IOException::class)
@@ -34,6 +35,7 @@ open class RateLimitedHttpClientWrapper(
 		attemptsLeft: Int,
 		responseHandler: ResponseHandler<T>
 	): T {
+		beforeEachRequestAttempt()
 		return httpClient.execute(request) { response ->
 			if (response.statusLine.statusCode == SC_TOO_MANY_REQUESTS && attemptsLeft > 0) {
 				process429(
