@@ -44,7 +44,7 @@ open class RateLimitedHttpClientWrapper(
 					attemptsLeft - 1, // decrement attempts reminder
 					responseHandler
 				)
-			} else if (response.statusLine.statusCode == 429 && attemptsLeft <= 0) {
+			} else if (response.statusLine.statusCode == SC_TOO_MANY_REQUESTS && attemptsLeft <= 0) {
 				log.warning("Request ${request.uri.path} rate-limited: no more attempts.")
 				responseHandler.handleResponse(response)
 			} else {
