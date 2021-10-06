@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.dto.variation.result
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
+import com.ecwid.apiclient.v3.dto.common.PictureInfo
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.variation.request.UpdatedVariation
@@ -20,6 +21,7 @@ data class FetchedVariation(
 	val thumbnailUrl: String? = null,
 	val imageUrl: String? = null,
 	val originalImageUrl: String? = null,
+	val originalImage: PictureInfo? = null,
 
 	val price: Double? = null,
 	val defaultDisplayedPrice: Double? = null,
