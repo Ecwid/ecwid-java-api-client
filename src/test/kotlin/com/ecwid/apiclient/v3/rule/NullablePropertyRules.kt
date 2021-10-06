@@ -930,6 +930,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedVariation::defaultDisplayedPriceFormatted),
 	IgnoreNullable(FetchedVariation::hdThumbnailUrl),
 	IgnoreNullable(FetchedVariation::imageUrl),
+	AllowNullable(FetchedVariation::originalImage),
 	AllowNullable(FetchedVariation::inStock),
 	IgnoreNullable(FetchedVariation::isShippingRequired),
 	IgnoreNullable(FetchedVariation::options),
