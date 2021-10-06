@@ -196,7 +196,9 @@ data class FetchedOrder(
 
 	data class RecurringChargeSettings(
 		val recurringInterval: RecurringSubscriptionInterval = RecurringSubscriptionInterval.MONTH,
-		val recurringIntervalCount: Int = 1
+		val recurringIntervalCount: Int = 1,
+		val subscriptionPriceWithSignUpFee: Double? = null,
+		val signUpFee: Double? = null
 	)
 
 	data class OrderItemSelectedOption(
