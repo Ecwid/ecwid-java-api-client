@@ -331,6 +331,8 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedOrder.OrderItem::quantity),
 	IgnoreNullable(FetchedOrder.OrderItem::quantityInStock),
 	IgnoreNullable(FetchedOrder.OrderItem::recurringChargeSettings),
+	AllowNullable(FetchedOrder.RecurringChargeSettings::subscriptionPriceWithSignUpFee),
+	AllowNullable(FetchedOrder.RecurringChargeSettings::signUpFee),
 	IgnoreNullable(FetchedOrder.OrderItem::selectedOptions),
 	AllowNullable(FetchedOrder.OrderItem::selectedPrice),
 	IgnoreNullable(FetchedOrder.OrderItem::shipping),
