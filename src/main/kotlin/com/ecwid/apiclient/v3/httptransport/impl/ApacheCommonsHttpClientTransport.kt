@@ -39,7 +39,8 @@ open class ApacheCommonsHttpClientTransport(
 	private val defaultRateLimitAttempts: Int = DEFAULT_RATE_LIMIT_ATTEMPTS,
 	private val defaultRateLimitRetryInterval: Long = DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 	private val maxRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
-	private val onEverySecondOfWaiting: (Long) -> Unit = EMPTY_WAITING_REACTION
+	private val onEverySecondOfWaiting: (Long) -> Unit = EMPTY_WAITING_REACTION,
+	private val beforeEachRequestAttempt: () -> Unit = { },
 ) : HttpTransport {
 
 	constructor(
@@ -50,7 +51,8 @@ open class ApacheCommonsHttpClientTransport(
 		defaultRateLimitRetryInterval: Long = DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 		maxRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 		defaultHeaders: List<Header> = emptyList(),
-		onEverySecondOfWaiting: (Long) -> Unit = EMPTY_WAITING_REACTION
+		onEverySecondOfWaiting: (Long) -> Unit = EMPTY_WAITING_REACTION,
+		beforeEachRequestAttempt: () -> Unit = { },
 	) : this(
 		httpClient = buildHttpClient(
 			defaultConnectionTimeout = defaultConnectionTimeout,
@@ -61,7 +63,8 @@ open class ApacheCommonsHttpClientTransport(
 		defaultRateLimitAttempts = defaultRateLimitAttempts,
 		defaultRateLimitRetryInterval = defaultRateLimitRetryInterval,
 		maxRateLimitRetryInterval = maxRateLimitRetryInterval,
-		onEverySecondOfWaiting = onEverySecondOfWaiting
+		onEverySecondOfWaiting = onEverySecondOfWaiting,
+		beforeEachRequestAttempt = beforeEachRequestAttempt,
 	)
 
 	override fun makeHttpRequest(httpRequest: HttpRequest): HttpResponse {
@@ -87,7 +90,8 @@ open class ApacheCommonsHttpClientTransport(
 				defaultRateLimitRetryInterval,
 				maxRateLimitRetryInterval,
 				defaultRateLimitAttempts,
-				onEverySecondOfWaiting
+				onEverySecondOfWaiting,
+				beforeEachRequestAttempt,
 			).execute(request) { response ->
 				response.toApiResponse()
 			}
