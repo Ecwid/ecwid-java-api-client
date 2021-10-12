@@ -8,7 +8,7 @@ data class ProductUpdateRequest(
 	val productId: Int = 0,
 	val updatedProduct: UpdatedProduct = UpdatedProduct(),
 	val checkLowStockNotification: Boolean? = null,
-	val rebuildVariantsOnOptionUpdate: Boolean? = null
+	val rebuildVariationsOnOptionsUpdate: Boolean? = null
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
 		pathSegments = listOf(
@@ -24,7 +24,7 @@ data class ProductUpdateRequest(
 	private fun toParams(): Map<String, String> {
 		return mutableMapOf<String, String>().apply {
 			checkLowStockNotification?.let { put("checkLowStockNotification", it.toString()) }
-			rebuildVariantsOnOptionUpdate?.let { put("rebuildVariantsOnOptionUpdate", it.toString()) }
+			rebuildVariationsOnOptionsUpdate?.let { put("rebuildVariationsOnOptionsUpdate", it.toString()) }
 		}.toMap()
 	}
 }
