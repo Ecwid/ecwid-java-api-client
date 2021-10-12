@@ -1137,6 +1137,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 
 	AllowNullable(ProductInventoryUpdateRequest::checkLowStockNotification),
 	AllowNullable(ProductUpdateRequest::checkLowStockNotification),
+	AllowNullable(ProductUpdateRequest::rebuildVariantsOnOptionUpdate),
 
 	AllowNullable(GetProductFiltersRequest::attributes),
 	AllowNullable(GetProductFiltersRequest::categories),
