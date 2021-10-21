@@ -4,6 +4,7 @@ import org.apache.http.HttpResponse
 import org.apache.http.client.HttpClient
 import org.apache.http.client.ResponseHandler
 import org.apache.http.client.methods.HttpUriRequest
+import org.apache.http.util.EntityUtils
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 import java.util.logging.Logger
@@ -63,6 +64,8 @@ open class RateLimitedHttpClientWrapper(
 		val waitInterval = response.getFirstHeader("Retry-After")?.value?.toLong()
 			?: defaultRateLimitRetryInterval
 		return if (waitInterval <= maxRateLimitRetryInterval) {
+			// return used http connection to pool before retry
+			EntityUtils.consume(response.entity)
 			// if server requested acceptable time, we'll wait
 			log.info("Request ${request.uri.path} rate-limited: waiting $waitInterval seconds...")
 			waitSeconds(waitInterval, onEverySecondOfWaiting)
