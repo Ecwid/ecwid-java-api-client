@@ -59,6 +59,22 @@ open class ApacheCommonsHttpClientTransport(
 		defaultConnectionTimeout: Int = DEFAULT_CONNECTION_TIMEOUT,
 		defaultReadTimeout: Int = DEFAULT_READ_TIMEOUT,
 		defaultMaxConnections: Int = DEFAULT_MAX_CONNECTIONS,
+		defaultHeaders: List<Header> = emptyList(),
+		rateLimitRetryStrategy: RateLimitRetryStrategy
+	) : this(
+		httpClient = buildHttpClient(
+			defaultConnectionTimeout = defaultConnectionTimeout,
+			defaultReadTimeout = defaultReadTimeout,
+			defaultMaxConnections = defaultMaxConnections,
+			defaultHeaders = defaultHeaders
+		),
+		rateLimitRetryStrategy = rateLimitRetryStrategy
+	)
+
+	constructor(
+		defaultConnectionTimeout: Int = DEFAULT_CONNECTION_TIMEOUT,
+		defaultReadTimeout: Int = DEFAULT_READ_TIMEOUT,
+		defaultMaxConnections: Int = DEFAULT_MAX_CONNECTIONS,
 		defaultRateLimitAttempts: Int = DEFAULT_RATE_LIMIT_ATTEMPTS,
 		defaultRateLimitRetryInterval: Long = DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 		maxRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
@@ -72,11 +88,13 @@ open class ApacheCommonsHttpClientTransport(
 			defaultMaxConnections = defaultMaxConnections,
 			defaultHeaders = defaultHeaders
 		),
-		defaultRateLimitAttempts = defaultRateLimitAttempts,
-		defaultRateLimitRetryInterval = defaultRateLimitRetryInterval,
-		maxRateLimitRetryInterval = maxRateLimitRetryInterval,
-		onEverySecondOfWaiting = onEverySecondOfWaiting,
-		beforeEachRequestAttempt = beforeEachRequestAttempt,
+		rateLimitRetryStrategy = SleepForRetryAfterRateLimitRetryStrategy(
+			defaultRateLimitAttempts = defaultRateLimitAttempts,
+			defaultRateLimitRetryInterval = defaultRateLimitRetryInterval,
+			maxRateLimitRetryInterval = maxRateLimitRetryInterval,
+			onEverySecondOfWaiting = onEverySecondOfWaiting,
+			beforeEachRequestAttempt = beforeEachRequestAttempt,
+		)
 	)
 
 	override fun makeHttpRequest(httpRequest: HttpRequest): HttpResponse {
