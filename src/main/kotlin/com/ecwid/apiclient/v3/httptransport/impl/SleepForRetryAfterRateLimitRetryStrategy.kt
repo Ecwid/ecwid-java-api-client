@@ -8,11 +8,11 @@ import org.apache.http.client.methods.HttpUriRequest
 import java.io.IOException
 
 class SleepForRetryAfterRateLimitRetryStrategy(
-	private val defaultRateLimitRetryInterval: Long,
-	private val maxRateLimitRetryInterval: Long,
-	private val defaultRateLimitAttempts: Int,
-	private val onEverySecondOfWaiting: (Long) -> Unit,
-	private val beforeEachRequestAttempt: () -> Unit,
+	private val defaultRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
+	private val maxRateLimitRetryInterval: Long = DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
+	private val defaultRateLimitAttempts: Int = DEFAULT_RATE_LIMIT_ATTEMPTS,
+	private val onEverySecondOfWaiting: (Long) -> Unit = EMPTY_WAITING_REACTION,
+	private val beforeEachRequestAttempt: () -> Unit = EMPTY_BEFORE_REQUEST_ACTION,
 ) : RateLimitRetryStrategy {
 
 	override fun makeHttpRequest(httpClient: HttpClient, httpRequest: HttpRequest): HttpResponse {

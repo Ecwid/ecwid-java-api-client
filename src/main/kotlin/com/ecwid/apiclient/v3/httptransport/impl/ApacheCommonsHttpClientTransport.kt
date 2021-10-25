@@ -35,7 +35,7 @@ val EMPTY_BEFORE_REQUEST_ACTION: () -> Unit = { }
 
 open class ApacheCommonsHttpClientTransport(
 	private val httpClient: HttpClient,
-	private val rateLimitRetryStrategy: RateLimitRetryStrategy,
+	private val rateLimitRetryStrategy: RateLimitRetryStrategy = SleepForRetryAfterRateLimitRetryStrategy(),
 ) : HttpTransport {
 
 	constructor(
