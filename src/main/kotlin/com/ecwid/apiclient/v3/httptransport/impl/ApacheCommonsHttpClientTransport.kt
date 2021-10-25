@@ -34,7 +34,7 @@ val EMPTY_WAITING_REACTION: (Long) -> Unit = { }
 val EMPTY_BEFORE_REQUEST_ACTION: () -> Unit = { }
 
 open class ApacheCommonsHttpClientTransport(
-	private val httpClient: HttpClient,
+	private val httpClient: HttpClient = buildHttpClient(),
 	private val rateLimitRetryStrategy: RateLimitRetryStrategy = SleepForRetryAfterRateLimitRetryStrategy(),
 ) : HttpTransport {
 
@@ -109,10 +109,10 @@ open class ApacheCommonsHttpClientTransport(
 	companion object {
 
 		private fun buildHttpClient(
-			defaultConnectionTimeout: Int,
-			defaultReadTimeout: Int,
-			defaultMaxConnections: Int,
-			defaultHeaders: List<Header>
+			defaultConnectionTimeout: Int = DEFAULT_CONNECTION_TIMEOUT,
+			defaultReadTimeout: Int = DEFAULT_READ_TIMEOUT,
+			defaultMaxConnections: Int = DEFAULT_MAX_CONNECTIONS,
+			defaultHeaders: List<Header> = emptyList(),
 		): HttpClient {
 			val connectionManager = PoolingHttpClientConnectionManager().apply {
 				maxTotal = defaultMaxConnections
