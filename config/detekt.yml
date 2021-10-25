@@ -39,6 +39,8 @@ formatting:
   # Initially enabled
   NoBlankLineBeforeRbrace:
     active: false
+  NoConsecutiveBlankLines:
+    active: false
   NoWildcardImports:
     active: false
   ParameterListWrapping:
