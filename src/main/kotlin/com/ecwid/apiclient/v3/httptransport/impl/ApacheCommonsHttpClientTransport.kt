@@ -31,6 +31,7 @@ internal const val DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 10L
 internal const val MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 60L
 
 val EMPTY_WAITING_REACTION: (Long) -> Unit = { }
+val EMPTY_BEFORE_REQUEST_ACTION: () -> Unit = { }
 
 open class ApacheCommonsHttpClientTransport(
 	private val httpClient: HttpClient,
@@ -43,7 +44,7 @@ open class ApacheCommonsHttpClientTransport(
 		defaultRateLimitRetryInterval: Long = DEFAULT_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 		maxRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 		onEverySecondOfWaiting: (Long) -> Unit = EMPTY_WAITING_REACTION,
-		beforeEachRequestAttempt: () -> Unit = { },
+		beforeEachRequestAttempt: () -> Unit = EMPTY_BEFORE_REQUEST_ACTION,
 	) : this(
 		httpClient,
 		rateLimitRetryStrategy = SleepForRetryAfterRateLimitRetryStrategy(
@@ -80,7 +81,7 @@ open class ApacheCommonsHttpClientTransport(
 		maxRateLimitRetryInterval: Long = MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS,
 		defaultHeaders: List<Header> = emptyList(),
 		onEverySecondOfWaiting: (Long) -> Unit = EMPTY_WAITING_REACTION,
-		beforeEachRequestAttempt: () -> Unit = { },
+		beforeEachRequestAttempt: () -> Unit = EMPTY_BEFORE_REQUEST_ACTION,
 	) : this(
 		httpClient = buildHttpClient(
 			defaultConnectionTimeout = defaultConnectionTimeout,
