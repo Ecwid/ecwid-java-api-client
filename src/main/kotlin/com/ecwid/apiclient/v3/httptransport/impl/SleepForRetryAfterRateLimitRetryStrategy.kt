@@ -25,7 +25,9 @@ class SleepForRetryAfterRateLimitRetryStrategy(
 	}
 
 	private fun executeWithoutRetry(httpClient: HttpClient, request: HttpUriRequest) =
-		httpClient.execute(request).toApiResponse()
+		httpClient.execute(request) { response ->
+			response.toApiResponse()
+		}
 
 	private fun executeWithRetryOnRateLimited(httpClient: HttpClient, request: HttpUriRequest): HttpResponse {
 		return try {

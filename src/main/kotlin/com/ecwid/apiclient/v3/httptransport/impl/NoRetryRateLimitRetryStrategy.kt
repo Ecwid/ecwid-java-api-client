@@ -6,6 +6,8 @@ import org.apache.http.client.HttpClient
 
 class NoRetryRateLimitRetryStrategy : RateLimitRetryStrategy {
 	override fun makeHttpRequest(httpClient: HttpClient, httpRequest: HttpRequest): HttpResponse {
-		return httpClient.execute(httpRequest.toHttpUriRequest()).toApiResponse()
+		return httpClient.execute(httpRequest.toHttpUriRequest()) { response ->
+			response.toApiResponse()
+		}
 	}
 }
