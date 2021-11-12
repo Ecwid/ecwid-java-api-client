@@ -1424,7 +1424,8 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 		),
 		subscriptionSettings = SubscriptionSettings(),
 		googleProductCategory = 632,
-		productCondition = ProductCondition.USED
+		productCondition = ProductCondition.USED,
+		externalReferenceId = "EXT_ID_123"
 	)
 }
 

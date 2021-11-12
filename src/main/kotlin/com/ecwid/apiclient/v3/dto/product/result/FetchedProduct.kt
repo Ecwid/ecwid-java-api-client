@@ -82,7 +82,8 @@ data class FetchedProduct(
 	val subscriptionSettings: SubscriptionSettings? = null,
 	val googleProductCategory: Int? = null,
 	val googleProductCategoryName: String? = null,
-	val productCondition: ProductCondition = ProductCondition.NEW
+	val productCondition: ProductCondition = ProductCondition.NEW,
+	val externalReferenceId: String? = null
 ) : ApiFetchedDTO {
 
 	data class Ribbon(
