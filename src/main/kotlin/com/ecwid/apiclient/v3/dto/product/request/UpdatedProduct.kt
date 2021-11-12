@@ -52,7 +52,8 @@ data class UpdatedProduct(
 	val nameYourPriceEnabled: Boolean? = null,
 	val subscriptionSettings: SubscriptionSettings? = null,
 	val googleProductCategory: Int? = null,
-	val productCondition: ProductCondition? = null
+	val productCondition: ProductCondition? = null,
+	val externalReferenceId: String? = null
 ) : ApiUpdatedDTO {
 
 	data class Ribbon(

@@ -51,7 +51,8 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		nameYourPriceEnabled = nameYourPriceEnabled,
 		subscriptionSettings = subscriptionSettings?.toUpdated(),
 		googleProductCategory = googleProductCategory,
-		productCondition = productCondition
+		productCondition = productCondition,
+		externalReferenceId = externalReferenceId
 	)
 }
 
