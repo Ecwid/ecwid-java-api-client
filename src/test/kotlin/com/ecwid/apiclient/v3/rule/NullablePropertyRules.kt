@@ -1127,6 +1127,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(OrdersSearchRequest::updatedFrom),
 	AllowNullable(OrdersSearchRequest::updatedTo),
 	AllowNullable(OrdersSearchRequest::vendorOrderNumber),
+	AllowNullable(OrdersSearchRequest::subscriptionIds),
 
 	AllowNullable(DeletedProductsSearchRequest::deletedFrom),
 	AllowNullable(DeletedProductsSearchRequest::deletedTo),
