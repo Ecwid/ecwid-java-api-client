@@ -373,6 +373,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedOrder.OrderItemSelectionInfo::selectionModifier),
 	IgnoreNullable(FetchedOrder.OrderItemSelectionInfo::selectionModifierType),
 	IgnoreNullable(FetchedOrder.OrderItemSelectionInfo::selectionTitle),
+	IgnoreNullable(FetchedOrder.OrderItemTax::id),
 	IgnoreNullable(FetchedOrder.OrderItemTax::includeInPrice),
 	IgnoreNullable(FetchedOrder.OrderItemTax::name),
 	IgnoreNullable(FetchedOrder.OrderItemTax::taxOnDiscountedSubtotal),
