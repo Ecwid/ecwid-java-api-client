@@ -129,6 +129,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrder::id),
 	ReadOnly(FetchedOrder::orderNumber),
 	ReadOnly(FetchedOrder::vendorOrderNumber),
+	ReadOnly(FetchedOrder::publicUid),
 	ReadOnly(FetchedOrder::orderExtraFields),
 	ReadOnly(FetchedOrder::giftCardCode),
 	ReadOnly(FetchedOrder::giftCardDoubleSpending),
