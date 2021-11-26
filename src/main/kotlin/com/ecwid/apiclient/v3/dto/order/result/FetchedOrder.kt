@@ -226,6 +226,7 @@ data class FetchedOrder(
 	)
 
 	data class OrderItemTax(
+		val id: Int? = null,
 		val name: String? = null,
 		val value: Double? = null,
 		val total: Double? = null,
