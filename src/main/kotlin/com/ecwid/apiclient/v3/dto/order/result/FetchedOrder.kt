@@ -13,6 +13,7 @@ data class FetchedOrder(
 
 	val orderNumber: Int = 0,
 	val vendorOrderNumber: String? = null,
+	val publicUid: String? = null,
 	val email: String? = null,
 	val ipAddress: String? = null,
 	val hidden: Boolean? = null,

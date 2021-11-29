@@ -271,6 +271,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedOrder.BaseOrderItemTax::total),
 	AllowNullable(FetchedOrder.BaseOrderItemTax::value),
 	AllowNullable(FetchedOrder::latestShipDate),
+	IgnoreNullable(FetchedOrder::publicUid),
 	IgnoreNullable(FetchedOrder.CreditCardStatus::avsMessage),
 	IgnoreNullable(FetchedOrder.CreditCardStatus::cvvMessage),
 	IgnoreNullable(FetchedOrder.DiscountCouponCatalogLimit::categories),
