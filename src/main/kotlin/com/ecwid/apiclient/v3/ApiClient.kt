@@ -27,14 +27,8 @@ import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
 import com.ecwid.apiclient.v3.dto.profile.request.*
 import com.ecwid.apiclient.v3.dto.profile.result.*
-import com.ecwid.apiclient.v3.dto.saleschannels.request.GoogleShoppingFeedConfigGetRequest
-import com.ecwid.apiclient.v3.dto.saleschannels.request.ShopzillaFeedConfigGetRequest
-import com.ecwid.apiclient.v3.dto.saleschannels.request.YahooShoppingFeedConfigGetRequest
-import com.ecwid.apiclient.v3.dto.saleschannels.request.YandexMarketFeedConfigGetRequest
-import com.ecwid.apiclient.v3.dto.saleschannels.response.FetchedGoogleShoppingFeedConfig
-import com.ecwid.apiclient.v3.dto.saleschannels.response.FetchedShopzillaFeedConfig
-import com.ecwid.apiclient.v3.dto.saleschannels.response.FetchedYahooShoppingFeedConfig
-import com.ecwid.apiclient.v3.dto.saleschannels.response.FetchedYandexMarketFeedConfig
+import com.ecwid.apiclient.v3.dto.saleschannels.request.*
+import com.ecwid.apiclient.v3.dto.saleschannels.response.*
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
@@ -277,6 +271,7 @@ interface SalesChannelsApiClient {
 	fun getShopzillaFeedConfig(request: ShopzillaFeedConfigGetRequest): FetchedShopzillaFeedConfig
 	fun getYahooShoppingFeedConfig(request: YahooShoppingFeedConfigGetRequest): FetchedYahooShoppingFeedConfig
 	fun getYandexMarketFeedConfig(request: YandexMarketFeedConfigGetRequest): FetchedYandexMarketFeedConfig
+	fun getYandexMarketDbsFeedConfig(request: YandexMarketDbsFeedConfigGetRequest): FetchedYandexMarketDbsFeedConfig
 }
 
 // Application
