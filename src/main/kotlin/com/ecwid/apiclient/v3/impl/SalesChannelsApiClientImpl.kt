@@ -2,14 +2,8 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.SalesChannelsApiClient
-import com.ecwid.apiclient.v3.dto.saleschannels.request.GoogleShoppingFeedConfigGetRequest
-import com.ecwid.apiclient.v3.dto.saleschannels.request.ShopzillaFeedConfigGetRequest
-import com.ecwid.apiclient.v3.dto.saleschannels.request.YahooShoppingFeedConfigGetRequest
-import com.ecwid.apiclient.v3.dto.saleschannels.request.YandexMarketFeedConfigGetRequest
-import com.ecwid.apiclient.v3.dto.saleschannels.response.FetchedGoogleShoppingFeedConfig
-import com.ecwid.apiclient.v3.dto.saleschannels.response.FetchedShopzillaFeedConfig
-import com.ecwid.apiclient.v3.dto.saleschannels.response.FetchedYahooShoppingFeedConfig
-import com.ecwid.apiclient.v3.dto.saleschannels.response.FetchedYandexMarketFeedConfig
+import com.ecwid.apiclient.v3.dto.saleschannels.request.*
+import com.ecwid.apiclient.v3.dto.saleschannels.response.*
 
 class SalesChannelsApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -26,4 +20,7 @@ class SalesChannelsApiClientImpl(
 
 	override fun getYandexMarketFeedConfig(request: YandexMarketFeedConfigGetRequest) =
 		apiClientHelper.makeObjectResultRequest<FetchedYandexMarketFeedConfig>(request)
+
+	override fun getYandexMarketDbsFeedConfig(request: YandexMarketDbsFeedConfigGetRequest) =
+		apiClientHelper.makeObjectResultRequest<FetchedYandexMarketDbsFeedConfig>(request)
 }
