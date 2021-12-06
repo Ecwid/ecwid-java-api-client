@@ -3,8 +3,8 @@ package com.ecwid.apiclient.v3
 import com.ecwid.apiclient.v3.config.ApiServerDomain
 import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.LoggingSettings
-import com.ecwid.apiclient.v3.dto.application.request.AppDeleteRequest
-import com.ecwid.apiclient.v3.dto.application.result.AppDeleteResult
+import com.ecwid.apiclient.v3.dto.application.request.ApplicationDeleteRequest
+import com.ecwid.apiclient.v3.dto.application.result.ApplicationDeleteResult
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequestWithIds
 import com.ecwid.apiclient.v3.dto.batch.request.GetEscapedBatchRequest
@@ -282,7 +282,7 @@ interface SalesChannelsApiClient {
 // Application
 // https://developers.ecwid.com/api-documentation/application
 interface ApplicationApiClient {
-	fun deleteApp(request: AppDeleteRequest): AppDeleteResult
+	fun deleteApplication(request: ApplicationDeleteRequest): ApplicationDeleteResult
 }
 
 // Starter site
