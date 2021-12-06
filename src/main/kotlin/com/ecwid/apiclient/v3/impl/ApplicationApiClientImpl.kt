@@ -2,12 +2,12 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.ApplicationApiClient
-import com.ecwid.apiclient.v3.dto.application.request.AppDeleteRequest
-import com.ecwid.apiclient.v3.dto.application.result.AppDeleteResult
+import com.ecwid.apiclient.v3.dto.application.request.ApplicationDeleteRequest
+import com.ecwid.apiclient.v3.dto.application.result.ApplicationDeleteResult
 
 class ApplicationApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
 ) : ApplicationApiClient {
-	override fun deleteApp(request: AppDeleteRequest) =
-		apiClientHelper.makeObjectResultRequest<AppDeleteResult>(request)
+	override fun deleteApplication(request: ApplicationDeleteRequest) =
+		apiClientHelper.makeObjectResultRequest<ApplicationDeleteResult>(request)
 }
