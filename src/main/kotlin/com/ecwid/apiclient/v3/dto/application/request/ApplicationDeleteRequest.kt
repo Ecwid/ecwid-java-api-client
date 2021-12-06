@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 
 class ApplicationDeleteRequest(
 	private val namespace: String = "",
-): ApiRequest {
+) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createDeleteRequest(
 		pathSegments = listOf(
 			"application"
