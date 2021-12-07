@@ -35,7 +35,6 @@ import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.httptransport.impl.ApacheCommonsHttpClientTransport
 import com.ecwid.apiclient.v3.jsontransformer.gson.GsonTransformerProvider
 import com.ecwid.apiclient.v3.util.PropertiesLoader
-import org.apache.http.HttpStatus
 import org.junit.jupiter.api.Assertions
 import java.nio.file.Path
 import java.nio.file.Paths
