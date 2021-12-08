@@ -31,6 +31,7 @@ import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.dto.variation.request.DeleteAllProductVariationsRequest
+import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.httptransport.impl.ApacheCommonsHttpClientTransport
 import com.ecwid.apiclient.v3.jsontransformer.gson.GsonTransformerProvider
 import com.ecwid.apiclient.v3.util.PropertiesLoader
@@ -102,7 +103,6 @@ abstract class BaseEntityTest {
 		apiClient
 			.searchProductsAsSequence(ProductsSearchRequest.ByFilters())
 			.map(FetchedProduct::id)
-			.filterNotNull()
 			.forEach { productId ->
 				apiClient.deleteProduct(ProductDeleteRequest(productId))
 			}
@@ -112,9 +112,12 @@ abstract class BaseEntityTest {
 		apiClient
 			.searchCategoriesAsSequence(CategoriesSearchRequest(hiddenCategories = true))
 			.map(FetchedCategory::id)
-			.filterNotNull()
 			.forEach { categoryId ->
-				apiClient.deleteCategory(CategoryDeleteRequest(categoryId))
+				try {
+					apiClient.deleteCategory(CategoryDeleteRequest(categoryId))
+				} catch (ignore: EcwidApiException) {
+					// ok
+				}
 			}
 	}
 

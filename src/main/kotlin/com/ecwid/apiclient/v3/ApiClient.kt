@@ -3,6 +3,8 @@ package com.ecwid.apiclient.v3
 import com.ecwid.apiclient.v3.config.ApiServerDomain
 import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.LoggingSettings
+import com.ecwid.apiclient.v3.dto.application.request.ApplicationDeleteRequest
+import com.ecwid.apiclient.v3.dto.application.result.ApplicationDeleteResult
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequestWithIds
 import com.ecwid.apiclient.v3.dto.batch.request.GetEscapedBatchRequest
@@ -48,7 +50,8 @@ open class ApiClient private constructor(
 	batchApiClient: BatchApiClient,
 	discountCouponsApiClient: CouponsApiClient,
 	cartsApiClient: CartsApiClient,
-	salesChannelsApiClient: SalesChannelsApiClient
+	salesChannelsApiClient: SalesChannelsApiClient,
+	applicationApiClient: ApplicationApiClient,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	ProductsApiClient by productsApiClient,
@@ -61,7 +64,8 @@ open class ApiClient private constructor(
 	BatchApiClient by batchApiClient,
 	CouponsApiClient by discountCouponsApiClient,
 	CartsApiClient by cartsApiClient,
-	SalesChannelsApiClient by salesChannelsApiClient {
+	SalesChannelsApiClient by salesChannelsApiClient,
+	ApplicationApiClient by applicationApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -76,7 +80,8 @@ open class ApiClient private constructor(
 		batchApiClient = BatchApiClientImpl(apiClientHelper),
 		discountCouponsApiClient = CouponsApiClientImpl(apiClientHelper),
 		cartsApiClient = CartsApiClientImpl(apiClientHelper),
-		salesChannelsApiClient = SalesChannelsApiClientImpl(apiClientHelper)
+		salesChannelsApiClient = SalesChannelsApiClientImpl(apiClientHelper),
+		applicationApiClient = ApplicationApiClientImpl(apiClientHelper),
 	)
 
 	companion object {
@@ -276,7 +281,9 @@ interface SalesChannelsApiClient {
 
 // Application
 // https://developers.ecwid.com/api-documentation/application
-// TODO
+interface ApplicationApiClient {
+	fun deleteApplication(request: ApplicationDeleteRequest): ApplicationDeleteResult
+}
 
 // Starter site
 // https://developers.ecwid.com/api-documentation/starter-site
