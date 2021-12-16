@@ -25,7 +25,8 @@ data class FetchedStoreProfile(
 	val productFiltersSettings: ProductFiltersSettings? = null,
 	val fbMessengerSettings: FBMessengerSettings? = null,
 	val orderInvoiceSettings: OrderInvoiceSettings? = null,
-	val giftCardSettings: GiftCardSettings? = null
+	val giftCardSettings: GiftCardSettings? = null,
+	val accountBilling: AccountBilling? = null
 ) : ApiFetchedDTO {
 
 	data class GeneralInfo(
@@ -660,6 +661,10 @@ data class FetchedStoreProfile(
 		val id: Int? = null,
 		val name: String? = null,
 		val url: String? = null
+	)
+
+	data class AccountBilling(
+		val channelId: String
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedStoreProfile::class)

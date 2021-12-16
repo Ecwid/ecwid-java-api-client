@@ -653,6 +653,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedStoreProfile::shipping),
 	IgnoreNullable(FetchedStoreProfile::taxSettings),
 	IgnoreNullable(FetchedStoreProfile::zones),
+	IgnoreNullable(FetchedStoreProfile::accountBilling),
 	IgnoreNullable(FetchedStoreProfile.AbandonedSalesSettings::autoAbandonedSalesRecovery),
 	IgnoreNullable(FetchedStoreProfile.Account::accountEmail),
 	IgnoreNullable(FetchedStoreProfile.Account::accountName),
