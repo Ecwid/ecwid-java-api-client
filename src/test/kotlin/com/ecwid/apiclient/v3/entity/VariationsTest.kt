@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.entity
 
+import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductDetailsRequest
@@ -46,6 +47,7 @@ class VariationsTest : BaseEntityTest() {
 		val testVariationSku = "testVariation"
 		val testVariationPrice = randomPrice()
 		val testVariationWeight = randomWeight()
+		val testVariationDimensions = generateDimensions()
 		val createProductVariationRequest = CreateProductVariationRequest(
 			productId = newProductId,
 			newVariation = UpdatedVariation(
@@ -54,6 +56,7 @@ class VariationsTest : BaseEntityTest() {
 				isShippingRequired = true,
 				price = testVariationPrice,
 				weight = testVariationWeight,
+				dimensions = testVariationDimensions,
 				options = listOf(
 					UpdatedVariation.Option(
 						name = "Size",
@@ -73,6 +76,7 @@ class VariationsTest : BaseEntityTest() {
 		assertEquals(testVariationPrice, variation.price)
 		assertEquals(testVariationWeight, variation.weight)
 		assertEquals(testVariationSku, variation.sku)
+		assertEquals(testVariationDimensions, variation.toUpdated().dimensions)
 	}
 
 	@Test
@@ -104,6 +108,7 @@ class VariationsTest : BaseEntityTest() {
 				isShippingRequired = true,
 				price = 51.2,
 				weight = 16.7,
+				dimensions = generateDimensions(),
 				options = listOf(
 					UpdatedVariation.Option(
 						name = "Size",
@@ -137,12 +142,14 @@ class VariationsTest : BaseEntityTest() {
 		assertTrue(create2ndVariationResult.id > 0)
 
 		// update 1st variation
+		val newDimensions = generateDimensions()
 		val update1stVariationRequest = UpdateProductVariationRequest(
 			productId = newProductId,
 			variationId = create1stVariationResult.id,
 			variation = UpdatedVariation(
 				sku = "modified first test Variation",
-				quantity = 15
+				quantity = 15,
+				dimensions = newDimensions
 			)
 		)
 		val updateResult = apiClient.updateProductVariation(update1stVariationRequest)
@@ -164,6 +171,7 @@ class VariationsTest : BaseEntityTest() {
 		assertEquals(create1stVariationResult.id, firstVar.id)
 		assertEquals("modified first test Variation", firstVar.sku)
 		assertEquals(15, firstVar.quantity)
+		assertEquals(newDimensions, firstVar.toUpdated().dimensions)
 		assertEquals(create2ndVariationResult.id, secondVar.id)
 		assertEquals("second test Variation", secondVar.sku)
 		assertEquals(5 /* = 9 - 4 */, secondVar.quantity)
@@ -283,3 +291,9 @@ private fun generateProductRadioOption(name: String, values: List<String>): Upda
 		choices = choices
 	)
 }
+
+private fun generateDimensions() = UpdatedVariation.ProductDimensions(
+	length = randomDimension(),
+	width = randomDimension(),
+	height = randomDimension()
+)
