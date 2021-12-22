@@ -75,9 +75,9 @@ data class FetchedVariation(
 	)
 
 	data class ProductDimensions(
-		val length: Double? = null,
-		val width: Double? = null,
-		val height: Double? = null
+		val length: Double = 0.0,
+		val width: Double = 0.0,
+		val height: Double = 0.0
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedVariation::class)
