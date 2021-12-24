@@ -18,6 +18,7 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 
 		weight = weight,
 		dimensions = dimensions?.toUpdated(),
+		volume = volume,
 
 		attributes = attributes?.map(FetchedVariation.AttributeValue::toUpdated),
 

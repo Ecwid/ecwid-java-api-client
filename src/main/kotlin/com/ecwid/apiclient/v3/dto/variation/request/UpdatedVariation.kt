@@ -20,6 +20,7 @@ data class UpdatedVariation(
 
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
+	val volume: Double? = null,
 
 	val attributes: List<AttributeValue>? = null,
 

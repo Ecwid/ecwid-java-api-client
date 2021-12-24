@@ -34,6 +34,7 @@ data class FetchedVariation(
 
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
+	val volume: Double = 0.0,
 	val borderInfo: BorderInfo? = null,
 
 	val attributes: List<AttributeValue>? = null,

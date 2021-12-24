@@ -48,6 +48,7 @@ class VariationsTest : BaseEntityTest() {
 		val testVariationPrice = randomPrice()
 		val testVariationWeight = randomWeight()
 		val testVariationDimensions = generateDimensions()
+		val testVariationVolume = randomVolume()
 		val createProductVariationRequest = CreateProductVariationRequest(
 			productId = newProductId,
 			newVariation = UpdatedVariation(
@@ -57,6 +58,7 @@ class VariationsTest : BaseEntityTest() {
 				price = testVariationPrice,
 				weight = testVariationWeight,
 				dimensions = testVariationDimensions,
+				volume = testVariationVolume,
 				options = listOf(
 					UpdatedVariation.Option(
 						name = "Size",
@@ -75,8 +77,9 @@ class VariationsTest : BaseEntityTest() {
 		val variation = variations.first()
 		assertEquals(testVariationPrice, variation.price)
 		assertEquals(testVariationWeight, variation.weight)
-		assertEquals(testVariationSku, variation.sku)
 		assertEquals(testVariationDimensions, variation.toUpdated().dimensions)
+		assertEquals(testVariationVolume, variation.volume)
+		assertEquals(testVariationSku, variation.sku)
 	}
 
 	@Test
@@ -109,6 +112,7 @@ class VariationsTest : BaseEntityTest() {
 				price = 51.2,
 				weight = 16.7,
 				dimensions = generateDimensions(),
+				volume = 16.0,
 				options = listOf(
 					UpdatedVariation.Option(
 						name = "Size",
@@ -149,7 +153,8 @@ class VariationsTest : BaseEntityTest() {
 			variation = UpdatedVariation(
 				sku = "modified first test Variation",
 				quantity = 15,
-				dimensions = newDimensions
+				dimensions = newDimensions,
+				volume = 15.25
 			)
 		)
 		val updateResult = apiClient.updateProductVariation(update1stVariationRequest)
@@ -172,6 +177,7 @@ class VariationsTest : BaseEntityTest() {
 		assertEquals("modified first test Variation", firstVar.sku)
 		assertEquals(15, firstVar.quantity)
 		assertEquals(newDimensions, firstVar.toUpdated().dimensions)
+		assertEquals(15.25, firstVar.volume)
 		assertEquals(create2ndVariationResult.id, secondVar.id)
 		assertEquals("second test Variation", secondVar.sku)
 		assertEquals(5 /* = 9 - 4 */, secondVar.quantity)
