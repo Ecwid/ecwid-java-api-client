@@ -52,6 +52,7 @@ data class FetchedProduct(
 
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
+	val volume: Double = 0.0,
 	val shipping: ShippingSettings? = null,
 	val isShippingRequired: Boolean? = null,
 

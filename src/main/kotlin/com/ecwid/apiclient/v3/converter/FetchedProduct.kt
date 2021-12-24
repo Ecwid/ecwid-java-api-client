@@ -27,6 +27,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 
 		weight = weight,
 		dimensions = dimensions?.toUpdated(),
+		volume = volume,
 		shipping = shipping?.toUpdated(),
 		isShippingRequired = isShippingRequired,
 

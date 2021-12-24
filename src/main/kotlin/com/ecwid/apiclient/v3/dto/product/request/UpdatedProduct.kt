@@ -30,6 +30,7 @@ data class UpdatedProduct(
 
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
+	val volume: Double? = null,
 	val shipping: ShippingSettings? = null,
 	val isShippingRequired: Boolean? = null,
 
