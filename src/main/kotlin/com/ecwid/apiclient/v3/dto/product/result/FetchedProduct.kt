@@ -97,7 +97,7 @@ data class FetchedProduct(
 		val recurringChargeSettings: List<RecurringChargeSettings> = emptyList(),
 		val oneTimePurchasePrice: Double? = null,
 		val oneTimePurchasePriceFormatted: String? = null,
-		val oneTimePurchaseMarkup : Double? =null,
+		val oneTimePurchaseMarkup: Double? = null,
 		val oneTimePurchaseMarkupFormatted: String? = null,
 		val oneTimePurchaseMarkupPercent: Double? = null,
 		val oneTimePurchaseMarkupPercentFormatted: String? = null
