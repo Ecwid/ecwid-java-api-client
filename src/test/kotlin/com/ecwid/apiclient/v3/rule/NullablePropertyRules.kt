@@ -947,6 +947,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedVariation::warningLimit),
 	IgnoreNullable(FetchedVariation::weight),
 	IgnoreNullable(FetchedVariation::wholesalePrices),
+	AllowNullable(FetchedVariation::externalReferenceId),
 	IgnoreNullable(FetchedVariation.AttributeValue::id),
 	IgnoreNullable(FetchedVariation.AttributeValue::name),
 	IgnoreNullable(FetchedVariation.AttributeValue::show),

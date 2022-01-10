@@ -36,6 +36,7 @@ data class FetchedVariation(
 	val borderInfo: BorderInfo? = null,
 
 	val attributes: List<AttributeValue>? = null,
+	val externalReferenceId: String? = null,
 
 	val isShippingRequired: Boolean? = null
 
