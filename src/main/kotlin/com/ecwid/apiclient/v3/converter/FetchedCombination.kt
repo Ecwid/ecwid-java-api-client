@@ -26,7 +26,9 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 
 		options = options?.map(FetchedVariation.Option::toUpdated),
 
-		isShippingRequired = isShippingRequired
+		isShippingRequired = isShippingRequired,
+
+		customsHsTariffCode = customsHsTariffCode,
 	)
 }
 

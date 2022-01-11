@@ -40,8 +40,9 @@ data class FetchedVariation(
 	val attributes: List<AttributeValue>? = null,
 	val externalReferenceId: String? = null,
 
-	val isShippingRequired: Boolean? = null
+	val isShippingRequired: Boolean? = null,
 
+	val customsHsTariffCode: String? = null,
 ) : ApiFetchedDTO {
 
 	data class AttributeValue(

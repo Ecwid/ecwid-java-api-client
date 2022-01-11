@@ -49,6 +49,7 @@ class VariationsTest : BaseEntityTest() {
 		val testVariationWeight = randomWeight()
 		val testVariationDimensions = generateDimensions()
 		val testVariationVolume = randomVolume()
+		val testVariationCustomsHsTariffCode = randomAlphanumeric(10)
 		val createProductVariationRequest = CreateProductVariationRequest(
 			productId = newProductId,
 			newVariation = UpdatedVariation(
@@ -64,7 +65,8 @@ class VariationsTest : BaseEntityTest() {
 						name = "Size",
 						value = "L"
 					)
-				)
+				),
+				customsHsTariffCode = testVariationCustomsHsTariffCode,
 			)
 		)
 
@@ -80,6 +82,7 @@ class VariationsTest : BaseEntityTest() {
 		assertEquals(testVariationDimensions, variation.toUpdated().dimensions)
 		assertEquals(testVariationVolume, variation.volume)
 		assertEquals(testVariationSku, variation.sku)
+		assertEquals(testVariationCustomsHsTariffCode, variation.customsHsTariffCode)
 	}
 
 	@Test
@@ -118,7 +121,8 @@ class VariationsTest : BaseEntityTest() {
 						name = "Size",
 						value = "L"
 					)
-				)
+				),
+				customsHsTariffCode = "123456",
 			)
 		)
 
@@ -154,7 +158,8 @@ class VariationsTest : BaseEntityTest() {
 				sku = "modified first test Variation",
 				quantity = 15,
 				dimensions = newDimensions,
-				volume = 15.25
+				volume = 15.25,
+				customsHsTariffCode = "654321",
 			)
 		)
 		val updateResult = apiClient.updateProductVariation(update1stVariationRequest)
@@ -178,6 +183,7 @@ class VariationsTest : BaseEntityTest() {
 		assertEquals(15, firstVar.quantity)
 		assertEquals(newDimensions, firstVar.toUpdated().dimensions)
 		assertEquals(15.25, firstVar.volume)
+		assertEquals("654321", firstVar.customsHsTariffCode)
 		assertEquals(create2ndVariationResult.id, secondVar.id)
 		assertEquals("second test Variation", secondVar.sku)
 		assertEquals(5 /* = 9 - 4 */, secondVar.quantity)

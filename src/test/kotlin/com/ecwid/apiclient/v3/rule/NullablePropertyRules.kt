@@ -949,6 +949,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedVariation::weight),
 	IgnoreNullable(FetchedVariation::wholesalePrices),
 	AllowNullable(FetchedVariation::externalReferenceId),
+	AllowNullable(FetchedVariation::customsHsTariffCode),
 	IgnoreNullable(FetchedVariation.AttributeValue::id),
 	IgnoreNullable(FetchedVariation.AttributeValue::name),
 	IgnoreNullable(FetchedVariation.AttributeValue::show),

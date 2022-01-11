@@ -25,7 +25,9 @@ data class UpdatedVariation(
 	val attributes: List<AttributeValue>? = null,
 	val externalReferenceId: String? = null,
 
-	val isShippingRequired: Boolean? = null
+	val isShippingRequired: Boolean? = null,
+
+	val customsHsTariffCode: String? = null,
 ) : ApiUpdatedDTO {
 
 	data class AttributeValue(
