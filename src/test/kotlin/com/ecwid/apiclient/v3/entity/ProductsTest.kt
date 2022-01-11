@@ -1386,6 +1386,7 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 
 		weight = randomWeight(),
 		dimensions = generateDimensions(),
+		volume = randomVolume(),
 		shipping = generateShippingSettings(),
 		isShippingRequired = true, // To allow set weight field
 

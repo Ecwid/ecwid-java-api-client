@@ -17,6 +17,8 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 		compareToPrice = compareToPrice,
 
 		weight = weight,
+		dimensions = dimensions?.toUpdated(),
+		volume = volume,
 
 		attributes = attributes?.map(FetchedVariation.AttributeValue::toUpdated),
 
@@ -42,4 +44,10 @@ private fun FetchedVariation.AttributeValue.toUpdated() = UpdatedVariation.Attri
 private fun FetchedVariation.Option.toUpdated() = UpdatedVariation.Option(
 	name = name,
 	value = value
+)
+
+private fun FetchedVariation.ProductDimensions.toUpdated() = UpdatedVariation.ProductDimensions(
+	length = length,
+	width = width,
+	height = height
 )

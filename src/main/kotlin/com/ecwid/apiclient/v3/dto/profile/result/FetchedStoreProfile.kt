@@ -150,6 +150,7 @@ data class FetchedStoreProfile(
 		val timeFormat: String? = null,
 		val timezone: String? = null,
 		val dimensionsUnit: DimensionUnit? = null,
+		val volumeUnit: VolumeUnit = VolumeUnit.ML,
 		val orderNumberPrefix: String? = null,
 		val orderNumberSuffix: String? = null
 	)
@@ -160,6 +161,10 @@ data class FetchedStoreProfile(
 
 	enum class DimensionUnit {
 		MM, CM, IN, YD
+	}
+
+	enum class VolumeUnit {
+		L, ML, OZ
 	}
 
 	data class Languages(

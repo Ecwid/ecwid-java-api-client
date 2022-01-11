@@ -19,6 +19,8 @@ data class UpdatedVariation(
 	val warningLimit: Int? = null,
 
 	val weight: Double? = null,
+	val dimensions: ProductDimensions? = null,
+	val volume: Double? = null,
 
 	val attributes: List<AttributeValue>? = null,
 	val externalReferenceId: String? = null,
@@ -41,6 +43,12 @@ data class UpdatedVariation(
 	data class Option(
 		val name: String? = null,
 		val value: String? = null
+	)
+
+	data class ProductDimensions(
+		val length: Double? = null,
+		val width: Double? = null,
+		val height: Double? = null
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedVariation::class)

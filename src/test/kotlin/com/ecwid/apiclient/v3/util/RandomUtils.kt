@@ -32,6 +32,10 @@ internal fun randomDimension(): Double = Random
 	.nextDouble(1.0, 100.0)
 	.roundDouble()
 
+internal fun randomVolume() = Random
+	.nextDouble(1.0, 100.0)
+	.roundDouble()
+
 internal fun randomModifier() = Random
 	.nextDouble(-20.0, 20.0)
 	.roundDouble()
