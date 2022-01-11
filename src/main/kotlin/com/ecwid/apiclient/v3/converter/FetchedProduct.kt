@@ -53,7 +53,8 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		subscriptionSettings = subscriptionSettings?.toUpdated(),
 		googleProductCategory = googleProductCategory,
 		productCondition = productCondition,
-		externalReferenceId = externalReferenceId
+		externalReferenceId = externalReferenceId,
+		customsHsTariffCode = customsHsTariffCode,
 	)
 }
 

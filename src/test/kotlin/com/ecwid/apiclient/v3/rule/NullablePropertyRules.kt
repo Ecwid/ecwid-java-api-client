@@ -1364,6 +1364,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedProduct::googleProductCategoryName),
 
 	AllowNullable(FetchedProduct::externalReferenceId),
+	AllowNullable(FetchedProduct::customsHsTariffCode),
 
 	AllowNullable(FetchedStoreProfile.Settings::googleProductCategory),
 	AllowNullable(FetchedStoreProfile.Settings::googleProductCategoryName),

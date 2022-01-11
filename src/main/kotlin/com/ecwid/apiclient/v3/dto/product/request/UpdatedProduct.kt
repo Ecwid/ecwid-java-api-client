@@ -54,7 +54,8 @@ data class UpdatedProduct(
 	val subscriptionSettings: SubscriptionSettings? = null,
 	val googleProductCategory: Int? = null,
 	val productCondition: ProductCondition? = null,
-	val externalReferenceId: String? = null
+	val externalReferenceId: String? = null,
+	val customsHsTariffCode: String? = null,
 ) : ApiUpdatedDTO {
 
 	data class Ribbon(
