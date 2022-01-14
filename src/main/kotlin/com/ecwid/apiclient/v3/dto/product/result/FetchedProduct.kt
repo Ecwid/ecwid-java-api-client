@@ -41,6 +41,7 @@ data class FetchedProduct(
 	val priceInProductList: Double? = null, // TODO Figure out how to test
 	val defaultDisplayedPrice: Double? = null, // TODO Figure out how to test
 	val defaultDisplayedPriceFormatted: String? = null, // TODO Figure out how to test
+	val costPrice: Double = 0.0,
 	val wholesalePrices: List<WholesalePrice>? = null,
 
 	val compareToPrice: Double? = null,

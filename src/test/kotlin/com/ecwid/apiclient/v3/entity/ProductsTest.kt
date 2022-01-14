@@ -1370,6 +1370,7 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 		showOnFrontpage = randomByte(),
 
 		price = basePrice,
+		costPrice = basePrice * 0.9,
 		wholesalePrices = listOf(
 			generateWholesalePrice(basePrice, 2),
 			generateWholesalePrice(basePrice, 3)

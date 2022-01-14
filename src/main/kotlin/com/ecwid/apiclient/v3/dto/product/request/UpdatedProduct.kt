@@ -25,6 +25,7 @@ data class UpdatedProduct(
 	val showOnFrontpage: Int? = null,
 
 	val price: Double? = null,
+	val costPrice: Double? = null,
 	val wholesalePrices: List<WholesalePrice>? = null,
 	val compareToPrice: Double? = null,
 

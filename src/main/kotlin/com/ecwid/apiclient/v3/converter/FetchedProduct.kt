@@ -22,6 +22,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		showOnFrontpage = showOnFrontpage,
 
 		price = price,
+		costPrice = costPrice,
 		wholesalePrices = wholesalePrices?.map(FetchedProduct.WholesalePrice::toUpdated),
 		compareToPrice = compareToPrice,
 
