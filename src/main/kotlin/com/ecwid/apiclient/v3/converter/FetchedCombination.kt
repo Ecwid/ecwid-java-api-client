@@ -13,6 +13,7 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 		warningLimit = warningLimit,
 
 		price = price,
+		costPrice = costPrice,
 		wholesalePrices = wholesalePrices?.map(FetchedVariation.WholesalePrice::toUpdated),
 		compareToPrice = compareToPrice,
 

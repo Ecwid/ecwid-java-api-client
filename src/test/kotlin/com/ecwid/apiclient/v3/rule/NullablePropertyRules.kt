@@ -930,6 +930,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedVariation::attributes),
 	AllowNullable(FetchedVariation::borderInfo),
 	IgnoreNullable(FetchedVariation::compareToPrice),
+	AllowNullable(FetchedVariation::costPrice),
 	IgnoreNullable(FetchedVariation::defaultDisplayedPrice),
 	IgnoreNullable(FetchedVariation::defaultDisplayedPriceFormatted),
 	AllowNullable(FetchedVariation::dimensions),

@@ -11,6 +11,7 @@ data class UpdatedVariation(
 	val options: List<Option>? = null,
 
 	val price: Double? = null,
+	val costPrice: Double? = null,
 	val compareToPrice: Double? = null,
 	val wholesalePrices: List<WholesalePrice>? = null,
 
