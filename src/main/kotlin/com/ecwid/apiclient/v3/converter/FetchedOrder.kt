@@ -153,7 +153,8 @@ fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 		selectedOptions = selectedOptions?.map(FetchedOrder.OrderItemSelectedOption::toUpdated),
 		taxes = taxes?.map(FetchedOrder.OrderItemTax::toUpdated),
 		dimensions = dimensions?.toUpdated(),
-		discounts = discounts?.map(FetchedOrder.OrderItemDiscounts::toUpdated)
+		discounts = discounts?.map(FetchedOrder.OrderItemDiscounts::toUpdated),
+		externalReferenceId = externalReferenceId
 	)
 }
 

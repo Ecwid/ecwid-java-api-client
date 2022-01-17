@@ -86,6 +86,7 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	IgnoreNullable(FetchedOrder.OrderItem::taxes),
 	IgnoreNullable(FetchedOrder.OrderItem::trackQuantity),
 	IgnoreNullable(FetchedOrder.OrderItem::weight),
+	IgnoreNullable(FetchedOrder.OrderItem::externalReferenceId),
 	IgnoreNullable(FetchedOrder.OrderItemDiscounts::discountInfo),
 	IgnoreNullable(FetchedOrder.OrderItemDiscounts::total),
 	AllowNullable(FetchedOrder.OrderItemOptionFile::id),
