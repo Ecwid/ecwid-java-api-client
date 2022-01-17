@@ -135,6 +135,7 @@ val customAppRequestNullablePropertyRules: List<NullablePropertyRule<*, *>> = li
 	AllowNullable(CustomAppRequest.OrderItem::warningLimit),
 	AllowNullable(CustomAppRequest.OrderItem::weight),
 	AllowNullable(CustomAppRequest.OrderItem::wholesalePrices),
+	AllowNullable(CustomAppRequest.OrderItem::externalReferenceId),
 	AllowNullable(CustomAppRequest.OrderItemOption::files),
 	AllowNullable(CustomAppRequest.OrderItemOption::name),
 	AllowNullable(CustomAppRequest.OrderItemOption::nameTranslated),
