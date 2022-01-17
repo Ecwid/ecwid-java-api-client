@@ -103,6 +103,8 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(orderItem.dimensions?.width, cartItem.dimensions?.width)
 			assertEquals(orderItem.dimensions?.height, cartItem.dimensions?.height)
 
+			assertEquals(orderItem.externalReferenceId, cartItem.externalReferenceId)
+
 			assertEquals(orderItem.selectedOptions?.count(), cartItem.selectedOptions?.count())
 			cartItem.selectedOptions?.forEachIndexed { selectedOptionIndex, cartSelectedOptions ->
 				val orderSelectedOption = orderItem.selectedOptions?.get(selectedOptionIndex)
