@@ -217,8 +217,17 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedVariation::borderInfo),
 	Ignored(FetchedVariation.AttributeValue::name),
 	Ignored(FetchedVariation.AttributeValue::type),
-	Ignored(FetchedVariation.AttributeValue::show)
+	Ignored(FetchedVariation.AttributeValue::show),
 
+	ReadOnly(FetchedProduct.RecurringChargeSettings::subscriptionPriceWithSignUpFeeFormatted),
+	ReadOnly(FetchedProduct.RecurringChargeSettings::signUpFee),
+	ReadOnly(FetchedProduct.RecurringChargeSettings::signUpFeeFormatted),
+	ReadOnly(FetchedProduct.RecurringChargeSettings::subscriptionPriceWithSignUpFeeFormatted),
+	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchasePriceFormatted),
+	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupFormatted),
+	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkup),
+	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercent),
+	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercentFormatted)
 )
 
 sealed class NonUpdatablePropertyRule<T, R>(
