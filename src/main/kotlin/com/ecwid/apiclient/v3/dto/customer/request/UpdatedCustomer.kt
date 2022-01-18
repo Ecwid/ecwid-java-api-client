@@ -13,7 +13,8 @@ data class UpdatedCustomer(
 	val taxId: String? = null,
 	val taxIdValid: Boolean? = null,
 	val taxExempt: Boolean? = null,
-	val acceptMarketing: Boolean? = null
+	val acceptMarketing: Boolean? = null,
+	val lang: String? = null,
 ) : ApiUpdatedDTO {
 
 	data class BillingPerson(

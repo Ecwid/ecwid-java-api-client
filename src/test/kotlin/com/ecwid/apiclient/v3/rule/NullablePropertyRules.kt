@@ -237,6 +237,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedCustomer::billingPerson),
 	IgnoreNullable(FetchedCustomer::customerGroupId),
 	IgnoreNullable(FetchedCustomer::customerGroupName),
+    AllowNullable(FetchedCustomer::lang),
 	IgnoreNullable(FetchedCustomer::registered),
 	IgnoreNullable(FetchedCustomer::shippingAddresses),
 	IgnoreNullable(FetchedCustomer::taxExempt),

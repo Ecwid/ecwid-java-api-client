@@ -378,7 +378,8 @@ private fun generateTestCustomerForCreate(customerGroupId: Int?): UpdatedCustome
 		taxId = randomAlphanumeric(8),
 		taxIdValid = randomBoolean(),
 		taxExempt = randomBoolean(),
-		acceptMarketing = randomBoolean()
+		acceptMarketing = randomBoolean(),
+		lang = "en",
 	)
 }
 
@@ -400,7 +401,8 @@ private fun generateTestCustomerForUpdate(
 		taxId = randomAlphanumeric(8),
 		taxIdValid = randomBoolean(),
 		taxExempt = randomBoolean(),
-		acceptMarketing = randomBoolean()
+		acceptMarketing = randomBoolean(),
+		lang = "ru",
 	)
 }
 
