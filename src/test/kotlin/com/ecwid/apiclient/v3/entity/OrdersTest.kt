@@ -391,6 +391,11 @@ class OrdersTest : BaseEntityTest() {
 		val deletedOrders = apiClient.searchDeletedOrdersAsSequence(deletedOrdersSearchRequest)
 		val deletedOrder = deletedOrders.firstOrNull { deletedOrder -> deletedOrder.id == orderCreateResult.id }
 		require(deletedOrder != null)
+
+		println("Generated instant from - $instantFrom")
+		println("Generated instant to - $instantTo")
+		println("Deleted order date - ${deletedOrder.date}")
+
 		assertTrue(instantFrom.isBefore(deletedOrder.date.toInstant()))
 		assertTrue(instantTo.isAfter(deletedOrder.date.toInstant()))
 	}
