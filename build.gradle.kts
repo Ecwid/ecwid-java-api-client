@@ -59,10 +59,6 @@ tasks.withType<Test> {
 	}
 }
 
-tasks.withType<Wrapper> {
-	gradleVersion = "7.0.2"
-}
-
 tasks.withType<Detekt>().configureEach {
 	jvmTarget = "11"
 }

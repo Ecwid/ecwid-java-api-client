@@ -97,5 +97,15 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct.ShippingSettings::type),
     AllowNullable(FetchedProduct::googleProductCategory),
 	AllowNullable(FetchedProduct::googleProductCategoryName),
-	AllowNullable(FetchedProduct::externalReferenceId)
+	AllowNullable(FetchedProduct::externalReferenceId),
+	IgnoreNullable(FetchedProduct.RecurringChargeSettings::signUpFee),
+	IgnoreNullable(FetchedProduct.RecurringChargeSettings::signUpFeeFormatted),
+	AllowNullable(FetchedProduct.RecurringChargeSettings::subscriptionPriceWithSignUpFee),
+	IgnoreNullable(FetchedProduct.RecurringChargeSettings::subscriptionPriceWithSignUpFeeFormatted),
+	IgnoreNullable(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkup),
+	IgnoreNullable(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupFormatted),
+	IgnoreNullable(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercent),
+	IgnoreNullable(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercentFormatted),
+	AllowNullable(FetchedProduct.SubscriptionSettings::oneTimePurchasePrice),
+	IgnoreNullable(FetchedProduct.SubscriptionSettings::oneTimePurchasePriceFormatted)
 )
