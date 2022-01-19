@@ -228,8 +228,7 @@ private fun generateTestOrderItem() = UpdatedOrder.OrderItem(
 	discounts = listOf(
 		generateOrderItemDiscounts(),
 		generateOrderItemDiscounts()
-	),
-	externalReferenceId = "External reference id " + randomAlphanumeric(10)
+	)
 )
 
 private fun generateOrderItemDiscounts(): UpdatedOrder.OrderItemDiscounts {

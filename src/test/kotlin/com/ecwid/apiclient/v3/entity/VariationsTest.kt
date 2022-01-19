@@ -44,7 +44,6 @@ class VariationsTest : BaseEntityTest() {
 		assertTrue(newProductId > 0)
 
 		val testVariationSku = "testVariation"
-		val testVariationExternalReferenceId = "product variation external referenceId"
 		val testVariationPrice = randomPrice()
 		val testVariationWeight = randomWeight()
 		val createProductVariationRequest = CreateProductVariationRequest(
@@ -60,8 +59,7 @@ class VariationsTest : BaseEntityTest() {
 						name = "Size",
 						value = "L"
 					)
-				),
-				externalReferenceId = testVariationExternalReferenceId
+				)
 			)
 		)
 
@@ -75,7 +73,6 @@ class VariationsTest : BaseEntityTest() {
 		assertEquals(testVariationPrice, variation.price)
 		assertEquals(testVariationWeight, variation.weight)
 		assertEquals(testVariationSku, variation.sku)
-		assertEquals(testVariationExternalReferenceId, variation.externalReferenceId)
 	}
 
 	@Test
