@@ -196,7 +196,7 @@ data class FetchedStoreProfile(
 		val title: String? = null,
 		val enabled: Boolean? = null,
 		val orderBy: Int? = null,
-		val fulfillmentType: FulfillmentType? = null,
+		val fulfilmentType: FulfilmentType? = null,
 		val destinationZone: Zone? = null,
 		val deliveryTimeDays: String? = null,
 		val description: String? = null,
@@ -215,7 +215,7 @@ data class FetchedStoreProfile(
 	)
 
 	@Suppress("unused")
-	enum class FulfillmentType {
+	enum class FulfilmentType {
 		pickup, shipping
 	}
 
