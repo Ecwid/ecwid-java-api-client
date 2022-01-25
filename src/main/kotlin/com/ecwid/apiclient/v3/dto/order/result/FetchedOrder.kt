@@ -228,14 +228,22 @@ data class FetchedOrder(
 	)
 
 	data class OrderItemTax(
-		val id: Int? = null,
 		val name: String? = null,
 		val value: Double? = null,
 		val total: Double? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
 		val taxOnShipping: Double? = null,
-		val includeInPrice: Boolean? = null
-	)
+		val includeInPrice: Boolean? = null,
+		val sourceTaxRateId: Int? = null,
+		val sourceTaxRateType: RateType? = null
+	) {
+		enum class RateType {
+			AUTO,
+			MANUAL,
+			CUSTOM,
+			LEGACY
+		}
+	}
 
 	data class ProductDimensions(
 		val length: Double? = null,
