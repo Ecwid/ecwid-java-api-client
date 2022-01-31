@@ -165,7 +165,9 @@ private fun FetchedStoreProfile.FormatsAndUnits.toUpdated(): UpdatedStoreProfile
 		timezone = timezone,
 		dimensionsUnit = dimensionsUnit?.toUpdated(),
 		orderNumberPrefix = orderNumberPrefix,
-		orderNumberSuffix = orderNumberSuffix
+		orderNumberSuffix = orderNumberSuffix,
+		orderNumberMinDigitsAmount = orderNumberMinDigitsAmount,
+		orderNumberNextNumber = orderNumberNextNumber,
 	)
 }
 

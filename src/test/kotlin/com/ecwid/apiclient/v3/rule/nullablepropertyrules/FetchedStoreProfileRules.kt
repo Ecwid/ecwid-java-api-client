@@ -148,6 +148,8 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.FormatsAndUnits::currencyTruncateZeroFractional),
 	IgnoreNullable(FetchedStoreProfile.FormatsAndUnits::dateFormat),
 	IgnoreNullable(FetchedStoreProfile.FormatsAndUnits::dimensionsUnit),
+	AllowNullable(FetchedStoreProfile.FormatsAndUnits::orderNumberMinDigitsAmount),
+	AllowNullable(FetchedStoreProfile.FormatsAndUnits::orderNumberNextNumber),
 	IgnoreNullable(FetchedStoreProfile.FormatsAndUnits::orderNumberPrefix),
 	IgnoreNullable(FetchedStoreProfile.FormatsAndUnits::orderNumberSuffix),
 	IgnoreNullable(FetchedStoreProfile.FormatsAndUnits::timeFormat),
