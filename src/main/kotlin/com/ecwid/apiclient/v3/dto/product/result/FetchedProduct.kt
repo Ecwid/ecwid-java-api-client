@@ -97,12 +97,22 @@ data class FetchedProduct(
 	data class SubscriptionSettings(
 		val subscriptionAllowed: Boolean = false,
 		val oneTimePurchaseAllowed: Boolean = false,
-		val recurringChargeSettings: List<RecurringChargeSettings> = emptyList()
+		val recurringChargeSettings: List<RecurringChargeSettings> = emptyList(),
+		val oneTimePurchasePrice: Double? = null,
+		val oneTimePurchasePriceFormatted: String? = null,
+		val oneTimePurchaseMarkup: Double? = null,
+		val oneTimePurchaseMarkupFormatted: String? = null,
+		val oneTimePurchaseMarkupPercent: Double? = null,
+		val oneTimePurchaseMarkupPercentFormatted: String? = null
 	)
 
 	data class RecurringChargeSettings(
 		val recurringInterval: RecurringSubscriptionInterval = RecurringSubscriptionInterval.MONTH,
-		val recurringIntervalCount: Int = 1
+		val recurringIntervalCount: Int = 1,
+		val subscriptionPriceWithSignUpFee: Double? = null,
+		val subscriptionPriceWithSignUpFeeFormatted: String? = null,
+		val signUpFee: Double? = null,
+		val signUpFeeFormatted: String? = null
 	)
 
 	data class WholesalePrice(

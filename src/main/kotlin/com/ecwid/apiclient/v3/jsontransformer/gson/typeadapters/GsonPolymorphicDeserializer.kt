@@ -11,7 +11,7 @@ class GsonPolymorphicDeserializer(
 	private val polymorphicType: PolymorphicType<*>
 ) : JsonDeserializer<Any?> {
 	override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Any? {
-		val type = json.asJsonObject[polymorphicType.jsonFieldName]?.asString?.toLowerCase()
+		val type = json.asJsonObject[polymorphicType.jsonFieldName]?.asString?.lowercase()
 			?: throw JsonDeserializationException(
 				"Deserialization polymorphic type ${typeOfT.typeName} failed. Type field ${polymorphicType.jsonFieldName} must be not null",
 				null

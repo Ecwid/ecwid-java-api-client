@@ -154,7 +154,8 @@ data class UpdatedOrder(
 		val taxes: List<OrderItemTax>? = null,
 		val dimensions: ProductDimensions? = null,
 		val discountsAllowed: Boolean? = null,
-		val discounts: List<OrderItemDiscounts>? = null
+		val discounts: List<OrderItemDiscounts>? = null,
+		val externalReferenceId: String? = null
 	)
 
 	data class OrderItemSelectedOption(

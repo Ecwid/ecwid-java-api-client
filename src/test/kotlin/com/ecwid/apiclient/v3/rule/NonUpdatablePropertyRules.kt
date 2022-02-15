@@ -177,7 +177,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrder.Surcharge::totalWithoutTax),
 	Ignored(FetchedOrder::refundedAmount),
 	Ignored(FetchedOrder::refunds),
-	ReadOnly(FetchedOrder.OrderItemTax::id),
+	ReadOnly(FetchedOrder.OrderItemTax::sourceTaxRateId),
+	ReadOnly(FetchedOrder.OrderItemTax::sourceTaxRateType),
 
 	ReadOnly(FetchedProductType::id),
 	Ignored(FetchedProductType::googleTaxonomy),
@@ -217,8 +218,17 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedVariation::borderInfo),
 	Ignored(FetchedVariation.AttributeValue::name),
 	Ignored(FetchedVariation.AttributeValue::type),
-	Ignored(FetchedVariation.AttributeValue::show)
+	Ignored(FetchedVariation.AttributeValue::show),
 
+	ReadOnly(FetchedProduct.RecurringChargeSettings::subscriptionPriceWithSignUpFeeFormatted),
+	ReadOnly(FetchedProduct.RecurringChargeSettings::signUpFee),
+	ReadOnly(FetchedProduct.RecurringChargeSettings::signUpFeeFormatted),
+	ReadOnly(FetchedProduct.RecurringChargeSettings::subscriptionPriceWithSignUpFeeFormatted),
+	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchasePriceFormatted),
+	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupFormatted),
+	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkup),
+	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercent),
+	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercentFormatted)
 )
 
 sealed class NonUpdatablePropertyRule<T, R>(

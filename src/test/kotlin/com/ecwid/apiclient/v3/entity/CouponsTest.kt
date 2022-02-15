@@ -182,8 +182,8 @@ class CouponsTest : BaseEntityTest() {
 		// Creating new coupon
 		val couponCreateRequest = CouponCreateRequest(
 			newCoupon = UpdatedCoupon(
-				name = randomAlphanumeric(10).toLowerCase(),
-				code = randomAlphanumeric(10).toLowerCase()
+				name = randomAlphanumeric(10).lowercase(),
+				code = randomAlphanumeric(10).lowercase()
 			)
 		)
 		val couponCreateResult = apiClient.createCoupon(couponCreateRequest)
@@ -223,7 +223,7 @@ class CouponsTest : BaseEntityTest() {
 
 		return UpdatedCoupon(
 			name = randomAlphanumeric(10),
-			code = randomAlphanumeric(10).toUpperCase(),
+			code = randomAlphanumeric(10).uppercase(),
 			discountType = randomEnumValue(DiscountCouponType.SHIPPING), // DiscountCouponType.SHIPPING is not compatible with catalogLimit
 			status = DiscountCouponStatus.ACTIVE,
 			discount = randomDouble(0.0, 100000.0),
@@ -249,7 +249,7 @@ class CouponsTest : BaseEntityTest() {
 
 		return UpdatedCoupon(
 			name = randomAlphanumeric(10),
-			code = randomAlphanumeric(10).toUpperCase(),
+			code = randomAlphanumeric(10).uppercase(),
 			discountType = randomEnumValue(DiscountCouponType.SHIPPING), // DiscountCouponType.SHIPPING is not compatible with catalogLimit
 			status = DiscountCouponStatus.ACTIVE,
 			discount = randomDouble(0.0, 100000.0),
@@ -272,7 +272,7 @@ class CouponsTest : BaseEntityTest() {
 		val expirationDate = randomDateFrom(launchDate)
 		return UpdatedCoupon(
 			name = randomAlphanumeric(10),
-			code = randomAlphanumeric(10).toUpperCase(),
+			code = randomAlphanumeric(10).uppercase(),
 			discountType = DiscountCouponType.ABS,
 			status = DiscountCouponStatus.ACTIVE,
 			discount = randomDouble(0.0, 100000.0),
@@ -291,7 +291,7 @@ class CouponsTest : BaseEntityTest() {
 		val expirationDate = randomDateFrom(launchDate)
 		return UpdatedCoupon(
 			name = randomAlphanumeric(10),
-			code = randomAlphanumeric(10).toUpperCase(),
+			code = randomAlphanumeric(10).uppercase(),
 			discountType = DiscountCouponType.PERCENT,
 			status = DiscountCouponStatus.ACTIVE,
 			discount = randomDouble(0.0, 100000.0),

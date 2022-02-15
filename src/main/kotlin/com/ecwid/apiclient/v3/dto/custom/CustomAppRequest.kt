@@ -99,7 +99,8 @@ data class CustomAppRequest(
 		val attributes: List<AttributeValue>? = null,
 		val relatedProducts: RelatedProducts? = null,
 		val combinations: List<FetchedVariation>? = null,
-		val showOnFrontpage: Int? = null
+		val showOnFrontpage: Int? = null,
+		val externalReferenceId: String? = null
 	)
 
 	data class Category(
