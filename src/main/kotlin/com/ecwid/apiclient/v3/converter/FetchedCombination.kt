@@ -21,6 +21,8 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 
 		attributes = attributes?.map(FetchedVariation.AttributeValue::toUpdated),
 
+		externalReferenceId = externalReferenceId,
+
 		options = options?.map(FetchedVariation.Option::toUpdated),
 
 		isShippingRequired = isShippingRequired

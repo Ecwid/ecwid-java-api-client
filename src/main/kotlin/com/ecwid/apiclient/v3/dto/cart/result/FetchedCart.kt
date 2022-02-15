@@ -145,7 +145,8 @@ data class FetchedCart(
 		val taxes: List<OrderItemTax>? = null,
 		val files: List<OrderItemProductFile>? = null,
 		val dimensions: ProductDimensions? = null,
-		val discounts: List<OrderItemDiscounts>? = null
+		val discounts: List<OrderItemDiscounts>? = null,
+		val externalReferenceId: String? = null
 	)
 
 	data class OrderItemOption(
