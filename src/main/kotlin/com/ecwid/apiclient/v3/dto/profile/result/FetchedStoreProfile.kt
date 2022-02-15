@@ -626,8 +626,16 @@ data class FetchedStoreProfile(
 		val breadcrumbsHaveHomeItem: Boolean? = null,
 
 		@JsonFieldName("breadcrumbs_home_url")
-		val breadcrumbsHomeUrl: String? = null
+		val breadcrumbsHomeUrl: String? = null,
 
+		@JsonFieldName("product_details_show_navigation_arrows")
+		val productDetailsShowNavigationArrows: Boolean? = null,
+
+		@JsonFieldName("product_details_show_product_photo_zoom")
+		val productDetailsShowProductPhotoZoom: Boolean? = null,
+
+		@JsonFieldName("product_details_show_breadcrumbs_position")
+		val productDetailsShowBreadcrumbsPosition: String? = null
 	)
 
 	data class ProductFiltersSettings(
