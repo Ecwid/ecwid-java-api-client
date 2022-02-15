@@ -66,12 +66,14 @@ data class UpdatedProduct(
 	data class SubscriptionSettings(
 		val subscriptionAllowed: Boolean = false,
 		val oneTimePurchaseAllowed: Boolean = false,
+		val oneTimePurchasePrice: Double? = null,
 		val recurringChargeSettings: List<RecurringChargeSettings> = emptyList()
 	)
 
 	data class RecurringChargeSettings(
 		val recurringInterval: RecurringSubscriptionInterval = RecurringSubscriptionInterval.MONTH,
-		val recurringIntervalCount: Int = 1
+		val recurringIntervalCount: Int = 1,
+		val subscriptionPriceWithSignUpFee: Double? = null,
 	)
 
 	data class WholesalePrice(
