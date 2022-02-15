@@ -7,7 +7,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	java
 	signing
-	kotlin("jvm") version "1.4.32"
+	kotlin("jvm") version "1.5.32"
 	id("com.adarshr.test-logger") version "2.1.1"
 	id("io.codearte.nexus-staging") version "0.22.0"
 	id("nebula.release") version "15.2.0"
@@ -57,10 +57,6 @@ tasks.withType<Test> {
 		slowThreshold = Consts.SLOW_TESTS_LOGGING_THRESHOLD_MS
 		theme = ThemeType.STANDARD
 	}
-}
-
-tasks.withType<Wrapper> {
-	gradleVersion = "7.0.2"
 }
 
 tasks.withType<Detekt>().configureEach {

@@ -23,6 +23,7 @@ data class UpdatedVariation(
 	val volume: Double? = null,
 
 	val attributes: List<AttributeValue>? = null,
+	val externalReferenceId: String? = null,
 
 	val isShippingRequired: Boolean? = null
 ) : ApiUpdatedDTO {

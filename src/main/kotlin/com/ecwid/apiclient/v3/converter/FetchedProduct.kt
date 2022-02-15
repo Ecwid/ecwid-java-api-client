@@ -65,13 +65,15 @@ private fun FetchedProduct.Ribbon.toUpdated() = UpdatedProduct.Ribbon(
 private fun FetchedProduct.SubscriptionSettings.toUpdated() = UpdatedProduct.SubscriptionSettings(
 	subscriptionAllowed = subscriptionAllowed,
 	oneTimePurchaseAllowed = oneTimePurchaseAllowed,
+	oneTimePurchasePrice = oneTimePurchasePrice,
 	recurringChargeSettings = recurringChargeSettings.toUpdated()
 )
 
 private fun List<FetchedProduct.RecurringChargeSettings>.toUpdated() = map {
 	UpdatedProduct.RecurringChargeSettings(
 		recurringInterval = it.recurringInterval,
-		recurringIntervalCount = it.recurringIntervalCount
+		recurringIntervalCount = it.recurringIntervalCount,
+		subscriptionPriceWithSignUpFee = it.subscriptionPriceWithSignUpFee
 	)
 }
 
