@@ -41,6 +41,7 @@ data class FetchedProduct(
 	val priceInProductList: Double? = null, // TODO Figure out how to test
 	val defaultDisplayedPrice: Double? = null, // TODO Figure out how to test
 	val defaultDisplayedPriceFormatted: String? = null, // TODO Figure out how to test
+	val costPrice: Double = 0.0,
 	val wholesalePrices: List<WholesalePrice>? = null,
 
 	val compareToPrice: Double? = null,
@@ -52,6 +53,7 @@ data class FetchedProduct(
 
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
+	val volume: Double = 0.0,
 	val shipping: ShippingSettings? = null,
 	val isShippingRequired: Boolean? = null,
 
@@ -83,7 +85,8 @@ data class FetchedProduct(
 	val googleProductCategory: Int? = null,
 	val googleProductCategoryName: String? = null,
 	val productCondition: ProductCondition = ProductCondition.NEW,
-	val externalReferenceId: String? = null
+	val externalReferenceId: String? = null,
+	val customsHsTariffCode: String? = null,
 ) : ApiFetchedDTO {
 
 	data class Ribbon(

@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.entity
 
+import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductDetailsRequest
@@ -45,7 +46,11 @@ class VariationsTest : BaseEntityTest() {
 
 		val testVariationSku = "testVariation"
 		val testVariationPrice = randomPrice()
+		val testVariationCostPrice = testVariationPrice * 0.9
 		val testVariationWeight = randomWeight()
+		val testVariationDimensions = generateDimensions()
+		val testVariationVolume = randomVolume()
+		val testVariationCustomsHsTariffCode = randomAlphanumeric(10)
 		val createProductVariationRequest = CreateProductVariationRequest(
 			productId = newProductId,
 			newVariation = UpdatedVariation(
@@ -53,13 +58,17 @@ class VariationsTest : BaseEntityTest() {
 				quantity = 2,
 				isShippingRequired = true,
 				price = testVariationPrice,
+				costPrice = testVariationCostPrice,
 				weight = testVariationWeight,
+				dimensions = testVariationDimensions,
+				volume = testVariationVolume,
 				options = listOf(
 					UpdatedVariation.Option(
 						name = "Size",
 						value = "L"
 					)
-				)
+				),
+				customsHsTariffCode = testVariationCustomsHsTariffCode,
 			)
 		)
 
@@ -71,8 +80,12 @@ class VariationsTest : BaseEntityTest() {
 		require(variations != null)
 		val variation = variations.first()
 		assertEquals(testVariationPrice, variation.price)
+		assertEquals(testVariationCostPrice, variation.costPrice)
 		assertEquals(testVariationWeight, variation.weight)
+		assertEquals(testVariationDimensions, variation.toUpdated().dimensions)
+		assertEquals(testVariationVolume, variation.volume)
 		assertEquals(testVariationSku, variation.sku)
+		assertEquals(testVariationCustomsHsTariffCode, variation.customsHsTariffCode)
 	}
 
 	@Test
@@ -103,13 +116,17 @@ class VariationsTest : BaseEntityTest() {
 				quantity = 2,
 				isShippingRequired = true,
 				price = 51.2,
+				costPrice = 46.6,
 				weight = 16.7,
+				dimensions = generateDimensions(),
+				volume = 16.0,
 				options = listOf(
 					UpdatedVariation.Option(
 						name = "Size",
 						value = "L"
 					)
-				)
+				),
+				customsHsTariffCode = "123456",
 			)
 		)
 
@@ -137,12 +154,17 @@ class VariationsTest : BaseEntityTest() {
 		assertTrue(create2ndVariationResult.id > 0)
 
 		// update 1st variation
+		val newDimensions = generateDimensions()
 		val update1stVariationRequest = UpdateProductVariationRequest(
 			productId = newProductId,
 			variationId = create1stVariationResult.id,
 			variation = UpdatedVariation(
 				sku = "modified first test Variation",
-				quantity = 15
+				quantity = 15,
+				costPrice = 47.2,
+				dimensions = newDimensions,
+				volume = 15.25,
+				customsHsTariffCode = "654321",
 			)
 		)
 		val updateResult = apiClient.updateProductVariation(update1stVariationRequest)
@@ -164,6 +186,10 @@ class VariationsTest : BaseEntityTest() {
 		assertEquals(create1stVariationResult.id, firstVar.id)
 		assertEquals("modified first test Variation", firstVar.sku)
 		assertEquals(15, firstVar.quantity)
+		assertEquals(47.2, firstVar.costPrice)
+		assertEquals(newDimensions, firstVar.toUpdated().dimensions)
+		assertEquals(15.25, firstVar.volume)
+		assertEquals("654321", firstVar.customsHsTariffCode)
 		assertEquals(create2ndVariationResult.id, secondVar.id)
 		assertEquals("second test Variation", secondVar.sku)
 		assertEquals(5 /* = 9 - 4 */, secondVar.quantity)
@@ -283,3 +309,9 @@ private fun generateProductRadioOption(name: String, values: List<String>): Upda
 		choices = choices
 	)
 }
+
+private fun generateDimensions() = UpdatedVariation.ProductDimensions(
+	length = randomDimension(),
+	width = randomDimension(),
+	height = randomDimension()
+)

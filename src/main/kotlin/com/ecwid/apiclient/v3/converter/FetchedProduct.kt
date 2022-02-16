@@ -22,11 +22,13 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		showOnFrontpage = showOnFrontpage,
 
 		price = price,
+		costPrice = costPrice,
 		wholesalePrices = wholesalePrices?.map(FetchedProduct.WholesalePrice::toUpdated),
 		compareToPrice = compareToPrice,
 
 		weight = weight,
 		dimensions = dimensions?.toUpdated(),
+		volume = volume,
 		shipping = shipping?.toUpdated(),
 		isShippingRequired = isShippingRequired,
 
@@ -52,7 +54,8 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		subscriptionSettings = subscriptionSettings?.toUpdated(),
 		googleProductCategory = googleProductCategory,
 		productCondition = productCondition,
-		externalReferenceId = externalReferenceId
+		externalReferenceId = externalReferenceId,
+		customsHsTariffCode = customsHsTariffCode,
 	)
 }
 

@@ -133,6 +133,7 @@ data class UpdatedStoreProfile(
 		val timeFormat: String? = null,
 		val timezone: String? = null,
 		val dimensionsUnit: DimensionUnit? = null,
+		val volumeUnit: VolumeUnit? = null,
 		val orderNumberPrefix: String? = null,
 		val orderNumberSuffix: String? = null
 	)
@@ -143,6 +144,10 @@ data class UpdatedStoreProfile(
 
 	enum class DimensionUnit {
 		MM, CM, IN, YD
+	}
+
+	enum class VolumeUnit {
+		L, ML, OZ
 	}
 
 	data class Languages(

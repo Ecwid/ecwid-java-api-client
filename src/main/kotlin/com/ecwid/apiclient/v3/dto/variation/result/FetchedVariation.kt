@@ -24,6 +24,7 @@ data class FetchedVariation(
 	val price: Double? = null,
 	val defaultDisplayedPrice: Double? = null,
 	val defaultDisplayedPriceFormatted: String? = null,
+	val costPrice: Double? = null,
 	val compareToPrice: Double? = null,
 	val wholesalePrices: List<WholesalePrice>? = null,
 
@@ -33,13 +34,16 @@ data class FetchedVariation(
 	val warningLimit: Int? = null,
 
 	val weight: Double? = null,
+	val dimensions: ProductDimensions? = null,
+	val volume: Double = 0.0,
 	val borderInfo: BorderInfo? = null,
 
 	val attributes: List<AttributeValue>? = null,
 	val externalReferenceId: String? = null,
 
-	val isShippingRequired: Boolean? = null
+	val isShippingRequired: Boolean? = null,
 
+	val customsHsTariffCode: String? = null,
 ) : ApiFetchedDTO {
 
 	data class AttributeValue(
@@ -72,6 +76,12 @@ data class FetchedVariation(
 		val green: Int? = null,
 		val blue: Int? = null,
 		val alpha: Int? = null
+	)
+
+	data class ProductDimensions(
+		val length: Double = 0.0,
+		val width: Double = 0.0,
+		val height: Double = 0.0
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedVariation::class)
