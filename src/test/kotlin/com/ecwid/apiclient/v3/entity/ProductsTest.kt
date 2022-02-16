@@ -1370,6 +1370,7 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 		showOnFrontpage = randomByte(),
 
 		price = basePrice,
+		costPrice = basePrice * 0.9,
 		wholesalePrices = listOf(
 			generateWholesalePrice(basePrice, 2),
 			generateWholesalePrice(basePrice, 3)
@@ -1386,6 +1387,7 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 
 		weight = randomWeight(),
 		dimensions = generateDimensions(),
+		volume = randomVolume(),
 		shipping = generateShippingSettings(),
 		isShippingRequired = true, // To allow set weight field
 
@@ -1425,7 +1427,8 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 		subscriptionSettings = SubscriptionSettings(),
 		googleProductCategory = 632,
 		productCondition = ProductCondition.USED,
-		externalReferenceId = "EXT_ID_123"
+		externalReferenceId = "EXT_ID_123",
+		customsHsTariffCode = randomAlphanumeric(10),
 	)
 }
 

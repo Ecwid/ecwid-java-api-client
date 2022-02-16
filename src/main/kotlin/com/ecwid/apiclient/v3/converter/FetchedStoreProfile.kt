@@ -164,6 +164,7 @@ private fun FetchedStoreProfile.FormatsAndUnits.toUpdated(): UpdatedStoreProfile
 		timeFormat = timeFormat,
 		timezone = timezone,
 		dimensionsUnit = dimensionsUnit?.toUpdated(),
+		volumeUnit = volumeUnit.toUpdated(),
 		orderNumberPrefix = orderNumberPrefix,
 		orderNumberSuffix = orderNumberSuffix
 	)
@@ -185,6 +186,14 @@ private fun FetchedStoreProfile.DimensionUnit.toUpdated(): UpdatedStoreProfile.D
 		FetchedStoreProfile.DimensionUnit.CM -> UpdatedStoreProfile.DimensionUnit.CM
 		FetchedStoreProfile.DimensionUnit.IN -> UpdatedStoreProfile.DimensionUnit.IN
 		FetchedStoreProfile.DimensionUnit.YD -> UpdatedStoreProfile.DimensionUnit.YD
+	}
+}
+
+private fun FetchedStoreProfile.VolumeUnit.toUpdated(): UpdatedStoreProfile.VolumeUnit {
+	return when (this) {
+		FetchedStoreProfile.VolumeUnit.L -> UpdatedStoreProfile.VolumeUnit.L
+		FetchedStoreProfile.VolumeUnit.ML -> UpdatedStoreProfile.VolumeUnit.ML
+		FetchedStoreProfile.VolumeUnit.OZ -> UpdatedStoreProfile.VolumeUnit.OZ
 	}
 }
 

@@ -41,6 +41,7 @@ data class FetchedProduct(
 	val priceInProductList: Double? = null, // TODO Figure out how to test
 	val defaultDisplayedPrice: Double? = null, // TODO Figure out how to test
 	val defaultDisplayedPriceFormatted: String? = null, // TODO Figure out how to test
+	val costPrice: Double = 0.0,
 	val wholesalePrices: List<WholesalePrice>? = null,
 
 	val compareToPrice: Double? = null,
@@ -52,6 +53,7 @@ data class FetchedProduct(
 
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
+	val volume: Double = 0.0,
 	val shipping: ShippingSettings? = null,
 	val isShippingRequired: Boolean? = null,
 
@@ -67,6 +69,7 @@ data class FetchedProduct(
 
 	val originalImage: PictureInfo? = null,
 	val galleryImages: List<GalleryImage>? = null,
+	val borderInfo: BorderInfo? = null,
 	val media: ProductMedia? = null,
 	val files: List<ProductFile>? = null,
 	val favorites: FavoritesStats? = null, // TODO Figure out how to test
@@ -83,8 +86,21 @@ data class FetchedProduct(
 	val googleProductCategory: Int? = null,
 	val googleProductCategoryName: String? = null,
 	val productCondition: ProductCondition = ProductCondition.NEW,
-	val externalReferenceId: String? = null
+	val externalReferenceId: String? = null,
+	val customsHsTariffCode: String? = null,
 ) : ApiFetchedDTO {
+
+	data class BorderInfo(
+		val dominatingColor: Color = Color(),
+		val homogeneity: Boolean = false
+	)
+
+	data class Color(
+		val red: Int = 0,
+		val green: Int = 0,
+		val blue: Int = 0,
+		val alpha: Int = 0
+	)
 
 	data class Ribbon(
 		val text: String? = null,
@@ -240,7 +256,8 @@ data class FetchedProduct(
 		val imageUrl: String = "",
 		val hdThumbnailUrl: String = "",
 		val thumbnailUrl: String = "",
-		val smallThumbnailUrl: String = ""
+		val smallThumbnailUrl: String = "",
+		val borderInfo: BorderInfo? = null,
 	)
 
 	data class ProductMedia(

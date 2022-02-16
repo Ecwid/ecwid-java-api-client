@@ -25,11 +25,13 @@ data class UpdatedProduct(
 	val showOnFrontpage: Int? = null,
 
 	val price: Double? = null,
+	val costPrice: Double? = null,
 	val wholesalePrices: List<WholesalePrice>? = null,
 	val compareToPrice: Double? = null,
 
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
+	val volume: Double? = null,
 	val shipping: ShippingSettings? = null,
 	val isShippingRequired: Boolean? = null,
 
@@ -53,7 +55,8 @@ data class UpdatedProduct(
 	val subscriptionSettings: SubscriptionSettings? = null,
 	val googleProductCategory: Int? = null,
 	val productCondition: ProductCondition? = null,
-	val externalReferenceId: String? = null
+	val externalReferenceId: String? = null,
+	val customsHsTariffCode: String? = null,
 ) : ApiUpdatedDTO {
 
 	data class Ribbon(

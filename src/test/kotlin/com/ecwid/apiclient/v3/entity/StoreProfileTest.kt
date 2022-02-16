@@ -104,6 +104,7 @@ class StoreProfileTest : BaseEntityTest() {
 				timeFormat = "HH:mm:ss",
 				timezone = "timezone",
 				dimensionsUnit = UpdatedStoreProfile.DimensionUnit.MM,
+				volumeUnit = UpdatedStoreProfile.VolumeUnit.L,
 				orderNumberPrefix = "orderNumberPrefix",
 				orderNumberSuffix = "orderNumberSuffix"
 			),
@@ -205,6 +206,9 @@ class StoreProfileTest : BaseEntityTest() {
 		val designSettings = actualProfile.designSettings
 		require(designSettings != null)
 
+		val formatsAndUnits = actualProfile.formatsAndUnits
+		require(formatsAndUnits != null)
+
 		assertEquals(testStoreId, generalInfo.storeId)
 		assertEquals("bobyor", starterSite.ecwidSubdomain)
 		assertEquals("example.com", starterSite.customDomain)
@@ -257,5 +261,7 @@ class StoreProfileTest : BaseEntityTest() {
 		val tikTokPixel = settings.tikTokPixel
 		require(tikTokPixel != null)
 		assertTrue(tikTokPixel.advancedMatching)
+
+		assertEquals(FetchedStoreProfile.VolumeUnit.L, formatsAndUnits.volumeUnit)
 	}
 }

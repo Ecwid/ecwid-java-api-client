@@ -2,11 +2,12 @@ package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
-import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
+import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 
 val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedProduct::attributes),
+	AllowNullable(FetchedProduct::borderInfo),
 	IgnoreNullable(FetchedProduct::categories),
 	IgnoreNullable(FetchedProduct::categoryIds),
 	IgnoreNullable(FetchedProduct::combinations),
@@ -16,6 +17,7 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct::compareToPriceDiscountPercent),
 	IgnoreNullable(FetchedProduct::compareToPriceDiscountPercentFormatted),
 	IgnoreNullable(FetchedProduct::compareToPriceFormatted),
+	AllowNullable(FetchedProduct::customsHsTariffCode),
 	IgnoreNullable(FetchedProduct::defaultCategoryId),
 	IgnoreNullable(FetchedProduct::defaultCombinationId),
 	IgnoreNullable(FetchedProduct::defaultDisplayedPrice),
@@ -65,6 +67,7 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct.FavoritesStats::displayedCount),
 	IgnoreNullable(FetchedProduct.GalleryImage::alt),
 	IgnoreNullable(FetchedProduct.GalleryImage::thumbnail),
+	AllowNullable(FetchedProduct.GalleryImage::borderInfo),
 	IgnoreNullable(FetchedProduct.ProductDimensions::height),
 	IgnoreNullable(FetchedProduct.ProductDimensions::length),
 	IgnoreNullable(FetchedProduct.ProductDimensions::width),
@@ -95,7 +98,7 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct.ShippingSettings::flatRate),
 	IgnoreNullable(FetchedProduct.ShippingSettings::methodMarkup),
 	IgnoreNullable(FetchedProduct.ShippingSettings::type),
-    AllowNullable(FetchedProduct::googleProductCategory),
+	AllowNullable(FetchedProduct::googleProductCategory),
 	AllowNullable(FetchedProduct::googleProductCategoryName),
 	AllowNullable(FetchedProduct::externalReferenceId),
 	IgnoreNullable(FetchedProduct.RecurringChargeSettings::signUpFee),
