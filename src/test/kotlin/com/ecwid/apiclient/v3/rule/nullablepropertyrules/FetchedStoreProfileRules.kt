@@ -244,7 +244,7 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.ShippingOption::destinationZone),
 	IgnoreNullable(FetchedStoreProfile.ShippingOption::enabled),
 	IgnoreNullable(FetchedStoreProfile.ShippingOption::flatRate),
-	IgnoreNullable(FetchedStoreProfile.ShippingOption::fulfillmentType),
+	IgnoreNullable(FetchedStoreProfile.ShippingOption::fulfilmentType),
 	IgnoreNullable(FetchedStoreProfile.ShippingOption::id),
 	IgnoreNullable(FetchedStoreProfile.ShippingOption::orderBy),
 	IgnoreNullable(FetchedStoreProfile.ShippingOption::pickupBusinessHours),
