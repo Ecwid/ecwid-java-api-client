@@ -17,7 +17,8 @@ data class FetchedCustomer(
 	val taxId: String? = null,
 	val taxIdValid: Boolean? = null,
 	val taxExempt: Boolean? = null,
-	val acceptMarketing: Boolean? = null
+	val acceptMarketing: Boolean? = null,
+	val lang: String? = null,
 ) : ApiFetchedDTO {
 
 	data class BillingPerson(
