@@ -152,7 +152,9 @@ data class FetchedStoreProfile(
 		val dimensionsUnit: DimensionUnit? = null,
 		val volumeUnit: VolumeUnit = VolumeUnit.ML,
 		val orderNumberPrefix: String? = null,
-		val orderNumberSuffix: String? = null
+		val orderNumberSuffix: String? = null,
+		val orderNumberMinDigitsAmount: Int? = null,
+		val orderNumberNextNumber: Int? = null,
 	)
 
 	enum class WeightUnit {
