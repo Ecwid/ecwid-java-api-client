@@ -84,7 +84,8 @@ data class UpdatedProduct(
 
 	data class TaxInfo(
 		val taxable: Boolean = true,
-		val enabledManualTaxes: List<Int>? = null
+		val enabledManualTaxes: List<Int>? = null,
+		val taxClassCode: String? = null,
 	)
 
 	sealed class ProductOption constructor(
