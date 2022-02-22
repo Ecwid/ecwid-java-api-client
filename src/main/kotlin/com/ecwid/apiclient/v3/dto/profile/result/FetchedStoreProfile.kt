@@ -52,8 +52,8 @@ data class FetchedStoreProfile(
 		val accountEmail: String? = null,
 		val availableFeatures: List<String>? = null,
 		val whiteLabel: Boolean? = null,
-		var brandName: String? = null,
-		var supportEmail: String? = null
+		val brandName: String? = null,
+		val supportEmail: String? = null
 	)
 
 	data class Settings(
