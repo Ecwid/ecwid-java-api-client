@@ -166,7 +166,9 @@ private fun FetchedStoreProfile.FormatsAndUnits.toUpdated(): UpdatedStoreProfile
 		dimensionsUnit = dimensionsUnit?.toUpdated(),
 		volumeUnit = volumeUnit.toUpdated(),
 		orderNumberPrefix = orderNumberPrefix,
-		orderNumberSuffix = orderNumberSuffix
+		orderNumberSuffix = orderNumberSuffix,
+		orderNumberMinDigitsAmount = orderNumberMinDigitsAmount,
+		orderNumberNextNumber = orderNumberNextNumber,
 	)
 }
 

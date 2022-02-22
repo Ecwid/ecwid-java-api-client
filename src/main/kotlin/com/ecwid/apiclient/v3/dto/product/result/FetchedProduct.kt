@@ -141,7 +141,8 @@ data class FetchedProduct(
 	data class TaxInfo(
 		val taxable: Boolean = true,
 		val defaultLocationIncludedTaxRate: Double = 0.0,
-		val enabledManualTaxes: List<Int> = listOf()
+		val enabledManualTaxes: List<Int> = listOf(),
+		val taxClassCode: String = "",
 	)
 
 	sealed class ProductOption(

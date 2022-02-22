@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
+import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 
 val fetchedCustomerNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
@@ -9,6 +10,7 @@ val fetchedCustomerNullablePropertyRules: List<NullablePropertyRule<*, *>> = lis
 	IgnoreNullable(FetchedCustomer::billingPerson),
 	IgnoreNullable(FetchedCustomer::customerGroupId),
 	IgnoreNullable(FetchedCustomer::customerGroupName),
+	AllowNullable(FetchedCustomer::lang),
 	IgnoreNullable(FetchedCustomer::registered),
 	IgnoreNullable(FetchedCustomer::shippingAddresses),
 	IgnoreNullable(FetchedCustomer::taxExempt),

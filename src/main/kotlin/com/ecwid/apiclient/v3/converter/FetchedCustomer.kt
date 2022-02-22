@@ -12,7 +12,8 @@ fun FetchedCustomer.toUpdated(): UpdatedCustomer {
 		taxId = taxId,
 		taxIdValid = taxIdValid,
 		taxExempt = taxExempt,
-		acceptMarketing = acceptMarketing
+		acceptMarketing = acceptMarketing,
+		lang = lang,
 	)
 }
 
