@@ -31,6 +31,8 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.Account::accountNickName),
 	IgnoreNullable(FetchedStoreProfile.Account::availableFeatures),
 	IgnoreNullable(FetchedStoreProfile.Account::whiteLabel),
+	AllowNullable(FetchedStoreProfile.Account::brandName),
+	AllowNullable(FetchedStoreProfile.Account::supportEmail),
 	IgnoreNullable(FetchedStoreProfile.ApplePay::gateway),
 	IgnoreNullable(FetchedStoreProfile.ApplePay::verificationFileUrl),
 	IgnoreNullable(FetchedStoreProfile.BusinessRegistrationID::name),

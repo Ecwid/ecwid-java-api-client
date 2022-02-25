@@ -190,6 +190,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedStoreProfile.InstantSiteInfo::storeLogoUrl),
 	Ignored(FetchedStoreProfile.Account::availableFeatures),
 	Ignored(FetchedStoreProfile.Account::whiteLabel),
+	ReadOnly(FetchedStoreProfile.Account::brandName),
+	ReadOnly(FetchedStoreProfile.Account::supportEmail),
 	Ignored(FetchedStoreProfile.Settings::invoiceLogoUrl),
 	Ignored(FetchedStoreProfile.Settings::emailLogoUrl),
 	Ignored(FetchedStoreProfile.FormatsAndUnits::currencyPrecision),
