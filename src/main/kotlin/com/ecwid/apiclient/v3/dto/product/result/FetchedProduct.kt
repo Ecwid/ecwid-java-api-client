@@ -82,6 +82,8 @@ data class FetchedProduct(
 	val ribbonTranslated: LocalizedValueMap? = null,
 	val subtitleTranslated: LocalizedValueMap? = null,
 	val nameYourPriceEnabled: Boolean? = null,
+	val customPriceTiers: List<CustomPriceTier>? = null,
+	val priceDefaultTier: Int? = null,
 	val subscriptionSettings: SubscriptionSettings? = null,
 	val googleProductCategory: Int? = null,
 	val googleProductCategoryName: String? = null,
@@ -243,6 +245,10 @@ data class FetchedProduct(
 		val length: Double? = null,
 		val width: Double? = null,
 		val height: Double? = null
+	)
+
+	data class CustomPriceTier(
+		val value: Double = 0.0
 	)
 
 	data class GalleryImage(

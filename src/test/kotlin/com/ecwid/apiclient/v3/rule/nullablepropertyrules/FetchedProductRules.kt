@@ -36,6 +36,8 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct::media),
 	IgnoreNullable(FetchedProduct::nameTranslated),
 	IgnoreNullable(FetchedProduct::nameYourPriceEnabled),
+	IgnoreNullable(FetchedProduct::customPriceTiers),
+	IgnoreNullable(FetchedProduct::priceDefaultTier),
 	IgnoreNullable(FetchedProduct::options),
 	IgnoreNullable(FetchedProduct::originalImage),
 	IgnoreNullable(FetchedProduct::price),

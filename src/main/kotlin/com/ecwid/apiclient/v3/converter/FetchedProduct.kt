@@ -51,6 +51,8 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		ribbonTranslated = ribbonTranslated,
 		subtitleTranslated = subtitleTranslated,
 		nameYourPriceEnabled = nameYourPriceEnabled,
+		customPriceTiers = customPriceTiers?.map { it.toUpdated() },
+		priceDefaultTier = priceDefaultTier,
 		subscriptionSettings = subscriptionSettings?.toUpdated(),
 		googleProductCategory = googleProductCategory,
 		productCondition = productCondition,
@@ -69,6 +71,10 @@ private fun FetchedProduct.SubscriptionSettings.toUpdated() = UpdatedProduct.Sub
 	oneTimePurchaseAllowed = oneTimePurchaseAllowed,
 	oneTimePurchasePrice = oneTimePurchasePrice,
 	recurringChargeSettings = recurringChargeSettings.toUpdated()
+)
+
+private fun FetchedProduct.CustomPriceTier.toUpdated() = UpdatedProduct.CustomPriceTier(
+	value = value,
 )
 
 private fun List<FetchedProduct.RecurringChargeSettings>.toUpdated() = map {
