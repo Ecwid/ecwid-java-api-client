@@ -21,6 +21,7 @@ val nonnullPropertyRules: List<NonnullPropertyRule<*, *>> = listOf(
 	AllowNonnull(UpdatedProduct.ProductOption.SizeOption::required),
 	AllowNonnull(UpdatedProduct.ProductOption.TextAreaOption::required),
 	AllowNonnull(UpdatedProduct.ProductOption.TextFieldOption::required),
+	AllowNonnull(UpdatedProduct.CustomPriceTier::value),
 
 	IgnoreNonnull(UpdatedCoupon::code),
 	IgnoreNonnull(UpdatedCoupon::name),
