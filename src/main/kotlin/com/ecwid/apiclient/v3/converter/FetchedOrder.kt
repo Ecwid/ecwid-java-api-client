@@ -275,7 +275,7 @@ fun FetchedOrder.ExternalOrderData.toUpdated(): UpdatedOrder.ExternalOrderData {
 		externalFulfillment = externalFulfillment,
 		externalOrderId = externalOrderId,
 		refererId = refererId,
-		platformSpecificFields = HashMap(platformSpecificFields),
+		platformSpecificFields = platformSpecificFields?.let { HashMap(it) },
 		refererChannel = refererChannel
 	)
 }
