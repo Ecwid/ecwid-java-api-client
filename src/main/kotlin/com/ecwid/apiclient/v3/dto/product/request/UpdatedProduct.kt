@@ -65,10 +65,10 @@ data class UpdatedProduct(
 	)
 
 	data class SubscriptionSettings(
-		val subscriptionAllowed: Boolean = false,
-		val oneTimePurchaseAllowed: Boolean = false,
+		val subscriptionAllowed: Boolean? = null,
+		val oneTimePurchaseAllowed: Boolean? = null,
+		val recurringChargeSettings: List<RecurringChargeSettings>? = null,
 		val oneTimePurchasePrice: Double? = null,
-		val recurringChargeSettings: List<RecurringChargeSettings> = emptyList()
 	)
 
 	data class RecurringChargeSettings(
