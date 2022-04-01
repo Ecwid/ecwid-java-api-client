@@ -123,6 +123,11 @@ interface StoreProfileApiClient {
 	fun removeInvoiceLogo(request: InvoiceLogoRemoveRequest): InvoiceLogoRemoveResult
 	fun uploadEmailLogo(request: EmailLogoUploadRequest): EmailLogoUploadResult
 	fun removeEmailLogo(request: EmailLogoRemoveRequest): EmailLogoRemoveResult
+	fun searchExtrafieldConfigs(request: ExtrafieldConfigSearchRequest): ExtrafieldConfigSearchResult
+	fun getExtrafieldConfigDetails(request: ExtrafieldConfigDetailsRequest): FetchedExtrafieldConfig
+	fun createExtrafieldConfig(request: ExtrafieldConfigCreateRequest): FetchedExtrafieldConfig
+	fun updateExtrafieldConfig(request: ExtrafieldConfigUpdateRequest): ExtrafieldConfigUpdateResult
+	fun deleteExtrafieldConfig(request: ExtrafieldConfigDeleteRequest): ExtrafieldConfigDeleteResult
 }
 
 // Products

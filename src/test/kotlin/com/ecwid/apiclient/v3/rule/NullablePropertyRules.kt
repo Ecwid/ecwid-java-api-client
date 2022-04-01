@@ -83,7 +83,8 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	ordersSearchRequestRequestNullablePropertyRules,
 	productDetailsRequestNullablePropertyRules,
 	productsSearchRequestNullablePropertyRules,
-	otherNullablePropertyRules
+	otherNullablePropertyRules,
+	fetchedExtrafieldConfigNullablePropertyRules
 ).flatten()
 
 sealed class NullablePropertyRule<T, R>(
