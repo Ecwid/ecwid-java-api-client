@@ -1,12 +1,11 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
-import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-sealed class ProductsSearchRequest : ApiRequestDTO {
+sealed class ProductsSearchRequest : ApiRequest {
 
 	data class ByFilters(
 		val keyword: String? = null,
@@ -31,7 +30,7 @@ sealed class ProductsSearchRequest : ApiRequestDTO {
 		val offset: Int = 0,
 		val limit: Int = 100,
 		val lang: String? = null
-	) : ProductsSearchRequest(), ApiRequest {
+	) : ProductsSearchRequest() {
 		override fun toRequestInfo() = RequestInfo.createGetRequest(
 			pathSegments = listOf(
 				"products"
@@ -76,7 +75,7 @@ sealed class ProductsSearchRequest : ApiRequestDTO {
 		}
 	}
 
-	data class ByIds(val productIds: List<Int> = listOf()) : ProductsSearchRequest(), ApiRequest {
+	data class ByIds(val productIds: List<Int> = listOf()) : ProductsSearchRequest() {
 		override fun toRequestInfo() = RequestInfo.createGetRequest(
 			pathSegments = listOf(
 				"products"
