@@ -411,6 +411,42 @@ data class FetchedStoreProfile(
 		@JsonFieldName("breadcrumbs_home_url")
 		val breadcrumbsHomeUrl: String? = null,
 
+		@JsonFieldName("cart_widget_fixed")
+		val cartWidgetFixed: Boolean? = null,
+
+		@JsonFieldName("cart_widget_fixed_position")
+		val cartWidgetFixedPosition: String? = null,
+
+		@JsonFieldName("cart_widget_fixed_shape")
+		val cartWidgetFixedShape: String? = null,
+
+		@JsonFieldName("cart_widget_horizontal_indent")
+		val cartWidgetHorizontalIndent: Int? = null,
+
+		@JsonFieldName("cart_widget_icon")
+		val cartWidgetIcon: String? = null,
+
+		@JsonFieldName("cart_widget_layout")
+		val cartWidgetLayout: String? = null,
+
+		@JsonFieldName("cart_widget_show_buy_animation")
+		val cartWidgetShowBuyAnimation: Boolean? = null,
+
+		@JsonFieldName("cart_widget_show_empty_cart")
+		val cartWidgetShowEmptyCart: Boolean? = null,
+
+		@JsonFieldName("cart_widget_store_custom_icon_url")
+		val cartWidgetStoreCustomIconUrl: String? = null,
+
+		@JsonFieldName("cart_widget_vertical_indent")
+		val cartWidgetVerticalIndent: Int? = null,
+
+		@JsonFieldName("checkout_products_collapsed_on_desktop")
+		val checkoutProductsCollapsedOnDesktop: Boolean? = null,
+
+		@JsonFieldName("checkout_products_collapsed_on_mobile")
+		val checkoutProductsCollapsedOnMobile: Boolean? = null,
+
 		@JsonFieldName("enable_catalog_on_one_page")
 		val enableCatalogOnOnePage: Boolean? = null,
 
@@ -419,6 +455,12 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("enable_simple_category_list")
 		val enableSimpleCategoryList: Boolean? = null,
+
+		@JsonFieldName("feedback_message_position")
+		val feedbackMessagePosition: String? = null,
+
+		@JsonFieldName("legal_pages_show_page_links")
+		val legalPagesShowPageLinks: Boolean? = null,
 
 		@JsonFieldName("product_details_additional_images_has_shadow")
 		val productDetailsAdditionalImagesHasShadow: Boolean? = null,
@@ -570,6 +612,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_filters_position_category_page")
 		val productFiltersPositionCategoryPage: String? = null,
 
+		@JsonFieldName("product_filters_position_search_page")
+		val productFiltersPositionSearchPage: String? = null,
+
 		@JsonFieldName("product_list_buybutton_behavior")
 		val productListBuyNowBehaviour: String? = null,
 
@@ -606,17 +651,26 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_list_show_additional_image_on_hover")
 		val productListShowAdditionalImage: Boolean? = null,
 
+		@JsonFieldName("show_breadcrumbs")
+		val productListShowBreadcrumbs: Boolean? = null,
+
 		@JsonFieldName("product_list_show_frame")
 		val productListShowCardFrame: Boolean? = null,
 
-		@JsonFieldName("product_list_show_name_your_price_label")
-		val productListShowPayWhatYouWantLabel: Boolean? = null,
+		@JsonFieldName("show_footer_menu")
+		val productListShowFooterMenu: Boolean? = null,
 
 		@JsonFieldName("product_list_show_on_sale_label")
 		val productListShowOnSaleLabel: Boolean? = null,
 
+		@JsonFieldName("product_list_show_name_your_price_label")
+		val productListShowPayWhatYouWantLabel: Boolean? = null,
+
 		@JsonFieldName("product_list_show_product_images")
 		val productListShowProductImages: Boolean? = null,
+
+		@JsonFieldName("show_signin_link")
+		val productListShowSignInLink: Boolean? = null,
 
 		@JsonFieldName("product_list_show_sold_out_label")
 		val productListShowSoldOutLabel: Boolean? = null,
@@ -633,17 +687,23 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_list_title_behavior")
 		val productListNameBehaviour: String? = null,
 
-		@JsonFieldName("show_breadcrumbs")
-		val productListShowBreadcrumbs: Boolean? = null,
+		@JsonFieldName("shopping_cart_products_collapsed_on_desktop")
+		val shoppingCartProductsCollapsedOnDesktop: Boolean? = null,
 
-		@JsonFieldName("show_footer_menu")
-		val productListShowFooterMenu: Boolean? = null,
+		@JsonFieldName("shopping_cart_products_collapsed_on_mobile")
+		val shoppingCartProductsCollapsedOnMobile: Boolean? = null,
+
+		@JsonFieldName("shopping_cart_show_qty_inputs_on_mobile")
+		val shoppingCartShowQtyInputs: Boolean? = null,
+
+		@JsonFieldName("shopping_cart_show_weight")
+		val shoppingCartShowWeight: Boolean? = null,
+
+		@JsonFieldName("show_cart_widget")
+		val showCartWidget: Boolean? = null,
 
 		@JsonFieldName("show_root_categories")
 		val showRootCategories: Boolean? = null,
-
-		@JsonFieldName("show_signin_link")
-		val productListShowSignInLink: Boolean? = null,
 	)
 
 	data class ProductFiltersSettings(
