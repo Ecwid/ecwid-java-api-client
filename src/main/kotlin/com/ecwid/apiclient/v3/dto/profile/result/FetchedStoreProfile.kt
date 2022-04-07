@@ -405,165 +405,62 @@ data class FetchedStoreProfile(
 	)
 
 	data class DesignSettings(
+		@JsonFieldName("breadcrumbs_have_home_item")
+		val breadcrumbsHaveHomeItem: Boolean? = null,
+
+		@JsonFieldName("breadcrumbs_home_url")
+		val breadcrumbsHomeUrl: String? = null,
 
 		@JsonFieldName("enable_catalog_on_one_page")
 		val enableCatalogOnOnePage: Boolean? = null,
 
-		@JsonFieldName("product_list_image_size")
-		val productListImageSize: String? = null,
+		@JsonFieldName("enable_page_transitions")
+		val enablePageTransitions: Boolean? = null,
 
-		@JsonFieldName("product_list_image_aspect_ratio")
-		val productListImageLayout: String? = null,
-
-		@JsonFieldName("product_list_image_position")
-		val productListImagePosition: String? = null,
-
-		@JsonFieldName("product_list_category_image_size")
-		val productListCategoryImageSize: String? = null,
-
-		@JsonFieldName("product_list_category_image_aspect_ratio")
-		val productListCategoryImageLayout: String? = null,
-
-		@JsonFieldName("product_list_category_image_position")
-		val productListCategoryImagePosition: String? = null,
-
-		@JsonFieldName("product_list_show_product_images")
-		val productListShowProductImages: Boolean? = null,
-
-		@JsonFieldName("product_list_product_info_layout")
-		val productListCardLayout: String? = null,
-
-		@JsonFieldName("product_list_show_frame")
-		val productListShowCardFrame: Boolean? = null,
-
-		@JsonFieldName("product_list_show_additional_image_on_hover")
-		val productListShowAdditionalImage: Boolean? = null,
-
-		@JsonFieldName("product_list_title_behavior")
-		val productListNameBehaviour: String? = null,
-
-		@JsonFieldName("product_list_price_behavior")
-		val productListPriceBehaviour: String? = null,
-
-		@JsonFieldName("product_list_sku_behavior")
-		val productListSKUBehaviour: String? = null,
-
-		@JsonFieldName("product_list_buybutton_behavior")
-		val productListBuyNowBehaviour: String? = null,
-
-		@JsonFieldName("product_list_category_title_behavior")
-		val productListCategoryNameBehaviour: String? = null,
-
-		@JsonFieldName("product_list_image_has_shadow")
-		val productListImageHasShadow: Boolean? = null,
-
-		@JsonFieldName("show_signin_link")
-		val productListShowSignInLink: Boolean? = null,
-
-		@JsonFieldName("show_footer_menu")
-		val productListShowFooterMenu: Boolean? = null,
-
-		@JsonFieldName("show_breadcrumbs")
-		val productListShowBreadcrumbs: Boolean? = null,
-
-		@JsonFieldName("product_list_show_sort_viewas_options")
-		val productListShowSortViewAsOptions: Boolean? = null,
-
-		@JsonFieldName("product_list_show_on_sale_label")
-		val productListShowOnSaleLabel: Boolean? = null,
-
-		@JsonFieldName("product_list_show_name_your_price_label")
-		val productListShowPayWhatYouWantLabel: Boolean? = null,
-
-		@JsonFieldName("product_list_show_sold_out_label")
-		val productListShowSoldOutLabel: Boolean? = null,
-
-		@JsonFieldName("product_details_show_product_sku")
-		val productDetailsShowProductSku: Boolean? = null,
+		@JsonFieldName("enable_simple_category_list")
+		val enableSimpleCategoryList: Boolean? = null,
 
 		@JsonFieldName("product_details_additional_images_has_shadow")
 		val productDetailsAdditionalImagesHasShadow: Boolean? = null,
 
-		@JsonFieldName("product_details_image_carousel")
-		val productDetailsImageCarousel: Boolean? = null,
-
 		@JsonFieldName("product_details_additional_images_preview_on_click")
 		val productDetailsAdditionalImagesPreviewOnClick: Boolean? = null,
+
+		@JsonFieldName("product_details_cut_product_description_in_sidebar")
+		val productDetailsCutProductDescriptionInSidebar: Boolean? = null,
+
+		@JsonFieldName("product_details_gallery_layout")
+		val productDetailsGalleryLayout: String? = null,
+
+		@JsonFieldName("product_details_hide_price_modifiers")
+		val productDetailsHidePriceModifiers: Boolean? = null,
+
+		@JsonFieldName("product_details_image_carousel")
+		val productDetailsImageCarousel: Boolean? = null,
 
 		@JsonFieldName("product_details_layout")
 		val productDetailsLayout: String? = null,
 
-		@JsonFieldName("product_details_two_columns_with_right_sidebar_show_product_description_on_sidebar")
-		val productDetailsTwoColumnsWithRightSidebarShowProductDescriptionOnSidebar: Boolean? = null,
-
-		@JsonFieldName("product_details_two_columns_with_left_sidebar_show_product_description_on_sidebar")
-		val productDetailsTwoColumnsWithLeftSidebarShowProductDescriptionOnSidebar: Boolean? = null,
-
-		@JsonFieldName("product_details_show_product_name")
-		val productDetailsShowProductName: Boolean? = null,
-
-		@JsonFieldName("product_details_show_breadcrumbs")
-		val productDetailsShowBreadcrumbs: Boolean? = null,
-
-		@JsonFieldName("product_details_show_product_price")
-		val productDetailsShowProductPrice: Boolean? = null,
-
-		@JsonFieldName("product_details_show_sale_price")
-		val productDetailsShowSalePrice: Boolean? = null,
-
-		@JsonFieldName("product_details_show_tax")
-		val productDetailsShowTax: Boolean? = null,
-
-		@JsonFieldName("product_details_show_attributes")
-		val productDetailsShowAttributes: Boolean? = null,
-
-		@JsonFieldName("product_details_show_weight")
-		val productDetailsShowWeight: Boolean? = null,
-
-		@JsonFieldName("product_details_show_product_description")
-		val productDetailsShowProductDescription: Boolean? = null,
-
-		@JsonFieldName("product_details_show_product_options")
-		val productDetailsShowProductOptions: Boolean? = null,
-
-		@JsonFieldName("product_details_show_buy_button")
-		val productDetailsShowBuyButton: Boolean? = null,
-
-		@JsonFieldName("product_details_show_wholesale_prices")
-		val productDetailsShowWholesalePrices: Boolean? = null,
-
-		@JsonFieldName("product_details_show_save_for_later")
-		val productDetailsShowSaveForLater: Boolean? = null,
-
-		@JsonFieldName("product_details_show_share_buttons")
-		val productDetailsShowShareButtons: Boolean? = null,
-
-		@JsonFieldName("product_details_show_product_name_always_first_on_mobile")
-		val productDetailsShowProductNameAlwaysFirstOnMobile: Boolean? = null,
-
-		@JsonFieldName("product_details_position_product_name")
-		val productDetailsPositionProductName: Int? = null,
-
 		@JsonFieldName("product_details_position_breadcrumbs")
 		val productDetailsPositionBreadcrumbs: Int? = null,
-
-		@JsonFieldName("product_details_position_product_sku")
-		val productDetailsPositionProductSku: Int? = null,
-
-		@JsonFieldName("product_details_position_product_price")
-		val productDetailsPositionProductPrice: Int? = null,
-
-		@JsonFieldName("product_details_position_product_options")
-		val productDetailsPositionProductOptions: Int? = null,
 
 		@JsonFieldName("product_details_position_buy_button")
 		val productDetailsPositionBuyButton: Int? = null,
 
-		@JsonFieldName("product_details_position_wholesale_prices")
-		val productDetailsPositionWholesalePrices: Int? = null,
-
 		@JsonFieldName("product_details_position_product_description")
 		val productDetailsPositionProductDescription: Int? = null,
+
+		@JsonFieldName("product_details_position_product_name")
+		val productDetailsPositionProductName: Int? = null,
+
+		@JsonFieldName("product_details_position_product_options")
+		val productDetailsPositionProductOptions: Int? = null,
+
+		@JsonFieldName("product_details_position_product_price")
+		val productDetailsPositionProductPrice: Int? = null,
+
+		@JsonFieldName("product_details_position_product_sku")
+		val productDetailsPositionProductSku: Int? = null,
 
 		@JsonFieldName("product_details_position_save_for_later")
 		val productDetailsPositionSaveForLater: Int? = null,
@@ -571,47 +468,101 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_details_position_share_buttons")
 		val productDetailsPositionShareButtons: Int? = null,
 
-		@JsonFieldName("product_details_hide_price_modifiers")
-		val productDetailsHidePriceModifiers: Boolean? = null,
+		@JsonFieldName("product_details_position_subtitle")
+		val productDetailsPositionSubtitle: Int? = null,
 
-		@JsonFieldName("product_details_show_price_per_unit")
-		val productDetailsShowPricePerUnit: Boolean? = null,
+		@JsonFieldName("product_details_position_wholesale_prices")
+		val productDetailsPositionWholesalePrices: Int? = null,
 
-		@JsonFieldName("product_details_cut_product_description_in_sidebar")
-		val productDetailsCutProductDescriptionInSidebar: Boolean? = null,
+		@JsonFieldName("product_details_show_attributes")
+		val productDetailsShowAttributes: Boolean? = null,
 
-		@JsonFieldName("product_details_thumbnails_aspect_ratio")
-		val productDetailsThumbnailsAspectRatio: String? = null,
+		@JsonFieldName("product_details_show_breadcrumbs")
+		val productDetailsShowBreadcrumbs: Boolean? = null,
 
-		@JsonFieldName("product_details_show_qty")
-		val productDetailsShowQty: Boolean? = null,
+		@JsonFieldName("product_details_show_breadcrumbs_position")
+		val productDetailsShowBreadcrumbsPosition: String? = null,
 
-		@JsonFieldName("product_details_show_in_stock_label")
-		val productDetailsShowInStockLabel: Boolean? = null,
-
-		@JsonFieldName("product_details_show_number_of_items_in_stock")
-		val productDetailsShowNumberOfItemsInStock: Boolean? = null,
-
-		@JsonFieldName("product_details_gallery_layout")
-		val productDetailsGalleryLayout: String? = null,
+		@JsonFieldName("product_details_show_buy_button")
+		val productDetailsShowBuyButton: Boolean? = null,
 
 		@JsonFieldName("product_details_show_facebook_share_button")
 		val productDetailsShowFacebookShareButton: Boolean? = null,
 
-		@JsonFieldName("product_details_show_twitter_share_button")
-		val productDetailsShowTwitterShareButton: Boolean? = null,
+		@JsonFieldName("product_details_show_in_stock_label")
+		val productDetailsShowInStockLabel: Boolean? = null,
+
+		@JsonFieldName("product_details_show_navigation_arrows")
+		val productDetailsShowNavigationArrows: Boolean? = null,
+
+		@JsonFieldName("product_details_show_number_of_items_in_stock")
+		val productDetailsShowNumberOfItemsInStock: Boolean? = null,
 
 		@JsonFieldName("product_details_show_pinterest_share_button")
 		val productDetailsShowPinterestShareButton: Boolean? = null,
 
+		@JsonFieldName("product_details_show_price_per_unit")
+		val productDetailsShowPricePerUnit: Boolean? = null,
+
+		@JsonFieldName("product_details_show_product_description")
+		val productDetailsShowProductDescription: Boolean? = null,
+
+		@JsonFieldName("product_details_show_product_name")
+		val productDetailsShowProductName: Boolean? = null,
+
+		@JsonFieldName("product_details_show_product_name_always_first_on_mobile")
+		val productDetailsShowProductNameAlwaysFirstOnMobile: Boolean? = null,
+
+		@JsonFieldName("product_details_show_product_options")
+		val productDetailsShowProductOptions: Boolean? = null,
+
+		@JsonFieldName("product_details_show_product_photo_zoom")
+		val productDetailsShowProductPhotoZoom: Boolean? = null,
+
+		@JsonFieldName("product_details_show_product_price")
+		val productDetailsShowProductPrice: Boolean? = null,
+
+		@JsonFieldName("product_details_show_product_sku")
+		val productDetailsShowProductSku: Boolean? = null,
+
+		@JsonFieldName("product_details_show_qty")
+		val productDetailsShowQty: Boolean? = null,
+
+		@JsonFieldName("product_details_show_sale_price")
+		val productDetailsShowSalePrice: Boolean? = null,
+
+		@JsonFieldName("product_details_show_save_for_later")
+		val productDetailsShowSaveForLater: Boolean? = null,
+
+		@JsonFieldName("product_details_show_share_buttons")
+		val productDetailsShowShareButtons: Boolean? = null,
+
+		@JsonFieldName("product_details_show_subtitle")
+		val productDetailsShowSubtitle: Boolean? = null,
+
+		@JsonFieldName("product_details_show_tax")
+		val productDetailsShowTax: Boolean? = null,
+
+		@JsonFieldName("product_details_show_twitter_share_button")
+		val productDetailsShowTwitterShareButton: Boolean? = null,
+
 		@JsonFieldName("product_details_show_vk_share_button")
 		val productDetailsShowVkShareButton: Boolean? = null,
 
-		@JsonFieldName("enable_simple_category_list")
-		val enableSimpleCategoryList: Boolean? = null,
+		@JsonFieldName("product_details_show_weight")
+		val productDetailsShowWeight: Boolean? = null,
 
-		@JsonFieldName("enable_page_transitions")
-		val enablePageTransitions: Boolean? = null,
+		@JsonFieldName("product_details_show_wholesale_prices")
+		val productDetailsShowWholesalePrices: Boolean? = null,
+
+		@JsonFieldName("product_details_thumbnails_aspect_ratio")
+		val productDetailsThumbnailsAspectRatio: String? = null,
+
+		@JsonFieldName("product_details_two_columns_with_left_sidebar_show_product_description_on_sidebar")
+		val productDetailsTwoColumnsWithLeftSidebarShowProductDescriptionOnSidebar: Boolean? = null,
+
+		@JsonFieldName("product_details_two_columns_with_right_sidebar_show_product_description_on_sidebar")
+		val productDetailsTwoColumnsWithRightSidebarShowProductDescriptionOnSidebar: Boolean? = null,
 
 		@JsonFieldName("product_filters_opened_by_default_on_category_page")
 		val productFiltersOpenedByDefaultOnCategoryPage: Boolean? = null,
@@ -619,32 +570,80 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_filters_position_category_page")
 		val productFiltersPositionCategoryPage: String? = null,
 
-		@JsonFieldName("show_root_categories")
-		val showRootCategories: Boolean? = null,
+		@JsonFieldName("product_list_buybutton_behavior")
+		val productListBuyNowBehaviour: String? = null,
 
-		@JsonFieldName("product_details_show_subtitle")
-		val productDetailsShowSubtitle: Boolean? = null,
+		@JsonFieldName("product_list_category_image_aspect_ratio")
+		val productListCategoryImageLayout: String? = null,
 
-		@JsonFieldName("product_details_position_subtitle")
-		val productDetailsPositionSubtitle: Int? = null,
+		@JsonFieldName("product_list_category_image_position")
+		val productListCategoryImagePosition: String? = null,
+
+		@JsonFieldName("product_list_category_image_size")
+		val productListCategoryImageSize: String? = null,
+
+		@JsonFieldName("product_list_category_title_behavior")
+		val productListCategoryNameBehaviour: String? = null,
+
+		@JsonFieldName("product_list_image_aspect_ratio")
+		val productListImageLayout: String? = null,
+
+		@JsonFieldName("product_list_image_has_shadow")
+		val productListImageHasShadow: Boolean? = null,
+
+		@JsonFieldName("product_list_image_position")
+		val productListImagePosition: String? = null,
+
+		@JsonFieldName("product_list_image_size")
+		val productListImageSize: String? = null,
+
+		@JsonFieldName("product_list_price_behavior")
+		val productListPriceBehaviour: String? = null,
+
+		@JsonFieldName("product_list_product_info_layout")
+		val productListCardLayout: String? = null,
+
+		@JsonFieldName("product_list_show_additional_image_on_hover")
+		val productListShowAdditionalImage: Boolean? = null,
+
+		@JsonFieldName("product_list_show_frame")
+		val productListShowCardFrame: Boolean? = null,
+
+		@JsonFieldName("product_list_show_name_your_price_label")
+		val productListShowPayWhatYouWantLabel: Boolean? = null,
+
+		@JsonFieldName("product_list_show_on_sale_label")
+		val productListShowOnSaleLabel: Boolean? = null,
+
+		@JsonFieldName("product_list_show_product_images")
+		val productListShowProductImages: Boolean? = null,
+
+		@JsonFieldName("product_list_show_sold_out_label")
+		val productListShowSoldOutLabel: Boolean? = null,
+
+		@JsonFieldName("product_list_show_sort_viewas_options")
+		val productListShowSortViewAsOptions: Boolean? = null,
+
+		@JsonFieldName("product_list_sku_behavior")
+		val productListSKUBehaviour: String? = null,
 
 		@JsonFieldName("product_list_subtitles_behavior")
 		val productListSubtitlesBehavior: String? = null,
 
-		@JsonFieldName("breadcrumbs_have_home_item")
-		val breadcrumbsHaveHomeItem: Boolean? = null,
+		@JsonFieldName("product_list_title_behavior")
+		val productListNameBehaviour: String? = null,
 
-		@JsonFieldName("breadcrumbs_home_url")
-		val breadcrumbsHomeUrl: String? = null,
+		@JsonFieldName("show_breadcrumbs")
+		val productListShowBreadcrumbs: Boolean? = null,
 
-		@JsonFieldName("product_details_show_navigation_arrows")
-		val productDetailsShowNavigationArrows: Boolean? = null,
+		@JsonFieldName("show_footer_menu")
+		val productListShowFooterMenu: Boolean? = null,
 
-		@JsonFieldName("product_details_show_product_photo_zoom")
-		val productDetailsShowProductPhotoZoom: Boolean? = null,
+		@JsonFieldName("show_root_categories")
+		val showRootCategories: Boolean? = null,
 
-		@JsonFieldName("product_details_show_breadcrumbs_position")
-		val productDetailsShowBreadcrumbsPosition: String? = null
+		@JsonFieldName("show_signin_link")
+		val productListShowSignInLink: Boolean? = null,
 	)
 
 	data class ProductFiltersSettings(
