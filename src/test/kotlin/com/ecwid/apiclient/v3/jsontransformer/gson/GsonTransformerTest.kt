@@ -1,6 +1,8 @@
 package com.ecwid.apiclient.v3.jsontransformer.gson
 
+import com.ecwid.apiclient.v3.dto.common.NullableUpdatedValue
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
+import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.google.gson.JsonParser
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -164,6 +166,47 @@ internal class GsonTransformerTest {
 				}
 			""".trimIndent(),
 			transformer.serialize(order, orderExt)
+		)
+	}
+
+	@Test
+	fun `test serialization with NullableUpdatedValue`() {
+		var product = UpdatedProduct(
+			name = "Test product",
+			googleProductCategory = null,
+		)
+
+		assertJsonEquals(
+			"""
+				{
+					"name": "Test product"
+				}
+			""".trimIndent(),
+			transformer.serialize(product, null)
+		)
+
+		product = product.copy(googleProductCategory = NullableUpdatedValue(null))
+
+		assertJsonEquals(
+			"""
+				{
+					"name": "Test product",
+					"googleProductCategory": null
+				}
+			""".trimIndent(),
+			transformer.serialize(product, null)
+		)
+
+		product = product.copy(googleProductCategory = NullableUpdatedValue(666))
+
+		assertJsonEquals(
+			"""
+				{
+					"name": "Test product",
+					"googleProductCategory": 666
+				}
+			""".trimIndent(),
+			transformer.serialize(product, null)
 		)
 	}
 }

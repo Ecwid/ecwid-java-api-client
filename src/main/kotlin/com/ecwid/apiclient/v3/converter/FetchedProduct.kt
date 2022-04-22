@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.converter
 
+import com.ecwid.apiclient.v3.dto.common.NullableUpdatedValue
 import com.ecwid.apiclient.v3.dto.product.enums.toAttributeValueAlias
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
@@ -54,7 +55,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		customPriceTiers = customPriceTiers?.map { it.toUpdated() },
 		priceDefaultTier = priceDefaultTier,
 		subscriptionSettings = subscriptionSettings?.toUpdated(),
-		googleProductCategory = googleProductCategory,
+		googleProductCategory = NullableUpdatedValue(googleProductCategory),
 		productCondition = productCondition,
 		externalReferenceId = externalReferenceId,
 		customsHsTariffCode = customsHsTariffCode,

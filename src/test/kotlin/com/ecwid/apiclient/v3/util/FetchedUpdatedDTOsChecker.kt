@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.util
 
+import com.ecwid.apiclient.v3.dto.common.NullableUpdatedValue
 import com.ecwid.apiclient.v3.rule.NonUpdatablePropertyRule
 import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
@@ -214,9 +215,15 @@ private fun checkField(
 			}
 		}
 		else -> {
+			val updatedDTOFieldClassCorrecterd = if (updatedDTOFieldClass == NullableUpdatedValue::class.java) {
+				(updatedDTOField.genericType as ParameterizedType).actualTypeArguments[0] as Class<*>
+			} else {
+				updatedDTOFieldClass
+			}
+
 			checkClassOrPrimitive(
 				fetchedDTOClass = fetchedDTOFieldClass,
-				updatedDTOClass = updatedDTOFieldClass,
+				updatedDTOClass = updatedDTOFieldClassCorrecterd,
 				parentFetchedDTOClass = fetchedDTOClass,
 				parentUpdatedDTOClass = updatedDTOClass,
 				fieldName = fieldName,

@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.converter.toUpdated
+import com.ecwid.apiclient.v3.dto.common.NullableUpdatedValue
 import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest
 import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest.ParentCategory
 import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
@@ -1425,7 +1426,7 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 			"en" to "Subtitle"
 		),
 		subscriptionSettings = SubscriptionSettings(),
-		googleProductCategory = 632,
+		googleProductCategory = NullableUpdatedValue(632),
 		productCondition = ProductCondition.USED,
 		externalReferenceId = "EXT_ID_123",
 		customsHsTariffCode = randomAlphanumeric(10),
