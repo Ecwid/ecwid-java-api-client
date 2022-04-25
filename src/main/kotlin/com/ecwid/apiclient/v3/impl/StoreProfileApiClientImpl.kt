@@ -34,4 +34,19 @@ internal class StoreProfileApiClientImpl(
 
 	override fun removeEmailLogo(request: EmailLogoRemoveRequest): EmailLogoRemoveResult =
 		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun searchExtrafieldConfigs(request: ExtrafieldConfigSearchRequest): ExtrafieldConfigSearchResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun getExtrafieldConfigDetails(request: ExtrafieldConfigDetailsRequest): FetchedExtrafieldConfig =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun createExtrafieldConfig(request: ExtrafieldConfigCreateRequest): FetchedExtrafieldConfig =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun updateExtrafieldConfig(request: ExtrafieldConfigUpdateRequest): ExtrafieldConfigUpdateResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun deleteExtrafieldConfig(request: ExtrafieldConfigDeleteRequest): ExtrafieldConfigDeleteResult =
+		apiClientHelper.makeObjectResultRequest(request)
 }

@@ -1,0 +1,13 @@
+package com.ecwid.apiclient.v3.dto.profile.enums
+
+enum class OrderDetailsDisplaySection {
+	SHIPPING_INFO,
+	BILLING_INFO,
+	CUSTOMER_INFO,
+	ORDER_COMMENTS,
+	SHIPPING_ADDRESS,
+	SHIPPING_METHODS,
+	PICKUP_DETAILS,
+	PICKUP_METHODS,
+	PAYMENT_DETAILS
+}
