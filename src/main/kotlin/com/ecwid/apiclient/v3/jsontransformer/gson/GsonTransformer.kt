@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult.Product
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
+import com.ecwid.apiclient.v3.jsontransformer.gson.typeadapters.GsonNullableUpdatedValueTypeAdapterFactory
 import com.ecwid.apiclient.v3.jsontransformer.gson.typeadapters.GsonPolymorphicDeserializer
 import com.ecwid.apiclient.v3.jsontransformer.gson.typeadapters.GsonProductFiltersDeserializer
 import com.google.gson.*
@@ -18,6 +19,7 @@ class GsonTransformer(polymorphicTypes: List<PolymorphicType<*>>) : JsonTransfor
 				gsonBuilder.registerTypeAdapter(polymorphType.rootClass, GsonPolymorphicDeserializer(polymorphType))
 			}
 			gsonBuilder.registerTypeAdapter(ProductFilters::class.java, GsonProductFiltersDeserializer())
+			gsonBuilder.registerTypeAdapterFactory(GsonNullableUpdatedValueTypeAdapterFactory)
 		}
 		.create()
 

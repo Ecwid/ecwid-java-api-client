@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
+import com.ecwid.apiclient.v3.dto.common.NullableUpdatedValue
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
@@ -55,7 +56,7 @@ data class UpdatedProduct(
 	val customPriceTiers: List<CustomPriceTier>? = null,
 	val priceDefaultTier: Int? = null,
 	val subscriptionSettings: SubscriptionSettings? = null,
-	val googleProductCategory: Int? = null,
+	val googleProductCategory: NullableUpdatedValue<Int>? = null,
 	val productCondition: ProductCondition? = null,
 	val externalReferenceId: String? = null,
 	val customsHsTariffCode: String? = null,
