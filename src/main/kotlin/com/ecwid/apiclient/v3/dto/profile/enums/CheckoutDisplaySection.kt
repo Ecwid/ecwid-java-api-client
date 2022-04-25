@@ -1,5 +1,12 @@
 package com.ecwid.apiclient.v3.dto.profile.enums
 
 enum class CheckoutDisplaySection {
-	email, shipping_address, pickup_details, shipping_methods, pickup_methods, payment_details, billing_address, order_comments;
+	EMAIL,
+	SHIPPING_ADDRESS,
+	PICKUP_DETAILS,
+	SHIPPING_METHODS,
+	PICKUP_METHODS,
+	PAYMENT_DETAILS,
+	BILLING_ADDRESS,
+	ORDER_COMMENTS
 }

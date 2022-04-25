@@ -1,5 +1,11 @@
 package com.ecwid.apiclient.v3.dto.profile.enums
 
 enum class ExtrafieldType {
-	text, select, datetime, toggle_button_group, textarea, checkbox, radio_buttons
+	TEXT,
+	SELECT,
+	DATETIME,
+	TOGGLE_BUTTON_GROUP,
+	TEXTAREA,
+	CHECKBOX,
+	RADIO_BUTTONS
 }

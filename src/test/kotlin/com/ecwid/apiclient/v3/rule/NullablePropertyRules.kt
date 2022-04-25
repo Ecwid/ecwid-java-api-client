@@ -73,6 +73,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	fetchedCategoryNullablePropertyRules,
 	fetchedCouponNullablePropertyRules,
 	fetchedCustomerNullablePropertyRules,
+	fetchedExtrafieldConfigNullablePropertyRules,
 	fetchedOrderNullablePropertyRules,
 	fetchedProductNullablePropertyRules,
 	fetchedProductTypeNullablePropertyRules,
@@ -83,8 +84,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	ordersSearchRequestRequestNullablePropertyRules,
 	productDetailsRequestNullablePropertyRules,
 	productsSearchRequestNullablePropertyRules,
-	otherNullablePropertyRules,
-	fetchedExtrafieldConfigNullablePropertyRules
+	otherNullablePropertyRules
 ).flatten()
 
 sealed class NullablePropertyRule<T, R>(

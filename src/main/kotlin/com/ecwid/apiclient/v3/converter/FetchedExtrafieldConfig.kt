@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.converter
 
+import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedExtrafieldConfig
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedExtrafieldConfig
 
@@ -26,10 +27,10 @@ fun FetchedExtrafieldConfig.toUpdated(): UpdatedExtrafieldConfig {
 		surchargeTaxable = surchargeTaxable,
 		showZeroSurchargeInTotal = showZeroSurchargeInTotal,
 		surchargeShortName = surchargeShortName?.toUpdated(),
-		titleTranslated = titleTranslated,
-		textPlaceholderTranslated = textPlaceholderTranslated,
-		tipTranslated = tipTranslated,
-		valueTranslated = valueTranslated
+		titleTranslated = if (titleTranslated != null) LocalizedValueMap(titleTranslated) else null,
+		textPlaceholderTranslated = if (textPlaceholderTranslated != null) LocalizedValueMap(textPlaceholderTranslated) else null,
+		tipTranslated = if (tipTranslated != null) LocalizedValueMap(tipTranslated) else null,
+		valueTranslated = if (valueTranslated != null) LocalizedValueMap(valueTranslated) else null
 	)
 }
 
@@ -38,8 +39,8 @@ fun FetchedExtrafieldConfig.FetchedExtrafieldOptionConfig.toUpdated(): UpdatedEx
 		title = title,
 		subtitle = subtitle,
 		surcharge = surcharge,
-		titleTranslated = titleTranslated,
-		subtitleTranslated = subtitleTranslated
+		titleTranslated = if (titleTranslated != null) LocalizedValueMap(titleTranslated) else null,
+		subtitleTranslated = if (subtitleTranslated != null) LocalizedValueMap(subtitleTranslated) else null
 	)
 }
 
@@ -47,6 +48,6 @@ fun FetchedExtrafieldConfig.FetchedExtrafieldSurchargeConfig.toUpdated(): Update
 	return UpdatedExtrafieldConfig.UpdatedExtrafieldSurchargeConfig(
 		name = name,
 		showSurchargePercentValue = showSurchargePercentValue,
-		nameTranslated = nameTranslated
+		nameTranslated = if (nameTranslated != null) LocalizedValueMap(nameTranslated) else null
 	)
 }
