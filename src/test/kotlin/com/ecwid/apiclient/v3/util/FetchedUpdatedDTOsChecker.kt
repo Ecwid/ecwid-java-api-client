@@ -215,7 +215,7 @@ private fun checkField(
 			}
 		}
 		else -> {
-			val updatedDTOFieldClassCorrecterd = if (updatedDTOFieldClass == NullableUpdatedValue::class.java) {
+			val updatedDTOFieldClassCorrected = if (updatedDTOFieldClass == NullableUpdatedValue::class.java) {
 				(updatedDTOField.genericType as ParameterizedType).actualTypeArguments[0] as Class<*>
 			} else {
 				updatedDTOFieldClass
@@ -223,7 +223,7 @@ private fun checkField(
 
 			checkClassOrPrimitive(
 				fetchedDTOClass = fetchedDTOFieldClass,
-				updatedDTOClass = updatedDTOFieldClassCorrecterd,
+				updatedDTOClass = updatedDTOFieldClassCorrected,
 				parentFetchedDTOClass = fetchedDTOClass,
 				parentUpdatedDTOClass = updatedDTOClass,
 				fieldName = fieldName,
