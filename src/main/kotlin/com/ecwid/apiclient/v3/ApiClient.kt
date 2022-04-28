@@ -125,7 +125,7 @@ interface StoreProfileApiClient {
 	fun removeEmailLogo(request: EmailLogoRemoveRequest): EmailLogoRemoveResult
 	fun searchExtrafieldConfigs(request: ExtrafieldConfigSearchRequest): ExtrafieldConfigSearchResult
 	fun getExtrafieldConfigDetails(request: ExtrafieldConfigDetailsRequest): FetchedExtrafieldConfig
-	fun createExtrafieldConfig(request: ExtrafieldConfigCreateRequest): FetchedExtrafieldConfig
+	fun createExtrafieldConfig(request: ExtrafieldConfigCreateRequest): ExtrafieldConfigCreateResult
 	fun updateExtrafieldConfig(request: ExtrafieldConfigUpdateRequest): ExtrafieldConfigUpdateResult
 	fun deleteExtrafieldConfig(request: ExtrafieldConfigDeleteRequest): ExtrafieldConfigDeleteResult
 }
