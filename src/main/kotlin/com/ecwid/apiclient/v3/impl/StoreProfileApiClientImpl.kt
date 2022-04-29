@@ -41,7 +41,7 @@ internal class StoreProfileApiClientImpl(
 	override fun getExtrafieldConfigDetails(request: ExtrafieldConfigDetailsRequest): FetchedExtrafieldConfig =
 		apiClientHelper.makeObjectResultRequest(request)
 
-	override fun createExtrafieldConfig(request: ExtrafieldConfigCreateRequest): FetchedExtrafieldConfig =
+	override fun createExtrafieldConfig(request: ExtrafieldConfigCreateRequest): ExtrafieldConfigCreateResult =
 		apiClientHelper.makeObjectResultRequest(request)
 
 	override fun updateExtrafieldConfig(request: ExtrafieldConfigUpdateRequest): ExtrafieldConfigUpdateResult =
