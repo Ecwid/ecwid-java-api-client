@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.jsontransformer.gson
 import com.ecwid.apiclient.v3.dto.common.NullableUpdatedValue
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
+import com.ecwid.apiclient.v3.impl.ParsedResponseWithExt
 import com.google.gson.JsonParser
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -209,6 +210,26 @@ internal class GsonTransformerTest {
 			transformer.serialize(product, null)
 		)
 	}
+
+	@Test
+	fun `test deserialization of ParsedResponseWithExt`() {
+		val json = "{'testField': {'baseField': 'base', 'extField': 'ext'}}"
+		val deserializedValue = transformer.deserialize(json, TestParsedResponseWithExt::class.java)
+		assertEquals(
+			TestParsedResponseWithExt(
+				testField = ParsedResponseWithExt(
+					baseResult = TestParsedResponseWithExt.TestBaseResult(
+						baseField = "base"
+					),
+					extResult = TestParsedResponseWithExt.TestExtResult(
+						extField = "ext"
+					),
+				)
+			),
+			deserializedValue
+		)
+	}
+
 }
 
 private fun assertJsonEquals(expected: String, actual: String) {
@@ -231,3 +252,17 @@ private data class OrderItemExt(
 )
 
 private data class ComplexExtraField(val value: String? = null)
+
+private data class TestParsedResponseWithExt(
+	val testField: ParsedResponseWithExt<TestBaseResult, TestExtResult>
+) {
+
+	data class TestBaseResult(
+		val baseField: String
+	)
+
+	data class TestExtResult(
+		val extField: String
+	)
+
+}
