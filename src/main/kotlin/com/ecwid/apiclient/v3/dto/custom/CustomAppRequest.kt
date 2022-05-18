@@ -14,7 +14,8 @@ import java.util.*
 data class CustomAppRequest(
 	val storeId: Int? = null,
 	val merchantAppSettings: MerchantAppSettings? = null,
-	val cart: Cart? = null
+	val cart: Cart? = null,
+	val lang: String? = null
 ) : ApiRequestDTO {
 	data class Cart(
 		val id: String? = null,
