@@ -33,6 +33,7 @@ internal fun HttpRequest.toHttpUriRequest(): HttpUriRequest {
 	}
 	return requestBuilder
 		.apply {
+			charset = Charsets.UTF_8
 			params.map { (name, value) ->
 				BasicNameValuePair(name, value)
 			}.forEach(this::addParameter)
