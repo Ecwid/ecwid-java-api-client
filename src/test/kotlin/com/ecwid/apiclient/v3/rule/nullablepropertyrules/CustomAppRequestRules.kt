@@ -187,5 +187,6 @@ val customAppRequestNullablePropertyRules: List<NullablePropertyRule<*, *>> = li
 	AllowNullable(CustomAppRequest.WholesalePriceEntry::quantity),
 	AllowNullable(CustomAppRequest::cart),
 	AllowNullable(CustomAppRequest::merchantAppSettings),
-	AllowNullable(CustomAppRequest::storeId)
+	AllowNullable(CustomAppRequest::storeId),
+	AllowNullable(CustomAppRequest::lang),
 )
