@@ -29,6 +29,8 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 
 		weight = weight,
 		dimensions = dimensions?.toUpdated(),
+		shippingPreparationTime = shippingPreparationTime?.toUpdated(),
+		showDeliveryTimeInStorefront = showDeliveryTimeInStorefront,
 		volume = volume,
 		shipping = shipping?.toUpdated(),
 		isShippingRequired = isShippingRequired,
@@ -193,6 +195,12 @@ private fun FetchedProduct.ProductDimensions.toUpdated() = UpdatedProduct.Produc
 	length = length,
 	width = width,
 	height = height
+)
+
+private fun FetchedProduct.ShippingPreparationTime.toUpdated() = UpdatedProduct.ShippingPreparationTime(
+	shippingPreparationTimeForInStockItemDays = shippingPreparationTimeForInStockItemDays,
+	shippingPreparationTimeForOutOfStockItemDays = shippingPreparationTimeForOutOfStockItemDays,
+	pickupPreparationTimeForInStockItemInMinutes = pickupPreparationTimeForInStockItemInMinutes
 )
 
 fun FetchedProduct.ProductMedia.toUpdated() = UpdatedProduct.ProductMedia(

@@ -14,6 +14,7 @@ import com.ecwid.apiclient.v3.dto.variation.request.ProductVariationsRequest
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 import com.ecwid.apiclient.v3.rule.nullablepropertyrules.*
+import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import kotlin.reflect.KProperty1
 
 val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
@@ -35,6 +36,9 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(GetProductFiltersResult.ProductFilters::onsale),
 	AllowNullable(GetProductFiltersResult.ProductFilters::options),
 	AllowNullable(GetProductFiltersResult.ProductFilters::price),
+	AllowNullable(FetchedProduct.ShippingPreparationTime::pickupPreparationTimeForInStockItemInMinutes),
+	AllowNullable(FetchedProduct.ShippingPreparationTime::shippingPreparationTimeForInStockItemDays),
+	AllowNullable(FetchedProduct.ShippingPreparationTime::shippingPreparationTimeForOutOfStockItemDays),
 
 	IgnoreNullable(ConvertCartToOrderResult::id),
 	IgnoreNullable(ConvertCartToOrderResult::orderNumber),

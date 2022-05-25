@@ -33,6 +33,10 @@ data class UpdatedProduct(
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
 	val volume: Double? = null,
+
+	val shippingPreparationTime: ShippingPreparationTime? = null,
+	val showDeliveryTimeInStorefront: Boolean? = null,
+
 	val shipping: ShippingSettings? = null,
 	val isShippingRequired: Boolean? = null,
 
@@ -322,6 +326,12 @@ data class UpdatedProduct(
 		val length: Double? = null,
 		val width: Double? = null,
 		val height: Double? = null
+	)
+
+	data class ShippingPreparationTime(
+		val shippingPreparationTimeForInStockItemDays: String? = null,
+		val shippingPreparationTimeForOutOfStockItemDays: String? = null,
+		val pickupPreparationTimeForInStockItemInMinutes: Int? = null
 	)
 
 	data class CustomPriceTier(
