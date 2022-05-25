@@ -54,6 +54,10 @@ data class FetchedProduct(
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
 	val volume: Double = 0.0,
+
+	val shippingPreparationTime: ShippingPreparationTime? = null,
+	val showDeliveryTimeInStorefront: Boolean? = null,
+
 	val shipping: ShippingSettings? = null,
 	val isShippingRequired: Boolean? = null,
 
@@ -245,6 +249,12 @@ data class FetchedProduct(
 		val length: Double? = null,
 		val width: Double? = null,
 		val height: Double? = null
+	)
+
+	data class ShippingPreparationTime(
+		val shippingPreparationTimeForInStockItemDays: String? = null,
+		val shippingPreparationTimeForOutOfStockItemDays: String? = null,
+		val pickupPreparationTimeForInStockItemInMinutes: Int? = null
 	)
 
 	data class CustomPriceTier(

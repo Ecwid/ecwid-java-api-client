@@ -38,6 +38,8 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct::nameYourPriceEnabled),
 	IgnoreNullable(FetchedProduct::customPriceTiers),
 	IgnoreNullable(FetchedProduct::priceDefaultTier),
+	IgnoreNullable(FetchedProduct::shippingPreparationTime),
+	IgnoreNullable(FetchedProduct::showDeliveryTimeInStorefront),
 	IgnoreNullable(FetchedProduct::options),
 	IgnoreNullable(FetchedProduct::originalImage),
 	IgnoreNullable(FetchedProduct::price),
