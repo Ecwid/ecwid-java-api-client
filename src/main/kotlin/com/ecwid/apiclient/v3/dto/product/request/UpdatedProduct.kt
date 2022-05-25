@@ -332,6 +332,7 @@ data class UpdatedProduct(
 		val images: List<ProductImage>? = null
 	)
 
+
 	data class ProductImage(
 		val id: String = "0",
 		val orderBy: Int = 0
