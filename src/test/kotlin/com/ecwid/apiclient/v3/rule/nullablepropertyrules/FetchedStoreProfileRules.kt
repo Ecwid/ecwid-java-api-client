@@ -56,6 +56,7 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.DefaultPostageDimensions::width),
 	AllowNullable(FetchedStoreProfile.DesignSettings::breadcrumbsHaveHomeItem),
 	AllowNullable(FetchedStoreProfile.DesignSettings::breadcrumbsHomeUrl),
+	AllowNullable(FetchedStoreProfile.DesignSettings::breadcrumbsSeparator),
 	AllowNullable(FetchedStoreProfile.DesignSettings::cartWidgetFixed),
 	AllowNullable(FetchedStoreProfile.DesignSettings::cartWidgetFixedPosition),
 	AllowNullable(FetchedStoreProfile.DesignSettings::cartWidgetFixedShape),

@@ -411,6 +411,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("breadcrumbs_home_url")
 		val breadcrumbsHomeUrl: String? = null,
 
+		@JsonFieldName("breadcrumbs_separator")
+		val breadcrumbsSeparator: String? = null,
+
 		@JsonFieldName("cart_widget_fixed")
 		val cartWidgetFixed: Boolean? = null,
 
