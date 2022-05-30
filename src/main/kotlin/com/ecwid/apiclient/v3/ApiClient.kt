@@ -31,6 +31,8 @@ import com.ecwid.apiclient.v3.dto.profile.request.*
 import com.ecwid.apiclient.v3.dto.profile.result.*
 import com.ecwid.apiclient.v3.dto.saleschannels.request.*
 import com.ecwid.apiclient.v3.dto.saleschannels.response.*
+import com.ecwid.apiclient.v3.dto.storage.request.*
+import com.ecwid.apiclient.v3.dto.storage.result.*
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
@@ -52,6 +54,7 @@ open class ApiClient private constructor(
 	cartsApiClient: CartsApiClient,
 	salesChannelsApiClient: SalesChannelsApiClient,
 	applicationApiClient: ApplicationApiClient,
+	applicationStorageApiClient: ApplicationStorageApiClient,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	ProductsApiClient by productsApiClient,
@@ -65,7 +68,8 @@ open class ApiClient private constructor(
 	CouponsApiClient by discountCouponsApiClient,
 	CartsApiClient by cartsApiClient,
 	SalesChannelsApiClient by salesChannelsApiClient,
-	ApplicationApiClient by applicationApiClient {
+	ApplicationApiClient by applicationApiClient,
+	ApplicationStorageApiClient by applicationStorageApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -82,6 +86,7 @@ open class ApiClient private constructor(
 		cartsApiClient = CartsApiClientImpl(apiClientHelper),
 		salesChannelsApiClient = SalesChannelsApiClientImpl(apiClientHelper),
 		applicationApiClient = ApplicationApiClientImpl(apiClientHelper),
+		applicationStorageApiClient = ApplicationStorageApiClientImpl(apiClientHelper),
 	)
 
 	companion object {
@@ -288,6 +293,15 @@ interface SalesChannelsApiClient {
 // https://developers.ecwid.com/api-documentation/application
 interface ApplicationApiClient {
 	fun deleteApplication(request: ApplicationDeleteRequest): ApplicationDeleteResult
+}
+
+// Application storage
+// https://developers.ecwid.com/api-documentation/app-storage
+interface ApplicationStorageApiClient {
+	fun getStorageEntity(request: StorageEntityRequest): FetchedStorageEntity
+	fun getAllStorageEntities(request: StorageEntitiesRequest): StorageEntitiesResult
+	fun createOrUpdateStorageEntity(request: StorageEntityUpdateRequest): StorageEntityUpdateResult
+	fun deleteStorageEntity(request: StorageEntityDeleteRequest): StorageEntityDeleteResult
 }
 
 // Starter site
