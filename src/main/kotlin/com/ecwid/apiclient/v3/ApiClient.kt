@@ -300,7 +300,8 @@ interface ApplicationApiClient {
 interface ApplicationStorageApiClient {
 	fun getStorageData(request: StorageDataRequest): FetchedStorageData
 	fun getAllStorageData(request: AllStorageDataRequest): AllStorageDataResult
-	fun createOrUpdateStorageData(request: StorageDataUpdateRequest): StorageDataUpdateResult
+	fun createStorageData(request: StorageDataCreateRequest): StorageDataCreateResult
+	fun updateStorageData(request: StorageDataUpdateRequest): StorageDataUpdateResult
 	fun deleteStorageData(request: StorageDataDeleteRequest): StorageDataDeleteResult
 }
 

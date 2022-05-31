@@ -15,7 +15,10 @@ internal class ApplicationStorageApiClientImpl(
 	override fun getAllStorageData(request: AllStorageDataRequest) =
 		apiClientHelper.makeObjectResultRequest<AllStorageDataResult>(request)
 
-	override fun createOrUpdateStorageData(request: StorageDataUpdateRequest) =
+	override fun createStorageData(request: StorageDataCreateRequest) =
+		apiClientHelper.makeObjectResultRequest<StorageDataCreateResult>(request)
+
+	override fun updateStorageData(request: StorageDataUpdateRequest) =
 		apiClientHelper.makeObjectResultRequest<StorageDataUpdateResult>(request)
 
 	override fun deleteStorageData(request: StorageDataDeleteRequest) =
