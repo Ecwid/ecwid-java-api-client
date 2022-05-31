@@ -22,19 +22,19 @@ class StorageTest : BaseEntityTest() {
 		val value = updateData.toJson()
 
 		val updatedStorageEntity = UpdatedStorageData(key = key, value = value)
-		val updateRequest = StorageEntityUpdateRequest(updatedStorageEntity)
-		val updateResult = apiClient.createOrUpdateStorageEntity(updateRequest)
+		val updateRequest = StorageDataUpdateRequest(updatedStorageEntity)
+		val updateResult = apiClient.createOrUpdateStorageData(updateRequest)
 		assertEquals(1, updateResult.updateCount)
 
-		val storageEntityRequest = StorageEntityRequest(key)
-		val storageEntity = apiClient.getStorageEntity(storageEntityRequest)
+		val storageEntityRequest = StorageDataRequest(key)
+		val storageEntity = apiClient.getStorageData(storageEntityRequest)
 		assertEquals(updatedStorageEntity, storageEntity.toUpdated())
 
 		val fetchedData = StorageApiData.fromJson(storageEntity.value)
 		assertEquals(updateData, fetchedData)
 
-		val deleteRequest = StorageEntityDeleteRequest(key)
-		val deleteResult = apiClient.deleteStorageEntity(deleteRequest)
+		val deleteRequest = StorageDataDeleteRequest(key)
+		val deleteResult = apiClient.deleteStorageData(deleteRequest)
 		assertEquals(1, deleteResult.deleteCount)
 	}
 
@@ -46,13 +46,13 @@ class StorageTest : BaseEntityTest() {
 		)
 
 		updatedEntities.forEach { entity ->
-			val updateRequest = StorageEntityUpdateRequest(entity)
-			val updateResult = apiClient.createOrUpdateStorageEntity(updateRequest)
+			val updateRequest = StorageDataUpdateRequest(entity)
+			val updateResult = apiClient.createOrUpdateStorageData(updateRequest)
 			assertEquals(1, updateResult.updateCount)
 		}
 
-		val storageEntitiesRequest = StorageEntitiesRequest()
-		val storageEntitiesResult = apiClient.getAllStorageEntities(storageEntitiesRequest)
+		val storageEntitiesRequest = AllStorageDataRequest()
+		val storageEntitiesResult = apiClient.getAllStorageData(storageEntitiesRequest)
 		storageEntitiesResult.forEach { fetchedEntity ->
 			val updatedEntity = updatedEntities.find { it.key == fetchedEntity.key }
 			assertNotNull(updatedEntity)
@@ -60,8 +60,8 @@ class StorageTest : BaseEntityTest() {
 		}
 
 		updatedEntities.forEach { entity ->
-			val deleteRequest = StorageEntityDeleteRequest(entity.key)
-			val deleteResult = apiClient.deleteStorageEntity(deleteRequest)
+			val deleteRequest = StorageDataDeleteRequest(entity.key)
+			val deleteResult = apiClient.deleteStorageData(deleteRequest)
 			assertEquals(1, deleteResult.deleteCount)
 		}
 	}

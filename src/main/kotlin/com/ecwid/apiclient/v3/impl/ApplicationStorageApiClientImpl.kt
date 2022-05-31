@@ -9,16 +9,16 @@ internal class ApplicationStorageApiClientImpl(
 	private val apiClientHelper: ApiClientHelper,
 ) : ApplicationStorageApiClient {
 
-	override fun getStorageEntity(request: StorageEntityRequest) =
+	override fun getStorageData(request: StorageDataRequest) =
 		apiClientHelper.makeObjectResultRequest<FetchedStorageData>(request)
 
-	override fun getAllStorageEntities(request: StorageEntitiesRequest) =
-		apiClientHelper.makeObjectResultRequest<StorageEntitiesResult>(request)
+	override fun getAllStorageData(request: AllStorageDataRequest) =
+		apiClientHelper.makeObjectResultRequest<AllStorageDataResult>(request)
 
-	override fun createOrUpdateStorageEntity(request: StorageEntityUpdateRequest) =
-		apiClientHelper.makeObjectResultRequest<StorageEntityUpdateResult>(request)
+	override fun createOrUpdateStorageData(request: StorageDataUpdateRequest) =
+		apiClientHelper.makeObjectResultRequest<StorageDataUpdateResult>(request)
 
-	override fun deleteStorageEntity(request: StorageEntityDeleteRequest) =
-		apiClientHelper.makeObjectResultRequest<StorageEntityDeleteResult>(request)
+	override fun deleteStorageData(request: StorageDataDeleteRequest) =
+		apiClientHelper.makeObjectResultRequest<StorageDataDeleteResult>(request)
 
 }

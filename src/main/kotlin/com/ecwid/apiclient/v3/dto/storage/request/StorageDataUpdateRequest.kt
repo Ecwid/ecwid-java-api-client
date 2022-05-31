@@ -5,17 +5,17 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.MIME_TYPE_APPLICATION_JSON
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
-data class StorageEntityUpdateRequest(
-	private val updatedStorageEntity: UpdatedStorageData = UpdatedStorageData(),
+data class StorageDataUpdateRequest(
+	private val updatedStorageData: UpdatedStorageData = UpdatedStorageData(),
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
 		pathSegments = listOf(
 			"storage",
-			updatedStorageEntity.key,
+			updatedStorageData.key,
 		),
 		httpBody = HttpBody.ByteArrayBody(
-			bytes = updatedStorageEntity.value.toByteArray(),
+			bytes = updatedStorageData.value.toByteArray(),
 			mimeType = MIME_TYPE_APPLICATION_JSON,
 		),
 	)

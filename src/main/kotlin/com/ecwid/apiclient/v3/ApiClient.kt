@@ -298,10 +298,10 @@ interface ApplicationApiClient {
 // Application storage
 // https://developers.ecwid.com/api-documentation/app-storage
 interface ApplicationStorageApiClient {
-	fun getStorageEntity(request: StorageEntityRequest): FetchedStorageData
-	fun getAllStorageEntities(request: StorageEntitiesRequest): StorageEntitiesResult
-	fun createOrUpdateStorageEntity(request: StorageEntityUpdateRequest): StorageEntityUpdateResult
-	fun deleteStorageEntity(request: StorageEntityDeleteRequest): StorageEntityDeleteResult
+	fun getStorageData(request: StorageDataRequest): FetchedStorageData
+	fun getAllStorageData(request: AllStorageDataRequest): AllStorageDataResult
+	fun createOrUpdateStorageData(request: StorageDataUpdateRequest): StorageDataUpdateResult
+	fun deleteStorageData(request: StorageDataDeleteRequest): StorageDataDeleteResult
 }
 
 // Starter site
