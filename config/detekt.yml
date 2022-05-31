@@ -9,6 +9,7 @@ complexity:
   LongParameterList:
     functionThreshold: 10
     constructorThreshold: 15
+    excludes: ['**/com/ecwid/apiclient/v3/ApiClient.kt']
   NestedBlockDepth:
     excludes: ['**/test/**']
   TooManyFunctions:
