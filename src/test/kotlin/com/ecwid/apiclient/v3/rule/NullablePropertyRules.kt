@@ -15,6 +15,7 @@ import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 import com.ecwid.apiclient.v3.rule.nullablepropertyrules.*
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
+import com.ecwid.apiclient.v3.dto.storage.result.FetchedStorageData
 import kotlin.reflect.KProperty1
 
 val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
@@ -57,8 +58,9 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(PaymentAppRequest::storeId),
 	AllowNullable(PaymentAppRequest::token),
 
-	IgnoreNullable(ProductInventoryUpdateResult::warning)
+	IgnoreNullable(ProductInventoryUpdateResult::warning),
 
+	AllowNullable(FetchedStorageData::value),
 )
 
 val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
