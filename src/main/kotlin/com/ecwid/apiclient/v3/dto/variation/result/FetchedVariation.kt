@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
+import com.ecwid.apiclient.v3.dto.product.enums.OutOfStockVisibilityBehaviour
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.variation.request.UpdatedVariation
 
@@ -29,6 +30,7 @@ data class FetchedVariation(
 	val wholesalePrices: List<WholesalePrice>? = null,
 
 	val quantity: Int? = null,
+	val outOfStockVisibilityBehaviour: OutOfStockVisibilityBehaviour? = null,
 	val unlimited: Boolean? = null,
 	val inStock: Boolean? = null,
 	val warningLimit: Int? = null,

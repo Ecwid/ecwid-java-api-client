@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.dto.variation.request
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueAlias
+import com.ecwid.apiclient.v3.dto.product.enums.OutOfStockVisibilityBehaviour
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 
 data class UpdatedVariation(
@@ -16,6 +17,7 @@ data class UpdatedVariation(
 	val wholesalePrices: List<WholesalePrice>? = null,
 
 	val quantity: Int? = null,
+	val outOfStockVisibilityBehaviour: OutOfStockVisibilityBehaviour? = null,
 	val unlimited: Boolean? = null,
 	val warningLimit: Int? = null,
 

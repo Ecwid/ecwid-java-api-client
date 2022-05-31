@@ -22,6 +22,7 @@ val fetchedVariationTypeNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	IgnoreNullable(FetchedVariation::originalImageUrl),
 	IgnoreNullable(FetchedVariation::price),
 	IgnoreNullable(FetchedVariation::quantity),
+	IgnoreNullable(FetchedVariation::outOfStockVisibilityBehaviour),
 	IgnoreNullable(FetchedVariation::sku),
 	IgnoreNullable(FetchedVariation::smallThumbnailUrl),
 	IgnoreNullable(FetchedVariation::thumbnailUrl),
