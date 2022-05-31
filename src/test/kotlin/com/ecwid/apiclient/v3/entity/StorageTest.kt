@@ -3,8 +3,7 @@ package com.ecwid.apiclient.v3.entity
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.storage.request.*
 import com.ecwid.apiclient.v3.jsontransformer.gson.GsonTransformer
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -16,22 +15,30 @@ class StorageTest : BaseEntityTest() {
 	}
 
 	@Test
-	fun testStorageApiSingleItemCreation() {
-		val updateData = StorageApiData(123, "test")
+	fun testStorageApiSingleItemOperations() {
+		val createApiData = StorageApiData(123, "test")
 		val key = "key"
-		val value = updateData.toJson()
+		val createValue = createApiData.toJson()
+		val createStorageData = UpdatedStorageData(key = key, value = createValue)
+		val createRequest = StorageDataCreateRequest(createStorageData)
+		val createResult = apiClient.createStorageData(createRequest)
+		assertEquals(1, createResult.updateCount)
 
-		val updatedStorageEntity = UpdatedStorageData(key = key, value = value)
-		val updateRequest = StorageDataUpdateRequest(updatedStorageEntity)
-		val updateResult = apiClient.createOrUpdateStorageData(updateRequest)
+		val createdDataRequest = StorageDataRequest(key)
+		val createdDataResult = apiClient.getStorageData(createdDataRequest)
+		assertEquals(createStorageData, createdDataResult.toUpdated())
+
+		val createdData = createdDataResult.value?.let { StorageApiData.fromJson(it) }
+		assertEquals(createApiData, createdData)
+
+		val updatedStorageData = UpdatedStorageData(key = key, value = null)
+		val updateRequest = StorageDataUpdateRequest(updatedStorageData)
+		val updateResult = apiClient.updateStorageData(updateRequest)
 		assertEquals(1, updateResult.updateCount)
 
-		val storageEntityRequest = StorageDataRequest(key)
-		val storageEntity = apiClient.getStorageData(storageEntityRequest)
-		assertEquals(updatedStorageEntity, storageEntity.toUpdated())
-
-		val fetchedData = storageEntity.value?.let { StorageApiData.fromJson(it) }
-		assertEquals(updateData, fetchedData)
+		val updatedDataRequest = StorageDataRequest(key)
+		val updatedDataResult = apiClient.getStorageData(updatedDataRequest)
+		assertTrue(updatedDataResult.value.isNullOrEmpty())
 
 		val deleteRequest = StorageDataDeleteRequest(key)
 		val deleteResult = apiClient.deleteStorageData(deleteRequest)
@@ -47,7 +54,7 @@ class StorageTest : BaseEntityTest() {
 
 		updatedEntities.forEach { entity ->
 			val updateRequest = StorageDataUpdateRequest(entity)
-			val updateResult = apiClient.createOrUpdateStorageData(updateRequest)
+			val updateResult = apiClient.updateStorageData(updateRequest)
 			assertEquals(1, updateResult.updateCount)
 		}
 
