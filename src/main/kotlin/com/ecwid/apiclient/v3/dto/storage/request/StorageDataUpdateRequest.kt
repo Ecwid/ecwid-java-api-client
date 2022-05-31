@@ -15,7 +15,7 @@ data class StorageDataUpdateRequest(
 			updatedStorageData.key,
 		),
 		httpBody = HttpBody.ByteArrayBody(
-			bytes = updatedStorageData.value.toByteArray(),
+			bytes = updatedStorageData.value?.toByteArray() ?: ByteArray(0),
 			mimeType = MIME_TYPE_APPLICATION_JSON,
 		),
 	)

@@ -30,7 +30,7 @@ class StorageTest : BaseEntityTest() {
 		val storageEntity = apiClient.getStorageData(storageEntityRequest)
 		assertEquals(updatedStorageEntity, storageEntity.toUpdated())
 
-		val fetchedData = StorageApiData.fromJson(storageEntity.value)
+		val fetchedData = storageEntity.value?.let { StorageApiData.fromJson(it) }
 		assertEquals(updateData, fetchedData)
 
 		val deleteRequest = StorageDataDeleteRequest(key)

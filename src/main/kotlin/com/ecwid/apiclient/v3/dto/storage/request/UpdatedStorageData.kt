@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.dto.storage.result.FetchedStorageData
 
 data class UpdatedStorageData(
 	val key: String = "",
-	val value: String = "",
+	val value: String? = null,
 ) : ApiUpdatedDTO {
 
 	override fun getModifyKind() = ApiUpdatedDTO.ModifyKind.ReadWrite(FetchedStorageData::class)
