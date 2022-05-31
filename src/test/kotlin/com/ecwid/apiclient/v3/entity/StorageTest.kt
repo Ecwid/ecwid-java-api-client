@@ -21,7 +21,7 @@ class StorageTest : BaseEntityTest() {
 		val key = "key"
 		val value = updateData.toJson()
 
-		val updatedStorageEntity = UpdatedStorageEntity(key = key, value = value)
+		val updatedStorageEntity = UpdatedStorageData(key = key, value = value)
 		val updateRequest = StorageEntityUpdateRequest(updatedStorageEntity)
 		val updateResult = apiClient.createOrUpdateStorageEntity(updateRequest)
 		assertEquals(1, updateResult.updateCount)
@@ -41,8 +41,8 @@ class StorageTest : BaseEntityTest() {
 	@Test
 	fun testStorageApiMultipleItemsCreation() {
 		val updatedEntities = listOf(
-			UpdatedStorageEntity(key = "key1", value = StorageApiData(123, "test1").toJson()),
-			UpdatedStorageEntity(key = "key2", value = StorageApiData(456, "test2").toJson()),
+			UpdatedStorageData(key = "key1", value = StorageApiData(123, "test1").toJson()),
+			UpdatedStorageData(key = "key2", value = StorageApiData(456, "test2").toJson()),
 		)
 
 		updatedEntities.forEach { entity ->

@@ -6,7 +6,7 @@ import com.ecwid.apiclient.v3.impl.MIME_TYPE_APPLICATION_JSON
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class StorageEntityUpdateRequest(
-	private val updatedStorageEntity: UpdatedStorageEntity = UpdatedStorageEntity(),
+	private val updatedStorageEntity: UpdatedStorageData = UpdatedStorageData(),
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPutRequest(

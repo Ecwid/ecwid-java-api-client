@@ -10,7 +10,7 @@ internal class ApplicationStorageApiClientImpl(
 ) : ApplicationStorageApiClient {
 
 	override fun getStorageEntity(request: StorageEntityRequest) =
-		apiClientHelper.makeObjectResultRequest<FetchedStorageEntity>(request)
+		apiClientHelper.makeObjectResultRequest<FetchedStorageData>(request)
 
 	override fun getAllStorageEntities(request: StorageEntitiesRequest) =
 		apiClientHelper.makeObjectResultRequest<StorageEntitiesResult>(request)
