@@ -119,6 +119,7 @@ class CartsTest : BaseEntityTest() {
 				assertEquals(orderTaxes.name, cartTaxes.name)
 				assertEquals(orderTaxes.value, cartTaxes.value)
 				assertEquals(orderTaxes.total, cartTaxes.total)
+				assertEquals(orderTaxes.taxOnSubtotal, cartTaxes.taxOnSubtotal)
 				assertEquals(orderTaxes.taxOnDiscountedSubtotal, cartTaxes.taxOnDiscountedSubtotal)
 				assertEquals(orderTaxes.taxOnShipping, cartTaxes.taxOnShipping)
 				assertEquals(orderTaxes.includeInPrice, cartTaxes.includeInPrice)
@@ -550,6 +551,7 @@ class CartsTest : BaseEntityTest() {
 			name = "Tax " + randomAlphanumeric(8),
 			value = 12.2,
 			total = 22.6,
+			taxOnSubtotal = 4.4,
 			taxOnDiscountedSubtotal = 4.4,
 			taxOnShipping = 3.3,
 			includeInPrice = true

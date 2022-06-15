@@ -288,6 +288,7 @@ private fun generateTestOrderItemTax(): UpdatedOrder.OrderItemTax {
 		name = "Tax " + randomAlphanumeric(8),
 		value = randomPrice(),
 		total = randomPrice(),
+		taxOnSubtotal = randomPrice(),
 		taxOnDiscountedSubtotal = randomPrice(),
 		taxOnShipping = randomPrice(),
 		includeInPrice = randomBoolean()

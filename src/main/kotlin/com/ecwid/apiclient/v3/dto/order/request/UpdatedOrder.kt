@@ -246,6 +246,7 @@ data class UpdatedOrder(
 		val name: String? = null,
 		val value: Double? = null,
 		val total: Double? = null,
+		val taxOnSubtotal: Double? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
 		val taxOnShipping: Double? = null,
 		val includeInPrice: Boolean? = null

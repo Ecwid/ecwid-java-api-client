@@ -184,6 +184,7 @@ fun FetchedOrder.OrderItemTax.toUpdated(): UpdatedOrder.OrderItemTax {
 		name = name,
 		value = value,
 		total = total,
+		taxOnSubtotal = taxOnSubtotal,
 		taxOnDiscountedSubtotal = taxOnDiscountedSubtotal,
 		taxOnShipping = taxOnShipping,
 		includeInPrice = includeInPrice
