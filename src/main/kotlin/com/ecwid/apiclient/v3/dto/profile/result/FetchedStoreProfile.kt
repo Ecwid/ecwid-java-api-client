@@ -492,6 +492,12 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_details_position_buy_button")
 		val productDetailsPositionBuyButton: Int? = null,
 
+		@JsonFieldName("product_details_position_delivery_time")
+		val productDetailsPositionDeliveryTime: Int? = null,
+
+		@JsonFieldName("product_details_show_delivery_time")
+		val productDetailsShowDeliveryTime: Boolean? = null,
+
 		@JsonFieldName("product_details_position_product_description")
 		val productDetailsPositionProductDescription: Int? = null,
 
