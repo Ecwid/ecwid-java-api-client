@@ -31,6 +31,8 @@ import com.ecwid.apiclient.v3.dto.profile.request.*
 import com.ecwid.apiclient.v3.dto.profile.result.*
 import com.ecwid.apiclient.v3.dto.saleschannels.request.*
 import com.ecwid.apiclient.v3.dto.saleschannels.response.*
+import com.ecwid.apiclient.v3.dto.startersite.request.StarterSiteSettingsRequest
+import com.ecwid.apiclient.v3.dto.startersite.result.StarterSiteSettingsResult
 import com.ecwid.apiclient.v3.dto.storage.request.*
 import com.ecwid.apiclient.v3.dto.storage.result.*
 import com.ecwid.apiclient.v3.dto.variation.request.*
@@ -55,6 +57,7 @@ open class ApiClient private constructor(
 	salesChannelsApiClient: SalesChannelsApiClient,
 	applicationApiClient: ApplicationApiClient,
 	applicationStorageApiClient: ApplicationStorageApiClient,
+	starterSiteApiClient: StarterSiteApiClient,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	ProductsApiClient by productsApiClient,
@@ -69,7 +72,8 @@ open class ApiClient private constructor(
 	CartsApiClient by cartsApiClient,
 	SalesChannelsApiClient by salesChannelsApiClient,
 	ApplicationApiClient by applicationApiClient,
-	ApplicationStorageApiClient by applicationStorageApiClient {
+	ApplicationStorageApiClient by applicationStorageApiClient,
+	StarterSiteApiClient by starterSiteApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -87,6 +91,7 @@ open class ApiClient private constructor(
 		salesChannelsApiClient = SalesChannelsApiClientImpl(apiClientHelper),
 		applicationApiClient = ApplicationApiClientImpl(apiClientHelper),
 		applicationStorageApiClient = ApplicationStorageApiClientImpl(apiClientHelper),
+		starterSiteApiClient = StarterSiteApiClientImpl(apiClientHelper)
 	)
 
 	companion object {
@@ -307,7 +312,9 @@ interface ApplicationStorageApiClient {
 
 // Starter site
 // https://developers.ecwid.com/api-documentation/starter-site
-// TODO
+interface StarterSiteApiClient {
+	fun getStarterSiteSettings(request: StarterSiteSettingsRequest): StarterSiteSettingsResult
+}
 
 // Static store pages
 // https://developers.ecwid.com/api-documentation/static-store-pages
