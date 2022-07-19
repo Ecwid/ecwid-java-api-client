@@ -201,7 +201,8 @@ private fun FetchedProduct.ProductDimensions.toUpdated() = UpdatedProduct.Produc
 private fun FetchedProduct.ShippingPreparationTime.toUpdated() = UpdatedProduct.ShippingPreparationTime(
 	shippingPreparationTimeForInStockItemDays = shippingPreparationTimeForInStockItemDays,
 	shippingPreparationTimeForOutOfStockItemDays = shippingPreparationTimeForOutOfStockItemDays,
-	pickupPreparationTimeForInStockItemInMinutes = pickupPreparationTimeForInStockItemInMinutes
+	pickupPreparationTimeForInStockItemInMinutes = pickupPreparationTimeForInStockItemInMinutes,
+	localDeliveryPreparationTimeForInStockItemInMinutes = localDeliveryPreparationTimeForInStockItemInMinutes
 )
 
 fun FetchedProduct.ProductMedia.toUpdated() = UpdatedProduct.ProductMedia(

@@ -40,6 +40,7 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedProduct.ShippingPreparationTime::pickupPreparationTimeForInStockItemInMinutes),
 	AllowNullable(FetchedProduct.ShippingPreparationTime::shippingPreparationTimeForInStockItemDays),
 	AllowNullable(FetchedProduct.ShippingPreparationTime::shippingPreparationTimeForOutOfStockItemDays),
+	AllowNullable(FetchedProduct.ShippingPreparationTime::localDeliveryPreparationTimeForInStockItemInMinutes),
 
 	IgnoreNullable(ConvertCartToOrderResult::id),
 	IgnoreNullable(ConvertCartToOrderResult::orderNumber),
