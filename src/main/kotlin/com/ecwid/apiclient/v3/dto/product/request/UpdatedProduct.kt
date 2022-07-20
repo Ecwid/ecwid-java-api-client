@@ -332,7 +332,8 @@ data class UpdatedProduct(
 	data class ShippingPreparationTime(
 		val shippingPreparationTimeForInStockItemDays: String? = null,
 		val shippingPreparationTimeForOutOfStockItemDays: String? = null,
-		val pickupPreparationTimeForInStockItemInMinutes: Int? = null
+		val pickupPreparationTimeForInStockItemInMinutes: Int? = null,
+		val localDeliveryPreparationTimeForInStockItemInMinutes: Int? = null,
 	)
 
 	data class CustomPriceTier(
