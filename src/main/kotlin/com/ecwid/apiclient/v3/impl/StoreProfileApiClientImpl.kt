@@ -49,4 +49,10 @@ internal class StoreProfileApiClientImpl(
 
 	override fun deleteExtrafieldConfig(request: ExtrafieldConfigDeleteRequest): ExtrafieldConfigDeleteResult =
 		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun getShippingOptions(request: ShippingOptionsRequest): ShippingOptionsResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun getPaymentOptions(request: PaymentOptionsRequest): PaymentOptionsResult =
+		apiClientHelper.makeObjectResultRequest(request)
 }

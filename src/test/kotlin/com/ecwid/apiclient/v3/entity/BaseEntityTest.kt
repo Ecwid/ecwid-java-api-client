@@ -182,7 +182,7 @@ abstract class BaseEntityTest {
 		productsSearchRequest: ProductsSearchRequest.ByFilters,
 		desiredProductCount: Int
 	): ProductsSearchResult {
-		return processDelay(500L, 10) {
+		return processDelay(1000L, 10) {
 			val productsSearchResult = apiClient.searchProducts(productsSearchRequest)
 			if (productsSearchResult.items.size == desiredProductCount) productsSearchResult else null
 		}
