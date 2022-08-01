@@ -1,6 +1,6 @@
 complexity:
   ComplexMethod:
-    threshold: 30
+    threshold: 40
   LargeClass:
     excludes: ['**/test/**']
   LongMethod:
