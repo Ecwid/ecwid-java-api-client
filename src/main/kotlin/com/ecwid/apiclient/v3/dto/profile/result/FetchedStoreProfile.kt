@@ -25,7 +25,8 @@ data class FetchedStoreProfile(
 	val productFiltersSettings: ProductFiltersSettings? = null,
 	val fbMessengerSettings: FBMessengerSettings? = null,
 	val orderInvoiceSettings: OrderInvoiceSettings? = null,
-	val giftCardSettings: GiftCardSettings? = null
+	val giftCardSettings: GiftCardSettings? = null,
+	val registrationAnswers: RegistrationAnswers? = null,
 ) : ApiFetchedDTO {
 
 	data class GeneralInfo(
@@ -54,6 +55,16 @@ data class FetchedStoreProfile(
 		val whiteLabel: Boolean? = null,
 		val brandName: String? = null,
 		val supportEmail: String? = null
+	)
+
+	data class RegistrationAnswers(
+		val goods: String? = null,
+		val alreadySelling: String? = null,
+		val forSomeone: String? = null,
+		val website: String? = null,
+		val platform: String? = null,
+		val facebook: String? = null,
+		val otherGoods: String? = null
 	)
 
 	data class Settings(
