@@ -30,4 +30,5 @@ val productsSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *>>
 	AllowNullable(ProductsSearchRequest.ByFilters::discountsAllowed),
 	AllowNullable(ProductsSearchRequest.ByFilters::isCustomerSetPrice),
 	AllowNullable(ProductsSearchRequest.ByFilters::visibleInStorefront),
+	AllowNullable(ProductsSearchRequest.ByIds::sortBy),
 )
