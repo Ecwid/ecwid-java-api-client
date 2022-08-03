@@ -100,6 +100,7 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct.RelatedCategory::productCount),
 	IgnoreNullable(FetchedProduct.RelatedProducts::productIds),
 	IgnoreNullable(FetchedProduct.RelatedProducts::relatedCategory),
+	AllowNullable(FetchedProduct.RelatedProducts::productSkus),
 	IgnoreNullable(FetchedProduct.Ribbon::color),
 	IgnoreNullable(FetchedProduct.Ribbon::text),
 	IgnoreNullable(FetchedProduct.ShippingSettings::disabledMethods),
