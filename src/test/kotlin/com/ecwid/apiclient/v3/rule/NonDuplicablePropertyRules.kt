@@ -18,6 +18,7 @@ val nonDuplicablePropertyRules: List<NonDuplicablePropertyRule<*, *>> = listOf(
 	WriteOnly(UpdatedProduct.AttributeValue::name),
 	WriteOnly(UpdatedVariation.AttributeValue::alias),
 	WriteOnly(UpdatedVariation.AttributeValue::name),
+	WriteOnly(UpdatedProduct.RelatedProducts::productSkus),
 
 )
 
