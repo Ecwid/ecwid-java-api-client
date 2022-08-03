@@ -237,7 +237,6 @@ data class FetchedProduct(
 
 	data class RelatedProducts(
 		val productIds: List<Int>? = null,
-		val productSkus: List<String>? = null,
 		val relatedCategory: RelatedCategory? = null
 	)
 

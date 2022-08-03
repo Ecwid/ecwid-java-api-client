@@ -183,7 +183,6 @@ private fun FetchedProduct.AttributeValue.toUpdated() = UpdatedProduct.Attribute
 
 private fun FetchedProduct.RelatedProducts.toUpdated() = UpdatedProduct.RelatedProducts(
 	productIds = productIds,
-	productSkus = productSkus,
 	relatedCategory = relatedCategory?.toUpdated()
 )
 
