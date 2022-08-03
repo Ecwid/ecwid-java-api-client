@@ -9,6 +9,7 @@ sealed class ProductsSearchRequest : ApiRequest {
 
 	data class ByFilters(
 		val keyword: String? = null,
+		val externalReferenceId: String? = null,
 		val priceFrom: Double? = null,
 		val priceTo: Double? = null,
 		val categories: List<Int>? = null,
@@ -25,11 +26,15 @@ sealed class ProductsSearchRequest : ApiRequest {
 		val attributes: ProductSearchAttributes? = null,
 		val options: ProductSearchOptions? = null,
 		val sku: String? = null,
+		val isGiftCard: Boolean? = null,
+		val discountsAllowed: Boolean? = null,
+		val isCustomerSetPrice: Boolean? = null,
 		val baseUrl: String? = null,
 		val cleanUrls: Boolean? = null,
 		val offset: Int = 0,
 		val limit: Int = 100,
-		val lang: String? = null
+		val lang: String? = null,
+		val visibleInStorefront: Boolean? = null,
 	) : ProductsSearchRequest() {
 		override fun toRequestInfo() = RequestInfo.createGetRequest(
 			pathSegments = listOf(
@@ -42,7 +47,11 @@ sealed class ProductsSearchRequest : ApiRequest {
 			val request = this
 			return mutableMapOf<String, String>().apply {
 				request.keyword?.let { put("keyword", it) }
+				request.externalReferenceId?.let { put("externalReferenceId", it) }
 				request.sku?.let { put("sku", it) }
+				request.isGiftCard?.let { put("isGiftCard", it.toString()) }
+				request.discountsAllowed?.let { put("discountsAllowed", it.toString()) }
+				request.isCustomerSetPrice?.let { put("isCustomerSetPrice", it.toString()) }
 				request.priceFrom?.let { put("priceFrom", it.toString()) }
 				request.priceTo?.let { put("priceTo", it.toString()) }
 				request.createdFrom?.let { put("createdFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
@@ -71,11 +80,15 @@ sealed class ProductsSearchRequest : ApiRequest {
 				put("offset", request.offset.toString())
 				put("limit", request.limit.toString())
 				request.lang?.let { put("lang", it) }
+				request.visibleInStorefront?.let { put("visibleInStorefront", it.toString()) }
 			}.toMap()
 		}
 	}
 
-	data class ByIds(val productIds: List<Int> = listOf()) : ProductsSearchRequest() {
+	data class ByIds(
+		val productIds: List<Int> = listOf(),
+		val sortBy: SortOrder? = null,
+	) : ProductsSearchRequest() {
 		override fun toRequestInfo() = RequestInfo.createGetRequest(
 			pathSegments = listOf(
 				"products"
@@ -90,6 +103,7 @@ sealed class ProductsSearchRequest : ApiRequest {
 			val request = this
 			return mutableMapOf<String, String>().apply {
 				put("productId", request.productIds.joinToString(","))
+				request.sortBy?.let { put("sortBy", it.name) }
 			}.toMap()
 		}
 	}

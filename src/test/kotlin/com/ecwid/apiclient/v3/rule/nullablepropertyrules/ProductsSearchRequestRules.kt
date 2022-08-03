@@ -24,5 +24,11 @@ val productsSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *>>
 	AllowNullable(ProductsSearchRequest.ByFilters::sku),
 	AllowNullable(ProductsSearchRequest.ByFilters::sortBy),
 	AllowNullable(ProductsSearchRequest.ByFilters::updatedFrom),
-	AllowNullable(ProductsSearchRequest.ByFilters::updatedTo)
+	AllowNullable(ProductsSearchRequest.ByFilters::updatedTo),
+	AllowNullable(ProductsSearchRequest.ByFilters::externalReferenceId),
+	AllowNullable(ProductsSearchRequest.ByFilters::isGiftCard),
+	AllowNullable(ProductsSearchRequest.ByFilters::discountsAllowed),
+	AllowNullable(ProductsSearchRequest.ByFilters::isCustomerSetPrice),
+	AllowNullable(ProductsSearchRequest.ByFilters::visibleInStorefront),
+	AllowNullable(ProductsSearchRequest.ByIds::sortBy),
 )
