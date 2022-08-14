@@ -1,6 +1,8 @@
 package com.ecwid.apiclient.v3.entity
 
+import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
+import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
@@ -168,6 +170,10 @@ class StoreProfileTest : BaseEntityTest() {
 					)
 				)
 			),
+			productFiltersSettings = UpdatedStoreProfile.ProductFiltersSettings(
+				enabledInStorefront = true,
+				filterSections = createTestFilterSections(),
+			),
 			orderInvoiceSettings = UpdatedStoreProfile.OrderInvoiceSettings(
 				displayOrderInvoices = true,
 				attachInvoiceToOrderEmailNotifications = UpdatedStoreProfile.OrderInvoiceSettings.AttachValue.ATTACH_TO_ALL_EMAILS,
@@ -263,5 +269,54 @@ class StoreProfileTest : BaseEntityTest() {
 		assertTrue(tikTokPixel.advancedMatching)
 
 		assertEquals(FetchedStoreProfile.VolumeUnit.L, formatsAndUnits.volumeUnit)
+
+		assertEquals(
+			expectedProfile.productFiltersSettings,
+			actualProfile.productFiltersSettings.toUpdated()
+		)
 	}
+
+	private fun createTestFilterSections() = listOf(
+		UpdatedStoreProfile.ProductFilterItem(
+			type = ProductFilterType.IN_STOCK,
+			enabled = true,
+		),
+		UpdatedStoreProfile.ProductFilterItem(
+			type = ProductFilterType.ON_SALE,
+			enabled = true,
+		),
+		UpdatedStoreProfile.ProductFilterItem(
+			type = ProductFilterType.PRICE,
+			enabled = false,
+		),
+		UpdatedStoreProfile.ProductFilterItem(
+			type = ProductFilterType.CATEGORIES,
+			enabled = false,
+		),
+		UpdatedStoreProfile.ProductFilterItem(
+			type = ProductFilterType.SEARCH,
+			enabled = true,
+		),
+		UpdatedStoreProfile.ProductFilterItem(
+			name = "Option 1",
+			type = ProductFilterType.OPTION,
+			enabled = true,
+		),
+		UpdatedStoreProfile.ProductFilterItem(
+			name = "Option 2",
+			type = ProductFilterType.OPTION,
+			enabled = true,
+		),
+		UpdatedStoreProfile.ProductFilterItem(
+			name = "Attribute 2",
+			type = ProductFilterType.ATTRIBUTE,
+			enabled = true,
+		),
+		UpdatedStoreProfile.ProductFilterItem(
+			name = "Attribute 1",
+			type = ProductFilterType.ATTRIBUTE,
+			enabled = true,
+		),
+	)
+
 }

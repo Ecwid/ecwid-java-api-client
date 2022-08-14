@@ -232,7 +232,7 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::paymentProcessorId),
 	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::paymentProcessorTitle),
 	AllowNullable(FetchedStoreProfile.PaymentOptionInfo::shippingSettings),
-	IgnoreNullable(FetchedStoreProfile.ProductFiltersSettings::enabledInStorefront),
+	AllowNullable(FetchedStoreProfile.ProductFilterItem::name),
 	IgnoreNullable(FetchedStoreProfile::registrationAnswers),
 	IgnoreNullable(FetchedStoreProfile.RegistrationAnswers::alreadySelling),
 	IgnoreNullable(FetchedStoreProfile.RegistrationAnswers::facebook),
@@ -337,5 +337,5 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.Zone::postCodes),
 	IgnoreNullable(FetchedStoreProfile.Zone::stateOrProvinceCodes),
 	AllowNullable(FetchedStoreProfile.Settings::googleProductCategory),
-	AllowNullable(FetchedStoreProfile.Settings::googleProductCategoryName)
+	AllowNullable(FetchedStoreProfile.Settings::googleProductCategoryName),
 )
