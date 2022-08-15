@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.dto.profile.result
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
+import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 
@@ -22,7 +23,7 @@ data class FetchedStoreProfile(
 	val payment: PaymentInfo? = null,
 	val featureToggles: List<FeatureTogglesInfo>? = null,
 	val designSettings: DesignSettings? = null,
-	val productFiltersSettings: ProductFiltersSettings? = null,
+	val productFiltersSettings: ProductFiltersSettings = ProductFiltersSettings(),
 	val fbMessengerSettings: FBMessengerSettings? = null,
 	val orderInvoiceSettings: OrderInvoiceSettings? = null,
 	val giftCardSettings: GiftCardSettings? = null,
@@ -726,8 +727,15 @@ data class FetchedStoreProfile(
 		val showRootCategories: Boolean? = null,
 	)
 
+	data class ProductFilterItem(
+		val name: String? = null,
+		val type: ProductFilterType = ProductFilterType.IN_STOCK,
+		val enabled: Boolean = false,
+	)
+
 	data class ProductFiltersSettings(
-		val enabledInStorefront: Boolean? = null
+		val enabledInStorefront: Boolean = false,
+		val filterSections: List<ProductFilterItem> = listOf(),
 	)
 
 	data class FBMessengerSettings(

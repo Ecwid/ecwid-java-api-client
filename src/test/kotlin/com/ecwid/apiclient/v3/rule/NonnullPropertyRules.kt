@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.coupon.request.UpdatedCoupon
 import com.ecwid.apiclient.v3.dto.customer.request.UpdatedCustomer
 import com.ecwid.apiclient.v3.dto.customergroup.request.UpdatedCustomerGroup
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
+import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.dto.storage.request.UpdatedStorageData
 import com.ecwid.apiclient.v3.dto.variation.request.UpdatedVariation
 import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.AllowNonnull
@@ -23,6 +24,7 @@ val nonnullPropertyRules: List<NonnullPropertyRule<*, *>> = listOf(
 	AllowNonnull(UpdatedProduct.ProductOption.TextAreaOption::required),
 	AllowNonnull(UpdatedProduct.ProductOption.TextFieldOption::required),
 	AllowNonnull(UpdatedProduct.CustomPriceTier::value),
+
 	AllowNonnull(UpdatedStorageData::key),
 	AllowNonnull(UpdatedStorageData::value),
 
@@ -61,7 +63,12 @@ val nonnullPropertyRules: List<NonnullPropertyRule<*, *>> = listOf(
 	IgnoreNonnull(UpdatedProduct.WholesalePrice::quantity),
 
 	IgnoreNonnull(UpdatedVariation.WholesalePrice::price),
-	IgnoreNonnull(UpdatedVariation.WholesalePrice::quantity)
+	IgnoreNonnull(UpdatedVariation.WholesalePrice::quantity),
+
+	AllowNonnull(UpdatedStoreProfile.ProductFilterItem::enabled),
+	AllowNonnull(UpdatedStoreProfile.ProductFilterItem::type),
+	AllowNonnull(UpdatedStoreProfile.ProductFiltersSettings::enabledInStorefront),
+	AllowNonnull(UpdatedStoreProfile.ProductFiltersSettings::filterSections),
 )
 
 sealed class NonnullPropertyRule<T, R>(

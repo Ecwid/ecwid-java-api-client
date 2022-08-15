@@ -28,6 +28,7 @@ import com.ecwid.apiclient.v3.dto.product.result.ProductsSearchResult
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypeDeleteRequest
 import com.ecwid.apiclient.v3.dto.producttype.request.ProductTypesGetAllRequest
 import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
+import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.dto.variation.request.DeleteAllProductVariationsRequest
@@ -83,6 +84,46 @@ abstract class BaseEntityTest {
 				automaticTaxEnabled = false,
 				taxes = listOf(),
 				pricesIncludeTax = false
+			),
+			productFiltersSettings = UpdatedStoreProfile.ProductFiltersSettings(
+				enabledInStorefront = true,
+				filterSections = listOf(
+					UpdatedStoreProfile.ProductFilterItem(
+						type = ProductFilterType.PRICE,
+						enabled = false,
+					),
+					UpdatedStoreProfile.ProductFilterItem(
+						type = ProductFilterType.IN_STOCK,
+						enabled = true,
+					),
+					UpdatedStoreProfile.ProductFilterItem(
+						type = ProductFilterType.ON_SALE,
+						enabled = true,
+					),
+					UpdatedStoreProfile.ProductFilterItem(
+						type = ProductFilterType.CATEGORIES,
+						enabled = false,
+					),
+					UpdatedStoreProfile.ProductFilterItem(
+						type = ProductFilterType.SEARCH,
+						enabled = true,
+					),
+					UpdatedStoreProfile.ProductFilterItem(
+						name = "Color",
+						type = ProductFilterType.OPTION,
+						enabled = true,
+					),
+					UpdatedStoreProfile.ProductFilterItem(
+						name = "Brand",
+						type = ProductFilterType.ATTRIBUTE,
+						enabled = true,
+					),
+					UpdatedStoreProfile.ProductFilterItem(
+						name = "UPC",
+						type = ProductFilterType.ATTRIBUTE,
+						enabled = true,
+					),
+				),
 			)
 		)
 

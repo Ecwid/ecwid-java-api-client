@@ -208,7 +208,6 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedStoreProfile::payment),
 	Ignored(FetchedStoreProfile::featureToggles),
 	Ignored(FetchedStoreProfile::designSettings),
-	Ignored(FetchedStoreProfile::productFiltersSettings),
 	Ignored(FetchedStoreProfile::fbMessengerSettings),
 	Ignored(FetchedStoreProfile::giftCardSettings),
 	ReadOnly(FetchedStoreProfile.Settings::googleProductCategoryName),

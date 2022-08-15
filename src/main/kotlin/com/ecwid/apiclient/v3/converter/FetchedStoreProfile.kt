@@ -17,6 +17,7 @@ fun FetchedStoreProfile.toUpdated(): UpdatedStoreProfile {
 		zones = zones?.map(FetchedStoreProfile.Zone::toUpdated),
 		businessRegistrationID = businessRegistrationID?.toUpdated(),
 		legalPagesSettings = legalPagesSettings?.toUpdated(),
+		productFiltersSettings = productFiltersSettings.toUpdated(),
 		orderInvoiceSettings = orderInvoiceSettings?.toUpdated()
 	)
 }
@@ -300,6 +301,21 @@ private fun FetchedStoreProfile.LegalPagesInfo.Display.toUpdated(): UpdatedStore
 		FetchedStoreProfile.LegalPagesInfo.Display.INLINE -> UpdatedStoreProfile.LegalPagesInfo.Display.INLINE
 		FetchedStoreProfile.LegalPagesInfo.Display.EXTERNAL_URL -> UpdatedStoreProfile.LegalPagesInfo.Display.EXTERNAL_URL
 	}
+}
+
+internal fun FetchedStoreProfile.ProductFiltersSettings.toUpdated(): UpdatedStoreProfile.ProductFiltersSettings {
+	return UpdatedStoreProfile.ProductFiltersSettings(
+		enabledInStorefront = enabledInStorefront,
+		filterSections = filterSections.map { it.toUpdated() }
+	)
+}
+
+private fun FetchedStoreProfile.ProductFilterItem.toUpdated(): UpdatedStoreProfile.ProductFilterItem {
+	return UpdatedStoreProfile.ProductFilterItem(
+		name = name,
+		type = type,
+		enabled = enabled,
+	)
 }
 
 private fun FetchedStoreProfile.OrderInvoiceSettings.toUpdated(): UpdatedStoreProfile.OrderInvoiceSettings {

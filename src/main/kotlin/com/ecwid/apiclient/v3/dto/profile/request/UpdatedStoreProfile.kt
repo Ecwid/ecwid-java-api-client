@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.dto.profile.request
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
+import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 
 data class UpdatedStoreProfile(
@@ -18,6 +19,7 @@ data class UpdatedStoreProfile(
 	val zones: List<Zone>? = null,
 	val businessRegistrationID: BusinessRegistrationID? = null,
 	val legalPagesSettings: LegalPagesSettingsDetails? = null,
+	val productFiltersSettings: ProductFiltersSettings? = null,
 	val orderInvoiceSettings: OrderInvoiceSettings? = null
 ) : ApiUpdatedDTO {
 
@@ -225,6 +227,17 @@ data class UpdatedStoreProfile(
 			INLINE, EXTERNAL_URL
 		}
 	}
+
+	data class ProductFilterItem(
+		val name: String? = null,
+		val type: ProductFilterType = ProductFilterType.IN_STOCK,
+		val enabled: Boolean = false,
+	)
+
+	data class ProductFiltersSettings(
+		val enabledInStorefront: Boolean = false,
+		val filterSections: List<ProductFilterItem> = listOf(),
+	)
 
 	data class OrderInvoiceSettings(
 		val displayOrderInvoices: Boolean? = null,
