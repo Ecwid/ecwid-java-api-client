@@ -19,5 +19,9 @@ val fetchedCategoryNullablePropertyRules: List<NullablePropertyRule<*, *>> = lis
 	IgnoreNullable(FetchedCategory::productCount),
 	IgnoreNullable(FetchedCategory::productIds),
 	IgnoreNullable(FetchedCategory::thumbnailUrl),
-	IgnoreNullable(FetchedCategory::url)
+	IgnoreNullable(FetchedCategory::url),
+	IgnoreNullable(FetchedCategory::seoTitle),
+	IgnoreNullable(FetchedCategory::seoTitleTranslated),
+	IgnoreNullable(FetchedCategory::seoDescription),
+	IgnoreNullable(FetchedCategory::seoDescriptionTranslated)
 )

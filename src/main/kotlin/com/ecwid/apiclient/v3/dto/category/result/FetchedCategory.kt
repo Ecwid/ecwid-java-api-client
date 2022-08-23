@@ -25,7 +25,12 @@ data class FetchedCategory(
 	val originalImage: PictureInfo? = null,
 	val url: String? = null,
 	val productCount: Int? = null,
-	val enabledProductCount: Int? = null
+	val enabledProductCount: Int? = null,
+
+	val seoTitle: String? = null,
+	val seoTitleTranslated: LocalizedValueMap? = null,
+	val seoDescription: String? = null,
+	val seoDescriptionTranslated: LocalizedValueMap? = null
 ) : ApiFetchedDTO {
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedCategory::class)

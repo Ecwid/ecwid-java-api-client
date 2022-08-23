@@ -84,7 +84,12 @@ private fun FetchedStoreProfile.Settings.toUpdated(): UpdatedStoreProfile.Settin
 		showPricePerUnit = showPricePerUnit,
 		googleProductCategory = googleProductCategory,
 		productCondition = productCondition,
-		tikTokPixel = tikTokPixel?.toUpdated()
+		tikTokPixel = tikTokPixel?.toUpdated(),
+		storeDescriptionTranslated = storeDescriptionTranslated,
+		rootCategorySeoTitle = rootCategorySeoTitle,
+		rootCategorySeoTitleTranslated = rootCategorySeoTitleTranslated,
+		rootCategorySeoDescription = rootCategorySeoDescription,
+		rootCategorySeoDescriptionTranslated = rootCategorySeoDescriptionTranslated
 	)
 }
 
