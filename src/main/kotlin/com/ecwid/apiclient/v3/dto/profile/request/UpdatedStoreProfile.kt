@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.profile.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
@@ -71,7 +72,12 @@ data class UpdatedStoreProfile(
 		val showPricePerUnit: Boolean? = null,
 		val googleProductCategory: Int? = null,
 		val productCondition: ProductCondition? = null,
-		val tikTokPixel: TikTokPixelSettings? = null
+		val tikTokPixel: TikTokPixelSettings? = null,
+		val storeDescriptionTranslated: LocalizedValueMap? = null,
+		val rootCategorySeoTitle: String? = null,
+		val rootCategorySeoTitleTranslated: LocalizedValueMap? = null,
+		val rootCategorySeoDescription: String? = null,
+		val rootCategorySeoDescriptionTranslated: LocalizedValueMap? = null
 	)
 
 	data class TikTokPixelSettings(

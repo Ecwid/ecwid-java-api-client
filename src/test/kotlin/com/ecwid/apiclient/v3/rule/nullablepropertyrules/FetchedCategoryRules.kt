@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
+import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 
 val fetchedCategoryNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
     IgnoreNullable(FetchedCategory::description),
@@ -19,5 +20,9 @@ val fetchedCategoryNullablePropertyRules: List<NullablePropertyRule<*, *>> = lis
 	IgnoreNullable(FetchedCategory::productCount),
 	IgnoreNullable(FetchedCategory::productIds),
 	IgnoreNullable(FetchedCategory::thumbnailUrl),
-	IgnoreNullable(FetchedCategory::url)
+	IgnoreNullable(FetchedCategory::url),
+	AllowNullable(FetchedCategory::seoTitle),
+	AllowNullable(FetchedCategory::seoTitleTranslated),
+	AllowNullable(FetchedCategory::seoDescription),
+	AllowNullable(FetchedCategory::seoDescriptionTranslated)
 )

@@ -13,6 +13,10 @@ fun FetchedCategory.toUpdated(): UpdatedCategory {
 		description = description,
 		descriptionTranslated = descriptionTranslated,
 		enabled = enabled,
-		productIds = productIds
+		productIds = productIds,
+		seoTitle = seoTitle,
+		seoTitleTranslated = seoTitleTranslated,
+		seoDescription = seoDescription,
+		seoDescriptionTranslated = seoDescriptionTranslated
 	)
 }
