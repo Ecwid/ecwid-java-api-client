@@ -97,60 +97,63 @@ data class UpdatedProduct(
 	)
 
 	sealed class ProductOption constructor(
-		val type: ProductOptionType? = null
+		val type: ProductOptionType? = null,
 	) {
+		abstract val name: String
+		abstract val nameTranslated: LocalizedValueMap?
+
 		data class SelectOption(
-			val name: String = "",
-			val nameTranslated: LocalizedValueMap? = null,
+			override val name: String = "",
+			override val nameTranslated: LocalizedValueMap? = null,
 			val choices: List<ProductOptionChoice> = listOf(),
 			val defaultChoice: Int = 0,
 			val required: Boolean = false
 		) : ProductOption(ProductOptionType.SELECT)
 
 		data class SizeOption(
-			val name: String = "",
-			val nameTranslated: LocalizedValueMap? = null,
+			override val name: String = "",
+			override val nameTranslated: LocalizedValueMap? = null,
 			val choices: List<ProductOptionChoice> = listOf(),
 			val defaultChoice: Int = 0,
 			val required: Boolean = false
 		) : ProductOption(ProductOptionType.SIZE)
 
 		data class RadioOption(
-			val name: String = "",
-			val nameTranslated: LocalizedValueMap? = null,
+			override val name: String = "",
+			override val nameTranslated: LocalizedValueMap? = null,
 			val choices: List<ProductOptionChoice> = listOf(),
 			val defaultChoice: Int = 0,
 			val required: Boolean = false
 		) : ProductOption(ProductOptionType.RADIO)
 
 		data class CheckboxOption(
-			val name: String = "",
-			val nameTranslated: LocalizedValueMap? = null,
+			override val name: String = "",
+			override val nameTranslated: LocalizedValueMap? = null,
 			val choices: List<ProductOptionChoice> = listOf(),
 			val required: Boolean = false
 		) : ProductOption(ProductOptionType.CHECKBOX)
 
 		data class TextFieldOption(
-			val name: String = "",
-			val nameTranslated: LocalizedValueMap? = null,
+			override val name: String = "",
+			override val nameTranslated: LocalizedValueMap? = null,
 			val required: Boolean = false
 		) : ProductOption(ProductOptionType.TEXTFIELD)
 
 		data class TextAreaOption(
-			val name: String = "",
-			val nameTranslated: LocalizedValueMap? = null,
+			override val name: String = "",
+			override val nameTranslated: LocalizedValueMap? = null,
 			val required: Boolean = false
 		) : ProductOption(ProductOptionType.TEXTAREA)
 
 		data class DateOption(
-			val name: String = "",
-			val nameTranslated: LocalizedValueMap? = null,
+			override val name: String = "",
+			override val nameTranslated: LocalizedValueMap? = null,
 			val required: Boolean = false
 		) : ProductOption(ProductOptionType.DATE)
 
 		data class FilesOption(
-			val name: String = "",
-			val nameTranslated: LocalizedValueMap? = null,
+			override val name: String = "",
+			override val nameTranslated: LocalizedValueMap? = null,
 			val required: Boolean = false
 		) : ProductOption(ProductOptionType.FILES)
 
