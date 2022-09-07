@@ -133,6 +133,7 @@ private fun FetchedProduct.ProductOption.CheckboxOption.toUpdated() = UpdatedPro
 	name = name,
 	nameTranslated = nameTranslated,
 	choices = choices.map { it.toUpdated() },
+	defaultChoice = defaultChoice,
 	required = required
 )
 
