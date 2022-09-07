@@ -159,36 +159,42 @@ data class FetchedProduct(
 		abstract val name: String
 		abstract val nameTranslated: LocalizedValueMap?
 
+		interface ChoiceBased {
+			val choices: List<ProductOptionChoice>
+			val defaultChoice: Int?
+		}
+
 		data class SelectOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			val choices: List<ProductOptionChoice> = listOf(),
-			val defaultChoice: Int = 0,
+			override val choices: List<ProductOptionChoice> = listOf(),
+			override val defaultChoice: Int = 0,
 			val required: Boolean = false
-		) : ProductOption(ProductOptionType.SELECT)
+		) : ProductOption(ProductOptionType.SELECT), ChoiceBased
 
 		data class SizeOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			val choices: List<ProductOptionChoice> = listOf(),
-			val defaultChoice: Int = 0,
+			override val choices: List<ProductOptionChoice> = listOf(),
+			override val defaultChoice: Int = 0,
 			val required: Boolean = false
-		) : ProductOption(ProductOptionType.SIZE)
+		) : ProductOption(ProductOptionType.SIZE), ChoiceBased
 
 		data class RadioOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			val choices: List<ProductOptionChoice> = listOf(),
-			val defaultChoice: Int = 0,
+			override val choices: List<ProductOptionChoice> = listOf(),
+			override val defaultChoice: Int = 0,
 			val required: Boolean = false
-		) : ProductOption(ProductOptionType.RADIO)
+		) : ProductOption(ProductOptionType.RADIO), ChoiceBased
 
 		data class CheckboxOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			val choices: List<ProductOptionChoice> = listOf(),
+			override val choices: List<ProductOptionChoice> = listOf(),
+			override val defaultChoice: Int? = null,
 			val required: Boolean = false
-		) : ProductOption(ProductOptionType.CHECKBOX)
+		) : ProductOption(ProductOptionType.CHECKBOX), ChoiceBased
 
 		data class TextFieldOption(
 			override val name: String = "",
