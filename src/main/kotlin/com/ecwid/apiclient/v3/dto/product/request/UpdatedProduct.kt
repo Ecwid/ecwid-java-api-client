@@ -101,60 +101,67 @@ data class UpdatedProduct(
 	) {
 		abstract val name: String
 		abstract val nameTranslated: LocalizedValueMap?
+		abstract val required: Boolean
+
+		interface ChoiceBased {
+			val choices: List<ProductOptionChoice>
+			val defaultChoice: Int?
+		}
 
 		data class SelectOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			val choices: List<ProductOptionChoice> = listOf(),
-			val defaultChoice: Int = 0,
-			val required: Boolean = false
-		) : ProductOption(ProductOptionType.SELECT)
+			override val choices: List<ProductOptionChoice> = listOf(),
+			override val defaultChoice: Int = 0,
+			override val required: Boolean = false
+		) : ProductOption(ProductOptionType.SELECT), ChoiceBased
 
 		data class SizeOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			val choices: List<ProductOptionChoice> = listOf(),
-			val defaultChoice: Int = 0,
-			val required: Boolean = false
-		) : ProductOption(ProductOptionType.SIZE)
+			override val choices: List<ProductOptionChoice> = listOf(),
+			override val defaultChoice: Int = 0,
+			override val required: Boolean = false
+		) : ProductOption(ProductOptionType.SIZE), ChoiceBased
 
 		data class RadioOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			val choices: List<ProductOptionChoice> = listOf(),
-			val defaultChoice: Int = 0,
-			val required: Boolean = false
-		) : ProductOption(ProductOptionType.RADIO)
+			override val choices: List<ProductOptionChoice> = listOf(),
+			override val defaultChoice: Int = 0,
+			override val required: Boolean = false
+		) : ProductOption(ProductOptionType.RADIO), ChoiceBased
 
 		data class CheckboxOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			val choices: List<ProductOptionChoice> = listOf(),
-			val required: Boolean = false
-		) : ProductOption(ProductOptionType.CHECKBOX)
+			override val choices: List<ProductOptionChoice> = listOf(),
+			override val defaultChoice: Int? = null,
+			override val required: Boolean = false
+		) : ProductOption(ProductOptionType.CHECKBOX), ChoiceBased
 
 		data class TextFieldOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			val required: Boolean = false
+			override val required: Boolean = false
 		) : ProductOption(ProductOptionType.TEXTFIELD)
 
 		data class TextAreaOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			val required: Boolean = false
+			override val required: Boolean = false
 		) : ProductOption(ProductOptionType.TEXTAREA)
 
 		data class DateOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			val required: Boolean = false
+			override val required: Boolean = false
 		) : ProductOption(ProductOptionType.DATE)
 
 		data class FilesOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			val required: Boolean = false
+			override val required: Boolean = false
 		) : ProductOption(ProductOptionType.FILES)
 
 		companion object {
