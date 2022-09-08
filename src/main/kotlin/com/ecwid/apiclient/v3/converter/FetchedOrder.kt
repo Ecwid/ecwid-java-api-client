@@ -239,7 +239,7 @@ fun FetchedOrder.HandlingFee.toUpdated(): UpdatedOrder.HandlingFee {
 	)
 }
 
-private fun FetchedOrder.Surcharge.toUpdated(): UpdatedOrder.Surcharge {
+fun FetchedOrder.Surcharge.toUpdated(): UpdatedOrder.Surcharge {
 	return UpdatedOrder.Surcharge(
 		id = id,
 		value = value,
@@ -252,7 +252,7 @@ private fun FetchedOrder.Surcharge.toUpdated(): UpdatedOrder.Surcharge {
 	)
 }
 
-private fun FetchedOrder.BaseOrderItemTax.toUpdated(): UpdatedOrder.BaseOrderItemTax {
+fun FetchedOrder.BaseOrderItemTax.toUpdated(): UpdatedOrder.BaseOrderItemTax {
 	return UpdatedOrder.BaseOrderItemTax(
 		name = name,
 		value = value,
@@ -260,7 +260,7 @@ private fun FetchedOrder.BaseOrderItemTax.toUpdated(): UpdatedOrder.BaseOrderIte
 	)
 }
 
-private fun FetchedOrder.UtmData.toUpdated(): UpdatedOrder.UtmData {
+fun FetchedOrder.UtmData.toUpdated(): UpdatedOrder.UtmData {
 	return UpdatedOrder.UtmData(
 		source = source,
 		campaign = campaign,
