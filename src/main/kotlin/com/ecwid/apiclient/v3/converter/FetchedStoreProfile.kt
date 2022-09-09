@@ -22,7 +22,7 @@ fun FetchedStoreProfile.toUpdated(): UpdatedStoreProfile {
 	)
 }
 
-private fun FetchedStoreProfile.GeneralInfo.toUpdated(): UpdatedStoreProfile.GeneralInfo {
+fun FetchedStoreProfile.GeneralInfo.toUpdated(): UpdatedStoreProfile.GeneralInfo {
 	return UpdatedStoreProfile.GeneralInfo(
 		storeUrl = storeUrl,
 		starterSite = starterSite?.toUpdated(),
@@ -30,14 +30,14 @@ private fun FetchedStoreProfile.GeneralInfo.toUpdated(): UpdatedStoreProfile.Gen
 	)
 }
 
-private fun FetchedStoreProfile.InstantSiteInfo.toUpdated(): UpdatedStoreProfile.InstantSiteInfo {
+fun FetchedStoreProfile.InstantSiteInfo.toUpdated(): UpdatedStoreProfile.InstantSiteInfo {
 	return UpdatedStoreProfile.InstantSiteInfo(
 		ecwidSubdomain = ecwidSubdomain,
 		customDomain = customDomain
 	)
 }
 
-private fun FetchedStoreProfile.WebsitePlatform.toUpdated(): UpdatedStoreProfile.WebsitePlatform {
+fun FetchedStoreProfile.WebsitePlatform.toUpdated(): UpdatedStoreProfile.WebsitePlatform {
 	return when (this) {
 		FetchedStoreProfile.WebsitePlatform.wix -> UpdatedStoreProfile.WebsitePlatform.wix
 		FetchedStoreProfile.WebsitePlatform.wordpress -> UpdatedStoreProfile.WebsitePlatform.wordpress
@@ -48,7 +48,7 @@ private fun FetchedStoreProfile.WebsitePlatform.toUpdated(): UpdatedStoreProfile
 	}
 }
 
-private fun FetchedStoreProfile.Account.toUpdated(): UpdatedStoreProfile.Account {
+fun FetchedStoreProfile.Account.toUpdated(): UpdatedStoreProfile.Account {
 	return UpdatedStoreProfile.Account(
 		accountName = accountName,
 		accountNickName = accountNickName,
@@ -56,7 +56,7 @@ private fun FetchedStoreProfile.Account.toUpdated(): UpdatedStoreProfile.Account
 	)
 }
 
-private fun FetchedStoreProfile.Settings.toUpdated(): UpdatedStoreProfile.Settings {
+fun FetchedStoreProfile.Settings.toUpdated(): UpdatedStoreProfile.Settings {
 	return UpdatedStoreProfile.Settings(
 		closed = closed,
 		storeName = storeName,
@@ -93,13 +93,13 @@ private fun FetchedStoreProfile.Settings.toUpdated(): UpdatedStoreProfile.Settin
 	)
 }
 
-private fun FetchedStoreProfile.TikTokPixelSettings.toUpdated(): UpdatedStoreProfile.TikTokPixelSettings? {
+fun FetchedStoreProfile.TikTokPixelSettings.toUpdated(): UpdatedStoreProfile.TikTokPixelSettings {
 	return UpdatedStoreProfile.TikTokPixelSettings(
 		advancedMatching = advancedMatching
 	)
 }
 
-private fun FetchedStoreProfile.ProductSortOrder.toUpdated(): UpdatedStoreProfile.ProductSortOrder {
+fun FetchedStoreProfile.ProductSortOrder.toUpdated(): UpdatedStoreProfile.ProductSortOrder {
 	return when (this) {
 		FetchedStoreProfile.ProductSortOrder.DEFINED_BY_STORE_OWNER -> UpdatedStoreProfile.ProductSortOrder.DEFINED_BY_STORE_OWNER
 		FetchedStoreProfile.ProductSortOrder.ADDED_TIME_DESC -> UpdatedStoreProfile.ProductSortOrder.ADDED_TIME_DESC
@@ -110,13 +110,13 @@ private fun FetchedStoreProfile.ProductSortOrder.toUpdated(): UpdatedStoreProfil
 	}
 }
 
-private fun FetchedStoreProfile.AbandonedSalesSettings.toUpdated(): UpdatedStoreProfile.AbandonedSalesSettings {
+fun FetchedStoreProfile.AbandonedSalesSettings.toUpdated(): UpdatedStoreProfile.AbandonedSalesSettings {
 	return UpdatedStoreProfile.AbandonedSalesSettings(
 		autoAbandonedSalesRecovery = autoAbandonedSalesRecovery
 	)
 }
 
-private fun FetchedStoreProfile.SalePriceSettings.toUpdated(): UpdatedStoreProfile.SalePriceSettings {
+fun FetchedStoreProfile.SalePriceSettings.toUpdated(): UpdatedStoreProfile.SalePriceSettings {
 	return UpdatedStoreProfile.SalePriceSettings(
 		displayOnProductList = displayOnProductList,
 		oldPriceLabel = oldPriceLabel,
@@ -124,7 +124,7 @@ private fun FetchedStoreProfile.SalePriceSettings.toUpdated(): UpdatedStoreProfi
 	)
 }
 
-private fun FetchedStoreProfile.SalePriceSettings.DisplayDiscount.toUpdated(): UpdatedStoreProfile.SalePriceSettings.DisplayDiscount {
+fun FetchedStoreProfile.SalePriceSettings.DisplayDiscount.toUpdated(): UpdatedStoreProfile.SalePriceSettings.DisplayDiscount {
 	return when (this) {
 		FetchedStoreProfile.SalePriceSettings.DisplayDiscount.NONE -> UpdatedStoreProfile.SalePriceSettings.DisplayDiscount.NONE
 		FetchedStoreProfile.SalePriceSettings.DisplayDiscount.ABS -> UpdatedStoreProfile.SalePriceSettings.DisplayDiscount.ABS
@@ -132,14 +132,14 @@ private fun FetchedStoreProfile.SalePriceSettings.DisplayDiscount.toUpdated(): U
 	}
 }
 
-private fun FetchedStoreProfile.MailNotifications.toUpdated(): UpdatedStoreProfile.MailNotifications {
+fun FetchedStoreProfile.MailNotifications.toUpdated(): UpdatedStoreProfile.MailNotifications {
 	return UpdatedStoreProfile.MailNotifications(
 		adminNotificationEmails = adminNotificationEmails?.map { email -> email },
 		customerNotificationFromEmail = customerNotificationFromEmail
 	)
 }
 
-private fun FetchedStoreProfile.Company.toUpdated(): UpdatedStoreProfile.Company {
+fun FetchedStoreProfile.Company.toUpdated(): UpdatedStoreProfile.Company {
 	return UpdatedStoreProfile.Company(
 		companyName = companyName,
 		email = email,
@@ -152,7 +152,7 @@ private fun FetchedStoreProfile.Company.toUpdated(): UpdatedStoreProfile.Company
 	)
 }
 
-private fun FetchedStoreProfile.FormatsAndUnits.toUpdated(): UpdatedStoreProfile.FormatsAndUnits {
+fun FetchedStoreProfile.FormatsAndUnits.toUpdated(): UpdatedStoreProfile.FormatsAndUnits {
 	return UpdatedStoreProfile.FormatsAndUnits(
 		currency = currency,
 		currencyPrefix = currencyPrefix,
@@ -178,7 +178,7 @@ private fun FetchedStoreProfile.FormatsAndUnits.toUpdated(): UpdatedStoreProfile
 	)
 }
 
-private fun FetchedStoreProfile.WeightUnit.toUpdated(): UpdatedStoreProfile.WeightUnit {
+fun FetchedStoreProfile.WeightUnit.toUpdated(): UpdatedStoreProfile.WeightUnit {
 	return when (this) {
 		FetchedStoreProfile.WeightUnit.CARAT -> UpdatedStoreProfile.WeightUnit.CARAT
 		FetchedStoreProfile.WeightUnit.GRAM -> UpdatedStoreProfile.WeightUnit.GRAM
@@ -188,7 +188,7 @@ private fun FetchedStoreProfile.WeightUnit.toUpdated(): UpdatedStoreProfile.Weig
 	}
 }
 
-private fun FetchedStoreProfile.DimensionUnit.toUpdated(): UpdatedStoreProfile.DimensionUnit {
+fun FetchedStoreProfile.DimensionUnit.toUpdated(): UpdatedStoreProfile.DimensionUnit {
 	return when (this) {
 		FetchedStoreProfile.DimensionUnit.MM -> UpdatedStoreProfile.DimensionUnit.MM
 		FetchedStoreProfile.DimensionUnit.CM -> UpdatedStoreProfile.DimensionUnit.CM
@@ -197,7 +197,7 @@ private fun FetchedStoreProfile.DimensionUnit.toUpdated(): UpdatedStoreProfile.D
 	}
 }
 
-private fun FetchedStoreProfile.VolumeUnit.toUpdated(): UpdatedStoreProfile.VolumeUnit {
+fun FetchedStoreProfile.VolumeUnit.toUpdated(): UpdatedStoreProfile.VolumeUnit {
 	return when (this) {
 		FetchedStoreProfile.VolumeUnit.L -> UpdatedStoreProfile.VolumeUnit.L
 		FetchedStoreProfile.VolumeUnit.ML -> UpdatedStoreProfile.VolumeUnit.ML
@@ -205,20 +205,20 @@ private fun FetchedStoreProfile.VolumeUnit.toUpdated(): UpdatedStoreProfile.Volu
 	}
 }
 
-private fun FetchedStoreProfile.Languages.toUpdated(): UpdatedStoreProfile.Languages {
+fun FetchedStoreProfile.Languages.toUpdated(): UpdatedStoreProfile.Languages {
 	return UpdatedStoreProfile.Languages(
 		enabledLanguages = enabledLanguages?.map { enabledLanguage -> enabledLanguage },
 		defaultLanguage = defaultLanguage
 	)
 }
 
-private fun FetchedStoreProfile.Shipping.toUpdated(): UpdatedStoreProfile.Shipping {
+fun FetchedStoreProfile.Shipping.toUpdated(): UpdatedStoreProfile.Shipping {
 	return UpdatedStoreProfile.Shipping(
 		handlingFee = handlingFee?.toUpdated()
 	)
 }
 
-private fun FetchedStoreProfile.HandlingFee.toUpdated(): UpdatedStoreProfile.HandlingFee {
+fun FetchedStoreProfile.HandlingFee.toUpdated(): UpdatedStoreProfile.HandlingFee {
 	return UpdatedStoreProfile.HandlingFee(
 		name = name,
 		value = value,
@@ -226,7 +226,7 @@ private fun FetchedStoreProfile.HandlingFee.toUpdated(): UpdatedStoreProfile.Han
 	)
 }
 
-private fun FetchedStoreProfile.TaxSettings.toUpdated(): UpdatedStoreProfile.TaxSettings {
+fun FetchedStoreProfile.TaxSettings.toUpdated(): UpdatedStoreProfile.TaxSettings {
 	return UpdatedStoreProfile.TaxSettings(
 		automaticTaxEnabled = automaticTaxEnabled,
 		taxes = taxes?.map(FetchedStoreProfile.TaxSettings.Taxes::toUpdated),
@@ -235,7 +235,7 @@ private fun FetchedStoreProfile.TaxSettings.toUpdated(): UpdatedStoreProfile.Tax
 	)
 }
 
-private fun FetchedStoreProfile.TaxSettings.Taxes.toUpdated(): UpdatedStoreProfile.TaxSettings.Taxes {
+fun FetchedStoreProfile.TaxSettings.Taxes.toUpdated(): UpdatedStoreProfile.TaxSettings.Taxes {
 	return UpdatedStoreProfile.TaxSettings.Taxes(
 		id = id,
 		name = name,
@@ -249,14 +249,14 @@ private fun FetchedStoreProfile.TaxSettings.Taxes.toUpdated(): UpdatedStoreProfi
 	)
 }
 
-private fun FetchedStoreProfile.TaxSettings.TaxRule.toUpdated(): UpdatedStoreProfile.TaxSettings.TaxRule {
+fun FetchedStoreProfile.TaxSettings.TaxRule.toUpdated(): UpdatedStoreProfile.TaxSettings.TaxRule {
 	return UpdatedStoreProfile.TaxSettings.TaxRule(
 		zoneId = zoneId,
 		tax = tax
 	)
 }
 
-private fun FetchedStoreProfile.Zone.toUpdated(): UpdatedStoreProfile.Zone {
+fun FetchedStoreProfile.Zone.toUpdated(): UpdatedStoreProfile.Zone {
 	return UpdatedStoreProfile.Zone(
 		id = id,
 		name = name,
@@ -266,21 +266,21 @@ private fun FetchedStoreProfile.Zone.toUpdated(): UpdatedStoreProfile.Zone {
 	)
 }
 
-private fun FetchedStoreProfile.BusinessRegistrationID.toUpdated(): UpdatedStoreProfile.BusinessRegistrationID {
+fun FetchedStoreProfile.BusinessRegistrationID.toUpdated(): UpdatedStoreProfile.BusinessRegistrationID {
 	return UpdatedStoreProfile.BusinessRegistrationID(
 		name = name,
 		value = value
 	)
 }
 
-private fun FetchedStoreProfile.LegalPagesSettingsDetails.toUpdated(): UpdatedStoreProfile.LegalPagesSettingsDetails {
+fun FetchedStoreProfile.LegalPagesSettingsDetails.toUpdated(): UpdatedStoreProfile.LegalPagesSettingsDetails {
 	return UpdatedStoreProfile.LegalPagesSettingsDetails(
 		requireTermsAgreementAtCheckout = requireTermsAgreementAtCheckout,
 		legalPages = legalPages?.map(FetchedStoreProfile.LegalPagesInfo::toUpdated)
 	)
 }
 
-private fun FetchedStoreProfile.LegalPagesInfo.toUpdated(): UpdatedStoreProfile.LegalPagesInfo {
+fun FetchedStoreProfile.LegalPagesInfo.toUpdated(): UpdatedStoreProfile.LegalPagesInfo {
 	return UpdatedStoreProfile.LegalPagesInfo(
 		type = type?.toUpdated(),
 		enabled = enabled,
@@ -291,7 +291,7 @@ private fun FetchedStoreProfile.LegalPagesInfo.toUpdated(): UpdatedStoreProfile.
 	)
 }
 
-private fun FetchedStoreProfile.LegalPagesInfo.Type.toUpdated(): UpdatedStoreProfile.LegalPagesInfo.Type {
+fun FetchedStoreProfile.LegalPagesInfo.Type.toUpdated(): UpdatedStoreProfile.LegalPagesInfo.Type {
 	return when (this) {
 		FetchedStoreProfile.LegalPagesInfo.Type.LEGAL_INFO -> UpdatedStoreProfile.LegalPagesInfo.Type.LEGAL_INFO
 		FetchedStoreProfile.LegalPagesInfo.Type.SHIPPING_COST_PAYMENT_INFO -> UpdatedStoreProfile.LegalPagesInfo.Type.SHIPPING_COST_PAYMENT_INFO
@@ -301,7 +301,7 @@ private fun FetchedStoreProfile.LegalPagesInfo.Type.toUpdated(): UpdatedStorePro
 	}
 }
 
-private fun FetchedStoreProfile.LegalPagesInfo.Display.toUpdated(): UpdatedStoreProfile.LegalPagesInfo.Display {
+fun FetchedStoreProfile.LegalPagesInfo.Display.toUpdated(): UpdatedStoreProfile.LegalPagesInfo.Display {
 	return when (this) {
 		FetchedStoreProfile.LegalPagesInfo.Display.INLINE -> UpdatedStoreProfile.LegalPagesInfo.Display.INLINE
 		FetchedStoreProfile.LegalPagesInfo.Display.EXTERNAL_URL -> UpdatedStoreProfile.LegalPagesInfo.Display.EXTERNAL_URL
@@ -315,7 +315,7 @@ internal fun FetchedStoreProfile.ProductFiltersSettings.toUpdated(): UpdatedStor
 	)
 }
 
-private fun FetchedStoreProfile.ProductFilterItem.toUpdated(): UpdatedStoreProfile.ProductFilterItem {
+fun FetchedStoreProfile.ProductFilterItem.toUpdated(): UpdatedStoreProfile.ProductFilterItem {
 	return UpdatedStoreProfile.ProductFilterItem(
 		name = name,
 		type = type,
@@ -323,7 +323,7 @@ private fun FetchedStoreProfile.ProductFilterItem.toUpdated(): UpdatedStoreProfi
 	)
 }
 
-private fun FetchedStoreProfile.OrderInvoiceSettings.toUpdated(): UpdatedStoreProfile.OrderInvoiceSettings {
+fun FetchedStoreProfile.OrderInvoiceSettings.toUpdated(): UpdatedStoreProfile.OrderInvoiceSettings {
 	return UpdatedStoreProfile.OrderInvoiceSettings(
 		displayOrderInvoices = displayOrderInvoices,
 		attachInvoiceToOrderEmailNotifications = attachInvoiceToOrderEmailNotifications?.toUpdated(),
@@ -331,7 +331,7 @@ private fun FetchedStoreProfile.OrderInvoiceSettings.toUpdated(): UpdatedStorePr
 	)
 }
 
-private fun FetchedStoreProfile.OrderInvoiceSettings.AttachValue.toUpdated(): UpdatedStoreProfile.OrderInvoiceSettings.AttachValue {
+fun FetchedStoreProfile.OrderInvoiceSettings.AttachValue.toUpdated(): UpdatedStoreProfile.OrderInvoiceSettings.AttachValue {
 	return when (this) {
 		FetchedStoreProfile.OrderInvoiceSettings.AttachValue.ATTACH_TO_ALL_EMAILS -> UpdatedStoreProfile.OrderInvoiceSettings.AttachValue.ATTACH_TO_ALL_EMAILS
 		FetchedStoreProfile.OrderInvoiceSettings.AttachValue.DO_NOT_ATTACH -> UpdatedStoreProfile.OrderInvoiceSettings.AttachValue.DO_NOT_ATTACH

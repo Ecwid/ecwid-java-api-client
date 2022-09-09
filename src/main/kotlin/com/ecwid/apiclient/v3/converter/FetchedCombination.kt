@@ -34,23 +34,23 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 	)
 }
 
-private fun FetchedVariation.WholesalePrice.toUpdated() = UpdatedVariation.WholesalePrice(
+fun FetchedVariation.WholesalePrice.toUpdated() = UpdatedVariation.WholesalePrice(
 	quantity = quantity,
 	price = price
 )
 
-private fun FetchedVariation.AttributeValue.toUpdated() = UpdatedVariation.AttributeValue(
+fun FetchedVariation.AttributeValue.toUpdated() = UpdatedVariation.AttributeValue(
 	id = id,
 	alias = type?.toAttributeValueAlias(),
 	value = value
 )
 
-private fun FetchedVariation.Option.toUpdated() = UpdatedVariation.Option(
+fun FetchedVariation.Option.toUpdated() = UpdatedVariation.Option(
 	name = name,
 	value = value
 )
 
-private fun FetchedVariation.ProductDimensions.toUpdated() = UpdatedVariation.ProductDimensions(
+fun FetchedVariation.ProductDimensions.toUpdated() = UpdatedVariation.ProductDimensions(
 	length = length,
 	width = width,
 	height = height
