@@ -1,10 +1,7 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
-import com.ecwid.apiclient.v3.dto.common.NullableUpdatedValue
-import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
+import com.ecwid.apiclient.v3.dto.common.*
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
-import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
-import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.product.enums.*
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 
@@ -276,11 +273,21 @@ data class UpdatedProduct(
 	)
 
 	data class AttributeValue internal constructor(
-		val id: Int? = null,
-		val alias: AttributeValueAlias? = null,
-		val name: String? = null,
-		val value: String? = null
-	) {
+		override val id: Int? = null,
+		override val alias: AttributeValueAlias? = null,
+		override val name: String? = null,
+		override val value: String? = null
+	): UpdatedAttributeValue {
+
+		fun UpdatedAttributeValue.ofProduct() =
+			AttributeValue(
+				id = id,
+				alias = alias,
+				name = name,
+				value = value
+			)
+
+		fun Collection<UpdatedAttributeValue>.ofProduct() = this.map { it.ofProduct() }
 
 		companion object {
 
