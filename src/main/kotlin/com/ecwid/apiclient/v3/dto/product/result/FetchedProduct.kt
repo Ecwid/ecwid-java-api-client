@@ -240,7 +240,7 @@ data class FetchedProduct(
 		override val type: AttributeType? = null,
 		override val value: String? = null,
 		override val show: AttributeValueLocation? = null
-	): FetchedAttributeValue {
+	) : FetchedAttributeValue {
 
 		fun FetchedAttributeValue.ofProduct() =
 			AttributeValue(
