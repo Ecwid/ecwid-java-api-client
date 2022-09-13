@@ -1,10 +1,7 @@
 package com.ecwid.apiclient.v3.dto.custom
 
 import com.ecwid.apiclient.v3.dto.cart.result.FetchedCart
-import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
-import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
-import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
-import com.ecwid.apiclient.v3.dto.common.PictureInfo
+import com.ecwid.apiclient.v3.dto.common.*
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
@@ -282,7 +279,20 @@ data class CustomAppRequest(
 		val type: AttributeType? = null,
 		val value: String? = null,
 		val show: AttributeValueLocation? = null
-	)
+	) {
+
+		fun FetchedAttributeValue.ofOrder() =
+			AttributeValue(
+				id = id,
+				name = name,
+				type = type,
+				value = value,
+				show = show
+			)
+
+		fun Collection<FetchedAttributeValue>.ofOrder() = this.map { it.ofOrder() }
+
+	}
 
 	data class ProductDimensions(
 		val length: Double? = null,

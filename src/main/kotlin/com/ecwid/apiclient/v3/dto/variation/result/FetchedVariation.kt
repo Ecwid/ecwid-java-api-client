@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.variation.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.FetchedAttributeValue
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
 import com.ecwid.apiclient.v3.dto.product.enums.OutOfStockVisibilityBehaviour
@@ -49,12 +50,25 @@ data class FetchedVariation(
 ) : ApiFetchedDTO {
 
 	data class AttributeValue(
-		val id: Int? = null,
-		val name: String? = null,
-		val type: AttributeType? = null,
-		val value: String? = null,
-		val show: AttributeValueLocation? = null
-	)
+		override val id: Int? = null,
+		override val name: String? = null,
+		override val type: AttributeType? = null,
+		override val value: String? = null,
+		override val show: AttributeValueLocation? = null
+	): FetchedAttributeValue {
+
+		fun FetchedAttributeValue.ofVariation() =
+			AttributeValue(
+				id = id,
+				name = name,
+				type = type,
+				value = value,
+				show = show
+			)
+
+		fun Collection<FetchedAttributeValue>.ofVariation() = this.map { it.ofVariation() }
+
+	}
 
 	data class WholesalePrice(
 		val quantity: Int = 0,

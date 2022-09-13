@@ -1,10 +1,7 @@
 package com.ecwid.apiclient.v3.dto.product.result
 
-import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.*
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
-import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
-import com.ecwid.apiclient.v3.dto.common.PictureInfo
-import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.product.enums.*
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
@@ -238,12 +235,25 @@ data class FetchedProduct(
 	)
 
 	data class AttributeValue(
-		val id: Int? = null,
-		val name: String? = null,
-		val type: AttributeType? = null,
-		val value: String? = null,
-		val show: AttributeValueLocation? = null
-	)
+		override val id: Int? = null,
+		override val name: String? = null,
+		override val type: AttributeType? = null,
+		override val value: String? = null,
+		override val show: AttributeValueLocation? = null
+	): FetchedAttributeValue {
+
+		fun FetchedAttributeValue.ofProduct() =
+			AttributeValue(
+				id = id,
+				name = name,
+				type = type,
+				value = value,
+				show = show
+			)
+
+		fun Collection<FetchedAttributeValue>.ofProduct() = this.map { it.ofProduct() }
+
+	}
 
 	data class RelatedProducts(
 		val productIds: List<Int>? = null,
