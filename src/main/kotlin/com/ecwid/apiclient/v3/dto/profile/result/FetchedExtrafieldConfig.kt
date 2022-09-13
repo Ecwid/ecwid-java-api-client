@@ -9,6 +9,8 @@ import com.ecwid.apiclient.v3.dto.profile.enums.OrderDetailsDisplaySection
 import com.ecwid.apiclient.v3.dto.profile.enums.CheckoutDisplaySection
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedExtrafieldConfig
 
+typealias StringList = List<String>
+
 data class FetchedExtrafieldConfig(
 	val key: String = "",
 	val title: String = "",
@@ -21,9 +23,9 @@ data class FetchedExtrafieldConfig(
 	val required: Boolean? = null,
 	val checkoutDisplaySection: CheckoutDisplaySection = CheckoutDisplaySection.EMAIL,
 	val orderDetailsDisplaySection: OrderDetailsDisplaySection? = null,
-	val showForCountry: List<String>? = null,
-	val showForPaymentMethodIds: List<String>? = null,
-	val showForShippingMethodIds: List<String>? = null,
+	val showForCountry: StringList? = null,
+	val showForPaymentMethodIds: StringList? = null,
+	val showForShippingMethodIds: StringList? = null,
 	val showInInvoice: Boolean? = null,
 	val showInNotifications: Boolean? = null,
 	val orderBy: Int? = null,
