@@ -2,6 +2,8 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.ProductVariationsApiClient
+import com.ecwid.apiclient.v3.dto.variation.request.ProductVariationImageAsyncUploadRequest
+import com.ecwid.apiclient.v3.dto.variation.result.ProductVariationImageAsyncUploadResult
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 
@@ -16,6 +18,9 @@ internal class ProductVariationsApiClientImpl(
 
 	override fun deleteVariationImage(request: ProductVariationImageDeleteRequest) =
 		apiClientHelper.makeObjectResultRequest<ProductVariationImageDeleteResult>(request)
+
+	override fun uploadProductVariationImageAsync(request: ProductVariationImageAsyncUploadRequest) =
+		apiClientHelper.makeObjectResultRequest<ProductVariationImageAsyncUploadResult>(request)
 
 	override fun getAllProductVariations(request: ProductVariationsRequest) =
 		apiClientHelper.makeObjectResultRequest<ProductVariationsResult>(request)
