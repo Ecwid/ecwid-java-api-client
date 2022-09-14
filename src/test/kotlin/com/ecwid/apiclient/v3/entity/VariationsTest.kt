@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.converter.toUpdated
+import com.ecwid.apiclient.v3.dto.common.AsyncPictureData
 import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductDetailsRequest
@@ -284,6 +285,46 @@ class VariationsTest : BaseEntityTest() {
 		val fetchedVariation2 = apiClient.getProductVariation(productVariationDetailsRequest)
 		Assertions.assertNull(fetchedVariation2.imageUrl)
 	}
+
+	@Test
+	fun `test uploading product variation image asynchronously`() {
+		val productPrice = randomPrice()
+		val productCreateRequest = ProductCreateRequest(
+			newProduct = UpdatedProduct(
+				price = productPrice,
+				name = "Product ${randomAlphanumeric(8)}",
+				sku = "testVariationImageUploadAsync",
+				options = listOf(generateProductRadioOption("Test", listOf("1", "2", "3", "4", "5")))
+			)
+		)
+		val productCreateResult = apiClient.createProduct(productCreateRequest)
+		val newProductId = productCreateResult.id
+		val testVariationPrice = randomPrice()
+		val testVariationWeight = randomWeight()
+		val createProductVariationRequest = CreateProductVariationRequest(
+			productId = newProductId,
+			newVariation = UpdatedVariation(
+				sku = "testVariation1",
+				quantity = 2,
+				price = testVariationPrice,
+				weight = testVariationWeight,
+				options = listOf(UpdatedVariation.Option(name = "Test", value = "5"))
+			)
+		)
+		val createProductVariationResult = apiClient.createProductVariation(createProductVariationRequest)
+		val newVariationId = createProductVariationResult.id
+		val uploadImageAsyncReq = ProductVariationImageAsyncUploadRequest(
+			productId = newProductId,
+			variationId = newVariationId,
+			asyncPictureData = AsyncPictureData("https://example.com/dummy.jpg", 100, 200)
+		)
+		apiClient.uploadProductVariationImageAsync(uploadImageAsyncReq)
+		val fetchedProduct = apiClient.getProductDetails(ProductDetailsRequest(productId = newProductId))
+		val variations = fetchedProduct.combinations
+		assertEquals(variations?.size, 1)
+		assertEquals(variations?.get(0)?.originalImageUrl, uploadImageAsyncReq.asyncPictureData.url)
+	}
+
 }
 
 private fun generateProductSelectOption(name: String, values: List<String>): UpdatedProduct.ProductOption {
