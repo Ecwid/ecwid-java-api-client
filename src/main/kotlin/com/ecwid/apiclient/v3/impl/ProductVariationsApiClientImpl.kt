@@ -16,11 +16,11 @@ internal class ProductVariationsApiClientImpl(
 	override fun uploadVariationImage(request: ProductVariationImageUploadRequest) =
 		apiClientHelper.makeObjectResultRequest<ProductVariationImageUploadResult>(request)
 
-	override fun deleteVariationImage(request: ProductVariationImageDeleteRequest) =
-		apiClientHelper.makeObjectResultRequest<ProductVariationImageDeleteResult>(request)
-
 	override fun uploadProductVariationImageAsync(request: ProductVariationImageAsyncUploadRequest) =
 		apiClientHelper.makeObjectResultRequest<ProductVariationImageAsyncUploadResult>(request)
+
+	override fun deleteVariationImage(request: ProductVariationImageDeleteRequest) =
+		apiClientHelper.makeObjectResultRequest<ProductVariationImageDeleteResult>(request)
 
 	override fun getAllProductVariations(request: ProductVariationsRequest) =
 		apiClientHelper.makeObjectResultRequest<ProductVariationsResult>(request)
