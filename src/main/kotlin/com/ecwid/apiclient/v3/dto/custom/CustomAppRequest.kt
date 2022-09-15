@@ -284,7 +284,7 @@ data class CustomAppRequest(
 		override val show: AttributeValueLocation? = null
 	) : FetchedAttributeValue {
 
-		fun Collection<FetchedAttributeValue>.otOrderAttributeList() = this.map { it as AttributeValue }
+		fun Collection<FetchedAttributeValue>.toOrderAttributeList() = this.map { it as AttributeValue }
 
 	}
 
