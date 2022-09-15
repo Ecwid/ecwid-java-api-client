@@ -223,7 +223,10 @@ data class CustomAppRequest(
 		val applicationLimit: DiscountCouponApplicationLimit? = null,
 		val creationDate: Date? = null,
 		val orderCount: Int? = null,
-		@Deprecated("This field is added for backward compatibility only. Don't use it.", replaceWith = ReplaceWith("catalogLimit"))
+		@Deprecated(
+			"This field is added for backward compatibility only. Don't use it.",
+			replaceWith = ReplaceWith("catalogLimit")
+		)
 		val legacyCatalogLimit: DiscountCouponCatalogLimit? = null,
 		val catalogLimit: DiscountCouponCatalogLimit? = null,
 		val repeatCustomerOnly: Boolean? = null,
@@ -279,9 +282,9 @@ data class CustomAppRequest(
 		override val type: AttributeType? = null,
 		override val value: String? = null,
 		override val show: AttributeValueLocation? = null
-	): FetchedAttributeValue {
+	) : FetchedAttributeValue {
 
-		fun Collection<FetchedAttributeValue>.otOrderAttributeList() = this.map { it as AttributeValue}
+		fun Collection<FetchedAttributeValue>.otOrderAttributeList() = this.map { it as AttributeValue }
 
 	}
 
