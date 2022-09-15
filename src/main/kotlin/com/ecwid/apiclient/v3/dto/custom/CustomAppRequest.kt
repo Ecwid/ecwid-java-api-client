@@ -274,23 +274,14 @@ data class CustomAppRequest(
 	)
 
 	data class AttributeValue(
-		val id: Int? = null,
-		val name: String? = null,
-		val type: AttributeType? = null,
-		val value: String? = null,
-		val show: AttributeValueLocation? = null
-	) {
+		override val id: Int? = null,
+		override val name: String? = null,
+		override val type: AttributeType? = null,
+		override val value: String? = null,
+		override val show: AttributeValueLocation? = null
+	): FetchedAttributeValue {
 
-		fun FetchedAttributeValue.ofOrder() =
-			AttributeValue(
-				id = id,
-				name = name,
-				type = type,
-				value = value,
-				show = show
-			)
-
-		fun Collection<FetchedAttributeValue>.ofOrder() = this.map { it.ofOrder() }
+		fun Collection<FetchedAttributeValue>.otOrderAttributeList() = this.map { it as AttributeValue}
 
 	}
 

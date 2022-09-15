@@ -41,15 +41,7 @@ data class UpdatedVariation(
 		override val value: String? = null
 	) : UpdatedAttributeValue {
 
-		fun UpdatedAttributeValue.ofVariation() =
-			AttributeValue(
-				id = id,
-				alias = alias,
-				name = name,
-				value = value
-			)
-
-		fun Collection<UpdatedAttributeValue>.ofVariation() = this.map { it.ofVariation() }
+		fun Collection<UpdatedAttributeValue>.toVariationAttributeList() = this.map { it as AttributeValue }
 
 	}
 

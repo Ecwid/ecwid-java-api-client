@@ -242,16 +242,7 @@ data class FetchedProduct(
 		override val show: AttributeValueLocation? = null
 	) : FetchedAttributeValue {
 
-		fun FetchedAttributeValue.ofProduct() =
-			AttributeValue(
-				id = id,
-				name = name,
-				type = type,
-				value = value,
-				show = show
-			)
-
-		fun Collection<FetchedAttributeValue>.ofProduct() = this.map { it.ofProduct() }
+		fun Collection<FetchedAttributeValue>.toProductAttributeList() = this.map { it as AttributeValue }
 
 	}
 
