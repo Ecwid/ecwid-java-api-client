@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.variation.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.UpdatedAttributeValue
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueAlias
 import com.ecwid.apiclient.v3.dto.product.enums.OutOfStockVisibilityBehaviour
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
@@ -34,11 +35,15 @@ data class UpdatedVariation(
 ) : ApiUpdatedDTO {
 
 	data class AttributeValue(
-		val id: Int? = null,
-		val alias: AttributeValueAlias? = null,
-		val name: String? = null,
-		val value: String? = null
-	)
+		override val id: Int? = null,
+		override val alias: AttributeValueAlias? = null,
+		override val name: String? = null,
+		override val value: String? = null
+	) : UpdatedAttributeValue {
+
+		fun Collection<UpdatedAttributeValue>.toVariationAttributeList() = this.map { it as AttributeValue }
+
+	}
 
 	data class WholesalePrice(
 		val quantity: Int = 0,

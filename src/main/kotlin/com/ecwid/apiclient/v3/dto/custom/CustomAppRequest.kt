@@ -1,10 +1,7 @@
 package com.ecwid.apiclient.v3.dto.custom
 
 import com.ecwid.apiclient.v3.dto.cart.result.FetchedCart
-import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
-import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
-import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
-import com.ecwid.apiclient.v3.dto.common.PictureInfo
+import com.ecwid.apiclient.v3.dto.common.*
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
@@ -226,7 +223,10 @@ data class CustomAppRequest(
 		val applicationLimit: DiscountCouponApplicationLimit? = null,
 		val creationDate: Date? = null,
 		val orderCount: Int? = null,
-		@Deprecated("This field is added for backward compatibility only. Don't use it.", replaceWith = ReplaceWith("catalogLimit"))
+		@Deprecated(
+			"This field is added for backward compatibility only. Don't use it.",
+			replaceWith = ReplaceWith("catalogLimit")
+		)
 		val legacyCatalogLimit: DiscountCouponCatalogLimit? = null,
 		val catalogLimit: DiscountCouponCatalogLimit? = null,
 		val repeatCustomerOnly: Boolean? = null,
@@ -277,12 +277,16 @@ data class CustomAppRequest(
 	)
 
 	data class AttributeValue(
-		val id: Int? = null,
-		val name: String? = null,
-		val type: AttributeType? = null,
-		val value: String? = null,
-		val show: AttributeValueLocation? = null
-	)
+		override val id: Int? = null,
+		override val name: String? = null,
+		override val type: AttributeType? = null,
+		override val value: String? = null,
+		override val show: AttributeValueLocation? = null
+	) : FetchedAttributeValue {
+
+		fun Collection<FetchedAttributeValue>.toOrderAttributeList() = this.map { it as AttributeValue }
+
+	}
 
 	data class ProductDimensions(
 		val length: Double? = null,
