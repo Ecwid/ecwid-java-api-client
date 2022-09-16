@@ -39,20 +39,14 @@ data class UpdatedVariation(
 		override val alias: AttributeValueAlias? = null,
 		override val name: String? = null,
 		override val value: String? = null
-	) : UpdatedAttributeValue {
+	) : UpdatedAttributeValue<AttributeValue> {
 
-		companion object {
-
-			fun UpdatedAttributeValue.toVariationAttribute() = AttributeValue(
-				id = id,
-				alias = alias,
-				name = name,
-				value = value,
-			)
-
-			fun Collection<UpdatedAttributeValue>.toVariationAttributeList() = this.map { it.toVariationAttribute() }
-		}
-
+		override fun toInheritor() = AttributeValue(
+			id = id,
+			alias = alias,
+			name = name,
+			value = value,
+		)
 	}
 
 	data class WholesalePrice(

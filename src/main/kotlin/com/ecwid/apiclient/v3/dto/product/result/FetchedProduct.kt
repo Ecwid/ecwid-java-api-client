@@ -240,20 +240,15 @@ data class FetchedProduct(
 		override val type: AttributeType? = null,
 		override val value: String? = null,
 		override val show: AttributeValueLocation? = null
-	) : FetchedAttributeValue {
+	) : FetchedAttributeValue<AttributeValue> {
 
-		companion object {
-
-			fun FetchedAttributeValue.toProductAttribute() = AttributeValue(
-				id = id,
-				name = name,
-				type = type,
-				value = value,
-				show = show
-			)
-
-			fun Collection<FetchedAttributeValue>.toProductAttributeList() = this.map { it.toProductAttribute() }
-		}
+		override fun toInheritor() = AttributeValue(
+			id = id,
+			name = name,
+			type = type,
+			value = value,
+			show = show
+		)
 	}
 
 	data class RelatedProducts(

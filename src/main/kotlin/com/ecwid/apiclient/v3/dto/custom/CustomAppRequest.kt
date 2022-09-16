@@ -282,21 +282,15 @@ data class CustomAppRequest(
 		override val type: AttributeType? = null,
 		override val value: String? = null,
 		override val show: AttributeValueLocation? = null
-	) : FetchedAttributeValue {
+	) : FetchedAttributeValue<AttributeValue> {
 
-		companion object {
-
-			fun FetchedAttributeValue.toOrderAttribute() = AttributeValue(
-				id = id,
-				name = name,
-				type = type,
-				value = value,
-				show = show
-			)
-
-			fun Collection<FetchedAttributeValue>.toOrderAttributeList() = this.map { it.toOrderAttribute() }
-		}
-
+		override fun toInheritor() = AttributeValue(
+			id = id,
+			name = name,
+			type = type,
+			value = value,
+			show = show
+		)
 	}
 
 	data class ProductDimensions(

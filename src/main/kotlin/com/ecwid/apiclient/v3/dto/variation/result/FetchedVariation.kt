@@ -55,20 +55,15 @@ data class FetchedVariation(
 		override val type: AttributeType? = null,
 		override val value: String? = null,
 		override val show: AttributeValueLocation? = null
-	) : FetchedAttributeValue {
+	) : FetchedAttributeValue<AttributeValue> {
 
-		companion object {
-
-			fun FetchedAttributeValue.toVariationAttribute() = AttributeValue(
-				id = id,
-				name = name,
-				type = type,
-				value = value,
-				show = show
-			)
-
-			fun Collection<FetchedAttributeValue>.toVariationAttributeList() = this.map { it.toVariationAttribute() }
-		}
+		override fun toInheritor() = AttributeValue(
+			id = id,
+			name = name,
+			type = type,
+			value = value,
+			show = show
+		)
 	}
 
 	data class WholesalePrice(
