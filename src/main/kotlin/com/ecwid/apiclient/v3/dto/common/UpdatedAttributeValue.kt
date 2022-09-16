@@ -8,7 +8,6 @@ interface UpdatedAttributeValue<T : UpdatedAttributeValue<T>> {
 	val name: String?
 	val value: String?
 
-	fun toInheritor(): T
+	fun cast(): T
 
-	fun Collection<T>.toInheritorList(): List<T> = this.map { it.toInheritor() }
 }

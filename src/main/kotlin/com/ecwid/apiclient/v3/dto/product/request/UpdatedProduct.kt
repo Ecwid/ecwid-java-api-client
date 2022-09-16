@@ -279,7 +279,7 @@ data class UpdatedProduct(
 		override val value: String? = null
 	) : UpdatedAttributeValue<AttributeValue> {
 
-		override fun toInheritor() = AttributeValue(
+		override fun cast() = AttributeValue(
 			id = id,
 			alias = alias,
 			name = name,

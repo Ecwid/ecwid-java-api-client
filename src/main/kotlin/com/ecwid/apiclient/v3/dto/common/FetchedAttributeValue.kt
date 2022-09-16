@@ -10,7 +10,6 @@ interface FetchedAttributeValue<T : FetchedAttributeValue<T>> {
 	val value: String?
 	val show: AttributeValueLocation?
 
-	fun toInheritor(): T
+	fun cast(): T
 
-	fun Collection<T>.toInheritorList(): List<T> = this.map { it.toInheritor() }
 }

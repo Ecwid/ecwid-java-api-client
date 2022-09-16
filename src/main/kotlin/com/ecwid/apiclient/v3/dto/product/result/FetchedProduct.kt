@@ -242,7 +242,7 @@ data class FetchedProduct(
 		override val show: AttributeValueLocation? = null
 	) : FetchedAttributeValue<AttributeValue> {
 
-		override fun toInheritor() = AttributeValue(
+		override fun cast() = AttributeValue(
 			id = id,
 			name = name,
 			type = type,
