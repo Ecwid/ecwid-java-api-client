@@ -279,16 +279,16 @@ data class UpdatedProduct(
 		override val value: String? = null
 	) : UpdatedAttributeValue {
 
-		fun UpdatedAttributeValue.toProductAttribute() = AttributeValue(
-			id = id,
-			alias = alias,
-			name = name,
-			value = value,
-		)
-
-		fun Collection<UpdatedAttributeValue>.toProductAttributeList() = this.map { it.toProductAttribute() }
-
 		companion object {
+
+			fun UpdatedAttributeValue.toProductAttribute() = AttributeValue(
+				id = id,
+				alias = alias,
+				name = name,
+				value = value,
+			)
+
+			fun Collection<UpdatedAttributeValue>.toProductAttributeList() = this.map { it.toProductAttribute() }
 
 			fun createBrandAttributeValue(value: String) = AttributeValue(
 				id = null,

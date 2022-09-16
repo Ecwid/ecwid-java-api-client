@@ -242,16 +242,18 @@ data class FetchedProduct(
 		override val show: AttributeValueLocation? = null
 	) : FetchedAttributeValue {
 
-		fun FetchedAttributeValue.toProductAttribute() = AttributeValue(
-			id = id,
-			name = name,
-			type = type,
-			value = value,
-			show = show
-		)
+		companion object {
 
-		fun Collection<FetchedAttributeValue>.toProductAttributeList() = this.map { it.toProductAttribute() }
+			fun FetchedAttributeValue.toProductAttribute() = AttributeValue(
+				id = id,
+				name = name,
+				type = type,
+				value = value,
+				show = show
+			)
 
+			fun Collection<FetchedAttributeValue>.toProductAttributeList() = this.map { it.toProductAttribute() }
+		}
 	}
 
 	data class RelatedProducts(
