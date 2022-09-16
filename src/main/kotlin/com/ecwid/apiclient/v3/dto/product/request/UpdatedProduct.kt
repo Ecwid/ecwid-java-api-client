@@ -277,16 +277,14 @@ data class UpdatedProduct(
 		override val alias: AttributeValueAlias? = null,
 		override val name: String? = null,
 		override val value: String? = null
-	) : UpdatedAttributeValue {
+	) : UpdatedAttributeValue<AttributeValue> {
 
-		fun UpdatedAttributeValue.toProductAttribute() = AttributeValue(
+		override fun cast() = AttributeValue(
 			id = id,
 			alias = alias,
 			name = name,
 			value = value,
 		)
-
-		fun Collection<UpdatedAttributeValue>.toProductAttributeList() = this.map { it.toProductAttribute() }
 
 		companion object {
 

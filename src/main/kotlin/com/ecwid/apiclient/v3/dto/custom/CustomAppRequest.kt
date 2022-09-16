@@ -282,18 +282,15 @@ data class CustomAppRequest(
 		override val type: AttributeType? = null,
 		override val value: String? = null,
 		override val show: AttributeValueLocation? = null
-	) : FetchedAttributeValue {
+	) : FetchedAttributeValue<AttributeValue> {
 
-		fun FetchedAttributeValue.toOrderAttribute() = AttributeValue(
+		override fun cast() = AttributeValue(
 			id = id,
 			name = name,
 			type = type,
 			value = value,
 			show = show
 		)
-
-		fun Collection<FetchedAttributeValue>.toOrderAttributeList() = this.map { it.toOrderAttribute() }
-
 	}
 
 	data class ProductDimensions(

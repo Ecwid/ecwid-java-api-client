@@ -55,18 +55,15 @@ data class FetchedVariation(
 		override val type: AttributeType? = null,
 		override val value: String? = null,
 		override val show: AttributeValueLocation? = null
-	) : FetchedAttributeValue {
+	) : FetchedAttributeValue<AttributeValue> {
 
-		fun FetchedAttributeValue.toVariationAttribute() = AttributeValue(
+		override fun cast() = AttributeValue(
 			id = id,
 			name = name,
 			type = type,
 			value = value,
 			show = show
 		)
-
-		fun Collection<FetchedAttributeValue>.toVariationAttributeList() = this.map { it.toVariationAttribute() }
-
 	}
 
 	data class WholesalePrice(

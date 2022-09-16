@@ -240,18 +240,15 @@ data class FetchedProduct(
 		override val type: AttributeType? = null,
 		override val value: String? = null,
 		override val show: AttributeValueLocation? = null
-	) : FetchedAttributeValue {
+	) : FetchedAttributeValue<AttributeValue> {
 
-		fun FetchedAttributeValue.toProductAttribute() = AttributeValue(
+		override fun cast() = AttributeValue(
 			id = id,
 			name = name,
 			type = type,
 			value = value,
 			show = show
 		)
-
-		fun Collection<FetchedAttributeValue>.toProductAttributeList() = this.map { it.toProductAttribute() }
-
 	}
 
 	data class RelatedProducts(
