@@ -57,7 +57,15 @@ data class FetchedVariation(
 		override val show: AttributeValueLocation? = null
 	) : FetchedAttributeValue {
 
-		fun Collection<FetchedAttributeValue>.toVariationAttributeList() = this.map { it as AttributeValue }
+		fun FetchedAttributeValue.toVariationAttribute() = AttributeValue(
+			id = id,
+			name = name,
+			type = type,
+			value = value,
+			show = show
+		)
+
+		fun Collection<FetchedAttributeValue>.toVariationAttributeList() = this.map { it.toVariationAttribute() }
 
 	}
 
