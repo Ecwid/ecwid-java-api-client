@@ -55,16 +55,7 @@ data class FetchedVariation(
 		override val type: AttributeType? = null,
 		override val value: String? = null,
 		override val show: AttributeValueLocation? = null
-	) : FetchedAttributeValue<AttributeValue> {
-
-		override fun cast() = AttributeValue(
-			id = id,
-			name = name,
-			type = type,
-			value = value,
-			show = show
-		)
-	}
+	) : FetchedAttributeValue
 
 	data class WholesalePrice(
 		val quantity: Int = 0,

@@ -277,14 +277,7 @@ data class UpdatedProduct(
 		override val alias: AttributeValueAlias? = null,
 		override val name: String? = null,
 		override val value: String? = null
-	) : UpdatedAttributeValue<AttributeValue> {
-
-		override fun cast() = AttributeValue(
-			id = id,
-			alias = alias,
-			name = name,
-			value = value,
-		)
+	) : UpdatedAttributeValue {
 
 		companion object {
 
