@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.order.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.BaseOrderTax
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
@@ -237,19 +238,19 @@ data class UpdatedOrder(
 	)
 
 	data class BaseOrderItemTax(
-		val name: String? = null,
-		val value: Double? = null,
-		val total: Double? = null
-	)
+		override val name: String? = null,
+		override val value: Double? = null,
+		override val total: Double? = null
+	) : BaseOrderTax
 
 	data class OrderItemTax(
-		val name: String? = null,
-		val value: Double? = null,
-		val total: Double? = null,
+		override val name: String? = null,
+		override val value: Double? = null,
+		override val total: Double? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
 		val taxOnShipping: Double? = null,
 		val includeInPrice: Boolean? = null
-	)
+	) : BaseOrderTax
 
 	data class ProductDimensions(
 		val length: Double? = null,

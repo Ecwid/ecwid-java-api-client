@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.order.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.BaseOrderTax
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
@@ -222,21 +223,21 @@ data class FetchedOrder(
 	)
 
 	data class BaseOrderItemTax(
-		val name: String? = null,
-		val value: Double? = null,
-		val total: Double? = null
-	)
+		override val name: String? = null,
+		override val value: Double? = null,
+		override val total: Double? = null
+	) : BaseOrderTax
 
 	data class OrderItemTax(
-		val name: String? = null,
-		val value: Double? = null,
-		val total: Double? = null,
+		override val name: String? = null,
+		override val value: Double? = null,
+		override val total: Double? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
 		val taxOnShipping: Double? = null,
 		val includeInPrice: Boolean? = null,
 		val sourceTaxRateId: Int? = null,
 		val sourceTaxRateType: RateType? = null
-	) {
+	) : BaseOrderTax {
 		enum class RateType {
 			AUTO,
 			MANUAL,
