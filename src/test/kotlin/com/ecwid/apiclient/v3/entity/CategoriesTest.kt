@@ -537,7 +537,17 @@ private fun generateTestCategory(
 		),
 		enabled = enabled,
 		productIds = productIds,
-		isSampleCategory = false
+		isSampleCategory = false,
+		seoTitle = "",
+		seoTitleTranslated = LocalizedValueMap(
+			"ru" to "",
+			"en" to ""
+		),
+		seoDescription = "",
+		seoDescriptionTranslated = LocalizedValueMap(
+			"ru" to "",
+			"en" to ""
+		)
 	)
 }
 
