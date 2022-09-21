@@ -246,6 +246,13 @@ data class FetchedOrder(
 		}
 	}
 
+
+	data class HandlingFeeTax(
+		override val name: String? = null,
+		override val value: Double? = null,
+		override val total: Double? = null
+	) : BaseOrderTax
+
 	data class ProductDimensions(
 		val length: Double? = null,
 		val width: Double? = null,
@@ -307,7 +314,7 @@ data class FetchedOrder(
 		val value: Double? = null,
 		val valueWithoutTax: Double = 0.0,
 		val description: String? = null,
-		val taxes: List<BaseOrderItemTax> = listOf()
+		val taxes: List<HandlingFeeTax> = listOf()
 	)
 
 	data class RefundInfo(
