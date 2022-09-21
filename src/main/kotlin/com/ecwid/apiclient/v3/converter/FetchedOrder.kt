@@ -235,7 +235,7 @@ fun FetchedOrder.HandlingFee.toUpdated(): UpdatedOrder.HandlingFee {
 		name = name,
 		value = value,
 		description = description,
-		taxes = taxes.map(FetchedOrder.BaseOrderItemTax::toUpdated)
+		taxes = taxes.map(FetchedOrder.HandlingFeeTax::toUpdated)
 	)
 }
 
@@ -254,6 +254,14 @@ fun FetchedOrder.Surcharge.toUpdated(): UpdatedOrder.Surcharge {
 
 fun FetchedOrder.BaseOrderItemTax.toUpdated(): UpdatedOrder.BaseOrderItemTax {
 	return UpdatedOrder.BaseOrderItemTax(
+		name = name,
+		value = value,
+		total = total
+	)
+}
+
+fun FetchedOrder.HandlingFeeTax.toUpdated(): UpdatedOrder.HandlingFeeTax {
+	return UpdatedOrder.HandlingFeeTax(
 		name = name,
 		value = value,
 		total = total

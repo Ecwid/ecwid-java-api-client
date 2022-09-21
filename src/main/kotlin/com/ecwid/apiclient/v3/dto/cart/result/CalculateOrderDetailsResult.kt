@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.cart.result
 
 import com.ecwid.apiclient.v3.dto.cart.CartStringToStringMap
 import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
+import com.ecwid.apiclient.v3.dto.common.BaseOrderTax
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import java.util.*
 
@@ -159,13 +160,13 @@ data class CalculateOrderDetailsResult(
 	)
 
 	data class OrderItemTax(
-		val name: String? = null,
-		val value: Double? = null,
-		val total: Double? = null,
+		override val name: String? = null,
+		override val value: Double? = null,
+		override val total: Double? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
 		val taxOnShipping: Double? = null,
 		val includeInPrice: Boolean? = null
-	)
+	) : BaseOrderTax
 
 	data class OrderItemProductFile(
 		val productFileId: Int? = null,
@@ -226,8 +227,8 @@ data class CalculateOrderDetailsResult(
 	)
 
 	data class TaxOnShipping(
-		val name: String? = null,
-		val value: Double? = null,
-		val total: Double? = null
-	)
+		override val name: String? = null,
+		override val value: Double? = null,
+		override val total: Double? = null
+	) : BaseOrderTax
 }

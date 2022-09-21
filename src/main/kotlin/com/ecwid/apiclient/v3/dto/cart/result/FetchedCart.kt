@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.cart.CartStringToStringMap
 import com.ecwid.apiclient.v3.dto.cart.request.UpdatedCart
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.BaseOrderTax
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import java.util.*
 
@@ -165,13 +166,13 @@ data class FetchedCart(
 	)
 
 	data class OrderItemTax(
-		val name: String? = null,
-		val value: Double? = null,
-		val total: Double? = null,
+		override val name: String? = null,
+		override val value: Double? = null,
+		override val total: Double? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
 		val taxOnShipping: Double? = null,
 		val includeInPrice: Boolean? = null
-	)
+	) : BaseOrderTax
 
 	data class OrderItemProductFile(
 		val productFileId: Int? = null,
@@ -234,10 +235,10 @@ data class FetchedCart(
 	)
 
 	data class TaxOnShipping(
-		val name: String? = null,
-		val value: Double? = null,
-		val total: Double? = null
-	)
+		override val name: String? = null,
+		override val value: Double? = null,
+		override val total: Double? = null
+	) : BaseOrderTax
 
 	data class UtmData(
 		val source: String? = null,
