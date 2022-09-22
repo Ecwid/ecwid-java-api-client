@@ -250,6 +250,7 @@ interface BatchApiClient {
 interface ProductVariationsApiClient {
 	fun createProductVariation(request: CreateProductVariationRequest): CreateProductVariationResult
 	fun uploadVariationImage(request: ProductVariationImageUploadRequest): ProductVariationImageUploadResult
+	fun uploadProductVariationImageAsync(request: ProductVariationImageAsyncUploadRequest): ProductVariationImageAsyncUploadResult
 	fun getAllProductVariations(request: ProductVariationsRequest): ProductVariationsResult
 	fun getProductVariation(request: ProductVariationDetailsRequest): FetchedVariation
 	fun updateProductVariation(request: UpdateProductVariationRequest): UpdateProductVariationResult
