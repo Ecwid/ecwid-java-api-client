@@ -11,7 +11,9 @@ data class FetchedLatestStats(
 	val categoriesUpdated: Date = Date(),
 	val discountCouponsUpdated: Date = Date(),
 	val abandonedSalesUpdated: Date = Date(),
-	val customersUpdated: Date = Date()
+	val customersUpdated: Date = Date(),
+	val productCount: Int? = null,
+	val categoryCount: Int? = null,
 ) : ApiFetchedDTO {
 
 	override fun getModifyKind() = ModifyKind.ReadOnly

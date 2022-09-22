@@ -15,6 +15,7 @@ import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 import com.ecwid.apiclient.v3.rule.nullablepropertyrules.*
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
+import com.ecwid.apiclient.v3.dto.profile.result.FetchedLatestStats
 import com.ecwid.apiclient.v3.dto.storage.result.FetchedStorageData
 import kotlin.reflect.KProperty1
 
@@ -43,6 +44,9 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedProduct.ShippingPreparationTime::localDeliveryPreparationTimeForInStockItemInMinutes),
 	AllowNullable(FetchedProduct.ProductOption.ChoiceBased::defaultChoice),
 	AllowNullable(FetchedProduct.ProductOption.CheckboxOption::defaultChoice),
+
+	AllowNullable(FetchedLatestStats::productCount),
+	AllowNullable(FetchedLatestStats::categoryCount),
 
 	IgnoreNullable(ConvertCartToOrderResult::id),
 	IgnoreNullable(ConvertCartToOrderResult::orderNumber),
