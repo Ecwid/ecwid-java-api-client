@@ -167,6 +167,7 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	IgnoreNullable(FetchedOrder.ShippingOption::estimatedTransitTime),
 	IgnoreNullable(FetchedOrder.ShippingOption::fulfillmentType),
 	IgnoreNullable(FetchedOrder.ShippingOption::isPickup),
+	AllowNullable(FetchedOrder.ShippingOption::locationId),
 	IgnoreNullable(FetchedOrder.ShippingOption::pickupInstruction),
 	IgnoreNullable(FetchedOrder.ShippingOption::shippingCarrierName),
 	IgnoreNullable(FetchedOrder.ShippingOption::shippingMethodName),
