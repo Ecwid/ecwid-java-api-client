@@ -306,7 +306,8 @@ data class FetchedOrder(
 		val estimatedTransitTime: String? = null,
 		val isPickup: Boolean? = null,
 		val pickupInstruction: String? = null,
-		val fulfillmentType: FulfillmentType? = null
+		val fulfillmentType: FulfillmentType? = null,
+		val locationId: String? = null,
 	)
 
 	data class HandlingFee(

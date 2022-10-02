@@ -226,7 +226,8 @@ fun FetchedOrder.ShippingOption.toUpdated(): UpdatedOrder.ShippingOption {
 		estimatedTransitTime = estimatedTransitTime,
 		isPickup = isPickup,
 		pickupInstruction = pickupInstruction,
-		fulfillmentType = fulfillmentType
+		fulfillmentType = fulfillmentType,
+		locationId = locationId,
 	)
 }
 

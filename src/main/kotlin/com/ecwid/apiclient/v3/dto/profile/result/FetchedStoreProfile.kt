@@ -235,6 +235,7 @@ data class FetchedStoreProfile(
 		val flatRate: FlatRate? = null,
 		val ratesTable: TableRatesDetails? = null,
 		val appClientId: String? = null,
+		val locationId: String? = null,
 		val pickupInstruction: String? = null,
 		val scheduledPickup: Boolean? = null,
 		val pickupPreparationTimeHours: Int? = null,
