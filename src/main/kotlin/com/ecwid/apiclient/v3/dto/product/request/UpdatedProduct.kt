@@ -208,11 +208,15 @@ data class UpdatedProduct(
 			fun createCheckboxOption(
 				name: String = "",
 				nameTranslated: LocalizedValueMap? = null,
-				choices: List<ProductOptionChoice> = listOf()
+				choices: List<ProductOptionChoice> = listOf(),
+				defaultChoice: Int? = null,
+				required: Boolean = false
 			) = CheckboxOption(
 				name = name,
 				nameTranslated = nameTranslated,
-				choices = choices
+				choices = choices,
+				defaultChoice = defaultChoice,
+				required = required
 			)
 
 			fun createTextFieldOption(
