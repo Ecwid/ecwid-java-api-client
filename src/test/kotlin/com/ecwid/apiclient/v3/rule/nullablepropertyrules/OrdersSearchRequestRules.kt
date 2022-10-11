@@ -9,6 +9,8 @@ val ordersSearchRequestRequestNullablePropertyRules: List<NullablePropertyRule<*
 	AllowNullable(OrdersSearchRequest::createdFrom),
 	AllowNullable(OrdersSearchRequest::createdTo),
 	AllowNullable(OrdersSearchRequest::customer),
+	AllowNullable(OrdersSearchRequest::customerId),
+	AllowNullable(OrdersSearchRequest::email),
 	AllowNullable(OrdersSearchRequest::fulfillmentStatus),
 	AllowNullable(OrdersSearchRequest::ids),
 	AllowNullable(OrdersSearchRequest::keywords),

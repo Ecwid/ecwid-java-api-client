@@ -20,6 +20,8 @@ data class OrdersSearchRequest(
 	val orderNumber: Int? = null,
 	val vendorOrderNumber: String? = null,
 	val customer: String? = null,
+	val customerId: Int? = null,
+	val email: String? = null,
 	val paymentMethod: String? = null,
 	val shippingMethod: String? = null,
 	val paymentStatus: OrderPaymentStatus? = null,
@@ -50,6 +52,8 @@ data class OrdersSearchRequest(
 			request.orderNumber?.let { put("orderNumber", it.toString()) }
 			request.vendorOrderNumber?.let { put("vendorOrderNumber", it) }
 			request.customer?.let { put("customer", it) }
+			request.customerId?.let { put("customerId", it.toString()) }
+			request.email?.let { put("email", it) }
 			request.paymentMethod?.let { put("paymentMethod", it) }
 			request.shippingMethod?.let { put("shippingMethod", it) }
 			request.paymentStatus?.let { put("paymentStatus", it.name) }
