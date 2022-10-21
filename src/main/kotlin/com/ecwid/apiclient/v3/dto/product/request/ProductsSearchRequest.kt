@@ -87,7 +87,10 @@ sealed class ProductsSearchRequest : ApiRequest {
 
 	data class ByIds(
 		val productIds: List<Int> = listOf(),
+		val baseUrl: String? = null,
+		val cleanUrls: Boolean? = null,
 		val sortBy: SortOrder? = null,
+		val lang: String? = null,
 	) : ProductsSearchRequest() {
 		override fun toRequestInfo() = RequestInfo.createGetRequest(
 			pathSegments = listOf(
@@ -103,7 +106,10 @@ sealed class ProductsSearchRequest : ApiRequest {
 			val request = this
 			return mutableMapOf<String, String>().apply {
 				put("productId", request.productIds.joinToString(","))
+				request.baseUrl?.let { put("baseUrl", it) }
+				request.cleanUrls?.let { put("cleanUrls", it.toString()) }
 				request.sortBy?.let { put("sortBy", it.name) }
+				request.lang?.let { put("lang", it) }
 			}.toMap()
 		}
 	}

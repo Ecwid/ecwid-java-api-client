@@ -13,6 +13,7 @@ plugins {
 	id("nebula.release") version "15.2.0"
 	id("maven-publish")
 	id("io.gitlab.arturbosch.detekt") version "1.17.1"
+	id("org.gradle.test-retry") version "1.4.1"
 }
 
 repositories {
@@ -57,6 +58,9 @@ tasks.withType<Test> {
 		slowThreshold = Consts.SLOW_TESTS_LOGGING_THRESHOLD_MS
 		theme = ThemeType.STANDARD
 	}
+	retry {
+		maxRetries.set(Consts.MAX_TEST_RETRIES_COUNT)
+	}
 }
 
 tasks.withType<Detekt>().configureEach {
@@ -66,7 +70,6 @@ tasks.withType<Detekt>().configureEach {
 val settingsProvider = SettingsProvider()
 
 tasks {
-
 	// All checks were already made by workflow "On pull request" => no checks here
 	if (gradle.startParameter.taskNames.contains("final")) {
 		named("build").get().apply {
@@ -324,6 +327,6 @@ object PublicationSettings {
 }
 
 object Consts {
-
 	const val SLOW_TESTS_LOGGING_THRESHOLD_MS = 30_000L
+	const val MAX_TEST_RETRIES_COUNT = 3
 }
