@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.rule.NullablePropertyRule
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 
 val productsSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
-    AllowNullable(ProductsSearchRequest.ByFilters::attributes),
+	AllowNullable(ProductsSearchRequest.ByFilters::attributes),
 	AllowNullable(ProductsSearchRequest.ByFilters::baseUrl),
 	AllowNullable(ProductsSearchRequest.ByFilters::categories),
 	AllowNullable(ProductsSearchRequest.ByFilters::cleanUrls),
@@ -30,5 +30,8 @@ val productsSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *>>
 	AllowNullable(ProductsSearchRequest.ByFilters::discountsAllowed),
 	AllowNullable(ProductsSearchRequest.ByFilters::isCustomerSetPrice),
 	AllowNullable(ProductsSearchRequest.ByFilters::visibleInStorefront),
+	AllowNullable(ProductsSearchRequest.ByIds::baseUrl),
+	AllowNullable(ProductsSearchRequest.ByIds::cleanUrls),
 	AllowNullable(ProductsSearchRequest.ByIds::sortBy),
+	AllowNullable(ProductsSearchRequest.ByIds::lang),
 )
