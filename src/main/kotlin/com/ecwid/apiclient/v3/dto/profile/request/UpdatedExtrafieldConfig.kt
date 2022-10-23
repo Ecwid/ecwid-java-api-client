@@ -40,10 +40,18 @@ data class UpdatedExtrafieldConfig(
 	data class UpdatedExtrafieldOptionConfig(
 		val title: String? = null,
 		val subtitle: String? = null,
-		val surcharge: Int? = null,
+		val surcharge: Double? = null,
 		val titleTranslated: LocalizedValueMap? = null,
 		val subtitleTranslated: LocalizedValueMap? = null
-	)
+	) {
+		constructor(
+			title: String?,
+			subtitle: String?,
+			surcharge: Int?,
+			titleTranslated: LocalizedValueMap?,
+			subtitleTranslated: LocalizedValueMap?
+		) : this(title, subtitle, surcharge?.toDouble(), titleTranslated, subtitleTranslated)
+	}
 
 	data class UpdatedExtrafieldSurchargeConfig(
 		val name: String? = null,

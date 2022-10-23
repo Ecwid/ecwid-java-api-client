@@ -40,7 +40,7 @@ data class FetchedExtrafieldConfig(
 	data class FetchedExtrafieldOptionConfig(
 		val title: String? = null,
 		val subtitle: String? = null,
-		val surcharge: Int? = null,
+		val surcharge: Double? = null,
 		val titleTranslated: LocalizedValueMap? = null,
 		val subtitleTranslated: LocalizedValueMap? = null
 	)
