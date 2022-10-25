@@ -154,7 +154,8 @@ fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 		taxes = taxes?.map(FetchedOrder.OrderItemTax::toUpdated),
 		dimensions = dimensions?.toUpdated(),
 		discounts = discounts?.map(FetchedOrder.OrderItemDiscounts::toUpdated),
-		externalReferenceId = externalReferenceId
+		externalReferenceId = externalReferenceId,
+		isPreorder = isPreorder,
 	)
 }
 
