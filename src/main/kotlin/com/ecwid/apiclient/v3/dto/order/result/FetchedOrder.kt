@@ -226,7 +226,8 @@ data class FetchedOrder(
 	data class BaseOrderItemTax(
 		override val name: String? = null,
 		override val value: Double? = null,
-		override val total: Double? = null
+		override val total: Double? = null,
+		val taxType: OrderItemTaxType? = null,
 	) : BaseOrderTax
 
 	data class OrderItemTax(
@@ -237,7 +238,8 @@ data class FetchedOrder(
 		val taxOnShipping: Double? = null,
 		val includeInPrice: Boolean? = null,
 		val sourceTaxRateId: Int? = null,
-		val sourceTaxRateType: RateType? = null
+		val sourceTaxRateType: RateType? = null,
+		val taxType: OrderItemTaxType? = null,
 	) : BaseOrderTax {
 		enum class RateType {
 			AUTO,
