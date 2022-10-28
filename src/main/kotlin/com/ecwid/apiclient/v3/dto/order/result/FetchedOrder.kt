@@ -276,7 +276,7 @@ data class FetchedOrder(
 		val productFileId: Long? = null,
 		val maxDownloads: Int? = null,
 		val remainingDownloads: Int? = null,
-		val expire: String? = null,
+		val expire: Date? = null,
 		val name: String? = null,
 		val description: String? = null,
 		val size: Long? = null,
