@@ -68,6 +68,8 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(ProductInventoryUpdateResult::warning),
 
 	AllowNullable(FetchedStorageData::value),
+	AllowNullable(FetchedProduct::minPurchaseQuantity),
+	AllowNullable(FetchedProduct::maxPurchaseQuantity),
 )
 
 val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(

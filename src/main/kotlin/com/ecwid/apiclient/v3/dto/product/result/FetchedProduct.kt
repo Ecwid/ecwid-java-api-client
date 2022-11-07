@@ -92,6 +92,8 @@ data class FetchedProduct(
 	val productCondition: ProductCondition = ProductCondition.NEW,
 	val externalReferenceId: String? = null,
 	val customsHsTariffCode: String? = null,
+	val minPurchaseQuantity: Int? = null,
+	val maxPurchaseQuantity: Int? = null,
 ) : ApiFetchedDTO {
 
 	data class BorderInfo(

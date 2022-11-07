@@ -62,6 +62,8 @@ data class UpdatedProduct(
 	val productCondition: ProductCondition? = null,
 	val externalReferenceId: String? = null,
 	val customsHsTariffCode: String? = null,
+	val minPurchaseQuantity: Int? = null,
+	val maxPurchaseQuantity: Int? = null,
 ) : ApiUpdatedDTO {
 
 	data class Ribbon(

@@ -62,6 +62,8 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		productCondition = productCondition,
 		externalReferenceId = externalReferenceId,
 		customsHsTariffCode = customsHsTariffCode,
+		minPurchaseQuantity = minPurchaseQuantity,
+		maxPurchaseQuantity = maxPurchaseQuantity,
 	)
 }
 
