@@ -55,4 +55,7 @@ internal class OrdersApiClientImpl(
 			offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
 		} while (searchResult.count >= searchResult.limit)
 	}
+
+	override fun getRepeatOrderURL(request: RepeatOrderURLRequest) =
+		apiClientHelper.makeObjectResultRequest<RepeatOrderURLResult>(request)
 }
