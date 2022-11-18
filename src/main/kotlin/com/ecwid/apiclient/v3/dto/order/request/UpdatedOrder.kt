@@ -241,7 +241,8 @@ data class UpdatedOrder(
 	data class BaseOrderItemTax(
 		override val name: String? = null,
 		override val value: Double? = null,
-		override val total: Double? = null
+		override val total: Double? = null,
+		val taxType: OrderItemTaxType? = null,
 	) : BaseOrderTax
 
 	data class OrderItemTax(
@@ -250,7 +251,8 @@ data class UpdatedOrder(
 		override val total: Double? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
 		val taxOnShipping: Double? = null,
-		val includeInPrice: Boolean? = null
+		val includeInPrice: Boolean? = null,
+		val taxType: OrderItemTaxType? = null,
 	) : BaseOrderTax
 
 	data class HandlingFeeTax(
