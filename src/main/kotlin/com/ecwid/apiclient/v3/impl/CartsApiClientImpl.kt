@@ -4,8 +4,6 @@ import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.CartsApiClient
 import com.ecwid.apiclient.v3.dto.cart.request.*
 import com.ecwid.apiclient.v3.dto.cart.result.*
-import com.ecwid.apiclient.v3.dto.order.request.RepeatOrderURLRequest
-import com.ecwid.apiclient.v3.dto.order.result.RepeatOrderURLResult
 
 internal data class CartsApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
