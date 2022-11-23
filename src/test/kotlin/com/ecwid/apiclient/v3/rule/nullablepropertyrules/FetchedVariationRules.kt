@@ -28,6 +28,8 @@ val fetchedVariationTypeNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	IgnoreNullable(FetchedVariation::thumbnailUrl),
 	IgnoreNullable(FetchedVariation::unlimited),
 	IgnoreNullable(FetchedVariation::warningLimit),
+	IgnoreNullable(FetchedVariation::minPurchaseQuantity),
+	IgnoreNullable(FetchedVariation::maxPurchaseQuantity),
 	IgnoreNullable(FetchedVariation::weight),
 	IgnoreNullable(FetchedVariation::wholesalePrices),
 	AllowNullable(FetchedVariation::externalReferenceId),
