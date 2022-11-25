@@ -515,9 +515,6 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_details_position_delivery_time")
 		val productDetailsPositionDeliveryTime: Int? = null,
 
-		@JsonFieldName("product_details_show_delivery_time")
-		val productDetailsShowDeliveryTime: Boolean? = null,
-
 		@JsonFieldName("product_details_position_product_description")
 		val productDetailsPositionProductDescription: Int? = null,
 
@@ -556,6 +553,9 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("product_details_show_buy_button")
 		val productDetailsShowBuyButton: Boolean? = null,
+
+		@JsonFieldName("product_details_show_delivery_time")
+		val productDetailsShowDeliveryTime: Boolean? = null,
 
 		@JsonFieldName("product_details_show_facebook_share_button")
 		val productDetailsShowFacebookShareButton: Boolean? = null,
@@ -647,6 +647,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_list_buybutton_behavior")
 		val productListBuyNowBehaviour: String? = null,
 
+		@JsonFieldName("product_list_product_info_layout")
+		val productListCardLayout: String? = null,
+
 		@JsonFieldName("product_list_category_image_aspect_ratio")
 		val productListCategoryImageLayout: String? = null,
 
@@ -659,11 +662,11 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_list_category_title_behavior")
 		val productListCategoryNameBehaviour: String? = null,
 
-		@JsonFieldName("product_list_image_aspect_ratio")
-		val productListImageLayout: String? = null,
-
 		@JsonFieldName("product_list_image_has_shadow")
 		val productListImageHasShadow: Boolean? = null,
+
+		@JsonFieldName("product_list_image_aspect_ratio")
+		val productListImageLayout: String? = null,
 
 		@JsonFieldName("product_list_image_position")
 		val productListImagePosition: String? = null,
@@ -671,11 +674,14 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_list_image_size")
 		val productListImageSize: String? = null,
 
+		@JsonFieldName("product_list_title_behavior")
+		val productListNameBehaviour: String? = null,
+
 		@JsonFieldName("product_list_price_behavior")
 		val productListPriceBehaviour: String? = null,
 
-		@JsonFieldName("product_list_product_info_layout")
-		val productListCardLayout: String? = null,
+		@JsonFieldName("product_list_sku_behavior")
+		val productListSKUBehaviour: String? = null,
 
 		@JsonFieldName("product_list_show_additional_image_on_hover")
 		val productListShowAdditionalImage: Boolean? = null,
@@ -707,14 +713,8 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_list_show_sort_viewas_options")
 		val productListShowSortViewAsOptions: Boolean? = null,
 
-		@JsonFieldName("product_list_sku_behavior")
-		val productListSKUBehaviour: String? = null,
-
 		@JsonFieldName("product_list_subtitles_behavior")
 		val productListSubtitlesBehavior: String? = null,
-
-		@JsonFieldName("product_list_title_behavior")
-		val productListNameBehaviour: String? = null,
 
 		@JsonFieldName("shopping_cart_products_collapsed_on_desktop")
 		val shoppingCartProductsCollapsedOnDesktop: Boolean? = null,
