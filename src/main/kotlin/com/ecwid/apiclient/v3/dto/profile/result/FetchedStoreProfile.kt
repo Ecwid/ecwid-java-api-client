@@ -754,6 +754,9 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("show_root_categories")
 		val showRootCategories: Boolean? = null,
+
+		@JsonFieldName("show_signin_link_with_unified_account_page")
+		val showSigninLinkWithUnifiedAccountPage: Boolean? = null,
 	)
 
 	data class ProductFilterItem(
