@@ -449,6 +449,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("cart_widget_icon")
 		val cartWidgetIcon: String? = null,
 
+		@JsonFieldName("cart_widget_is_responsive")
+		var cartWidgetIsResponsive: Boolean? = null,
+
 		@JsonFieldName("cart_widget_layout")
 		val cartWidgetLayout: String? = null,
 
@@ -469,6 +472,12 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("checkout_products_collapsed_on_mobile")
 		val checkoutProductsCollapsedOnMobile: Boolean? = null,
+
+		@JsonFieldName("checkout_show_address_line_2")
+		var checkoutShowAddressLine2: Boolean? = null,
+
+		@JsonFieldName("checkout_show_state_input")
+		var checkoutShowStateInput: Boolean? = null,
 
 		@JsonFieldName("enable_catalog_on_one_page")
 		val enableCatalogOnOnePage: Boolean? = null,
@@ -626,6 +635,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_details_show_wholesale_prices")
 		val productDetailsShowWholesalePrices: Boolean? = null,
 
+		@JsonFieldName("product_details_show_zoomed_image_in_gallery")
+		var productDetailsShowZoomedImageInGallery: Boolean? = null,
+
 		@JsonFieldName("product_details_thumbnails_aspect_ratio")
 		val productDetailsThumbnailsAspectRatio: String? = null,
 
@@ -650,6 +662,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_list_product_info_layout")
 		val productListCardLayout: String? = null,
 
+		@JsonFieldName("product_list_category_cell_spacing")
+		var productListCategoryCellSpacing: Int? = null,
+
 		@JsonFieldName("product_list_category_image_aspect_ratio")
 		val productListCategoryImageLayout: String? = null,
 
@@ -661,6 +676,9 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("product_list_category_title_behavior")
 		val productListCategoryNameBehaviour: String? = null,
+
+		@JsonFieldName("product_list_cell_spacing")
+		var productListCellSpacing: Int? = null,
 
 		@JsonFieldName("product_list_image_has_shadow")
 		val productListImageHasShadow: Boolean? = null,
@@ -721,6 +739,9 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("shopping_cart_products_collapsed_on_mobile")
 		val shoppingCartProductsCollapsedOnMobile: Boolean? = null,
+
+		@JsonFieldName("shopping_cart_show_sku")
+		var shoppingCartShowSku: Boolean? = null,
 
 		@JsonFieldName("shopping_cart_show_qty_inputs")
 		val shoppingCartShowQtyInputs: Boolean? = null,
