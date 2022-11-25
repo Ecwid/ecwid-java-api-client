@@ -722,7 +722,7 @@ data class FetchedStoreProfile(
 		@JsonFieldName("shopping_cart_products_collapsed_on_mobile")
 		val shoppingCartProductsCollapsedOnMobile: Boolean? = null,
 
-		@JsonFieldName("shopping_cart_show_qty_inputs_on_mobile")
+		@JsonFieldName("shopping_cart_show_qty_inputs")
 		val shoppingCartShowQtyInputs: Boolean? = null,
 
 		@JsonFieldName("shopping_cart_show_weight")
