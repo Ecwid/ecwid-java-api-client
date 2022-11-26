@@ -10,7 +10,7 @@ plugins {
 	kotlin("jvm") version "1.5.32"
 	id("com.adarshr.test-logger") version "2.1.1"
 	id("io.codearte.nexus-staging") version "0.22.0"
-	id("nebula.release") version "15.2.0"
+	id("nebula.release") version "17.1.0"
 	id("maven-publish")
 	id("io.gitlab.arturbosch.detekt") version "1.17.1"
 	id("org.gradle.test-retry") version "1.4.1"
