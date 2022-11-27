@@ -133,6 +133,9 @@ interface StoreProfileApiClient {
 	fun createExtrafieldConfig(request: ExtrafieldConfigCreateRequest): ExtrafieldConfigCreateResult
 	fun updateExtrafieldConfig(request: ExtrafieldConfigUpdateRequest): ExtrafieldConfigUpdateResult
 	fun deleteExtrafieldConfig(request: ExtrafieldConfigDeleteRequest): ExtrafieldConfigDeleteResult
+	fun searchOrderStatusesSetting(request: OrderStatusSettingSearchRequest): OrderStatusSettingSearchResult
+	fun getOrderStatusSettingDetails(request: OrderStatusSettingDetailsRequest): FetchedOrderStatusSetting
+	fun updateOrderStatusSetting(request: OrderStatusSettingUpdateRequest): OrderStatusSettingUpdateResult
 }
 
 // Products
