@@ -9,3 +9,4 @@ src/test/resources/test.properties
 # Files created by github actions before workflow job run
 # Task `gradle release` requires that git reposoitary to be clean
 settings.xml
+toolchains.xml
