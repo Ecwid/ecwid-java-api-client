@@ -1,9 +1,7 @@
 package com.ecwid.apiclient.v3.util
 
-import com.google.common.base.Predicate
-import com.google.common.base.Predicates
-import org.reflections.ReflectionUtils
 import org.reflections.Reflections
+import org.reflections.util.ReflectionUtilsPredicates.withClassModifier
 import uk.co.jemos.podam.api.AbstractRandomDataProviderStrategy
 import uk.co.jemos.podam.api.DataProviderStrategy
 import uk.co.jemos.podam.common.PodamConstants
@@ -71,13 +69,14 @@ internal class DTORandomDataProviderStrategy : AbstractRandomDataProviderStrateg
 
 		@Suppress("UNCHECKED_CAST")
 		private fun fillConcreteSubclasses(abstractClass: Class<out T>) {
-			this.subclasses.addAll(
-				ReflectionUtils.getAll(
-					reflections.getSubTypesOf(abstractClass as Class<T>),
-					Predicates.not(IS_ABSTRACT),
-					Predicates.not(IS_SUBCLASS_OF_ENUM)
-				)
-			)
+			val subclasses = reflections.getSubTypesOf(abstractClass as Class<T>)
+				.filter { clazz ->
+					val isAbstract = withClassModifier(Modifier.ABSTRACT).test(clazz)
+					val isInterface = withClassModifier(Modifier.INTERFACE).test(clazz)
+					val isSubclassOfEnum = clazz?.superclass?.isEnum == true
+					!isAbstract && !isInterface && !isSubclassOfEnum
+				}
+			this.subclasses.addAll(subclasses)
 		}
 
 		private fun sortClassesByName(classes: MutableList<Class<out T>>) {
@@ -87,17 +86,7 @@ internal class DTORandomDataProviderStrategy : AbstractRandomDataProviderStrateg
 		}
 
 		companion object {
-
 			private val reflections = Reflections("com.ecwid.apiclient.v3")
-
-			private val IS_ABSTRACT = Predicates.or(
-				ReflectionUtils.withClassModifier(Modifier.ABSTRACT),
-				ReflectionUtils.withClassModifier(Modifier.INTERFACE)
-			)
-
-			private val IS_SUBCLASS_OF_ENUM = Predicate<Class<*>> { clazz ->
-				clazz?.superclass?.isEnum == true
-			}
 		}
 	}
 }
