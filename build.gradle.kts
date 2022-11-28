@@ -24,7 +24,7 @@ dependencies {
 	implementation(kotlin("stdlib-jdk8"))
 	implementation(kotlin("reflect"))
 
-	api("com.google.code.gson:gson:2.8.6")
+	api("com.google.code.gson:gson:2.10")
 	api("org.apache.httpcomponents:httpclient:4.5.13")
 
 	testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
