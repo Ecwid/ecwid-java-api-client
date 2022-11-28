@@ -8,7 +8,7 @@ plugins {
 	java
 	signing
 	kotlin("jvm") version "1.7.21"
-	id("com.adarshr.test-logger") version "2.1.1"
+	id("com.adarshr.test-logger") version "3.2.0"
 	id("io.codearte.nexus-staging") version "0.22.0"
 	id("nebula.release") version "17.1.0"
 	id("maven-publish")
