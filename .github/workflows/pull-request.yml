@@ -44,7 +44,7 @@ jobs:
           GITHUB_HEAD_REF: ${{ github.head_ref }}
 
       - name: Upload artifacts with checks results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: check-results
