@@ -87,6 +87,7 @@ tasks.withType<Sign> {
 	doFirst {
 		settingsProvider.validateGPGSecrets()
 	}
+	dependsOn(tasks.getByName("build"))
 }
 
 tasks.withType<PublishToMavenRepository> {
@@ -103,6 +104,7 @@ tasks.register(Tasks.PRINT_FINAL_RELEASE_NOTE_TASK_NAME) {
 			sanitizedVersion = project.sanitizeVersion()
 		)
 	}
+	dependsOn(tasks.getByName("final"))
 }
 
 tasks.register(Tasks.PRINT_DEV_SNAPSHOT_RELEASE_NOTE_TASK_NAME) {
@@ -113,6 +115,7 @@ tasks.register(Tasks.PRINT_DEV_SNAPSHOT_RELEASE_NOTE_TASK_NAME) {
 			sanitizedVersion = project.sanitizeVersion()
 		)
 	}
+	dependsOn(tasks.getByName("devSnapshot"))
 }
 
 detekt {
