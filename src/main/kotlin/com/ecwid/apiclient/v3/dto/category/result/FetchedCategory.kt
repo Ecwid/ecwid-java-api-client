@@ -20,7 +20,7 @@ data class FetchedCategory(
 
 	val hdThumbnailUrl: String? = null,
 	val thumbnailUrl: String? = null,
-	val imageUrl: String? = null, // TODO Cannot test due to bug https://track.ecwid.com/youtrack/issue/ECWID-53222 
+	val imageUrl: String? = null, // TODO Cannot test due to bug https://track.ecwid.com/youtrack/issue/ECWID-53222
 	val originalImageUrl: String? = null,
 	val originalImage: PictureInfo? = null,
 	val url: String? = null,

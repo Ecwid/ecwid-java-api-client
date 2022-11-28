@@ -13,7 +13,6 @@ class GsonProductFiltersDeserializer : JsonDeserializer<ProductFilters> {
 		typeOfT: Type,
 		context: JsonDeserializationContext
 	): ProductFilters {
-
 		var priceFilter: PriceFilter? = null
 		var inventoryFilterValues: InventoryFilterValues? = null
 		var onSaleFilterValues: OnSaleFilterValues? = null
@@ -27,15 +26,19 @@ class GsonProductFiltersDeserializer : JsonDeserializer<ProductFilters> {
 				key == "price" -> {
 					priceFilter = context.deserialize(jsonElement, PriceFilter::class.java)
 				}
+
 				key == "inventory" -> {
 					inventoryFilterValues = context.deserialize(jsonElement, InventoryFilterValues::class.java)
 				}
+
 				key == "onsale" -> {
 					onSaleFilterValues = context.deserialize(jsonElement, OnSaleFilterValues::class.java)
 				}
+
 				key == "categories" -> {
 					categoriesFilterValues = context.deserialize(jsonElement, CategoriesFilterValues::class.java)
 				}
+
 				key.startsWith("option_") -> {
 					val optionName = key.replaceFirst("option_", "")
 					val optionFilterValues: OptionFilterValues =
@@ -45,6 +48,7 @@ class GsonProductFiltersDeserializer : JsonDeserializer<ProductFilters> {
 					newOptionsFilterMapValues[Option(optionName)] = optionFilterValues
 					optionsFilterMapValues = newOptionsFilterMapValues
 				}
+
 				key.startsWith("attribute_") -> {
 					val attributeName = key.replaceFirst("attribute_", "")
 					val attributeFilterValue: AttributeFilterValues =

@@ -129,13 +129,16 @@ class ApiClientHelper private constructor(
 					)
 				}
 			}
+
 			is HttpResponse.Error -> {
 				try {
 					val responseBody = responseBytes.asString()
 					logErrorResponseIfNeeded(requestId, requestTime, httpResponse.statusCode, responseBody)
 					val ecwidError = if (responseBody.isNotBlank()) {
 						jsonTransformer.deserialize(responseBody, EcwidApiError::class.java)
-					} else null
+					} else {
+						null
+					}
 					throw EcwidApiException(
 						statusCode = httpResponse.statusCode,
 						reasonPhrase = httpResponse.reasonPhrase,
@@ -151,6 +154,7 @@ class ApiClientHelper private constructor(
 					)
 				}
 			}
+
 			is HttpResponse.TransportError -> {
 				logTransportErrorResponseIfNeeded(
 					requestId,
@@ -196,16 +200,19 @@ class ApiClientHelper private constructor(
 			uri = createApiEndpointUri(pathSegments),
 			params = params.withCredentialsParams(credentials)
 		)
+
 		HttpMethod.POST -> HttpRequest.HttpPostRequest(
 			uri = createApiEndpointUri(pathSegments),
 			params = params.withCredentialsParams(credentials),
 			transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
+
 		HttpMethod.PUT -> HttpRequest.HttpPutRequest(
 			uri = createApiEndpointUri(pathSegments),
 			params = params.withCredentialsParams(credentials),
 			transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
+
 		HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
 			uri = createApiEndpointUri(pathSegments),
 			params = params.withCredentialsParams(credentials)
@@ -393,12 +400,15 @@ internal fun HttpBody.prepare(jsonTransformer: JsonTransformer): TransportHttpBo
 			val bodyAsBytes = jsonTransformer.serialize(obj, objExt).toByteArray()
 			TransportHttpBody.ByteArrayBody(bodyAsBytes, MIME_TYPE_APPLICATION_JSON)
 		}
+
 		is HttpBody.ByteArrayBody -> {
 			TransportHttpBody.ByteArrayBody(bytes, mimeType)
 		}
+
 		is HttpBody.InputStreamBody -> {
 			TransportHttpBody.InputStreamBody(stream, mimeType)
 		}
+
 		is HttpBody.LocalFileBody -> {
 			TransportHttpBody.LocalFileBody(file, mimeType)
 		}

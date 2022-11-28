@@ -2,11 +2,11 @@ package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
 import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
-import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
+import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 
 val fetchedCategoryNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
-    IgnoreNullable(FetchedCategory::description),
+	IgnoreNullable(FetchedCategory::description),
 	IgnoreNullable(FetchedCategory::descriptionTranslated),
 	IgnoreNullable(FetchedCategory::enabledProductCount),
 	IgnoreNullable(FetchedCategory::hdThumbnailUrl),

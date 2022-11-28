@@ -11,7 +11,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 
 	@Test
 	fun `test field found in Fetched DTO but not found in Updated DTO`() {
-
 		data class FetchedDTO(
 			val field1: Int,
 			val field2: String
@@ -38,7 +37,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 
 	@Test
 	fun `test field in Fetched sub DTO but not found in Updated sub DTO`() {
-
 		data class FetchedSubDTO(
 			val subField1: Double,
 			val subField2: String
@@ -75,7 +73,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 
 	@Test
 	fun `test incompatible field types`() {
-
 		data class FetchedDTO(
 			val field1: Int,
 			val field2: String,
@@ -117,7 +114,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 
 	@Test
 	fun `test field is list in Fetched DTO but is not in Updated DTO`() {
-
 		data class FetchedDTO(
 			val field1: Int,
 			val field2: List<Int>
@@ -149,7 +145,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 
 	@Test
 	fun `test field is map in Fetched DTO but is not in Updated DTO`() {
-
 		data class FetchedDTO(
 			val field1: Int,
 			val field2: Map<String, Double>
@@ -181,7 +176,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 
 	@Test
 	fun `test incompatible list generic type for field in Fetched and Updated DTOs`() {
-
 		class FetchedListWrapper : ArrayList<Int>()
 
 		data class FetchedDTO(
@@ -223,7 +217,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 
 	@Test
 	fun `test incompatible map generic types for field in Fetched and Updated DTOs`() {
-
 		class FetchedMapWrapper : HashMap<Int, Int>()
 
 		data class FetchedDTO(
@@ -286,7 +279,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 
 	@Test
 	fun `test non primitive fields types must not be shared between Fetched and Updated DTOs`() {
-
 		data class FetchedDTO(
 			val field1: Int,
 			val field2: SharedDTO,
@@ -316,7 +308,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 
 	@Test
 	fun `test ignored fields`() {
-
 		data class FetchedDTO(
 			val field1: Int,
 			val field2: String
@@ -338,7 +329,6 @@ class FetchedUpdatedDTOsCheckerUnitTest {
 
 	@Test
 	fun `test success`() {
-
 		class FetchedListWrapper : ArrayList<Float>()
 
 		class FetchedMapWrapper : HashMap<Double, String>()

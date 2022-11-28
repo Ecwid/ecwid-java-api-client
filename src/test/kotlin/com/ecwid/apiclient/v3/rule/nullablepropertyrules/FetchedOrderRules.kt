@@ -2,8 +2,8 @@ package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
-import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
+import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 
 val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedOrder.BaseOrderItemTax::name),
@@ -284,7 +284,7 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder.TaxInvoice::type),
 	AllowNullable(FetchedOrder::invoices),
 	AllowNullable(FetchedOrder::predictedPackage),
-    AllowNullable(FetchedOrder::externalOrderData),
+	AllowNullable(FetchedOrder::externalOrderData),
 	AllowNullable(FetchedOrder.ExternalOrderData::externalOrderId),
 	AllowNullable(FetchedOrder.ExternalOrderData::externalFulfillment),
 	AllowNullable(FetchedOrder.ExternalOrderData::refererId),
