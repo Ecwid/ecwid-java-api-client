@@ -27,7 +27,7 @@ dependencies {
 	api("com.google.code.gson:gson:2.10")
 	api("org.apache.httpcomponents:httpclient:4.5.13")
 
-	testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
 	testImplementation("org.reflections:reflections:0.9.11")
 	testImplementation("uk.co.jemos.podam:podam:7.2.6.RELEASE")
 
