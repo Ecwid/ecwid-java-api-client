@@ -29,7 +29,7 @@ dependencies {
 
 	testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
 	testImplementation("org.reflections:reflections:0.10.2")
-	testImplementation("uk.co.jemos.podam:podam:7.2.6.RELEASE")
+	testImplementation("uk.co.jemos.podam:podam:7.2.11.RELEASE")
 
 	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
 }
