@@ -12,7 +12,7 @@ plugins {
 	id("io.codearte.nexus-staging") version "0.22.0"
 	id("nebula.release") version "17.1.0"
 	id("maven-publish")
-	id("io.gitlab.arturbosch.detekt") version "1.17.1"
+	id("io.gitlab.arturbosch.detekt") version "1.22.0"
 	id("org.gradle.test-retry") version "1.4.1"
 }
 
@@ -31,7 +31,7 @@ dependencies {
 	testImplementation("org.reflections:reflections:0.10.2")
 	testImplementation("uk.co.jemos.podam:podam:7.2.11.RELEASE")
 
-	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
+	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
 }
 
 configure<JavaPluginConvention> {
