@@ -95,9 +95,9 @@ tasks.withType<PublishToMavenRepository> {
 	}
 }
 
-tasks.register("printFinalReleaseNode") {
+tasks.register(Tasks.PRINT_FINAL_RELEASE_NOTE_TASK_NAME) {
 	doLast {
-		printFinalReleaseNode(
+		printFinalReleaseNote(
 			groupId = PublicationSettings.GROUP_ID,
 			artifactId = PublicationSettings.ARTIFACT_ID,
 			sanitizedVersion = project.sanitizeVersion()
@@ -105,9 +105,9 @@ tasks.register("printFinalReleaseNode") {
 	}
 }
 
-tasks.register("printDevSnapshotReleaseNode") {
+tasks.register(Tasks.PRINT_DEV_SNAPSHOT_RELEASE_NOTE_TASK_NAME) {
 	doLast {
-		printDevSnapshotReleaseNode(
+		printDevSnapshotReleaseNote(
 			groupId = PublicationSettings.GROUP_ID,
 			artifactId = PublicationSettings.ARTIFACT_ID,
 			sanitizedVersion = project.sanitizeVersion()
@@ -227,7 +227,7 @@ fun Project.sanitizeVersion(): String {
 
 fun Project.isSnapshotVersion() = version.toString().contains("-dev.")
 
-fun printFinalReleaseNode(groupId: String, artifactId: String, sanitizedVersion: String) {
+fun printFinalReleaseNote(groupId: String, artifactId: String, sanitizedVersion: String) {
 	println()
 	println("========================================================")
 	println()
@@ -249,7 +249,7 @@ fun printFinalReleaseNode(groupId: String, artifactId: String, sanitizedVersion:
 	println()
 }
 
-fun printDevSnapshotReleaseNode(groupId: String, artifactId: String, sanitizedVersion: String) {
+fun printDevSnapshotReleaseNote(groupId: String, artifactId: String, sanitizedVersion: String) {
 	println()
 	println("========================================================")
 	println()
@@ -329,4 +329,9 @@ object PublicationSettings {
 object Consts {
 	const val SLOW_TESTS_LOGGING_THRESHOLD_MS = 30_000L
 	const val MAX_TEST_RETRIES_COUNT = 3
+}
+
+object Tasks {
+	const val PRINT_FINAL_RELEASE_NOTE_TASK_NAME = "printFinalReleaseNote"
+	const val PRINT_DEV_SNAPSHOT_RELEASE_NOTE_TASK_NAME = "printDevSnapshotReleaseNote"
 }
