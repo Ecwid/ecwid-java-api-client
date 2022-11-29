@@ -81,6 +81,13 @@ tasks {
 	named("release").get().apply {
 		dependsOn(named("publish").get())
 	}
+
+	named("closeRepository").get().apply {
+		dependsOn(named("final").get())
+	}
+	named("releaseRepository").get().apply {
+		dependsOn(named("final").get())
+	}
 }
 
 tasks.withType<Sign> {

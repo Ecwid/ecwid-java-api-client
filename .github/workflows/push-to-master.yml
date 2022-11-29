@@ -34,7 +34,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build, upload release version to Maven Central and create git release tag with Gradle
-        run: ./gradlew detekt final closeAndReleaseRepository printFinalReleaseNote
+        run: ./gradlew detekt final closeRepository releaseRepository printFinalReleaseNote
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
           GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
