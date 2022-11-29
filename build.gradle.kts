@@ -78,7 +78,7 @@ tasks {
 	}
 
 	// Publish artifacts to Maven Central before pushing new git tag to repo
-	named("release").get().apply {
+	named("closeAndReleaseRepository").get().apply {
 		dependsOn(named("publish").get())
 	}
 
