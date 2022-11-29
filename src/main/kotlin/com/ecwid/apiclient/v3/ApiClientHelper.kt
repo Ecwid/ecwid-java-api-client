@@ -118,8 +118,8 @@ class ApiClientHelper private constructor(
 			is HttpResponse.Success -> {
 				try {
 					val parsedResponse = responseParser.parse(responseBytes)
-					val responseBodyForLog = responseParser.getLogString(responseBytes)
-					logSuccessfulResponseIfNeeded(requestId, requestTime, responseBodyForLog)
+					val getResponseBodyForLog = { responseParser.getLogString(responseBytes) }
+					logSuccessfulResponseIfNeeded(requestId, requestTime, getResponseBodyForLog)
 					parsedResponse
 				} catch (e: JsonDeserializationException) {
 					logCannotParseResponseError(requestId, requestTime, responseBytes.asString(), e)
@@ -234,7 +234,7 @@ class ApiClientHelper private constructor(
 		return uri.toString() + encodedPath
 	}
 
-	private fun logSuccessfulResponseIfNeeded(requestId: String, requestTime: Long, responseBody: String) {
+	private fun logSuccessfulResponseIfNeeded(requestId: String, requestTime: Long, getResponseBody: () -> String) {
 		if (!loggingSettings.logResponse) return
 		logEntry(
 			prefix = "Response",
@@ -244,7 +244,7 @@ class ApiClientHelper private constructor(
 				add("OK")
 				add("$requestTime ms")
 				if (loggingSettings.logSuccessfulResponseBody) {
-					add(responseBody)
+					add(getResponseBody.invoke())
 				}
 			}
 		)
