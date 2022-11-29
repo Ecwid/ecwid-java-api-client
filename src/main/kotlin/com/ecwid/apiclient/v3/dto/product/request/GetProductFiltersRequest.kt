@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
+import com.ecwid.apiclient.v3.dto.product.request.GetProductFiltersRequest.*
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -110,28 +111,24 @@ data class GetProductFiltersRequest(
 	private fun toParams(): Map<String, String> {
 		val request = this
 		return mutableMapOf<String, String>().apply {
-			put("filterFields", request.filterFields.joinToString(separator = ",") { filterFieldType ->
-				filterFieldType.getFilterFieldName()
-			})
+			put("filterFields", request.filterFields.toFilterFields())
 			request.filterFacetLimits?.let { filterFacetLimits ->
-				val filterFacetLimitValue = filterFacetLimits
-					.toList()
-					.joinToString(separator = ",") { (filterFieldType, filterFacetLimit) ->
-						"${filterFieldType.getFilterFieldName()}:${filterFacetLimit.getFilterFacetLimitValue()}"
-					}
-				put("filterFacetLimit", filterFacetLimitValue)
+				put("filterFacetLimit", filterFacetLimits.toFilterFacetLimitValue())
 			}
 			request.filterParentCategoryId?.let { filterParentCategoryId ->
 				put("filterParentCategoryId", filterParentCategoryId.getFilterParentCategoryIdValue())
 			}
-			request.keyword?.let { keyword -> put("keyword", keyword) }
-			request.priceFrom?.let { priceFrom -> put("priceFrom", "$priceFrom") }
-			request.priceTo?.let { priceTo -> put("priceTo", "$priceTo") }
+			request.keyword?.let { keyword ->
+				put("keyword", keyword)
+			}
+			request.priceFrom?.let { priceFrom ->
+				put("priceFrom", "$priceFrom")
+			}
+			request.priceTo?.let { priceTo ->
+				put("priceTo", "$priceTo")
+			}
 			request.categories?.let { categories ->
-				val categoriesValue = categories.joinToString(separator = ",") { categoryId ->
-					categoryId.getFilterParentCategoryIdValue()
-				}
-				put("categories", categoriesValue)
+				put("categories", categories.toCategoriesValue())
 			}
 			request.includeProductsFromSubcategories?.let { includeProductsFromSubcategories ->
 				put("includeProductsFromSubcategories", "$includeProductsFromSubcategories")
@@ -161,9 +158,34 @@ data class GetProductFiltersRequest(
 					put(attributeField.getFilterFieldName(), attributeValues.joinToString(separator = ","))
 				}
 			}
-			request.inventory?.let { inventory -> put("inventory", if (inventory) "instock" else "outofstock") }
-			request.onSale?.let { onSale -> put("onsale", if (onSale) "onsale" else "notonsale") }
-			request.lang?.let { lang -> put("lang", lang) }
+			request.inventory?.let { inventory ->
+				put("inventory", if (inventory) "instock" else "outofstock")
+			}
+			request.onSale?.let { onSale ->
+				put("onsale", if (onSale) "onsale" else "notonsale")
+			}
+			request.lang?.let { lang ->
+				put("lang", lang)
+			}
 		}.toMap()
 	}
+
+}
+
+private fun List<FilterFieldType>.toFilterFields(): String {
+	return joinToString(separator = ",", transform = FilterFieldType::getFilterFieldName)
+}
+
+private fun Map<FilterFieldType, FilterFacetLimit>.toFilterFacetLimitValue(): String {
+	return toList()
+		.joinToString(separator = ",") { (filterFieldType, filterFacetLimit) ->
+			"${filterFieldType.getFilterFieldName()}:${filterFacetLimit.getFilterFacetLimitValue()}"
+		}
+}
+
+private fun List<FilterCategoryId>.toCategoriesValue(): String {
+	val categoriesValue = joinToString(separator = ",") { categoryId ->
+		categoryId.getFilterParentCategoryIdValue()
+	}
+	return categoriesValue
 }

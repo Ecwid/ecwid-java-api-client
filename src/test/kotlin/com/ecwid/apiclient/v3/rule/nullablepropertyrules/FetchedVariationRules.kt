@@ -2,8 +2,8 @@ package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
-import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
+import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 
 val fetchedVariationTypeNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedVariation::attributes),

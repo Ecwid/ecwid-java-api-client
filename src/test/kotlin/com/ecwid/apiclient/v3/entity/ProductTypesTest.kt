@@ -154,7 +154,7 @@ class ProductTypesTest : BaseEntityTest() {
 			assertTrue(productTypeCreateResult.id > 0)
 		}
 
-		// Trying to request all product types 
+		// Trying to request all product types
 		val customerGroupsSearchResult = apiClient.getAllProductTypes(ProductTypesGetAllRequest())
 		assertEquals(3 + 1, customerGroupsSearchResult.size) // “General” product type always exists in every store
 	}

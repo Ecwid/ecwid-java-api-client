@@ -70,13 +70,13 @@ class CustomerGroupsTest : BaseEntityTest() {
 			assertTrue(customerGroupCreateResult.id > 0)
 		}
 
-		// Trying to request first page 
+		// Trying to request first page
 		val customerGroupsSearchRequest1 = CustomerGroupsSearchRequest(offset = 0, limit = 2)
 		val customerGroupsSearchResult1 = apiClient.searchCustomerGroups(customerGroupsSearchRequest1)
 		assertEquals(2 + 1, customerGroupsSearchResult1.count) // “General” group exists is on every page
 		assertEquals(3, customerGroupsSearchResult1.total)
 
-		// Trying to request second and the last page 
+		// Trying to request second and the last page
 		val customerGroupsSearchRequest2 = CustomerGroupsSearchRequest(offset = 2, limit = 2)
 		val customerGroupsSearchResult2 = apiClient.searchCustomerGroups(customerGroupsSearchRequest2)
 		assertEquals(1 + 1, customerGroupsSearchResult2.count) // “General” group exists is on every page

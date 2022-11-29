@@ -34,7 +34,6 @@ class CouponsTest : BaseEntityTest() {
 
 	@Test
 	fun testCouponLifecycle() {
-
 		// Create two products
 		val productCreateResult1 = createTestProduct()
 		val productCreateResult2 = createTestProduct()

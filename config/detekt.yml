@@ -1,17 +1,17 @@
 complexity:
-  ComplexMethod:
+  CyclomaticComplexMethod:
     threshold: 40
   LargeClass:
-    excludes: ['**/test/**']
+    excludes: [ '**/test/**' ]
   LongMethod:
     threshold: 100
-    excludes: ['**/test/**']
+    excludes: [ '**/test/**' ]
   LongParameterList:
     functionThreshold: 10
     constructorThreshold: 15
-    excludes: ['**/com/ecwid/apiclient/v3/ApiClient.kt']
+    excludes: [ '**/com/ecwid/apiclient/v3/ApiClient.kt' ]
   NestedBlockDepth:
-    excludes: ['**/test/**']
+    excludes: [ '**/test/**' ]
   TooManyFunctions:
     thresholdInFiles: 50
     thresholdInClasses: 50
@@ -29,7 +29,7 @@ style:
   ReturnCount:
     max: 5
   UnnecessaryAbstractClass:
-    excludes: ['**/test/**']
+    excludes: [ '**/test/**' ]
   WildcardImport:
     active: false
 
@@ -37,6 +37,8 @@ style:
 formatting:
   MaximumLineLength:
     maxLineLength: 180
+  EnumEntryNameCase:
+    active: false # We need to fix all enums before enabling this inspection
   # Initially enabled
   NoBlankLineBeforeRbrace:
     active: false

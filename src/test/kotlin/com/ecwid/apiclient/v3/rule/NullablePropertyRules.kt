@@ -6,17 +6,18 @@ import com.ecwid.apiclient.v3.dto.cart.result.CartUpdateResult
 import com.ecwid.apiclient.v3.dto.cart.result.ConvertCartToOrderResult
 import com.ecwid.apiclient.v3.dto.order.result.DeletedOrder
 import com.ecwid.apiclient.v3.dto.payment.PaymentAppRequest
-import com.ecwid.apiclient.v3.dto.product.request.*
+import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest
+import com.ecwid.apiclient.v3.dto.product.request.ProductUpdateRequest
+import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult
 import com.ecwid.apiclient.v3.dto.product.result.ProductInventoryUpdateResult
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
+import com.ecwid.apiclient.v3.dto.profile.result.FetchedLatestStats
+import com.ecwid.apiclient.v3.dto.storage.result.FetchedStorageData
 import com.ecwid.apiclient.v3.dto.variation.request.ProductVariationsRequest
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 import com.ecwid.apiclient.v3.rule.nullablepropertyrules.*
-import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
-import com.ecwid.apiclient.v3.dto.profile.result.FetchedLatestStats
-import com.ecwid.apiclient.v3.dto.storage.result.FetchedStorageData
 import kotlin.reflect.KProperty1
 
 val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(

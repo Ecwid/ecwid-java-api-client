@@ -56,10 +56,10 @@ class BatchApiTest : BaseEntityTest() {
 			val productCreateResult =
 				createResponses.first().toTypedResponse(ProductCreateResult::class.java)
 		) {
-
 			is TypedBatchResponse.Ok -> {
 				Assertions.assertTrue(productCreateResult.value.id > 0)
 			}
+
 			is TypedBatchResponse.ApiError -> Assertions.fail("Api error is unexpected")
 			is TypedBatchResponse.ParseError -> Assertions.fail("Parse error is unexpected")
 			is TypedBatchResponse.NotExecuted -> Assertions.fail("Not executed error is not expected")
@@ -88,10 +88,10 @@ class BatchApiTest : BaseEntityTest() {
 			val productsSearchResult =
 				searchResponses.first().toTypedResponse(ProductsSearchResult::class.java)
 		) {
-
 			is TypedBatchResponse.Ok -> {
 				Assertions.assertTrue(productsSearchResult.value.count > 0)
 			}
+
 			is TypedBatchResponse.ApiError -> Assertions.fail("Api error is unexpected")
 			is TypedBatchResponse.ParseError -> Assertions.fail("Parse error is unexpected")
 			is TypedBatchResponse.NotExecuted -> Assertions.fail("Not executed error is not expected")
