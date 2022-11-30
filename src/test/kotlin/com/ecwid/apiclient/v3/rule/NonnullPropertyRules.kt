@@ -57,8 +57,6 @@ val nonnullPropertyRules: List<NonnullPropertyRule<*, *>> = listOf(
 	IgnoreNonnull(UpdatedProduct.ProductOptionChoice::text),
 	IgnoreNonnull(UpdatedProduct.RecurringChargeSettings::recurringInterval),
 	IgnoreNonnull(UpdatedProduct.RecurringChargeSettings::recurringIntervalCount),
-	IgnoreNonnull(UpdatedProduct.TaxInfo::enabledManualTaxes),
-	IgnoreNonnull(UpdatedProduct.TaxInfo::taxable),
 	IgnoreNonnull(UpdatedProduct.WholesalePrice::price),
 	IgnoreNonnull(UpdatedProduct.WholesalePrice::quantity),
 
