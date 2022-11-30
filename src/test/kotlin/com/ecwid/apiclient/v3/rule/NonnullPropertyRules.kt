@@ -67,6 +67,8 @@ val nonnullPropertyRules: List<NonnullPropertyRule<*, *>> = listOf(
 	AllowNonnull(UpdatedStoreProfile.ProductFilterItem::type),
 	AllowNonnull(UpdatedStoreProfile.ProductFiltersSettings::enabledInStorefront),
 	AllowNonnull(UpdatedStoreProfile.ProductFiltersSettings::filterSections),
+	AllowNonnull(UpdatedVariation.RecurringChargeSettings::recurringInterval),
+	AllowNonnull(UpdatedVariation.RecurringChargeSettings::recurringIntervalCount),
 )
 
 sealed class NonnullPropertyRule<T, R>(
