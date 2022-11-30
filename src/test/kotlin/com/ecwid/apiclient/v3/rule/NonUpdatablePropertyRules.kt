@@ -229,6 +229,17 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedVariation.AttributeValue::name),
 	Ignored(FetchedVariation.AttributeValue::type),
 	Ignored(FetchedVariation.AttributeValue::show),
+	ReadOnly(FetchedVariation.RecurringChargeSettings::subscriptionPriceWithSignUpFeeFormatted),
+	ReadOnly(FetchedVariation.RecurringChargeSettings::signUpFee),
+	ReadOnly(FetchedVariation.RecurringChargeSettings::signUpFeeFormatted),
+	ReadOnly(FetchedVariation.RecurringChargeSettings::subscriptionPriceWithSignUpFeeFormatted),
+	ReadOnly(FetchedVariation.SubscriptionSettings::oneTimePurchasePriceFormatted),
+	ReadOnly(FetchedVariation.SubscriptionSettings::oneTimePurchaseMarkupFormatted),
+	ReadOnly(FetchedVariation.SubscriptionSettings::oneTimePurchaseMarkup),
+	ReadOnly(FetchedVariation.SubscriptionSettings::oneTimePurchaseMarkupPercent),
+	ReadOnly(FetchedVariation.SubscriptionSettings::oneTimePurchaseMarkupPercentFormatted),
+	ReadOnly(FetchedVariation.SubscriptionSettings::displayedOneTimePurchaseMarkupPercent),
+	ReadOnly(FetchedVariation.SubscriptionSettings::displayedOneTimePurchaseMarkupPercentFormatted),
 
 	ReadOnly(FetchedProduct.RecurringChargeSettings::subscriptionPriceWithSignUpFeeFormatted),
 	ReadOnly(FetchedProduct.RecurringChargeSettings::signUpFee),
@@ -238,7 +249,9 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupFormatted),
 	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkup),
 	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercent),
-	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercentFormatted)
+	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercentFormatted),
+	ReadOnly(FetchedProduct.SubscriptionSettings::displayedOneTimePurchaseMarkupPercent),
+	ReadOnly(FetchedProduct.SubscriptionSettings::displayedOneTimePurchaseMarkupPercentFormatted)
 )
 
 sealed class NonUpdatablePropertyRule<T, R>(

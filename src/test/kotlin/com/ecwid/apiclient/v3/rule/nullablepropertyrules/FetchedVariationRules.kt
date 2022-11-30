@@ -45,5 +45,18 @@ val fetchedVariationTypeNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	IgnoreNullable(FetchedVariation.Option::name),
 	IgnoreNullable(FetchedVariation.Option::nameTranslated),
 	IgnoreNullable(FetchedVariation.Option::value),
-	IgnoreNullable(FetchedVariation.Option::valueTranslated)
+	IgnoreNullable(FetchedVariation.Option::valueTranslated),
+	IgnoreNullable(FetchedVariation::subscriptionSettings),
+	IgnoreNullable(FetchedVariation.RecurringChargeSettings::signUpFee),
+	IgnoreNullable(FetchedVariation.RecurringChargeSettings::signUpFeeFormatted),
+	AllowNullable(FetchedVariation.RecurringChargeSettings::subscriptionPriceWithSignUpFee),
+	IgnoreNullable(FetchedVariation.RecurringChargeSettings::subscriptionPriceWithSignUpFeeFormatted),
+	IgnoreNullable(FetchedVariation.SubscriptionSettings::oneTimePurchaseMarkup),
+	IgnoreNullable(FetchedVariation.SubscriptionSettings::oneTimePurchaseMarkupFormatted),
+	IgnoreNullable(FetchedVariation.SubscriptionSettings::oneTimePurchaseMarkupPercent),
+	IgnoreNullable(FetchedVariation.SubscriptionSettings::oneTimePurchaseMarkupPercentFormatted),
+	IgnoreNullable(FetchedVariation.SubscriptionSettings::displayedOneTimePurchaseMarkupPercent),
+	IgnoreNullable(FetchedVariation.SubscriptionSettings::displayedOneTimePurchaseMarkupPercentFormatted),
+	AllowNullable(FetchedVariation.SubscriptionSettings::oneTimePurchasePrice),
+	IgnoreNullable(FetchedVariation.SubscriptionSettings::oneTimePurchasePriceFormatted)
 )
