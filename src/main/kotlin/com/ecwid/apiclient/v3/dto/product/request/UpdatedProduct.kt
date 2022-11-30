@@ -90,7 +90,7 @@ data class UpdatedProduct(
 	)
 
 	data class TaxInfo(
-		val taxable: Boolean = true,
+		val taxable: Boolean? = null,
 		val enabledManualTaxes: List<Int>? = null,
 		val taxClassCode: String? = null,
 	)
