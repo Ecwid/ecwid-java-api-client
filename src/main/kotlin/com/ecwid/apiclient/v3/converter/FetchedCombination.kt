@@ -31,6 +31,7 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 		isShippingRequired = isShippingRequired,
 
 		customsHsTariffCode = customsHsTariffCode,
+		subscriptionSettings = subscriptionSettings?.toUpdated(),
 	)
 }
 
@@ -55,3 +56,18 @@ fun FetchedVariation.ProductDimensions.toUpdated() = UpdatedVariation.ProductDim
 	width = width,
 	height = height
 )
+
+private fun FetchedVariation.SubscriptionSettings.toUpdated() = UpdatedVariation.SubscriptionSettings(
+	subscriptionAllowed = subscriptionAllowed,
+	oneTimePurchaseAllowed = oneTimePurchaseAllowed,
+	oneTimePurchasePrice = oneTimePurchasePrice,
+	recurringChargeSettings = recurringChargeSettings.toUpdated()
+)
+
+private fun List<FetchedVariation.RecurringChargeSettings>.toUpdated() = map {
+	UpdatedVariation.RecurringChargeSettings(
+		recurringInterval = it.recurringInterval,
+		recurringIntervalCount = it.recurringIntervalCount,
+		subscriptionPriceWithSignUpFee = it.subscriptionPriceWithSignUpFee
+	)
+}

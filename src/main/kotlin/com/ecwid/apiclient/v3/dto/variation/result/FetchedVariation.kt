@@ -6,6 +6,7 @@ import com.ecwid.apiclient.v3.dto.common.FetchedAttributeValue
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
 import com.ecwid.apiclient.v3.dto.product.enums.OutOfStockVisibilityBehaviour
+import com.ecwid.apiclient.v3.dto.product.enums.RecurringSubscriptionInterval
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.variation.request.UpdatedVariation
 
@@ -47,6 +48,7 @@ data class FetchedVariation(
 	val isShippingRequired: Boolean? = null,
 
 	val customsHsTariffCode: String? = null,
+	val subscriptionSettings: SubscriptionSettings? = null,
 ) : ApiFetchedDTO {
 
 	data class AttributeValue(
@@ -85,6 +87,29 @@ data class FetchedVariation(
 		val length: Double = 0.0,
 		val width: Double = 0.0,
 		val height: Double = 0.0
+	)
+
+	data class SubscriptionSettings(
+		val subscriptionAllowed: Boolean = false,
+		val oneTimePurchaseAllowed: Boolean = false,
+		val recurringChargeSettings: List<RecurringChargeSettings> = emptyList(),
+		val oneTimePurchasePrice: Double? = null,
+		val oneTimePurchasePriceFormatted: String? = null,
+		val oneTimePurchaseMarkup: Double? = null,
+		val oneTimePurchaseMarkupFormatted: String? = null,
+		val oneTimePurchaseMarkupPercent: Double? = null,
+		val oneTimePurchaseMarkupPercentFormatted: String? = null,
+		val displayedOneTimePurchaseMarkupPercent: Double? = null,
+		val displayedOneTimePurchaseMarkupPercentFormatted: String? = null
+	)
+
+	data class RecurringChargeSettings(
+		val recurringInterval: RecurringSubscriptionInterval = RecurringSubscriptionInterval.MONTH,
+		val recurringIntervalCount: Int = 1,
+		val subscriptionPriceWithSignUpFee: Double? = null,
+		val subscriptionPriceWithSignUpFeeFormatted: String? = null,
+		val signUpFee: Double? = null,
+		val signUpFeeFormatted: String? = null
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedVariation::class)
