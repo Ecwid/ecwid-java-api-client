@@ -118,6 +118,8 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupFormatted),
 	IgnoreNullable(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercent),
 	IgnoreNullable(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercentFormatted),
+	IgnoreNullable(FetchedProduct.SubscriptionSettings::displayedOneTimePurchaseMarkupPercent),
+	IgnoreNullable(FetchedProduct.SubscriptionSettings::displayedOneTimePurchaseMarkupPercentFormatted),
 	AllowNullable(FetchedProduct.SubscriptionSettings::oneTimePurchasePrice),
 	IgnoreNullable(FetchedProduct.SubscriptionSettings::oneTimePurchasePriceFormatted)
 )

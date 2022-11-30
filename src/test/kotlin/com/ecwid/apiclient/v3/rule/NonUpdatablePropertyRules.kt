@@ -238,7 +238,9 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupFormatted),
 	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkup),
 	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercent),
-	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercentFormatted)
+	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercentFormatted),
+	ReadOnly(FetchedProduct.SubscriptionSettings::displayedOneTimePurchaseMarkupPercent),
+	ReadOnly(FetchedProduct.SubscriptionSettings::displayedOneTimePurchaseMarkupPercentFormatted)
 )
 
 sealed class NonUpdatablePropertyRule<T, R>(
