@@ -220,6 +220,7 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder::discount),
 	AllowNullable(FetchedOrder::discountCoupon),
 	AllowNullable(FetchedOrder::discountInfo),
+	AllowNullable(FetchedOrder::ticket),
 	AllowNullable(FetchedOrder::ebayId),
 	AllowNullable(FetchedOrder::email),
 	AllowNullable(FetchedOrder::externalFulfillment),
