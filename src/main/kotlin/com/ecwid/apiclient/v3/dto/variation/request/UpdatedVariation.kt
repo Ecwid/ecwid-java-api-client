@@ -22,6 +22,8 @@ data class UpdatedVariation(
 	val outOfStockVisibilityBehaviour: OutOfStockVisibilityBehaviour? = null,
 	val unlimited: Boolean? = null,
 	val warningLimit: Int? = null,
+	val minPurchaseQuantity: Int? = null,
+	val maxPurchaseQuantity: Int? = null,
 
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,

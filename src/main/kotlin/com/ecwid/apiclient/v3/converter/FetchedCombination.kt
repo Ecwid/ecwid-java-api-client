@@ -12,6 +12,8 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 		outOfStockVisibilityBehaviour = outOfStockVisibilityBehaviour,
 		unlimited = unlimited,
 		warningLimit = warningLimit,
+		minPurchaseQuantity = minPurchaseQuantity,
+		maxPurchaseQuantity = maxPurchaseQuantity,
 
 		price = price,
 		costPrice = costPrice,
