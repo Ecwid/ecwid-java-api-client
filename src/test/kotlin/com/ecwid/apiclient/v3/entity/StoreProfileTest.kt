@@ -219,6 +219,7 @@ class StoreProfileTest : BaseEntityTest() {
 		assertEquals("bobyor", starterSite.ecwidSubdomain)
 		assertEquals("example.com", starterSite.customDomain)
 		assertEquals("https://bobyor.company.site", starterSite.generatedUrl)
+		assertEquals("company.site", starterSite.ecwidSubdomainSuffix)
 		assertEquals("https://www.mysite.com", generalInfo.storeUrl)
 		assertEquals(FetchedStoreProfile.WebsitePlatform.wordpress, generalInfo.websitePlatform)
 
