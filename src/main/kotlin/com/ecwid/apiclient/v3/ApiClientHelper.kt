@@ -22,6 +22,7 @@ import kotlin.random.Random
 private const val API_TOKEN_PARAM_NAME = "token"
 private const val APP_CLIENT_ID_PARAM_NAME = "appClientId"
 private const val APP_CLIENT_SECRET_PARAM_NAME = "appSecretKey"
+private const val REQUEST_ID_NAME = "requestId"
 
 private const val REQUEST_ID_LENGTH = 8
 private const val MAX_LOG_ENTRY_SECTION_LENGTH = 200
@@ -70,7 +71,7 @@ class ApiClientHelper private constructor(
 		val requestId = generateRequestId()
 
 		val requestInfo = request.toRequestInfo()
-		val httpRequest = requestInfo.toHttpRequest()
+		val httpRequest = requestInfo.toHttpRequest(requestId)
 		logRequestIfNeeded(requestId, httpRequest, requestInfo.httpBody)
 
 		val startTime = Date().time
@@ -195,27 +196,27 @@ class ApiClientHelper private constructor(
 	}
 
 	@PublishedApi
-	internal fun RequestInfo.toHttpRequest(): HttpRequest = when (method) {
+	internal fun RequestInfo.toHttpRequest(requestId: String): HttpRequest = when (method) {
 		HttpMethod.GET -> HttpRequest.HttpGetRequest(
 			uri = createApiEndpointUri(pathSegments),
-			params = params.withCredentialsParams(credentials)
+			params = params.withCredentialsParams(credentials).withRequestId(requestId)
 		)
 
 		HttpMethod.POST -> HttpRequest.HttpPostRequest(
 			uri = createApiEndpointUri(pathSegments),
-			params = params.withCredentialsParams(credentials),
+			params = params.withCredentialsParams(credentials).withRequestId(requestId),
 			transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 
 		HttpMethod.PUT -> HttpRequest.HttpPutRequest(
 			uri = createApiEndpointUri(pathSegments),
-			params = params.withCredentialsParams(credentials),
+			params = params.withCredentialsParams(credentials).withRequestId(requestId),
 			transportHttpBody = httpBody.prepare(jsonTransformer)
 		)
 
 		HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
 			uri = createApiEndpointUri(pathSegments),
-			params = params.withCredentialsParams(credentials)
+			params = params.withCredentialsParams(credentials).withRequestId(requestId)
 		)
 	}
 
@@ -352,6 +353,14 @@ internal fun generateRequestId(): String {
 internal fun Map<String, String>.withCredentialsParams(credentials: ApiCredentials) = when (credentials) {
 	is ApiStoreCredentials -> this.withApiTokenParam(credentials.apiToken)
 	is ApiAppCredentials -> withAppCredentialsParams(credentials)
+}
+
+@PublishedApi
+internal fun Map<String, String>.withRequestId(requestId: String): Map<String, String> {
+	return toMutableMap()
+		.apply {
+			put(REQUEST_ID_NAME, requestId)
+		}
 }
 
 @PublishedApi
