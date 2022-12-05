@@ -6,7 +6,7 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class OrderStatusSettingUpdateRequest(
 	val statusId: String = "",
-	val updatedConfig: UpdatedOrderStatusSetting = UpdatedOrderStatusSetting()
+	val updatedOrderStatusSetting: UpdatedOrderStatusSetting = UpdatedOrderStatusSetting()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
 		pathSegments = listOf(
@@ -15,7 +15,7 @@ data class OrderStatusSettingUpdateRequest(
 			statusId
 		),
 		httpBody = HttpBody.JsonBody(
-			obj = updatedConfig
+			obj = updatedOrderStatusSetting
 		)
 	)
 }

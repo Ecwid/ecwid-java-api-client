@@ -12,6 +12,7 @@ data class FetchedOrderStatusSetting(
 	val name: String? = null,
 	val nameTranslations: LocalizedValueMap? = null,
 	val sendNotificationWhenStatusIsAssigned: Boolean = true,
+	val lastNameChangeDate: String? = null,
 ) : ApiFetchedDTO {
 	override fun getModifyKind() = ApiFetchedDTO.ModifyKind.ReadWrite(UpdatedOrderStatusSetting::class)
 }

@@ -8,4 +8,5 @@ val fetchedOrderStatusSettingNullablePropertyRules: List<NullablePropertyRule<*,
 	AllowNullable(FetchedOrderStatusSetting::defaultStatus),
 	AllowNullable(FetchedOrderStatusSetting::name),
 	AllowNullable(FetchedOrderStatusSetting::nameTranslations),
+	AllowNullable(FetchedOrderStatusSetting::lastNameChangeDate),
 )
