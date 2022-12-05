@@ -31,12 +31,16 @@ internal fun HttpRequest.toHttpUriRequest(): HttpUriRequest {
 			RequestBuilder.delete(uri)
 		}
 	}
+
 	return requestBuilder
 		.apply {
 			charset = Charsets.UTF_8
 			params.map { (name, value) ->
 				BasicNameValuePair(name, value)
 			}.forEach(this::addParameter)
+			headers.map { (name, value) ->
+				BasicNameValuePair(name, value)
+			}.forEach { header -> this.addHeader(header.name, header.value) }
 		}
 		.build()
 }

@@ -22,7 +22,7 @@ import kotlin.random.Random
 private const val API_TOKEN_PARAM_NAME = "token"
 private const val APP_CLIENT_ID_PARAM_NAME = "appClientId"
 private const val APP_CLIENT_SECRET_PARAM_NAME = "appSecretKey"
-private const val REQUEST_ID_NAME = "requestId"
+private const val REQUEST_ID_HEADER_NAME = "requestId"
 
 private const val REQUEST_ID_LENGTH = 8
 private const val MAX_LOG_ENTRY_SECTION_LENGTH = 200
@@ -199,24 +199,28 @@ class ApiClientHelper private constructor(
 	internal fun RequestInfo.toHttpRequest(requestId: String): HttpRequest = when (method) {
 		HttpMethod.GET -> HttpRequest.HttpGetRequest(
 			uri = createApiEndpointUri(pathSegments),
-			params = params.withCredentialsParams(credentials).withRequestId(requestId)
+			params = params.withCredentialsParams(credentials),
+			headers = headers.withRequestId(requestId),
 		)
 
 		HttpMethod.POST -> HttpRequest.HttpPostRequest(
 			uri = createApiEndpointUri(pathSegments),
-			params = params.withCredentialsParams(credentials).withRequestId(requestId),
-			transportHttpBody = httpBody.prepare(jsonTransformer)
+			params = params.withCredentialsParams(credentials),
+			transportHttpBody = httpBody.prepare(jsonTransformer),
+			headers = headers.withRequestId(requestId),
 		)
 
 		HttpMethod.PUT -> HttpRequest.HttpPutRequest(
 			uri = createApiEndpointUri(pathSegments),
-			params = params.withCredentialsParams(credentials).withRequestId(requestId),
-			transportHttpBody = httpBody.prepare(jsonTransformer)
+			params = params.withCredentialsParams(credentials),
+			transportHttpBody = httpBody.prepare(jsonTransformer),
+			headers = headers.withRequestId(requestId),
 		)
 
 		HttpMethod.DELETE -> HttpRequest.HttpDeleteRequest(
 			uri = createApiEndpointUri(pathSegments),
-			params = params.withCredentialsParams(credentials).withRequestId(requestId)
+			params = params.withCredentialsParams(credentials),
+			headers = headers.withRequestId(requestId),
 		)
 	}
 
@@ -356,14 +360,6 @@ internal fun Map<String, String>.withCredentialsParams(credentials: ApiCredentia
 }
 
 @PublishedApi
-internal fun Map<String, String>.withRequestId(requestId: String): Map<String, String> {
-	return toMutableMap()
-		.apply {
-			put(REQUEST_ID_NAME, requestId)
-		}
-}
-
-@PublishedApi
 internal fun Map<String, String>.withApiTokenParam(apiToken: String): Map<String, String> {
 	return toMutableMap()
 		.apply {
@@ -389,6 +385,14 @@ private fun Map<String, String>.withMaskedApiTokenParam(): Map<String, String> {
 			if (apiTokenParam != null) {
 				put(API_TOKEN_PARAM_NAME, maskApiToken(apiTokenParam))
 			}
+		}
+		.toMap()
+}
+
+private fun Map<String, String>.withRequestId(requestId: String): Map<String, String> {
+	return toMutableMap()
+		.apply {
+			put(REQUEST_ID_HEADER_NAME, requestId)
 		}
 		.toMap()
 }
