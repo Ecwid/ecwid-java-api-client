@@ -18,9 +18,8 @@ import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
 import org.reflections.Reflections
-import org.reflections.scanners.MethodParameterScanner
-import org.reflections.scanners.SubTypesScanner
-import org.reflections.util.ClasspathHelper
+import org.reflections.scanners.Scanners
+import org.reflections.scanners.Scanners.SubTypes
 import org.reflections.util.ConfigurationBuilder
 import org.reflections.util.FilterBuilder
 import uk.co.jemos.podam.api.PodamFactoryImpl
@@ -36,21 +35,53 @@ import kotlin.reflect.jvm.javaGetter
 @TestMethodOrder(OrderAnnotation::class)
 class DtoContractUnitTest {
 
-	private val convertersReflections =
+	private val convertersReflections = lazy {
 		Reflections(
 			ConfigurationBuilder()
-				.filterInputsBy(FilterBuilder().includePackage("com.ecwid.apiclient.v3.converter"))
-				.setUrls(ClasspathHelper.forPackage(""))
-				.setScanners(MethodParameterScanner())
+				.forPackage("com.ecwid.apiclient.v3.converter")
+				.filterInputsBy(
+					FilterBuilder()
+						.includePattern("com\\.ecwid\\.apiclient\\.v3\\.converter\\..*")
+				)
+				.setScanners(Scanners.MethodsReturn)
 		)
+	}
+
+	private val apiRequestClassesReflections = lazy {
+		Reflections(
+			ConfigurationBuilder()
+				.forPackage(ApiRequest::class.java.packageName)
+				.filterInputsBy(
+					FilterBuilder()
+						.includePattern(ApiRequest::class.java.packageName + "\\..*")
+				)
+				.setScanners(SubTypes.filterResultsBy { true })
+		)
+	}
+
+	private val getDtoClassesToCheck = lazy {
+		apiRequestClassesReflections
+			.value
+			.getSubTypesOf(Object::class.java)
+			.filterNot { clazz -> clazz.isInterface || clazz.isAnonymousClass }
+			.filterNot { clazz ->
+				try {
+					clazz.kotlin.isCompanion
+				} catch (ignore: UnsupportedOperationException) {
+					// Filtering file facades classes (*Kt classes) and synthetic classes (i.e. when-mappings classes)
+					true
+				}
+			}
+			.sortedBy { clazz -> clazz.canonicalName }
+	}
 
 	@Test
 	@Order(0)
 	fun `test all DTOs marked as data classes`() {
-		val dtoClasses = getDtoClassesToCheck()
-		assertFalse(dtoClasses.isEmpty())
+		val dtoClassesToCheck = getDtoClassesToCheck.value
+		assertFalse(dtoClassesToCheck.isEmpty())
 
-		val problemDtoClasses = dtoClasses.filter { dtoClass ->
+		val problemDtoClasses = dtoClassesToCheck.filter { dtoClass ->
 			!dtoClass.kotlin.isData && isDtoShouldBeMarkedAsDataClass(dtoClass)
 		}
 		assertTrue(problemDtoClasses.isEmpty()) {
@@ -61,11 +92,11 @@ class DtoContractUnitTest {
 	@Test
 	@Order(1)
 	fun `test all data classes DTOs has default constructor`() {
-		val dtoDataClasses = getDtoClassesToCheck()
+		val dtoClassesToCheck = getDtoClassesToCheck.value
 			.filter { dtoClass -> dtoClass.kotlin.isData }
-		assertFalse(dtoDataClasses.isEmpty())
+		assertFalse(dtoClassesToCheck.isEmpty())
 
-		val problemDtoClasses = dtoDataClasses.filter { dtoDataClass ->
+		val problemDtoClasses = dtoClassesToCheck.filter { dtoDataClass ->
 			val constructors = dtoDataClass.constructors
 			val hasZeroArgConstructor = constructors.any { constructor -> constructor.parameters.isEmpty() }
 			!hasZeroArgConstructor && isDtoShouldHaveZeroArgConstructor(constructors)
@@ -80,11 +111,11 @@ class DtoContractUnitTest {
 	@Test
 	@Order(2)
 	fun `test all data classes DTOs has only val parameters in their primary constructors`() {
-		val dtoDataClasses = getDtoClassesToCheck()
+		val dtoClassesToCheck = getDtoClassesToCheck.value
 			.filter { dtoClass -> dtoClass.kotlin.isData }
-		assertFalse(dtoDataClasses.isEmpty())
+		assertFalse(dtoClassesToCheck.isEmpty())
 
-		val problemDtoClasses = dtoDataClasses.filter { dtoDataClass ->
+		val problemDtoClasses = dtoClassesToCheck.filter { dtoDataClass ->
 			isPrimaryConstructorHasMutableProperties(dtoDataClass)
 		}
 		assertTrue(problemDtoClasses.isEmpty()) {
@@ -104,12 +135,12 @@ class DtoContractUnitTest {
 			ApiResultDTO::class.java
 		)
 
-		val dtoDataClasses = getDtoClassesToCheck()
+		val dtoClassesToCheck = getDtoClassesToCheck.value
 			.filterNot { dtoClass -> dtoClass.isEnum }
 			.filterNot { dtoClass -> dtoClass.packageName.startsWith("com.ecwid.apiclient.v3.dto.common") }
-		assertFalse(dtoDataClasses.isEmpty())
+		assertFalse(dtoClassesToCheck.isEmpty())
 
-		val problemDtoClasses = dtoDataClasses
+		val problemDtoClasses = dtoClassesToCheck
 			.filterNot { dtoClass -> dtoClass.isClassifiedDTOOrEnclosingClass(*dtoMarkerInterfaces) }
 		assertTrue(problemDtoClasses.isEmpty()) {
 			val interfacesStr = dtoMarkerInterfaces.joinToString(separator = ", ") { int -> int.simpleName }
@@ -121,7 +152,7 @@ class DtoContractUnitTest {
 	@Test
 	@Order(4)
 	fun `test all DTOs marked as 'preferably having non-nullable fields' have only non-nullable fields or fields added to exclusion list`() {
-		val dtoDataClasses = getDtoClassesToCheck()
+		val dtoClassesToCheck = getDtoClassesToCheck.value
 			.filter { dtoClass ->
 				dtoClass.isClassifiedDTOOrEnclosingClass(
 					ApiFetchedDTO::class.java,
@@ -130,14 +161,14 @@ class DtoContractUnitTest {
 				)
 			}
 			.filterNot { dtoClass -> dtoClass.kotlin.visibility == KVisibility.PRIVATE }
-		assertFalse(dtoDataClasses.isEmpty())
+		assertFalse(dtoClassesToCheck.isEmpty())
 
 		val allowedOrIgnoredNullableProperties = nullablePropertyRules
 			.filter { rule -> rule is AllowNullable || rule is IgnoreNullable }
 			.map { rule -> rule.property }
 			.toSet()
 
-		val nullableProperties = dtoDataClasses
+		val nullableProperties = dtoClassesToCheck
 			.flatMap { dtoDataClass ->
 				getPrimaryConstructorProperties(dtoDataClass)
 					.filter { property -> property.returnType.isMarkedNullable }
@@ -170,20 +201,20 @@ class DtoContractUnitTest {
 	@Test
 	@Order(6)
 	fun `test all DTOs marked as 'preferably having nullable fields' have only nullable fields or fields added to exclusion list`() {
-		val dtoDataClasses = getDtoClassesToCheck()
+		val dtoClassesToCheck = getDtoClassesToCheck.value
 			.filter { dtoClass ->
 				dtoClass.isClassifiedDTOOrEnclosingClass(
 					ApiUpdatedDTO::class.java
 				)
 			}
-		assertFalse(dtoDataClasses.isEmpty())
+		assertFalse(dtoClassesToCheck.isEmpty())
 
 		val allowedOrIgnoredNonnullProperties = nonnullPropertyRules
 			.filter { rule -> rule is AllowNonnull || rule is IgnoreNonnull }
 			.map { rule -> rule.property }
 			.toSet()
 
-		val nonnullProperties = dtoDataClasses
+		val nonnullProperties = dtoClassesToCheck
 			.flatMap { dtoDataClass ->
 				getPrimaryConstructorProperties(dtoDataClass)
 					.filterNot { property -> property.returnType.isMarkedNullable }
@@ -216,7 +247,9 @@ class DtoContractUnitTest {
 	@Test
 	@Order(8)
 	fun `test fetched and updated DTOs correctly linked to each other`() {
-		val dtoClassesToCheck = getDtoClassesToCheck()
+		val dtoClassesToCheck = getDtoClassesToCheck.value
+		assertFalse(dtoClassesToCheck.isEmpty())
+
 		val fetchedDTOClassesToModifyKindMap = getFetchedDTOClassesToModifyKindMap(dtoClassesToCheck)
 		val updatedDTOClassesToModifyKindMap = getUpdatedDTOClassesToModifyKindMap(dtoClassesToCheck)
 
@@ -226,6 +259,7 @@ class DtoContractUnitTest {
 				ApiFetchedDTO.ModifyKind.ReadOnly -> {
 					// No UpdatedDTO to check
 				}
+
 				is ApiFetchedDTO.ModifyKind.ReadWrite -> {
 					val updatedDTOClass = kind.updatedDTOClass
 					val updatedDtoModifyKind = updatedDTOClassesToModifyKindMap[updatedDTOClass]
@@ -236,6 +270,7 @@ class DtoContractUnitTest {
 								"Classes ${dtoClass.qualifiedName} and ${updatedDTOClass.qualifiedName} does not links to each other"
 							)
 						}
+
 						null -> {
 							fail("Impossible situation")
 						}
@@ -254,9 +289,11 @@ class DtoContractUnitTest {
 						ApiFetchedDTO.ModifyKind.ReadOnly -> {
 							fail("Updatable class ${dtoClass.qualifiedName} links to class ${fetchedDTOClass.qualifiedName} which is marked as read-only ")
 						}
+
 						is ApiFetchedDTO.ModifyKind.ReadWrite -> {
 							// Backlink was checked before
 						}
+
 						null -> {
 							fail("Impossible situation")
 						}
@@ -269,7 +306,8 @@ class DtoContractUnitTest {
 	@Test
 	@Order(9)
 	fun `test fetched and updated DTOs fields list and their types are synchronized`() {
-		val dtoClassesToCheck = getDtoClassesToCheck()
+		val dtoClassesToCheck = getDtoClassesToCheck.value
+		assertFalse(dtoClassesToCheck.isEmpty())
 
 		val fetchedUpdatedDTOs = dtoClassesToCheck
 			.filter { dtoClass ->
@@ -315,7 +353,9 @@ class DtoContractUnitTest {
 		val dataStrategy = DTORandomDataProviderStrategy()
 		val factory = PodamFactoryImpl(dataStrategy)
 
-		val dtoClassesToCheck = getDtoClassesToCheck()
+		val dtoClassesToCheck = getDtoClassesToCheck.value
+		assertFalse(dtoClassesToCheck.isEmpty())
+
 		val fetchedDTOClassesToModifyKindMap = getFetchedDTOClassesToModifyKindMap(dtoClassesToCheck)
 
 		val problemMessages = mutableListOf<String>()
@@ -326,13 +366,14 @@ class DtoContractUnitTest {
 					// No UpdatedDTO to check
 					null
 				}
+
 				is ApiFetchedDTO.ModifyKind.ReadWrite -> {
 					@Suppress("UNCHECKED_CAST")
 					val fetchedDtoKClass = fetchedDtoClass as KClass<out ApiFetchedDTO>
 					val updatedDTOClass = kind.updatedDTOClass
 
 					val toUpdatedMethod: Method? =
-						findToUpdatedMethod(convertersReflections, fetchedDtoKClass, updatedDTOClass)
+						findToUpdatedMethod(convertersReflections.value, fetchedDtoKClass, updatedDTOClass)
 					if (toUpdatedMethod == null) {
 						problemMessages += "Extension function with signature `${fetchedDtoKClass.java.canonicalName}.toUpdated(): ${updatedDTOClass.java.canonicalName}` is not implemented"
 						null
@@ -399,9 +440,11 @@ private fun FieldProblem.buildMessage(): String {
 		FieldProblemKind.FIELD_NOT_FOUND -> {
 			"All updatable fields from Fetched DTO must have corresponding field in Updated DTO."
 		}
+
 		FieldProblemKind.TYPE_MUST_NOT_BE_REUSED -> {
 			"Fields with the same name in Fetched and Updated DTOs must not share the same DTO (except for primitives and enums)"
 		}
+
 		FieldProblemKind.FIELD_IS_NOT_MAP,
 		FieldProblemKind.FIELD_IS_NOT_LIST,
 		FieldProblemKind.PRIMITIVE_FIELDS_INCOMPATIBLE_TYPE -> {
@@ -415,6 +458,7 @@ private fun FieldProblem.buildMessage(): String {
 				"If this field is read-only in Ecwid API you CAN add it as `ReadOnly()` exclusion to file `NonUpdatablePropertyRules.kt`.\n" +
 				"You MUST NOT add exclusion with type Ignored() which is used only for old fields until they are fixed."
 		}
+
 		FieldProblemKind.FIELD_IS_NOT_MAP,
 		FieldProblemKind.FIELD_IS_NOT_LIST,
 		FieldProblemKind.PRIMITIVE_FIELDS_INCOMPATIBLE_TYPE,
@@ -475,10 +519,12 @@ private fun isDtoShouldBeMarkedAsDataClass(dtoClass: Class<*>): Boolean {
 			// Sealed classes must not be instantiated by themself but their inheritors must be marked as data classes
 			false
 		}
+
 		kclass.objectInstance != null -> {
 			// Singleton classes has no explicit constructor arguments so it cannot be marked as data class
 			false
 		}
+
 		else -> {
 			// Classes that has only one zero-arg constructor cannot be marked as data class
 			val constructors = dtoClass.constructors
@@ -540,19 +586,6 @@ private fun getUpdatedDTOClassesToModifyKindMap(dtoClassesToCheck: List<Class<*>
 			dtoClass.kotlin as KClass<*> to instance.getModifyKind()
 		}
 }
-
-internal fun getDtoClassesToCheck() = Reflections(ApiRequest::class.java.packageName, SubTypesScanner(false))
-	.getSubTypesOf(Object::class.java)
-	.filterNot { clazz -> clazz.isInterface || clazz.isAnonymousClass }
-	.filterNot { clazz ->
-		try {
-			clazz.kotlin.isCompanion
-		} catch (ignore: UnsupportedOperationException) {
-			// Filtering file facades classes (*Kt classes) and synthetic classes (i.e. when-mappings classes)
-			true
-		}
-	}
-	.sortedBy { clazz -> clazz.canonicalName }
 
 private fun findToUpdatedMethod(
 	reflections: Reflections,

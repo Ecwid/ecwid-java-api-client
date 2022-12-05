@@ -331,7 +331,6 @@ class CartsTest : BaseEntityTest() {
 	@Test
 	@Disabled("Will be fixed in ECWID-75364")
 	fun testSearchCarts() {
-
 		// Create two carts
 		val totalPrice = randomPrice()
 		val cartForSearch1 = generateCartForTestingSearch(totalPrice, false)

@@ -72,13 +72,15 @@ private data class SingleBatchRequest(
 					is HttpBody.EmptyBody -> {
 						null
 					}
+
 					is HttpBody.JsonBody -> {
 						requestInfo.httpBody.obj
 					}
+
 					is HttpBody.ByteArrayBody,
 					is HttpBody.InputStreamBody,
 					is HttpBody.LocalFileBody -> {
-						throw IllegalStateException("Request type ${requestInfo.httpBody.javaClass.simpleName} is not allowed in batch requests")
+						error("Request type ${requestInfo.httpBody.javaClass.simpleName} is not allowed in batch requests")
 					}
 				}
 			)

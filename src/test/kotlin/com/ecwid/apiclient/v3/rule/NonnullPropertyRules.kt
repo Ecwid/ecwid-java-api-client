@@ -57,8 +57,6 @@ val nonnullPropertyRules: List<NonnullPropertyRule<*, *>> = listOf(
 	IgnoreNonnull(UpdatedProduct.ProductOptionChoice::text),
 	IgnoreNonnull(UpdatedProduct.RecurringChargeSettings::recurringInterval),
 	IgnoreNonnull(UpdatedProduct.RecurringChargeSettings::recurringIntervalCount),
-	IgnoreNonnull(UpdatedProduct.TaxInfo::enabledManualTaxes),
-	IgnoreNonnull(UpdatedProduct.TaxInfo::taxable),
 	IgnoreNonnull(UpdatedProduct.WholesalePrice::price),
 	IgnoreNonnull(UpdatedProduct.WholesalePrice::quantity),
 
@@ -69,6 +67,8 @@ val nonnullPropertyRules: List<NonnullPropertyRule<*, *>> = listOf(
 	AllowNonnull(UpdatedStoreProfile.ProductFilterItem::type),
 	AllowNonnull(UpdatedStoreProfile.ProductFiltersSettings::enabledInStorefront),
 	AllowNonnull(UpdatedStoreProfile.ProductFiltersSettings::filterSections),
+	AllowNonnull(UpdatedVariation.RecurringChargeSettings::recurringInterval),
+	AllowNonnull(UpdatedVariation.RecurringChargeSettings::recurringIntervalCount),
 )
 
 sealed class NonnullPropertyRule<T, R>(

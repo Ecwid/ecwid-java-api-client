@@ -51,6 +51,7 @@ data class FetchedOrder(
 	val externalTransactionId: String? = null,
 	val externalTransactionUrl: String? = null,
 	val referenceTransactionId: String? = null,
+	val ticket: Int? = null,
 	val ebayId: String? = null,
 
 	val customerId: Int? = null, // TODO Figure out how to test

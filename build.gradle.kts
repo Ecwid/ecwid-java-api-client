@@ -7,12 +7,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	java
 	signing
-	kotlin("jvm") version "1.5.32"
-	id("com.adarshr.test-logger") version "2.1.1"
-	id("io.codearte.nexus-staging") version "0.22.0"
+	kotlin("jvm") version "1.7.21"
+	id("com.adarshr.test-logger") version "3.2.0"
+	id("io.codearte.nexus-staging") version "0.30.0"
 	id("nebula.release") version "17.1.0"
 	id("maven-publish")
-	id("io.gitlab.arturbosch.detekt") version "1.17.1"
+	id("io.gitlab.arturbosch.detekt") version "1.22.0"
 	id("org.gradle.test-retry") version "1.4.1"
 }
 
@@ -24,14 +24,14 @@ dependencies {
 	implementation(kotlin("stdlib-jdk8"))
 	implementation(kotlin("reflect"))
 
-	api("com.google.code.gson:gson:2.8.6")
+	api("com.google.code.gson:gson:2.10")
 	api("org.apache.httpcomponents:httpclient:4.5.13")
 
-	testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
-	testImplementation("org.reflections:reflections:0.9.11")
-	testImplementation("uk.co.jemos.podam:podam:7.2.6.RELEASE")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
+	testImplementation("org.reflections:reflections:0.10.2")
+	testImplementation("uk.co.jemos.podam:podam:7.2.11.RELEASE")
 
-	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
+	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
 }
 
 configure<JavaPluginConvention> {
@@ -81,12 +81,20 @@ tasks {
 	named("release").get().apply {
 		dependsOn(named("publish").get())
 	}
+
+	named("closeRepository").get().apply {
+		dependsOn(named("final").get())
+	}
+	named("releaseRepository").get().apply {
+		dependsOn(named("final").get())
+	}
 }
 
 tasks.withType<Sign> {
 	doFirst {
 		settingsProvider.validateGPGSecrets()
 	}
+	dependsOn(tasks.getByName("build"))
 }
 
 tasks.withType<PublishToMavenRepository> {
@@ -95,24 +103,26 @@ tasks.withType<PublishToMavenRepository> {
 	}
 }
 
-tasks.register("printFinalReleaseNode") {
+tasks.register(Tasks.PRINT_FINAL_RELEASE_NOTE_TASK_NAME) {
 	doLast {
-		printFinalReleaseNode(
+		printFinalReleaseNote(
 			groupId = PublicationSettings.GROUP_ID,
 			artifactId = PublicationSettings.ARTIFACT_ID,
 			sanitizedVersion = project.sanitizeVersion()
 		)
 	}
+	dependsOn(tasks.getByName("final"))
 }
 
-tasks.register("printDevSnapshotReleaseNode") {
+tasks.register(Tasks.PRINT_DEV_SNAPSHOT_RELEASE_NOTE_TASK_NAME) {
 	doLast {
-		printDevSnapshotReleaseNode(
+		printDevSnapshotReleaseNote(
 			groupId = PublicationSettings.GROUP_ID,
 			artifactId = PublicationSettings.ARTIFACT_ID,
 			sanitizedVersion = project.sanitizeVersion()
 		)
 	}
+	dependsOn(tasks.getByName("devSnapshot"))
 }
 
 detekt {
@@ -227,7 +237,7 @@ fun Project.sanitizeVersion(): String {
 
 fun Project.isSnapshotVersion() = version.toString().contains("-dev.")
 
-fun printFinalReleaseNode(groupId: String, artifactId: String, sanitizedVersion: String) {
+fun printFinalReleaseNote(groupId: String, artifactId: String, sanitizedVersion: String) {
 	println()
 	println("========================================================")
 	println()
@@ -249,7 +259,7 @@ fun printFinalReleaseNode(groupId: String, artifactId: String, sanitizedVersion:
 	println()
 }
 
-fun printDevSnapshotReleaseNode(groupId: String, artifactId: String, sanitizedVersion: String) {
+fun printDevSnapshotReleaseNote(groupId: String, artifactId: String, sanitizedVersion: String) {
 	println()
 	println("========================================================")
 	println()
@@ -329,4 +339,9 @@ object PublicationSettings {
 object Consts {
 	const val SLOW_TESTS_LOGGING_THRESHOLD_MS = 30_000L
 	const val MAX_TEST_RETRIES_COUNT = 3
+}
+
+object Tasks {
+	const val PRINT_FINAL_RELEASE_NOTE_TASK_NAME = "printFinalReleaseNote"
+	const val PRINT_DEV_SNAPSHOT_RELEASE_NOTE_TASK_NAME = "printDevSnapshotReleaseNote"
 }

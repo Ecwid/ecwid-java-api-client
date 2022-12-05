@@ -116,12 +116,14 @@ interface StoreProfileApiClient {
 	fun getStoreProfile(request: StoreProfileRequest): FetchedStoreProfile
 	fun updateStoreProfile(request: StoreProfileUpdateRequest): StoreProfileUpdateResult
 	fun getLatestStats(request: LatestStatsRequest): FetchedLatestStats
- 	fun getShippingOptions(request: ShippingOptionsRequest): ShippingOptionsResult
-// 	fun addShippingOption()
-// 	fun updateShippingOption()
- 	fun getPaymentOptions(request: PaymentOptionsRequest): PaymentOptionsResult
-// 	fun addPaymentOption()
-// 	fun updatePaymentOption()
+	fun getShippingOptions(request: ShippingOptionsRequest): ShippingOptionsResult
+
+	// 	fun addShippingOption()
+	// 	fun updateShippingOption()
+	fun getPaymentOptions(request: PaymentOptionsRequest): PaymentOptionsResult
+
+	// 	fun addPaymentOption()
+	// 	fun updatePaymentOption()
 	fun uploadStoreLogo(request: StoreLogoUploadRequest): StoreLogoUploadResult
 	fun removeStoreLogo(request: StoreLogoRemoveRequest): StoreLogoRemoveResult
 	fun uploadInvoiceLogo(request: InvoiceLogoUploadRequest): InvoiceLogoUploadResult

@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.UpdatedAttributeValue
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueAlias
 import com.ecwid.apiclient.v3.dto.product.enums.OutOfStockVisibilityBehaviour
+import com.ecwid.apiclient.v3.dto.product.enums.RecurringSubscriptionInterval
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 
 data class UpdatedVariation(
@@ -21,6 +22,8 @@ data class UpdatedVariation(
 	val outOfStockVisibilityBehaviour: OutOfStockVisibilityBehaviour? = null,
 	val unlimited: Boolean? = null,
 	val warningLimit: Int? = null,
+	val minPurchaseQuantity: Int? = null,
+	val maxPurchaseQuantity: Int? = null,
 
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
@@ -32,6 +35,7 @@ data class UpdatedVariation(
 	val isShippingRequired: Boolean? = null,
 
 	val customsHsTariffCode: String? = null,
+	val subscriptionSettings: SubscriptionSettings? = null,
 ) : ApiUpdatedDTO {
 
 	data class AttributeValue(
@@ -55,6 +59,19 @@ data class UpdatedVariation(
 		val length: Double? = null,
 		val width: Double? = null,
 		val height: Double? = null
+	)
+
+	data class SubscriptionSettings(
+		val subscriptionAllowed: Boolean? = null,
+		val oneTimePurchaseAllowed: Boolean? = null,
+		val recurringChargeSettings: List<RecurringChargeSettings>? = null,
+		val oneTimePurchasePrice: Double? = null,
+	)
+
+	data class RecurringChargeSettings(
+		val recurringInterval: RecurringSubscriptionInterval = RecurringSubscriptionInterval.MONTH,
+		val recurringIntervalCount: Int = 1,
+		val subscriptionPriceWithSignUpFee: Double? = null,
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedVariation::class)

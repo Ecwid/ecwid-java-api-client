@@ -11,7 +11,6 @@ class DTOsEmptinessCheckerUnitTest {
 
 	@Test
 	fun `test DTOs check for emptiness and default fields value works well`() {
-
 		data class BooleanDTO(
 			val booleanField1: Boolean,
 			val booleanField2: Boolean,

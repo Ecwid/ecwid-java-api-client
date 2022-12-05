@@ -3,10 +3,10 @@ package com.ecwid.apiclient.v3.dto.profile.request
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
-import com.ecwid.apiclient.v3.dto.profile.enums.ExtrafieldType
-import com.ecwid.apiclient.v3.dto.profile.enums.SurchargeType
-import com.ecwid.apiclient.v3.dto.profile.enums.OrderDetailsDisplaySection
 import com.ecwid.apiclient.v3.dto.profile.enums.CheckoutDisplaySection
+import com.ecwid.apiclient.v3.dto.profile.enums.ExtrafieldType
+import com.ecwid.apiclient.v3.dto.profile.enums.OrderDetailsDisplaySection
+import com.ecwid.apiclient.v3.dto.profile.enums.SurchargeType
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedExtrafieldConfig
 
 data class UpdatedExtrafieldConfig(
