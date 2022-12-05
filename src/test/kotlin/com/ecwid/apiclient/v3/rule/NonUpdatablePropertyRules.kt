@@ -8,6 +8,7 @@ import com.ecwid.apiclient.v3.dto.customergroup.result.FetchedCustomerGroup
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
+import com.ecwid.apiclient.v3.dto.profile.result.FetchedOrderStatusSetting
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 import com.ecwid.apiclient.v3.rule.NonUpdatablePropertyRule.Ignored
@@ -252,7 +253,12 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercent),
 	ReadOnly(FetchedProduct.SubscriptionSettings::oneTimePurchaseMarkupPercentFormatted),
 	ReadOnly(FetchedProduct.SubscriptionSettings::displayedOneTimePurchaseMarkupPercent),
-	ReadOnly(FetchedProduct.SubscriptionSettings::displayedOneTimePurchaseMarkupPercentFormatted)
+	ReadOnly(FetchedProduct.SubscriptionSettings::displayedOneTimePurchaseMarkupPercentFormatted),
+
+	ReadOnly(FetchedOrderStatusSetting::statusId),
+	ReadOnly(FetchedOrderStatusSetting::orderStatusType),
+	ReadOnly(FetchedOrderStatusSetting::defaultStatus),
+	ReadOnly(FetchedOrderStatusSetting::lastNameChangeDate),
 )
 
 sealed class NonUpdatablePropertyRule<T, R>(
