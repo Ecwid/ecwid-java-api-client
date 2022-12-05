@@ -22,7 +22,7 @@ import kotlin.random.Random
 private const val API_TOKEN_PARAM_NAME = "token"
 private const val APP_CLIENT_ID_PARAM_NAME = "appClientId"
 private const val APP_CLIENT_SECRET_PARAM_NAME = "appSecretKey"
-private const val REQUEST_ID_HEADER_NAME = "requestId"
+private const val REQUEST_ID_HEADER_NAME = "X-Ecwid-Api-Request-Id"
 
 private const val REQUEST_ID_LENGTH = 8
 private const val MAX_LOG_ENTRY_SECTION_LENGTH = 200
