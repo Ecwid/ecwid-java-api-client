@@ -1,10 +1,7 @@
 package com.ecwid.apiclient.v3.dto.order.result
 
-import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.*
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
-import com.ecwid.apiclient.v3.dto.common.BaseOrderTax
-import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
-import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import java.util.*
@@ -47,6 +44,7 @@ data class FetchedOrder(
 	val paymentModule: String? = null,
 	val paymentParams: OrderedStringToStringMap? = null,
 	val paymentMessage: String? = null,
+	val paymentSubtype: String? = null,
 	val creditCardStatus: CreditCardStatus? = null,
 	val externalTransactionId: String? = null,
 	val externalTransactionUrl: String? = null,
@@ -197,6 +195,7 @@ data class FetchedOrder(
 		val discounts: List<OrderItemDiscounts>? = null,
 		val externalReferenceId: String? = null,
 		val isPreorder: Boolean? = null,
+		val attributes: List<OrderItemAttributeValue>? = null
 	)
 
 	data class RecurringChargeSettings(
@@ -228,8 +227,9 @@ data class FetchedOrder(
 		override val name: String? = null,
 		override val value: Double? = null,
 		override val total: Double? = null,
+		override val includeInPrice: Boolean? = null,
 		val taxType: OrderItemTaxType? = null,
-	) : BaseOrderTax
+	) : ExtendedOrderTax
 
 	data class OrderItemTax(
 		override val name: String? = null,
@@ -237,11 +237,11 @@ data class FetchedOrder(
 		override val total: Double? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
 		val taxOnShipping: Double? = null,
-		val includeInPrice: Boolean? = null,
+		override val includeInPrice: Boolean? = null,
 		val sourceTaxRateId: Int? = null,
 		val sourceTaxRateType: RateType? = null,
 		val taxType: OrderItemTaxType? = null,
-	) : BaseOrderTax {
+	) : ExtendedOrderTax {
 		enum class RateType {
 			AUTO,
 			MANUAL,
@@ -254,8 +254,9 @@ data class FetchedOrder(
 	data class HandlingFeeTax(
 		override val name: String? = null,
 		override val value: Double? = null,
-		override val total: Double? = null
-	) : BaseOrderTax
+		override val total: Double? = null,
+		override val includeInPrice: Boolean? = null,
+	) : ExtendedOrderTax
 
 	data class ProductDimensions(
 		val length: Double? = null,
@@ -273,6 +274,14 @@ data class FetchedOrder(
 		val name: String? = null,
 		val size: Int? = null,
 		val url: String? = null
+	)
+
+	data class OrderItemAttributeValue(
+		val id: Int? = null,
+		val name: String? = null,
+		val nameTranslated: HashMap<String, String>? = null,
+		val value: String? = null,
+		val valueTranslated: HashMap<String, String>? = null,
 	)
 
 	data class OrderItemProductFile(
@@ -312,6 +321,8 @@ data class FetchedOrder(
 		val pickupInstruction: String? = null,
 		val fulfillmentType: FulfillmentType? = null,
 		val locationId: String? = null,
+		val localizedLabel: String? = null,
+		val isShippingLimit: Boolean? = null,
 	)
 
 	data class HandlingFee(
