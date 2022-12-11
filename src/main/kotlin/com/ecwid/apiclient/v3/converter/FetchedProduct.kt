@@ -181,7 +181,8 @@ fun FetchedProduct.ShippingSettings.toUpdated() = UpdatedProduct.ShippingSetting
 fun FetchedProduct.AttributeValue.toUpdated() = UpdatedProduct.AttributeValue(
 	id = id,
 	alias = type?.toAttributeValueAlias(),
-	value = value
+	value = value,
+	valueTranslated = valueTranslated,
 )
 
 fun FetchedProduct.RelatedProducts.toUpdated() = UpdatedProduct.RelatedProducts(
