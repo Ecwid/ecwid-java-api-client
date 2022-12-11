@@ -10,6 +10,7 @@ val customAppRequestNullablePropertyRules: List<NullablePropertyRule<*, *>> = li
 	AllowNullable(CustomAppRequest.AttributeValue::show),
 	AllowNullable(CustomAppRequest.AttributeValue::type),
 	AllowNullable(CustomAppRequest.AttributeValue::value),
+	AllowNullable(CustomAppRequest.AttributeValue::valueTranslated),
 	AllowNullable(CustomAppRequest.BorderInfo::dominatingColor),
 	AllowNullable(CustomAppRequest.BorderInfo::homogeneity),
 	AllowNullable(CustomAppRequest.Cart::couponDiscount),

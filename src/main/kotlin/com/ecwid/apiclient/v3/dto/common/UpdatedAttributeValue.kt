@@ -9,12 +9,14 @@ interface UpdatedAttributeValue {
 	val alias: AttributeValueAlias?
 	val name: String?
 	val value: String?
+	val valueTranslated: LocalizedValueMap?
 
 	fun toProductAttribute() = UpdatedProduct.AttributeValue(
 		id = id,
 		alias = alias,
 		name = name,
 		value = value,
+		valueTranslated = valueTranslated,
 	)
 
 	fun toVariationAttribute() = UpdatedVariation.AttributeValue(
@@ -22,6 +24,7 @@ interface UpdatedAttributeValue {
 		alias = alias,
 		name = name,
 		value = value,
+		valueTranslated = valueTranslated,
 	)
 
 }

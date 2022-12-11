@@ -72,6 +72,7 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct.AttributeValue::show),
 	IgnoreNullable(FetchedProduct.AttributeValue::type),
 	IgnoreNullable(FetchedProduct.AttributeValue::value),
+	IgnoreNullable(FetchedProduct.AttributeValue::valueTranslated),
 	IgnoreNullable(FetchedProduct.FavoritesStats::count),
 	IgnoreNullable(FetchedProduct.FavoritesStats::displayedCount),
 	IgnoreNullable(FetchedProduct.GalleryImage::alt),
