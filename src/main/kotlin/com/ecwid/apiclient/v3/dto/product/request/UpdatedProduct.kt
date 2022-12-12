@@ -278,6 +278,7 @@ data class UpdatedProduct(
 		val enabledMethods: List<String>? = null
 	)
 
+
 	data class AttributeValue internal constructor(
 		override val id: Int? = null,
 		override val alias: AttributeValueAlias? = null,
