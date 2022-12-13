@@ -220,6 +220,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedStoreProfile::giftCardSettings),
 	ReadOnly(FetchedStoreProfile.Settings::googleProductCategoryName),
 	ReadOnly(FetchedStoreProfile.TikTokPixelSettings::code),
+	ReadOnly(FetchedStoreProfile.InstantSiteInfo::ecwidSubdomainSuffix),
 
 	ReadOnly(FetchedVariation::id),
 	Ignored(FetchedVariation::combinationNumber),

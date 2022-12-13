@@ -42,7 +42,8 @@ data class FetchedStoreProfile(
 		val ecwidSubdomain: String? = null,
 		val customDomain: String? = null,
 		val generatedUrl: String? = null,
-		val storeLogoUrl: String? = null
+		val storeLogoUrl: String? = null,
+		val ecwidSubdomainSuffix: String? = null
 	)
 
 	enum class WebsitePlatform {

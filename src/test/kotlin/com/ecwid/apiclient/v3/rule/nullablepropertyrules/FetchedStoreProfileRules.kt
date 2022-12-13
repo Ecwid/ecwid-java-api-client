@@ -352,4 +352,5 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.Zone::stateOrProvinceCodes),
 	AllowNullable(FetchedStoreProfile.Settings::googleProductCategory),
 	AllowNullable(FetchedStoreProfile.Settings::googleProductCategoryName),
+	AllowNullable(FetchedStoreProfile.InstantSiteInfo::ecwidSubdomainSuffix),
 )
