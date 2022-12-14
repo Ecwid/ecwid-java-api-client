@@ -39,7 +39,7 @@ data class UpdatedVariation(
 	val subscriptionSettings: SubscriptionSettings? = null,
 ) : ApiUpdatedDTO {
 
-	data class AttributeValue internal constructor(
+	data class AttributeValue(
 		override val id: Int? = null,
 		override val alias: AttributeValueAlias? = null,
 		override val name: String? = null,
