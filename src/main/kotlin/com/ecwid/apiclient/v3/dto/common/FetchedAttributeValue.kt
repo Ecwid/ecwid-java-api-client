@@ -11,6 +11,7 @@ interface FetchedAttributeValue {
 	val name: String?
 	val type: AttributeType?
 	val value: String?
+	val valueTranslated: LocalizedValueMap?
 	val show: AttributeValueLocation?
 
 	fun toProductAttribute() = FetchedProduct.AttributeValue(
@@ -18,6 +19,7 @@ interface FetchedAttributeValue {
 		name = name,
 		type = type,
 		value = value,
+		valueTranslated = valueTranslated,
 		show = show,
 	)
 
@@ -26,6 +28,7 @@ interface FetchedAttributeValue {
 		name = name,
 		type = type,
 		value = value,
+		valueTranslated = valueTranslated,
 		show = show,
 	)
 
@@ -34,6 +37,7 @@ interface FetchedAttributeValue {
 		name = name,
 		type = type,
 		value = value,
+		valueTranslated = valueTranslated,
 		show = show,
 	)
 

@@ -45,7 +45,8 @@ fun FetchedVariation.WholesalePrice.toUpdated() = UpdatedVariation.WholesalePric
 fun FetchedVariation.AttributeValue.toUpdated() = UpdatedVariation.AttributeValue(
 	id = id,
 	alias = type?.toAttributeValueAlias(),
-	value = value
+	value = value,
+	valueTranslated = valueTranslated,
 )
 
 fun FetchedVariation.Option.toUpdated() = UpdatedVariation.Option(

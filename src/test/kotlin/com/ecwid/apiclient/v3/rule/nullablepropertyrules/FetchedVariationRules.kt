@@ -38,6 +38,7 @@ val fetchedVariationTypeNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	IgnoreNullable(FetchedVariation.AttributeValue::show),
 	IgnoreNullable(FetchedVariation.AttributeValue::type),
 	IgnoreNullable(FetchedVariation.AttributeValue::value),
+	IgnoreNullable(FetchedVariation.AttributeValue::valueTranslated),
 	AllowNullable(FetchedVariation.BorderInfo::homogeneity),
 	AllowNullable(FetchedVariation.BorderInfo::dominatingColor),
 	AllowNullable(FetchedVariation.Color::alpha),

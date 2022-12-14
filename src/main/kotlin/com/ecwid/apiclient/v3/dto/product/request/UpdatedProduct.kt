@@ -278,49 +278,56 @@ data class UpdatedProduct(
 		val enabledMethods: List<String>? = null
 	)
 
-	data class AttributeValue internal constructor(
+	data class AttributeValue(
 		override val id: Int? = null,
 		override val alias: AttributeValueAlias? = null,
 		override val name: String? = null,
-		override val value: String? = null
+		override val value: String? = null,
+		override val valueTranslated: LocalizedValueMap? = null,
 	) : UpdatedAttributeValue {
 
 		companion object {
 
-			fun createBrandAttributeValue(value: String) = AttributeValue(
+			fun createBrandAttributeValue(value: String, valueTranslated: LocalizedValueMap? = null) = AttributeValue(
 				id = null,
 				alias = AttributeValueAlias.BRAND,
-				value = value
+				value = value,
+				valueTranslated = valueTranslated,
 			)
 
-			fun createUpcAttributeValue(value: String) = AttributeValue(
+			fun createUpcAttributeValue(value: String, valueTranslated: LocalizedValueMap? = null) = AttributeValue(
 				id = null,
 				alias = AttributeValueAlias.UPC,
-				value = value
+				value = value,
+				valueTranslated = valueTranslated,
 			)
 
-			fun createPricePerUnitAttributeValue(value: String) = AttributeValue(
+			fun createPricePerUnitAttributeValue(value: String, valueTranslated: LocalizedValueMap? = null) = AttributeValue(
 				id = null,
 				alias = AttributeValueAlias.PRICE_PER_UNIT,
-				value = value
+				value = value,
+				valueTranslated = valueTranslated,
 			)
 
-			fun createUnitsInProductAttributeValue(value: String) = AttributeValue(
+			fun createUnitsInProductAttributeValue(value: String, valueTranslated: LocalizedValueMap? = null) = AttributeValue(
 				id = null,
 				alias = AttributeValueAlias.UNITS_IN_PRODUCT,
-				value = value
+				value = value,
+				valueTranslated = valueTranslated,
 			)
 
 			@Suppress("unused")
-			fun createAttributeValue(productAttributeId: Int, value: String) = AttributeValue(
+			fun createAttributeValue(productAttributeId: Int, value: String, valueTranslated: LocalizedValueMap? = null) = AttributeValue(
 				id = productAttributeId,
-				value = value
+				value = value,
+				valueTranslated = valueTranslated,
 			)
 
 			@Suppress("unused")
-			fun createAttributeValue(name: String, value: String) = AttributeValue(
+			fun createAttributeValue(name: String, value: String, valueTranslated: LocalizedValueMap? = null) = AttributeValue(
 				name = name,
-				value = value
+				value = value,
+				valueTranslated = valueTranslated,
 			)
 		}
 	}

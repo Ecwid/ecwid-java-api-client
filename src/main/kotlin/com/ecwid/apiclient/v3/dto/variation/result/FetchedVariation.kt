@@ -58,6 +58,7 @@ data class FetchedVariation(
 		override val name: String? = null,
 		override val type: AttributeType? = null,
 		override val value: String? = null,
+		override val valueTranslated: LocalizedValueMap? = null,
 		override val show: AttributeValueLocation? = null
 	) : FetchedAttributeValue
 
