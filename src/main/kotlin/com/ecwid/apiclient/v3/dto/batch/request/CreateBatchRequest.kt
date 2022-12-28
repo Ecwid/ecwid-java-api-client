@@ -34,21 +34,17 @@ data class CreateBatchRequest(
 	val stopOnFirstFailure: Boolean = true,
 	val allowParallelMode: Boolean = false,
 	val deduplicationKey: UUID = UUID.randomUUID(),
-
-	@Deprecated("Prefer using named arguments")
-	val extraParams: Map<String, String> = emptyMap(),
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 		pathSegments = listOf(
 			"batch"
 		),
-		params = buildMap {
-			put("allowParallelMode", allowParallelMode.toString())
-			putAll(extraParams) // has precedence over allowParallelMode to keep backward compatibility
-			put("stopOnFirstFailure", stopOnFirstFailure.toString())
-			put("deduplicationKey", deduplicationKey.toString())
-		},
+		params = mapOf(
+			"stopOnFirstFailure" to stopOnFirstFailure.toString(),
+			"allowParallelMode" to allowParallelMode.toString(),
+			"deduplicationKey" to deduplicationKey.toString(),
+		),
 		httpBody = HttpBody.JsonBody(
 			obj = requests.map(SingleBatchRequest.Companion::create)
 		)
