@@ -6,6 +6,7 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.util.buildEndpointPath
 import com.ecwid.apiclient.v3.util.buildQueryString
+import java.util.UUID
 
 data class CreateBatchRequestWithIds(
 	val requests: Map<String, ApiRequest> = emptyMap(),
@@ -31,7 +32,8 @@ data class CreateBatchRequestWithIds(
 data class CreateBatchRequest(
 	val requests: List<ApiRequest> = emptyList(),
 	val stopOnFirstFailure: Boolean = true,
-	val extraParams: Map<String, String> = emptyMap()
+	val deduplicationKey: UUID = UUID.randomUUID(),
+	val extraParams: Map<String, String> = emptyMap(),
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
@@ -39,7 +41,8 @@ data class CreateBatchRequest(
 			"batch"
 		),
 		params = extraParams + mapOf(
-			"stopOnFirstFailure" to stopOnFirstFailure.toString()
+			"stopOnFirstFailure" to stopOnFirstFailure.toString(),
+			"deduplicationKey" to deduplicationKey.toString(),
 		),
 		httpBody = HttpBody.JsonBody(
 			obj = requests.map(SingleBatchRequest.Companion::create)
