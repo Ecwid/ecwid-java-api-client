@@ -6,19 +6,23 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.util.buildEndpointPath
 import com.ecwid.apiclient.v3.util.buildQueryString
+import java.util.UUID
 
 data class CreateBatchRequestWithIds(
 	val requests: Map<String, ApiRequest> = emptyMap(),
 	val stopOnFirstFailure: Boolean = true,
-	val extraParams: Map<String, String> = emptyMap()
+	val allowParallelMode: Boolean = false,
+	val deduplicationKey: UUID = UUID.randomUUID(),
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 		pathSegments = listOf(
 			"batch"
 		),
-		params = extraParams + mapOf(
-			"stopOnFirstFailure" to stopOnFirstFailure.toString()
+		params = mapOf(
+			"stopOnFirstFailure" to stopOnFirstFailure.toString(),
+			"allowParallelMode" to allowParallelMode.toString(),
+			"deduplicationKey" to deduplicationKey.toString(),
 		),
 		httpBody = HttpBody.JsonBody(
 			obj = requests.map { (id, request) ->
@@ -31,15 +35,18 @@ data class CreateBatchRequestWithIds(
 data class CreateBatchRequest(
 	val requests: List<ApiRequest> = emptyList(),
 	val stopOnFirstFailure: Boolean = true,
-	val extraParams: Map<String, String> = emptyMap()
+	val allowParallelMode: Boolean = false,
+	val deduplicationKey: UUID = UUID.randomUUID(),
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 		pathSegments = listOf(
 			"batch"
 		),
-		params = extraParams + mapOf(
-			"stopOnFirstFailure" to stopOnFirstFailure.toString()
+		params = mapOf(
+			"stopOnFirstFailure" to stopOnFirstFailure.toString(),
+			"allowParallelMode" to allowParallelMode.toString(),
+			"deduplicationKey" to deduplicationKey.toString(),
 		),
 		httpBody = HttpBody.JsonBody(
 			obj = requests.map(SingleBatchRequest.Companion::create)
