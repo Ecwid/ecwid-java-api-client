@@ -157,7 +157,7 @@ data class FetchedStoreProfile(
 		val currency: String? = null,
 		val currencyPrefix: String? = null,
 		val currencySuffix: String? = null,
-		val currencyPrecision: String? = null,
+		val currencyPrecision: Int? = null,
 		val currencyGroupSeparator: String? = null,
 		val currencyDecimalSeparator: String? = null,
 		val currencyTruncateZeroFractional: Boolean? = null,
