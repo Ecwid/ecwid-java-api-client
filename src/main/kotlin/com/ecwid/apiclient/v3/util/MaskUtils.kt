@@ -17,3 +17,11 @@ internal fun maskApiToken(apiToken: String): String {
 	}
 	return ""
 }
+
+internal fun maskAppSecretKey(secretKey: String): String {
+	return if (secretKey.length > 2 * TOKEN_UNMASKED_LENGTH) {
+		secretKey.take(TOKEN_UNMASKED_LENGTH) + "***" + secretKey.takeLast(minOf(TOKEN_UNMASKED_LENGTH, secretKey.length - 2 * TOKEN_UNMASKED_LENGTH))
+	} else {
+		"***"
+	}
+}
