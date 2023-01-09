@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.util.maskApiToken
+import com.ecwid.apiclient.v3.util.maskAppSecretKey
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -31,5 +32,13 @@ class MaskUtilsUnitTest {
 		assertEquals("012345", maskApiToken("012345"))
 		assertEquals("01234", maskApiToken("01234"))
 		assertEquals("012", maskApiToken("012"))
+	}
+
+	@Test
+	fun testAppSecretKey() {
+		assertEquals("***", maskAppSecretKey("appSec"))
+		assertEquals("app***Key", maskAppSecretKey("appSecretKey"))
+		assertEquals("app***re", maskAppSecretKey("appSecre"))
+		assertEquals("app***r", maskAppSecretKey("appSecr"))
 	}
 }

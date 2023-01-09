@@ -13,6 +13,7 @@ import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
 import com.ecwid.apiclient.v3.util.buildEndpointPath
 import com.ecwid.apiclient.v3.util.maskApiToken
+import com.ecwid.apiclient.v3.util.maskAppSecretKey
 import java.net.URI
 import java.util.*
 import java.util.logging.Level
@@ -175,11 +176,10 @@ class ApiClientHelper private constructor(
 	internal fun logRequestIfNeeded(requestId: String, httpRequest: HttpRequest, httpBody: HttpBody) {
 		if (!loggingSettings.logRequest) return
 
-		val params = if (loggingSettings.maskRequestApiToken) {
-			httpRequest.params.withMaskedApiTokenParam()
-		} else {
-			httpRequest.params
-		}
+		val params = httpRequest.params.withMaskedApiParams(
+			loggingSettings.maskRequestApiToken,
+			loggingSettings.maskRequestApiSecretKey
+		)
 
 		logEntry(
 			prefix = "Request",
@@ -378,12 +378,20 @@ internal fun Map<String, String>.withAppCredentialsParams(appCredentials: ApiApp
 		.toMap()
 }
 
-private fun Map<String, String>.withMaskedApiTokenParam(): Map<String, String> {
+private fun Map<String, String>.withMaskedApiParams(maskRequestApiToken: Boolean, maskRequestApiSecretKey: Boolean): Map<String, String> {
 	return toMutableMap()
 		.apply {
-			val apiTokenParam = get(API_TOKEN_PARAM_NAME)
-			if (apiTokenParam != null) {
-				put(API_TOKEN_PARAM_NAME, maskApiToken(apiTokenParam))
+			if (maskRequestApiToken) {
+				val apiTokenParam = get(API_TOKEN_PARAM_NAME)
+				if (apiTokenParam != null) {
+					put(API_TOKEN_PARAM_NAME, maskApiToken(apiTokenParam))
+				}
+			}
+			if (maskRequestApiSecretKey) {
+				val apiSecretKeyParam = get(APP_CLIENT_SECRET_PARAM_NAME)
+				if (apiSecretKeyParam != null) {
+					put(APP_CLIENT_SECRET_PARAM_NAME, maskAppSecretKey(apiSecretKeyParam))
+				}
 			}
 		}
 		.toMap()
