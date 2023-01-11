@@ -388,6 +388,7 @@ data class FetchedStoreProfile(
 		val paymentOptions: List<PaymentOptionInfo>? = null,
 		val applePay: ApplePay? = null,
 		val applePayOptions: List<ApplePay> = emptyList(),
+		val countryCode: String? = null,
 	)
 
 	data class PaymentOptionInfo(
