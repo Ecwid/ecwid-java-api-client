@@ -230,6 +230,7 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.OrderInvoiceSettings::invoiceLogoUrl),
 	IgnoreNullable(FetchedStoreProfile.PaymentInfo::applePay),
 	IgnoreNullable(FetchedStoreProfile.PaymentInfo::paymentOptions),
+	AllowNullable(FetchedStoreProfile.PaymentInfo::countryCode),
 	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::appClientId),
 	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::checkoutDescription),
 	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::checkoutTitle),
