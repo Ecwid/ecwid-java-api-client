@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.converter.toUpdated
+import com.ecwid.apiclient.v3.dto.customer.enums.CommercialRelationshipScheme
 import com.ecwid.apiclient.v3.dto.customer.request.*
 import com.ecwid.apiclient.v3.dto.customer.request.CustomersSearchRequest.SortOrder
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
@@ -380,6 +381,7 @@ private fun generateTestCustomerForCreate(customerGroupId: Int?): UpdatedCustome
 		taxExempt = randomBoolean(),
 		acceptMarketing = randomBoolean(),
 		lang = "en",
+		commercialRelationshipScheme = CommercialRelationshipScheme.b2b,
 	)
 }
 
@@ -403,6 +405,7 @@ private fun generateTestCustomerForUpdate(
 		taxExempt = randomBoolean(),
 		acceptMarketing = randomBoolean(),
 		lang = "ru",
+		commercialRelationshipScheme = CommercialRelationshipScheme.b2c,
 	)
 }
 

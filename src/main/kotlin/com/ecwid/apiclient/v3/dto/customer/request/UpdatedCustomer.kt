@@ -2,7 +2,9 @@ package com.ecwid.apiclient.v3.dto.customer.request
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.customer.enums.CommercialRelationshipScheme
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
+import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 
 data class UpdatedCustomer(
 	val email: String = "",
@@ -15,6 +17,9 @@ data class UpdatedCustomer(
 	val taxExempt: Boolean? = null,
 	val acceptMarketing: Boolean? = null,
 	val lang: String? = null,
+
+	@JsonFieldName("b2b_b2c")
+	val commercialRelationshipScheme: CommercialRelationshipScheme? = null,
 ) : ApiUpdatedDTO {
 
 	data class BillingPerson(
