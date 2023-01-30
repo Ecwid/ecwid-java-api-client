@@ -11,6 +11,7 @@ import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
+import com.ecwid.apiclient.v3.metric.RequestTimeMetric
 import com.ecwid.apiclient.v3.util.buildEndpointPath
 import com.ecwid.apiclient.v3.util.maskApiToken
 import com.ecwid.apiclient.v3.util.maskAppSecretKey
@@ -77,11 +78,19 @@ class ApiClientHelper private constructor(
 
 		val startTime = Date().time
 		val httpResponse = httpTransport.makeHttpRequest(httpRequest)
+		val requestTimeMs = Date().time - startTime
+
+		RequestTimeMetric.observeRequest(
+			apiRequest = request,
+			requestInfo = requestInfo,
+			requestTimeMs = requestTimeMs,
+			httpResponse = httpResponse,
+		)
 
 		return processHttpResponse(
 			httpResponse = httpResponse,
 			requestId = requestId,
-			requestTime = Date().time - startTime,
+			requestTime = requestTimeMs,
 			responseParser = responseParser
 		)
 	}
