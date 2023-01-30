@@ -12,6 +12,7 @@ import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
 import com.ecwid.apiclient.v3.metric.RequestTimeMetric
+import com.ecwid.apiclient.v3.metric.ResponseSizeMetric
 import com.ecwid.apiclient.v3.util.buildEndpointPath
 import com.ecwid.apiclient.v3.util.maskApiToken
 import com.ecwid.apiclient.v3.util.maskAppSecretKey
@@ -84,6 +85,11 @@ class ApiClientHelper private constructor(
 			apiRequest = request,
 			requestInfo = requestInfo,
 			requestTimeMs = requestTimeMs,
+			httpResponse = httpResponse,
+		)
+		ResponseSizeMetric.observeResponse(
+			apiRequest = request,
+			requestInfo = requestInfo,
 			httpResponse = httpResponse,
 		)
 
