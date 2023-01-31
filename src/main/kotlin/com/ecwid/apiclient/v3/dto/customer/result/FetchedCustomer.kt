@@ -23,7 +23,7 @@ data class FetchedCustomer(
 	val lang: String? = null,
 
 	@JsonFieldName("b2b_b2c")
-	val commercialRelationshipScheme: CommercialRelationshipScheme? = null,
+	val commercialRelationshipScheme: CommercialRelationshipScheme = CommercialRelationshipScheme.b2c,
 ) : ApiFetchedDTO {
 
 	data class BillingPerson(
