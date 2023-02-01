@@ -27,6 +27,8 @@ data class OrdersSearchRequest(
 	val paymentStatus: OrderPaymentStatus? = null,
 	val fulfillmentStatus: OrderFulfillmentStatus? = null,
 	val subscriptionIds: List<Long>? = null,
+	val pickupTimeFrom: Date? = null,
+	val pickupTimeTo: Date? = null,
 	val offset: Int = 0,
 	val limit: Int = 100
 ) : ApiRequest {
@@ -59,6 +61,8 @@ data class OrdersSearchRequest(
 			request.paymentStatus?.let { put("paymentStatus", it.name) }
 			request.fulfillmentStatus?.let { put("fulfillmentStatus", it.name) }
 			request.subscriptionIds?.let { put("subscriptionId", it.joinToString(",")) }
+			request.pickupTimeFrom?.let { put("pickupTimeFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
+			request.pickupTimeTo?.let { put("pickupTimeTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			put("offset", request.offset.toString())
 			put("limit", request.limit.toString())
 		}.toMap()
