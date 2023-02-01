@@ -23,5 +23,7 @@ val ordersSearchRequestRequestNullablePropertyRules: List<NullablePropertyRule<*
 	AllowNullable(OrdersSearchRequest::updatedFrom),
 	AllowNullable(OrdersSearchRequest::updatedTo),
 	AllowNullable(OrdersSearchRequest::vendorOrderNumber),
-	AllowNullable(OrdersSearchRequest::subscriptionIds)
+	AllowNullable(OrdersSearchRequest::subscriptionIds),
+	AllowNullable(OrdersSearchRequest::pickupTimeFrom),
+	AllowNullable(OrdersSearchRequest::pickupTimeTo),
 )
