@@ -40,7 +40,7 @@ object RequestSizeMetric {
 	) {
 		metric
 			.labels(
-				apiRequest.buildMetricName(),
+				apiRequest.javaClass.simpleName,
 				requestInfo.getFirstPathSegment(),
 				requestInfo.method.name,
 				extractStatusFromHttpResponse(httpResponse),
