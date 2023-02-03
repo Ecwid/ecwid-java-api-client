@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.httptransport.impl
 
+import com.ecwid.apiclient.v3.metric.RequestRetrySleepMetric
 import org.apache.http.HttpResponse
 import org.apache.http.client.HttpClient
 import org.apache.http.client.ResponseHandler
@@ -82,6 +83,7 @@ open class RateLimitedHttpClientWrapper(
 		for (second in 1..waitInterval) {
 			TimeUnit.SECONDS.sleep(1)
 			onEverySecondOfWaiting(second)
+			RequestRetrySleepMetric.inc()
 		}
 	}
 }
