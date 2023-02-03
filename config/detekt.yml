@@ -32,6 +32,12 @@ style:
     excludes: [ '**/test/**' ]
   WildcardImport:
     active: false
+  MagicNumber:
+    excludes: [
+      '**/test/**',
+      '**/com/ecwid/apiclient/v3/metric/**',
+    ]
+
 
 # ktlint rules
 formatting:
@@ -53,3 +59,10 @@ formatting:
     active: false # Will be enabled after ktlint will have support of indent_style = tab
   Indentation:
     active: false # Will be enabled after ktlint will have support of indent_style = tab
+
+exceptions:
+  TooGenericExceptionCaught:
+    excludes: [
+      '**/test/**',
+      '**/com/ecwid/apiclient/v3/metric/**',
+    ]

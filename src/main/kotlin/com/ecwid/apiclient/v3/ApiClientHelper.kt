@@ -11,6 +11,9 @@ import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
+import com.ecwid.apiclient.v3.metric.RequestSizeMetric
+import com.ecwid.apiclient.v3.metric.RequestTimeMetric
+import com.ecwid.apiclient.v3.metric.ResponseSizeMetric
 import com.ecwid.apiclient.v3.util.buildEndpointPath
 import com.ecwid.apiclient.v3.util.maskApiToken
 import com.ecwid.apiclient.v3.util.maskAppSecretKey
@@ -72,16 +75,36 @@ class ApiClientHelper private constructor(
 		val requestId = generateRequestId()
 
 		val requestInfo = request.toRequestInfo()
-		val httpRequest = requestInfo.toHttpRequest(requestId)
+		val originalHttpRequest = requestInfo.toHttpRequest(requestId)
+		val (httpRequest, requestSizeCounter) = RequestSizeMetric.makeHttpRequestCountable(originalHttpRequest)
 		logRequestIfNeeded(requestId, httpRequest, requestInfo.httpBody)
 
 		val startTime = Date().time
 		val httpResponse = httpTransport.makeHttpRequest(httpRequest)
+		val requestTimeMs = Date().time - startTime
+
+		RequestTimeMetric.observeRequest(
+			apiRequest = request,
+			requestInfo = requestInfo,
+			requestTimeMs = requestTimeMs,
+			httpResponse = httpResponse,
+		)
+		RequestSizeMetric.observeRequest(
+			apiRequest = request,
+			requestInfo = requestInfo,
+			size = requestSizeCounter,
+			httpResponse = httpResponse,
+		)
+		ResponseSizeMetric.observeResponse(
+			apiRequest = request,
+			requestInfo = requestInfo,
+			httpResponse = httpResponse,
+		)
 
 		return processHttpResponse(
 			httpResponse = httpResponse,
 			requestId = requestId,
-			requestTime = Date().time - startTime,
+			requestTime = requestTimeMs,
 			responseParser = responseParser
 		)
 	}
