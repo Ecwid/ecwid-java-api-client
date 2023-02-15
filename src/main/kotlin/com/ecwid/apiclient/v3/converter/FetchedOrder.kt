@@ -81,7 +81,8 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 		pricesIncludeTax = pricesIncludeTax,
 		externalOrderData = externalOrderData?.toUpdated(),
 
-		orderExtraFields = orderExtraFields?.map(FetchedOrder.ExtraFieldsInfo::toUpdated)
+		orderExtraFields = orderExtraFields?.map(FetchedOrder.ExtraFieldsInfo::toUpdated),
+		paymentReference = paymentReference,
 	)
 }
 

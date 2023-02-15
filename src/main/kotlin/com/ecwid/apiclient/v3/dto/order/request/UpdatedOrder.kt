@@ -85,7 +85,8 @@ data class UpdatedOrder(
 	val disableAllCustomerNotifications: Boolean? = null,
 	val externalOrderData: ExternalOrderData? = null,
 
-	val orderExtraFields: List<OrderExtraFields>? = null
+	val orderExtraFields: List<OrderExtraFields>? = null,
+	val paymentReference: String? = null,
 
 ) : ApiUpdatedDTO {
 

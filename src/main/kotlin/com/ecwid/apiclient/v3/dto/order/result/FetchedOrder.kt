@@ -106,7 +106,8 @@ data class FetchedOrder(
 
 	val pricesIncludeTax: Boolean? = null,
 	val disableAllCustomerNotifications: Boolean? = null,
-	val externalOrderData: ExternalOrderData? = null
+	val externalOrderData: ExternalOrderData? = null,
+	val paymentReference: String? = null,
 
 ) : ApiFetchedDTO {
 
