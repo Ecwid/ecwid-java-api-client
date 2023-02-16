@@ -26,4 +26,5 @@ val ordersSearchRequestRequestNullablePropertyRules: List<NullablePropertyRule<*
 	AllowNullable(OrdersSearchRequest::subscriptionIds),
 	AllowNullable(OrdersSearchRequest::pickupTimeFrom),
 	AllowNullable(OrdersSearchRequest::pickupTimeTo),
+	AllowNullable(OrdersSearchRequest::paymentReference),
 )
