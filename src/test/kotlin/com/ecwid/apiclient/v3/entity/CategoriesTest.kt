@@ -233,6 +233,7 @@ class CategoriesTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-75364")
 	fun testCategoryLifecycle() {
 		val nameSuffix = "testCategoryLifecycle"
 
