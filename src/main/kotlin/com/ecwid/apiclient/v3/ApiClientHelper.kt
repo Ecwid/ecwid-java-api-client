@@ -27,7 +27,6 @@ const val APP_CLIENT_SECRET_PARAM_NAME = "appSecretKey"
 private const val REQUEST_ID_HEADER_NAME = "X-Ecwid-Api-Request-Id"
 
 private const val REQUEST_ID_LENGTH = 8
-private const val MAX_LOG_ENTRY_SECTION_LENGTH = 200
 private val REQUEST_ID_CHARACTERS = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 
 class ApiClientHelper private constructor(
@@ -204,6 +203,7 @@ class ApiClientHelper private constructor(
 			prefix = "Request",
 			logLevel = Level.INFO,
 			requestId = requestId,
+			maxSectionLength = loggingSettings.maxLogSectionLength,
 			sections = mutableListOf<String>().apply {
 				add("${httpRequest.method} ${httpRequest.uri}")
 				if (loggingSettings.logRequestParams) {
@@ -212,7 +212,7 @@ class ApiClientHelper private constructor(
 				if (loggingSettings.logRequestBody) {
 					httpBody.asString()?.maskLogString(securePatterns)?.let(::add)
 				}
-			}
+			},
 		)
 	}
 
@@ -266,6 +266,7 @@ class ApiClientHelper private constructor(
 			prefix = "Response",
 			logLevel = Level.INFO,
 			requestId = requestId,
+			maxSectionLength = loggingSettings.maxLogSectionLength,
 			sections = mutableListOf<String>().apply {
 				add("OK")
 				add("$requestTime ms")
@@ -287,6 +288,7 @@ class ApiClientHelper private constructor(
 			prefix = "Response",
 			logLevel = Level.INFO,
 			requestId = requestId,
+			maxSectionLength = loggingSettings.maxLogSectionLength,
 			sections = mutableListOf<String>().apply {
 				add("ERR $httpStatusCode")
 				add("$requestTime ms")
@@ -308,6 +310,7 @@ class ApiClientHelper private constructor(
 			prefix = "Response",
 			logLevel = Level.WARNING,
 			requestId = requestId,
+			maxSectionLength = loggingSettings.maxLogSectionLength,
 			sections = mutableListOf<String>().apply {
 				add("ERR")
 				add("$requestTime ms")
@@ -330,6 +333,7 @@ class ApiClientHelper private constructor(
 			prefix = "Response",
 			logLevel = Level.WARNING,
 			requestId = requestId,
+			maxSectionLength = loggingSettings.maxLogSectionLength,
 			sections = mutableListOf<String>().apply {
 				add("ERR")
 				add("$requestTime ms")
@@ -345,9 +349,9 @@ class ApiClientHelper private constructor(
 		prefix: String,
 		logLevel: Level?,
 		requestId: String,
+		maxSectionLength: Int,
 		sections: List<String>,
 		exception: Exception? = null,
-		maxSectionLength: Int = MAX_LOG_ENTRY_SECTION_LENGTH
 	) {
 		val sectionsString = sections.joinToString(separator = "; ") {
 			if (it.length > maxSectionLength) it.take(maxSectionLength) + "…" else it
