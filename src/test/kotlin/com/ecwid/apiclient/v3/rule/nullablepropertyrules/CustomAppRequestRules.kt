@@ -119,6 +119,7 @@ val customAppRequestNullablePropertyRules: List<NullablePropertyRule<*, *>> = li
 	AllowNullable(CustomAppRequest.OrderItem::priceInProductList),
 	AllowNullable(CustomAppRequest.OrderItem::productClassId),
 	AllowNullable(CustomAppRequest.OrderItem::productId),
+	AllowNullable(CustomAppRequest.OrderItem::variationId),
 	AllowNullable(CustomAppRequest.OrderItem::productPrice),
 	AllowNullable(CustomAppRequest.OrderItem::quantity),
 	AllowNullable(CustomAppRequest.OrderItem::relatedProducts),

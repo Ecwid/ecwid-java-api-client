@@ -54,6 +54,7 @@ data class CustomAppRequest(
 		val price: Double? = null,
 		val amount: Int? = null,
 		val productId: Int? = null,
+		val variationId: Long? = null,
 		val name: String? = null,
 		val categoryId: Int? = null,
 		val sku: String? = null,
