@@ -14,18 +14,16 @@ import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
 import com.ecwid.apiclient.v3.metric.RequestSizeMetric
 import com.ecwid.apiclient.v3.metric.RequestTimeMetric
 import com.ecwid.apiclient.v3.metric.ResponseSizeMetric
-import com.ecwid.apiclient.v3.util.buildEndpointPath
-import com.ecwid.apiclient.v3.util.maskApiToken
-import com.ecwid.apiclient.v3.util.maskAppSecretKey
+import com.ecwid.apiclient.v3.util.*
 import java.net.URI
 import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
 import kotlin.random.Random
 
-private const val API_TOKEN_PARAM_NAME = "token"
+const val API_TOKEN_PARAM_NAME = "token"
 private const val APP_CLIENT_ID_PARAM_NAME = "appClientId"
-private const val APP_CLIENT_SECRET_PARAM_NAME = "appSecretKey"
+const val APP_CLIENT_SECRET_PARAM_NAME = "appSecretKey"
 private const val REQUEST_ID_HEADER_NAME = "X-Ecwid-Api-Request-Id"
 
 private const val REQUEST_ID_LENGTH = 8
@@ -197,13 +195,11 @@ class ApiClientHelper private constructor(
 
 	@PublishedApi
 	internal fun logRequestIfNeeded(requestId: String, httpRequest: HttpRequest, httpBody: HttpBody) {
-		if (!loggingSettings.logRequest) return
+		if (!loggingSettings.logRequest) {
+			return
+		}
 
-		val params = httpRequest.params.withMaskedApiParams(
-			loggingSettings.maskRequestApiToken,
-			loggingSettings.maskRequestApiSecretKey
-		)
-
+		val securePatterns = createSecurePatterns(loggingSettings)
 		logEntry(
 			prefix = "Request",
 			logLevel = Level.INFO,
@@ -211,10 +207,10 @@ class ApiClientHelper private constructor(
 			sections = mutableListOf<String>().apply {
 				add("${httpRequest.method} ${httpRequest.uri}")
 				if (loggingSettings.logRequestParams) {
-					add(params.dumpToString())
+					add(httpRequest.params.dumpToString().maskLogString(securePatterns))
 				}
 				if (loggingSettings.logRequestBody) {
-					httpBody.asString()?.let { add(it) }
+					httpBody.asString()?.maskLogString(securePatterns)?.let(::add)
 				}
 			}
 		)
@@ -399,25 +395,6 @@ internal fun Map<String, String>.withAppCredentialsParams(appCredentials: ApiApp
 		.apply {
 			put(APP_CLIENT_ID_PARAM_NAME, appCredentials.clientId)
 			put(APP_CLIENT_SECRET_PARAM_NAME, appCredentials.clientSecret)
-		}
-		.toMap()
-}
-
-private fun Map<String, String>.withMaskedApiParams(maskRequestApiToken: Boolean, maskRequestApiSecretKey: Boolean): Map<String, String> {
-	return toMutableMap()
-		.apply {
-			if (maskRequestApiToken) {
-				val apiTokenParam = get(API_TOKEN_PARAM_NAME)
-				if (apiTokenParam != null) {
-					put(API_TOKEN_PARAM_NAME, maskApiToken(apiTokenParam))
-				}
-			}
-			if (maskRequestApiSecretKey) {
-				val apiSecretKeyParam = get(APP_CLIENT_SECRET_PARAM_NAME)
-				if (apiSecretKeyParam != null) {
-					put(APP_CLIENT_SECRET_PARAM_NAME, maskAppSecretKey(apiSecretKeyParam))
-				}
-			}
 		}
 		.toMap()
 }
