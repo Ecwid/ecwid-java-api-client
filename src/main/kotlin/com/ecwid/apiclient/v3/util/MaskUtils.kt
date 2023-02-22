@@ -3,6 +3,8 @@ package com.ecwid.apiclient.v3.util
 import kotlin.math.max
 import kotlin.math.min
 
+private const val FULL_MASKING_THRESHOLD = 4
+
 data class SecurePattern(
 	val regex: Regex,
 	val unmaskedLength: Int
@@ -26,7 +28,7 @@ fun String?.maskSensitive(unmaskedLength: Int): String {
 		return ""
 	}
 
-	if (length - unmaskedLength < 4) {
+	if (length - unmaskedLength < FULL_MASKING_THRESHOLD) {
 		return "***"
 	}
 
