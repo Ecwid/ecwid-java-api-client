@@ -1,8 +1,6 @@
 package com.ecwid.apiclient.v3
 
-import com.ecwid.apiclient.v3.util.maskApiToken
-import com.ecwid.apiclient.v3.util.maskAppSecretKey
-import com.ecwid.apiclient.v3.util.maskSensitive
+import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -41,6 +39,21 @@ class MaskUtilsUnitTest {
 		assertEquals("app***Key", maskAppSecretKey("appSecretKey"))
 		assertEquals("app***re", maskAppSecretKey("appSecre"))
 		assertEquals("app***r", maskAppSecretKey("appSecr"))
+	}
+
+	@Test
+	fun testMaskLogString() {
+		val logString =
+			"token=secret_RandomToken0jwOrgYc5sSKBYcvO0DbP; PasswordCredentials(email=test@example.com, password=123456)"
+		val securePatterns = listOf(
+			SecurePattern(Regex("token=(?:secret_|public_|)([^;,)]+)"), 6),
+			SecurePattern(Regex("email=([^;,)]+)"), 4),
+			SecurePattern(Regex("password=([^;,)]+)"), 2),
+		)
+
+		val maskedLogString = maskLogString(logString, securePatterns)
+		val expectedMaskedLogString = "token=secret_Ran***DbP; PasswordCredentials(email=te***om, password=1***6)"
+		assertEquals(expectedMaskedLogString, maskedLogString)
 	}
 
 	@Test

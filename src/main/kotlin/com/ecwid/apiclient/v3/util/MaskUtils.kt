@@ -34,6 +34,24 @@ internal fun maskAppSecretKey(secretKey: String): String {
 	}
 }
 
+data class SecurePattern(
+	val regex: Regex,
+	val unmaskedLength: Int
+)
+
+fun maskLogString(s: String, securePatterns: List<SecurePattern>): String {
+	var result = s
+	for ((regex, unmaskedLength) in securePatterns) {
+		result = result.replace(regex) { matchResult ->
+			val patternValue = matchResult.groupValues[0]
+			val secureValue = matchResult.groupValues[1]
+			val maskedSecureValue = maskSensitive(secureValue, unmaskedLength)
+			return@replace patternValue.replace(secureValue, maskedSecureValue)
+		}
+	}
+	return result
+}
+
 fun maskSensitive(sensitiveData: String?, unmaskedLength: Int): String {
 	if (sensitiveData == null) {
 		return ""
