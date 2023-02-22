@@ -59,7 +59,8 @@ abstract class BaseEntityTest {
 			loggingSettings = LoggingSettings().copy(
 				logRequest = true,
 				logRequestBody = true,
-				logSuccessfulResponseBody = true
+				logSuccessfulResponseBody = true,
+				maxLogSectionLength = 100 * 1024,
 			),
 			httpTransport = ApacheCommonsHttpClientTransport(defaultHeaders = emptyList()),
 			jsonTransformerProvider = GsonTransformerProvider()

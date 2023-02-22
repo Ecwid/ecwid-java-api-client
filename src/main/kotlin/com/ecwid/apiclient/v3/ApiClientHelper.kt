@@ -14,22 +14,19 @@ import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
 import com.ecwid.apiclient.v3.metric.RequestSizeMetric
 import com.ecwid.apiclient.v3.metric.RequestTimeMetric
 import com.ecwid.apiclient.v3.metric.ResponseSizeMetric
-import com.ecwid.apiclient.v3.util.buildEndpointPath
-import com.ecwid.apiclient.v3.util.maskApiToken
-import com.ecwid.apiclient.v3.util.maskAppSecretKey
+import com.ecwid.apiclient.v3.util.*
 import java.net.URI
 import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
 import kotlin.random.Random
 
-private const val API_TOKEN_PARAM_NAME = "token"
+const val API_TOKEN_PARAM_NAME = "token"
 private const val APP_CLIENT_ID_PARAM_NAME = "appClientId"
-private const val APP_CLIENT_SECRET_PARAM_NAME = "appSecretKey"
+const val APP_CLIENT_SECRET_PARAM_NAME = "appSecretKey"
 private const val REQUEST_ID_HEADER_NAME = "X-Ecwid-Api-Request-Id"
 
 private const val REQUEST_ID_LENGTH = 8
-private const val MAX_LOG_ENTRY_SECTION_LENGTH = 200
 private val REQUEST_ID_CHARACTERS = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 
 class ApiClientHelper private constructor(
@@ -197,24 +194,25 @@ class ApiClientHelper private constructor(
 
 	@PublishedApi
 	internal fun logRequestIfNeeded(requestId: String, httpRequest: HttpRequest, httpBody: HttpBody) {
-		if (!loggingSettings.logRequest) return
+		if (!loggingSettings.logRequest) {
+			return
+		}
 
-		val params = httpRequest.params.withMaskedApiParams(
-			loggingSettings.maskRequestApiToken,
-			loggingSettings.maskRequestApiSecretKey
-		)
-
+		val securePatterns = createSecurePatterns(loggingSettings)
 		logEntry(
 			prefix = "Request",
 			logLevel = Level.INFO,
 			requestId = requestId,
+			maxSectionLength = loggingSettings.maxLogSectionLength,
 			sections = mutableListOf<String>().apply {
 				add("${httpRequest.method} ${httpRequest.uri}")
-				add(params.dumpToString())
-				if (loggingSettings.logRequestBody) {
-					httpBody.asString()?.let { add(it) }
+				if (loggingSettings.logRequestParams) {
+					add(httpRequest.params.dumpToString().maskLogString(securePatterns))
 				}
-			}
+				if (loggingSettings.logRequestBody) {
+					httpBody.asString()?.maskLogString(securePatterns)?.let(::add)
+				}
+			},
 		)
 	}
 
@@ -263,16 +261,21 @@ class ApiClientHelper private constructor(
 	}
 
 	private fun logSuccessfulResponseIfNeeded(requestId: String, requestTime: Long, getResponseBody: () -> String) {
-		if (!loggingSettings.logResponse) return
+		if (!loggingSettings.logResponse) {
+			return
+		}
+
+		val securePatterns = createSecurePatterns(loggingSettings)
 		logEntry(
 			prefix = "Response",
 			logLevel = Level.INFO,
 			requestId = requestId,
+			maxSectionLength = loggingSettings.maxLogSectionLength,
 			sections = mutableListOf<String>().apply {
 				add("OK")
 				add("$requestTime ms")
 				if (loggingSettings.logSuccessfulResponseBody) {
-					add(getResponseBody.invoke())
+					add(getResponseBody.invoke().maskLogString(securePatterns))
 				}
 			}
 		)
@@ -284,11 +287,15 @@ class ApiClientHelper private constructor(
 		httpStatusCode: Int,
 		responseBody: String
 	) {
-		if (!loggingSettings.logResponse) return
+		if (!loggingSettings.logResponse) {
+			return
+		}
+
 		logEntry(
 			prefix = "Response",
 			logLevel = Level.INFO,
 			requestId = requestId,
+			maxSectionLength = loggingSettings.maxLogSectionLength,
 			sections = mutableListOf<String>().apply {
 				add("ERR $httpStatusCode")
 				add("$requestTime ms")
@@ -305,11 +312,15 @@ class ApiClientHelper private constructor(
 		errorMessage: String?,
 		exception: Exception
 	) {
-		if (!loggingSettings.logResponse) return
+		if (!loggingSettings.logResponse) {
+			return
+		}
+
 		logEntry(
 			prefix = "Response",
 			logLevel = Level.WARNING,
 			requestId = requestId,
+			maxSectionLength = loggingSettings.maxLogSectionLength,
 			sections = mutableListOf<String>().apply {
 				add("ERR")
 				add("$requestTime ms")
@@ -327,11 +338,15 @@ class ApiClientHelper private constructor(
 		responseBody: String,
 		exception: Exception
 	) {
-		if (!loggingSettings.logResponse) return
+		if (!loggingSettings.logResponse) {
+			return
+		}
+
 		logEntry(
 			prefix = "Response",
 			logLevel = Level.WARNING,
 			requestId = requestId,
+			maxSectionLength = loggingSettings.maxLogSectionLength,
 			sections = mutableListOf<String>().apply {
 				add("ERR")
 				add("$requestTime ms")
@@ -347,9 +362,9 @@ class ApiClientHelper private constructor(
 		prefix: String,
 		logLevel: Level?,
 		requestId: String,
+		maxSectionLength: Int,
 		sections: List<String>,
 		exception: Exception? = null,
-		maxSectionLength: Int = MAX_LOG_ENTRY_SECTION_LENGTH
 	) {
 		val sectionsString = sections.joinToString(separator = "; ") {
 			if (it.length > maxSectionLength) it.take(maxSectionLength) + "…" else it
@@ -397,25 +412,6 @@ internal fun Map<String, String>.withAppCredentialsParams(appCredentials: ApiApp
 		.apply {
 			put(APP_CLIENT_ID_PARAM_NAME, appCredentials.clientId)
 			put(APP_CLIENT_SECRET_PARAM_NAME, appCredentials.clientSecret)
-		}
-		.toMap()
-}
-
-private fun Map<String, String>.withMaskedApiParams(maskRequestApiToken: Boolean, maskRequestApiSecretKey: Boolean): Map<String, String> {
-	return toMutableMap()
-		.apply {
-			if (maskRequestApiToken) {
-				val apiTokenParam = get(API_TOKEN_PARAM_NAME)
-				if (apiTokenParam != null) {
-					put(API_TOKEN_PARAM_NAME, maskApiToken(apiTokenParam))
-				}
-			}
-			if (maskRequestApiSecretKey) {
-				val apiSecretKeyParam = get(APP_CLIENT_SECRET_PARAM_NAME)
-				if (apiSecretKeyParam != null) {
-					put(APP_CLIENT_SECRET_PARAM_NAME, maskAppSecretKey(apiSecretKeyParam))
-				}
-			}
 		}
 		.toMap()
 }
