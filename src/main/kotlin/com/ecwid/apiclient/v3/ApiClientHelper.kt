@@ -261,7 +261,11 @@ class ApiClientHelper private constructor(
 	}
 
 	private fun logSuccessfulResponseIfNeeded(requestId: String, requestTime: Long, getResponseBody: () -> String) {
-		if (!loggingSettings.logResponse) return
+		if (!loggingSettings.logResponse) {
+			return
+		}
+
+		val securePatterns = createSecurePatterns(loggingSettings)
 		logEntry(
 			prefix = "Response",
 			logLevel = Level.INFO,
@@ -271,7 +275,7 @@ class ApiClientHelper private constructor(
 				add("OK")
 				add("$requestTime ms")
 				if (loggingSettings.logSuccessfulResponseBody) {
-					add(getResponseBody.invoke())
+					add(getResponseBody.invoke().maskLogString(securePatterns))
 				}
 			}
 		)
@@ -283,7 +287,10 @@ class ApiClientHelper private constructor(
 		httpStatusCode: Int,
 		responseBody: String
 	) {
-		if (!loggingSettings.logResponse) return
+		if (!loggingSettings.logResponse) {
+			return
+		}
+
 		logEntry(
 			prefix = "Response",
 			logLevel = Level.INFO,
@@ -305,7 +312,10 @@ class ApiClientHelper private constructor(
 		errorMessage: String?,
 		exception: Exception
 	) {
-		if (!loggingSettings.logResponse) return
+		if (!loggingSettings.logResponse) {
+			return
+		}
+
 		logEntry(
 			prefix = "Response",
 			logLevel = Level.WARNING,
@@ -328,7 +338,10 @@ class ApiClientHelper private constructor(
 		responseBody: String,
 		exception: Exception
 	) {
-		if (!loggingSettings.logResponse) return
+		if (!loggingSettings.logResponse) {
+			return
+		}
+
 		logEntry(
 			prefix = "Response",
 			logLevel = Level.WARNING,
