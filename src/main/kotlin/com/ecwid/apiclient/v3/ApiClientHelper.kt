@@ -210,7 +210,9 @@ class ApiClientHelper private constructor(
 			requestId = requestId,
 			sections = mutableListOf<String>().apply {
 				add("${httpRequest.method} ${httpRequest.uri}")
-				add(params.dumpToString())
+				if (loggingSettings.logRequestParams) {
+					add(params.dumpToString())
+				}
 				if (loggingSettings.logRequestBody) {
 					httpBody.asString()?.let { add(it) }
 				}
