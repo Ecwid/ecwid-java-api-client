@@ -813,7 +813,7 @@ class ProductsTest : BaseEntityTest() {
 			expectedId = "0",
 			expectedOrderBy = 0,
 			expectedIsMain = true,
-			expectedPathEnd = "/${productImageUploadResult4.id}.jpg",
+			expectedPathEnd = "/${productImageUploadResult4.id}.png",
 			productImage = productDetails1.media?.images?.get(0)
 		)
 

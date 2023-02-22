@@ -480,7 +480,7 @@ class CategoriesTest : BaseEntityTest() {
 		assertAll(
 			{
 				assertTrue(
-					categoryDetails.thumbnailUrl?.endsWith("/$expectedThumbnailImageId.jpg")
+					categoryDetails.thumbnailUrl?.endsWith("/$expectedThumbnailImageId.png")
 						?: false,
 					"thumbnailUrl mismatch"
 				)
