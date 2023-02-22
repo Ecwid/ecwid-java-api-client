@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3
 
 import com.ecwid.apiclient.v3.util.maskApiToken
 import com.ecwid.apiclient.v3.util.maskAppSecretKey
+import com.ecwid.apiclient.v3.util.maskSensitive
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -41,4 +42,11 @@ class MaskUtilsUnitTest {
 		assertEquals("app***re", maskAppSecretKey("appSecre"))
 		assertEquals("app***r", maskAppSecretKey("appSecr"))
 	}
+
+	@Test
+	fun testMaskSensitive() {
+		assertEquals("te***ng", maskSensitive("test string", 4))
+		assertEquals("***", maskSensitive("test string", 8))
+	}
+
 }
