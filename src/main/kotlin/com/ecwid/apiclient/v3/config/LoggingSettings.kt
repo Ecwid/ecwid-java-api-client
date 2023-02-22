@@ -9,5 +9,7 @@ data class LoggingSettings(
 
 	val logResponse: Boolean = true,
 	val logSuccessfulResponseBody: Boolean = false,
-	val logFailedResponseBody: Boolean = true
+	val logFailedResponseBody: Boolean = true,
+
+	val maxLogSectionLength: Int = 200,
 )
