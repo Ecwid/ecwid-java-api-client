@@ -16,7 +16,21 @@ private val API_SECRET_KEY_SECURE_PATTERN = SecurePattern(
 	unmaskedLength = 6
 )
 
-private val GLOBAL_SECURE_PATTERNS = listOf<SecurePattern>()
+private val GLOBAL_SECURE_PATTERNS = listOf(
+	createParamSecurePattern("email"),
+	createParamSecurePattern("name"),
+	createParamSecurePattern("firstName"),
+	createParamSecurePattern("lastName"),
+	createParamSecurePattern("street"),
+	createParamSecurePattern("city"),
+	createParamSecurePattern("postalCode"),
+	createParamSecurePattern("phone"),
+)
+
+fun createParamSecurePattern(paramName: String) = SecurePattern(
+	regex = Regex("$paramName=$PARAM_VALUE_PATTERN"),
+	unmaskedLength = 6
+)
 
 fun createSecurePatterns(loggingSettings: LoggingSettings) = mutableListOf<SecurePattern>().apply {
 	if (loggingSettings.maskRequestApiToken) {
