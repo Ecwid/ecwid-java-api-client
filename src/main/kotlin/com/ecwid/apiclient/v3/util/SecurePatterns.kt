@@ -11,24 +11,27 @@ private val API_TOKEN_SECURE_PATTERN = SecurePattern(
 	unmaskedLength = 6
 )
 
-private val API_SECRET_KEY_SECURE_PATTERN = SecurePattern(
-	regex = Regex("$APP_CLIENT_SECRET_PARAM_NAME=$PARAM_VALUE_PATTERN"),
+private val API_SECRET_KEY_SECURE_PATTERN = createKeyValueSecurePattern(APP_CLIENT_SECRET_PARAM_NAME)
+
+private val GLOBAL_SECURE_PATTERNS = listOf(
+	createKeyValueSecurePattern("email"),
+	createJsonSecurePattern("email"),
+	createJsonSecurePattern("name"),
+	createJsonSecurePattern("firstName"),
+	createJsonSecurePattern("lastName"),
+	createJsonSecurePattern("street"),
+	createJsonSecurePattern("city"),
+	createJsonSecurePattern("postalCode"),
+	createJsonSecurePattern("phone"),
+)
+
+fun createKeyValueSecurePattern(paramName: String) = SecurePattern(
+	regex = Regex("$paramName=$PARAM_VALUE_PATTERN"),
 	unmaskedLength = 6
 )
 
-private val GLOBAL_SECURE_PATTERNS = listOf(
-	createParamSecurePattern("email"),
-	createParamSecurePattern("name"),
-	createParamSecurePattern("firstName"),
-	createParamSecurePattern("lastName"),
-	createParamSecurePattern("street"),
-	createParamSecurePattern("city"),
-	createParamSecurePattern("postalCode"),
-	createParamSecurePattern("phone"),
-)
-
-fun createParamSecurePattern(paramName: String) = SecurePattern(
-	regex = Regex("$paramName=$PARAM_VALUE_PATTERN"),
+fun createJsonSecurePattern(paramName: String) = SecurePattern(
+	regex = Regex(""""$paramName":\s*"([^"]*)""""),
 	unmaskedLength = 6
 )
 
