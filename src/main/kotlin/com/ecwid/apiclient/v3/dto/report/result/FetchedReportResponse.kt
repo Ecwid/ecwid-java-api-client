@@ -5,12 +5,12 @@ import com.ecwid.apiclient.v3.dto.report.enums.ComparePeriod
 import com.ecwid.apiclient.v3.dto.report.enums.TimeScaleValue
 
 data class FetchedReportResponse(
-	val reportType: String,
-	val startedFrom: Long,
-	val endedAt: Long,
+	val reportType: String = "",
+	val startedFrom: Long = 0,
+	val endedAt: Long = 0,
 	val timeScaleValue: TimeScaleValue? = null,
 	val comparePeriod: ComparePeriod? = null,
-	val aggregatedData: List<DataItem>,
+	val aggregatedData: List<DataItem> = listOf(),
 	val dataset: List<Dataset>? = null,
 ) : ApiFetchedDTO {
 

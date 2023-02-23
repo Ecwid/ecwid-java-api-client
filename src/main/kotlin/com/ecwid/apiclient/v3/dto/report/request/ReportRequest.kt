@@ -7,7 +7,7 @@ import com.ecwid.apiclient.v3.dto.report.enums.TimeScaleValue
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class ReportRequest(
-	val reportType: String,
+	val reportType: String = "",
 	val startedFrom: Long? = null,
 	val endedAt: Long? = null,
 	val timeScaleValue: TimeScaleValue? = null,
