@@ -71,6 +71,7 @@ data class FetchedStoreProfile(
 	)
 
 	data class Settings(
+		val askTaxId: Boolean = false,
 		val closed: Boolean? = null,
 		val storeName: String? = null,
 		val storeDescription: String? = null,

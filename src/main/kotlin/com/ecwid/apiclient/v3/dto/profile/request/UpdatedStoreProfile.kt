@@ -46,6 +46,7 @@ data class UpdatedStoreProfile(
 	)
 
 	data class Settings(
+		val askTaxId: Boolean? = null,
 		val closed: Boolean? = null,
 		val storeName: String? = null,
 		val storeDescription: String? = null,
