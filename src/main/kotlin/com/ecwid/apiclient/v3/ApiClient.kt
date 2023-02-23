@@ -121,6 +121,8 @@ interface StoreProfileApiClient {
 	// 	fun addShippingOption()
 	// 	fun updateShippingOption()
 	fun getPaymentOptions(request: PaymentOptionsRequest): PaymentOptionsResult
+	fun createPaymentOption(request: PaymentOptionCreateRequest): PaymentOptionCreateResult
+	fun deletePaymentOption(request: PaymentOptionDeleteRequest): PaymentOptionDeleteResult
 
 	// 	fun addPaymentOption()
 	// 	fun updatePaymentOption()

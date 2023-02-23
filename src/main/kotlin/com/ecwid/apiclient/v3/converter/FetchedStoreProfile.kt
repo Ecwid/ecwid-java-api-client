@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.converter
 
+import com.ecwid.apiclient.v3.dto.profile.request.UpdatedPaymentOption
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 
@@ -336,4 +337,28 @@ fun FetchedStoreProfile.OrderInvoiceSettings.AttachValue.toUpdated(): UpdatedSto
 		FetchedStoreProfile.OrderInvoiceSettings.AttachValue.ATTACH_TO_ALL_EMAILS -> UpdatedStoreProfile.OrderInvoiceSettings.AttachValue.ATTACH_TO_ALL_EMAILS
 		FetchedStoreProfile.OrderInvoiceSettings.AttachValue.DO_NOT_ATTACH -> UpdatedStoreProfile.OrderInvoiceSettings.AttachValue.DO_NOT_ATTACH
 	}
+}
+
+fun FetchedStoreProfile.PaymentOptionInfo.toUpdated(): UpdatedPaymentOption {
+	return UpdatedPaymentOption(
+		enabled = enabled,
+		checkoutTitle = checkoutTitle,
+		checkoutDescription = checkoutDescription,
+		paymentProcessorId = paymentProcessorId,
+		orderBy = orderBy,
+		appClientId = appClientId,
+		instructionsForCustomer = instructionsForCustomer?.let {
+			UpdatedPaymentOption.InstructionsForCustomerInfo(
+				instructionsTitle = it.instructionsTitle,
+				instructions = it.instructions,
+			)
+		},
+		shippingSettings = shippingSettings?.let {
+			UpdatedPaymentOption.ShippingSettings(
+				enabledShippingMethods = it.enabledShippingMethods,
+			)
+		},
+		subtype = subtype,
+		subtypeMethodName = subtypeMethodName,
+	)
 }
