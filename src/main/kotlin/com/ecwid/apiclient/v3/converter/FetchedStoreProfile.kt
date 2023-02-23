@@ -58,6 +58,7 @@ fun FetchedStoreProfile.Account.toUpdated(): UpdatedStoreProfile.Account {
 
 fun FetchedStoreProfile.Settings.toUpdated(): UpdatedStoreProfile.Settings {
 	return UpdatedStoreProfile.Settings(
+		askTaxId = askTaxId,
 		closed = closed,
 		storeName = storeName,
 		storeDescription = storeDescription,
