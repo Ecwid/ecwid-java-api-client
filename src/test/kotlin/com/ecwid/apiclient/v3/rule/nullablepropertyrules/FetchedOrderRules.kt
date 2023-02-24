@@ -242,6 +242,7 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder::handlingFee),
 	AllowNullable(FetchedOrder::hidden),
 	AllowNullable(FetchedOrder::id),
+	AllowNullable(FetchedOrder::internalId),
 	AllowNullable(FetchedOrder::ipAddress),
 	AllowNullable(FetchedOrder::items),
 	AllowNullable(FetchedOrder::latestDeliveryDate),
