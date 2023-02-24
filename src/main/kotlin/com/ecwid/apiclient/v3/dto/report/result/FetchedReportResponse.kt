@@ -15,9 +15,9 @@ data class FetchedReportResponse(
 ) : ApiFetchedDTO {
 
 	data class Dataset(
-		val orderBy: Int,
-		val datapointId: String,
-		val data: List<DataItem>,
+		val orderBy: Int = 0,
+		val datapointId: String = "",
+		val data: List<DataItem> = listOf(),
 		val startTimeStamp: Long? = null,
 		val endTimeStamp: Long? = null,
 		val percentage: Double? = null,
@@ -26,8 +26,8 @@ data class FetchedReportResponse(
 	)
 
 	data class DataItem(
-		val dataId: String,
-		val dataValue: Double?,
+		val dataId: String = "",
+		val dataValue: Double? = null,
 	)
 
 	override fun getModifyKind() = ApiFetchedDTO.ModifyKind.ReadOnly
