@@ -8,6 +8,7 @@ import java.util.*
 
 data class FetchedOrder(
 	val id: String? = null,
+	val internalId: Long? = null,
 
 	val orderNumber: Int = 0,
 	val vendorOrderNumber: String? = null,
@@ -109,7 +110,7 @@ data class FetchedOrder(
 	val externalOrderData: ExternalOrderData? = null,
 	val paymentReference: String? = null,
 
-) : ApiFetchedDTO {
+	) : ApiFetchedDTO {
 
 	data class CreditCardStatus(
 		val avsMessage: String? = null,
