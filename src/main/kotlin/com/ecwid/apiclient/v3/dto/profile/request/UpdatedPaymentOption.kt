@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 
 data class UpdatedPaymentOption(
 	val enabled: Boolean? = null,
+	val configured: Boolean? = null,
 	val checkoutTitle: String? = null,
 	val checkoutDescription: String? = null,
 	val paymentProcessorId: String? = null,

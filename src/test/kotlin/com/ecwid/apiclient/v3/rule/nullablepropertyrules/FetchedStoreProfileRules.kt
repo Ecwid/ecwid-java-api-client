@@ -235,6 +235,7 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::checkoutDescription),
 	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::checkoutTitle),
 	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::enabled),
+	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::configured),
 	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::id),
 	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::instructionsForCustomer),
 	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::orderBy),

@@ -342,6 +342,7 @@ fun FetchedStoreProfile.OrderInvoiceSettings.AttachValue.toUpdated(): UpdatedSto
 fun FetchedStoreProfile.PaymentOptionInfo.toUpdated(): UpdatedPaymentOption {
 	return UpdatedPaymentOption(
 		enabled = enabled,
+		configured = configured,
 		checkoutTitle = checkoutTitle,
 		checkoutDescription = checkoutDescription,
 		paymentProcessorId = paymentProcessorId,
