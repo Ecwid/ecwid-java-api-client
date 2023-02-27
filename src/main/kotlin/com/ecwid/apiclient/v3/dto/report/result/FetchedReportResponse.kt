@@ -12,6 +12,8 @@ data class FetchedReportResponse(
 	val comparePeriod: ComparePeriod? = null,
 	val aggregatedData: List<DataItem> = listOf(),
 	val dataset: List<Dataset>? = null,
+	val comparePeriodAggregatedData: List<DataItem>? = null,
+	val comparePeriodDataset: List<Dataset>? = null,
 ) : ApiFetchedDTO {
 
 	data class Dataset(
