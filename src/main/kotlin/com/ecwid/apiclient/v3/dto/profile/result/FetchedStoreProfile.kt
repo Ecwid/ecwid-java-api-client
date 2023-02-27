@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
+import com.ecwid.apiclient.v3.dto.profile.request.UpdatedPaymentOption
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 
@@ -394,6 +395,7 @@ data class FetchedStoreProfile(
 
 	data class PaymentOptionInfo(
 		val id: String? = null,
+		val configured: Boolean? = null,
 		val enabled: Boolean? = null,
 		val checkoutTitle: String? = null,
 		val checkoutDescription: String? = null,
@@ -402,8 +404,12 @@ data class FetchedStoreProfile(
 		val orderBy: Int? = null,
 		val appClientId: String? = null,
 		val instructionsForCustomer: InstructionsForCustomerInfo? = null,
-		val shippingSettings: ShippingSettings? = null
-	)
+		val shippingSettings: ShippingSettings? = null,
+		val subtype: String? = null,
+		val subtypeMethodName: String? = null,
+	) : ApiFetchedDTO {
+		override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedPaymentOption::class)
+	}
 
 	data class ApplePay(
 		val enabled: Boolean = false,

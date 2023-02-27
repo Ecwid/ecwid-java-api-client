@@ -56,6 +56,15 @@ internal class StoreProfileApiClientImpl(
 	override fun getPaymentOptions(request: PaymentOptionsRequest): PaymentOptionsResult =
 		apiClientHelper.makeObjectResultRequest(request)
 
+	override fun createPaymentOption(request: PaymentOptionCreateRequest): PaymentOptionCreateResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun deletePaymentOption(request: PaymentOptionDeleteRequest): PaymentOptionDeleteResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun updatePaymentOption(request: PaymentOptionUpdateRequest): PaymentOptionUpdateResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
 	override fun searchOrderStatusesSettings(request: OrderStatusSettingsSearchRequest): OrderStatusSettingsSearchResult =
 		apiClientHelper.makeObjectResultRequest(request)
 
