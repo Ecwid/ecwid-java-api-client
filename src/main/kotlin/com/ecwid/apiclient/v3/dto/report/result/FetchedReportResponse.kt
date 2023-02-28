@@ -10,16 +10,16 @@ data class FetchedReportResponse(
 	val endedAt: Long = 0,
 	val timeScaleValue: TimeScaleValue? = null,
 	val comparePeriod: ComparePeriod? = null,
-	val aggregatedData: List<DataItem> = listOf(),
-	val dataset: List<Dataset>? = null,
-	val comparePeriodAggregatedData: List<DataItem>? = null,
-	val comparePeriodDataset: List<Dataset>? = null,
+	val aggregatedData: List<FetchedDataItem> = listOf(),
+	val dataset: List<FetchedDataset>? = null,
+	val comparePeriodAggregatedData: List<FetchedDataItem>? = null,
+	val comparePeriodDataset: List<FetchedDataset>? = null,
 ) : ApiFetchedDTO {
 
-	data class Dataset(
+	data class FetchedDataset(
 		val orderBy: Int = 0,
 		val datapointId: String = "",
-		val data: List<DataItem> = listOf(),
+		val data: List<FetchedDataItem> = listOf(),
 		val startTimeStamp: Long? = null,
 		val endTimeStamp: Long? = null,
 		val percentage: Double? = null,
@@ -27,7 +27,7 @@ data class FetchedReportResponse(
 		val comparePeriodEndTimeStamp: Long? = null,
 	)
 
-	data class DataItem(
+	data class FetchedDataItem(
 		val dataId: String = "",
 		val dataValue: Double? = null,
 	)

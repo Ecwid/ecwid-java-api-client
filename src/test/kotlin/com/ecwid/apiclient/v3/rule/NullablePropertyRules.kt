@@ -86,13 +86,13 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedReportResponse::comparePeriodAggregatedData),
 	AllowNullable(FetchedReportResponse::comparePeriodDataset),
 
-	AllowNullable(FetchedReportResponse.Dataset::startTimeStamp),
-	AllowNullable(FetchedReportResponse.Dataset::endTimeStamp),
-	AllowNullable(FetchedReportResponse.Dataset::percentage),
-	AllowNullable(FetchedReportResponse.Dataset::comparePeriodStartTimeStamp),
-	AllowNullable(FetchedReportResponse.Dataset::comparePeriodEndTimeStamp),
+	AllowNullable(FetchedReportResponse.FetchedDataset::startTimeStamp),
+	AllowNullable(FetchedReportResponse.FetchedDataset::endTimeStamp),
+	AllowNullable(FetchedReportResponse.FetchedDataset::percentage),
+	AllowNullable(FetchedReportResponse.FetchedDataset::comparePeriodStartTimeStamp),
+	AllowNullable(FetchedReportResponse.FetchedDataset::comparePeriodEndTimeStamp),
 
-	AllowNullable(FetchedReportResponse.DataItem::dataValue),
+	AllowNullable(FetchedReportResponse.FetchedDataItem::dataValue),
 )
 
 val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
