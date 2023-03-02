@@ -57,7 +57,7 @@ open class ApiClient private constructor(
 	salesChannelsApiClient: SalesChannelsApiClient,
 	applicationApiClient: ApplicationApiClient,
 	applicationStorageApiClient: ApplicationStorageApiClient,
-	reportApiClient: ReportApiClientImpl,
+	reportsApiClient: ReportsApiClientImpl,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	ProductsApiClient by productsApiClient,
@@ -73,7 +73,7 @@ open class ApiClient private constructor(
 	SalesChannelsApiClient by salesChannelsApiClient,
 	ApplicationApiClient by applicationApiClient,
 	ApplicationStorageApiClient by applicationStorageApiClient,
-	ReportApiClient by reportApiClient {
+	ReportsApiClient by reportsApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -91,7 +91,7 @@ open class ApiClient private constructor(
 		salesChannelsApiClient = SalesChannelsApiClientImpl(apiClientHelper),
 		applicationApiClient = ApplicationApiClientImpl(apiClientHelper),
 		applicationStorageApiClient = ApplicationStorageApiClientImpl(apiClientHelper),
-		reportApiClient = ReportApiClientImpl(apiClientHelper),
+		reportsApiClient = ReportsApiClientImpl(apiClientHelper),
 	)
 
 	companion object {
@@ -325,6 +325,6 @@ interface ApplicationStorageApiClient {
 // TODO
 
 // Report API
-interface ReportApiClient {
+interface ReportsApiClient {
 	fun fetchReport(request: ReportRequest): FetchedReportResponse
 }
