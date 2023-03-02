@@ -27,9 +27,11 @@ object RequestSizeMetric {
 			1_000_000.0,
 			5_000_000.0,
 			10_000_000.0,
+			25_000_000.0,
 			50_000_000.0,
+			100_000_000.0,
 		)
-		.labelNames("request_type", "endpoint", "method", "status")
+		.labelNames("request_type", "path", "method", "status")
 		.register()
 
 	fun observeRequest(
