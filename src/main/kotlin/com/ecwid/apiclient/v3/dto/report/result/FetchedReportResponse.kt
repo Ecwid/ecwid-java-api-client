@@ -29,7 +29,7 @@ data class FetchedReportResponse(
 
 	data class FetchedDataItem(
 		val dataId: String = "",
-		val dataValue: Double? = null,
+		val dataValue: Double = 0.0,
 	)
 
 	override fun getModifyKind() = ApiFetchedDTO.ModifyKind.ReadOnly
