@@ -24,7 +24,7 @@ object ResponseSizeMetric {
 			50_000_000.0,
 			100_000_000.0,
 		)
-		.labelNames("request_type", "endpoint", "method", "status")
+		.labelNames("request_type", "path", "method", "status")
 		.register()
 
 	fun observeResponse(
