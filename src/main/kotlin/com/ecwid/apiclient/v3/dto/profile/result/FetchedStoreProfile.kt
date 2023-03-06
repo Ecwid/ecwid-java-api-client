@@ -8,6 +8,7 @@ import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedPaymentOption
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
+import java.util.*
 
 data class FetchedStoreProfile(
 	val generalInfo: GeneralInfo? = null,
@@ -58,7 +59,8 @@ data class FetchedStoreProfile(
 		val availableFeatures: List<String>? = null,
 		val whiteLabel: Boolean? = null,
 		val brandName: String? = null,
-		val supportEmail: String? = null
+		val supportEmail: String? = null,
+		val registrationDate: Date? = null,
 	)
 
 	data class RegistrationAnswers(
