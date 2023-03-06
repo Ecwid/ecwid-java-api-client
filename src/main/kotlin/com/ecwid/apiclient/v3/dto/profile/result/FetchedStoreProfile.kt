@@ -60,7 +60,7 @@ data class FetchedStoreProfile(
 		val whiteLabel: Boolean? = null,
 		val brandName: String? = null,
 		val supportEmail: String? = null,
-		val registrationDate: Date? = null,
+		val registrationDate: Date = Date(),
 	)
 
 	data class RegistrationAnswers(
