@@ -8,7 +8,7 @@ For this you need to copy test/resources/test.properties.sample renamed to test.
 and configure it
 
 For example: `test.properties`
-```
+```properties
 storeId=2
 apiToken=secret_4T6z...
 apiHost=app.local.ecwid.com
@@ -18,7 +18,7 @@ apiPort=8443
 ## Examples
 
 #### Simple example:
-```
+```kotlin
 val apiClient = ApiClient.create(
 		apiServerDomain = ApiServerDomain(),
 		storeCredentials = ApiStoreCredentials(
@@ -32,7 +32,7 @@ println("api/v3 customer: $customer")
 ```
 
 #### Batch api example:
-```
+```kotlin
 val apiClient = ApiClient.create(
 		apiServerDomain = ApiServerDomain(),
 		storeCredentials = ApiStoreCredentials(
