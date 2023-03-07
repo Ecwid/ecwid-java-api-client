@@ -3,11 +3,12 @@ package com.ecwid.apiclient.v3.dto.report.request
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.report.enums.ComparePeriod
 import com.ecwid.apiclient.v3.dto.report.enums.FirstDayOfWeek
+import com.ecwid.apiclient.v3.dto.report.enums.ReportType
 import com.ecwid.apiclient.v3.dto.report.enums.TimeScaleValue
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class ReportRequest(
-	val reportType: String = "",
+	val reportType: ReportType = ReportType.ALL_TRAFFIC,
 	val startedFrom: Long? = null,
 	val endedAt: Long? = null,
 	val timeScaleValue: TimeScaleValue? = null,
@@ -18,7 +19,7 @@ data class ReportRequest(
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 		pathSegments = listOf(
 			"reports",
-			reportType
+			reportType.alias,
 		),
 		params = toParams()
 	)

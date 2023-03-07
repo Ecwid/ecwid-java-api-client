@@ -2,10 +2,11 @@ package com.ecwid.apiclient.v3.dto.report.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.report.enums.ComparePeriod
+import com.ecwid.apiclient.v3.dto.report.enums.ReportType
 import com.ecwid.apiclient.v3.dto.report.enums.TimeScaleValue
 
 data class FetchedReportResponse(
-	val reportType: String = "",
+	val reportType: ReportType = ReportType.ALL_TRAFFIC,
 	val startedFrom: Long = 0,
 	val endedAt: Long = 0,
 	val timeScaleValue: TimeScaleValue? = null,
