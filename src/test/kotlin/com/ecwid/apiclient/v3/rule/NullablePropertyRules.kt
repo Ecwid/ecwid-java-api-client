@@ -13,6 +13,8 @@ import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult
 import com.ecwid.apiclient.v3.dto.product.result.ProductInventoryUpdateResult
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedLatestStats
+import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
+import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
 import com.ecwid.apiclient.v3.dto.storage.result.FetchedStorageData
 import com.ecwid.apiclient.v3.dto.variation.request.ProductVariationsRequest
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
@@ -71,6 +73,24 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedStorageData::value),
 	AllowNullable(FetchedProduct::minPurchaseQuantity),
 	AllowNullable(FetchedProduct::maxPurchaseQuantity),
+
+	AllowNullable(ReportRequest::startedFrom),
+	AllowNullable(ReportRequest::endedAt),
+	AllowNullable(ReportRequest::timeScaleValue),
+	AllowNullable(ReportRequest::comparePeriod),
+	AllowNullable(ReportRequest::firstDayOfWeek),
+
+	AllowNullable(FetchedReportResponse::timeScaleValue),
+	AllowNullable(FetchedReportResponse::comparePeriod),
+	AllowNullable(FetchedReportResponse::dataset),
+	AllowNullable(FetchedReportResponse::comparePeriodAggregatedData),
+	AllowNullable(FetchedReportResponse::comparePeriodDataset),
+
+	AllowNullable(FetchedReportResponse.FetchedDataset::startTimeStamp),
+	AllowNullable(FetchedReportResponse.FetchedDataset::endTimeStamp),
+	AllowNullable(FetchedReportResponse.FetchedDataset::percentage),
+	AllowNullable(FetchedReportResponse.FetchedDataset::comparePeriodStartTimeStamp),
+	AllowNullable(FetchedReportResponse.FetchedDataset::comparePeriodEndTimeStamp),
 )
 
 val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(

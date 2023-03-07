@@ -29,6 +29,8 @@ import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
 import com.ecwid.apiclient.v3.dto.profile.request.*
 import com.ecwid.apiclient.v3.dto.profile.result.*
+import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
+import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
 import com.ecwid.apiclient.v3.dto.saleschannels.request.*
 import com.ecwid.apiclient.v3.dto.saleschannels.response.*
 import com.ecwid.apiclient.v3.dto.storage.request.*
@@ -55,6 +57,7 @@ open class ApiClient private constructor(
 	salesChannelsApiClient: SalesChannelsApiClient,
 	applicationApiClient: ApplicationApiClient,
 	applicationStorageApiClient: ApplicationStorageApiClient,
+	reportsApiClient: ReportsApiClientImpl,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	ProductsApiClient by productsApiClient,
@@ -69,7 +72,8 @@ open class ApiClient private constructor(
 	CartsApiClient by cartsApiClient,
 	SalesChannelsApiClient by salesChannelsApiClient,
 	ApplicationApiClient by applicationApiClient,
-	ApplicationStorageApiClient by applicationStorageApiClient {
+	ApplicationStorageApiClient by applicationStorageApiClient,
+	ReportsApiClient by reportsApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -87,6 +91,7 @@ open class ApiClient private constructor(
 		salesChannelsApiClient = SalesChannelsApiClientImpl(apiClientHelper),
 		applicationApiClient = ApplicationApiClientImpl(apiClientHelper),
 		applicationStorageApiClient = ApplicationStorageApiClientImpl(apiClientHelper),
+		reportsApiClient = ReportsApiClientImpl(apiClientHelper),
 	)
 
 	companion object {
@@ -319,3 +324,8 @@ interface ApplicationStorageApiClient {
 // Static store pages
 // https://developers.ecwid.com/api-documentation/static-store-pages
 // TODO
+
+// Report API
+interface ReportsApiClient {
+	fun fetchReport(request: ReportRequest): FetchedReportResponse
+}
