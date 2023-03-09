@@ -13,8 +13,6 @@ data class UpdatedPaymentOption(
 	val appClientId: String? = null,
 	val instructionsForCustomer: InstructionsForCustomerInfo? = null,
 	val shippingSettings: ShippingSettings? = null,
-	val subtype: String? = null,
-	val subtypeMethodName: String? = null,
 	val methods: List<PaymentMethod>? = null,
 	val supportsSubtypes: Boolean? = null,
 ) : ApiUpdatedDTO {

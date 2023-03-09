@@ -242,8 +242,6 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::paymentProcessorId),
 	IgnoreNullable(FetchedStoreProfile.PaymentOptionInfo::paymentProcessorTitle),
 	AllowNullable(FetchedStoreProfile.PaymentOptionInfo::shippingSettings),
-	AllowNullable(FetchedStoreProfile.PaymentOptionInfo::subtype),
-	AllowNullable(FetchedStoreProfile.PaymentOptionInfo::subtypeMethodName),
 	AllowNullable(FetchedStoreProfile.PaymentOptionInfo::methods),
 	AllowNullable(FetchedStoreProfile.PaymentOptionInfo::supportsSubtypes),
 	AllowNullable(FetchedStoreProfile.PaymentMethod::cards),
