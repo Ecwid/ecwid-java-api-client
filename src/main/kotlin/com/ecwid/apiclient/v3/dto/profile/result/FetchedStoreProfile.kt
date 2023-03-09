@@ -409,6 +409,8 @@ data class FetchedStoreProfile(
 		val shippingSettings: ShippingSettings? = null,
 		val subtype: String? = null,
 		val subtypeMethodName: String? = null,
+		val methods: List<PaymentMethod>? = null,
+		val supportsSubtypes: Boolean? = null,
 	) : ApiFetchedDTO {
 		override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedPaymentOption::class)
 	}
@@ -427,6 +429,12 @@ data class FetchedStoreProfile(
 
 	data class ShippingSettings(
 		val enabledShippingMethods: List<String>? = null
+	)
+
+	data class PaymentMethod(
+		val cards: List<String>? = null,
+		val subtype: String? = null,
+		val subtypeMethodName: String? = null,
 	)
 
 	data class FeatureTogglesInfo(

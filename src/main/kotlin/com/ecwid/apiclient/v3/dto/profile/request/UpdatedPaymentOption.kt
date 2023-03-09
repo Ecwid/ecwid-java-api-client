@@ -15,6 +15,8 @@ data class UpdatedPaymentOption(
 	val shippingSettings: ShippingSettings? = null,
 	val subtype: String? = null,
 	val subtypeMethodName: String? = null,
+	val methods: List<PaymentMethod>? = null,
+	val supportsSubtypes: Boolean? = null,
 ) : ApiUpdatedDTO {
 
 	data class InstructionsForCustomerInfo(
@@ -26,5 +28,10 @@ data class UpdatedPaymentOption(
 		val enabledShippingMethods: List<String>? = null
 	)
 
+	data class PaymentMethod(
+		val cards: List<String>? = null,
+		val subtype: String? = null,
+		val subtypeMethodName: String? = null,
+	)
 	override fun getModifyKind() = ApiUpdatedDTO.ModifyKind.ReadWrite(FetchedStoreProfile.PaymentOptionInfo::class)
 }
