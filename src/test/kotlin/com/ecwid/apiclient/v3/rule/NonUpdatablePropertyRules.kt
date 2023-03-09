@@ -201,6 +201,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedStoreProfile.Account::whiteLabel),
 	ReadOnly(FetchedStoreProfile.Account::brandName),
 	ReadOnly(FetchedStoreProfile.Account::supportEmail),
+	ReadOnly(FetchedStoreProfile.Account::registrationDate),
 	ReadOnly(FetchedStoreProfile.RegistrationAnswers::facebook),
 	ReadOnly(FetchedStoreProfile.RegistrationAnswers::alreadySelling),
 	ReadOnly(FetchedStoreProfile.RegistrationAnswers::forSomeone),
