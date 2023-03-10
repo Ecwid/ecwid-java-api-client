@@ -360,7 +360,13 @@ fun FetchedStoreProfile.PaymentOptionInfo.toUpdated(): UpdatedPaymentOption {
 				enabledShippingMethods = it.enabledShippingMethods,
 			)
 		},
-		subtype = subtype,
-		subtypeMethodName = subtypeMethodName,
+		methods = methods?.map {
+			UpdatedPaymentOption.PaymentMethod(
+				cards = it.cards,
+				subtype = it.subtype,
+				subtypeMethodName = it.subtypeMethodName,
+			)
+		},
+		supportsSubtypes = supportsSubtypes,
 	)
 }
