@@ -24,7 +24,7 @@ data class OrdersSearchRequest(
 	val email: String? = null,
 	val paymentMethod: String? = null,
 	val shippingMethod: String? = null,
-	val paymentStatus: OrderPaymentStatus? = null,
+	val paymentStatus: List<OrderPaymentStatus>? = null,
 	val fulfillmentStatus: OrderFulfillmentStatus? = null,
 	val subscriptionIds: List<Long>? = null,
 	val pickupTimeFrom: Date? = null,
@@ -59,7 +59,7 @@ data class OrdersSearchRequest(
 			request.email?.let { put("email", it) }
 			request.paymentMethod?.let { put("paymentMethod", it) }
 			request.shippingMethod?.let { put("shippingMethod", it) }
-			request.paymentStatus?.let { put("paymentStatus", it.name) }
+			request.paymentStatus?.let { put("paymentStatus", it.joinToString(",")) }
 			request.fulfillmentStatus?.let { put("fulfillmentStatus", it.name) }
 			request.subscriptionIds?.let { put("subscriptionId", it.joinToString(",")) }
 			request.pickupTimeFrom?.let { put("pickupTimeFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
