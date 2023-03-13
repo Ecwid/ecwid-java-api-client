@@ -312,8 +312,8 @@ class OrdersTest : BaseEntityTest() {
 
 		assertOrdersSearch(
 			positiveOrderNumber = orderCreateResult.id,
-			positiveSearchRequest = OrdersSearchRequest(paymentStatus = OrderPaymentStatus.AWAITING_PAYMENT),
-			negativeSearchRequest = OrdersSearchRequest(paymentStatus = OrderPaymentStatus.PAID)
+			positiveSearchRequest = OrdersSearchRequest(paymentStatus = listOf(OrderPaymentStatus.AWAITING_PAYMENT)),
+			negativeSearchRequest = OrdersSearchRequest(paymentStatus = listOf(OrderPaymentStatus.PAID))
 		)
 
 		assertOrdersSearch(
