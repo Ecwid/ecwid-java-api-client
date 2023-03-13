@@ -8,7 +8,7 @@ import com.ecwid.apiclient.v3.dto.report.enums.TimeScaleValue
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class ReportRequest(
-	val reportType: ReportType = ReportType.ALL_TRAFFIC,
+	val reportType: ReportType = ReportType.allTraffic,
 	val startedFrom: Long? = null,
 	val endedAt: Long? = null,
 	val timeScaleValue: TimeScaleValue? = null,
@@ -19,7 +19,7 @@ data class ReportRequest(
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 		pathSegments = listOf(
 			"reports",
-			reportType.alias,
+			reportType.toString(),
 		),
 		params = toParams()
 	)
@@ -28,9 +28,9 @@ data class ReportRequest(
 		return mutableMapOf<String, String>().apply {
 			startedFrom?.let { put("startedFrom", it.toString()) }
 			endedAt?.let { put("endedAt", it.toString()) }
-			timeScaleValue?.let { put("timeScaleValue", it.alias) }
-			comparePeriod?.let { put("comparePeriod", it.alias) }
-			firstDayOfWeek?.let { put("firstDayOfWeek", it.alias) }
+			timeScaleValue?.let { put("timeScaleValue", it.toString()) }
+			comparePeriod?.let { put("comparePeriod", it.toString()) }
+			firstDayOfWeek?.let { put("firstDayOfWeek", it.toString()) }
 		}.toMap()
 	}
 
