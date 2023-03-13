@@ -6,7 +6,7 @@ import com.ecwid.apiclient.v3.dto.report.enums.ReportType
 import com.ecwid.apiclient.v3.dto.report.enums.TimeScaleValue
 
 data class FetchedReportResponse(
-	val reportType: ReportType = ReportType.ALL_TRAFFIC,
+	val reportType: ReportType = ReportType.allTraffic,
 	val startedFrom: Long = 0,
 	val endedAt: Long = 0,
 	val timeScaleValue: TimeScaleValue? = null,
