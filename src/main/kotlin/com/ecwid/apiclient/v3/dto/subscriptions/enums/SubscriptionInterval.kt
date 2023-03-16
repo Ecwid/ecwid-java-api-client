@@ -5,5 +5,5 @@ enum class SubscriptionInterval {
 	DAY,
 	WEEK,
 	MONTH,
-	YEAR
+	YEAR,
 }

@@ -1,12 +1,12 @@
 package com.ecwid.apiclient.v3.dto.subscriptions.result
 
-import com.ecwid.apiclient.v3.dto.cart.request.UpdatedCart
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.subscriptions.enums.PriceModifierType
 import com.ecwid.apiclient.v3.dto.subscriptions.enums.ProductOptionType
 import com.ecwid.apiclient.v3.dto.subscriptions.enums.SubscriptionInterval
 import com.ecwid.apiclient.v3.dto.subscriptions.enums.SubscriptionStatus
+import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 import java.util.*
 
 data class FetchedSubscription(
@@ -24,7 +24,6 @@ data class FetchedSubscription(
 	val orderTemplate: OrderTemplate = OrderTemplate(),
 	val orders: List<Orders> = emptyList(),
 ) : ApiFetchedDTO {
-
 
 	data class ChargeSettings(
 		val recurringInterval: SubscriptionInterval = SubscriptionInterval.MONTH,
@@ -63,7 +62,8 @@ data class FetchedSubscription(
 		val creditCard: String? = null,
 		val creditCardExpirationMonth: String? = null,
 		val creditCardExpirationYear: String? = null,
-		val google_customer_id: String? = null,
+		@JsonFieldName("google_customer_id")
+		val googleCustomerId: String? = null,
 		val stripeCardId: String? = null,
 		val stripeCreditCardBrand: String? = null,
 		val stripeCreditCardLast4Digit: String? = null,
@@ -162,18 +162,11 @@ data class FetchedSubscription(
 		val intervalCount: Int = 0,
 	)
 
-	data class OrderItemOptionFile(
-		val id: Int? = null,
-		val name: String? = null,
-		val size: Int? = null,
-		val url: String? = null
-	)
-
 	data class Orders(
 		val id: Long = 0,
 		val total: Double = 0.0,
 		val createDate: Date = Date(),
 	)
 
-	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedCart::class)
+	override fun getModifyKind() = ModifyKind.ReadOnly
 }
