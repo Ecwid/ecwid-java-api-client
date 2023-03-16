@@ -35,6 +35,8 @@ import com.ecwid.apiclient.v3.dto.saleschannels.request.*
 import com.ecwid.apiclient.v3.dto.saleschannels.response.*
 import com.ecwid.apiclient.v3.dto.storage.request.*
 import com.ecwid.apiclient.v3.dto.storage.result.*
+import com.ecwid.apiclient.v3.dto.subscriptions.request.SubscriptionsSearchRequest
+import com.ecwid.apiclient.v3.dto.subscriptions.result.SubscriptionsSearchResult
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
@@ -58,6 +60,7 @@ open class ApiClient private constructor(
 	applicationApiClient: ApplicationApiClient,
 	applicationStorageApiClient: ApplicationStorageApiClient,
 	reportsApiClient: ReportsApiClientImpl,
+	subscriptionsApiClient: SubscriptionsApiClientImpl,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	ProductsApiClient by productsApiClient,
@@ -73,7 +76,8 @@ open class ApiClient private constructor(
 	SalesChannelsApiClient by salesChannelsApiClient,
 	ApplicationApiClient by applicationApiClient,
 	ApplicationStorageApiClient by applicationStorageApiClient,
-	ReportsApiClient by reportsApiClient {
+	ReportsApiClient by reportsApiClient,
+	SubscriptionsApiClient by subscriptionsApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -92,6 +96,7 @@ open class ApiClient private constructor(
 		applicationApiClient = ApplicationApiClientImpl(apiClientHelper),
 		applicationStorageApiClient = ApplicationStorageApiClientImpl(apiClientHelper),
 		reportsApiClient = ReportsApiClientImpl(apiClientHelper),
+		subscriptionsApiClient = SubscriptionsApiClientImpl(apiClientHelper),
 	)
 
 	companion object {
@@ -328,4 +333,10 @@ interface ApplicationStorageApiClient {
 // Report API
 interface ReportsApiClient {
 	fun fetchReport(request: ReportRequest): FetchedReportResponse
+}
+
+// Recurring subscriptions
+// https://api-docs.ecwid.com/reference/get-subscription
+interface SubscriptionsApiClient {
+	fun searchSubscriptions(request: SubscriptionsSearchRequest): SubscriptionsSearchResult
 }
