@@ -75,6 +75,7 @@ fun FetchedStoreProfile.Settings.toUpdated(): UpdatedStoreProfile.Settings {
 		googleRemarketingEnabled = googleRemarketingEnabled,
 		googleTagId = googleTagId,
 		hideOutOfStockProductsInStorefront = hideOutOfStockProductsInStorefront,
+		openBagOnAddition = openBagOnAddition,
 		orderCommentsCaption = orderCommentsCaption,
 		orderCommentsEnabled = orderCommentsEnabled,
 		orderCommentsRequired = orderCommentsRequired,

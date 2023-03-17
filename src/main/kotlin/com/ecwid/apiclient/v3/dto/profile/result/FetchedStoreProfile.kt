@@ -93,6 +93,7 @@ data class FetchedStoreProfile(
 		val googleTagId: String? = null,
 		val hideOutOfStockProductsInStorefront: Boolean? = null,
 		val invoiceLogoUrl: String? = null,
+		val openBagOnAddition: Boolean = false,
 		val orderCommentsCaption: String? = null,
 		val orderCommentsEnabled: Boolean? = null,
 		val orderCommentsRequired: Boolean? = null,

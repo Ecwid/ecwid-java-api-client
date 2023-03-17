@@ -65,6 +65,7 @@ data class UpdatedStoreProfile(
 		val orderCommentsCaption: String? = null,
 		val orderCommentsEnabled: Boolean? = null,
 		val orderCommentsRequired: Boolean? = null,
+		val openBagOnAddition: Boolean? = null,
 		val pinterestTagId: String? = null,
 		val productCondition: ProductCondition? = null,
 		val rootCategorySeoDescription: String? = null,
