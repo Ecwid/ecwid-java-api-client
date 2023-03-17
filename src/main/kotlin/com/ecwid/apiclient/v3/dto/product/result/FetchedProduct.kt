@@ -308,17 +308,17 @@ data class FetchedProduct(
 	)
 
 	data class ProductVideo(
-		var id: String = "0",
-		var videoCoverId: String? = null,
-		var url: String? = null,
-		var image160pxUrl: String? = null,
-		var image400pxUrl: String? = null,
-		var image800pxUrl: String? = null,
-		var image1500pxUrl: String? = null,
-		var imageOriginalUrl: String? = null,
-		var embedHtml: String? = null,
-		var providerName: String? = null,
-		var title: String? = null,
+		val id: String = "0",
+		val videoCoverId: String? = null,
+		val url: String? = null,
+		val image160pxUrl: String? = null,
+		val image400pxUrl: String? = null,
+		val image800pxUrl: String? = null,
+		val image1500pxUrl: String? = null,
+		val imageOriginalUrl: String? = null,
+		val embedHtml: String? = null,
+		val providerName: String? = null,
+		val title: String? = null,
 	)
 
 	data class ProductFile(
