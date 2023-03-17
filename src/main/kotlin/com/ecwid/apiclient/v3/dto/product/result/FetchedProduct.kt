@@ -292,7 +292,8 @@ data class FetchedProduct(
 	)
 
 	data class ProductMedia(
-		val images: List<ProductImage> = listOf()
+		val images: List<ProductImage> = listOf(),
+		val videos: List<ProductVideo> = listOf(),
 	)
 
 	data class ProductImage(
@@ -304,6 +305,20 @@ data class FetchedProduct(
 		val image800pxUrl: String? = null,
 		val image1500pxUrl: String? = null,
 		val imageOriginalUrl: String? = null
+	)
+
+	data class ProductVideo(
+		var id: String = "0",
+		var videoCoverId: String? = null,
+		var url: String? = null,
+		var image160pxUrl: String? = null,
+		var image400pxUrl: String? = null,
+		var image800pxUrl: String? = null,
+		var image1500pxUrl: String? = null,
+		var imageOriginalUrl: String? = null,
+		var embedHtml: String? = null,
+		var providerName: String? = null,
+		var title: String? = null,
 	)
 
 	data class ProductFile(
