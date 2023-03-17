@@ -95,7 +95,6 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct.ProductVideo::imageOriginalUrl),
 	IgnoreNullable(FetchedProduct.ProductVideo::embedHtml),
 	IgnoreNullable(FetchedProduct.ProductVideo::providerName),
-	IgnoreNullable(FetchedProduct.ProductVideo::imageOriginalUrl),
 	IgnoreNullable(FetchedProduct.ProductVideo::title),
 	IgnoreNullable(FetchedProduct.ProductOption::type),
 	IgnoreNullable(FetchedProduct.ProductOption.CheckboxOption::nameTranslated),
