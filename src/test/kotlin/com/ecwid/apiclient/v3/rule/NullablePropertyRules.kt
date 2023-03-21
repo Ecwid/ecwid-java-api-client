@@ -121,6 +121,8 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	ordersSearchRequestRequestNullablePropertyRules,
 	productDetailsRequestNullablePropertyRules,
 	productsSearchRequestNullablePropertyRules,
+	subscriptionsSearchRequestNullablePropertyRules,
+	fetchedSubscriptionsNullablePropertyRules,
 	otherNullablePropertyRules
 ).flatten()
 

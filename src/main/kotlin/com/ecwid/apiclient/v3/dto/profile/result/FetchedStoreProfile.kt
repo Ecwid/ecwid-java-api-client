@@ -250,7 +250,7 @@ data class FetchedStoreProfile(
 
 	@Suppress("unused")
 	enum class FulfilmentType {
-		pickup, shipping
+		pickup, shipping, delivery
 	}
 
 	data class Zone(
