@@ -309,14 +309,14 @@ data class FetchedProduct(
 
 	data class ProductVideo(
 		val id: String = "0",
+		val url: String = "",
+		val embedHtml: String = "",
 		val videoCoverId: String? = null,
-		val url: String? = null,
 		val image160pxUrl: String? = null,
 		val image400pxUrl: String? = null,
 		val image800pxUrl: String? = null,
 		val image1500pxUrl: String? = null,
 		val imageOriginalUrl: String? = null,
-		val embedHtml: String? = null,
 		val providerName: String? = null,
 		val title: String? = null,
 	)
