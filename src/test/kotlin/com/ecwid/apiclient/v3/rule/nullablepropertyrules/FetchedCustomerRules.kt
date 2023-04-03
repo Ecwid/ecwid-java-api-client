@@ -42,6 +42,6 @@ val fetchedCustomerNullablePropertyRules: List<NullablePropertyRule<*, *>> = lis
 	IgnoreNullable(FetchedCustomer.ShippingAddress::street),
 	AllowNullable(FetchedCustomer.ShippingAddress::note),
 	AllowNullable(FetchedCustomer.ShippingAddress::createdDate),
-	IgnoreNullable(FetchedCustomer.ShippingAddress::defaultAddress),
-	IgnoreNullable(FetchedCustomer.ShippingAddress::orderBy),
+	AllowNullable(FetchedCustomer.ShippingAddress::defaultAddress),
+	AllowNullable(FetchedCustomer.ShippingAddress::orderBy),
 )
