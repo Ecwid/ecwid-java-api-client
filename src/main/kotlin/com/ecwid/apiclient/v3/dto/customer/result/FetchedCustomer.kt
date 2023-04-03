@@ -52,7 +52,11 @@ data class FetchedCustomer(
 		val postalCode: String? = null,
 		val stateOrProvinceCode: String? = null,
 		val stateOrProvinceName: String? = null,
-		val phone: String? = null
+		val phone: String? = null,
+		val note: String? = null,
+		val createdDate: Date? = null,
+		val defaultAddress: Boolean? = null,
+		val orderBy: Int? = null,
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedCustomer::class)
