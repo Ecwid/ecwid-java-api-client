@@ -46,6 +46,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedProduct.ProductImage::image800pxUrl),
 	Ignored(FetchedProduct.ProductImage::image1500pxUrl),
 	Ignored(FetchedProduct.ProductImage::imageOriginalUrl),
+	ReadOnly(FetchedProduct.ProductMedia::videos),
 	ReadOnly(FetchedProduct.GalleryImage::borderInfo),
 	Ignored(FetchedProduct::files),
 	Ignored(FetchedProduct::favorites),
