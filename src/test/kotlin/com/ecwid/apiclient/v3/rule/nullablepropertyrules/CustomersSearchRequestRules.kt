@@ -12,8 +12,12 @@ val customersSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *>
 	AllowNullable(CustomersSearchRequest::keyword),
 	AllowNullable(CustomersSearchRequest::maxOrderCount),
 	AllowNullable(CustomersSearchRequest::minOrderCount),
+	AllowNullable(CustomersSearchRequest::maxSalesValue),
+	AllowNullable(CustomersSearchRequest::minSalesValue),
 	AllowNullable(CustomersSearchRequest::name),
 	AllowNullable(CustomersSearchRequest::sortBy),
 	AllowNullable(CustomersSearchRequest::updatedFrom),
-	AllowNullable(CustomersSearchRequest::updatedTo)
+	AllowNullable(CustomersSearchRequest::updatedTo),
+	AllowNullable(CustomersSearchRequest::purchasedProductId),
+	AllowNullable(CustomersSearchRequest::lang),
 )
