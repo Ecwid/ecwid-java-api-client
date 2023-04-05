@@ -21,6 +21,7 @@ data class FetchedCustomer(
 	val taxExempt: Boolean? = null,
 	val acceptMarketing: Boolean? = null,
 	val lang: String? = null,
+	val customerStats: CustomerStats? = null,
 
 	@JsonFieldName("b2b_b2c")
 	val commercialRelationshipScheme: CommercialRelationshipScheme = CommercialRelationshipScheme.b2c,
@@ -57,6 +58,14 @@ data class FetchedCustomer(
 		val createdDate: Date? = null,
 		val defaultAddress: Boolean? = null,
 		val orderBy: Int? = null,
+	)
+
+	data class CustomerStats(
+		val numberOfOrders: Int = 0,
+		val salesValue: Double = 0.0,
+		val averageOrderValue: Double = 0.0,
+		val firstOrderDate: Date? = null,
+		val lastOrderDate: Date? = null,
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedCustomer::class)
