@@ -54,9 +54,9 @@ internal class CategoriesApiClientImpl(
 	override fun deleteCategoryImage(request: CategoryImageDeleteRequest) =
 		apiClientHelper.makeObjectResultRequest<CategoryImageDeleteResult>(request)
 
-	override fun assignProductsToCategory(request: CategoryAssignProductsRequest): CategoryUpdateResult =
+	override fun assignProductsToCategory(request: AssignProductsToCategoryRequest): CategoryUpdateResult =
 		apiClientHelper.makeObjectResultRequest(request)
 
-	override fun unassignProductsFromCategory(request: CategoryUnassignProductsRequest): CategoryDeleteResult =
+	override fun unassignProductsFromCategory(request: UnassignProductsFromCategoryRequest): CategoryDeleteResult =
 		apiClientHelper.makeObjectResultRequest(request)
 }

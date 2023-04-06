@@ -473,11 +473,11 @@ class CategoriesTest : BaseEntityTest() {
 		// Assign products to category
 		val productIds = listOf(productCreateResult1.id, productCreateResult2.id)
 
-		val assignRequest1 = CategoryAssignProductsRequest(categoryCreateResult1.id, productIds)
+		val assignRequest1 = AssignProductsToCategoryRequest(categoryCreateResult1.id, productIds)
 		val assignResult1 = apiClient.assignProductsToCategory(assignRequest1)
 		assertEquals(1, assignResult1.updateCount)
 
-		val assignRequest2 = CategoryAssignProductsRequest(categoryCreateResult2.id, productIds)
+		val assignRequest2 = AssignProductsToCategoryRequest(categoryCreateResult2.id, productIds)
 		val assignResult2 = apiClient.assignProductsToCategory(assignRequest2)
 		assertEquals(1, assignResult2.updateCount)
 
@@ -488,11 +488,11 @@ class CategoriesTest : BaseEntityTest() {
 		assertEquals(productIds, categoryAfterAssign2.productIds)
 
 		// Unassign products from category
-		val unassignRequest1 = CategoryUnassignProductsRequest(categoryCreateResult1.id, listOf(productCreateResult1.id))
+		val unassignRequest1 = UnassignProductsFromCategoryRequest(categoryCreateResult1.id, listOf(productCreateResult1.id))
 		val unassignResult1 = apiClient.unassignProductsFromCategory(unassignRequest1)
 		assertEquals(1, unassignResult1.deleteCount)
 
-		val unassignRequest2 = CategoryUnassignProductsRequest(categoryCreateResult2.id, listOf(productCreateResult2.id))
+		val unassignRequest2 = UnassignProductsFromCategoryRequest(categoryCreateResult2.id, listOf(productCreateResult2.id))
 		val unassignResult2 = apiClient.unassignProductsFromCategory(unassignRequest2)
 		assertEquals(1, unassignResult2.deleteCount)
 

@@ -4,7 +4,7 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
-data class CategoryAssignProductsRequest(
+data class UnassignProductsFromCategoryRequest(
 	val categoryId: Int = 0,
 	val productIds: List<Int> = emptyList()
 ) : ApiRequest {
@@ -12,7 +12,7 @@ data class CategoryAssignProductsRequest(
 		pathSegments = listOf(
 			"categories",
 			"$categoryId",
-			"assignProducts"
+			"unassignProducts"
 		),
 		httpBody = HttpBody.JsonBody(CategoryProductIds(productIds))
 	)
