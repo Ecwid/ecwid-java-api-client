@@ -13,7 +13,7 @@ plugins {
 	id("nebula.release") version "17.1.0"
 	id("maven-publish")
 	id("io.gitlab.arturbosch.detekt") version "1.22.0"
-	id("org.gradle.test-retry") version "1.4.1"
+	id("org.gradle.test-retry") version "1.5.2"
 }
 
 repositories {
