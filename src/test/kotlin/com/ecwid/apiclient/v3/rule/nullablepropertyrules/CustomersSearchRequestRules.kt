@@ -19,5 +19,7 @@ val customersSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *>
 	AllowNullable(CustomersSearchRequest::updatedFrom),
 	AllowNullable(CustomersSearchRequest::updatedTo),
 	AllowNullable(CustomersSearchRequest::purchasedProductId),
+	AllowNullable(CustomersSearchRequest::taxExempt),
+	AllowNullable(CustomersSearchRequest::acceptMarketing),
 	AllowNullable(CustomersSearchRequest::lang),
 )

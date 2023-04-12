@@ -14,6 +14,8 @@ data class CustomersSearchRequest(
 	val maxOrderCount: Int? = null,
 	val minSalesValue: Int? = null,
 	val maxSalesValue: Int? = null,
+	val taxExempt: Boolean? = null,
+	val acceptMarketing: Boolean? = null,
 	val purchasedProductId: String? = null,
 	val createdFrom: Date? = null,
 	val createdTo: Date? = null,
@@ -65,6 +67,8 @@ data class CustomersSearchRequest(
 			request.createdTo?.let { put("createdTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			request.updatedFrom?.let { put("updatedFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			request.updatedTo?.let { put("updatedTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
+			request.taxExempt?.let { put("taxExempt", it.toString()) }
+			request.acceptMarketing?.let { put("acceptMarketing", it.toString()) }
 			request.purchasedProductId?.let { put("purchasedProductId", it) }
 			request.lang?.let { put("lang", it) }
 			request.sortBy?.let { put("sortBy", it.name) }
