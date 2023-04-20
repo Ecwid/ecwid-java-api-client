@@ -450,6 +450,59 @@ class CategoriesTest : BaseEntityTest() {
 		}
 	}
 
+	@Test
+	fun testAssignProductsToCategory() {
+		// Create new products to put into new categories
+		val productCreateRequest1 = ProductCreateRequest(generateTestProduct("testAssignProductsToCategory", enabled = true))
+		val productCreateResult1 = apiClient.createProduct(productCreateRequest1)
+		assertTrue(productCreateResult1.id > 0)
+
+		val productCreateRequest2 = ProductCreateRequest(generateTestProduct("testAssignProductsToCategory", enabled = false))
+		val productCreateResult2 = apiClient.createProduct(productCreateRequest2)
+		assertTrue(productCreateResult2.id > 0)
+
+		// Create new categories
+		val categoryCreateRequest1 = CategoryCreateRequest(generateTestCategory(enabled = true))
+		val categoryCreateResult1 = apiClient.createCategory(categoryCreateRequest1)
+		assertTrue(categoryCreateResult1.id > 0)
+
+		val categoryCreateRequest2 = CategoryCreateRequest(generateTestCategory(enabled = false))
+		val categoryCreateResult2 = apiClient.createCategory(categoryCreateRequest2)
+		assertTrue(categoryCreateResult2.id > 0)
+
+		// Assign products to category
+		val productIds = listOf(productCreateResult1.id, productCreateResult2.id)
+
+		val assignRequest1 = AssignProductsToCategoryRequest(categoryCreateResult1.id, productIds)
+		val assignResult1 = apiClient.assignProductsToCategory(assignRequest1)
+		assertEquals(1, assignResult1.updateCount)
+
+		val assignRequest2 = AssignProductsToCategoryRequest(categoryCreateResult2.id, productIds)
+		val assignResult2 = apiClient.assignProductsToCategory(assignRequest2)
+		assertEquals(1, assignResult2.updateCount)
+
+		val categoryAfterAssign1 = apiClient.getCategoryDetails(CategoryDetailsRequest(categoryCreateResult1.id))
+		assertEquals(productIds, categoryAfterAssign1.productIds)
+
+		val categoryAfterAssign2 = apiClient.getCategoryDetails(CategoryDetailsRequest(categoryCreateResult2.id))
+		assertEquals(productIds, categoryAfterAssign2.productIds)
+
+		// Unassign products from category
+		val unassignRequest1 = UnassignProductsFromCategoryRequest(categoryCreateResult1.id, listOf(productCreateResult1.id))
+		val unassignResult1 = apiClient.unassignProductsFromCategory(unassignRequest1)
+		assertEquals(1, unassignResult1.deleteCount)
+
+		val unassignRequest2 = UnassignProductsFromCategoryRequest(categoryCreateResult2.id, listOf(productCreateResult2.id))
+		val unassignResult2 = apiClient.unassignProductsFromCategory(unassignRequest2)
+		assertEquals(1, unassignResult2.deleteCount)
+
+		val categoryAfterUnassign1 = apiClient.getCategoryDetails(CategoryDetailsRequest(categoryCreateResult1.id))
+		assertEquals(listOf(productCreateResult2.id), categoryAfterUnassign1.productIds)
+
+		val categoryAfterUnassign2 = apiClient.getCategoryDetails(CategoryDetailsRequest(categoryCreateResult2.id))
+		assertEquals(listOf(productCreateResult1.id), categoryAfterUnassign2.productIds)
+	}
+
 	private fun assertCategory(
 		desiredId: Int,
 		desiredProductIds: List<Int>?,
