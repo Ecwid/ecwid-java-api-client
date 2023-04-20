@@ -99,7 +99,7 @@ class CustomersTest : BaseEntityTest() {
 		val customerDetails2 = apiClient.getCustomerDetails(customerDetailsRequest)
 		assertEquals(
 			customerUpdateRequest.updatedCustomer,
-			customerDetails2.withSortedShippingAddresses().toUpdated()
+			customerDetails2.withSortedShippingAddresses().toUpdated().cleanupForComparisonAfterUpdate()
 		)
 
 		// Deleting customer
@@ -361,7 +361,16 @@ private fun UpdatedCustomer.cleanupForComparison(customerCreateRequest: Customer
 		password = customerCreateRequest.newCustomer.password,
 		// Shipping address ids were just added by server side
 		shippingAddresses = shippingAddresses?.map { shippingAddress ->
-			shippingAddress.copy(id = null)
+			shippingAddress.copy(id = null, defaultAddress = null, orderBy = null)
+		}
+	)
+}
+
+private fun UpdatedCustomer.cleanupForComparisonAfterUpdate(): UpdatedCustomer {
+	return copy(
+		// Shipping address defaultAddresses and ordersBy were just added by server side
+		shippingAddresses = shippingAddresses?.map { shippingAddress ->
+			shippingAddress.copy(defaultAddress = null, orderBy = null)
 		}
 	)
 }
