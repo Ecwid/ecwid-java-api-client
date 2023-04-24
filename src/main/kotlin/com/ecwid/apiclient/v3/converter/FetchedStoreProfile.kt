@@ -40,12 +40,39 @@ fun FetchedStoreProfile.InstantSiteInfo.toUpdated(): UpdatedStoreProfile.Instant
 
 fun FetchedStoreProfile.WebsitePlatform.toUpdated(): UpdatedStoreProfile.WebsitePlatform {
 	return when (this) {
+		FetchedStoreProfile.WebsitePlatform.unknown -> UpdatedStoreProfile.WebsitePlatform.unknown
+
+		FetchedStoreProfile.WebsitePlatform.adobeMuse -> UpdatedStoreProfile.WebsitePlatform.adobeMuse
+		FetchedStoreProfile.WebsitePlatform.bitrix24 -> UpdatedStoreProfile.WebsitePlatform.bitrix24
+		FetchedStoreProfile.WebsitePlatform.blogger -> UpdatedStoreProfile.WebsitePlatform.blogger
+		FetchedStoreProfile.WebsitePlatform.drupal -> UpdatedStoreProfile.WebsitePlatform.drupal
+		FetchedStoreProfile.WebsitePlatform.duda -> UpdatedStoreProfile.WebsitePlatform.duda
+		FetchedStoreProfile.WebsitePlatform.etsy -> UpdatedStoreProfile.WebsitePlatform.etsy
+		FetchedStoreProfile.WebsitePlatform.facebook -> UpdatedStoreProfile.WebsitePlatform.facebook
+		FetchedStoreProfile.WebsitePlatform.godaddy -> UpdatedStoreProfile.WebsitePlatform.godaddy
+		FetchedStoreProfile.WebsitePlatform.google_sites -> UpdatedStoreProfile.WebsitePlatform.google_sites
+		FetchedStoreProfile.WebsitePlatform.iframe -> UpdatedStoreProfile.WebsitePlatform.iframe
+		FetchedStoreProfile.WebsitePlatform.instagram -> UpdatedStoreProfile.WebsitePlatform.instagram
+		FetchedStoreProfile.WebsitePlatform.instantsite -> UpdatedStoreProfile.WebsitePlatform.instantsite
+		FetchedStoreProfile.WebsitePlatform.jimdo -> UpdatedStoreProfile.WebsitePlatform.jimdo
+		FetchedStoreProfile.WebsitePlatform.joomla -> UpdatedStoreProfile.WebsitePlatform.joomla
+		FetchedStoreProfile.WebsitePlatform.prestashop -> UpdatedStoreProfile.WebsitePlatform.prestashop
+		FetchedStoreProfile.WebsitePlatform.rapidWeaver -> UpdatedStoreProfile.WebsitePlatform.rapidWeaver
+		FetchedStoreProfile.WebsitePlatform.shopify -> UpdatedStoreProfile.WebsitePlatform.shopify
+		FetchedStoreProfile.WebsitePlatform.squarespace -> UpdatedStoreProfile.WebsitePlatform.squarespace
+		FetchedStoreProfile.WebsitePlatform.strikingly -> UpdatedStoreProfile.WebsitePlatform.strikingly
+		FetchedStoreProfile.WebsitePlatform.tilda -> UpdatedStoreProfile.WebsitePlatform.tilda
+		FetchedStoreProfile.WebsitePlatform.tumblr -> UpdatedStoreProfile.WebsitePlatform.tumblr
+		FetchedStoreProfile.WebsitePlatform.typo3 -> UpdatedStoreProfile.WebsitePlatform.typo3
+		FetchedStoreProfile.WebsitePlatform.ucraft -> UpdatedStoreProfile.WebsitePlatform.ucraft
+		FetchedStoreProfile.WebsitePlatform.ukit -> UpdatedStoreProfile.WebsitePlatform.ukit
+		FetchedStoreProfile.WebsitePlatform.webflow -> UpdatedStoreProfile.WebsitePlatform.webflow
+		FetchedStoreProfile.WebsitePlatform.weblium -> UpdatedStoreProfile.WebsitePlatform.weblium
+		FetchedStoreProfile.WebsitePlatform.weebly -> UpdatedStoreProfile.WebsitePlatform.weebly
 		FetchedStoreProfile.WebsitePlatform.wix -> UpdatedStoreProfile.WebsitePlatform.wix
 		FetchedStoreProfile.WebsitePlatform.wordpress -> UpdatedStoreProfile.WebsitePlatform.wordpress
-		FetchedStoreProfile.WebsitePlatform.iframe -> UpdatedStoreProfile.WebsitePlatform.iframe
-		FetchedStoreProfile.WebsitePlatform.joomla -> UpdatedStoreProfile.WebsitePlatform.joomla
+		FetchedStoreProfile.WebsitePlatform.xara -> UpdatedStoreProfile.WebsitePlatform.xara
 		FetchedStoreProfile.WebsitePlatform.yola -> UpdatedStoreProfile.WebsitePlatform.yola
-		FetchedStoreProfile.WebsitePlatform.unknown -> UpdatedStoreProfile.WebsitePlatform.unknown
 	}
 }
 
