@@ -35,8 +35,41 @@ data class UpdatedStoreProfile(
 		val customDomain: String? = null
 	)
 
+	@Suppress("unused")
 	enum class WebsitePlatform {
-		wix, wordpress, iframe, joomla, yola, unknown
+		unknown,
+
+		adobeMuse,
+		bitrix24,
+		blogger,
+		drupal,
+		duda,
+		etsy,
+		facebook,
+		godaddy,
+		google_sites,
+		iframe,
+		instagram,
+		instantsite,
+		jimdo,
+		joomla,
+		prestashop,
+		rapidWeaver,
+		shopify,
+		squarespace,
+		strikingly,
+		tilda,
+		tumblr,
+		typo3,
+		ucraft,
+		ukit,
+		webflow,
+		weblium,
+		weebly,
+		wix,
+		wordpress,
+		xara,
+		yola,
 	}
 
 	data class Account(
