@@ -431,6 +431,7 @@ data class FetchedStoreProfile(
 
 	data class PaymentOptionInfo(
 		val appClientId: String? = null,
+		val appNamespace: String? = null,
 		val checkoutDescription: String? = null,
 		val checkoutTitle: String? = null,
 		val configured: Boolean? = null,
