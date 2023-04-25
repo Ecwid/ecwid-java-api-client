@@ -482,10 +482,10 @@ class CategoriesTest : BaseEntityTest() {
 		assertEquals(1, assignResult2.updateCount)
 
 		val categoryAfterAssign1 = apiClient.getCategoryDetails(CategoryDetailsRequest(categoryCreateResult1.id))
-		assertEquals(productIds, categoryAfterAssign1.productIds)
+		assertEqualsIgnoreOrder(productIds, categoryAfterAssign1.productIds)
 
 		val categoryAfterAssign2 = apiClient.getCategoryDetails(CategoryDetailsRequest(categoryCreateResult2.id))
-		assertEquals(productIds, categoryAfterAssign2.productIds)
+		assertEqualsIgnoreOrder(productIds, categoryAfterAssign2.productIds)
 
 		// Unassign products from category
 		val unassignRequest1 = UnassignProductsFromCategoryRequest(categoryCreateResult1.id, listOf(productCreateResult1.id))
@@ -611,4 +611,8 @@ private fun UpdatedCategory.cleanupForComparison(): UpdatedCategory {
 		// orderBy can be changed by internal ecwid rules so reset it
 		orderBy = 10
 	)
+}
+
+private fun <T : Comparable<T>> assertEqualsIgnoreOrder(expected: Iterable<T>, actual: Iterable<T>?) {
+	assertEquals(expected.sorted(), actual?.sorted())
 }
