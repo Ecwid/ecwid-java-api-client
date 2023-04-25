@@ -4,16 +4,17 @@ import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 
 data class UpdatedPaymentOption(
-	val enabled: Boolean? = null,
-	val configured: Boolean? = null,
-	val checkoutTitle: String? = null,
-	val checkoutDescription: String? = null,
-	val paymentProcessorId: String? = null,
-	val orderBy: Int? = null,
 	val appClientId: String? = null,
+	val appNamespace: String? = null,
+	val checkoutDescription: String? = null,
+	val checkoutTitle: String? = null,
+	val configured: Boolean? = null,
+	val enabled: Boolean? = null,
 	val instructionsForCustomer: InstructionsForCustomerInfo? = null,
-	val shippingSettings: ShippingSettings? = null,
 	val methods: List<PaymentMethod>? = null,
+	val orderBy: Int? = null,
+	val paymentProcessorId: String? = null,
+	val shippingSettings: ShippingSettings? = null,
 	val supportsSubtypes: Boolean? = null,
 ) : ApiUpdatedDTO {
 
@@ -31,5 +32,6 @@ data class UpdatedPaymentOption(
 		val subtype: String? = null,
 		val subtypeMethodName: String? = null,
 	)
+
 	override fun getModifyKind() = ApiUpdatedDTO.ModifyKind.ReadWrite(FetchedStoreProfile.PaymentOptionInfo::class)
 }

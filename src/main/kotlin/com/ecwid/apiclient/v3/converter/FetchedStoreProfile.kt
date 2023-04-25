@@ -370,31 +370,38 @@ fun FetchedStoreProfile.OrderInvoiceSettings.AttachValue.toUpdated(): UpdatedSto
 
 fun FetchedStoreProfile.PaymentOptionInfo.toUpdated(): UpdatedPaymentOption {
 	return UpdatedPaymentOption(
-		enabled = enabled,
-		configured = configured,
-		checkoutTitle = checkoutTitle,
-		checkoutDescription = checkoutDescription,
-		paymentProcessorId = paymentProcessorId,
-		orderBy = orderBy,
 		appClientId = appClientId,
-		instructionsForCustomer = instructionsForCustomer?.let {
-			UpdatedPaymentOption.InstructionsForCustomerInfo(
-				instructionsTitle = it.instructionsTitle,
-				instructions = it.instructions,
-			)
-		},
-		shippingSettings = shippingSettings?.let {
-			UpdatedPaymentOption.ShippingSettings(
-				enabledShippingMethods = it.enabledShippingMethods,
-			)
-		},
-		methods = methods?.map {
-			UpdatedPaymentOption.PaymentMethod(
-				cards = it.cards,
-				subtype = it.subtype,
-				subtypeMethodName = it.subtypeMethodName,
-			)
-		},
+		appNamespace = appNamespace,
+		checkoutDescription = checkoutDescription,
+		checkoutTitle = checkoutTitle,
+		configured = configured,
+		enabled = enabled,
+		instructionsForCustomer = instructionsForCustomer?.toUpdated(),
+		methods = methods?.map(FetchedStoreProfile.PaymentMethod::toUpdated),
+		orderBy = orderBy,
+		paymentProcessorId = paymentProcessorId,
+		shippingSettings = shippingSettings?.toUpdated(),
 		supportsSubtypes = supportsSubtypes,
+	)
+}
+
+private fun FetchedStoreProfile.InstructionsForCustomerInfo.toUpdated(): UpdatedPaymentOption.InstructionsForCustomerInfo {
+	return UpdatedPaymentOption.InstructionsForCustomerInfo(
+		instructionsTitle = instructionsTitle,
+		instructions = instructions,
+	)
+}
+
+private fun FetchedStoreProfile.PaymentMethod.toUpdated(): UpdatedPaymentOption.PaymentMethod {
+	return UpdatedPaymentOption.PaymentMethod(
+		cards = cards,
+		subtype = subtype,
+		subtypeMethodName = subtypeMethodName,
+	)
+}
+
+private fun FetchedStoreProfile.ShippingSettings.toUpdated(): UpdatedPaymentOption.ShippingSettings {
+	return UpdatedPaymentOption.ShippingSettings(
+		enabledShippingMethods = enabledShippingMethods,
 	)
 }
