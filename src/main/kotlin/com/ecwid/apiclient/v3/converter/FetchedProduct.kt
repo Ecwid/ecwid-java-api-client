@@ -42,7 +42,9 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		isSampleProduct = isSampleProduct,
 
 		seoTitle = seoTitle,
+		seoTitleTranslated = seoTitleTranslated,
 		seoDescription = seoDescription,
+		seoDescriptionTranslated = seoDescriptionTranslated,
 
 		options = options?.map(FetchedProduct.ProductOption::toUpdated),
 		tax = tax?.toUpdated(),
