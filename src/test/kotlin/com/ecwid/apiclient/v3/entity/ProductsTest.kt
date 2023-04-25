@@ -1390,13 +1390,13 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 
 		seoTitle = "SEO Title " + randomAlphanumeric(16),
 		seoTitleTranslated = LocalizedValueMap(
-			"ru" to "",
-			"en" to ""
+			"ru" to "RU SEO Title " + randomAlphanumeric(16),
+			"en" to "EN SEO Title " + randomAlphanumeric(16),
 		),
 		seoDescription = "SEO Description " + randomAlphanumeric(16),
 		seoDescriptionTranslated = LocalizedValueMap(
-			"ru" to "",
-			"en" to ""
+			"ru" to "RU SEO Description " + randomAlphanumeric(16),
+			"en" to "EN SEO Description " + randomAlphanumeric(16),
 		),
 
 		options = listOf(
