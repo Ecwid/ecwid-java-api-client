@@ -16,6 +16,7 @@ data class FetchedCustomer(
 	val customerGroupName: String? = null,
 	val billingPerson: BillingPerson? = null,
 	val shippingAddresses: List<ShippingAddress>? = null,
+	val contacts: List<CustomerContact>? = null,
 	val taxId: String? = null,
 	val taxIdValid: Boolean? = null,
 	val taxExempt: Boolean? = null,
@@ -66,6 +67,17 @@ data class FetchedCustomer(
 		val averageOrderValue: Double = 0.0,
 		val firstOrderDate: Date? = null,
 		val lastOrderDate: Date? = null,
+	)
+
+	data class CustomerContact(
+		val id: Long = 0,
+		val contact: String = "",
+		val handle: String? = null,
+		val note: String? = null,
+		val type: String = "",
+		val default: Boolean = false,
+		val orderBy: Int = 0,
+		val timestamp: Date? = null,
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedCustomer::class)
