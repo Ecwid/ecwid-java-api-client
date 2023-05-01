@@ -44,4 +44,7 @@ internal data class CustomersApiClientImpl(
 			offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
 		} while (searchResult.count >= searchResult.limit)
 	}
+
+	override fun searchCustomersProducts(request: CustomersProductsSearchRequest) =
+		apiClientHelper.makeObjectResultRequest<CustomersProductsSearchResult>(request)
 }
