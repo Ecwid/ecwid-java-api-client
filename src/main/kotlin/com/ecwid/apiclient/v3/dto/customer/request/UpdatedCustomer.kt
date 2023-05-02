@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.customer.enums.CommercialRelationshipScheme
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
+import java.util.*
 
 data class UpdatedCustomer(
 	val email: String = "",
@@ -42,7 +43,10 @@ data class UpdatedCustomer(
 		val countryCode: String? = null,
 		val postalCode: String? = null,
 		val stateOrProvinceCode: String? = null,
-		val phone: String? = null
+		val phone: String? = null,
+		val note: String? = null,
+		val defaultAddress: Boolean? = null,
+		val orderBy: Int? = null,
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedCustomer::class)

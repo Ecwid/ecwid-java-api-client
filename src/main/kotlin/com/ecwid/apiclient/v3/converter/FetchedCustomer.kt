@@ -41,6 +41,9 @@ fun FetchedCustomer.ShippingAddress.toUpdated(): UpdatedCustomer.ShippingAddress
 		countryCode = countryCode,
 		postalCode = postalCode,
 		stateOrProvinceCode = stateOrProvinceCode,
-		phone = phone
+		phone = phone,
+		note = note,
+		defaultAddress = defaultAddress,
+		orderBy = orderBy,
 	)
 }

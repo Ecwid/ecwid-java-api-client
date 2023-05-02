@@ -12,10 +12,16 @@ data class CustomersSearchRequest(
 	val customerGroupId: Int? = null,
 	val minOrderCount: Int? = null,
 	val maxOrderCount: Int? = null,
+	val minSalesValue: Int? = null,
+	val maxSalesValue: Int? = null,
+	val taxExempt: Boolean? = null,
+	val acceptMarketing: Boolean? = null,
+	val purchasedProductId: String? = null,
 	val createdFrom: Date? = null,
 	val createdTo: Date? = null,
 	val updatedFrom: Date? = null,
 	val updatedTo: Date? = null,
+	val lang: String? = null,
 	val sortBy: SortOrder? = null,
 	val offset: Int = 0,
 	val limit: Int = 100
@@ -37,7 +43,13 @@ data class CustomersSearchRequest(
 		REGISTERED_DATE_DESC,
 		REGISTERED_DATE_ASC,
 		UPDATED_DATE_DESC,
-		UPDATED_DATE_ASC
+		UPDATED_DATE_ASC,
+		SALES_VALUE_ASC,
+		SALES_VALUE_DESC,
+		FIRST_ORDER_DATE_ASC,
+		FIRST_ORDER_DATE_DESC,
+		LAST_ORDER_DATE_ASC,
+		LAST_ORDER_DATE_DESC,
 	}
 
 	private fun toParams(): Map<String, String> {
@@ -49,10 +61,16 @@ data class CustomersSearchRequest(
 			request.customerGroupId?.let { put("customerGroup", it.toString()) }
 			request.minOrderCount?.let { put("minOrderCount", it.toString()) }
 			request.maxOrderCount?.let { put("maxOrderCount", it.toString()) }
+			request.minSalesValue?.let { put("minSalesValue", it.toString()) }
+			request.maxSalesValue?.let { put("maxSalesValue", it.toString()) }
 			request.createdFrom?.let { put("createdFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			request.createdTo?.let { put("createdTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			request.updatedFrom?.let { put("updatedFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			request.updatedTo?.let { put("updatedTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
+			request.taxExempt?.let { put("taxExempt", it.toString()) }
+			request.acceptMarketing?.let { put("acceptMarketing", it.toString()) }
+			request.purchasedProductId?.let { put("purchasedProductId", it) }
+			request.lang?.let { put("lang", it) }
 			request.sortBy?.let { put("sortBy", it.name) }
 			put("offset", request.offset.toString())
 			put("limit", request.limit.toString())

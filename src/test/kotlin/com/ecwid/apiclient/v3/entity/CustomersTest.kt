@@ -99,7 +99,7 @@ class CustomersTest : BaseEntityTest() {
 		val customerDetails2 = apiClient.getCustomerDetails(customerDetailsRequest)
 		assertEquals(
 			customerUpdateRequest.updatedCustomer,
-			customerDetails2.withSortedShippingAddresses().toUpdated()
+			customerDetails2.withSortedShippingAddresses().toUpdated().cleanupForComparisonAfterUpdate()
 		)
 
 		// Deleting customer
@@ -287,6 +287,15 @@ class CustomersTest : BaseEntityTest() {
 
 		assertCustomersSortBySearch(customerCreateResult1.id, SortOrder.UPDATED_DATE_ASC)
 		assertCustomersSortBySearch(customerCreateResult2.id, SortOrder.UPDATED_DATE_DESC)
+ 		// TODO раскомментировать после выхода ECWID-115142
+ 		// assertCustomersSortBySearch(customerCreateResult1.id, SortOrder.SALES_VALUE_ASC)
+      	// assertCustomersSortBySearch(customerCreateResult2.id, SortOrder.SALES_VALUE_DESC)
+
+		// assertCustomersSortBySearch(customerCreateResult1.id, SortOrder.FIRST_ORDER_DATE_ASC)
+		// assertCustomersSortBySearch(customerCreateResult2.id, SortOrder.FIRST_ORDER_DATE_DESC)
+
+		// assertCustomersSortBySearch(customerCreateResult1.id, SortOrder.LAST_ORDER_DATE_ASC)
+		// assertCustomersSortBySearch(customerCreateResult2.id, SortOrder.LAST_ORDER_DATE_DESC)
 	}
 
 	@Test
@@ -352,7 +361,16 @@ private fun UpdatedCustomer.cleanupForComparison(customerCreateRequest: Customer
 		password = customerCreateRequest.newCustomer.password,
 		// Shipping address ids were just added by server side
 		shippingAddresses = shippingAddresses?.map { shippingAddress ->
-			shippingAddress.copy(id = null)
+			shippingAddress.copy(id = null, defaultAddress = null, orderBy = null)
+		}
+	)
+}
+
+private fun UpdatedCustomer.cleanupForComparisonAfterUpdate(): UpdatedCustomer {
+	return copy(
+		// Shipping address defaultAddresses and ordersBy were just added by server side
+		shippingAddresses = shippingAddresses?.map { shippingAddress ->
+			shippingAddress.copy(defaultAddress = null, orderBy = null)
 		}
 	)
 }
