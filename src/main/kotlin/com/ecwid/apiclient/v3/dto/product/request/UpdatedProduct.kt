@@ -42,7 +42,9 @@ data class UpdatedProduct(
 	val attributes: List<AttributeValue>? = null,
 
 	val seoTitle: String? = null,
+	val seoTitleTranslated: LocalizedValueMap? = null,
 	val seoDescription: String? = null,
+	val seoDescriptionTranslated: LocalizedValueMap? = null,
 
 	val options: List<ProductOption>? = null,
 	val tax: TaxInfo? = null,

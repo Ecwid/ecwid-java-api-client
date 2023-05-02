@@ -48,8 +48,41 @@ data class FetchedStoreProfile(
 		val ecwidSubdomainSuffix: String? = null
 	)
 
+	@Suppress("unused")
 	enum class WebsitePlatform {
-		wix, wordpress, iframe, joomla, yola, unknown
+		unknown,
+
+		adobeMuse,
+		bitrix24,
+		blogger,
+		drupal,
+		duda,
+		etsy,
+		facebook,
+		godaddy,
+		google_sites,
+		iframe,
+		instagram,
+		instantsite,
+		jimdo,
+		joomla,
+		prestashop,
+		rapidWeaver,
+		shopify,
+		squarespace,
+		strikingly,
+		tilda,
+		tumblr,
+		typo3,
+		ucraft,
+		ukit,
+		webflow,
+		weblium,
+		weebly,
+		wix,
+		wordpress,
+		xara,
+		yola,
 	}
 
 	data class Account(
@@ -397,18 +430,19 @@ data class FetchedStoreProfile(
 	)
 
 	data class PaymentOptionInfo(
-		val id: String? = null,
+		val appClientId: String? = null,
+		val appNamespace: String? = null,
+		val checkoutDescription: String? = null,
+		val checkoutTitle: String? = null,
 		val configured: Boolean? = null,
 		val enabled: Boolean? = null,
-		val checkoutTitle: String? = null,
-		val checkoutDescription: String? = null,
+		val id: String? = null,
+		val instructionsForCustomer: InstructionsForCustomerInfo? = null,
+		val methods: List<PaymentMethod>? = null,
+		val orderBy: Int? = null,
 		val paymentProcessorId: String? = null,
 		val paymentProcessorTitle: String? = null,
-		val orderBy: Int? = null,
-		val appClientId: String? = null,
-		val instructionsForCustomer: InstructionsForCustomerInfo? = null,
 		val shippingSettings: ShippingSettings? = null,
-		val methods: List<PaymentMethod>? = null,
 		val supportsSubtypes: Boolean? = null,
 	) : ApiFetchedDTO {
 		override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedPaymentOption::class)
