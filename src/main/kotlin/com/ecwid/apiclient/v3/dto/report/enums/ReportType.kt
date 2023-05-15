@@ -4,4 +4,5 @@ enum class ReportType {
 	allTraffic,
 	newVsReturningVisitors,
 	visitorsByDevice,
+	allOrders,
 }
