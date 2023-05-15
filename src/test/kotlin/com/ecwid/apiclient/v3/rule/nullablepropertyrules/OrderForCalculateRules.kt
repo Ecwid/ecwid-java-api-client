@@ -2,17 +2,27 @@ package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
 import com.ecwid.apiclient.v3.dto.cart.request.OrderForCalculate
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
+import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 
 val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(OrderForCalculate::billingPerson),
 	IgnoreNullable(OrderForCalculate::customerId),
+	AllowNullable(OrderForCalculate::customSurcharges),
 	IgnoreNullable(OrderForCalculate::discountCoupon),
 	IgnoreNullable(OrderForCalculate::discountInfo),
 	IgnoreNullable(OrderForCalculate::email),
+	AllowNullable(OrderForCalculate::handlingFee),
 	IgnoreNullable(OrderForCalculate::ipAddress),
 	IgnoreNullable(OrderForCalculate::items),
+	AllowNullable(OrderForCalculate::paymentOptionsDetails),
+	AllowNullable(OrderForCalculate::shippingOption),
 	IgnoreNullable(OrderForCalculate::shippingPerson),
+	AllowNullable(OrderForCalculate.CustomSurcharge::description),
+	AllowNullable(OrderForCalculate.CustomSurcharge::id),
+	AllowNullable(OrderForCalculate.CustomSurcharge::taxable),
+	AllowNullable(OrderForCalculate.CustomSurcharge::type),
+	AllowNullable(OrderForCalculate.CustomSurcharge::value),
 	IgnoreNullable(OrderForCalculate.DiscountCouponCatalogLimit::categories),
 	IgnoreNullable(OrderForCalculate.DiscountCouponCatalogLimit::products),
 	IgnoreNullable(OrderForCalculate.DiscountCouponInfo::applicationLimit),
@@ -33,6 +43,13 @@ val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = l
 	IgnoreNullable(OrderForCalculate.DiscountInfo::orderTotal),
 	IgnoreNullable(OrderForCalculate.DiscountInfo::type),
 	IgnoreNullable(OrderForCalculate.DiscountInfo::value),
+	AllowNullable(OrderForCalculate.HandlingFee::description),
+	AllowNullable(OrderForCalculate.HandlingFee::name),
+	AllowNullable(OrderForCalculate.HandlingFee::taxes),
+	AllowNullable(OrderForCalculate.HandlingFee::value),
+	AllowNullable(OrderForCalculate.HandlingFeeTax::name),
+	AllowNullable(OrderForCalculate.HandlingFeeTax::value),
+	AllowNullable(OrderForCalculate.HandlingFeeTax::total),
 	IgnoreNullable(OrderForCalculate.OrderItem::categoryId),
 	IgnoreNullable(OrderForCalculate.OrderItem::couponAmount),
 	IgnoreNullable(OrderForCalculate.OrderItem::couponApplied),
@@ -90,6 +107,7 @@ val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = l
 	IgnoreNullable(OrderForCalculate.OrderItemTax::taxOnShipping),
 	IgnoreNullable(OrderForCalculate.OrderItemTax::total),
 	IgnoreNullable(OrderForCalculate.OrderItemTax::value),
+	AllowNullable(OrderForCalculate.PaymentOption::paymentId),
 	IgnoreNullable(OrderForCalculate.PersonInfo::city),
 	IgnoreNullable(OrderForCalculate.PersonInfo::companyName),
 	IgnoreNullable(OrderForCalculate.PersonInfo::countryCode),
@@ -105,5 +123,10 @@ val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = l
 	IgnoreNullable(OrderForCalculate.ProductDimensions::width),
 	IgnoreNullable(OrderForCalculate.SelectionInfo::selectionModifier),
 	IgnoreNullable(OrderForCalculate.SelectionInfo::selectionModifierType),
-	IgnoreNullable(OrderForCalculate.SelectionInfo::selectionTitle)
+	IgnoreNullable(OrderForCalculate.SelectionInfo::selectionTitle),
+	AllowNullable(OrderForCalculate.ShippingOption::fulfillmentType),
+	AllowNullable(OrderForCalculate.ShippingOption::pickupInstruction),
+	AllowNullable(OrderForCalculate.ShippingOption::shippingMethodId),
+	AllowNullable(OrderForCalculate.ShippingOption::shippingMethodName),
+	AllowNullable(OrderForCalculate.ShippingOption::shippingRate),
 )
