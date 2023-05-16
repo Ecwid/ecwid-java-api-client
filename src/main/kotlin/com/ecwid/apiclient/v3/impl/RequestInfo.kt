@@ -28,12 +28,13 @@ class RequestInfo private constructor(
 			pathSegments: List<String>,
 			params: Map<String, String> = mapOf(),
 			headers: Map<String, String> = mapOf(),
+			httpBody: HttpBody  = HttpBody.EmptyBody
 		) = RequestInfo(
 			pathSegments = pathSegments,
 			method = HttpMethod.DELETE,
 			params = params,
 			headers = headers,
-			httpBody = HttpBody.EmptyBody
+			httpBody = httpBody,
 		)
 
 		fun createPostRequest(

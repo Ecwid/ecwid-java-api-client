@@ -29,6 +29,7 @@ internal fun HttpRequest.toHttpUriRequest(): HttpUriRequest {
 		}
 		is HttpRequest.HttpDeleteRequest -> {
 			RequestBuilder.delete(uri)
+				.setEntity(transportHttpBody.toEntity())
 		}
 	}
 
