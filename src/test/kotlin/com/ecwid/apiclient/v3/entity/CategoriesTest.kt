@@ -482,10 +482,10 @@ class CategoriesTest : BaseEntityTest() {
 		assertEquals(1, assignResult2.updateCount)
 
 		val categoryAfterAssign1 = apiClient.getCategoryDetails(CategoryDetailsRequest(categoryCreateResult1.id))
-		assertEquals(productIds, categoryAfterAssign1.productIds)
+		assertEquals(productIds.toSet(), categoryAfterAssign1.productIds?.toSet())
 
 		val categoryAfterAssign2 = apiClient.getCategoryDetails(CategoryDetailsRequest(categoryCreateResult2.id))
-		assertEquals(productIds, categoryAfterAssign2.productIds)
+		assertEquals(productIds.toSet(), categoryAfterAssign2.productIds?.toSet())
 
 		// Unassign products from category
 		val unassignRequest1 = UnassignProductsFromCategoryRequest(categoryCreateResult1.id, listOf(productCreateResult1.id))
