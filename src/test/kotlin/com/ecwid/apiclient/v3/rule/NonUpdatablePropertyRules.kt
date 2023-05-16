@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 import com.ecwid.apiclient.v3.dto.coupon.result.FetchedCoupon
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
 import com.ecwid.apiclient.v3.dto.customergroup.result.FetchedCustomerGroup
+import com.ecwid.apiclient.v3.dto.instantsite.redirects.result.FetchedInstantSiteRedirect
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
@@ -273,6 +274,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrderStatusSettings::orderStatusType),
 	ReadOnly(FetchedOrderStatusSettings::defaultStatus),
 	ReadOnly(FetchedOrderStatusSettings::lastNameChangeDate),
+
+	ReadOnly(FetchedInstantSiteRedirect::id),
 )
 
 sealed class NonUpdatablePropertyRule<T, R>(
