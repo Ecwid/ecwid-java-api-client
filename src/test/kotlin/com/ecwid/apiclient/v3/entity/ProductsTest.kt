@@ -951,7 +951,7 @@ class ProductsTest : BaseEntityTest() {
 			productImage = productDetails2.media?.images?.get(2)
 		)
 		assertMediaProductImage(
-			expectedId = productGalleryImageUploadResult1.id.toString(), // This is the moved gallery item
+			expectedId = "4", // This is the moved gallery item, it gets the next vacant id
 			expectedOrderBy = 3,
 			expectedIsMain = false,
 			expectedPathEnd = productDetails1.media?.images?.get(0)?.image1500pxUrl,
