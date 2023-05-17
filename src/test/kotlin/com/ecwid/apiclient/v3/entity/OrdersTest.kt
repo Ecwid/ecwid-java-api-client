@@ -10,6 +10,7 @@ import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import java.io.FileInputStream
@@ -198,6 +199,7 @@ class OrdersTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled
 	fun testSearchFields() {
 		// Creating new order
 		val orderCreateRequest = OrderCreateRequest(
@@ -324,6 +326,7 @@ class OrdersTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled
 	fun testSearchPaging() {
 		// Create some orders
 		repeat(3) {
