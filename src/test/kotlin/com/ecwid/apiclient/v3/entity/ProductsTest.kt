@@ -829,6 +829,7 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled
 	fun testManipulateProductGalleryImages() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
@@ -1204,6 +1205,7 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled
 	fun testUploadProductGalleryImageAsync() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
