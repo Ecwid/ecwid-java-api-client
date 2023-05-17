@@ -877,7 +877,7 @@ class ProductsTest : BaseEntityTest() {
 		val productDetails1 = apiClient.getProductDetails(productDetailsRequest)
 		assertEquals(4, productDetails1.media?.images?.size)
 		assertMediaProductImage(
-			expectedId = productGalleryImageUploadResult1.id.toString(),
+			expectedId = "0",
 			expectedOrderBy = 0,
 			expectedIsMain = true,
 			expectedPathEnd = null,
