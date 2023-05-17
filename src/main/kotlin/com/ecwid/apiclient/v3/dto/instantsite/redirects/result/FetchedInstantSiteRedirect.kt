@@ -7,6 +7,6 @@ data class FetchedInstantSiteRedirect(
 	val id: String = "",
 	val fromUrl: String = "",
 	val toUrl: String = "",
-): ApiFetchedDTO {
+) : ApiFetchedDTO {
 	override fun getModifyKind() = ApiFetchedDTO.ModifyKind.ReadWrite(UpdatedInstantSiteRedirect::class)
 }
