@@ -4,7 +4,6 @@ import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.InstantSiteRedirectsApiClient
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.request.*
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.result.*
-import com.ecwid.apiclient.v3.dto.subscriptions.result.SubscriptionsSearchResult
 
 class InstantSiteRedirectsApiClientImpl(
 	private val apiClientHelper: ApiClientHelper

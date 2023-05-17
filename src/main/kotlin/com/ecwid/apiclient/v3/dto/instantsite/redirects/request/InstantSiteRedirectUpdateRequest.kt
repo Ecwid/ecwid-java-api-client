@@ -4,7 +4,7 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
-data class InstantSiteRedirectUpdateRequest (
+data class InstantSiteRedirectUpdateRequest(
 	val redirectId: String = "",
 	val updatedRedirect: UpdatedInstantSiteRedirect = UpdatedInstantSiteRedirect(),
 ) : ApiRequest {
