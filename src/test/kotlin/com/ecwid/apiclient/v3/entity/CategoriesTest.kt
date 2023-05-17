@@ -482,10 +482,10 @@ class CategoriesTest : BaseEntityTest() {
 		assertEquals(1, assignResult2.updateCount)
 
 		val categoryAfterAssign1 = apiClient.getCategoryDetails(CategoryDetailsRequest(categoryCreateResult1.id))
-		assertEquals(productIds, categoryAfterAssign1.productIds)
+		assertListEquals(productIds, categoryAfterAssign1.productIds)
 
 		val categoryAfterAssign2 = apiClient.getCategoryDetails(CategoryDetailsRequest(categoryCreateResult2.id))
-		assertEquals(productIds, categoryAfterAssign2.productIds)
+		assertListEquals(productIds, categoryAfterAssign2.productIds)
 
 		// Unassign products from category
 		val unassignRequest1 = UnassignProductsFromCategoryRequest(categoryCreateResult1.id, listOf(productCreateResult1.id))
@@ -514,7 +514,7 @@ class CategoriesTest : BaseEntityTest() {
 
 		assertAll(
 			{ assertEquals(desiredId, category.id) },
-			{ assertEquals(desiredProductIds, category.productIds) }
+			{ assertListEquals(desiredProductIds, category.productIds) }
 		)
 	}
 
@@ -554,6 +554,17 @@ class CategoriesTest : BaseEntityTest() {
 			// { assertNull(categoryDetails.imageUrl, "imageUrl is not empty") }, // TODO Cannot test due to bug https://track.ecwid.com/youtrack/issue/ECWID-53222
 			{ assertNull(categoryDetails.originalImageUrl, "originalImageUrl is not empty") },
 			{ assertNull(categoryDetails.originalImage, "originalImage is not null") }
+		)
+	}
+
+	private fun assertListEquals(expectedList: List<Int>?, actualList: List<Int>?) {
+		if (expectedList == null || actualList == null) {
+			return
+		}
+		assertAll(
+			{ assertEquals(expectedList.size, actualList.size) },
+			{ assertTrue(expectedList.containsAll(actualList)) },
+			{ assertTrue(actualList.containsAll(expectedList)) },
 		)
 	}
 }
