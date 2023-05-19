@@ -229,9 +229,9 @@ data class OrderForCalculate(
 	data class CustomSurcharge(
 		val id: String? = null,
 		val value: Double? = null,
-		val type: SurchargeType = SurchargeType.ABSOLUTE,
+		val type: SurchargeType? = SurchargeType.ABSOLUTE,
 		val description: String? = null,
-		val taxable: Boolean = false,
+		val taxable: Boolean? = false,
 	)
 
 	data class ShippingOption(
@@ -239,7 +239,7 @@ data class OrderForCalculate(
 		val shippingMethodName: String? = null,
 		val shippingRate: Double? = null,
 		val pickupInstruction: String? = null,
-		val fulfillmentType: FulfillmentType = FulfillmentType.SHIPPING,
+		val fulfillmentType: FulfillmentType? = FulfillmentType.SHIPPING,
 	)
 
 	data class HandlingFee(
