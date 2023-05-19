@@ -102,7 +102,7 @@ data class UpdatedProduct(
 	) {
 		abstract val name: String
 		abstract val nameTranslated: LocalizedValueMap?
-		abstract val required: Boolean
+		abstract val required: Boolean?
 
 		interface ChoiceBased {
 			val choices: List<ProductOptionChoice>
@@ -114,7 +114,7 @@ data class UpdatedProduct(
 			override val nameTranslated: LocalizedValueMap? = null,
 			override val choices: List<ProductOptionChoice> = listOf(),
 			override val defaultChoice: Int = 0,
-			override val required: Boolean = false
+			override val required: Boolean? = null
 		) : ProductOption(ProductOptionType.SELECT), ChoiceBased
 
 		data class SizeOption(
@@ -122,7 +122,7 @@ data class UpdatedProduct(
 			override val nameTranslated: LocalizedValueMap? = null,
 			override val choices: List<ProductOptionChoice> = listOf(),
 			override val defaultChoice: Int = 0,
-			override val required: Boolean = false
+			override val required: Boolean? = null
 		) : ProductOption(ProductOptionType.SIZE), ChoiceBased
 
 		data class RadioOption(
@@ -130,7 +130,7 @@ data class UpdatedProduct(
 			override val nameTranslated: LocalizedValueMap? = null,
 			override val choices: List<ProductOptionChoice> = listOf(),
 			override val defaultChoice: Int = 0,
-			override val required: Boolean = false
+			override val required: Boolean? = null
 		) : ProductOption(ProductOptionType.RADIO), ChoiceBased
 
 		data class CheckboxOption(
@@ -138,31 +138,31 @@ data class UpdatedProduct(
 			override val nameTranslated: LocalizedValueMap? = null,
 			override val choices: List<ProductOptionChoice> = listOf(),
 			override val defaultChoice: Int? = null,
-			override val required: Boolean = false
+			override val required: Boolean? = null
 		) : ProductOption(ProductOptionType.CHECKBOX), ChoiceBased
 
 		data class TextFieldOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			override val required: Boolean = false
+			override val required: Boolean? = null
 		) : ProductOption(ProductOptionType.TEXTFIELD)
 
 		data class TextAreaOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			override val required: Boolean = false
+			override val required: Boolean? = null
 		) : ProductOption(ProductOptionType.TEXTAREA)
 
 		data class DateOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			override val required: Boolean = false
+			override val required: Boolean? = null
 		) : ProductOption(ProductOptionType.DATE)
 
 		data class FilesOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
-			override val required: Boolean = false
+			override val required: Boolean? = null
 		) : ProductOption(ProductOptionType.FILES)
 
 		companion object {
@@ -172,7 +172,7 @@ data class UpdatedProduct(
 				nameTranslated: LocalizedValueMap? = null,
 				choices: List<ProductOptionChoice> = listOf(),
 				defaultChoice: Int = 0,
-				required: Boolean = false
+				required: Boolean? = null
 			) = SelectOption(
 				name = name,
 				nameTranslated = nameTranslated,
@@ -186,7 +186,7 @@ data class UpdatedProduct(
 				nameTranslated: LocalizedValueMap? = null,
 				choices: List<ProductOptionChoice> = listOf(),
 				defaultChoice: Int = 0,
-				required: Boolean = false
+				required: Boolean? = null
 			) = SizeOption(
 				name = name,
 				nameTranslated = nameTranslated,
@@ -200,7 +200,7 @@ data class UpdatedProduct(
 				nameTranslated: LocalizedValueMap? = null,
 				choices: List<ProductOptionChoice> = listOf(),
 				defaultChoice: Int = 0,
-				required: Boolean = false
+				required: Boolean? = null
 			) = RadioOption(
 				name = name,
 				nameTranslated = nameTranslated,
@@ -214,7 +214,7 @@ data class UpdatedProduct(
 				nameTranslated: LocalizedValueMap? = null,
 				choices: List<ProductOptionChoice> = listOf(),
 				defaultChoice: Int? = null,
-				required: Boolean = false
+				required: Boolean? = null
 			) = CheckboxOption(
 				name = name,
 				nameTranslated = nameTranslated,
@@ -226,7 +226,7 @@ data class UpdatedProduct(
 			fun createTextFieldOption(
 				name: String = "",
 				nameTranslated: LocalizedValueMap? = null,
-				required: Boolean = false
+				required: Boolean? = null
 			) = TextFieldOption(
 				name = name,
 				nameTranslated = nameTranslated,
@@ -236,7 +236,7 @@ data class UpdatedProduct(
 			fun createTextAreaOption(
 				name: String = "",
 				nameTranslated: LocalizedValueMap? = null,
-				required: Boolean = false
+				required: Boolean? = null
 			) = TextAreaOption(
 				name = name,
 				nameTranslated = nameTranslated,
@@ -246,7 +246,7 @@ data class UpdatedProduct(
 			fun createDateOption(
 				name: String = "",
 				nameTranslated: LocalizedValueMap? = null,
-				required: Boolean = false
+				required: Boolean? = null
 			) = DateOption(
 				name = name,
 				nameTranslated = nameTranslated,
@@ -256,7 +256,7 @@ data class UpdatedProduct(
 			fun createFilesOption(
 				name: String = "",
 				nameTranslated: LocalizedValueMap? = null,
-				required: Boolean = false
+				required: Boolean? = null
 			) = FilesOption(
 				name = name,
 				nameTranslated = nameTranslated,
