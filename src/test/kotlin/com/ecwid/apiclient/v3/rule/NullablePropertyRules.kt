@@ -8,6 +8,7 @@ import com.ecwid.apiclient.v3.dto.order.result.DeletedOrder
 import com.ecwid.apiclient.v3.dto.payment.PaymentAppRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductUpdateRequest
+import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult
 import com.ecwid.apiclient.v3.dto.product.result.ProductInventoryUpdateResult
@@ -27,6 +28,7 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(ProductInventoryUpdateRequest::checkLowStockNotification),
 	AllowNullable(ProductUpdateRequest::checkLowStockNotification),
 	AllowNullable(ProductUpdateRequest::rebuildVariationsOnOptionsUpdate),
+	AllowNullable(ProductUpdateRequest::keepOptionDisplaySettings),
 
 	AllowNullable(StoreProfileRequest::lang),
 
@@ -47,6 +49,8 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedProduct.ShippingPreparationTime::localDeliveryPreparationTimeForInStockItemInMinutes),
 	AllowNullable(FetchedProduct.ProductOption.ChoiceBased::defaultChoice),
 	AllowNullable(FetchedProduct.ProductOption.CheckboxOption::defaultChoice),
+
+	AllowNullable(UpdatedProduct.ProductOption::required),
 
 	AllowNullable(FetchedLatestStats::productCount),
 	AllowNullable(FetchedLatestStats::categoryCount),
