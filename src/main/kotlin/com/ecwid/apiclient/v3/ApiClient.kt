@@ -352,6 +352,6 @@ interface InstantSiteRedirectsApiClient {
 	fun searchInstantSiteRedirects(request: InstantSiteRedirectsSearchRequest): InstantSiteRedirectsSearchResult
 	fun getInstantSiteRedirect(request: InstantSiteRedirectGetRequest): FetchedInstantSiteRedirect
 	fun updateInstantSiteRedirect(request: InstantSiteRedirectUpdateRequest): InstantSiteRedirectsUpdateResult
-	fun createInstantSiteRedirectList(request: InstantSiteRedirectListCreateRequest): InstantSiteRedirectListCreateResult
-	fun deleteInstantSiteRedirect(request: InstantSiteRedirectDeleteRequest): InstantSiteRedirectListDeleteResult
+	fun createInstantSiteRedirects(request: InstantSiteRedirectsCreateRequest): InstantSiteRedirectsCreateResult
+	fun deleteInstantSiteRedirect(request: InstantSiteRedirectDeleteRequest): InstantSiteRedirectsDeleteResult
 }

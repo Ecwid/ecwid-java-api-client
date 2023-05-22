@@ -17,9 +17,9 @@ class InstantSiteRedirectsApiClientImpl(
 	override fun updateInstantSiteRedirect(request: InstantSiteRedirectUpdateRequest) =
 		apiClientHelper.makeObjectResultRequest<InstantSiteRedirectsUpdateResult>(request)
 
-	override fun createInstantSiteRedirectList(request: InstantSiteRedirectListCreateRequest) =
-		apiClientHelper.makeObjectResultRequest<InstantSiteRedirectListCreateResult>(request)
+	override fun createInstantSiteRedirects(request: InstantSiteRedirectsCreateRequest) =
+		apiClientHelper.makeObjectResultRequest<InstantSiteRedirectsCreateResult>(request)
 
 	override fun deleteInstantSiteRedirect(request: InstantSiteRedirectDeleteRequest) =
-		apiClientHelper.makeObjectResultRequest<InstantSiteRedirectListDeleteResult>(request)
+		apiClientHelper.makeObjectResultRequest<InstantSiteRedirectsDeleteResult>(request)
 }
