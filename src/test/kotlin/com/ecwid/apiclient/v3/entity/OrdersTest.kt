@@ -403,7 +403,7 @@ class OrdersTest : BaseEntityTest() {
 		negativeSearchRequest: OrdersSearchRequest
 	) {
 		val positiveOrdersSearchResult = apiClient.searchOrders(positiveSearchRequest)
-		assertEquals(1, positiveOrdersSearchResult.total)
+		assertEquals(1, positiveOrdersSearchResult.items.size)
 		assertEquals(positiveOrderNumber, positiveOrdersSearchResult.items[0].orderNumber)
 
 		val negativeOrdersSearchResult = apiClient.searchOrders(negativeSearchRequest)
