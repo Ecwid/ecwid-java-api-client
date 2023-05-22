@@ -199,7 +199,6 @@ class OrdersTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled
 	fun testSearchFields() {
 		// Creating new order
 		val orderCreateRequest = OrderCreateRequest(

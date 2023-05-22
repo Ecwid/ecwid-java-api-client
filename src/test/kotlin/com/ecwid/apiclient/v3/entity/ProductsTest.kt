@@ -40,7 +40,6 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled
 	fun testSearchByFilters() {
 		// Create some categories
 
@@ -584,7 +583,6 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled
 	fun testGetProductFilters() {
 		// Create one category
 
@@ -766,7 +764,6 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled
 	fun testManipulateProductImage() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(

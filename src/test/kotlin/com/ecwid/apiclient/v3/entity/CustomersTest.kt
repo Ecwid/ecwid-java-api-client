@@ -32,7 +32,6 @@ class CustomersTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled
 	fun testCustomerLifecycle() {
 		// Creating one customer group
 		val customerGroupCreateRequest1 = CustomerGroupCreateRequest(
