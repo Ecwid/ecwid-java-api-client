@@ -30,7 +30,6 @@ sealed class HttpRequest(
 	data class HttpDeleteRequest(
 		override val uri: String,
 		override val params: Map<String, String>,
-		override val transportHttpBody: TransportHttpBody,
 		override val headers: Map<String, String>
-	) : HttpRequest("DELETE", uri, params, transportHttpBody, headers)
+	) : HttpRequest("DELETE", uri, params, TransportHttpBody.EmptyBody, headers)
 }

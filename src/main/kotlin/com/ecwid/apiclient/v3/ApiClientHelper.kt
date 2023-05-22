@@ -242,7 +242,6 @@ class ApiClientHelper private constructor(
 			uri = createApiEndpointUri(pathSegments),
 			params = params.withCredentialsParams(credentials),
 			headers = headers.withRequestId(requestId),
-			transportHttpBody = httpBody.prepare(jsonTransformer),
 		)
 	}
 
