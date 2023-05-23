@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
 import com.ecwid.apiclient.v3.dto.cart.result.CartUpdateResult
 import com.ecwid.apiclient.v3.dto.cart.result.ConvertCartToOrderResult
+import com.ecwid.apiclient.v3.dto.instantsite.redirects.request.InstantSiteRedirectsSearchRequest
 import com.ecwid.apiclient.v3.dto.order.result.DeletedOrder
 import com.ecwid.apiclient.v3.dto.payment.PaymentAppRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest
@@ -91,6 +92,10 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedReportResponse.FetchedDataset::percentage),
 	AllowNullable(FetchedReportResponse.FetchedDataset::comparePeriodStartTimeStamp),
 	AllowNullable(FetchedReportResponse.FetchedDataset::comparePeriodEndTimeStamp),
+
+	AllowNullable(InstantSiteRedirectsSearchRequest::keyword),
+	AllowNullable(InstantSiteRedirectsSearchRequest::limit),
+	AllowNullable(InstantSiteRedirectsSearchRequest::offset),
 )
 
 val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(

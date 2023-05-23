@@ -21,6 +21,8 @@ import com.ecwid.apiclient.v3.dto.customer.request.*
 import com.ecwid.apiclient.v3.dto.customer.result.*
 import com.ecwid.apiclient.v3.dto.customergroup.request.*
 import com.ecwid.apiclient.v3.dto.customergroup.result.*
+import com.ecwid.apiclient.v3.dto.instantsite.redirects.request.*
+import com.ecwid.apiclient.v3.dto.instantsite.redirects.result.*
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.*
 import com.ecwid.apiclient.v3.dto.product.request.*
@@ -61,6 +63,7 @@ open class ApiClient private constructor(
 	applicationStorageApiClient: ApplicationStorageApiClient,
 	reportsApiClient: ReportsApiClientImpl,
 	subscriptionsApiClient: SubscriptionsApiClientImpl,
+	instantSiteRedirectsApiClient: InstantSiteRedirectsApiClientImpl,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	ProductsApiClient by productsApiClient,
@@ -77,7 +80,8 @@ open class ApiClient private constructor(
 	ApplicationApiClient by applicationApiClient,
 	ApplicationStorageApiClient by applicationStorageApiClient,
 	ReportsApiClient by reportsApiClient,
-	SubscriptionsApiClient by subscriptionsApiClient {
+	SubscriptionsApiClient by subscriptionsApiClient,
+	InstantSiteRedirectsApiClient by instantSiteRedirectsApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -97,6 +101,7 @@ open class ApiClient private constructor(
 		applicationStorageApiClient = ApplicationStorageApiClientImpl(apiClientHelper),
 		reportsApiClient = ReportsApiClientImpl(apiClientHelper),
 		subscriptionsApiClient = SubscriptionsApiClientImpl(apiClientHelper),
+		instantSiteRedirectsApiClient = InstantSiteRedirectsApiClientImpl(apiClientHelper)
 	)
 
 	companion object {
@@ -341,4 +346,12 @@ interface ReportsApiClient {
 // https://api-docs.ecwid.com/reference/get-subscription
 interface SubscriptionsApiClient {
 	fun searchSubscriptions(request: SubscriptionsSearchRequest): SubscriptionsSearchResult
+}
+
+interface InstantSiteRedirectsApiClient {
+	fun searchInstantSiteRedirects(request: InstantSiteRedirectsSearchRequest): InstantSiteRedirectsSearchResult
+	fun getInstantSiteRedirect(request: InstantSiteRedirectGetRequest): FetchedInstantSiteRedirect
+	fun updateInstantSiteRedirect(request: InstantSiteRedirectUpdateRequest): InstantSiteRedirectsUpdateResult
+	fun createInstantSiteRedirects(request: InstantSiteRedirectsCreateRequest): InstantSiteRedirectsCreateResult
+	fun deleteInstantSiteRedirect(request: InstantSiteRedirectDeleteRequest): InstantSiteRedirectsDeleteResult
 }
