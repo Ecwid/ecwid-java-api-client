@@ -15,7 +15,11 @@ data class OrderForCalculate(
 	val items: List<OrderItem>? = null,
 	val billingPerson: PersonInfo? = null,
 	val shippingPerson: PersonInfo? = null,
-	val discountInfo: List<DiscountInfo>? = null
+	val discountInfo: List<DiscountInfo>? = null,
+	val customSurcharges: List<CustomSurcharge>? = null,
+	val shippingOption: ShippingOption? = null,
+	val handlingFee: HandlingFee? = null,
+	val paymentOptionsDetails: PaymentOption? = null,
 ) : ApiRequestDTO {
 
 	data class DiscountInfo(
@@ -220,5 +224,38 @@ data class OrderForCalculate(
 		val stateOrProvinceCode: String? = null,
 		val stateOrProvinceName: String? = null,
 		val phone: String? = null
+	)
+
+	data class CustomSurcharge(
+		val id: String? = null,
+		val value: Double? = null,
+		val type: SurchargeType = SurchargeType.ABSOLUTE,
+		val description: String? = null,
+		val taxable: Boolean = false,
+	)
+
+	data class ShippingOption(
+		val shippingMethodId: String? = null,
+		val shippingMethodName: String? = null,
+		val shippingRate: Double? = null,
+		val pickupInstruction: String? = null,
+		val fulfillmentType: FulfillmentType = FulfillmentType.SHIPPING,
+	)
+
+	data class HandlingFee(
+		val name: String? = null,
+		val value: Double? = null,
+		val description: String? = null,
+		val taxes: List<HandlingFeeTax>? = null,
+	)
+
+	data class HandlingFeeTax(
+		val name: String? = null,
+		val value: Double? = null,
+		val total: Double? = null,
+	)
+
+	data class PaymentOption(
+		val paymentId: String? = null,
 	)
 }
