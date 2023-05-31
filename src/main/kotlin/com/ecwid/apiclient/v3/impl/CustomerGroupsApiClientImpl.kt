@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.CustomerGroupsApiClient
 import com.ecwid.apiclient.v3.dto.customergroup.request.*
 import com.ecwid.apiclient.v3.dto.customergroup.result.*
+import com.ecwid.apiclient.v3.responsefields.AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
 
 internal class CustomerGroupsApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -13,7 +14,9 @@ internal class CustomerGroupsApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<CustomerGroupsSearchResult>(request)
 
 	override fun searchCustomerGroupsAsSequence(request: CustomerGroupsSearchRequest) = sequence {
-		var offsetRequest = request
+		var offsetRequest = request.copy(
+			responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+		)
 		do {
 			val searchResult = searchCustomerGroups(offsetRequest)
 			yieldAll(searchResult.items)

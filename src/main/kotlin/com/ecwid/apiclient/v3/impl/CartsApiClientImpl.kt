@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.CartsApiClient
 import com.ecwid.apiclient.v3.dto.cart.request.*
 import com.ecwid.apiclient.v3.dto.cart.result.*
+import com.ecwid.apiclient.v3.responsefields.AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
 
 internal data class CartsApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -12,7 +13,9 @@ internal data class CartsApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<CartsSearchResult>(request)
 
 	override fun searchCartsAsSequence(request: CartsSearchRequest): List<FetchedCart> {
-		var offsetRequest = request
+		var offsetRequest = request.copy(
+			responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+		)
 		val totalList: MutableList<FetchedCart> = mutableListOf()
 		do {
 			val searchResult = searchCarts(offsetRequest)

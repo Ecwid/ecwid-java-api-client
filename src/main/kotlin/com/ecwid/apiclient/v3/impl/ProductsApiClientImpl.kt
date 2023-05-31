@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.ProductsApiClient
 import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.result.*
+import com.ecwid.apiclient.v3.responsefields.AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
 
 internal class ProductsApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -16,7 +17,9 @@ internal class ProductsApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<ProductsSearchResult>(request)
 
 	override fun searchProductsAsSequence(request: ProductsSearchRequest.ByFilters) = sequence {
-		var offsetRequest = request
+		var offsetRequest = request.copy(
+			responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+		)
 		do {
 			val searchResult = searchProducts(offsetRequest)
 			yieldAll(searchResult.items)
@@ -87,7 +90,9 @@ internal class ProductsApiClientImpl(
 
 	override fun searchDeletedProductsAsSequence(request: DeletedProductsSearchRequest): Sequence<DeletedProduct> =
 		sequence {
-			var offsetRequest = request
+			var offsetRequest = request.copy(
+				responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+			)
 			do {
 				val searchResult = searchDeletedProducts(offsetRequest)
 				yieldAll(searchResult.items)
