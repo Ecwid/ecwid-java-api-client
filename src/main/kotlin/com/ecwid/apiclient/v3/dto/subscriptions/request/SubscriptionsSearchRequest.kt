@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.subscriptions.enums.SortOrder
 import com.ecwid.apiclient.v3.dto.subscriptions.enums.SubscriptionInterval
 import com.ecwid.apiclient.v3.dto.subscriptions.enums.SubscriptionStatus
 import com.ecwid.apiclient.v3.impl.RequestInfo
+import com.ecwid.apiclient.v3.responsefields.ResponseFields
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -30,14 +31,16 @@ data class SubscriptionsSearchRequest(
 	val orderCreatedTo: Date? = null,
 	val offset: Int? = null,
 	val limit: Int? = null,
-	val sortBy: SortOrder = SortOrder.DATE_CREATED_DESC
+	val sortBy: SortOrder = SortOrder.DATE_CREATED_DESC,
+	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 		pathSegments = listOf(
 			"subscriptions"
 		),
-		params = toParams()
+		params = toParams(),
+		responseFields = responseFields,
 	)
 
 	private fun toParams(): Map<String, String> {

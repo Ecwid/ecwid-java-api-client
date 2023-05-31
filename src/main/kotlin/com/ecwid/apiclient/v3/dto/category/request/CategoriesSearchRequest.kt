@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.category.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
+import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
 data class CategoriesSearchRequest(
 	val parentCategoryId: ParentCategory = ParentCategory.Any,
@@ -11,14 +12,16 @@ data class CategoriesSearchRequest(
 	val cleanUrls: Boolean? = null,
 	val offset: Int = 0,
 	val limit: Int = 100,
-	val lang: String? = null
+	val lang: String? = null,
+	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 		pathSegments = listOf(
 			"categories"
 		),
-		params = toParams()
+		params = toParams(),
+		responseFields = responseFields,
 	)
 
 	sealed class ParentCategory {

@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.category.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
+import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
 /**
  * Weird delimiter to ensure it never occurs in category names.
@@ -16,7 +17,8 @@ data class CategoriesByPathRequest(
 	val delimiter: String = "",
 	val offset: Int = 0,
 	val limit: Int = 100,
-	val lang: String? = null
+	val lang: String? = null,
+	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 
 	constructor(
@@ -39,7 +41,8 @@ data class CategoriesByPathRequest(
 		pathSegments = listOf(
 			"categoriesByPath"
 		),
-		params = toParams()
+		params = toParams(),
+		responseFields = responseFields,
 	)
 
 	private fun toParams(): Map<String, String> {
