@@ -5,4 +5,5 @@ enum class ReportType {
 	newVsReturningVisitors,
 	visitorsByDevice,
 	allOrders,
+	newOrdersVsRepeatOrders,
 }
