@@ -31,8 +31,12 @@ data class ResponseFields(
 		return fields.isEmpty()
 	}
 
+	fun contains(other: ResponseFields): Boolean {
+		return fields.contains(other.fields)
+	}
+
 	data class Field(
-		val children: Map<String, Field>
+		internal val children: Map<String, Field>
 	) {
 		companion object {
 			internal val All = Field(emptyMap())
@@ -78,4 +82,27 @@ private fun mergeFields(left: ResponseFields.Field, right: ResponseFields.Field)
 	}
 
 	return ResponseFields.Field(newMap)
+}
+
+private fun Map<String, ResponseFields.Field>.contains(other: Map<String, ResponseFields.Field>): Boolean {
+	if (isEmpty()) {
+		// All contains any map
+		return true
+	}
+
+	if (other.isEmpty()) {
+		// Any can not contains All map
+		return false
+	}
+
+	other.forEach { (name, otherField) ->
+		val field = get(name)
+			?: return false
+
+		if (!field.children.contains(otherField.children)) {
+			return false
+		}
+	}
+
+	return true
 }

@@ -1,6 +1,6 @@
 package com.ecwid.apiclient.v3.responsefields
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class ResponseFieldsUnitTest {
@@ -135,5 +135,49 @@ class ResponseFieldsUnitTest {
 		)
 
 		assertEquals(expected, actual)
+	}
+
+	@Test
+	fun `contains test`() {
+		val idOnly = newResponseFields { field("id") }
+		val nameOnly = newResponseFields { field("name") }
+		val idAndNameOnly = newResponseFields { fields("id", "name") }
+		val optionsOnly = newResponseFields { field("options") }
+		val optionsSpecifiedOnly = newResponseFields {
+			field("options") {
+				field("id")
+			}
+		}
+
+		assertTrue(idOnly.contains(idOnly)) {
+			"$idOnly must contains $idOnly"
+		}
+		assertTrue(idAndNameOnly.contains(idOnly)) {
+			"$idAndNameOnly must contains $idOnly"
+		}
+		assertTrue(idAndNameOnly.contains(nameOnly)) {
+			"$idAndNameOnly must contains $nameOnly"
+		}
+		assertTrue(ResponseFields.All.contains(idOnly)) {
+			"All must contains $idOnly"
+		}
+		assertTrue(ResponseFields.All.contains(ResponseFields.All)) {
+			"All must contains All"
+		}
+		assertTrue(optionsOnly.contains(optionsSpecifiedOnly)) {
+			"$optionsOnly must contains $optionsSpecifiedOnly"
+		}
+		assertFalse(idOnly.contains(ResponseFields.All)) {
+			"$idOnly must not contains All"
+		}
+		assertFalse(idOnly.contains(nameOnly)) {
+			"$idOnly must not contains $nameOnly"
+		}
+		assertFalse(idOnly.contains(idAndNameOnly)) {
+			"$idOnly must not contains $idAndNameOnly"
+		}
+		assertFalse(optionsSpecifiedOnly.contains(optionsOnly)) {
+			"$optionsSpecifiedOnly must not contains $optionsOnly"
+		}
 	}
 }
