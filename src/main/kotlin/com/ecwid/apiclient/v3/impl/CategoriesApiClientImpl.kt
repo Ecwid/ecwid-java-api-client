@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.CategoriesApiClient
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.result.*
+import com.ecwid.apiclient.v3.responsefields.AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
 
 internal class CategoriesApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -13,7 +14,9 @@ internal class CategoriesApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<CategoriesSearchResult>(request)
 
 	override fun searchCategoriesAsSequence(request: CategoriesSearchRequest) = sequence {
-		var offsetRequest = request
+		var offsetRequest = request.copy(
+			responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+		)
 		do {
 			val searchResult = searchCategories(offsetRequest)
 			yieldAll(searchResult.items)
@@ -25,7 +28,9 @@ internal class CategoriesApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<CategoriesSearchResult>(request)
 
 	override fun searchCategoriesByPathAsSequence(request: CategoriesByPathRequest) = sequence {
-		var offsetRequest = request
+		var offsetRequest = request.copy(
+			responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+		)
 		do {
 			val searchResult = searchCategoriesByPath(offsetRequest)
 			yieldAll(searchResult.items)

@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.product.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
+import com.ecwid.apiclient.v3.responsefields.ResponseFields
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -35,12 +36,14 @@ sealed class ProductsSearchRequest : ApiRequest {
 		val limit: Int = 100,
 		val lang: String? = null,
 		val visibleInStorefront: Boolean? = null,
+		val responseFields: ResponseFields = ResponseFields.All,
 	) : ProductsSearchRequest() {
 		override fun toRequestInfo() = RequestInfo.createGetRequest(
 			pathSegments = listOf(
 				"products"
 			),
-			params = toParams()
+			params = toParams(),
+			responseFields = responseFields,
 		)
 
 		private fun toParams(): Map<String, String> {
@@ -91,12 +94,14 @@ sealed class ProductsSearchRequest : ApiRequest {
 		val cleanUrls: Boolean? = null,
 		val sortBy: SortOrder? = null,
 		val lang: String? = null,
+		val responseFields: ResponseFields = ResponseFields.All,
 	) : ProductsSearchRequest() {
 		override fun toRequestInfo() = RequestInfo.createGetRequest(
 			pathSegments = listOf(
 				"products"
 			),
-			params = toParams()
+			params = toParams(),
+			responseFields = responseFields,
 		)
 
 		@Suppress("unused")

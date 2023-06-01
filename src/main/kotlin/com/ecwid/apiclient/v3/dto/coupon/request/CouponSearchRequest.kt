@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponStatus
 import com.ecwid.apiclient.v3.dto.order.enums.DiscountCouponType
 import com.ecwid.apiclient.v3.impl.RequestInfo
+import com.ecwid.apiclient.v3.responsefields.ResponseFields
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -16,13 +17,15 @@ data class CouponSearchRequest(
 	val createdFrom: Date? = null,
 	val createdTo: Date? = null,
 	val updatedFrom: Date? = null,
-	val updatedTo: Date? = null
+	val updatedTo: Date? = null,
+	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 		pathSegments = listOf(
 			"discount_coupons"
 		),
-		params = toParams()
+		params = toParams(),
+		responseFields = responseFields,
 	)
 
 	private fun toParams(): Map<String, String> {

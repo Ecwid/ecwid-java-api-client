@@ -6,6 +6,7 @@ import com.ecwid.apiclient.v3.dto.report.enums.FirstDayOfWeek
 import com.ecwid.apiclient.v3.dto.report.enums.ReportType
 import com.ecwid.apiclient.v3.dto.report.enums.TimeScaleValue
 import com.ecwid.apiclient.v3.impl.RequestInfo
+import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
 data class ReportRequest(
 	val reportType: ReportType = ReportType.allTraffic,
@@ -14,6 +15,7 @@ data class ReportRequest(
 	val timeScaleValue: TimeScaleValue? = null,
 	val comparePeriod: ComparePeriod? = null,
 	val firstDayOfWeek: FirstDayOfWeek? = null,
+	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
@@ -21,7 +23,8 @@ data class ReportRequest(
 			"reports",
 			reportType.toString(),
 		),
-		params = toParams()
+		params = toParams(),
+		responseFields = responseFields,
 	)
 
 	private fun toParams(): Map<String, String> {

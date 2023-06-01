@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.CouponsApiClient
 import com.ecwid.apiclient.v3.dto.coupon.request.*
 import com.ecwid.apiclient.v3.dto.coupon.result.*
+import com.ecwid.apiclient.v3.responsefields.AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
 
 internal data class CouponsApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -12,7 +13,9 @@ internal data class CouponsApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<CouponSearchResult>(request)
 
 	override fun searchCouponsAsSequence(request: CouponSearchRequest) = sequence {
-		var offsetRequest = request
+		var offsetRequest = request.copy(
+			responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+		)
 		do {
 			val searchResult = searchCoupons(offsetRequest)
 			yieldAll(searchResult.items)

@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.dto.product.request
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.product.request.GetProductFiltersRequest.*
 import com.ecwid.apiclient.v3.impl.RequestInfo
+import com.ecwid.apiclient.v3.responsefields.ResponseFields
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -24,7 +25,8 @@ data class GetProductFiltersRequest(
 	val attributes: Map<FilterFieldType.Attribute, List<String>>? = null,
 	val inventory: Boolean? = null,
 	val onSale: Boolean? = null,
-	val lang: String? = null
+	val lang: String? = null,
+	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 
 	@Suppress("unused")
@@ -105,7 +107,8 @@ data class GetProductFiltersRequest(
 			"products",
 			"filters"
 		),
-		params = toParams()
+		params = toParams(),
+		responseFields = responseFields,
 	)
 
 	private fun toParams(): Map<String, String> {

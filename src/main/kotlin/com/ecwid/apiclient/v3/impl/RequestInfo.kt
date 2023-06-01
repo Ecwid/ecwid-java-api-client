@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.httptransport.HttpBody
+import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
 class RequestInfo private constructor(
 	val pathSegments: List<String>,
@@ -16,12 +17,13 @@ class RequestInfo private constructor(
 			pathSegments: List<String>,
 			params: Map<String, String> = mapOf(),
 			headers: Map<String, String> = mapOf(),
+			responseFields: ResponseFields = ResponseFields.All, // default value will be removed in next releases
 		) = RequestInfo(
 			pathSegments = pathSegments,
 			method = HttpMethod.GET,
-			params = params,
+			params = appendParamsIfRequired(params, responseFields),
 			headers = headers,
-			httpBody = HttpBody.EmptyBody
+			httpBody = HttpBody.EmptyBody,
 		)
 
 		fun createDeleteRequest(
@@ -68,14 +70,15 @@ class RequestInfo private constructor(
 			fileData: UploadFileData
 		): RequestInfo {
 			return when (fileData) {
-				is UploadFileData.ExternalUrlData -> RequestInfo.createPostRequest(
+				is UploadFileData.ExternalUrlData -> createPostRequest(
 					pathSegments = pathSegments,
 					params = commonParams + mapOf(
 						"externalUrl" to fileData.externalUrl
 					),
 					httpBody = HttpBody.EmptyBody
 				)
-				is UploadFileData.ByteArrayData -> RequestInfo.createPostRequest(
+
+				is UploadFileData.ByteArrayData -> createPostRequest(
 					pathSegments = pathSegments,
 					params = commonParams,
 					httpBody = HttpBody.ByteArrayBody(
@@ -83,7 +86,8 @@ class RequestInfo private constructor(
 						mimeType = MIME_TYPE_OCTET_STREAM
 					)
 				)
-				is UploadFileData.LocalFileData -> RequestInfo.createPostRequest(
+
+				is UploadFileData.LocalFileData -> createPostRequest(
 					pathSegments = pathSegments,
 					params = commonParams,
 					httpBody = HttpBody.LocalFileBody(
@@ -91,7 +95,8 @@ class RequestInfo private constructor(
 						mimeType = MIME_TYPE_OCTET_STREAM
 					)
 				)
-				is UploadFileData.InputStreamData -> RequestInfo.createPostRequest(
+
+				is UploadFileData.InputStreamData -> createPostRequest(
 					pathSegments = pathSegments,
 					params = commonParams,
 					httpBody = HttpBody.InputStreamBody(
@@ -110,4 +115,13 @@ enum class HttpMethod {
 	POST,
 	PUT,
 	DELETE
+}
+
+private fun appendParamsIfRequired(params: Map<String, String>, responseFields: ResponseFields): Map<String, String> {
+	val parameter = responseFields.toHttpParameter()
+	return if (parameter.isEmpty()) {
+		params
+	} else {
+		params + mapOf("responseFields" to parameter)
+	}
 }
