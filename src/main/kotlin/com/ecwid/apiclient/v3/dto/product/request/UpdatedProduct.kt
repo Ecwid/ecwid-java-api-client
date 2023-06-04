@@ -113,7 +113,7 @@ data class UpdatedProduct(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
 			override val choices: List<ProductOptionChoice> = listOf(),
-			override val defaultChoice: Int = 0,
+			override val defaultChoice: Int? = null,
 			override val required: Boolean? = null
 		) : ProductOption(ProductOptionType.SELECT), ChoiceBased
 
@@ -121,7 +121,7 @@ data class UpdatedProduct(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
 			override val choices: List<ProductOptionChoice> = listOf(),
-			override val defaultChoice: Int = 0,
+			override val defaultChoice: Int? = null,
 			override val required: Boolean? = null
 		) : ProductOption(ProductOptionType.SIZE), ChoiceBased
 
@@ -129,7 +129,7 @@ data class UpdatedProduct(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
 			override val choices: List<ProductOptionChoice> = listOf(),
-			override val defaultChoice: Int = 0,
+			override val defaultChoice: Int? = null,
 			override val required: Boolean? = null
 		) : ProductOption(ProductOptionType.RADIO), ChoiceBased
 
