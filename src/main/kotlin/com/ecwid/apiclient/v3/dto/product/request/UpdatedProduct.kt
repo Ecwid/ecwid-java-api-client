@@ -171,7 +171,7 @@ data class UpdatedProduct(
 				name: String = "",
 				nameTranslated: LocalizedValueMap? = null,
 				choices: List<ProductOptionChoice> = listOf(),
-				defaultChoice: Int = 0,
+				defaultChoice: Int? = null,
 				required: Boolean? = null
 			) = SelectOption(
 				name = name,
@@ -185,7 +185,7 @@ data class UpdatedProduct(
 				name: String = "",
 				nameTranslated: LocalizedValueMap? = null,
 				choices: List<ProductOptionChoice> = listOf(),
-				defaultChoice: Int = 0,
+				defaultChoice: Int? = null,
 				required: Boolean? = null
 			) = SizeOption(
 				name = name,
@@ -199,7 +199,7 @@ data class UpdatedProduct(
 				name: String = "",
 				nameTranslated: LocalizedValueMap? = null,
 				choices: List<ProductOptionChoice> = listOf(),
-				defaultChoice: Int = 0,
+				defaultChoice: Int? = null,
 				required: Boolean? = null
 			) = RadioOption(
 				name = name,
