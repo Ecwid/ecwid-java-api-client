@@ -130,6 +130,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedCustomer.ShippingAddress::stateOrProvinceName),
 	ReadOnly(FetchedCustomer.ShippingAddress::createdDate),
 	ReadOnly(FetchedCustomer::stats),
+	ReadOnly(FetchedCustomer::contacts),
 
 	ReadOnly(FetchedCustomerGroup::id),
 

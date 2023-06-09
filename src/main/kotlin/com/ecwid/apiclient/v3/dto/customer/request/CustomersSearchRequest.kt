@@ -18,6 +18,7 @@ data class CustomersSearchRequest(
 	val taxExempt: Boolean? = null,
 	val acceptMarketing: Boolean? = null,
 	val purchasedProductId: String? = null,
+	val countryCode: String? = null,
 	val createdFrom: Date? = null,
 	val createdTo: Date? = null,
 	val updatedFrom: Date? = null,
@@ -73,6 +74,7 @@ data class CustomersSearchRequest(
 			request.taxExempt?.let { put("taxExempt", it.toString()) }
 			request.acceptMarketing?.let { put("acceptMarketing", it.toString()) }
 			request.purchasedProductId?.let { put("purchasedProductId", it) }
+			request.countryCode?.let { put("countryCode", it) }
 			request.lang?.let { put("lang", it) }
 			request.sortBy?.let { put("sortBy", it.name) }
 			put("offset", request.offset.toString())
