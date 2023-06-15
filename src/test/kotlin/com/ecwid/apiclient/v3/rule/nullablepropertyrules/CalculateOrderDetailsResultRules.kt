@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
 import com.ecwid.apiclient.v3.dto.cart.result.CalculateOrderDetailsResult
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
+import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 
 val calculateOrderDetailsResultNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
@@ -133,6 +134,7 @@ val calculateOrderDetailsResultNullablePropertyRules: List<NullablePropertyRule<
 	IgnoreNullable(CalculateOrderDetailsResult::createDate),
 	IgnoreNullable(CalculateOrderDetailsResult::createTimestamp),
 	IgnoreNullable(CalculateOrderDetailsResult::customerId),
+	AllowNullable(CalculateOrderDetailsResult::customerTaxExempt),
 	IgnoreNullable(CalculateOrderDetailsResult::discount),
 	IgnoreNullable(CalculateOrderDetailsResult::discountCoupon),
 	IgnoreNullable(CalculateOrderDetailsResult::discountInfo),
