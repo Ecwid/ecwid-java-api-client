@@ -27,6 +27,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		costPrice = costPrice,
 		wholesalePrices = wholesalePrices?.map(FetchedProduct.WholesalePrice::toUpdated),
 		compareToPrice = compareToPrice,
+		lowestPrice = lowestPrice,
 
 		weight = weight,
 		dimensions = dimensions?.toUpdated(),

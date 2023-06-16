@@ -49,6 +49,9 @@ data class FetchedProduct(
 	val compareToPriceDiscountPercentFormatted: String? = null, // TODO Figure out how to test
 	val compareToPriceFormatted: String? = null, // TODO Figure out how to test
 
+	val lowestPrice: Double? = null,
+	val lowestPriceFormatted: String? = null,
+
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
 	val volume: Double = 0.0,

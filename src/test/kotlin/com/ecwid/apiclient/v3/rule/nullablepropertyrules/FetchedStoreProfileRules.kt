@@ -260,6 +260,7 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.SalePriceSettings::displayDiscount),
 	IgnoreNullable(FetchedStoreProfile.SalePriceSettings::displayOnProductList),
 	IgnoreNullable(FetchedStoreProfile.SalePriceSettings::oldPriceLabel),
+	IgnoreNullable(FetchedStoreProfile.SalePriceSettings::displayLowestPrice),
 	IgnoreNullable(FetchedStoreProfile.Settings::abandonedSales),
 	IgnoreNullable(FetchedStoreProfile.Settings::acceptMarketingCheckboxCustomText),
 	IgnoreNullable(FetchedStoreProfile.Settings::acceptMarketingCheckboxDefaultValue),

@@ -150,7 +150,8 @@ fun FetchedStoreProfile.SalePriceSettings.toUpdated(): UpdatedStoreProfile.SaleP
 	return UpdatedStoreProfile.SalePriceSettings(
 		displayOnProductList = displayOnProductList,
 		oldPriceLabel = oldPriceLabel,
-		displayDiscount = displayDiscount?.toUpdated()
+		displayDiscount = displayDiscount?.toUpdated(),
+		displayLowestPrice = displayLowestPrice
 	)
 }
 
