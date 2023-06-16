@@ -18,6 +18,7 @@ data class CalculateOrderDetailsResult(
 	val paymentParams: CartStringToStringMap? = null,
 
 	val customerId: Int? = null,
+	val customerTaxExempt: Boolean? = null,
 
 	val total: Double? = null,
 	val subtotal: Double? = null,
