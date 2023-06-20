@@ -17,6 +17,8 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct::compareToPriceDiscountPercent),
 	IgnoreNullable(FetchedProduct::compareToPriceDiscountPercentFormatted),
 	IgnoreNullable(FetchedProduct::compareToPriceFormatted),
+	AllowNullable(FetchedProduct::lowestPrice),
+	AllowNullable(FetchedProduct::lowestPriceFormatted),
 	AllowNullable(FetchedProduct::customsHsTariffCode),
 	IgnoreNullable(FetchedProduct::defaultCategoryId),
 	IgnoreNullable(FetchedProduct::defaultCombinationId),

@@ -34,6 +34,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedProduct::compareToPriceDiscountPercent),
 	Ignored(FetchedProduct::compareToPriceDiscountPercentFormatted),
 	Ignored(FetchedProduct::compareToPriceFormatted),
+	Ignored(FetchedProduct::lowestPrice),
+	Ignored(FetchedProduct::lowestPriceFormatted),
 	Ignored(FetchedProduct.AttributeValue::name),
 	Ignored(FetchedProduct.AttributeValue::type),
 	Ignored(FetchedProduct.AttributeValue::show),

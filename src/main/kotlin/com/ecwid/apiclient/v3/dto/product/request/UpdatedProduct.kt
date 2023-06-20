@@ -27,6 +27,7 @@ data class UpdatedProduct(
 	val costPrice: Double? = null,
 	val wholesalePrices: List<WholesalePrice>? = null,
 	val compareToPrice: Double? = null,
+	val lowestPrice: Double? = null,
 
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
