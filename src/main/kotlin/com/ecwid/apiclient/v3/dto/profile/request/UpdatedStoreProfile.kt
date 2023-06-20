@@ -136,7 +136,7 @@ data class UpdatedStoreProfile(
 		val displayOnProductList: Boolean? = null,
 		val oldPriceLabel: String? = null,
 		val displayDiscount: DisplayDiscount? = null,
-		var displayLowestPrice: Boolean? = null
+		val displayLowestPrice: Boolean? = null
 	) {
 
 		enum class DisplayDiscount {
