@@ -7,7 +7,6 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KType
 import kotlin.reflect.full.findAnnotation
-import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
 
@@ -36,7 +35,7 @@ class ResponseFieldsBuilder {
 			"Only kotlin data class allowed"
 		}
 
-		return cache.getOrPut(klass) {
+		return cache.computeIfAbsent(klass) {
 			val fields = klass.memberProperties.associate(this::parseProperty)
 			if (fields.isEmpty()) {
 				ResponseFields.All
@@ -59,7 +58,7 @@ class ResponseFieldsBuilder {
 			// Collection
 			typeArguments.size == 1 && isCollectionType(returnType) -> {
 				val genericArgument = typeArguments.first().type
-					?: error("Not allowed type $returnType in property ${property.name}")
+					?: error("Not allowed type $returnType in property ${property.name} of class ${property::class.qualifiedName}")
 
 				return buildPropertyName(property) to buildFieldByType(genericArgument)
 			}
@@ -67,7 +66,7 @@ class ResponseFieldsBuilder {
 			// Map
 			typeArguments.size == 2 && isMapType(returnType) -> {
 				val genericArgument = typeArguments[1].type
-					?: error("Not allowed type $returnType in property ${property.name}")
+					?: error("Not allowed type $returnType in property ${property.name} of class ${property::class.qualifiedName}")
 
 				return buildPropertyName(property) to buildFieldByType(genericArgument)
 			}
@@ -88,7 +87,7 @@ class ResponseFieldsBuilder {
 		if (klass.isData) {
 			val fields = buildResponseFields(klass).fields
 			return if (fields.isEmpty()) {
-				 ResponseFields.Field.All
+				ResponseFields.Field.All
 			} else {
 				ResponseFields.Field(fields)
 			}
@@ -101,14 +100,14 @@ class ResponseFieldsBuilder {
 		val klass = propertyType.classifier as? KClass<*>
 			?: return false
 
-		return klass.isSubclassOf(Map::class)
+		return Map::class.java.isAssignableFrom(klass.java)
 	}
 
 	private fun isCollectionType(propertyType: KType): Boolean {
 		val klass = propertyType.classifier as? KClass<*>
 			?: return false
 
-		return klass.isSubclassOf(Collection::class)
+		return Collection::class.java.isAssignableFrom(klass.java)
 	}
 
 	private fun buildFromAnnotation(element: KAnnotatedElement): ResponseFields.Field? {
