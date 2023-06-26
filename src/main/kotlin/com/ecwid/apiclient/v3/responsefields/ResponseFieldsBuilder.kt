@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.responsefields
 
+import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KAnnotatedElement
 import kotlin.reflect.KClass
@@ -8,6 +9,7 @@ import kotlin.reflect.KType
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.javaField
 
 /**
  * Generate responseFields parameter from data class
@@ -47,7 +49,7 @@ class ResponseFieldsBuilder {
 	private fun parseProperty(property: KProperty1<*, *>): Pair<String, ResponseFields.Field> {
 		val fromAnnotation = buildFromAnnotation(property)
 		if (fromAnnotation != null) {
-			return property.name to fromAnnotation
+			return buildPropertyName(property) to fromAnnotation
 		}
 
 		val returnType = property.returnType
@@ -59,7 +61,7 @@ class ResponseFieldsBuilder {
 				val genericArgument = typeArguments.first().type
 					?: error("Not allowed type $returnType in property ${property.name}")
 
-				return property.name to buildFieldByType(genericArgument)
+				return buildPropertyName(property) to buildFieldByType(genericArgument)
 			}
 
 			// Map
@@ -67,11 +69,11 @@ class ResponseFieldsBuilder {
 				val genericArgument = typeArguments[1].type
 					?: error("Not allowed type $returnType in property ${property.name}")
 
-				return property.name to buildFieldByType(genericArgument)
+				return buildPropertyName(property) to buildFieldByType(genericArgument)
 			}
 		}
 
-		return property.name to buildFieldByType(returnType)
+		return buildPropertyName(property) to buildFieldByType(returnType)
 	}
 
 	private fun buildFieldByType(type: KType): ResponseFields.Field {
@@ -119,5 +121,12 @@ class ResponseFieldsBuilder {
 			val fieldsMap = annotation.fields.associateWith { ResponseFields.Field.All }
 			ResponseFields.Field(fieldsMap)
 		}
+	}
+
+	private fun buildPropertyName(property: KProperty1<*, *>): String {
+		val annotation = property.javaField?.getAnnotation(JsonFieldName::class.java)
+			?: return property.name
+
+		return annotation.fieldName
 	}
 }

@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.responsefields
 
+import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -51,8 +52,8 @@ internal class ResponseFieldsBuilderUnitTest {
 
 			field("enabled")
 
-			// GetResponseFields field annotation
-			field("namedCategory") {
+			// GetResponseFields field annotation and custom json name
+			field("named_category") {
 				field("name")
 			}
 
@@ -103,6 +104,7 @@ private data class TestProduct(
 	val taxInfo: TaxInfo?,
 	val enabled: Boolean,
 
+	@JsonFieldName("named_category")
 	@ResponseFieldsOverride(["name"])
 	val namedCategory: Category?,
 
