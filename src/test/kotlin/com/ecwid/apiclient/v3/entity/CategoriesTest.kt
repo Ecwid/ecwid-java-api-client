@@ -191,7 +191,7 @@ class CategoriesTest : BaseEntityTest() {
 			categorySearchRequest = CategoriesSearchRequest(
 				cleanUrls = false
 			),
-			urlPattern = "https://.*.company.site.*/#!/Category-.*/c/.*"
+			urlPattern = "https://.*.company.site.*/products#!/Category-.*/c/.*"
 		)
 		assertCategoryUrlMatchesRegex(
 			categorySearchRequest = CategoriesSearchRequest(

@@ -255,7 +255,7 @@ class ProductsTest : BaseEntityTest() {
 				cleanUrls = false,
 				keyword = productCreateRequest.newProduct.sku
 			),
-			urlPattern = "https://.*.company.site.*/#!/Product-.*/p/.*"
+			urlPattern = "https://.*.company.site.*/products#!/Product-.*/p/.*"
 		)
 		assertProductUrlMatchesRegex(
 			productSearchRequest = ByFilters(
