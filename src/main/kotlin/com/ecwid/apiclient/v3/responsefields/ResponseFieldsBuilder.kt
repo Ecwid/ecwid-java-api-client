@@ -1,13 +1,14 @@
 package com.ecwid.apiclient.v3.responsefields
 
+import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KAnnotatedElement
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KType
 import kotlin.reflect.full.findAnnotation
-import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.javaField
 
 /**
  * Generate responseFields parameter from data class
@@ -34,7 +35,7 @@ class ResponseFieldsBuilder {
 			"Only kotlin data class allowed"
 		}
 
-		return cache.getOrPut(klass) {
+		return cache.computeIfAbsent(klass) {
 			val fields = klass.memberProperties.associate(this::parseProperty)
 			if (fields.isEmpty()) {
 				ResponseFields.All
@@ -47,7 +48,7 @@ class ResponseFieldsBuilder {
 	private fun parseProperty(property: KProperty1<*, *>): Pair<String, ResponseFields.Field> {
 		val fromAnnotation = buildFromAnnotation(property)
 		if (fromAnnotation != null) {
-			return property.name to fromAnnotation
+			return buildPropertyName(property) to fromAnnotation
 		}
 
 		val returnType = property.returnType
@@ -57,21 +58,21 @@ class ResponseFieldsBuilder {
 			// Collection
 			typeArguments.size == 1 && isCollectionType(returnType) -> {
 				val genericArgument = typeArguments.first().type
-					?: error("Not allowed type $returnType in property ${property.name}")
+					?: error("Not allowed type $returnType in property ${property.name} of class ${property::class.qualifiedName}")
 
-				return property.name to buildFieldByType(genericArgument)
+				return buildPropertyName(property) to buildFieldByType(genericArgument)
 			}
 
 			// Map
 			typeArguments.size == 2 && isMapType(returnType) -> {
 				val genericArgument = typeArguments[1].type
-					?: error("Not allowed type $returnType in property ${property.name}")
+					?: error("Not allowed type $returnType in property ${property.name} of class ${property::class.qualifiedName}")
 
-				return property.name to buildFieldByType(genericArgument)
+				return buildPropertyName(property) to buildFieldByType(genericArgument)
 			}
 		}
 
-		return property.name to buildFieldByType(returnType)
+		return buildPropertyName(property) to buildFieldByType(returnType)
 	}
 
 	private fun buildFieldByType(type: KType): ResponseFields.Field {
@@ -86,7 +87,7 @@ class ResponseFieldsBuilder {
 		if (klass.isData) {
 			val fields = buildResponseFields(klass).fields
 			return if (fields.isEmpty()) {
-				 ResponseFields.Field.All
+				ResponseFields.Field.All
 			} else {
 				ResponseFields.Field(fields)
 			}
@@ -99,14 +100,14 @@ class ResponseFieldsBuilder {
 		val klass = propertyType.classifier as? KClass<*>
 			?: return false
 
-		return klass.isSubclassOf(Map::class)
+		return Map::class.java.isAssignableFrom(klass.java)
 	}
 
 	private fun isCollectionType(propertyType: KType): Boolean {
 		val klass = propertyType.classifier as? KClass<*>
 			?: return false
 
-		return klass.isSubclassOf(Collection::class)
+		return Collection::class.java.isAssignableFrom(klass.java)
 	}
 
 	private fun buildFromAnnotation(element: KAnnotatedElement): ResponseFields.Field? {
@@ -119,5 +120,12 @@ class ResponseFieldsBuilder {
 			val fieldsMap = annotation.fields.associateWith { ResponseFields.Field.All }
 			ResponseFields.Field(fieldsMap)
 		}
+	}
+
+	private fun buildPropertyName(property: KProperty1<*, *>): String {
+		val annotation = property.javaField?.getAnnotation(JsonFieldName::class.java)
+			?: return property.name
+
+		return annotation.fieldName
 	}
 }
