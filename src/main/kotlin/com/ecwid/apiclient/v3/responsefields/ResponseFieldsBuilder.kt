@@ -35,7 +35,7 @@ class ResponseFieldsBuilder {
 			"Only kotlin data class allowed"
 		}
 
-		return cache.computeIfAbsent(klass) {
+		return cache.getOrPut(klass) {
 			val fields = klass.memberProperties.associate(this::parseProperty)
 			if (fields.isEmpty()) {
 				ResponseFields.All

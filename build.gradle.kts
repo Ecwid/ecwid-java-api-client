@@ -7,7 +7,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	java
 	signing
-	kotlin("jvm") version "1.8.10"
+	kotlin("jvm") version "1.8.21"
 	id("com.adarshr.test-logger") version "3.2.0"
 	id("io.codearte.nexus-staging") version "0.30.0"
 	id("nebula.release") version "17.1.0"
