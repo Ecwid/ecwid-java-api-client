@@ -9,9 +9,9 @@ plugins {
 	signing
 	kotlin("jvm") version "1.8.21"
 	id("com.adarshr.test-logger") version "3.2.0"
-	id("io.codearte.nexus-staging") version "0.30.0"
 	id("nebula.release") version "17.1.0"
 	id("maven-publish")
+	id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 	id("io.gitlab.arturbosch.detekt") version "1.22.0"
 	id("org.gradle.test-retry") version "1.5.2"
 }
@@ -70,6 +70,7 @@ tasks.withType<Detekt>().configureEach {
 
 val settingsProvider = SettingsProvider()
 
+
 tasks {
 	// All checks were already made by workflow "On pull request" => no checks here
 	if (gradle.startParameter.taskNames.contains("final")) {
@@ -78,16 +79,15 @@ tasks {
 		}
 	}
 
-	// Publish artifacts to Maven Central before pushing new git tag to repo
-	named("release").get().apply {
-		dependsOn(named("publish").get())
-	}
+	afterEvaluate {
+		// Publish artifacts to Maven Central before pushing new git tag to repo
+		named("release").get().apply {
+			dependsOn(named("publishToSonatype").get())
+		}
 
-	named("closeRepository").get().apply {
-		dependsOn(named("final").get())
-	}
-	named("releaseRepository").get().apply {
-		dependsOn(named("final").get())
+		named("closeAndReleaseStagingRepository").get().apply {
+			dependsOn(named("final").get())
+		}
 	}
 }
 
@@ -186,30 +186,25 @@ publishing {
 			}
 		}
 	}
+}
+
+// signing {
+// 	useInMemoryPgpKeys(settingsProvider.gpgSigningKey, settingsProvider.gpgSigningPassword)
+// 	sign(publishing.publications["mavenJava"])
+// }
+
+nexusPublishing {
 	repositories {
-		maven {
-			credentials {
-				username = settingsProvider.ossrhUsername
-				password = settingsProvider.ossrhPassword
-			}
-			url = if (project.isSnapshotVersion()) {
-				uri("https://oss.sonatype.org/content/repositories/snapshots/")
-			} else {
-				uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-			}
+		sonatype {
+			useStaging.set(!project.isSnapshotVersion())
+			packageGroup.set(PublicationSettings.STAGING_PACKAGE_GROUP)
+			stagingProfileId.set(PublicationSettings.STAGING_PROFILE_ID)
+			nexusUrl.set(uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/"))
+			snapshotRepositoryUrl.set(uri("https://oss.sonatype.org/content/repositories/snapshots/"))
+			username.set(settingsProvider.ossrhUsername)
+			password.set(settingsProvider.ossrhPassword)
 		}
 	}
-}
-
-signing {
-	useInMemoryPgpKeys(settingsProvider.gpgSigningKey, settingsProvider.gpgSigningPassword)
-	sign(publishing.publications["mavenJava"])
-}
-
-nexusStaging {
-	packageGroup = PublicationSettings.STAGING_PACKAGE_GROUP
-	username = settingsProvider.ossrhUsername
-	password = settingsProvider.ossrhPassword
 }
 
 // We want to change SNAPSHOT versions format from:
@@ -335,6 +330,7 @@ object PublicationSettings {
 	const val SCM_URL = "https://github.com/Ecwid/ecwid-java-api-client.git"
 
 	const val STAGING_PACKAGE_GROUP = "com.ecwid"
+	const val STAGING_PROFILE_ID = "42242535548c99"
 }
 
 object Consts {
