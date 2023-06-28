@@ -252,10 +252,29 @@ class CartsTest : BaseEntityTest() {
 		assertEquals(orderForCalculate.email, calculatedOrder.email)
 		assertEquals(orderForCalculate.ipAddress, calculatedOrder.ipAddress)
 		assertEquals(orderForCalculate.customerId, calculatedOrder.customerId)
-		assertEquals(
-			null,
-			calculatedOrder.discountCoupon
-		) // TODO Discover why after each calculation this field resets to null
+
+		calculateOrderDetailsRequest.orderForCalculate.discountCoupon
+
+		val resultDiscountCoupon = calculatedOrder.discountCoupon
+		val requestDiscountCoupon = orderForCalculate.discountCoupon
+		requireNotNull(requestDiscountCoupon)
+		requireNotNull(resultDiscountCoupon)
+		assertEquals(requestDiscountCoupon.name, resultDiscountCoupon.name)
+		assertEquals(requestDiscountCoupon.code, resultDiscountCoupon.code)
+		assertEquals(requestDiscountCoupon.discountType, resultDiscountCoupon.discountType)
+		assertEquals(requestDiscountCoupon.status, resultDiscountCoupon.status)
+		assertEquals(requestDiscountCoupon.discount, resultDiscountCoupon.discount)
+		assertEquals(requestDiscountCoupon.launchDate, resultDiscountCoupon.launchDate)
+		assertEquals(requestDiscountCoupon.expirationDate, resultDiscountCoupon.expirationDate)
+		assertEquals(requestDiscountCoupon.totalLimit, resultDiscountCoupon.totalLimit)
+		assertEquals(requestDiscountCoupon.usesLimit, resultDiscountCoupon.usesLimit)
+		assertEquals(requestDiscountCoupon.applicationLimit, resultDiscountCoupon.applicationLimit)
+		assertNotNull(resultDiscountCoupon.creationDate)
+		assertEquals(requestDiscountCoupon.name, resultDiscountCoupon.name)
+		assertEquals(0, resultDiscountCoupon.orderCount)
+		requireNotNull(resultDiscountCoupon.catalogLimit)
+		assertEquals(requestDiscountCoupon.catalogLimit?.products, resultDiscountCoupon.catalogLimit?.products)
+		assertEquals(requestDiscountCoupon.catalogLimit?.categories, resultDiscountCoupon.catalogLimit?.categories)
 
 		assertEquals(orderForCalculate.items?.count(), calculatedOrder.items?.count())
 		calculatedOrder.items?.forEachIndexed { itemIndex, calculatedItem ->
@@ -266,7 +285,7 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(forCalculateItem.categoryId, calculatedItem.categoryId)
 			assertEquals(forCalculateItem.price, calculatedItem.price)
 			assertEquals(forCalculateItem.productPrice, calculatedItem.productPrice)
-			assertEquals(133.2, calculatedItem.shipping)
+			assertEquals(0.0, calculatedItem.shipping)
 			assertEquals(forCalculateItem.fixedShippingRate, calculatedItem.fixedShippingRate)
 			assertEquals(
 				null,
