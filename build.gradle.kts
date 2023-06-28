@@ -188,10 +188,10 @@ publishing {
 	}
 }
 
-// signing {
-// 	useInMemoryPgpKeys(settingsProvider.gpgSigningKey, settingsProvider.gpgSigningPassword)
-// 	sign(publishing.publications["mavenJava"])
-// }
+signing {
+	useInMemoryPgpKeys(settingsProvider.gpgSigningKey, settingsProvider.gpgSigningPassword)
+	sign(publishing.publications["mavenJava"])
+}
 
 nexusPublishing {
 	repositories {
@@ -199,8 +199,6 @@ nexusPublishing {
 			useStaging.set(!project.isSnapshotVersion())
 			packageGroup.set(PublicationSettings.STAGING_PACKAGE_GROUP)
 			stagingProfileId.set(PublicationSettings.STAGING_PROFILE_ID)
-			nexusUrl.set(uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/"))
-			snapshotRepositoryUrl.set(uri("https://oss.sonatype.org/content/repositories/snapshots/"))
 			username.set(settingsProvider.ossrhUsername)
 			password.set(settingsProvider.ossrhPassword)
 		}
