@@ -5,10 +5,9 @@ import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.customer.enums.CommercialRelationshipScheme
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
-import java.util.*
 
 data class UpdatedCustomer(
-	val email: String = "",
+	val email: String? = null,
 	val password: String? = null,
 	val customerGroupId: Int? = null,
 	val billingPerson: BillingPerson? = null,
