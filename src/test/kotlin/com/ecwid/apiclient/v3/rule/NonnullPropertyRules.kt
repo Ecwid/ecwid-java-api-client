@@ -2,7 +2,6 @@ package com.ecwid.apiclient.v3.rule
 
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.coupon.request.UpdatedCoupon
-import com.ecwid.apiclient.v3.dto.customer.request.UpdatedCustomer
 import com.ecwid.apiclient.v3.dto.customergroup.request.UpdatedCustomerGroup
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
@@ -30,8 +29,6 @@ val nonnullPropertyRules: List<NonnullPropertyRule<*, *>> = listOf(
 
 	IgnoreNonnull(UpdatedCoupon::code),
 	IgnoreNonnull(UpdatedCoupon::name),
-
-	IgnoreNonnull(UpdatedCustomer::email),
 
 	IgnoreNonnull(UpdatedCustomerGroup::name),
 
