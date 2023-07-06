@@ -19,9 +19,14 @@ data class CalculateOrderDetailsResult(
 
 	val customerId: Int? = null,
 	val customerTaxExempt: Boolean? = null,
+	val customerTaxIdValid: Boolean? = null,
+	val pricesIncludeTax: Boolean? = null,
+	val reversedTaxApplied: Boolean? = null,
 
 	val total: Double? = null,
+	val totalWithoutTax: Double? = null,
 	val subtotal: Double? = null,
+	val subtotalWithoutTax: Double? = null,
 	val usdTotal: Double? = null,
 
 	val tax: Double? = null,
@@ -47,7 +52,9 @@ data class CalculateOrderDetailsResult(
 
 	val shippingOption: ShippingOptionInfo? = null,
 	val availableShippingOptions: List<ShippingOptionInfo>? = null,
-	val handlingFee: HandlingFeeInfo? = null
+	val handlingFee: HandlingFeeInfo? = null,
+
+	val customSurcharges: List<Surcharge>? = null,
 ) : ApiResultDTO {
 
 	data class TaxInfo(
@@ -232,4 +239,16 @@ data class CalculateOrderDetailsResult(
 		override val value: Double? = null,
 		override val total: Double? = null
 	) : BaseOrderTax
+
+	data class Surcharge(
+		val id: String? = null,
+		val value: Double? = null,
+		val type: SurchargeType? = null,
+		val total: Double? = null,
+		val totalWithoutTax: Double? = null,
+		val description: String? = null,
+		val descriptionTranslated: String? = null,
+		val taxable: Boolean? = null,
+		val taxes: List<OrderItemTax>? = null
+	)
 }
