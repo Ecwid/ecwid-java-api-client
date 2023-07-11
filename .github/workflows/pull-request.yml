@@ -2,6 +2,8 @@ name: On pull request
 
 on: [ pull_request ]
 
+concurrency: pull-request
+
 jobs:
   build:
 
@@ -21,15 +23,6 @@ jobs:
           distribution: 'adopt'
           server-id: github
           settings-path: ${{ github.workspace }}
-
-      - name: Enqueue concurrent workflows runs
-        uses: softprops/turnstyle@v1
-        with:
-          abort-after-seconds: 1800
-          poll-interval-seconds: 30
-          same-branch-only: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build, run tests and upload dev snapshot to Maven Central with Gradle
         run: ./gradlew devSnapshot printDevSnapshotReleaseNote
