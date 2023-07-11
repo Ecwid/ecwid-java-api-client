@@ -20,9 +20,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'adopt'
-          server-id: github
-          settings-path: ${{ github.workspace }}
+          distribution: 'corretto'
 
       - name: Build, run tests and upload dev snapshot to Maven Central with Gradle
         run: ./gradlew devSnapshot printDevSnapshotReleaseNote

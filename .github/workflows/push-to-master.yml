@@ -23,8 +23,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'adopt'
-          server-id: github
+          distribution: 'corretto'
 
       - name: Build, upload release version to Maven Central and create git release tag with Gradle
         run: ./gradlew detekt final closeAndReleaseStagingRepository printFinalReleaseNote
