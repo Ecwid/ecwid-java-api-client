@@ -43,11 +43,43 @@ data class FetchedProduct(
 	val wholesalePrices: List<WholesalePrice>? = null,
 
 	val compareToPrice: Double? = null,
+
+	@Deprecated(
+		message = "Use field 'defaultDisplayedCompareToPriceDiscount' instead",
+		replaceWith = ReplaceWith("defaultDisplayedCompareToPriceDiscount")
+	)
 	val compareToPriceDiscount: Double? = null, // TODO Figure out how to test
+
+	@Deprecated(
+		message = "Use field 'defaultDisplayedCompareToPriceDiscountFormatted' instead",
+		replaceWith = ReplaceWith("defaultDisplayedCompareToPriceDiscountFormatted")
+	)
 	val compareToPriceDiscountFormatted: String? = null, // TODO Figure out how to test
+
+	@Deprecated(
+		message = "Use field 'defaultDisplayedCompareToPriceDiscountPercent' instead",
+		replaceWith = ReplaceWith("defaultDisplayedCompareToPriceDiscountPercent")
+	)
 	val compareToPriceDiscountPercent: Double? = null, // TODO Figure out how to test
+
+	@Deprecated(
+		message = "Use field 'defaultDisplayedCompareToPriceDiscountPercentFormatted' instead",
+		replaceWith = ReplaceWith("defaultDisplayedCompareToPriceDiscountPercentFormatted")
+	)
 	val compareToPriceDiscountPercentFormatted: String? = null, // TODO Figure out how to test
+
+	@Deprecated(
+		message = "Use field 'defaultDisplayedCompareToPriceFormatted' instead",
+		replaceWith = ReplaceWith("defaultDisplayedCompareToPriceFormatted")
+	)
 	val compareToPriceFormatted: String? = null, // TODO Figure out how to test
+
+	val defaultDisplayedCompareToPrice: Double? = null,
+	val defaultDisplayedCompareToPriceFormatted: String? = null,
+	val defaultDisplayedCompareToPriceDiscount: Double? = null,
+	val defaultDisplayedCompareToPriceDiscountFormatted: String? = null,
+	val defaultDisplayedCompareToPriceDiscountPercent: Double? = null,
+	val defaultDisplayedCompareToPriceDiscountPercentFormatted: String? = null,
 
 	val lowestPrice: Double? = null,
 	val lowestPriceFormatted: String? = null,
