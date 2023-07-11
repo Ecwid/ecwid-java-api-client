@@ -21,6 +21,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'corretto'
+          cache: 'gradle'
 
       - name: Build, run tests and upload dev snapshot to Maven Central with Gradle
         run: ./gradlew devSnapshot printDevSnapshotReleaseNote
