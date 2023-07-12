@@ -5,6 +5,8 @@ on:
     branches:
       - master
 
+concurrency: push-to-master
+
 jobs:
   build:
 
@@ -21,17 +23,8 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'adopt'
-          server-id: github
-
-      - name: Enqueue concurrent workflows runs
-        uses: softprops/turnstyle@v1
-        with:
-          abort-after-seconds: 1800
-          poll-interval-seconds: 30
-          same-branch-only: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          distribution: 'corretto'
+          cache: 'gradle'
 
       - name: Build, upload release version to Maven Central and create git release tag with Gradle
         run: ./gradlew detekt final closeAndReleaseStagingRepository printFinalReleaseNote
