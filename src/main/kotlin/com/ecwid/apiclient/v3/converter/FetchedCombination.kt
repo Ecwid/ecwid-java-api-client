@@ -19,6 +19,7 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 		costPrice = costPrice,
 		wholesalePrices = wholesalePrices?.map(FetchedVariation.WholesalePrice::toUpdated),
 		compareToPrice = compareToPrice,
+		lowestPrice = lowestPrice,
 
 		weight = weight,
 		dimensions = dimensions?.toUpdated(),
