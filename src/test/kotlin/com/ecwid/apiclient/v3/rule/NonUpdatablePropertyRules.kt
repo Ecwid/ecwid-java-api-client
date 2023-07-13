@@ -252,6 +252,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedVariation::defaultDisplayedPriceFormatted),
 	ReadOnly(FetchedVariation::inStock),
 	Ignored(FetchedVariation::borderInfo),
+	Ignored(FetchedVariation::lowestPrice),
+	ReadOnly(FetchedVariation::lowestPriceFormatted),
 	Ignored(FetchedVariation.AttributeValue::name),
 	Ignored(FetchedVariation.AttributeValue::type),
 	Ignored(FetchedVariation.AttributeValue::show),

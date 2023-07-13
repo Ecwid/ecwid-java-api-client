@@ -10,6 +10,7 @@ val fetchedVariationTypeNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	AllowNullable(FetchedVariation::borderInfo),
 	IgnoreNullable(FetchedVariation::compareToPrice),
 	IgnoreNullable(FetchedVariation::lowestPrice),
+	IgnoreNullable(FetchedVariation::lowestPriceFormatted),
 	AllowNullable(FetchedVariation::costPrice),
 	AllowNullable(FetchedVariation::customsHsTariffCode),
 	IgnoreNullable(FetchedVariation::defaultDisplayedPrice),
