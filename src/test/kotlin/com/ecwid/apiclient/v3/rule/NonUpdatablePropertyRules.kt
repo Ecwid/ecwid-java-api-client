@@ -41,7 +41,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedProduct::defaultDisplayedCompareToPriceDiscountPercent),
 	ReadOnly(FetchedProduct::defaultDisplayedCompareToPriceDiscountPercentFormatted),
 	Ignored(FetchedProduct::lowestPrice),
-	Ignored(FetchedProduct::lowestPriceFormatted),
+	ReadOnly(FetchedProduct::lowestPriceFormatted),
 	Ignored(FetchedProduct.AttributeValue::name),
 	Ignored(FetchedProduct.AttributeValue::type),
 	Ignored(FetchedProduct.AttributeValue::show),
