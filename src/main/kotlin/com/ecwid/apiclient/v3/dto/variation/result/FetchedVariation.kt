@@ -29,6 +29,8 @@ data class FetchedVariation(
 	val defaultDisplayedPriceFormatted: String? = null,
 	val costPrice: Double? = null,
 	val compareToPrice: Double? = null,
+	val lowestPrice: Double? = null,
+	val lowestPriceFormatted: String? = null,
 	val wholesalePrices: List<WholesalePrice>? = null,
 
 	val quantity: Int? = null,
