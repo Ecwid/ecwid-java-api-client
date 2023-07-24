@@ -6,6 +6,7 @@ import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest.Paren
 import com.ecwid.apiclient.v3.dto.category.request.CategoryCreateRequest
 import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
 import com.ecwid.apiclient.v3.dto.common.*
+import com.ecwid.apiclient.v3.dto.product.enums.PriceModifierType
 import com.ecwid.apiclient.v3.dto.product.enums.ShippingSettingsType
 import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.request.GetProductFiltersRequest.*
@@ -1571,7 +1572,7 @@ private fun generateProductOptionChoice(): ProductOptionChoice {
 			"en" to enText
 		),
 		priceModifier = randomModifier(),
-		priceModifierType = randomEnumValue()
+		priceModifierType = randomEnumValue<PriceModifierType>()
 	)
 }
 

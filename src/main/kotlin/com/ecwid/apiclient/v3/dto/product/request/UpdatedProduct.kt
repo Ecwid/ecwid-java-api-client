@@ -269,8 +269,8 @@ data class UpdatedProduct(
 	data class ProductOptionChoice(
 		val text: String = "",
 		val textTranslated: LocalizedValueMap? = null,
-		val priceModifier: Double = 0.0,
-		val priceModifierType: PriceModifierType = PriceModifierType.ABSOLUTE
+		val priceModifier: Double? = null,
+		val priceModifierType: PriceModifierType? = null,
 	)
 
 	data class ShippingSettings(
