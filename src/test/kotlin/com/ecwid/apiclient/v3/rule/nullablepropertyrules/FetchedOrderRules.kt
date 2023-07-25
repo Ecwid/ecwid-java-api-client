@@ -304,4 +304,5 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder.OrderItemAttributeValue::value),
 	AllowNullable(FetchedOrder.OrderItemAttributeValue::valueTranslated),
 	AllowNullable(FetchedOrder::paymentReference),
+	AllowNullable(FetchedOrder::shippingLabelAvailableForPurchase),
 )
