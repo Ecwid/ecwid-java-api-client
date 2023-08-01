@@ -7,4 +7,5 @@ enum class ReportType {
 	allOrders,
 	newOrdersVsRepeatOrders,
 	allRevenue,
+	customersByMarketingEmailsConsent,
 }
