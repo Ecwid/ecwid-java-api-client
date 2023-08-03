@@ -10,7 +10,7 @@ data class CustomersSearchRequest(
 	val keyword: String? = null,
 	val name: String? = null,
 	val email: String? = null,
-	val customerGroupId: Int? = null,
+	val customerGroupId: String? = null,
 	val minOrderCount: Int? = null,
 	val maxOrderCount: Int? = null,
 	val minSalesValue: Int? = null,
@@ -62,7 +62,7 @@ data class CustomersSearchRequest(
 			request.keyword?.let { put("keyword", it) }
 			request.name?.let { put("name", it) }
 			request.email?.let { put("email", it) }
-			request.customerGroupId?.let { put("customerGroup", it.toString()) }
+			request.customerGroupId?.let { put("customerGroup", it) }
 			request.minOrderCount?.let { put("minOrderCount", it.toString()) }
 			request.maxOrderCount?.let { put("maxOrderCount", it.toString()) }
 			request.minSalesValue?.let { put("minSalesValue", it.toString()) }
