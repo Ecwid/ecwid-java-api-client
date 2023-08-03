@@ -49,18 +49,26 @@ data class TypedSingleBatchResponse(
 		return when (status) {
 			BatchResponseStatus.COMPLETED -> {
 				try {
-					TypedBatchResponse.Ok(jsonTransformer.deserialize(escapedHttpBody, clazz)!!)
+					val deserialized = jsonTransformer.deserialize(escapedHttpBody, clazz)
+						?: throw JsonDeserializationException("Cannot deserialize response body to $clazz: $escapedHttpBody", null)
+					TypedBatchResponse.Ok(deserialized)
 				} catch (jsonDeserializationException: JsonDeserializationException) {
 					TypedBatchResponse.ParseError(jsonDeserializationException)
 				}
 			}
 			BatchResponseStatus.FAILED -> {
-				try {
-					val ecwidError = jsonTransformer.deserialize(escapedHttpBody, EcwidApiError::class.java)!!
-					TypedBatchResponse.ApiError(ecwidError)
+				@Suppress("SwallowedException")
+				val ecwidApiError = try {
+					jsonTransformer.deserialize(escapedHttpBody, EcwidApiError::class.java)
 				} catch (jsonDeserializationException: JsonDeserializationException) {
-					TypedBatchResponse.ParseError(jsonDeserializationException)
+					null
 				}
+
+				TypedBatchResponse.ApiError(
+					httpStatusCode = httpStatusCode,
+					httpStatusText = httpStatusLine,
+					ecwidApiError = ecwidApiError,
+				)
 			}
 			BatchResponseStatus.NOT_EXECUTED -> {
 				TypedBatchResponse.NotExecuted()
