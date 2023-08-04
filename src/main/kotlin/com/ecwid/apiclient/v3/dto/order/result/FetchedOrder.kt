@@ -62,6 +62,7 @@ data class FetchedOrder(
 	val totalBeforeGiftCardRedemption: Double? = null,
 	val giftCardDoubleSpending: Boolean? = null,
 	val giftCardCode: String? = null,
+	val giftCardId: Int? = null,
 
 	val total: Double? = null,
 	val totalWithoutTax: Double? = null,

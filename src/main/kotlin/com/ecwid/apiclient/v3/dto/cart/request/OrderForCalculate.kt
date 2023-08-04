@@ -21,6 +21,9 @@ data class OrderForCalculate(
 	val shippingOption: ShippingOption? = null,
 	val handlingFee: HandlingFee? = null,
 	val paymentOptionsDetails: PaymentOption? = null,
+	val giftCardCode: String? = null,
+	val giftCardId: Int? = null,
+	val giftCardTransactionOrderId: Int? = null,
 ) : ApiRequestDTO {
 
 	data class DiscountInfo(
