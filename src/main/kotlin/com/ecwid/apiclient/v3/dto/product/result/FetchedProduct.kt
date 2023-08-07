@@ -82,7 +82,8 @@ data class FetchedProduct(
 	val defaultDisplayedCompareToPriceDiscountPercentFormatted: String? = null,
 
 	val lowestPrice: Double? = null,
-	val lowestPriceFormatted: String? = null,
+	val defaultDisplayedLowestPrice: Double? = null,
+	val defaultDisplayedLowestPriceFormatted: String? = null,
 
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
