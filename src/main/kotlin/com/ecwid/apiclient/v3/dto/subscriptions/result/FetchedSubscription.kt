@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.subscriptions.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.subscriptions.enums.PriceModifierType
 import com.ecwid.apiclient.v3.dto.subscriptions.enums.ProductOptionType
 import com.ecwid.apiclient.v3.dto.subscriptions.enums.SubscriptionInterval
@@ -110,6 +111,7 @@ data class FetchedSubscription(
 
 		val sku: String? = null,
 		val name: String? = null,
+		val nameTranslated: LocalizedValueMap? = null,
 		val shortDescription: String? = null,
 		val quantity: Int? = null,
 		val quantityInStock: Int? = null,
