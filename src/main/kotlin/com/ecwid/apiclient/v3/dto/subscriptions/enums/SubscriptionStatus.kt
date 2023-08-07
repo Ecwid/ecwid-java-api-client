@@ -6,4 +6,5 @@ enum class SubscriptionStatus {
 	CANCELLED,
 	LAST_CHARGE_FAILED,
 	REQUIRES_PAYMENT_CONFIRMATION,
+	PAUSED,
 }
