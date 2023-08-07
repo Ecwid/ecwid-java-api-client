@@ -18,7 +18,7 @@ data class SubscriptionsSearchRequest(
 	val updatedFrom: Date? = null,
 	val updatedTo: Date? = null,
 	val customerId: Int? = null,
-	val status: SubscriptionStatus? = null,
+	val status: List<SubscriptionStatus>? = null,
 	val nextChargeFrom: Date? = null,
 	val nextChargeTo: Date? = null,
 	val recurringInterval: SubscriptionInterval? = null,
@@ -53,7 +53,7 @@ data class SubscriptionsSearchRequest(
 			updatedFrom?.let { put("updatedFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			updatedTo?.let { put("updatedTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			customerId?.let { put("customerId", it.toString()) }
-			status?.let { put("status", it.name) }
+			status?.let { put("status", it.joinToString(",")) }
 			nextChargeFrom?.let { put("nextChargeFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			nextChargeTo?.let { put("nextChargeTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			recurringInterval?.let { put("recurringInterval", it.name) }
