@@ -120,7 +120,10 @@ data class FetchedSubscription(
 
 		val digital: Boolean? = null,
 		val productAvailable: Boolean? = null,
+
 		val imageUrl: String? = null,
+		val smallThumbnailUrl: String? = null,
+		val hdThumbnailUrl: String? = null,
 
 		val recurringChargeSettings: RecurringChargeSettings? = null,
 		val selectedOptions: List<SelectedOptions>? = null,
