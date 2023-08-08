@@ -53,6 +53,7 @@ val calculateOrderDetailsResultNullablePropertyRules: List<NullablePropertyRule<
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItem::quantity),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItem::quantityInStock),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItem::selectedOptions),
+	AllowNullable(CalculateOrderDetailsResult.OrderItem::combinationId),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItem::shipping),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItem::shortDescription),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItem::sku),

@@ -2,7 +2,7 @@ package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
 import com.ecwid.apiclient.v3.dto.cart.result.FetchedCart
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
-import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
+import com.ecwid.apiclient.v3.rule.NullablePropertyRule.*
 
 val fetchedCartNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
     IgnoreNullable(FetchedCart::acceptMarketing),
@@ -97,6 +97,7 @@ val fetchedCartNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedCart.OrderItem::quantity),
 	IgnoreNullable(FetchedCart.OrderItem::quantityInStock),
 	IgnoreNullable(FetchedCart.OrderItem::selectedOptions),
+	AllowNullable(FetchedCart.OrderItem::combinationId),
 	IgnoreNullable(FetchedCart.OrderItem::shipping),
 	IgnoreNullable(FetchedCart.OrderItem::shortDescription),
 	IgnoreNullable(FetchedCart.OrderItem::sku),

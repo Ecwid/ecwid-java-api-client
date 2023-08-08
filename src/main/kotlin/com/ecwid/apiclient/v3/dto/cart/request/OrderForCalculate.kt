@@ -90,6 +90,7 @@ data class OrderForCalculate(
 		val couponApplied: Boolean? = null,
 
 		val selectedOptions: List<OrderItemOption>? = null,
+		val combinationId: Int? = null,
 		val taxes: List<OrderItemTax>? = null,
 		val files: List<OrderItemProductFile>? = null,
 		val dimensions: ProductDimensions? = null,

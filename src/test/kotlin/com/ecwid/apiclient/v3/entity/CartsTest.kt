@@ -111,6 +111,7 @@ class CartsTest : BaseEntityTest() {
 				assertEquals(orderSelectedOption.type, cartSelectedOptions.type)
 				// TODO Discover why after each create field `valuesArray` some times resets to null
 			}
+			assertEquals(orderItem.combinationId, cartItem.combinationId)
 
 			assertEquals(orderItem.taxes?.count(), cartItem.taxes?.count())
 			cartItem.taxes?.forEachIndexed { taxIndex, cartTaxes ->
@@ -316,6 +317,7 @@ class CartsTest : BaseEntityTest() {
 					calculatedOrderItemOptions.files?.count()
 				) // TODO Discover why after each calculation this field resets to null
 			}
+			assertEquals(forCalculateItem.combinationId, calculatedItem.combinationId)
 
 			assertEquals(forCalculateItem.files?.count(), calculatedItem.files?.count())
 			calculatedItem.files?.forEachIndexed { taxIndex, calculatedFile ->
@@ -488,6 +490,7 @@ class CartsTest : BaseEntityTest() {
 				generateDateSelectedOption(),
 				generateFilesSelectedOption()
 			),
+			combinationId = randomId(),
 			taxes = listOf(
 				generateTestOrderItemTax()
 			),

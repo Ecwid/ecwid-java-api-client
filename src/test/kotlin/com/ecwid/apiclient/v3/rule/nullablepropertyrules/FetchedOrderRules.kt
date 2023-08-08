@@ -81,6 +81,7 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder.RecurringChargeSettings::subscriptionPriceWithSignUpFee),
 	AllowNullable(FetchedOrder.RecurringChargeSettings::signUpFee),
 	IgnoreNullable(FetchedOrder.OrderItem::selectedOptions),
+	AllowNullable(FetchedOrder.OrderItem::combinationId),
 	AllowNullable(FetchedOrder.OrderItem::selectedPrice),
 	IgnoreNullable(FetchedOrder.OrderItem::shipping),
 	IgnoreNullable(FetchedOrder.OrderItem::shortDescription),

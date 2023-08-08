@@ -73,6 +73,7 @@ val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = l
 	IgnoreNullable(OrderForCalculate.OrderItem::quantity),
 	IgnoreNullable(OrderForCalculate.OrderItem::quantityInStock),
 	IgnoreNullable(OrderForCalculate.OrderItem::selectedOptions),
+	AllowNullable(OrderForCalculate.OrderItem::combinationId),
 	IgnoreNullable(OrderForCalculate.OrderItem::shipping),
 	IgnoreNullable(OrderForCalculate.OrderItem::shortDescription),
 	IgnoreNullable(OrderForCalculate.OrderItem::sku),
