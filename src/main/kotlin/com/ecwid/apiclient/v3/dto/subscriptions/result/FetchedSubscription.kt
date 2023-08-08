@@ -18,6 +18,7 @@ data class FetchedSubscription(
 	val created: Date = Date(),
 	val cancelled: Date? = null,
 	val nextCharge: Date = Date(),
+	val nextChargeFormatted: String = "",
 	val createTimestamp: Long? = null,
 	val updateTimestamp: Long? = null,
 	val chargeSettings: ChargeSettings = ChargeSettings(),
