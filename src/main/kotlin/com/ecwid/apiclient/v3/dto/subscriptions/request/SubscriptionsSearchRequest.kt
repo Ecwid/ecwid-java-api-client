@@ -32,6 +32,7 @@ data class SubscriptionsSearchRequest(
 	val offset: Int? = null,
 	val limit: Int? = null,
 	val sortBy: SortOrder = SortOrder.DATE_CREATED_DESC,
+	val lang: String? = null,
 	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 
@@ -67,6 +68,7 @@ data class SubscriptionsSearchRequest(
 			offset?.let { put("offset", it.toString()) }
 			limit?.let { put("limit", it.toString()) }
 			put("sortBy", sortBy.name)
+			lang?.let { put("lang", it) }
 		}.toMap()
 	}
 }
