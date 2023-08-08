@@ -38,6 +38,7 @@ import com.ecwid.apiclient.v3.dto.saleschannels.response.*
 import com.ecwid.apiclient.v3.dto.storage.request.*
 import com.ecwid.apiclient.v3.dto.storage.result.*
 import com.ecwid.apiclient.v3.dto.subscriptions.request.SubscriptionsSearchRequest
+import com.ecwid.apiclient.v3.dto.subscriptions.result.FetchedSubscription
 import com.ecwid.apiclient.v3.dto.subscriptions.result.SubscriptionsSearchResult
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
@@ -348,6 +349,7 @@ interface ReportsApiClient {
 // https://api-docs.ecwid.com/reference/get-subscription
 interface SubscriptionsApiClient {
 	fun searchSubscriptions(request: SubscriptionsSearchRequest): SubscriptionsSearchResult
+	fun searchSubscriptionsAsSequence(request: SubscriptionsSearchRequest): Sequence<FetchedSubscription>
 }
 
 interface InstantSiteRedirectsApiClient {
