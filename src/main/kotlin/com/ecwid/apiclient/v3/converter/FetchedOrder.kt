@@ -152,6 +152,7 @@ fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 		taxable = taxable,
 
 		selectedOptions = selectedOptions?.map(FetchedOrder.OrderItemSelectedOption::toUpdated),
+		combinationId = combinationId,
 		taxes = taxes?.map(FetchedOrder.OrderItemTax::toUpdated),
 		dimensions = dimensions?.toUpdated(),
 		discounts = discounts?.map(FetchedOrder.OrderItemDiscounts::toUpdated),
