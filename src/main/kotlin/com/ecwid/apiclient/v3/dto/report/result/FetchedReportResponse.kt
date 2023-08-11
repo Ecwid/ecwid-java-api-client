@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.report.enums.ComparePeriod
 import com.ecwid.apiclient.v3.dto.report.enums.ReportType
 import com.ecwid.apiclient.v3.dto.report.enums.TimeScaleValue
+import com.google.gson.JsonObject
 
 data class FetchedReportResponse(
 	val reportType: ReportType = ReportType.allTraffic,
@@ -26,6 +27,7 @@ data class FetchedReportResponse(
 		val percentage: Double? = null,
 		val comparePeriodStartTimeStamp: Long? = null,
 		val comparePeriodEndTimeStamp: Long? = null,
+		val additionalData: JsonObject? = null,
 	)
 
 	data class FetchedDataItem(
