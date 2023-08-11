@@ -38,7 +38,7 @@ data class FetchedReportResponse(
 		val type: AdditionalDataType,
 	) {
 		class AdditionalUtmData(
-			val utmList: List<FetchedUtmDataItem>,
+			val utmList: List<FetchedUtmDataItem> = emptyList(),
 		) : FetchedAdditionalData(AdditionalDataType.UTM)
 
 		enum class AdditionalDataType {
