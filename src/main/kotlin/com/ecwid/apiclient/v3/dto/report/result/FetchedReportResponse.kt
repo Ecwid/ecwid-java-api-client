@@ -47,9 +47,9 @@ data class FetchedReportResponse(
 	}
 
 	data class FetchedUtmDataItem(
-		val utmSource: String,
-		val utmMedium: String,
-		val utmCampaign: String,
+		val utmSource: String = "",
+		val utmMedium: String = "",
+		val utmCampaign: String = "",
 	)
 
 	override fun getModifyKind() = ApiFetchedDTO.ModifyKind.ReadOnly
