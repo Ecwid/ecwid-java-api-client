@@ -18,7 +18,7 @@ data class SubscriptionsSearchRequest(
 	val updatedFrom: Date? = null,
 	val updatedTo: Date? = null,
 	val customerId: Int? = null,
-	val status: SubscriptionStatus? = null,
+	val status: List<SubscriptionStatus>? = null,
 	val nextChargeFrom: Date? = null,
 	val nextChargeTo: Date? = null,
 	val recurringInterval: SubscriptionInterval? = null,
@@ -29,9 +29,10 @@ data class SubscriptionsSearchRequest(
 	val orderTotal: Double? = null,
 	val orderCreatedFrom: Date? = null,
 	val orderCreatedTo: Date? = null,
-	val offset: Int? = null,
-	val limit: Int? = null,
+	val offset: Int = 0,
+	val limit: Int = 100,
 	val sortBy: SortOrder = SortOrder.DATE_CREATED_DESC,
+	val lang: String? = null,
 	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 
@@ -53,7 +54,7 @@ data class SubscriptionsSearchRequest(
 			updatedFrom?.let { put("updatedFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			updatedTo?.let { put("updatedTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			customerId?.let { put("customerId", it.toString()) }
-			status?.let { put("status", it.name) }
+			status?.let { put("status", it.joinToString(",")) }
 			nextChargeFrom?.let { put("nextChargeFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			nextChargeTo?.let { put("nextChargeTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			recurringInterval?.let { put("recurringInterval", it.name) }
@@ -67,6 +68,7 @@ data class SubscriptionsSearchRequest(
 			offset?.let { put("offset", it.toString()) }
 			limit?.let { put("limit", it.toString()) }
 			put("sortBy", sortBy.name)
+			lang?.let { put("lang", it) }
 		}.toMap()
 	}
 }

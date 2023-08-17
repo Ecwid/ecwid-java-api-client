@@ -96,6 +96,7 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedReportResponse.FetchedDataset::percentage),
 	AllowNullable(FetchedReportResponse.FetchedDataset::comparePeriodStartTimeStamp),
 	AllowNullable(FetchedReportResponse.FetchedDataset::comparePeriodEndTimeStamp),
+	AllowNullable(FetchedReportResponse.FetchedDataset::additionalData),
 
 	AllowNullable(InstantSiteRedirectsSearchRequest::keyword),
 	AllowNullable(InstantSiteRedirectsSearchRequest::limit),

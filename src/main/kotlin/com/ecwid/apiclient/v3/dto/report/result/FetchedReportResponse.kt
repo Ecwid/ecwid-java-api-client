@@ -26,11 +26,30 @@ data class FetchedReportResponse(
 		val percentage: Double? = null,
 		val comparePeriodStartTimeStamp: Long? = null,
 		val comparePeriodEndTimeStamp: Long? = null,
+		val additionalData: FetchedAdditionalData? = null,
 	)
 
 	data class FetchedDataItem(
 		val dataId: String = "",
 		val dataValue: Double = 0.0,
+	)
+
+	sealed class FetchedAdditionalData(
+		val type: AdditionalDataType,
+	) {
+		data class AdditionalUtmData(
+			val utmList: List<FetchedUtmDataItem> = emptyList(),
+		) : FetchedAdditionalData(AdditionalDataType.UTM)
+
+		enum class AdditionalDataType {
+			UTM
+		}
+	}
+
+	data class FetchedUtmDataItem(
+		val utmSource: String = "",
+		val utmMedium: String = "",
+		val utmCampaign: String = "",
 	)
 
 	override fun getModifyKind() = ApiFetchedDTO.ModifyKind.ReadOnly

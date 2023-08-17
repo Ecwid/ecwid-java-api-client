@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.config.*
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.common.EcwidApiError
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct.ProductOption
+import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.httptransport.*
@@ -50,7 +51,7 @@ class ApiClientHelper private constructor(
 		credentials = storeCredentials,
 		loggingSettings = loggingSettings,
 		httpTransport = httpTransport,
-		jsonTransformer = jsonTransformerProvider.build(listOf(createProductOptionsPolymorphicType()))
+		jsonTransformer = jsonTransformerProvider.build(createPolymorphicTypeList())
 	)
 
 	constructor(
@@ -64,7 +65,7 @@ class ApiClientHelper private constructor(
 		credentials = credentials,
 		loggingSettings = loggingSettings,
 		httpTransport = httpTransport,
-		jsonTransformer = jsonTransformerProvider.build(listOf(createProductOptionsPolymorphicType()))
+		jsonTransformer = jsonTransformerProvider.build(createPolymorphicTypeList())
 	)
 
 	@PublishedApi
@@ -455,6 +456,13 @@ internal fun HttpBody.prepare(jsonTransformer: JsonTransformer): TransportHttpBo
 	}
 }
 
+fun createPolymorphicTypeList(): List<PolymorphicType<*>> {
+	return listOf(
+		createProductOptionsPolymorphicType(),
+		createAdditionalDataPolymorphicType()
+	)
+}
+
 private fun createProductOptionsPolymorphicType(): PolymorphicType<ProductOption> {
 	return PolymorphicType(
 		rootClass = ProductOption::class.java,
@@ -468,6 +476,16 @@ private fun createProductOptionsPolymorphicType(): PolymorphicType<ProductOption
 			"textarea" to ProductOption.TextAreaOption::class.java,
 			"date" to ProductOption.DateOption::class.java,
 			"files" to ProductOption.FilesOption::class.java
+		)
+	)
+}
+
+private fun createAdditionalDataPolymorphicType(): PolymorphicType<FetchedReportResponse.FetchedAdditionalData> {
+	return PolymorphicType(
+		rootClass = FetchedReportResponse.FetchedAdditionalData::class.java,
+		jsonFieldName = "type",
+		childClasses = mapOf(
+			"utm" to FetchedReportResponse.FetchedAdditionalData.AdditionalUtmData::class.java,
 		)
 	)
 }

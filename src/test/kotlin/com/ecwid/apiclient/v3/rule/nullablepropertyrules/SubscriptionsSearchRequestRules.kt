@@ -24,6 +24,5 @@ val subscriptionsSearchRequestNullablePropertyRules: List<NullablePropertyRule<*
 	AllowNullable(SubscriptionsSearchRequest::orderTotal),
 	AllowNullable(SubscriptionsSearchRequest::orderCreatedFrom),
 	AllowNullable(SubscriptionsSearchRequest::orderCreatedTo),
-	AllowNullable(SubscriptionsSearchRequest::offset),
-	AllowNullable(SubscriptionsSearchRequest::limit),
+	AllowNullable(SubscriptionsSearchRequest::lang),
 )

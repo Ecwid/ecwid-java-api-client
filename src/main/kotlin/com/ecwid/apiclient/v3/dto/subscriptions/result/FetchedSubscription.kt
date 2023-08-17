@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.subscriptions.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.subscriptions.enums.PriceModifierType
 import com.ecwid.apiclient.v3.dto.subscriptions.enums.ProductOptionType
 import com.ecwid.apiclient.v3.dto.subscriptions.enums.SubscriptionInterval
@@ -17,6 +18,7 @@ data class FetchedSubscription(
 	val created: Date = Date(),
 	val cancelled: Date? = null,
 	val nextCharge: Date = Date(),
+	val nextChargeFormatted: String = "",
 	val createTimestamp: Long? = null,
 	val updateTimestamp: Long? = null,
 	val chargeSettings: ChargeSettings = ChargeSettings(),
@@ -110,6 +112,7 @@ data class FetchedSubscription(
 
 		val sku: String? = null,
 		val name: String? = null,
+		val nameTranslated: LocalizedValueMap? = null,
 		val shortDescription: String? = null,
 		val quantity: Int? = null,
 		val quantityInStock: Int? = null,
@@ -120,7 +123,10 @@ data class FetchedSubscription(
 
 		val digital: Boolean? = null,
 		val productAvailable: Boolean? = null,
+
 		val imageUrl: String? = null,
+		val smallThumbnailUrl: String? = null,
+		val hdThumbnailUrl: String? = null,
 
 		val recurringChargeSettings: RecurringChargeSettings? = null,
 		val selectedOptions: List<SelectedOptions>? = null,

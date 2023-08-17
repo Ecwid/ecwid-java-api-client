@@ -153,6 +153,7 @@ data class UpdatedOrder(
 		val isGiftCard: Boolean? = null,
 
 		val selectedOptions: List<OrderItemSelectedOption>? = null,
+		val combinationId: Int? = null,
 		val taxes: List<OrderItemTax>? = null,
 		val dimensions: ProductDimensions? = null,
 		val discountsAllowed: Boolean? = null,
