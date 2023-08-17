@@ -244,6 +244,7 @@ interface CustomersApiClient {
 	fun searchDeletedCustomersAsSequence(request: DeletedCustomersSearchRequest): Sequence<DeletedCustomer>
 	fun searchCustomersProducts(request: CustomersProductsSearchRequest): CustomersProductsSearchResult
 	fun searchCustomersLocations(request: CustomersLocationsSearchRequest): CustomersLocationsSearchResult
+	fun searchCustomersFilters(request: CustomerFiltersDataSearchRequest): CustomersFiltersDataSearchResult
 }
 
 // Customer groups

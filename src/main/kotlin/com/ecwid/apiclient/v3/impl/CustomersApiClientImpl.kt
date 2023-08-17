@@ -55,4 +55,8 @@ internal data class CustomersApiClientImpl(
 
 	override fun searchCustomersLocations(request: CustomersLocationsSearchRequest) =
 		apiClientHelper.makeObjectResultRequest<CustomersLocationsSearchResult>(request)
+
+	override fun searchCustomersFilters(request: CustomerFiltersDataSearchRequest) =
+		apiClientHelper.makeObjectResultRequest<CustomersFiltersDataSearchResult>(request)
+
 }
