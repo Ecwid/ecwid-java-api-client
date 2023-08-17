@@ -108,6 +108,7 @@ data class UpdatedStoreProfile(
 		val salePrice: SalePriceSettings? = null,
 		val showAcceptMarketingCheckbox: Boolean? = null,
 		val showPricePerUnit: Boolean? = null,
+		val showRepeatOrderButton: Boolean? = null,
 		val snapPixelId: String? = null,
 		val storeDescription: String? = null,
 		val storeDescriptionTranslated: LocalizedValueMap? = null,

@@ -139,6 +139,7 @@ data class FetchedStoreProfile(
 		val salePrice: SalePriceSettings? = null,
 		val showAcceptMarketingCheckbox: Boolean? = null,
 		val showPricePerUnit: Boolean = false,
+		val showRepeatOrderButton: Boolean = false,
 		val snapPixelId: String? = null,
 		val storeDescription: String? = null,
 		val storeDescriptionTranslated: LocalizedValueMap? = null,
