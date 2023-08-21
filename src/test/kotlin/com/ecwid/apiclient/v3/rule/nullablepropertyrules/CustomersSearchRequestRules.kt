@@ -1,6 +1,5 @@
 package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
-import com.ecwid.apiclient.v3.dto.customer.request.CustomersMassUpdateRequest
 import com.ecwid.apiclient.v3.dto.customer.request.CustomersSearchRequest
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
@@ -24,16 +23,4 @@ val customersSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *>
 	AllowNullable(CustomersSearchRequest::taxExempt),
 	AllowNullable(CustomersSearchRequest::acceptMarketing),
 	AllowNullable(CustomersSearchRequest::lang),
-
-	AllowNullable(CustomersMassUpdateRequest::customerGroupId),
-	AllowNullable(CustomersMassUpdateRequest::keyword),
-	AllowNullable(CustomersMassUpdateRequest::maxOrderCount),
-	AllowNullable(CustomersMassUpdateRequest::minOrderCount),
-	AllowNullable(CustomersMassUpdateRequest::maxSalesValue),
-	AllowNullable(CustomersMassUpdateRequest::minSalesValue),
-	AllowNullable(CustomersMassUpdateRequest::purchasedProductId),
-	AllowNullable(CustomersMassUpdateRequest::countryCode),
-	AllowNullable(CustomersMassUpdateRequest::taxExempt),
-	AllowNullable(CustomersMassUpdateRequest::acceptMarketing),
-	AllowNullable(CustomersMassUpdateRequest::lang),
 )

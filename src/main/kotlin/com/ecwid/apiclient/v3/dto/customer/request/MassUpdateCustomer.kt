@@ -7,7 +7,7 @@ data class MassUpdateCustomer(
 	val ids: List<Int>? = null,
 	val mode: SelectMode = SelectMode.ALL,
 	val delete: Boolean? = null,
-	val customer: UpdatedCustomer = UpdatedCustomer()
+	val customer: UpdatedCustomer? = null
 ) : ApiRequestDTO {
 
 	data class UpdatedCustomer(
