@@ -115,6 +115,7 @@ fun FetchedStoreProfile.Settings.toUpdated(): UpdatedStoreProfile.Settings {
 		salePrice = salePrice?.toUpdated(),
 		showAcceptMarketingCheckbox = showAcceptMarketingCheckbox,
 		showPricePerUnit = showPricePerUnit,
+		showRepeatOrderButton = showRepeatOrderButton,
 		snapPixelId = snapPixelId,
 		storeDescription = storeDescription,
 		storeDescriptionTranslated = storeDescriptionTranslated,
