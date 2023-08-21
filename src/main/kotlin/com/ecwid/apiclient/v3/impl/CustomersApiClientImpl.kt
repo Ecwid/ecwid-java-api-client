@@ -59,4 +59,7 @@ internal data class CustomersApiClientImpl(
 	override fun searchCustomersFilters(request: CustomerFiltersDataSearchRequest) =
 		apiClientHelper.makeObjectResultRequest<CustomersFiltersDataSearchResult>(request)
 
+	override fun massUpdate(request: CustomersMassUpdateRequest) =
+		apiClientHelper.makeObjectResultRequest<CustomerUpdateResult>(request)
+
 }
