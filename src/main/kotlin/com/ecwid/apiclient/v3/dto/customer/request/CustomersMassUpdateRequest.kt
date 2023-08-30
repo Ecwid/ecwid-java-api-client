@@ -20,7 +20,7 @@ data class CustomersMassUpdateRequest(
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
 		pathSegments = listOf(
-			"customers"
+			"customers_update"
 		),
 		params = toParams(),
 		httpBody = HttpBody.JsonBody(
