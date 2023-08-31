@@ -8,14 +8,14 @@ import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 
 val customersMassUpdatedRequestNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 
-	AllowNullable(CustomersMassUpdateRequest::customerGroupId),
 	AllowNullable(CustomersMassUpdateRequest::keyword),
 	AllowNullable(CustomersMassUpdateRequest::maxOrderCount),
 	AllowNullable(CustomersMassUpdateRequest::minOrderCount),
 	AllowNullable(CustomersMassUpdateRequest::maxSalesValue),
 	AllowNullable(CustomersMassUpdateRequest::minSalesValue),
-	AllowNullable(CustomersMassUpdateRequest::purchasedProductId),
-	AllowNullable(CustomersMassUpdateRequest::countryCode),
+	AllowNullable(CustomersMassUpdateRequest::purchasedProductIds),
+	AllowNullable(CustomersMassUpdateRequest::customerGroupIds),
+	AllowNullable(CustomersMassUpdateRequest::countryCodes),
 	AllowNullable(CustomersMassUpdateRequest::taxExempt),
 	AllowNullable(CustomersMassUpdateRequest::acceptMarketing),
 	AllowNullable(CustomersMassUpdateRequest::lang),
