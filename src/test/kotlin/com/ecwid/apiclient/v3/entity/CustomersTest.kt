@@ -173,8 +173,8 @@ class CustomersTest : BaseEntityTest() {
 
 		assertCustomersSearch(
 			positiveCustomerId = customerCreateResult.id,
-			positiveSearchRequest = CustomersSearchRequest(customerGroupId = customerCreateRequest.newCustomer.customerGroupId.toString()),
-			negativeSearchRequest = CustomersSearchRequest(customerGroupId = "0")
+			positiveSearchRequest = CustomersSearchRequest(customerGroupId = customerCreateRequest.newCustomer.customerGroupId),
+			negativeSearchRequest = CustomersSearchRequest(customerGroupId = 0)
 		)
 
 		assertCustomersSearch(

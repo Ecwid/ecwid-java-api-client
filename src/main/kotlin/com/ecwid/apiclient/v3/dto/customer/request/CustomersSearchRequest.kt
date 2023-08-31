@@ -10,15 +10,16 @@ data class CustomersSearchRequest(
 	val keyword: String? = null,
 	val name: String? = null,
 	val email: String? = null,
-	val customerGroupId: String? = null,
+	val customerGroupId: Int? = null,
 	val minOrderCount: Int? = null,
 	val maxOrderCount: Int? = null,
 	val minSalesValue: Int? = null,
 	val maxSalesValue: Int? = null,
 	val taxExempt: Boolean? = null,
 	val acceptMarketing: Boolean? = null,
-	val purchasedProductId: String? = null,
-	val countryCode: String? = null,
+	val purchasedProductIds: String? = null,
+	val customerGroupIds: String? = null,
+	val countryCodes: String? = null,
 	val createdFrom: Date? = null,
 	val createdTo: Date? = null,
 	val updatedFrom: Date? = null,
@@ -62,7 +63,7 @@ data class CustomersSearchRequest(
 			request.keyword?.let { put("keyword", it) }
 			request.name?.let { put("name", it) }
 			request.email?.let { put("email", it) }
-			request.customerGroupId?.let { put("customerGroup", it) }
+			request.customerGroupId?.let { put("customerGroup", it.toString()) }
 			request.minOrderCount?.let { put("minOrderCount", it.toString()) }
 			request.maxOrderCount?.let { put("maxOrderCount", it.toString()) }
 			request.minSalesValue?.let { put("minSalesValue", it.toString()) }
@@ -73,8 +74,9 @@ data class CustomersSearchRequest(
 			request.updatedTo?.let { put("updatedTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			request.taxExempt?.let { put("taxExempt", it.toString()) }
 			request.acceptMarketing?.let { put("acceptMarketing", it.toString()) }
-			request.purchasedProductId?.let { put("purchasedProductId", it) }
-			request.countryCode?.let { put("countryCode", it) }
+			request.purchasedProductIds?.let { put("purchasedProductIds", it) }
+			request.customerGroupIds?.let { put("customerGroupIds", it) }
+			request.countryCodes?.let { put("countryCodes", it) }
 			request.lang?.let { put("lang", it) }
 			request.sortBy?.let { put("sortBy", it.name) }
 			put("offset", request.offset.toString())
