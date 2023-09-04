@@ -112,6 +112,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	couponSearchRequestNullablePropertyRules,
 	customAppRequestNullablePropertyRules,
 	customersSearchRequestNullablePropertyRules,
+	customersMassUpdatedRequestNullablePropertyRules,
 	deletedCustomersSearchRequestNullablePropertyRules,
 	deletedOrdersSearchRequestNullablePropertyRules,
 	deletedProductsSearchRequestNullablePropertyRules,
