@@ -63,7 +63,9 @@ data class GetProductFiltersRequest(
 		abstract fun getFilterFieldName(): String
 
 		protected fun escapeName(name: String): String {
-			return name.replace(",", "\\,").replace("\\", "\\\\")
+			return name
+				.replace("\\", "\\\\")
+				.replace(",", "\\,")
 		}
 
 	}
