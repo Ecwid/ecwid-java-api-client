@@ -5,17 +5,7 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
 data class CustomersIdsRequest(
-	val keyword: String? = null,
-	val minOrderCount: Int? = null,
-	val maxOrderCount: Int? = null,
-	val minSalesValue: Int? = null,
-	val maxSalesValue: Int? = null,
-	val taxExempt: Boolean? = null,
-	val acceptMarketing: Boolean? = null,
-	val purchasedProductIds: String? = null,
-	val customerGroupIds: String? = null,
-	val countryCodes: String? = null,
-	val lang: String? = null,
+	val requestFields: CustomersRequestFields = CustomersRequestFields(),
 	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
@@ -27,7 +17,7 @@ data class CustomersIdsRequest(
 	)
 
 	private fun toParams(): Map<String, String> {
-		val request = this
+		val request = this.requestFields
 		return mutableMapOf<String, String>().apply {
 			request.keyword?.let { put("keyword", it) }
 			request.minOrderCount?.let { put("minOrderCount", it.toString()) }
