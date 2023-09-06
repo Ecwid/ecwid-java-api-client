@@ -9,6 +9,7 @@ val productsSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *>>
 	AllowNullable(ProductsSearchRequest.ByFilters::baseUrl),
 	AllowNullable(ProductsSearchRequest.ByFilters::categories),
 	AllowNullable(ProductsSearchRequest.ByFilters::cleanUrls),
+	AllowNullable(ProductsSearchRequest.ByFilters::slugsWithoutIds),
 	AllowNullable(ProductsSearchRequest.ByFilters::createdFrom),
 	AllowNullable(ProductsSearchRequest.ByFilters::createdTo),
 	AllowNullable(ProductsSearchRequest.ByFilters::enabled),
@@ -32,6 +33,7 @@ val productsSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *>>
 	AllowNullable(ProductsSearchRequest.ByFilters::visibleInStorefront),
 	AllowNullable(ProductsSearchRequest.ByIds::baseUrl),
 	AllowNullable(ProductsSearchRequest.ByIds::cleanUrls),
+	AllowNullable(ProductsSearchRequest.ByIds::slugsWithoutIds),
 	AllowNullable(ProductsSearchRequest.ByIds::sortBy),
 	AllowNullable(ProductsSearchRequest.ByIds::lang),
 )

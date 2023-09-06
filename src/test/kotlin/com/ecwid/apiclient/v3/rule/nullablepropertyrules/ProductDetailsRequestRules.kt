@@ -7,5 +7,6 @@ import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 val productDetailsRequestNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
     AllowNullable(ProductDetailsRequest::baseUrl),
 	AllowNullable(ProductDetailsRequest::cleanUrls),
+	AllowNullable(ProductDetailsRequest::slugsWithoutIds),
 	AllowNullable(ProductDetailsRequest::lang)
 )
