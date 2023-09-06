@@ -44,7 +44,9 @@ data class UpdatedOrder(
 	val acceptMarketing: Boolean? = null,
 
 	val total: Double? = null,
+	val totalWithoutTax: Double? = null,
 	val subtotal: Double? = null,
+	val subtotalWithoutTax: Double? = null,
 
 	val tax: Double? = null,
 	val customerTaxExempt: Boolean? = null,
