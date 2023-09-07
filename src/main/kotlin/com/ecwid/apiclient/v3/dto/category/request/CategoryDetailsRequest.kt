@@ -8,6 +8,7 @@ data class CategoryDetailsRequest(
 	val categoryId: Int = 0,
 	val baseUrl: String? = null,
 	val cleanUrls: Boolean? = null,
+	val slugsWithoutIds: Boolean? = null,
 	val lang: String? = null,
 	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
@@ -25,6 +26,7 @@ data class CategoryDetailsRequest(
 		return mutableMapOf<String, String>().apply {
 			request.baseUrl?.let { put("baseUrl", it) }
 			request.cleanUrls?.let { put("cleanUrls", it.toString()) }
+			request.slugsWithoutIds?.let { put("slugsWithoutIds", it.toString()) }
 			request.lang?.let { put("lang", it) }
 		}.toMap()
 	}

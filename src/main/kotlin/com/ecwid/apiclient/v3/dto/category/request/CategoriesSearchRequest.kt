@@ -10,6 +10,7 @@ data class CategoriesSearchRequest(
 	val returnProductIds: Boolean? = null,
 	val baseUrl: String? = null,
 	val cleanUrls: Boolean? = null,
+	val slugsWithoutIds: Boolean? = null,
 	val offset: Int = 0,
 	val limit: Int = 100,
 	val lang: String? = null,
@@ -47,6 +48,7 @@ data class CategoriesSearchRequest(
 			request.returnProductIds?.let { put("productIds", it.toString()) }
 			request.baseUrl?.let { put("baseUrl", it) }
 			request.cleanUrls?.let { put("cleanUrls", it.toString()) }
+			request.slugsWithoutIds?.let { put("slugsWithoutIds", it.toString()) }
 			put("offset", request.offset.toString())
 			put("limit", request.limit.toString())
 			request.lang?.let { put("lang", it) }

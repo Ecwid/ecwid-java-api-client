@@ -32,6 +32,7 @@ sealed class ProductsSearchRequest : ApiRequest {
 		val isCustomerSetPrice: Boolean? = null,
 		val baseUrl: String? = null,
 		val cleanUrls: Boolean? = null,
+		val slugsWithoutIds: Boolean? = null,
 		val offset: Int = 0,
 		val limit: Int = 100,
 		val lang: String? = null,
@@ -79,6 +80,7 @@ sealed class ProductsSearchRequest : ApiRequest {
 				request.includeProductsFromSubcategories?.let { put("includeProductsFromSubcategories", it.toString()) }
 				request.baseUrl?.let { put("baseUrl", it) }
 				request.cleanUrls?.let { put("cleanUrls", it.toString()) }
+				request.slugsWithoutIds?.let { put("slugsWithoutIds", it.toString()) }
 				request.sortBy?.let { put("sortBy", it.name) }
 				put("offset", request.offset.toString())
 				put("limit", request.limit.toString())
@@ -92,6 +94,7 @@ sealed class ProductsSearchRequest : ApiRequest {
 		val productIds: List<Int> = listOf(),
 		val baseUrl: String? = null,
 		val cleanUrls: Boolean? = null,
+		val slugsWithoutIds: Boolean? = null,
 		val sortBy: SortOrder? = null,
 		val lang: String? = null,
 		val responseFields: ResponseFields = ResponseFields.All,
@@ -113,6 +116,7 @@ sealed class ProductsSearchRequest : ApiRequest {
 				put("productId", request.productIds.joinToString(","))
 				request.baseUrl?.let { put("baseUrl", it) }
 				request.cleanUrls?.let { put("cleanUrls", it.toString()) }
+				request.slugsWithoutIds?.let { put("slugsWithoutIds", it.toString()) }
 				request.sortBy?.let { put("sortBy", it.name) }
 				request.lang?.let { put("lang", it) }
 			}.toMap()
