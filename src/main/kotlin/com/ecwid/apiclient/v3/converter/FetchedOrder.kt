@@ -39,7 +39,9 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 		acceptMarketing = acceptMarketing,
 
 		total = total,
+		totalWithoutTax = totalWithoutTax,
 		subtotal = subtotal,
+		subtotalWithoutTax = subtotalWithoutTax,
 
 		tax = tax,
 		customerTaxExempt = customerTaxExempt,
