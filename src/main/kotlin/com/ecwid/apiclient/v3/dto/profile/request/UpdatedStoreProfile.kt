@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
+import com.ecwid.apiclient.v3.dto.product.enums.ProductPriceVisibilityBehaviour
 import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 
@@ -108,6 +109,7 @@ data class UpdatedStoreProfile(
 		val salePrice: SalePriceSettings? = null,
 		val showAcceptMarketingCheckbox: Boolean? = null,
 		val showPricePerUnit: Boolean? = null,
+		val showPriceOnProductList: ProductPriceVisibilityBehaviour? = ProductPriceVisibilityBehaviour.SHOW,
 		val showRepeatOrderButton: Boolean? = null,
 		val snapPixelId: String? = null,
 		val storeDescription: String? = null,

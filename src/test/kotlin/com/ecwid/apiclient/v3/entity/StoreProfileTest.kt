@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
+import com.ecwid.apiclient.v3.dto.product.enums.ProductPriceVisibilityBehaviour
 import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
@@ -257,6 +258,7 @@ class StoreProfileTest : BaseEntityTest() {
 		assertEquals("googleTagId", settings.googleTagId)
 		assertEquals("googleEventId", settings.googleEventId)
 		assertEquals(true, settings.showPricePerUnit)
+		assertEquals(ProductPriceVisibilityBehaviour.SHOW, settings.showPriceOnProductList)
 
 		// Checking field with custom name and annotation @JsonFieldName
 		assertEquals("MEDIUM", designSettings.productListImageSize)
