@@ -41,6 +41,8 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 		total = total,
 		subtotal = subtotal,
 
+		totalBeforeGiftCardRedemption = totalBeforeGiftCardRedemption,
+
 		tax = tax,
 		customerTaxExempt = customerTaxExempt,
 		customerTaxId = customerTaxId,
