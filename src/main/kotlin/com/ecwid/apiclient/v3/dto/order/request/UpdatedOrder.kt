@@ -46,6 +46,8 @@ data class UpdatedOrder(
 	val total: Double? = null,
 	val subtotal: Double? = null,
 
+	val totalBeforeGiftCardRedemption: Double? = null,
+
 	val tax: Double? = null,
 	val customerTaxExempt: Boolean? = null,
 	val customerTaxId: String? = null,
