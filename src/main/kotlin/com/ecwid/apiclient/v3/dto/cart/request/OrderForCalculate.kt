@@ -70,6 +70,7 @@ data class OrderForCalculate(
 
 		val price: Double? = null,
 		val productPrice: Double? = null,
+		val needCalculateWholesalePrice: Boolean? = null,
 		val shipping: Double? = null,
 		val tax: Double? = null,
 		val fixedShippingRate: Double? = null,
