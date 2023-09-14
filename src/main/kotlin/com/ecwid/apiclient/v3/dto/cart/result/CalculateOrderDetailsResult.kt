@@ -30,6 +30,8 @@ data class CalculateOrderDetailsResult(
 	val subtotalWithoutTax: Double? = null,
 	val usdTotal: Double? = null,
 
+	val totalBeforeGiftCardRedemption: Double? = null,
+
 	val tax: Double? = null,
 	val taxesOnShipping: List<TaxOnShipping>? = null,
 	val availableTaxes: List<TaxInfo> = emptyList(),
