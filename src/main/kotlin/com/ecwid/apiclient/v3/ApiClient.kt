@@ -5,9 +5,11 @@ import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.LoggingSettings
 import com.ecwid.apiclient.v3.dto.application.request.ApplicationDeleteRequest
 import com.ecwid.apiclient.v3.dto.application.result.ApplicationDeleteResult
+import com.ecwid.apiclient.v3.dto.batch.request.CancelBatchGroupRequest
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequestWithIds
 import com.ecwid.apiclient.v3.dto.batch.request.GetEscapedBatchRequest
+import com.ecwid.apiclient.v3.dto.batch.result.CancelBatchGroupResult
 import com.ecwid.apiclient.v3.dto.batch.result.CreateBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
@@ -264,6 +266,7 @@ interface CustomerGroupsApiClient {
 interface BatchApiClient {
 	fun createBatch(request: CreateBatchRequestWithIds): CreateBatchResult
 	fun createBatch(request: CreateBatchRequest): CreateBatchResult
+	fun cancelBatchGroup(request: CancelBatchGroupRequest): CancelBatchGroupResult
 	fun getTypedBatch(request: GetEscapedBatchRequest): GetTypedBatchResult
 	fun getEscapedBatch(request: GetEscapedBatchRequest): GetEscapedBatchResult
 }

@@ -2,9 +2,11 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.BatchApiClient
+import com.ecwid.apiclient.v3.dto.batch.request.CancelBatchGroupRequest
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequestWithIds
 import com.ecwid.apiclient.v3.dto.batch.request.GetEscapedBatchRequest
+import com.ecwid.apiclient.v3.dto.batch.result.CancelBatchGroupResult
 import com.ecwid.apiclient.v3.dto.batch.result.CreateBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
@@ -19,6 +21,9 @@ internal class BatchApiClientImpl(
 
 	override fun createBatch(request: CreateBatchRequest) =
 		apiClientHelper.makeObjectResultRequest<CreateBatchResult>(request)
+
+	override fun cancelBatchGroup(request: CancelBatchGroupRequest) =
+		apiClientHelper.makeObjectResultRequest<CancelBatchGroupResult>(request)
 
 	override fun getEscapedBatch(request: GetEscapedBatchRequest) =
 		apiClientHelper.makeObjectResultRequest<GetEscapedBatchResult>(request)
