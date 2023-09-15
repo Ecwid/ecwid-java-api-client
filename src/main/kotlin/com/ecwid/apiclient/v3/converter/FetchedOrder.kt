@@ -172,7 +172,8 @@ fun FetchedOrder.OrderItemSelectedOption.toUpdated(): UpdatedOrder.OrderItemSele
 		valueTranslated = valueTranslated?.let { OrderedStringToStringMap(it) },
 		valuesArray = valuesArray?.let { ArrayList(it) },
 		valuesArrayTranslated = valuesArrayTranslated?.let { OrderedStringToListStringMap(it) },
-		selections = selections?.map(FetchedOrder.OrderItemSelectionInfo::toUpdated)
+		selections = selections?.map(FetchedOrder.OrderItemSelectionInfo::toUpdated),
+		files = files?.map(FetchedOrder.OrderItemOptionFile::toUpdated),
 	)
 }
 
@@ -181,6 +182,15 @@ fun FetchedOrder.OrderItemSelectionInfo.toUpdated(): UpdatedOrder.OrderItemSelec
 		selectionTitle = selectionTitle,
 		selectionModifier = selectionModifier,
 		selectionModifierType = selectionModifierType
+	)
+}
+
+fun FetchedOrder.OrderItemOptionFile.toUpdated(): UpdatedOrder.OrderItemOptionFile {
+	return UpdatedOrder.OrderItemOptionFile(
+		id = id,
+		name = name,
+		size = size,
+		url = url,
 	)
 }
 

@@ -172,7 +172,8 @@ data class UpdatedOrder(
 		val valueTranslated: OrderedStringToStringMap? = null,
 		val valuesArray: List<String>? = null,
 		val valuesArrayTranslated: OrderedStringToListStringMap? = null,
-		val selections: List<OrderItemSelectionInfo>? = null
+		val selections: List<OrderItemSelectionInfo>? = null,
+		val files: List<OrderItemOptionFile>? = null,
 	) {
 
 		companion object {
@@ -240,6 +241,13 @@ data class UpdatedOrder(
 		val selectionTitle: String? = null,
 		val selectionModifier: Double? = null,
 		val selectionModifierType: PriceModifierType? = null
+	)
+
+	data class OrderItemOptionFile(
+		val id: Int? = null,
+		val name: String? = null,
+		val size: Int? = null,
+		val url: String? = null,
 	)
 
 	data class BaseOrderItemTax(
