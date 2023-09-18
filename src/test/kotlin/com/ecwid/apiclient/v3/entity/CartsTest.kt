@@ -221,16 +221,18 @@ class CartsTest : BaseEntityTest() {
 			paymentStatus = OrderPaymentStatus.AWAITING_PAYMENT,
 			paymentMessage = null, // TODO Discover why after each create this field resets to null
 			items = testOrder.items?.mapIndexed { itemIndex, item ->
+				val createdOrderItem = createdOrder.items?.get(itemIndex)
 				val selectedOptions2 = item.selectedOptions?.mapIndexed { selectedOptionIndex, selectedOption ->
 					// TODO Discover why after create these two fields some times resets to null
 					val createdOptionSelectedOption =
-						createdOrder.items?.get(itemIndex)?.selectedOptions?.get(selectedOptionIndex)
+						createdOrderItem?.selectedOptions?.get(selectedOptionIndex)
 					selectedOption.copy(
 						valuesArray = createdOptionSelectedOption?.valuesArray,
 						selections = createdOptionSelectedOption?.selections
 					)
 				}
 				item.copy(
+					id = createdOrderItem?.id,
 					selectedOptions = selectedOptions2
 				)
 			}

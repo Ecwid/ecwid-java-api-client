@@ -125,6 +125,7 @@ data class UpdatedOrder(
 // 	)
 
 	data class OrderItem(
+		val id: Long? = null,
 		val productId: Int? = null,
 		val categoryId: Int? = null,
 
