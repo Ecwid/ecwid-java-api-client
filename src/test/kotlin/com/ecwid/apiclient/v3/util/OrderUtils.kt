@@ -8,6 +8,7 @@ fun generateTestOrder(): UpdatedOrder {
 	val externalOrderId = "Order #" + randomAlphanumeric(8)
 	val externalFulfillment = randomBoolean()
 	val refererId = "Referer " + randomAlphanumeric(8)
+	val totalPrice = randomPrice()
 	return UpdatedOrder(
 		email = randomEmail(),
 		ipAddress = randomIp(),
@@ -49,7 +50,8 @@ fun generateTestOrder(): UpdatedOrder {
 		customerGroup = "Group " + randomAlphanumeric(8),
 		acceptMarketing = randomBoolean(),
 
-		total = randomPrice(),
+		total = totalPrice,
+		totalBeforeGiftCardRedemption = totalPrice,
 		subtotal = randomPrice(),
 
 		tax = randomPrice(),

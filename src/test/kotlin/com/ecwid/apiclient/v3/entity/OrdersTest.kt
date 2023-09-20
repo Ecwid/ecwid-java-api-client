@@ -437,6 +437,7 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 
 private fun UpdatedOrder.OrderItem.cleanupForComparison(orderItem: UpdatedOrder.OrderItem?): UpdatedOrder.OrderItem {
 	return copy(
+		id = null,
 		nameTranslated = orderItem?.nameTranslated,
 		shortDescriptionTranslated = orderItem?.shortDescriptionTranslated,
 		selectedPrice = orderItem?.selectedPrice,

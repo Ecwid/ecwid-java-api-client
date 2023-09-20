@@ -41,6 +41,8 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 		total = total,
 		subtotal = subtotal,
 
+		totalBeforeGiftCardRedemption = totalBeforeGiftCardRedemption,
+
 		tax = tax,
 		customerTaxExempt = customerTaxExempt,
 		customerTaxId = customerTaxId,
@@ -120,6 +122,7 @@ fun FetchedOrder.DiscountCouponInfo.toUpdated(): UpdatedOrder.DiscountCouponInfo
 
 fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 	return UpdatedOrder.OrderItem(
+		id = id,
 		productId = if (productId == 0) null else productId,
 		categoryId = categoryId,
 
