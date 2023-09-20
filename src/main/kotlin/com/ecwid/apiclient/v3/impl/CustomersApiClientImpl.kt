@@ -62,4 +62,7 @@ internal data class CustomersApiClientImpl(
 	override fun massUpdate(request: CustomersMassUpdateRequest) =
 		apiClientHelper.makeObjectResultRequest<CustomerUpdateResult>(request)
 
+	override fun getCustomersIds(request: CustomersIdsRequest) =
+		apiClientHelper.makeObjectResultRequest<CustomersIdsResult>(request)
+
 }

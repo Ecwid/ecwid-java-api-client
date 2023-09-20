@@ -1,21 +1,19 @@
 package com.ecwid.apiclient.v3.dto.customer.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
-import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
+import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
-data class CustomersMassUpdateRequest(
+data class CustomersIdsRequest(
 	val requestFields: CustomersRequestFields = CustomersRequestFields(),
-	val customer: MassUpdateCustomer = MassUpdateCustomer()
+	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
-	override fun toRequestInfo() = RequestInfo.createPostRequest(
+	override fun toRequestInfo() = RequestInfo.createGetRequest(
 		pathSegments = listOf(
-			"customers_update"
+			"customers_ids"
 		),
 		params = toParams(),
-		httpBody = HttpBody.JsonBody(
-			obj = customer
-		)
+		responseFields = responseFields,
 	)
 
 	private fun toParams(): Map<String, String> {

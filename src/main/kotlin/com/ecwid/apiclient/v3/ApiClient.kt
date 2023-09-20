@@ -246,6 +246,7 @@ interface CustomersApiClient {
 	fun searchCustomersLocations(request: CustomersLocationsSearchRequest): CustomersLocationsSearchResult
 	fun searchCustomersFilters(request: CustomerFiltersDataSearchRequest): CustomersFiltersDataSearchResult
 	fun massUpdate(request: CustomersMassUpdateRequest): CustomerUpdateResult
+	fun getCustomersIds(request: CustomersIdsRequest): CustomersIdsResult
 }
 
 // Customer groups
