@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
+import com.ecwid.apiclient.v3.dto.customer.result.CustomerFilterShippingAddress
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
@@ -51,4 +52,9 @@ val fetchedCustomerNullablePropertyRules: List<NullablePropertyRule<*, *>> = lis
 	AllowNullable(FetchedCustomer.CustomerContact::handle),
 	AllowNullable(FetchedCustomer.CustomerContact::note),
 	AllowNullable(FetchedCustomer.CustomerContact::timestamp),
+
+	AllowNullable(CustomerFilterShippingAddress::street),
+	AllowNullable(CustomerFilterShippingAddress::city),
+	AllowNullable(CustomerFilterShippingAddress::countryCode),
+	AllowNullable(CustomerFilterShippingAddress::countryName),
 )

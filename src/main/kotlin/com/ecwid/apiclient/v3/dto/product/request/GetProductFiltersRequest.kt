@@ -51,20 +51,16 @@ data class GetProductFiltersRequest(
 		data class Option(
 			private val optionName: String = ""
 		) : FilterFieldType() {
-			override fun getFilterFieldName() = "option_" + escapeName(optionName)
+			override fun getFilterFieldName() = "option_$optionName"
 		}
 
 		data class Attribute(
 			private val attributeName: String = ""
 		) : FilterFieldType() {
-			override fun getFilterFieldName() = "attribute_" + escapeName(attributeName)
+			override fun getFilterFieldName() = "attribute_$attributeName"
 		}
 
 		abstract fun getFilterFieldName(): String
-
-		protected fun escapeName(name: String): String {
-			return name.replace(",", "\\,").replace("\\", "\\\\")
-		}
 
 	}
 
@@ -176,14 +172,24 @@ data class GetProductFiltersRequest(
 }
 
 private fun List<FilterFieldType>.toFilterFields(): String {
-	return joinToString(separator = ",", transform = FilterFieldType::getFilterFieldName)
+	return joinToString(separator = ",") { filterFieldType ->
+		escapeProductFilterName(filterFieldType.getFilterFieldName())
+	}
 }
 
 private fun Map<FilterFieldType, FilterFacetLimit>.toFilterFacetLimitValue(): String {
 	return toList()
 		.joinToString(separator = ",") { (filterFieldType, filterFacetLimit) ->
-			"${filterFieldType.getFilterFieldName()}:${filterFacetLimit.getFilterFacetLimitValue()}"
+			val filterName = escapeProductFilterName(filterFieldType.getFilterFieldName())
+			val filterFacetLimitValue = filterFacetLimit.getFilterFacetLimitValue()
+			"$filterName:$filterFacetLimitValue"
 		}
+}
+
+private fun escapeProductFilterName(name: String): String {
+	return name
+		.replace("\\", "\\\\")
+		.replace(",", "\\,")
 }
 
 private fun List<FilterCategoryId>.toCategoriesValue(): String {

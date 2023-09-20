@@ -171,8 +171,9 @@ val calculateOrderDetailsResultNullablePropertyRules: List<NullablePropertyRule<
 	IgnoreNullable(CalculateOrderDetailsResult::tax),
 	IgnoreNullable(CalculateOrderDetailsResult::taxesOnShipping),
 	IgnoreNullable(CalculateOrderDetailsResult::total),
-	AllowNullable(CalculateOrderDetailsResult::totalWithoutTax),
 	IgnoreNullable(CalculateOrderDetailsResult::totalAndMembershipBasedDiscount),
+	AllowNullable(CalculateOrderDetailsResult::totalBeforeGiftCardRedemption),
+	AllowNullable(CalculateOrderDetailsResult::totalWithoutTax),
 	IgnoreNullable(CalculateOrderDetailsResult::usdTotal),
 	IgnoreNullable(CalculateOrderDetailsResult::volumeDiscount)
 )

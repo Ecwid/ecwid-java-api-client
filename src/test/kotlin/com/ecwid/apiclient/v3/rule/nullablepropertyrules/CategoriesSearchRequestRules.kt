@@ -7,6 +7,7 @@ import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 val categoriesSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(CategoriesSearchRequest::baseUrl),
 	AllowNullable(CategoriesSearchRequest::cleanUrls),
+	AllowNullable(CategoriesSearchRequest::slugsWithoutIds),
 	AllowNullable(CategoriesSearchRequest::hiddenCategories),
 	AllowNullable(CategoriesSearchRequest::lang),
 	AllowNullable(CategoriesSearchRequest::returnProductIds)
