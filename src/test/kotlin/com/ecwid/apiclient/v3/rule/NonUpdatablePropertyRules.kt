@@ -121,6 +121,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedCategory::originalImage),
 	Ignored(FetchedCategory::url),
 	Ignored(FetchedCategory::productCount),
+	ReadOnly(FetchedCategory::productCountWithoutSubcategories),
 	Ignored(FetchedCategory::enabledProductCount),
 
 	ReadOnly(FetchedCoupon::id),
