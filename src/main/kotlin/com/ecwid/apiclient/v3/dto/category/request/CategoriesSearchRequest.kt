@@ -6,6 +6,7 @@ import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
 data class CategoriesSearchRequest(
 	val parentCategoryId: ParentCategory = ParentCategory.Any,
+	val categoryIds: List<Int>? = null,
 	val hiddenCategories: Boolean? = null,
 	val returnProductIds: Boolean? = null,
 	val baseUrl: String? = null,
@@ -44,6 +45,7 @@ data class CategoriesSearchRequest(
 		val request = this
 		return mutableMapOf<String, String>().apply {
 			parentCategoryId?.let { put("parent", it.toString()) }
+			request.categoryIds?.let { put("categoryIds", it.joinToString(",")) }
 			request.hiddenCategories?.let { put("hidden_categories", it.toString()) }
 			request.returnProductIds?.let { put("productIds", it.toString()) }
 			request.baseUrl?.let { put("baseUrl", it) }
