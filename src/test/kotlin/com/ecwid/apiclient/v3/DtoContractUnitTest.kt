@@ -63,7 +63,7 @@ class DtoContractUnitTest {
 		apiRequestClassesReflections
 			.value
 			.getSubTypesOf(Object::class.java)
-			.filterNot { clazz -> clazz.isInterface || clazz.isAnonymousClass }
+			.filterNot { clazz -> clazz.isInterface || clazz.isAnonymousClass || clazz.isLocalClass }
 			.filterNot { clazz ->
 				try {
 					clazz.kotlin.isCompanion

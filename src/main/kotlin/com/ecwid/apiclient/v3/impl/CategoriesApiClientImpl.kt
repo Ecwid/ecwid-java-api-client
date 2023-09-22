@@ -4,7 +4,13 @@ import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.CategoriesApiClient
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.result.*
+import com.ecwid.apiclient.v3.dto.common.PagingResult
+import com.ecwid.apiclient.v3.dto.common.PartialResult
+import com.ecwid.apiclient.v3.dto.common.fetchPagesAsItemSequence
 import com.ecwid.apiclient.v3.responsefields.AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+import com.ecwid.apiclient.v3.searchCategoriesByPathPartial
+import com.ecwid.apiclient.v3.searchCategoriesPartial
+import kotlin.reflect.KClass
 
 internal class CategoriesApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -64,4 +70,48 @@ internal class CategoriesApiClientImpl(
 
 	override fun unassignProductsFromCategory(request: UnassignProductsFromCategoryRequest): CategoryDeleteResult =
 		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun <Result : PartialResult<FetchedCategory>> getCategoryDetailsPartial(
+		request: CategoryDetailsRequest,
+		resultClass: KClass<Result>,
+	): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(
+			request = request,
+			resultClass = resultClass,
+		)
+	}
+
+	override fun <Result : PartialResult<CategoriesSearchResult>> searchCategoriesPartial(
+		request: CategoriesSearchRequest,
+		resultClass: KClass<Result>
+	): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(
+			request = request,
+			resultClass = resultClass,
+		)
+	}
+
+	override fun <Result : PartialResult<CategoriesSearchResult>> searchCategoriesByPathPartial(
+		request: CategoriesByPathRequest,
+		resultClass: KClass<Result>
+	): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(
+			request = request,
+			resultClass = resultClass,
+		)
+	}
+
+	override fun <Result, Item> searchCategoriesPartialAsSequence(
+		request: CategoriesSearchRequest,
+		resultClass: KClass<Result>
+	): Sequence<Item> where Result : PartialResult<CategoriesSearchResult>, Result : PagingResult<Item> {
+		return fetchPagesAsItemSequence(request) { searchCategoriesPartial(it, resultClass) }
+	}
+
+	override fun <Result, Item> searchCategoriesByPathPartialAsSequence(
+		request: CategoriesByPathRequest,
+		resultClass: KClass<Result>,
+	): Sequence<Item> where Result : PartialResult<CategoriesSearchResult>, Result : PagingResult<Item> {
+		return fetchPagesAsItemSequence(request) { searchCategoriesByPathPartial(it, resultClass) }
+	}
 }

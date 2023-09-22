@@ -32,7 +32,7 @@ class ResponseFieldsBuilder {
 	 */
 	fun buildResponseFields(klass: KClass<*>): ResponseFields {
 		require(klass.isData) {
-			"Only kotlin data class allowed"
+			"Only kotlin data class allowed: $klass"
 		}
 
 		return cache.getOrPut(klass) {

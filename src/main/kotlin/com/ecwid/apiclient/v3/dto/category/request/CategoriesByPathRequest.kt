@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.category.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
+import com.ecwid.apiclient.v3.dto.common.PagingRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
@@ -15,11 +16,11 @@ data class CategoriesByPathRequest(
 	 */
 	val path: String = "",
 	val delimiter: String = "",
-	val offset: Int = 0,
+	override val offset: Int = 0,
 	val limit: Int = 100,
 	val lang: String? = null,
 	val responseFields: ResponseFields = ResponseFields.All,
-) : ApiRequest {
+) : ApiRequest, PagingRequest<CategoriesByPathRequest> {
 
 	constructor(
 		/**
@@ -56,4 +57,6 @@ data class CategoriesByPathRequest(
 			request.lang?.let { put("lang", it) }
 		}.toMap()
 	}
+
+	override fun copyWithOffset(offset: Int) = copy(offset = offset)
 }

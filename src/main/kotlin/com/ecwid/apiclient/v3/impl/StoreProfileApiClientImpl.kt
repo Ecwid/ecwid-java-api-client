@@ -2,8 +2,10 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.StoreProfileApiClient
+import com.ecwid.apiclient.v3.dto.common.PartialResult
 import com.ecwid.apiclient.v3.dto.profile.request.*
 import com.ecwid.apiclient.v3.dto.profile.result.*
+import kotlin.reflect.KClass
 
 internal class StoreProfileApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -73,4 +75,8 @@ internal class StoreProfileApiClientImpl(
 
 	override fun updateOrderStatusSettings(request: OrderStatusSettingsUpdateRequest): OrderStatusSettingsUpdateResult =
 		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun <Result : PartialResult<FetchedStoreProfile>> getStoreProfilePartial(request: StoreProfileRequest, resultClass: KClass<Result>): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
+	}
 }

@@ -1,7 +1,9 @@
 package com.ecwid.apiclient.v3
 
+import com.ecwid.apiclient.v3.dto.common.PartialResult
 import com.ecwid.apiclient.v3.dto.profile.request.*
 import com.ecwid.apiclient.v3.dto.profile.result.*
+import kotlin.reflect.KClass
 
 // Store-Profile
 // https://api-docs.ecwid.com/reference/store-profile
@@ -32,4 +34,10 @@ interface StoreProfileApiClient {
 	fun searchOrderStatusesSettings(request: OrderStatusSettingsSearchRequest): OrderStatusSettingsSearchResult
 	fun getOrderStatusSettingsDetails(request: OrderStatusSettingsDetailsRequest): FetchedOrderStatusSettings
 	fun updateOrderStatusSettings(request: OrderStatusSettingsUpdateRequest): OrderStatusSettingsUpdateResult
+
+	fun <Result : PartialResult<FetchedStoreProfile>> getStoreProfilePartial(request: StoreProfileRequest, resultClass: KClass<Result>): Result
+}
+
+inline fun <reified Result : PartialResult<FetchedStoreProfile>> StoreProfileApiClient.getStoreProfilePartial(request: StoreProfileRequest): Result {
+	return getStoreProfilePartial(request, Result::class)
 }

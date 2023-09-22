@@ -2,9 +2,13 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.ProductsApiClient
+import com.ecwid.apiclient.v3.dto.common.PagingResult
+import com.ecwid.apiclient.v3.dto.common.PartialResult
+import com.ecwid.apiclient.v3.dto.common.fetchPagesAsItemSequence
 import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.result.*
 import com.ecwid.apiclient.v3.responsefields.AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+import kotlin.reflect.KClass
 
 internal class ProductsApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -100,4 +104,22 @@ internal class ProductsApiClientImpl(
 			} while (searchResult.count >= searchResult.limit)
 		}
 
+	override fun <Result : PartialResult<FetchedProduct>> getProductDetailsPartial(request: ProductDetailsRequest, resultClass: KClass<Result>): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
+	}
+
+	override fun <Result : PartialResult<ProductsSearchResult>> searchProductsPartial(request: ProductsSearchRequest.ByIds, resultClass: KClass<Result>): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
+	}
+
+	override fun <Result : PartialResult<ProductsSearchResult>> searchProductsPartial(request: ProductsSearchRequest.ByFilters, resultClass: KClass<Result>): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
+	}
+
+	override fun <Result, Item> searchProductsPartialAsSequence(
+		request: ProductsSearchRequest.ByFilters,
+		resultClass: KClass<Result>,
+	): Sequence<Item> where Result : PartialResult<ProductsSearchResult>, Result : PagingResult<Item> {
+		return fetchPagesAsItemSequence(request) { searchProductsPartial(it, resultClass) }
+	}
 }
