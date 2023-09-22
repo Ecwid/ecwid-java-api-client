@@ -1,5 +1,7 @@
 package com.ecwid.apiclient.v3.rule
 
+import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
+import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequestWithIds
 import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
 import com.ecwid.apiclient.v3.dto.cart.result.CartUpdateResult
@@ -97,6 +99,9 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedReportResponse.FetchedDataset::comparePeriodStartTimeStamp),
 	AllowNullable(FetchedReportResponse.FetchedDataset::comparePeriodEndTimeStamp),
 	AllowNullable(FetchedReportResponse.FetchedDataset::additionalData),
+
+	AllowNullable(CreateBatchRequest::groupId),
+	AllowNullable(CreateBatchRequestWithIds::groupId),
 
 	AllowNullable(InstantSiteRedirectsSearchRequest::keyword),
 	AllowNullable(InstantSiteRedirectsSearchRequest::limit),
