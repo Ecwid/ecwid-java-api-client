@@ -110,7 +110,7 @@ data class FetchedOrder(
 	val disableAllCustomerNotifications: Boolean? = null,
 	val externalOrderData: ExternalOrderData? = null,
 	val paymentReference: String? = null,
-	val shippingLabelAvailableForPurchase: Boolean = false,
+	val shippingLabelAvailableForShipment: Boolean = false,
 
 	) : ApiFetchedDTO {
 
