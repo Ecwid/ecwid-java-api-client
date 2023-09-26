@@ -10,6 +10,7 @@ val categoriesSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *
 	AllowNullable(CategoriesSearchRequest::cleanUrls),
 	AllowNullable(CategoriesSearchRequest::slugsWithoutIds),
 	AllowNullable(CategoriesSearchRequest::hiddenCategories),
+	AllowNullable(CategoriesSearchRequest::keyword),
 	AllowNullable(CategoriesSearchRequest::lang),
 	AllowNullable(CategoriesSearchRequest::returnProductIds)
 )
