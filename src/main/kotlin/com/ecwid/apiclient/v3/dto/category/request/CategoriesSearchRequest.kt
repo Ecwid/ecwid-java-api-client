@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
 data class CategoriesSearchRequest(
+	val keyword: String? = null,
 	val parentCategoryId: ParentCategory = ParentCategory.Any,
 	val categoryIds: List<Int>? = null,
 	val hiddenCategories: Boolean? = null,
