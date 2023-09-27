@@ -108,7 +108,7 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(InstantSiteRedirectsSearchRequest::limit),
 	AllowNullable(InstantSiteRedirectsSearchRequest::offset),
 
-	AllowNullable(FetchedCart.UtmData::gClid)
+	AllowNullable(FetchedCart.UtmData::gclid)
 )
 
 val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
