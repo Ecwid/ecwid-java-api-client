@@ -246,7 +246,8 @@ data class FetchedCart(
 		val campaign: String? = null,
 		val medium: String? = null,
 		val mcEid: String? = null,
-		val mcCid: String? = null
+		val mcCid: String? = null,
+		val gClid: String? = null
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedCart::class)
