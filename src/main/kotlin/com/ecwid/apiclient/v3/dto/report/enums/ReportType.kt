@@ -13,6 +13,7 @@ enum class ReportType {
 	/** finance */
 	allRevenue,
 	allExpenses,
+	allProfit,
 
 	/** marketing */
 	customersByMarketingEmailsConsent,
