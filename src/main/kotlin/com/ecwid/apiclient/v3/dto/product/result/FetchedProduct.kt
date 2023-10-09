@@ -333,7 +333,7 @@ data class FetchedProduct(
 		val borderInfo: BorderInfo? = null,
 		val altText: Alt? = null
 	) {
-		data class Alt (
+		data class Alt(
 			val main: String? = null,
 			val translated: LocalizedValueMap? = null
 		)
