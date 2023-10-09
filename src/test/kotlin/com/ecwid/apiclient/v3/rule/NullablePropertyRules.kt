@@ -6,6 +6,7 @@ import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
 import com.ecwid.apiclient.v3.dto.cart.result.CartUpdateResult
 import com.ecwid.apiclient.v3.dto.cart.result.ConvertCartToOrderResult
+import com.ecwid.apiclient.v3.dto.instantsite.redirects.request.InstantSiteRedirectsGetForExactPathRequest
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.request.InstantSiteRedirectsSearchRequest
 import com.ecwid.apiclient.v3.dto.order.result.DeletedOrder
 import com.ecwid.apiclient.v3.dto.payment.PaymentAppRequest
@@ -106,6 +107,8 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(InstantSiteRedirectsSearchRequest::keyword),
 	AllowNullable(InstantSiteRedirectsSearchRequest::limit),
 	AllowNullable(InstantSiteRedirectsSearchRequest::offset),
+
+	AllowNullable(InstantSiteRedirectsGetForExactPathRequest::exactPath),
 )
 
 val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
