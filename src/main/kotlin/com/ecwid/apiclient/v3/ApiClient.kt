@@ -276,6 +276,7 @@ interface SubscriptionsApiClient {
 
 interface InstantSiteRedirectsApiClient {
 	fun searchInstantSiteRedirects(request: InstantSiteRedirectsSearchRequest): InstantSiteRedirectsSearchResult
+	fun getInstantSiteRedirectsForExactPath(request: InstantSiteRedirectsGetForExactPathRequest): InstantSiteRedirectsGetForExactPathResult
 	fun getInstantSiteRedirect(request: InstantSiteRedirectGetRequest): FetchedInstantSiteRedirect
 	fun updateInstantSiteRedirect(request: InstantSiteRedirectUpdateRequest): InstantSiteRedirectsUpdateResult
 	fun createInstantSiteRedirects(request: InstantSiteRedirectsCreateRequest): InstantSiteRedirectsCreateResult
