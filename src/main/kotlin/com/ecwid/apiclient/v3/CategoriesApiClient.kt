@@ -10,10 +10,25 @@ import kotlin.reflect.KClass
 // https://developers.ecwid.com/api-documentation/categories
 interface CategoriesApiClient {
 	fun searchCategories(request: CategoriesSearchRequest): CategoriesSearchResult
+	fun <Result> searchCategories(request: CategoriesSearchRequest, resultClass: KClass<Result>): Result
+		where Result : PartialResult<CategoriesSearchResult>
+
 	fun searchCategoriesAsSequence(request: CategoriesSearchRequest): Sequence<FetchedCategory>
+	fun <Result, Item> searchCategoriesAsSequence(request: CategoriesSearchRequest, resultClass: KClass<Result>): Sequence<Item>
+		where Result : PartialResult<CategoriesSearchResult>, Result : PagingResult<Item>
+
 	fun searchCategoriesByPath(request: CategoriesByPathRequest): CategoriesSearchResult
+	fun <Result> searchCategoriesByPath(request: CategoriesByPathRequest, resultClass: KClass<Result>): Result
+		where Result : PartialResult<CategoriesSearchResult>
+
 	fun searchCategoriesByPathAsSequence(request: CategoriesByPathRequest): Sequence<FetchedCategory>
+	fun <Result, Item> searchCategoriesByPathAsSequence(request: CategoriesByPathRequest, resultClass: KClass<Result>): Sequence<Item>
+		where Result : PartialResult<CategoriesSearchResult>, Result : PagingResult<Item>
+
 	fun getCategoryDetails(request: CategoryDetailsRequest): FetchedCategory
+	fun <Result> getCategoryDetails(request: CategoryDetailsRequest, resultClass: KClass<Result>): Result
+		where Result : PartialResult<FetchedCategory>
+
 	fun createCategory(request: CategoryCreateRequest): CategoryCreateResult
 	fun updateCategory(request: CategoryUpdateRequest): CategoryUpdateResult
 	fun deleteCategory(request: CategoryDeleteRequest): CategoryDeleteResult
@@ -22,16 +37,6 @@ interface CategoriesApiClient {
 	fun deleteCategoryImage(request: CategoryImageDeleteRequest): CategoryImageDeleteResult
 	fun assignProductsToCategory(request: AssignProductsToCategoryRequest): CategoryUpdateResult
 	fun unassignProductsFromCategory(request: UnassignProductsFromCategoryRequest): CategoryDeleteResult
-
-	fun <Result : PartialResult<FetchedCategory>> getCategoryDetails(request: CategoryDetailsRequest, resultClass: KClass<Result>): Result
-	fun <Result : PartialResult<CategoriesSearchResult>> searchCategories(request: CategoriesSearchRequest, resultClass: KClass<Result>): Result
-	fun <Result : PartialResult<CategoriesSearchResult>> searchCategoriesByPath(request: CategoriesByPathRequest, resultClass: KClass<Result>): Result
-
-	fun <Result, Item> searchCategoriesAsSequence(request: CategoriesSearchRequest, resultClass: KClass<Result>): Sequence<Item>
-		where Result : PartialResult<CategoriesSearchResult>, Result : PagingResult<Item>
-
-	fun <Result, Item> searchCategoriesByPathAsSequence(request: CategoriesByPathRequest, resultClass: KClass<Result>): Sequence<Item>
-		where Result : PartialResult<CategoriesSearchResult>, Result : PagingResult<Item>
 }
 
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")

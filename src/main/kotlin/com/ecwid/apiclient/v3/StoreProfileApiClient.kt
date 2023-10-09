@@ -9,6 +9,9 @@ import kotlin.reflect.KClass
 // https://api-docs.ecwid.com/reference/store-profile
 interface StoreProfileApiClient {
 	fun getStoreProfile(request: StoreProfileRequest): FetchedStoreProfile
+	fun <Result> getStoreProfile(request: StoreProfileRequest, resultClass: KClass<Result>): Result
+		where Result : PartialResult<FetchedStoreProfile>
+
 	fun updateStoreProfile(request: StoreProfileUpdateRequest): StoreProfileUpdateResult
 	fun getLatestStats(request: LatestStatsRequest): FetchedLatestStats
 	fun getShippingOptions(request: ShippingOptionsRequest): ShippingOptionsResult
@@ -34,8 +37,6 @@ interface StoreProfileApiClient {
 	fun searchOrderStatusesSettings(request: OrderStatusSettingsSearchRequest): OrderStatusSettingsSearchResult
 	fun getOrderStatusSettingsDetails(request: OrderStatusSettingsDetailsRequest): FetchedOrderStatusSettings
 	fun updateOrderStatusSettings(request: OrderStatusSettingsUpdateRequest): OrderStatusSettingsUpdateResult
-
-	fun <Result : PartialResult<FetchedStoreProfile>> getStoreProfile(request: StoreProfileRequest, resultClass: KClass<Result>): Result
 }
 
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")

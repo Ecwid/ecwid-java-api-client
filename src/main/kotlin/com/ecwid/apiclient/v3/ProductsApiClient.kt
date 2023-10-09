@@ -10,10 +10,23 @@ import kotlin.reflect.KClass
 // https://developers.ecwid.com/api-documentation/products
 interface ProductsApiClient {
 	fun searchProducts(request: ProductsSearchRequest.ByFilters): ProductsSearchResult
+	fun <Result> searchProducts(request: ProductsSearchRequest.ByFilters, resultClass: KClass<Result>): Result
+		where Result : PartialResult<ProductsSearchResult>
+
 	fun searchProducts(request: ProductsSearchRequest.ByIds): ProductsSearchResult
+	fun <Result> searchProducts(request: ProductsSearchRequest.ByIds, resultClass: KClass<Result>): Result
+		where Result : PartialResult<ProductsSearchResult>
+
 	fun searchProductsAsSequence(request: ProductsSearchRequest.ByFilters): Sequence<FetchedProduct>
+	fun <Result, Item> searchProductsAsSequence(request: ProductsSearchRequest.ByFilters, resultClass: KClass<Result>): Sequence<Item>
+		where Result : PartialResult<ProductsSearchResult>, Result : PagingResult<Item>
+
 	fun searchProductsAsSequence(request: ProductsSearchRequest.ByIds): Sequence<FetchedProduct>
+
 	fun getProductDetails(request: ProductDetailsRequest): FetchedProduct
+	fun <Result> getProductDetails(request: ProductDetailsRequest, resultClass: KClass<Result>): Result
+		where Result : PartialResult<FetchedProduct>
+
 	fun createProduct(request: ProductCreateRequest): ProductCreateResult
 	fun updateProduct(request: ProductUpdateRequest): ProductUpdateResult
 	fun updateProductInventory(request: ProductInventoryUpdateRequest): ProductInventoryUpdateResult
@@ -33,13 +46,6 @@ interface ProductsApiClient {
 	fun deleteProductFiles(request: ProductFilesDeleteRequest): ProductFilesDeleteResult
 	fun searchDeletedProducts(request: DeletedProductsSearchRequest): DeletedProductsSearchResult
 	fun searchDeletedProductsAsSequence(request: DeletedProductsSearchRequest): Sequence<DeletedProduct>
-
-	fun <Result : PartialResult<FetchedProduct>> getProductDetails(request: ProductDetailsRequest, resultClass: KClass<Result>): Result
-	fun <Result : PartialResult<ProductsSearchResult>> searchProducts(request: ProductsSearchRequest.ByIds, resultClass: KClass<Result>): Result
-	fun <Result : PartialResult<ProductsSearchResult>> searchProducts(request: ProductsSearchRequest.ByFilters, resultClass: KClass<Result>): Result
-
-	fun <Result, Item> searchProductsAsSequence(request: ProductsSearchRequest.ByFilters, resultClass: KClass<Result>): Sequence<Item>
-		where Result : PartialResult<ProductsSearchResult>, Result : PagingResult<Item>
 }
 
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")
