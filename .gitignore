@@ -3,6 +3,7 @@
 !.idea/codeStyles/codeStyleConfig.xml
 build/
 out/
+*.iml
 
 src/test/resources/test.properties
 
