@@ -35,9 +35,10 @@ interface StoreProfileApiClient {
 	fun getOrderStatusSettingsDetails(request: OrderStatusSettingsDetailsRequest): FetchedOrderStatusSettings
 	fun updateOrderStatusSettings(request: OrderStatusSettingsUpdateRequest): OrderStatusSettingsUpdateResult
 
-	fun <Result : PartialResult<FetchedStoreProfile>> getStoreProfilePartial(request: StoreProfileRequest, resultClass: KClass<Result>): Result
+	fun <Result : PartialResult<FetchedStoreProfile>> getStoreProfile(request: StoreProfileRequest, resultClass: KClass<Result>): Result
 }
 
-inline fun <reified Result : PartialResult<FetchedStoreProfile>> StoreProfileApiClient.getStoreProfilePartial(request: StoreProfileRequest): Result {
-	return getStoreProfilePartial(request, Result::class)
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result : PartialResult<FetchedStoreProfile>> StoreProfileApiClient.getStoreProfile(request: StoreProfileRequest): Result {
+	return getStoreProfile(request, Result::class)
 }

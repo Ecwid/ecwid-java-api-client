@@ -104,22 +104,22 @@ internal class ProductsApiClientImpl(
 			} while (searchResult.count >= searchResult.limit)
 		}
 
-	override fun <Result : PartialResult<FetchedProduct>> getProductDetailsPartial(request: ProductDetailsRequest, resultClass: KClass<Result>): Result {
+	override fun <Result : PartialResult<FetchedProduct>> getProductDetails(request: ProductDetailsRequest, resultClass: KClass<Result>): Result {
 		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
 	}
 
-	override fun <Result : PartialResult<ProductsSearchResult>> searchProductsPartial(request: ProductsSearchRequest.ByIds, resultClass: KClass<Result>): Result {
+	override fun <Result : PartialResult<ProductsSearchResult>> searchProducts(request: ProductsSearchRequest.ByIds, resultClass: KClass<Result>): Result {
 		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
 	}
 
-	override fun <Result : PartialResult<ProductsSearchResult>> searchProductsPartial(request: ProductsSearchRequest.ByFilters, resultClass: KClass<Result>): Result {
+	override fun <Result : PartialResult<ProductsSearchResult>> searchProducts(request: ProductsSearchRequest.ByFilters, resultClass: KClass<Result>): Result {
 		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
 	}
 
-	override fun <Result, Item> searchProductsPartialAsSequence(
+	override fun <Result, Item> searchProductsAsSequence(
 		request: ProductsSearchRequest.ByFilters,
 		resultClass: KClass<Result>,
 	): Sequence<Item> where Result : PartialResult<ProductsSearchResult>, Result : PagingResult<Item> {
-		return fetchPagesAsItemSequence(request) { searchProductsPartial(it, resultClass) }
+		return fetchPagesAsItemSequence(request) { searchProducts(it, resultClass) }
 	}
 }

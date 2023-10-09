@@ -76,7 +76,7 @@ internal class StoreProfileApiClientImpl(
 	override fun updateOrderStatusSettings(request: OrderStatusSettingsUpdateRequest): OrderStatusSettingsUpdateResult =
 		apiClientHelper.makeObjectResultRequest(request)
 
-	override fun <Result : PartialResult<FetchedStoreProfile>> getStoreProfilePartial(request: StoreProfileRequest, resultClass: KClass<Result>): Result {
+	override fun <Result : PartialResult<FetchedStoreProfile>> getStoreProfile(request: StoreProfileRequest, resultClass: KClass<Result>): Result {
 		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
 	}
 }

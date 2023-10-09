@@ -34,28 +34,32 @@ interface ProductsApiClient {
 	fun searchDeletedProducts(request: DeletedProductsSearchRequest): DeletedProductsSearchResult
 	fun searchDeletedProductsAsSequence(request: DeletedProductsSearchRequest): Sequence<DeletedProduct>
 
-	fun <Result : PartialResult<FetchedProduct>> getProductDetailsPartial(request: ProductDetailsRequest, resultClass: KClass<Result>): Result
-	fun <Result : PartialResult<ProductsSearchResult>> searchProductsPartial(request: ProductsSearchRequest.ByIds, resultClass: KClass<Result>): Result
-	fun <Result : PartialResult<ProductsSearchResult>> searchProductsPartial(request: ProductsSearchRequest.ByFilters, resultClass: KClass<Result>): Result
+	fun <Result : PartialResult<FetchedProduct>> getProductDetails(request: ProductDetailsRequest, resultClass: KClass<Result>): Result
+	fun <Result : PartialResult<ProductsSearchResult>> searchProducts(request: ProductsSearchRequest.ByIds, resultClass: KClass<Result>): Result
+	fun <Result : PartialResult<ProductsSearchResult>> searchProducts(request: ProductsSearchRequest.ByFilters, resultClass: KClass<Result>): Result
 
-	fun <Result, Item> searchProductsPartialAsSequence(request: ProductsSearchRequest.ByFilters, resultClass: KClass<Result>): Sequence<Item>
+	fun <Result, Item> searchProductsAsSequence(request: ProductsSearchRequest.ByFilters, resultClass: KClass<Result>): Sequence<Item>
 		where Result : PartialResult<ProductsSearchResult>, Result : PagingResult<Item>
 }
 
-inline fun <reified Result : PartialResult<FetchedProduct>> ProductsApiClient.getProductDetailsPartial(request: ProductDetailsRequest): Result {
-	return getProductDetailsPartial(request, Result::class)
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result : PartialResult<FetchedProduct>> ProductsApiClient.getProductDetails(request: ProductDetailsRequest): Result {
+	return getProductDetails(request, Result::class)
 }
 
-inline fun <reified Result : PartialResult<ProductsSearchResult>> ProductsApiClient.searchProductsPartial(request: ProductsSearchRequest.ByIds): Result {
-	return searchProductsPartial(request, Result::class)
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result : PartialResult<ProductsSearchResult>> ProductsApiClient.searchProducts(request: ProductsSearchRequest.ByIds): Result {
+	return searchProducts(request, Result::class)
 }
 
-inline fun <reified Result : PartialResult<ProductsSearchResult>> ProductsApiClient.searchProductsPartial(request: ProductsSearchRequest.ByFilters): Result {
-	return searchProductsPartial(request, Result::class)
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result : PartialResult<ProductsSearchResult>> ProductsApiClient.searchProducts(request: ProductsSearchRequest.ByFilters): Result {
+	return searchProducts(request, Result::class)
 }
 
-inline fun <reified Result, Item> ProductsApiClient.searchProductsPartialAsSequence(
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result, Item> ProductsApiClient.searchProductsAsSequence(
 	request: ProductsSearchRequest.ByFilters
 ): Sequence<Item> where Result : PartialResult<ProductsSearchResult>, Result : PagingResult<Item> {
-	return searchProductsPartialAsSequence(request, Result::class)
+	return searchProductsAsSequence(request, Result::class)
 }

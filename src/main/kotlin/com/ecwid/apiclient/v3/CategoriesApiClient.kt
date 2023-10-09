@@ -23,42 +23,47 @@ interface CategoriesApiClient {
 	fun assignProductsToCategory(request: AssignProductsToCategoryRequest): CategoryUpdateResult
 	fun unassignProductsFromCategory(request: UnassignProductsFromCategoryRequest): CategoryDeleteResult
 
-	fun <Result : PartialResult<FetchedCategory>> getCategoryDetailsPartial(request: CategoryDetailsRequest, resultClass: KClass<Result>): Result
-	fun <Result : PartialResult<CategoriesSearchResult>> searchCategoriesPartial(request: CategoriesSearchRequest, resultClass: KClass<Result>): Result
-	fun <Result : PartialResult<CategoriesSearchResult>> searchCategoriesByPathPartial(request: CategoriesByPathRequest, resultClass: KClass<Result>): Result
+	fun <Result : PartialResult<FetchedCategory>> getCategoryDetails(request: CategoryDetailsRequest, resultClass: KClass<Result>): Result
+	fun <Result : PartialResult<CategoriesSearchResult>> searchCategories(request: CategoriesSearchRequest, resultClass: KClass<Result>): Result
+	fun <Result : PartialResult<CategoriesSearchResult>> searchCategoriesByPath(request: CategoriesByPathRequest, resultClass: KClass<Result>): Result
 
-	fun <Result, Item> searchCategoriesPartialAsSequence(request: CategoriesSearchRequest, resultClass: KClass<Result>): Sequence<Item>
+	fun <Result, Item> searchCategoriesAsSequence(request: CategoriesSearchRequest, resultClass: KClass<Result>): Sequence<Item>
 		where Result : PartialResult<CategoriesSearchResult>, Result : PagingResult<Item>
 
-	fun <Result, Item> searchCategoriesByPathPartialAsSequence(request: CategoriesByPathRequest, resultClass: KClass<Result>): Sequence<Item>
+	fun <Result, Item> searchCategoriesByPathAsSequence(request: CategoriesByPathRequest, resultClass: KClass<Result>): Sequence<Item>
 		where Result : PartialResult<CategoriesSearchResult>, Result : PagingResult<Item>
 }
 
-inline fun <reified Result : PartialResult<FetchedCategory>> CategoriesApiClient.getCategoryDetailsPartial(request: CategoryDetailsRequest): Result {
-	return getCategoryDetailsPartial(request, Result::class)
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result : PartialResult<FetchedCategory>> CategoriesApiClient.getCategoryDetails(request: CategoryDetailsRequest): Result {
+	return getCategoryDetails(request, Result::class)
 }
 
-inline fun <reified Result : PartialResult<CategoriesSearchResult>> CategoriesApiClient.searchCategoriesPartial(request: CategoriesSearchRequest): Result {
-	return searchCategoriesPartial(request, Result::class)
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result : PartialResult<CategoriesSearchResult>> CategoriesApiClient.searchCategories(request: CategoriesSearchRequest): Result {
+	return searchCategories(request, Result::class)
 }
 
-inline fun <reified Result : PartialResult<CategoriesSearchResult>> CategoriesApiClient.searchCategoriesByPathPartial(request: CategoriesByPathRequest): Result {
-	return searchCategoriesByPathPartial(request, Result::class)
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result : PartialResult<CategoriesSearchResult>> CategoriesApiClient.searchCategoriesByPath(request: CategoriesByPathRequest): Result {
+	return searchCategoriesByPath(request, Result::class)
 }
 
-inline fun <reified Result, Item> CategoriesApiClient.searchCategoriesPartialAsSequence(
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result, Item> CategoriesApiClient.searchCategoriesAsSequence(
 	request: CategoriesSearchRequest,
 ): Sequence<Item> where Result : PartialResult<CategoriesSearchResult>, Result : PagingResult<Item> {
-	return searchCategoriesPartialAsSequence(
+	return searchCategoriesAsSequence(
 		request = request,
 		resultClass = Result::class,
 	)
 }
 
-inline fun <reified Result, Item> CategoriesApiClient.searchCategoriesByPathPartialAsSequence(
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result, Item> CategoriesApiClient.searchCategoriesByPathAsSequence(
 	request: CategoriesByPathRequest,
 ): Sequence<Item> where Result : PartialResult<CategoriesSearchResult>, Result : PagingResult<Item> {
-	return searchCategoriesByPathPartialAsSequence(
+	return searchCategoriesByPathAsSequence(
 		request = request,
 		resultClass = Result::class,
 	)
