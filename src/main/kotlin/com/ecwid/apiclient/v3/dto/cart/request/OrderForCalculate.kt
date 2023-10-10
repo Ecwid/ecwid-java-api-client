@@ -24,7 +24,7 @@ data class OrderForCalculate(
 	val giftCardCode: String? = null,
 	val giftCardId: Int? = null,
 	val giftCardTransactionOrderId: Int? = null,
-	val reversedTaxApplied : Boolean? = null,
+	val reversedTaxApplied: Boolean? = null,
 ) : ApiRequestDTO {
 
 	data class DiscountInfo(
