@@ -132,7 +132,7 @@ data class FetchedProduct(
 	val customsHsTariffCode: String? = null,
 	val minPurchaseQuantity: Int? = null,
 	val maxPurchaseQuantity: Int? = null,
-) : ApiFetchedDTO {
+) : ApiFetchedDTO, ApiResultDTO {
 
 	data class BorderInfo(
 		val dominatingColor: Color = Color(),

@@ -15,8 +15,6 @@ import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
 import com.ecwid.apiclient.v3.dto.cart.request.*
 import com.ecwid.apiclient.v3.dto.cart.result.*
-import com.ecwid.apiclient.v3.dto.category.request.*
-import com.ecwid.apiclient.v3.dto.category.result.*
 import com.ecwid.apiclient.v3.dto.coupon.request.*
 import com.ecwid.apiclient.v3.dto.coupon.result.*
 import com.ecwid.apiclient.v3.dto.customer.request.*
@@ -27,12 +25,8 @@ import com.ecwid.apiclient.v3.dto.instantsite.redirects.request.*
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.result.*
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.*
-import com.ecwid.apiclient.v3.dto.product.request.*
-import com.ecwid.apiclient.v3.dto.product.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
-import com.ecwid.apiclient.v3.dto.profile.request.*
-import com.ecwid.apiclient.v3.dto.profile.result.*
 import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
 import com.ecwid.apiclient.v3.dto.saleschannels.request.*
@@ -126,84 +120,6 @@ open class ApiClient private constructor(
 			return ApiClient(apiClientHelper)
 		}
 	}
-}
-
-// Store-Profile
-// https://api-docs.ecwid.com/reference/store-profile
-interface StoreProfileApiClient {
-	fun getStoreProfile(request: StoreProfileRequest): FetchedStoreProfile
-	fun updateStoreProfile(request: StoreProfileUpdateRequest): StoreProfileUpdateResult
-	fun getLatestStats(request: LatestStatsRequest): FetchedLatestStats
-	fun getShippingOptions(request: ShippingOptionsRequest): ShippingOptionsResult
-
-	// 	fun addShippingOption()
-	// 	fun updateShippingOption()
-	fun getPaymentOptions(request: PaymentOptionsRequest): PaymentOptionsResult
-	fun createPaymentOption(request: PaymentOptionCreateRequest): PaymentOptionCreateResult
-	fun deletePaymentOption(request: PaymentOptionDeleteRequest): PaymentOptionDeleteResult
-	fun updatePaymentOption(request: PaymentOptionUpdateRequest): PaymentOptionUpdateResult
-
-	fun uploadStoreLogo(request: StoreLogoUploadRequest): StoreLogoUploadResult
-	fun removeStoreLogo(request: StoreLogoRemoveRequest): StoreLogoRemoveResult
-	fun uploadInvoiceLogo(request: InvoiceLogoUploadRequest): InvoiceLogoUploadResult
-	fun removeInvoiceLogo(request: InvoiceLogoRemoveRequest): InvoiceLogoRemoveResult
-	fun uploadEmailLogo(request: EmailLogoUploadRequest): EmailLogoUploadResult
-	fun removeEmailLogo(request: EmailLogoRemoveRequest): EmailLogoRemoveResult
-	fun searchExtrafieldConfigs(request: ExtrafieldConfigSearchRequest): ExtrafieldConfigSearchResult
-	fun getExtrafieldConfigDetails(request: ExtrafieldConfigDetailsRequest): FetchedExtrafieldConfig
-	fun createExtrafieldConfig(request: ExtrafieldConfigCreateRequest): ExtrafieldConfigCreateResult
-	fun updateExtrafieldConfig(request: ExtrafieldConfigUpdateRequest): ExtrafieldConfigUpdateResult
-	fun deleteExtrafieldConfig(request: ExtrafieldConfigDeleteRequest): ExtrafieldConfigDeleteResult
-	fun searchOrderStatusesSettings(request: OrderStatusSettingsSearchRequest): OrderStatusSettingsSearchResult
-	fun getOrderStatusSettingsDetails(request: OrderStatusSettingsDetailsRequest): FetchedOrderStatusSettings
-	fun updateOrderStatusSettings(request: OrderStatusSettingsUpdateRequest): OrderStatusSettingsUpdateResult
-}
-
-// Products
-// https://developers.ecwid.com/api-documentation/products
-interface ProductsApiClient {
-	fun searchProducts(request: ProductsSearchRequest.ByFilters): ProductsSearchResult
-	fun searchProducts(request: ProductsSearchRequest.ByIds): ProductsSearchResult
-	fun searchProductsAsSequence(request: ProductsSearchRequest.ByFilters): Sequence<FetchedProduct>
-	fun searchProductsAsSequence(request: ProductsSearchRequest.ByIds): Sequence<FetchedProduct>
-	fun getProductDetails(request: ProductDetailsRequest): FetchedProduct
-	fun createProduct(request: ProductCreateRequest): ProductCreateResult
-	fun updateProduct(request: ProductUpdateRequest): ProductUpdateResult
-	fun updateProductInventory(request: ProductInventoryUpdateRequest): ProductInventoryUpdateResult
-	fun getProductFilters(request: GetProductFiltersRequest): GetProductFiltersResult
-	fun deleteProduct(request: ProductDeleteRequest): ProductDeleteResult
-	fun uploadProductImage(request: ProductImageUploadRequest): ProductImageUploadResult
-	fun uploadProductImageAsync(request: ProductImageAsyncUploadRequest): ProductImageAsyncUploadResult
-	fun deleteProductImage(request: ProductImageDeleteRequest): ProductImageDeleteResult
-	fun uploadProductGalleryImage(request: ProductGalleryImageUploadRequest): ProductGalleryImageUploadResult
-	fun uploadProductGalleryImageAsync(request: ProductGalleryImageAsyncUploadRequest): ProductGalleryImageAsyncUploadResult
-	fun deleteProductGalleryImage(request: ProductGalleryImageDeleteRequest): ProductGalleryImageDeleteResult
-	fun deleteProductGalleryImages(request: ProductGalleryImagesDeleteRequest): ProductGalleryImagesDeleteResult
-	fun downloadProductFile(request: ProductFileDownloadRequest): ByteArray
-	fun uploadProductFile(request: ProductFileUploadRequest): ProductFileUploadResult
-	fun updateProductFile(request: ProductFileUpdateRequest): ProductFileUpdateResult
-	fun deleteProductFile(request: ProductFileDeleteRequest): ProductFileDeleteResult
-	fun deleteProductFiles(request: ProductFilesDeleteRequest): ProductFilesDeleteResult
-	fun searchDeletedProducts(request: DeletedProductsSearchRequest): DeletedProductsSearchResult
-	fun searchDeletedProductsAsSequence(request: DeletedProductsSearchRequest): Sequence<DeletedProduct>
-}
-
-// Categories
-// https://developers.ecwid.com/api-documentation/categories
-interface CategoriesApiClient {
-	fun searchCategories(request: CategoriesSearchRequest): CategoriesSearchResult
-	fun searchCategoriesAsSequence(request: CategoriesSearchRequest): Sequence<FetchedCategory>
-	fun searchCategoriesByPath(request: CategoriesByPathRequest): CategoriesSearchResult
-	fun searchCategoriesByPathAsSequence(request: CategoriesByPathRequest): Sequence<FetchedCategory>
-	fun getCategoryDetails(request: CategoryDetailsRequest): FetchedCategory
-	fun createCategory(request: CategoryCreateRequest): CategoryCreateResult
-	fun updateCategory(request: CategoryUpdateRequest): CategoryUpdateResult
-	fun deleteCategory(request: CategoryDeleteRequest): CategoryDeleteResult
-	fun uploadCategoryImage(request: CategoryImageUploadRequest): CategoryImageUploadResult
-	fun uploadCategoryImageAsync(request: CategoryImageAsyncUploadRequest): CategoryImageAsyncUploadResult
-	fun deleteCategoryImage(request: CategoryImageDeleteRequest): CategoryImageDeleteResult
-	fun assignProductsToCategory(request: AssignProductsToCategoryRequest): CategoryUpdateResult
-	fun unassignProductsFromCategory(request: UnassignProductsFromCategoryRequest): CategoryDeleteResult
 }
 
 // Orders

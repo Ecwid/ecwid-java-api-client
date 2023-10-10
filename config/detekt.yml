@@ -27,7 +27,7 @@ style:
   ThrowsCount:
     max: 5
   ReturnCount:
-    max: 5
+    max: 8
   UnnecessaryAbstractClass:
     excludes: [ '**/test/**' ]
   WildcardImport:

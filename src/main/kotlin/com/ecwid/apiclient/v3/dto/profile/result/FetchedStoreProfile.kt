@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.profile.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
@@ -31,7 +32,7 @@ data class FetchedStoreProfile(
 	val orderInvoiceSettings: OrderInvoiceSettings? = null,
 	val giftCardSettings: GiftCardSettings? = null,
 	val registrationAnswers: RegistrationAnswers? = null,
-) : ApiFetchedDTO {
+) : ApiFetchedDTO, ApiResultDTO {
 
 	data class GeneralInfo(
 		val storeId: Int = 0,
