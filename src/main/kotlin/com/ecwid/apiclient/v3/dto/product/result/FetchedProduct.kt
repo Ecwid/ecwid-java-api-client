@@ -316,10 +316,6 @@ data class FetchedProduct(
 	data class GalleryImage(
 		val id: Long = 0,
 		val orderBy: Int = 0,
-		@Deprecated(
-			message = "Use field 'altText.main' instead",
-			replaceWith = ReplaceWith("altText.main")
-		)
 		val alt: String? = null,
 		val width: Int = 0,
 		val height: Int = 0,
@@ -331,13 +327,7 @@ data class FetchedProduct(
 		val thumbnailUrl: String = "",
 		val smallThumbnailUrl: String = "",
 		val borderInfo: BorderInfo? = null,
-		val altText: Alt? = null
-	) {
-		data class Alt(
-			val main: String? = null,
-			val translated: LocalizedValueMap? = null
-		)
-	}
+	)
 
 	data class ProductMedia(
 		val images: List<ProductImage> = listOf(),
@@ -352,8 +342,14 @@ data class FetchedProduct(
 		val image400pxUrl: String? = null,
 		val image800pxUrl: String? = null,
 		val image1500pxUrl: String? = null,
-		val imageOriginalUrl: String? = null
-	)
+		val imageOriginalUrl: String? = null,
+		val alt: Alt? = null
+	) {
+		data class Alt(
+			val main: String? = null,
+			val translated: LocalizedValueMap? = null
+		)
+	}
 
 	data class ProductVideo(
 		val id: String = "0",
