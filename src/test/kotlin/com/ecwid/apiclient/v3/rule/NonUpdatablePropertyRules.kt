@@ -240,6 +240,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedStoreProfile.Settings::googleProductCategoryName),
 	ReadOnly(FetchedStoreProfile.TikTokPixelSettings::code),
 	ReadOnly(FetchedStoreProfile.InstantSiteInfo::ecwidSubdomainSuffix),
+	ReadOnly(FetchedStoreProfile.InstantSiteInfo::slugsWithoutIdsEnabled),
 	ReadOnly(FetchedStoreProfile.PaymentOptionInfo::id),
 	ReadOnly(FetchedStoreProfile.PaymentOptionInfo::paymentProcessorTitle),
 
