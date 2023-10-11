@@ -46,6 +46,7 @@ data class CategoriesSearchRequest(
 
 		val request = this
 		return mutableMapOf<String, String>().apply {
+			request.keyword?.let { put("keyword", it) }
 			parentCategoryId?.let { put("parent", it.toString()) }
 			request.categoryIds?.let { put("categoryIds", it.joinToString(",")) }
 			request.hiddenCategories?.let { put("hidden_categories", it.toString()) }
