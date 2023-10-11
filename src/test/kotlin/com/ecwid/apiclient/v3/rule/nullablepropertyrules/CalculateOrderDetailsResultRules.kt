@@ -150,6 +150,7 @@ val calculateOrderDetailsResultNullablePropertyRules: List<NullablePropertyRule<
 	IgnoreNullable(CalculateOrderDetailsResult::createTimestamp),
 	IgnoreNullable(CalculateOrderDetailsResult::customerId),
 	AllowNullable(CalculateOrderDetailsResult::customerTaxExempt),
+	AllowNullable(CalculateOrderDetailsResult::customerTaxId),
 	AllowNullable(CalculateOrderDetailsResult::customerTaxIdValid),
 	AllowNullable(CalculateOrderDetailsResult::customSurcharges),
 	IgnoreNullable(CalculateOrderDetailsResult::discount),

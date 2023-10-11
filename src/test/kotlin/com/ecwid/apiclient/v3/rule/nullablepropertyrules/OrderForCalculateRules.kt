@@ -8,6 +8,7 @@ import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(OrderForCalculate::billingPerson),
 	IgnoreNullable(OrderForCalculate::customerId),
+	AllowNullable(OrderForCalculate::customerTaxId),
 	AllowNullable(OrderForCalculate::customerTaxExempt),
 	AllowNullable(OrderForCalculate::customSurcharges),
 	IgnoreNullable(OrderForCalculate::discountCoupon),
@@ -20,6 +21,7 @@ val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = l
 	IgnoreNullable(OrderForCalculate::ipAddress),
 	IgnoreNullable(OrderForCalculate::items),
 	AllowNullable(OrderForCalculate::paymentOptionsDetails),
+	AllowNullable(OrderForCalculate::reversedTaxApplied),
 	AllowNullable(OrderForCalculate::shippingOption),
 	IgnoreNullable(OrderForCalculate::shippingPerson),
 	AllowNullable(OrderForCalculate.CustomSurcharge::description),
