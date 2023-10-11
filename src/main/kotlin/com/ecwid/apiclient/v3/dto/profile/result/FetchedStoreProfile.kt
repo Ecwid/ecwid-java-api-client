@@ -46,7 +46,8 @@ data class FetchedStoreProfile(
 		val customDomain: String? = null,
 		val generatedUrl: String? = null,
 		val storeLogoUrl: String? = null,
-		val ecwidSubdomainSuffix: String? = null
+		val ecwidSubdomainSuffix: String? = null,
+		val slugsWithoutIdsEnabled: Boolean? = null,
 	)
 
 	@Suppress("unused")
