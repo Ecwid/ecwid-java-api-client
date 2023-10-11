@@ -20,6 +20,7 @@ data class CalculateOrderDetailsResult(
 
 	val customerId: Int? = null,
 	val customerTaxExempt: Boolean? = null,
+	val customerTaxId: String? = null,
 	val customerTaxIdValid: Boolean? = null,
 	val pricesIncludeTax: Boolean? = null,
 	val reversedTaxApplied: Boolean? = null,
