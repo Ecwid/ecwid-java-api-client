@@ -34,7 +34,8 @@ fun FetchedStoreProfile.GeneralInfo.toUpdated(): UpdatedStoreProfile.GeneralInfo
 fun FetchedStoreProfile.InstantSiteInfo.toUpdated(): UpdatedStoreProfile.InstantSiteInfo {
 	return UpdatedStoreProfile.InstantSiteInfo(
 		ecwidSubdomain = ecwidSubdomain,
-		customDomain = customDomain
+		customDomain = customDomain,
+		slugsWithoutIdsEnabled = slugsWithoutIdsEnabled
 	)
 }
 
