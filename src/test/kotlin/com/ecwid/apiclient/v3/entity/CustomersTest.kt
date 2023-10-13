@@ -400,6 +400,7 @@ private fun generateTestCustomerForCreate(customerGroupId: Int?): UpdatedCustome
 		taxIdValid = randomBoolean(),
 		taxExempt = randomBoolean(),
 		acceptMarketing = randomBoolean(),
+		privateAdminNotes = "test note",
 		lang = "en",
 		commercialRelationshipScheme = CommercialRelationshipScheme.b2b,
 	)
@@ -425,6 +426,7 @@ private fun generateTestCustomerForUpdate(
 		taxExempt = randomBoolean(),
 		acceptMarketing = randomBoolean(),
 		lang = "ru",
+		privateAdminNotes = "test note",
 		commercialRelationshipScheme = CommercialRelationshipScheme.b2c,
 	)
 }
