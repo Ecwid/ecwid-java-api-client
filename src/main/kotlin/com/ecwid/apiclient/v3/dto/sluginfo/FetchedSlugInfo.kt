@@ -1,14 +1,14 @@
 package com.ecwid.apiclient.v3.dto.sluginfo
 
 data class FetchedSlugInfo(
-	val status: String,
-	val type: String?,
-	val canonicalSlug: String?,
-	val storeEntityData: EntityData?,
-	var staticContent: StaticContent?,
+	val status: String = "",
+	val type: String? = null,
+	val canonicalSlug: String? = null,
+	val storeEntityData: EntityData? = null,
+	var staticContent: StaticContent? = null,
 )
 
-data class EntityData(val id: String?)
+data class EntityData(val id: String? = null)
 
 data class StaticContent(
 	val cssFiles: List<String>? = null,

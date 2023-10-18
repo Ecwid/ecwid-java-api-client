@@ -9,8 +9,9 @@ data class SlugInfoRequest(
 	val slug: String = "",
 	val getStaticContent: Boolean = false,
 	val degeneratorParams: Map<String, Any>? = null,
-	val responseFields: ResponseFields = ResponseFields.All,
-	) : ApiRequest {
+	val responseFields: ResponseFields = ResponseFields.All
+) : ApiRequest {
+
 	override fun toRequestInfo(): RequestInfo = RequestInfo.createGetRequest(
 		pathSegments = listOf(
 			"storefront-widget-pages"
