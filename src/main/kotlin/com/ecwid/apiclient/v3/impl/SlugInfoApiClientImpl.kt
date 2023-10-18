@@ -7,7 +7,7 @@ import com.ecwid.apiclient.v3.dto.sluginfo.SlugInfoRequest
 
 internal class SlugInfoApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
-): SlugInfoApiClient {
+) : SlugInfoApiClient {
 	override fun getSlugInfo(request: SlugInfoRequest): FetchedSlugInfo =
 		apiClientHelper.makeObjectResultRequest<FetchedSlugInfo>(request)
 
