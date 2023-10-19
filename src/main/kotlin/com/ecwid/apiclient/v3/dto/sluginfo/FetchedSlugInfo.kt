@@ -9,7 +9,7 @@ data class FetchedSlugInfo(
 	val canonicalSlug: String? = null,
 	val storeEntityData: EntityData? = null,
 	val staticContent: StaticContent? = null,
-): ApiFetchedDTO, ApiResultDTO {
+) : ApiFetchedDTO, ApiResultDTO {
 
 	data class EntityData(val id: String? = null)
 
