@@ -143,7 +143,10 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	productsSearchRequestNullablePropertyRules,
 	subscriptionsSearchRequestNullablePropertyRules,
 	fetchedSubscriptionsNullablePropertyRules,
-	otherNullablePropertyRules
+	otherNullablePropertyRules,
+	fetchedSlugInfoNullablePropertyRules,
+	fetchedSlugInfoClassesNullablePropertyRules,
+	slugInfoRequestNullablePropertyRules
 ).flatten()
 
 sealed class NullablePropertyRule<T, R>(
