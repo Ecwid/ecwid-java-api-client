@@ -31,6 +31,8 @@ import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
 import com.ecwid.apiclient.v3.dto.saleschannels.request.*
 import com.ecwid.apiclient.v3.dto.saleschannels.response.*
+import com.ecwid.apiclient.v3.dto.sluginfo.FetchedSlugInfo
+import com.ecwid.apiclient.v3.dto.sluginfo.SlugInfoRequest
 import com.ecwid.apiclient.v3.dto.storage.request.*
 import com.ecwid.apiclient.v3.dto.storage.result.*
 import com.ecwid.apiclient.v3.dto.subscriptions.request.SubscriptionsSearchRequest
@@ -61,6 +63,7 @@ open class ApiClient private constructor(
 	reportsApiClient: ReportsApiClientImpl,
 	subscriptionsApiClient: SubscriptionsApiClientImpl,
 	instantSiteRedirectsApiClient: InstantSiteRedirectsApiClientImpl,
+	slugInfoApiClient: SlugInfoApiClientImpl,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	ProductsApiClient by productsApiClient,
@@ -78,7 +81,8 @@ open class ApiClient private constructor(
 	ApplicationStorageApiClient by applicationStorageApiClient,
 	ReportsApiClient by reportsApiClient,
 	SubscriptionsApiClient by subscriptionsApiClient,
-	InstantSiteRedirectsApiClient by instantSiteRedirectsApiClient {
+	InstantSiteRedirectsApiClient by instantSiteRedirectsApiClient,
+	SlugInfoApiClient by slugInfoApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -98,7 +102,8 @@ open class ApiClient private constructor(
 		applicationStorageApiClient = ApplicationStorageApiClientImpl(apiClientHelper),
 		reportsApiClient = ReportsApiClientImpl(apiClientHelper),
 		subscriptionsApiClient = SubscriptionsApiClientImpl(apiClientHelper),
-		instantSiteRedirectsApiClient = InstantSiteRedirectsApiClientImpl(apiClientHelper)
+		instantSiteRedirectsApiClient = InstantSiteRedirectsApiClientImpl(apiClientHelper),
+		slugInfoApiClient = SlugInfoApiClientImpl(apiClientHelper),
 	)
 
 	companion object {
@@ -281,4 +286,8 @@ interface InstantSiteRedirectsApiClient {
 	fun updateInstantSiteRedirect(request: InstantSiteRedirectUpdateRequest): InstantSiteRedirectsUpdateResult
 	fun createInstantSiteRedirects(request: InstantSiteRedirectsCreateRequest): InstantSiteRedirectsCreateResult
 	fun deleteInstantSiteRedirect(request: InstantSiteRedirectDeleteRequest): InstantSiteRedirectsDeleteResult
+}
+
+interface SlugInfoApiClient {
+	fun getSlugInfo(request: SlugInfoRequest): FetchedSlugInfo
 }
