@@ -93,6 +93,7 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedReportResponse::dataset),
 	AllowNullable(FetchedReportResponse::comparePeriodAggregatedData),
 	AllowNullable(FetchedReportResponse::comparePeriodDataset),
+	AllowNullable(FetchedReportResponse::additionalData),
 
 	AllowNullable(FetchedReportResponse.FetchedDataset::startTimeStamp),
 	AllowNullable(FetchedReportResponse.FetchedDataset::endTimeStamp),

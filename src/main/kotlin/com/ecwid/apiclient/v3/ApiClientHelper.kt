@@ -528,6 +528,7 @@ private fun createAdditionalDataPolymorphicType(): PolymorphicType<FetchedReport
 		jsonFieldName = "type",
 		childClasses = mapOf(
 			"utm" to FetchedReportResponse.FetchedAdditionalData.AdditionalUtmData::class.java,
+			"orders" to FetchedReportResponse.FetchedAdditionalData.AdditionalOrdersData::class.java,
 		)
 	)
 }
