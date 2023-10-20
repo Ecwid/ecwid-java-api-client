@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.impl
 import com.ecwid.apiclient.v3.dto.common.UploadFileData
 import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.responsefields.ResponseFields
+import com.ecwid.apiclient.v3.withResponseFieldsParam
 
 class RequestInfo private constructor(
 	val pathSegments: List<String>,
@@ -21,7 +22,7 @@ class RequestInfo private constructor(
 		) = RequestInfo(
 			pathSegments = pathSegments,
 			method = HttpMethod.GET,
-			params = appendParamsIfRequired(params, responseFields),
+			params = params.withResponseFieldsParam(responseFields),
 			headers = headers,
 			httpBody = HttpBody.EmptyBody,
 		)
@@ -115,13 +116,4 @@ enum class HttpMethod {
 	POST,
 	PUT,
 	DELETE
-}
-
-private fun appendParamsIfRequired(params: Map<String, String>, responseFields: ResponseFields): Map<String, String> {
-	val parameter = responseFields.toHttpParameter()
-	return if (parameter.isEmpty()) {
-		params
-	} else {
-		params + mapOf("responseFields" to parameter)
-	}
 }

@@ -28,6 +28,7 @@ dependencies {
 	api("org.apache.httpcomponents:httpclient:4.5.13")
 	api("io.prometheus:simpleclient:0.16.0")
 
+	testImplementation(kotlin("test"))
 	testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
 	testImplementation("org.reflections:reflections:0.10.2")
 	testImplementation("uk.co.jemos.podam:podam:7.2.11.RELEASE")

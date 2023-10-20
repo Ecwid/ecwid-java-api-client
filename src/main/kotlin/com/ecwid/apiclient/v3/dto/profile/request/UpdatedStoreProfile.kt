@@ -32,7 +32,8 @@ data class UpdatedStoreProfile(
 
 	data class InstantSiteInfo(
 		val ecwidSubdomain: String? = null,
-		val customDomain: String? = null
+		val customDomain: String? = null,
+		val slugsWithoutIdsEnabled: Boolean? = null,
 	)
 
 	@Suppress("unused")

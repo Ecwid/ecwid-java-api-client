@@ -11,6 +11,9 @@ class InstantSiteRedirectsApiClientImpl(
 	override fun searchInstantSiteRedirects(request: InstantSiteRedirectsSearchRequest) =
 		apiClientHelper.makeObjectResultRequest<InstantSiteRedirectsSearchResult>(request)
 
+	override fun getInstantSiteRedirectsForExactPath(request: InstantSiteRedirectsGetForExactPathRequest) =
+		apiClientHelper.makeObjectResultRequest<InstantSiteRedirectsGetForExactPathResult>(request)
+
 	override fun getInstantSiteRedirect(request: InstantSiteRedirectGetRequest) =
 		apiClientHelper.makeObjectResultRequest<FetchedInstantSiteRedirect>(request)
 

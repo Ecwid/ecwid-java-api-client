@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
+import com.ecwid.apiclient.v3.dto.common.PagingRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.responsefields.ResponseFields
 import java.util.*
@@ -33,12 +34,12 @@ sealed class ProductsSearchRequest : ApiRequest {
 		val baseUrl: String? = null,
 		val cleanUrls: Boolean? = null,
 		val slugsWithoutIds: Boolean? = null,
-		val offset: Int = 0,
+		override val offset: Int = 0,
 		val limit: Int = 100,
 		val lang: String? = null,
 		val visibleInStorefront: Boolean? = null,
 		val responseFields: ResponseFields = ResponseFields.All,
-	) : ProductsSearchRequest() {
+	) : ProductsSearchRequest(), PagingRequest<ByFilters> {
 		override fun toRequestInfo() = RequestInfo.createGetRequest(
 			pathSegments = listOf(
 				"products"
@@ -88,6 +89,8 @@ sealed class ProductsSearchRequest : ApiRequest {
 				request.visibleInStorefront?.let { put("visibleInStorefront", it.toString()) }
 			}.toMap()
 		}
+
+		override fun copyWithOffset(offset: Int) = copy(offset = offset)
 	}
 
 	data class ByIds(
