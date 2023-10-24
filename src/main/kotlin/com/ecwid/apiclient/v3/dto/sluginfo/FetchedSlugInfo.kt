@@ -4,8 +4,8 @@ import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 
 data class FetchedSlugInfo(
-	val status: String = "",
-	val type: String? = null,
+	val status: Status = Status.OK,
+	val type: Type? = null,
 	val canonicalSlug: String? = null,
 	val storeEntityData: EntityData? = null,
 	val staticContent: StaticContent? = null,
@@ -28,5 +28,22 @@ data class FetchedSlugInfo(
 	override fun getModifyKind(): ApiFetchedDTO.ModifyKind =
 		ApiFetchedDTO.ModifyKind.ReadOnly
 
+	enum class Status {
+		OK,
+		NOT_FOUND,
+		NONCANONICAL
+	}
+
+	enum class Type {
+		ROOT,
+		PRODUCT,
+		CATEGORY,
+		SEARCH,
+		LEGAL_PAGE,
+		CART,
+		CHECKOUT,
+		CUSTOMER_ACCOUNT,
+		INTERNAL
+	}
 
 }
