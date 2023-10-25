@@ -94,6 +94,7 @@ data class FetchedProduct(
 
 	val shipping: ShippingSettings? = null,
 	val isShippingRequired: Boolean? = null,
+	val isShippingFree: Boolean? = null,
 
 	val productClassId: Int? = null,
 	val attributes: List<AttributeValue>? = null,

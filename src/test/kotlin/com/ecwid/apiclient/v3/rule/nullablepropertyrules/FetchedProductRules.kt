@@ -42,6 +42,7 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct::isGiftCard),
 	IgnoreNullable(FetchedProduct::isSampleProduct),
 	IgnoreNullable(FetchedProduct::isShippingRequired),
+	IgnoreNullable(FetchedProduct::isShippingFree),
 	IgnoreNullable(FetchedProduct::media),
 	IgnoreNullable(FetchedProduct::nameTranslated),
 	IgnoreNullable(FetchedProduct::nameYourPriceEnabled),
