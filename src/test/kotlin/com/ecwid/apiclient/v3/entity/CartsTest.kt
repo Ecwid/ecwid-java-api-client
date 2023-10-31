@@ -41,6 +41,7 @@ class CartsTest : BaseEntityTest() {
 		assertEquals(testOrder.additionalInfo, cartDetailsResult.additionalInfo)
 		assertEquals(testOrder.orderComments, cartDetailsResult.orderComments)
 		assertEquals(testOrder.trackingNumber, cartDetailsResult.trackingNumber)
+		assertEquals(testOrder.trackingUrl, cartDetailsResult.trackingUrl)
 		assertEquals(testOrder.paymentMethod, cartDetailsResult.paymentMethod)
 		assertEquals(testOrder.paymentModule, cartDetailsResult.paymentModule)
 		assertEquals(testOrder.paymentParams, cartDetailsResult.paymentParams)

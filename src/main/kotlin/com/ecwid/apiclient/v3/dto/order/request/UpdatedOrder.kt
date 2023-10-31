@@ -29,6 +29,7 @@ data class UpdatedOrder(
 
 	val fulfillmentStatus: OrderFulfillmentStatus? = null,
 	val trackingNumber: String? = null,
+	val trackingUrl: String? = null,
 	val pickupTime: Date? = null,
 
 	val paymentStatus: OrderPaymentStatus? = null,
