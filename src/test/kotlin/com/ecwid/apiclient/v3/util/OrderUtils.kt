@@ -9,6 +9,7 @@ fun generateTestOrder(): UpdatedOrder {
 	val externalFulfillment = randomBoolean()
 	val refererId = "Referer " + randomAlphanumeric(8)
 	val totalPrice = randomPrice()
+	val trackingNumber = randomAlphanumeric(16)
 	return UpdatedOrder(
 		email = randomEmail(),
 		ipAddress = randomIp(),
@@ -29,7 +30,8 @@ fun generateTestOrder(): UpdatedOrder {
 		privateAdminNotes = "Private admin note " + randomAlphanumeric(16),
 
 		fulfillmentStatus = randomEnumValue<OrderFulfillmentStatus>(),
-		trackingNumber = randomAlphanumeric(16),
+		trackingNumber = trackingNumber,
+		trackingUrl = "https://track.aftership.com/$trackingNumber",
 
 		paymentStatus = randomEnumValue(OrderPaymentStatus.INCOMPLETE),
 		paymentMethod = "Payment method " + randomAlphanumeric(8),

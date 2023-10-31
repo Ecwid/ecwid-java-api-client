@@ -49,6 +49,7 @@ val fetchedCartNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedCart::totalAndMembershipBasedDiscount),
 	IgnoreNullable(FetchedCart::trackingNumber),
 	IgnoreNullable(FetchedCart::trackingUrl),
+	IgnoreNullable(FetchedCart::trackingUrl),
 	IgnoreNullable(FetchedCart::updateDate),
 	IgnoreNullable(FetchedCart::updateTimestamp),
 	IgnoreNullable(FetchedCart::usdTotal),
