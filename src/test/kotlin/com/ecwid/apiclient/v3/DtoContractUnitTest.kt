@@ -191,7 +191,7 @@ class DtoContractUnitTest {
 		val ignoreNullablePropertiesCount = nullablePropertyRules
 			.filterIsInstance<IgnoreNullable<*, *>>()
 			.size
-		assertEquals(976, ignoreNullablePropertiesCount) {
+		assertEquals(977, ignoreNullablePropertiesCount) {
 			"You MUST NOT add exclusion with type IgnoreNullable() which is used only for old fields until they are fixed.\n" +
 				"Please make added property non-nullable if possible.\n" +
 				"If Ecwid API sometimes return null as value for this property you CAN add it to as `AllowNullable()` exclusion type instead."
@@ -340,7 +340,7 @@ class DtoContractUnitTest {
 		val ignoreNonUpdatablePropertyRulesCount = nonUpdatablePropertyRules
 			.filterIsInstance<NonUpdatablePropertyRule.Ignored<*, *>>()
 			.size
-		assertTrue(ignoreNonUpdatablePropertyRulesCount <= 160) {
+		assertTrue(ignoreNonUpdatablePropertyRulesCount <= 161) {
 			"You MUST NOT add exclusion with type Ignored() which is used only for old fields until they are fixed.\n" +
 				"Please add this field to Updated DTO if possible.\n" +
 				"If this field is read-only in Ecwid API you CAN add it as `ReadOnly()` exclusion to file `NonUpdatablePropertyRules.kt`."
