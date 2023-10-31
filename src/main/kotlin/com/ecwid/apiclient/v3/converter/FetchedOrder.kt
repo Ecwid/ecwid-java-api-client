@@ -24,6 +24,7 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 
 		fulfillmentStatus = fulfillmentStatus,
 		trackingNumber = trackingNumber,
+		trackingUrl = trackingUrl,
 		pickupTime = pickupTime,
 
 		paymentStatus = paymentStatus,
