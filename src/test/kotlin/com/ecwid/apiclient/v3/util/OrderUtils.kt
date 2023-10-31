@@ -30,7 +30,6 @@ fun generateTestOrder(): UpdatedOrder {
 
 		fulfillmentStatus = randomEnumValue<OrderFulfillmentStatus>(),
 		trackingNumber = randomAlphanumeric(16),
-		trackingUrl = "https://track.test.url/${randomAlphanumeric(16)}",
 
 		paymentStatus = randomEnumValue(OrderPaymentStatus.INCOMPLETE),
 		paymentMethod = "Payment method " + randomAlphanumeric(8),
