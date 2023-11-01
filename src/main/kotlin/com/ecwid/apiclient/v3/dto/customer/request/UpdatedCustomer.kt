@@ -17,6 +17,7 @@ data class UpdatedCustomer(
 	val taxExempt: Boolean? = null,
 	val acceptMarketing: Boolean? = null,
 	val lang: String? = null,
+	val privateAdminNotes: String? = null,
 
 	@JsonFieldName("b2b_b2c")
 	val commercialRelationshipScheme: CommercialRelationshipScheme? = null,
