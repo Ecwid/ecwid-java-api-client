@@ -340,7 +340,7 @@ class DtoContractUnitTest {
 		val ignoreNonUpdatablePropertyRulesCount = nonUpdatablePropertyRules
 			.filterIsInstance<NonUpdatablePropertyRule.Ignored<*, *>>()
 			.size
-		assertTrue(ignoreNonUpdatablePropertyRulesCount <= 161) {
+		assertTrue(ignoreNonUpdatablePropertyRulesCount <= 160) {
 			"You MUST NOT add exclusion with type Ignored() which is used only for old fields until they are fixed.\n" +
 				"Please add this field to Updated DTO if possible.\n" +
 				"If this field is read-only in Ecwid API you CAN add it as `ReadOnly()` exclusion to file `NonUpdatablePropertyRules.kt`."
