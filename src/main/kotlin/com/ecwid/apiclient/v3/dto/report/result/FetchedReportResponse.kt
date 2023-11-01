@@ -15,6 +15,7 @@ data class FetchedReportResponse(
 	val dataset: List<FetchedDataset>? = null,
 	val comparePeriodAggregatedData: List<FetchedDataItem>? = null,
 	val comparePeriodDataset: List<FetchedDataset>? = null,
+	val additionalData: FetchedAdditionalData? = null,
 ) : ApiFetchedDTO {
 
 	data class FetchedDataset(
@@ -41,8 +42,13 @@ data class FetchedReportResponse(
 			val utmList: List<FetchedUtmDataItem> = emptyList(),
 		) : FetchedAdditionalData(AdditionalDataType.UTM)
 
+		data class AdditionalOrdersData(
+			val ordersCount: Int = 0,
+		) : FetchedAdditionalData(AdditionalDataType.ORDERS)
+
 		enum class AdditionalDataType {
-			UTM
+			UTM,
+			ORDERS
 		}
 	}
 

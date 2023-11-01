@@ -93,6 +93,7 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedReportResponse::dataset),
 	AllowNullable(FetchedReportResponse::comparePeriodAggregatedData),
 	AllowNullable(FetchedReportResponse::comparePeriodDataset),
+	AllowNullable(FetchedReportResponse::additionalData),
 
 	AllowNullable(FetchedReportResponse.FetchedDataset::startTimeStamp),
 	AllowNullable(FetchedReportResponse.FetchedDataset::endTimeStamp),
@@ -143,7 +144,10 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	productsSearchRequestNullablePropertyRules,
 	subscriptionsSearchRequestNullablePropertyRules,
 	fetchedSubscriptionsNullablePropertyRules,
-	otherNullablePropertyRules
+	otherNullablePropertyRules,
+	fetchedSlugInfoNullablePropertyRules,
+	fetchedSlugInfoClassesNullablePropertyRules,
+	slugInfoRequestNullablePropertyRules
 ).flatten()
 
 sealed class NullablePropertyRule<T, R>(
