@@ -91,7 +91,7 @@ data class OrderForCalculate(
 		val fixedShippingRateOnly: Boolean? = null,
 		val digital: Boolean? = null,
 		val couponApplied: Boolean? = null,
-		var isGiftCard: Boolean? = null,
+		val isGiftCard: Boolean? = null,
 
 		val selectedOptions: List<OrderItemOption>? = null,
 		val combinationId: Int? = null,

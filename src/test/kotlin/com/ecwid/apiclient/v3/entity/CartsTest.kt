@@ -306,6 +306,7 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(forCalculateItem.fixedShippingRateOnly, calculatedItem.fixedShippingRateOnly)
 			assertEquals(forCalculateItem.digital, calculatedItem.digital)
 			assertEquals(false, calculatedItem.couponApplied)
+			assertEquals(false, calculatedItem.isGiftCard)
 
 			assertEquals(forCalculateItem.selectedOptions?.count(), calculatedItem.selectedOptions?.count())
 			calculatedItem.selectedOptions?.forEachIndexed { selectedOptionIndex, calculatedOrderItemOptions ->
