@@ -55,6 +55,7 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	IgnoreNullable(FetchedOrder.OrderItem::categoryId),
 	IgnoreNullable(FetchedOrder.OrderItem::couponAmount),
 	IgnoreNullable(FetchedOrder.OrderItem::couponApplied),
+	AllowNullable(FetchedOrder.OrderItem::isGiftCard),
 	IgnoreNullable(FetchedOrder.OrderItem::digital),
 	IgnoreNullable(FetchedOrder.OrderItem::dimensions),
 	IgnoreNullable(FetchedOrder.OrderItem::discounts),
