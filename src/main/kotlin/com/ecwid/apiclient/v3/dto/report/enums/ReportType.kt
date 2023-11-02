@@ -21,4 +21,7 @@ enum class ReportType {
 
 	/** conversions */
 	conversions,
+
+	/** addToCartConversion */
+	addToCartConversion,
 }
