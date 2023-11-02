@@ -79,6 +79,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedCart::additionalInfo),
 	Ignored(FetchedCart::orderComments),
 	Ignored(FetchedCart::trackingNumber),
+	ReadOnly(FetchedCart::trackingUrl),
 	Ignored(FetchedCart::paymentMethod),
 	Ignored(FetchedCart::paymentModule),
 	Ignored(FetchedCart::paymentParams),
