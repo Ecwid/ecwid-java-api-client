@@ -18,4 +18,10 @@ enum class ReportType {
 	/** marketing */
 	customersByMarketingEmailsConsent,
 	topOfMarketingSources,
+
+	/** conversions */
+	conversions,
+
+	/** addToCartConversion */
+	addToCartConversion,
 }

@@ -23,6 +23,7 @@ data class FetchedCustomer(
 	val acceptMarketing: Boolean? = null,
 	val lang: String? = null,
 	val stats: CustomerStats? = null,
+	val privateAdminNotes: String? = null,
 
 	@JsonFieldName("b2b_b2c")
 	val commercialRelationshipScheme: CommercialRelationshipScheme = CommercialRelationshipScheme.b2c,

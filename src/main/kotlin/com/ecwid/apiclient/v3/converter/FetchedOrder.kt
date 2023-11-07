@@ -24,6 +24,7 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 
 		fulfillmentStatus = fulfillmentStatus,
 		trackingNumber = trackingNumber,
+		trackingUrl = trackingUrl ?: "https://track.aftership.com/$trackingNumber",
 		pickupTime = pickupTime,
 
 		paymentStatus = paymentStatus,

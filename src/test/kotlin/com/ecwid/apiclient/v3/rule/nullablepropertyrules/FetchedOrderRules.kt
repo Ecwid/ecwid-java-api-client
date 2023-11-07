@@ -276,6 +276,7 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder::totalBeforeGiftCardRedemption),
 	AllowNullable(FetchedOrder::totalWithoutTax),
 	AllowNullable(FetchedOrder::trackingNumber),
+	AllowNullable(FetchedOrder::trackingUrl),
 	AllowNullable(FetchedOrder::updateDate),
 	AllowNullable(FetchedOrder::updateTimestamp),
 	AllowNullable(FetchedOrder::usdTotal),

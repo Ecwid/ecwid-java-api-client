@@ -38,6 +38,7 @@ data class FetchedOrder(
 	val latestShipDate: Date? = null,
 	val latestDeliveryDate: Date? = null,
 	val trackingNumber: String? = null,
+	val trackingUrl: String? = null,
 	val pickupTime: Date? = null,
 
 	val paymentStatus: OrderPaymentStatus? = null,

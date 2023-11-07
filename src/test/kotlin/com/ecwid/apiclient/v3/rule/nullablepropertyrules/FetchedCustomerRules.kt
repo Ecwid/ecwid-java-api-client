@@ -12,6 +12,7 @@ val fetchedCustomerNullablePropertyRules: List<NullablePropertyRule<*, *>> = lis
 	IgnoreNullable(FetchedCustomer::customerGroupId),
 	IgnoreNullable(FetchedCustomer::customerGroupName),
 	AllowNullable(FetchedCustomer::lang),
+	AllowNullable(FetchedCustomer::privateAdminNotes),
 	IgnoreNullable(FetchedCustomer::registered),
 	IgnoreNullable(FetchedCustomer::shippingAddresses),
 	IgnoreNullable(FetchedCustomer::taxExempt),

@@ -25,6 +25,7 @@ data class FetchedCart(
 	val additionalInfo: CartStringToStringMap? = null,
 	val orderComments: String? = null,
 	val trackingNumber: String? = null,
+	val trackingUrl: String? = null,
 
 	val paymentMethod: String? = null,
 	val paymentModule: String? = null,
