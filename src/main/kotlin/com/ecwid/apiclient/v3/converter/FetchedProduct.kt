@@ -218,7 +218,13 @@ fun FetchedProduct.ProductMedia.toUpdated() = UpdatedProduct.ProductMedia(
 
 fun FetchedProduct.ProductImage.toUpdated() = UpdatedProduct.ProductImage(
 	id = id,
-	orderBy = orderBy
+	orderBy = orderBy,
+	alt = alt?.toUpdated()
+)
+
+fun FetchedProduct.ProductImage.Alt.toUpdated() = UpdatedProduct.ProductImage.Alt(
+	main = main,
+	translated = translated
 )
 
 fun FetchedProduct.TaxInfo.toUpdated() = UpdatedProduct.TaxInfo(

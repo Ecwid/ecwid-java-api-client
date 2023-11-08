@@ -343,8 +343,14 @@ data class FetchedProduct(
 		val image400pxUrl: String? = null,
 		val image800pxUrl: String? = null,
 		val image1500pxUrl: String? = null,
-		val imageOriginalUrl: String? = null
-	)
+		val imageOriginalUrl: String? = null,
+		val alt: Alt? = null
+	) {
+		data class Alt(
+			val main: String? = null,
+			val translated: LocalizedValueMap? = null
+		)
+	}
 
 	data class ProductVideo(
 		val id: String = "0",
