@@ -185,7 +185,7 @@ data class FetchedOrder(
 		val digital: Boolean? = null,
 		val productAvailable: Boolean? = null, // TODO Probably this field is always true
 		val couponApplied: Boolean? = null,
-		val isGiftCard: Boolean? = null,
+		val giftCard: Boolean? = null,
 
 		val recurringChargeSettings: RecurringChargeSettings? = null,
 		val subscriptionId: Long? = null,

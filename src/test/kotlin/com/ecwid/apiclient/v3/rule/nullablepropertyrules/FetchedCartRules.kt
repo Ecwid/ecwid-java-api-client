@@ -81,7 +81,7 @@ val fetchedCartNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedCart.OrderItem::categoryId),
 	IgnoreNullable(FetchedCart.OrderItem::couponAmount),
 	IgnoreNullable(FetchedCart.OrderItem::couponApplied),
-	AllowNullable(FetchedCart.OrderItem::isGiftCard),
+	AllowNullable(FetchedCart.OrderItem::giftCard),
 	IgnoreNullable(FetchedCart.OrderItem::digital),
 	IgnoreNullable(FetchedCart.OrderItem::dimensions),
 	IgnoreNullable(FetchedCart.OrderItem::discounts),

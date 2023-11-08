@@ -148,7 +148,7 @@ data class CalculateOrderDetailsResult(
 		val fixedShippingRateOnly: Boolean? = null,
 		val digital: Boolean? = null,
 		val couponApplied: Boolean? = null,
-		val isGiftCard: Boolean? = null,
+		val giftCard: Boolean? = null,
 
 		val selectedOptions: List<OrderItemOption>? = null,
 		val combinationId: Int? = null,

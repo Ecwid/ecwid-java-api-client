@@ -59,7 +59,7 @@ val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = l
 	IgnoreNullable(OrderForCalculate.OrderItem::categoryId),
 	IgnoreNullable(OrderForCalculate.OrderItem::couponAmount),
 	IgnoreNullable(OrderForCalculate.OrderItem::couponApplied),
-	AllowNullable(OrderForCalculate.OrderItem::isGiftCard),
+	AllowNullable(OrderForCalculate.OrderItem::giftCard),
 	IgnoreNullable(OrderForCalculate.OrderItem::digital),
 	IgnoreNullable(OrderForCalculate.OrderItem::dimensions),
 	IgnoreNullable(OrderForCalculate.OrderItem::discounts),

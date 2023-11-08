@@ -208,7 +208,7 @@ private fun generateTestOrderItem() = UpdatedOrder.OrderItem(
 	fixedShippingRateOnly = randomBoolean(),
 	digital = randomBoolean(),
 	couponApplied = randomBoolean(),
-	isGiftCard = randomBoolean(),
+	giftCard = randomBoolean(),
 	isCustomerSetPrice = randomBoolean(),
 	taxable = randomBoolean(),
 

@@ -145,7 +145,7 @@ fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 		fixedShippingRateOnly = fixedShippingRateOnly,
 		digital = digital,
 		couponApplied = couponApplied,
-		isGiftCard = isGiftCard,
+		giftCard = giftCard,
 
 		discountsAllowed = discountsAllowed,
 		isCustomerSetPrice = isCustomerSetPrice,
