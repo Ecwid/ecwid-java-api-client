@@ -98,6 +98,7 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(orderItem.fixedShippingRateOnly, cartItem.fixedShippingRateOnly)
 			assertEquals(orderItem.digital, cartItem.digital)
 			assertEquals(orderItem.couponApplied, cartItem.couponApplied)
+			assertEquals(orderItem.giftCard, cartItem.giftCard)
 
 			assertEquals(orderItem.dimensions?.length, cartItem.dimensions?.length)
 			assertEquals(orderItem.dimensions?.width, cartItem.dimensions?.width)
@@ -305,6 +306,7 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(forCalculateItem.fixedShippingRateOnly, calculatedItem.fixedShippingRateOnly)
 			assertEquals(forCalculateItem.digital, calculatedItem.digital)
 			assertEquals(false, calculatedItem.couponApplied)
+			assertEquals(false, calculatedItem.giftCard)
 
 			assertEquals(forCalculateItem.selectedOptions?.count(), calculatedItem.selectedOptions?.count())
 			calculatedItem.selectedOptions?.forEachIndexed { selectedOptionIndex, calculatedOrderItemOptions ->
@@ -485,6 +487,7 @@ class CartsTest : BaseEntityTest() {
 			fixedShippingRateOnly = true,
 			digital = true,
 			couponApplied = true,
+			giftCard = false,
 			selectedOptions = listOf(
 				generateChoiceSelectedOption(),
 				generateChoicesSelectedOption(),

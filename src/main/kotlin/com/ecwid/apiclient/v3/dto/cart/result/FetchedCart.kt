@@ -142,6 +142,7 @@ data class FetchedCart(
 		val fixedShippingRateOnly: Boolean? = null,
 		val digital: Boolean? = null,
 		val couponApplied: Boolean? = null,
+		val giftCard: Boolean? = null,
 
 		val selectedOptions: List<OrderItemOption>? = null,
 		val combinationId: Int? = null,

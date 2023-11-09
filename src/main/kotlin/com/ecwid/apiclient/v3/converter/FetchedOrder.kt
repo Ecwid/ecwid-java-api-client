@@ -146,10 +146,10 @@ fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 		fixedShippingRateOnly = fixedShippingRateOnly,
 		digital = digital,
 		couponApplied = couponApplied,
+		giftCard = giftCard,
 
 		discountsAllowed = discountsAllowed,
 		isCustomerSetPrice = isCustomerSetPrice,
-		isGiftCard = isGiftCard,
 		nameTranslated = nameTranslated,
 		selectedPrice = selectedPrice?.toUpdated(),
 		shortDescriptionTranslated = shortDescriptionTranslated,
