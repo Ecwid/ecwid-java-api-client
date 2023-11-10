@@ -110,6 +110,7 @@ val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = l
 	IgnoreNullable(OrderForCalculate.OrderItemProductFile::productFileId),
 	IgnoreNullable(OrderForCalculate.OrderItemProductFile::remainingDownloads),
 	IgnoreNullable(OrderForCalculate.OrderItemProductFile::size),
+	AllowNullable(OrderForCalculate.OrderItemTax::taxType),
 	IgnoreNullable(OrderForCalculate.OrderItemTax::includeInPrice),
 	IgnoreNullable(OrderForCalculate.OrderItemTax::name),
 	IgnoreNullable(OrderForCalculate.OrderItemTax::taxOnDiscountedSubtotal),

@@ -187,9 +187,10 @@ data class OrderForCalculate(
 		override val name: String? = null,
 		override val value: Double? = null,
 		override val total: Double? = null,
+		val includeInPrice: Boolean? = null,
+		var taxType: OrderItemTaxType? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
-		val taxOnShipping: Double? = null,
-		val includeInPrice: Boolean? = null
+		val taxOnShipping: Double? = null
 	) : BaseOrderTax
 
 	data class OrderItemProductFile(
