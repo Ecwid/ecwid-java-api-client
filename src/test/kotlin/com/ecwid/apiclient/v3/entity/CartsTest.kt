@@ -124,6 +124,7 @@ class CartsTest : BaseEntityTest() {
 				assertEquals(orderTaxes.taxOnDiscountedSubtotal, cartTaxes.taxOnDiscountedSubtotal)
 				assertEquals(orderTaxes.taxOnShipping, cartTaxes.taxOnShipping)
 				assertEquals(orderTaxes.includeInPrice, cartTaxes.includeInPrice)
+				assertEquals(orderTaxes.taxType, cartTaxes.taxType)
 			}
 
 			assertEquals(orderItem.discounts?.count(), cartItem.discounts?.count())
@@ -578,7 +579,8 @@ class CartsTest : BaseEntityTest() {
 			total = 22.6,
 			taxOnDiscountedSubtotal = 4.4,
 			taxOnShipping = 3.3,
-			includeInPrice = true
+			includeInPrice = true,
+			taxType = OrderItemTaxType.STATE
 		)
 	}
 

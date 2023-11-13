@@ -87,6 +87,7 @@ val calculateOrderDetailsResultNullablePropertyRules: List<NullablePropertyRule<
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItemProductFile::productFileId),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItemProductFile::remainingDownloads),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItemProductFile::size),
+	AllowNullable(CalculateOrderDetailsResult.OrderItemTax::taxType),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItemTax::includeInPrice),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItemTax::name),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItemTax::taxOnDiscountedSubtotal),
