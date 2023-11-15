@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.UpdatedAttributeValue
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueAlias
+import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
 import com.ecwid.apiclient.v3.dto.product.enums.OutOfStockVisibilityBehaviour
 import com.ecwid.apiclient.v3.dto.product.enums.RecurringSubscriptionInterval
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
@@ -46,6 +47,7 @@ data class UpdatedVariation(
 		override val name: String? = null,
 		override val value: String? = null,
 		override val valueTranslated: LocalizedValueMap? = null,
+		override val show: AttributeValueLocation? = null,
 	) : UpdatedAttributeValue
 
 	data class WholesalePrice(

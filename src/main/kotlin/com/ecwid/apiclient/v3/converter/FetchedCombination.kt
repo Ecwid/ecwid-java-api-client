@@ -48,6 +48,7 @@ fun FetchedVariation.AttributeValue.toUpdated() = UpdatedVariation.AttributeValu
 	alias = type?.toAttributeValueAlias(),
 	value = value,
 	valueTranslated = valueTranslated,
+	show = show,
 )
 
 fun FetchedVariation.Option.toUpdated() = UpdatedVariation.Option(
