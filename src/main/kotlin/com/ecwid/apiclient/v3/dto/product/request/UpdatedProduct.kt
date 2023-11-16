@@ -287,6 +287,7 @@ data class UpdatedProduct(
 		override val name: String? = null,
 		override val value: String? = null,
 		override val valueTranslated: LocalizedValueMap? = null,
+		override val show: AttributeValueLocation? = null,
 	) : UpdatedAttributeValue {
 
 		companion object {

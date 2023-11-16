@@ -186,6 +186,7 @@ fun FetchedProduct.AttributeValue.toUpdated() = UpdatedProduct.AttributeValue(
 	alias = type?.toAttributeValueAlias(),
 	value = value,
 	valueTranslated = valueTranslated,
+	show = show,
 )
 
 fun FetchedProduct.RelatedProducts.toUpdated() = UpdatedProduct.RelatedProducts(
