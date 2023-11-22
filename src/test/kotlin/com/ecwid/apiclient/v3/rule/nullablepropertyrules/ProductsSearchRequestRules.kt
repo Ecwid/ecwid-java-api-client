@@ -22,6 +22,7 @@ val productsSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *>>
 	AllowNullable(ProductsSearchRequest.ByFilters::options),
 	AllowNullable(ProductsSearchRequest.ByFilters::priceFrom),
 	AllowNullable(ProductsSearchRequest.ByFilters::priceTo),
+	AllowNullable(ProductsSearchRequest.ByFilters::searchMethod),
 	AllowNullable(ProductsSearchRequest.ByFilters::sku),
 	AllowNullable(ProductsSearchRequest.ByFilters::sortBy),
 	AllowNullable(ProductsSearchRequest.ByFilters::updatedFrom),

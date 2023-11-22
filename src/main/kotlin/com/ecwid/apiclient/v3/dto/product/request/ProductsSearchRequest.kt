@@ -11,6 +11,7 @@ sealed class ProductsSearchRequest : ApiRequest {
 
 	data class ByFilters(
 		val keyword: String? = null,
+		val searchMethod: SearchMethod? = null,
 		val externalReferenceId: String? = null,
 		val priceFrom: Double? = null,
 		val priceTo: Double? = null,
@@ -52,6 +53,7 @@ sealed class ProductsSearchRequest : ApiRequest {
 			val request = this
 			return mutableMapOf<String, String>().apply {
 				request.keyword?.let { put("keyword", it) }
+				request.searchMethod?.let { put("searchMethod", it.name) }
 				request.externalReferenceId?.let { put("externalReferenceId", it) }
 				request.sku?.let { put("sku", it) }
 				request.isGiftCard?.let { put("isGiftCard", it.toString()) }
@@ -142,6 +144,12 @@ sealed class ProductsSearchRequest : ApiRequest {
 		data class OptionValue(val name: String = "", val values: List<String> = listOf()) {
 			constructor(name: String, value: String) : this(name = name, values = listOf(value))
 		}
+	}
+
+	@Suppress("unused")
+	enum class SearchMethod {
+		STOREFRONT,
+		CP
 	}
 
 	@Suppress("unused")
