@@ -20,6 +20,7 @@ data class UpdatedVariation(
 	val compareToPrice: Double? = null,
 	val lowestPrice: Double? = null,
 	val wholesalePrices: List<WholesalePrice>? = null,
+	val lowestPriceSettings: LowestPriceSettings? = null,
 
 	val quantity: Int? = null,
 	val outOfStockVisibilityBehaviour: OutOfStockVisibilityBehaviour? = null,
@@ -77,6 +78,11 @@ data class UpdatedVariation(
 		val recurringInterval: RecurringSubscriptionInterval = RecurringSubscriptionInterval.MONTH,
 		val recurringIntervalCount: Int = 1,
 		val subscriptionPriceWithSignUpFee: Double? = null,
+	)
+
+	data class LowestPriceSettings(
+		val lowestPriceEnabled: Boolean? = null,
+		val manualLowestPrice: Double? = null,
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedVariation::class)

@@ -28,6 +28,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		wholesalePrices = wholesalePrices?.map(FetchedProduct.WholesalePrice::toUpdated),
 		compareToPrice = compareToPrice,
 		lowestPrice = lowestPrice,
+		lowestPriceSettings = lowestPriceSettings.toUpdated(),
 
 		weight = weight,
 		dimensions = dimensions?.toUpdated(),
@@ -232,4 +233,9 @@ fun FetchedProduct.TaxInfo.toUpdated() = UpdatedProduct.TaxInfo(
 	taxable = taxable,
 	enabledManualTaxes = enabledManualTaxes,
 	taxClassCode = taxClassCode,
+)
+
+fun FetchedProduct.LowestPriceSettings.toUpdated() = UpdatedProduct.LowestPriceSettings(
+	lowestPriceEnabled = lowestPriceEnabled,
+	manualLowestPrice = manualLowestPrice
 )

@@ -33,6 +33,7 @@ data class FetchedVariation(
 	val defaultDisplayedLowestPrice: Double? = null,
 	val defaultDisplayedLowestPriceFormatted: String? = null,
 	val wholesalePrices: List<WholesalePrice>? = null,
+	val lowestPriceSettings: LowestPriceSettings = LowestPriceSettings(),
 
 	val quantity: Int? = null,
 	val outOfStockVisibilityBehaviour: OutOfStockVisibilityBehaviour? = null,
@@ -116,6 +117,16 @@ data class FetchedVariation(
 		val subscriptionPriceWithSignUpFeeFormatted: String? = null,
 		val signUpFee: Double? = null,
 		val signUpFeeFormatted: String? = null
+	)
+
+	data class LowestPriceSettings(
+		val lowestPriceEnabled: Boolean = false,
+		val manualLowestPrice: Double? = null,
+		val defaultDisplayedLowestPrice: Double? = null,
+		val defaultDisplayedLowestPriceFormatted: String? = null,
+		val automaticLowestPrice: Double? = null,
+		val defaultDisplayedAutomaticLowestPrice: Double? = null,
+		val defaultDisplayedAutomaticLowestPriceFormatted: String? = null,
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedVariation::class)

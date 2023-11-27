@@ -20,6 +20,7 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 		wholesalePrices = wholesalePrices?.map(FetchedVariation.WholesalePrice::toUpdated),
 		compareToPrice = compareToPrice,
 		lowestPrice = lowestPrice,
+		lowestPriceSettings = lowestPriceSettings.toUpdated(),
 
 		weight = weight,
 		dimensions = dimensions?.toUpdated(),
@@ -76,3 +77,8 @@ private fun List<FetchedVariation.RecurringChargeSettings>.toUpdated() = map {
 		subscriptionPriceWithSignUpFee = it.subscriptionPriceWithSignUpFee
 	)
 }
+
+private fun FetchedVariation.LowestPriceSettings.toUpdated() = UpdatedVariation.LowestPriceSettings(
+	lowestPriceEnabled = lowestPriceEnabled,
+	manualLowestPrice = manualLowestPrice,
+)
