@@ -12,6 +12,7 @@ data class UpdatedCustomer(
 	val customerGroupId: Int? = null,
 	val billingPerson: BillingPerson? = null,
 	val shippingAddresses: List<ShippingAddress>? = null,
+	val contacts: List<CustomerContact>? = null,
 	val taxId: String? = null,
 	val taxIdValid: Boolean? = null,
 	val taxExempt: Boolean? = null,
@@ -46,6 +47,16 @@ data class UpdatedCustomer(
 		val phone: String? = null,
 		val note: String? = null,
 		val defaultAddress: Boolean? = null,
+		val orderBy: Int? = null,
+	)
+
+	data class CustomerContact(
+		val id: Long? = null,
+		val contact: String? = null,
+		val handle: String? = null,
+		val note: String? = null,
+		val type: String? = null,
+		val default: Boolean? = null,
 		val orderBy: Int? = null,
 	)
 
