@@ -39,7 +39,9 @@ internal class DTORandomDataProviderStrategy : AbstractRandomDataProviderStrateg
 
 	private fun <T> getConcreteSubclassesProvider(abstractClass: Class<T>): ConcreteSubclassesProvider<T> {
 		@Suppress("UNCHECKED_CAST")
-		return concreteSubclassesMap.getOrPut(abstractClass) { ConcreteSubclassesProvider(abstractClass) } as ConcreteSubclassesProvider<T>
+		return concreteSubclassesMap.getOrPut(abstractClass) {
+			ConcreteSubclassesProvider(abstractClass)
+		} as ConcreteSubclassesProvider<T>
 	}
 
 	private class ConcreteSubclassesProvider<out T>(val abstractClass: Class<out T>) {

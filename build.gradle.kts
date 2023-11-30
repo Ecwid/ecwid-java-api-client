@@ -292,12 +292,16 @@ class SettingsProvider {
 
 	fun validateGPGSecrets() = require(
 		value = !gpgSigningKey.isNullOrBlank() && !gpgSigningPassword.isNullOrBlank(),
-		lazyMessage = { "Both $GPG_SIGNING_KEY_PROPERTY and $GPG_SIGNING_PASSWORD_PROPERTY environment variables must not be empty" }
+		lazyMessage = {
+			"Both $GPG_SIGNING_KEY_PROPERTY and $GPG_SIGNING_PASSWORD_PROPERTY environment variables must not be empty"
+		}
 	)
 
 	fun validateOssrhCredentials() = require(
 		value = !ossrhUsername.isNullOrBlank() && !ossrhPassword.isNullOrBlank(),
-		lazyMessage = { "Both $OSSRH_USERNAME_PROPERTY and $OSSRH_PASSWORD_PROPERTY environment variables must not be empty" }
+		lazyMessage = {
+			"Both $OSSRH_USERNAME_PROPERTY and $OSSRH_PASSWORD_PROPERTY environment variables must not be empty"
+		}
 	)
 
 	companion object {

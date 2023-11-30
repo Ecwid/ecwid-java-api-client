@@ -194,6 +194,7 @@ class VariationsTest : BaseEntityTest() {
 		assertEquals("654321", firstVar.customsHsTariffCode)
 		assertEquals(create2ndVariationResult.id, secondVar.id)
 		assertEquals("second test Variation", secondVar.sku)
+		@Suppress("CommentWrapping")
 		assertEquals(5 /* = 9 - 4 */, secondVar.quantity)
 
 		// delete 1st variation
