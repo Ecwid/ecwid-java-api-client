@@ -7,7 +7,8 @@ package com.ecwid.apiclient.v3.responsefields
  *
  * Override response field parameter in data class.
  * Used in [ResponseFieldsBuilder]
- */@Target(AnnotationTarget.CLASS, AnnotationTarget.FIELD, AnnotationTarget.PROPERTY)
+ */
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FIELD, AnnotationTarget.PROPERTY)
 annotation class ResponseFieldsOverride(
 	val fields: Array<String>
 )

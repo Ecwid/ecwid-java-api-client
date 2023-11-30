@@ -7,12 +7,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	java
 	signing
-	kotlin("jvm") version "1.8.21"
+	kotlin("jvm") version "1.9.21"
 	id("com.adarshr.test-logger") version "3.2.0"
 	id("nebula.release") version "17.1.0"
 	id("maven-publish")
 	id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
-	id("io.gitlab.arturbosch.detekt") version "1.22.0"
+	id("io.gitlab.arturbosch.detekt") version "1.23.4"
 	id("org.gradle.test-retry") version "1.5.2"
 }
 
@@ -33,7 +33,7 @@ dependencies {
 	testImplementation("org.reflections:reflections:0.10.2")
 	testImplementation("uk.co.jemos.podam:podam:7.2.11.RELEASE")
 
-	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
+	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.4")
 }
 
 configure<JavaPluginConvention> {
@@ -292,12 +292,16 @@ class SettingsProvider {
 
 	fun validateGPGSecrets() = require(
 		value = !gpgSigningKey.isNullOrBlank() && !gpgSigningPassword.isNullOrBlank(),
-		lazyMessage = { "Both $GPG_SIGNING_KEY_PROPERTY and $GPG_SIGNING_PASSWORD_PROPERTY environment variables must not be empty" }
+		lazyMessage = {
+			"Both $GPG_SIGNING_KEY_PROPERTY and $GPG_SIGNING_PASSWORD_PROPERTY environment variables must not be empty"
+		}
 	)
 
 	fun validateOssrhCredentials() = require(
 		value = !ossrhUsername.isNullOrBlank() && !ossrhPassword.isNullOrBlank(),
-		lazyMessage = { "Both $OSSRH_USERNAME_PROPERTY and $OSSRH_PASSWORD_PROPERTY environment variables must not be empty" }
+		lazyMessage = {
+			"Both $OSSRH_USERNAME_PROPERTY and $OSSRH_PASSWORD_PROPERTY environment variables must not be empty"
+		}
 	)
 
 	companion object {

@@ -5,5 +5,5 @@ enum class TimeScaleValue {
 	day,
 	week,
 	month,
-	year;
+	year
 }

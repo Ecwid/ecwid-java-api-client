@@ -312,7 +312,9 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(forCalculateItem.selectedOptions?.count(), calculatedItem.selectedOptions?.count())
 			calculatedItem.selectedOptions?.forEachIndexed { selectedOptionIndex, calculatedOrderItemOptions ->
 				val forCalculateItemOption = forCalculateItem.selectedOptions?.get(selectedOptionIndex)
-				requireNotNull(forCalculateItemOption) { "orderForCalculate.items[$itemIndex].selectedOptions[$selectedOptionIndex] not found" }
+				requireNotNull(forCalculateItemOption) {
+					"orderForCalculate.items[$itemIndex].selectedOptions[$selectedOptionIndex] not found"
+				}
 
 				assertEquals(forCalculateItemOption.name, calculatedOrderItemOptions.name)
 				assertEquals(forCalculateItemOption.type, calculatedOrderItemOptions.type)

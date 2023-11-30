@@ -46,7 +46,8 @@ class ResponseFieldsTest : BaseEntityTest() {
 				field("phone")
 			}
 		}
-		val customerDetailsRequestWithResponseField = CustomerDetailsRequest(customerId = result.id, responseFields = responseFields)
+		val customerDetailsRequestWithResponseField =
+			CustomerDetailsRequest(customerId = result.id, responseFields = responseFields)
 		val customerDetails2 = apiClient.getCustomerDetails(customerDetailsRequestWithResponseField)
 
 		Assertions.assertEquals(customerDetails2.id, 0)
