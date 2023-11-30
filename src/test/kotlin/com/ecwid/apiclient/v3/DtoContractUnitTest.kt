@@ -29,6 +29,7 @@ import java.lang.reflect.*
 import kotlin.reflect.*
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
+import kotlin.reflect.jvm.internal.impl.load.kotlin.header.KotlinClassHeader
 import kotlin.reflect.jvm.javaField
 import kotlin.reflect.jvm.javaGetter
 
@@ -64,6 +65,12 @@ class DtoContractUnitTest {
 			.value
 			.getSubTypesOf(Object::class.java)
 			.filterNot { clazz -> clazz.isInterface || clazz.isAnonymousClass || clazz.isLocalClass }
+			.filter { clazz ->
+				val kindId = clazz.getAnnotation(Metadata::class.java).kind
+				val kind = KotlinClassHeader.Kind.getById(kindId)
+
+				kind == KotlinClassHeader.Kind.CLASS
+			}
 			.filterNot { clazz ->
 				try {
 					clazz.kotlin.isCompanion
