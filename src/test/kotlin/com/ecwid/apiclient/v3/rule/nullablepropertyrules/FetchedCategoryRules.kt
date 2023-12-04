@@ -25,5 +25,8 @@ val fetchedCategoryNullablePropertyRules: List<NullablePropertyRule<*, *>> = lis
 	AllowNullable(FetchedCategory::seoTitle),
 	AllowNullable(FetchedCategory::seoTitleTranslated),
 	AllowNullable(FetchedCategory::seoDescription),
-	AllowNullable(FetchedCategory::seoDescriptionTranslated)
+	AllowNullable(FetchedCategory::seoDescriptionTranslated),
+	AllowNullable(FetchedCategory::imageAlt),
+	AllowNullable(FetchedCategory.Alt::main),
+	AllowNullable(FetchedCategory.Alt::translated)
 )

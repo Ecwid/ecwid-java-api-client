@@ -17,6 +17,12 @@ fun FetchedCategory.toUpdated(): UpdatedCategory {
 		seoTitle = seoTitle,
 		seoTitleTranslated = seoTitleTranslated,
 		seoDescription = seoDescription,
-		seoDescriptionTranslated = seoDescriptionTranslated
+		seoDescriptionTranslated = seoDescriptionTranslated,
+		imageAlt = imageAlt?.toUpdated()
 	)
 }
+
+fun FetchedCategory.Alt.toUpdated() = UpdatedCategory.Alt(
+	main = main,
+	translated = translated
+)
