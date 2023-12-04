@@ -24,4 +24,7 @@ enum class ReportType {
 
 	/** addToCartConversion */
 	addToCartConversion,
+
+	/** visitorsByCountry */
+	visitorsByCountry,
 }
