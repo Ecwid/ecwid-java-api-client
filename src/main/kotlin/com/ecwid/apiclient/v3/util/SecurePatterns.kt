@@ -14,6 +14,7 @@ private val API_TOKEN_SECURE_PATTERN = SecurePattern(
 private val API_SECRET_KEY_SECURE_PATTERN = createKeyValueSecurePattern(APP_CLIENT_SECRET_PARAM_NAME)
 
 private val GLOBAL_SECURE_PATTERNS = listOf(
+	createKeyValueSecurePattern("hash"),
 	createKeyValueSecurePattern("email"),
 	createJsonSecurePattern("email"),
 	createJsonSecurePattern("name"),
