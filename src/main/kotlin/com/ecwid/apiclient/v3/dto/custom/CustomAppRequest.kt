@@ -99,6 +99,7 @@ data class CustomAppRequest(
 		val relatedProducts: RelatedProducts? = null,
 		val combinations: List<FetchedVariation>? = null,
 		val showOnFrontpage: Int? = null,
+		val discountsAllowed: Boolean? = null,
 		val externalReferenceId: String? = null
 	)
 
