@@ -15,6 +15,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 
 		enabled = enabled,
 		quantity = quantity,
+		locationInventory = locationInventory,
 		outOfStockVisibilityBehaviour = outOfStockVisibilityBehaviour,
 		unlimited = unlimited,
 		warningLimit = warningLimit,

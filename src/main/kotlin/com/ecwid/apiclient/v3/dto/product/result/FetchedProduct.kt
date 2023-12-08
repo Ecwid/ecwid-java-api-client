@@ -25,6 +25,7 @@ data class FetchedProduct(
 
 	val enabled: Boolean? = null,
 	val quantity: Int? = null,
+	val locationInventory: Map<String, Int>? = null,
 	val outOfStockVisibilityBehaviour: OutOfStockVisibilityBehaviour? = null,
 	val unlimited: Boolean? = null,
 	val inStock: Boolean? = null,

@@ -154,4 +154,5 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	AllowNullable(FetchedProduct.ProductOption.CheckboxOption::defaultChoice),
 	AllowNullable(FetchedProduct::minPurchaseQuantity),
 	AllowNullable(FetchedProduct::maxPurchaseQuantity),
+	AllowNullable(FetchedProduct::locationInventory),
 )
