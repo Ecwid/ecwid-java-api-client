@@ -55,6 +55,8 @@ fun generateTestOrder(): UpdatedOrder {
 		total = totalPrice,
 		totalBeforeGiftCardRedemption = totalPrice,
 		subtotal = randomPrice(),
+		giftCardRedemption = 0.0,
+		giftCardDoubleSpending = false,
 
 		tax = randomPrice(),
 		customerTaxExempt = false, // TODO We cannot set this field to true, we should need update corresponding customer entity field first
