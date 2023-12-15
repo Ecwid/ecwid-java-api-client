@@ -43,6 +43,10 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 		subtotal = subtotal,
 
 		totalBeforeGiftCardRedemption = totalBeforeGiftCardRedemption,
+		giftCardRedemption = giftCardRedemption,
+		giftCardDoubleSpending = giftCardDoubleSpending,
+		giftCardCode = giftCardCode,
+		giftCardId = giftCardId,
 
 		tax = tax,
 		customerTaxExempt = customerTaxExempt,
