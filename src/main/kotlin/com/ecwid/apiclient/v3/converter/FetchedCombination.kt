@@ -9,6 +9,7 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 		sku = sku,
 
 		quantity = quantity,
+		locationInventory = locationInventory,
 		outOfStockVisibilityBehaviour = outOfStockVisibilityBehaviour,
 		unlimited = unlimited,
 		warningLimit = warningLimit,

@@ -64,5 +64,6 @@ val fetchedVariationTypeNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	IgnoreNullable(FetchedVariation.SubscriptionSettings::displayedOneTimePurchaseMarkupPercent),
 	IgnoreNullable(FetchedVariation.SubscriptionSettings::displayedOneTimePurchaseMarkupPercentFormatted),
 	AllowNullable(FetchedVariation.SubscriptionSettings::oneTimePurchasePrice),
-	IgnoreNullable(FetchedVariation.SubscriptionSettings::oneTimePurchasePriceFormatted)
+	IgnoreNullable(FetchedVariation.SubscriptionSettings::oneTimePurchasePriceFormatted),
+	AllowNullable(FetchedVariation::locationInventory),
 )

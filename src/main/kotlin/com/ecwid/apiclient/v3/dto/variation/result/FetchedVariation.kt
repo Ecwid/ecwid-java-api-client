@@ -35,6 +35,7 @@ data class FetchedVariation(
 	val wholesalePrices: List<WholesalePrice>? = null,
 
 	val quantity: Int? = null,
+	val locationInventory: Map<String, Int>? = null,
 	val outOfStockVisibilityBehaviour: OutOfStockVisibilityBehaviour? = null,
 	val unlimited: Boolean? = null,
 	val inStock: Boolean? = null,

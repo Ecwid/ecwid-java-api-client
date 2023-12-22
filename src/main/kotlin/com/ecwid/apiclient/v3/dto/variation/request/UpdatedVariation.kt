@@ -22,6 +22,7 @@ data class UpdatedVariation(
 	val wholesalePrices: List<WholesalePrice>? = null,
 
 	val quantity: Int? = null,
+	val locationInventory: Map<String, Int>? = null,
 	val outOfStockVisibilityBehaviour: OutOfStockVisibilityBehaviour? = null,
 	val unlimited: Boolean? = null,
 	val warningLimit: Int? = null,

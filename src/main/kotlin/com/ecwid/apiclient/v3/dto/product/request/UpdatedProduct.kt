@@ -15,6 +15,7 @@ data class UpdatedProduct(
 
 	val enabled: Boolean? = null,
 	val quantity: Int? = null,
+	val locationInventory: Map<String, Int>? = null,
 	val outOfStockVisibilityBehaviour: OutOfStockVisibilityBehaviour? = null,
 	val unlimited: Boolean? = null,
 	val warningLimit: Int? = null,

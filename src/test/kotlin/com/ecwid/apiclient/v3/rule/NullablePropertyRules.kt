@@ -12,8 +12,6 @@ import com.ecwid.apiclient.v3.dto.order.result.DeletedOrder
 import com.ecwid.apiclient.v3.dto.payment.PaymentAppRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductUpdateRequest
-import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
-import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult
 import com.ecwid.apiclient.v3.dto.product.result.ProductInventoryUpdateResult
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
@@ -47,14 +45,6 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(GetProductFiltersResult.ProductFilters::onsale),
 	AllowNullable(GetProductFiltersResult.ProductFilters::options),
 	AllowNullable(GetProductFiltersResult.ProductFilters::price),
-	AllowNullable(FetchedProduct.ShippingPreparationTime::pickupPreparationTimeForInStockItemInMinutes),
-	AllowNullable(FetchedProduct.ShippingPreparationTime::shippingPreparationTimeForInStockItemDays),
-	AllowNullable(FetchedProduct.ShippingPreparationTime::shippingPreparationTimeForOutOfStockItemDays),
-	AllowNullable(FetchedProduct.ShippingPreparationTime::localDeliveryPreparationTimeForInStockItemInMinutes),
-	AllowNullable(FetchedProduct.ProductOption.ChoiceBased::defaultChoice),
-	AllowNullable(FetchedProduct.ProductOption.CheckboxOption::defaultChoice),
-
-	AllowNullable(UpdatedProduct.ProductOption::required),
 
 	AllowNullable(FetchedLatestStats::productCount),
 	AllowNullable(FetchedLatestStats::categoryCount),
@@ -79,8 +69,6 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(ProductInventoryUpdateResult::warning),
 
 	AllowNullable(FetchedStorageData::value),
-	AllowNullable(FetchedProduct::minPurchaseQuantity),
-	AllowNullable(FetchedProduct::maxPurchaseQuantity),
 
 	AllowNullable(ReportRequest::startedFrom),
 	AllowNullable(ReportRequest::endedAt),

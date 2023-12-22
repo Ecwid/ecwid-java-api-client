@@ -145,5 +145,14 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct.SubscriptionSettings::displayedOneTimePurchaseMarkupPercent),
 	IgnoreNullable(FetchedProduct.SubscriptionSettings::displayedOneTimePurchaseMarkupPercentFormatted),
 	AllowNullable(FetchedProduct.SubscriptionSettings::oneTimePurchasePrice),
-	IgnoreNullable(FetchedProduct.SubscriptionSettings::oneTimePurchasePriceFormatted)
+	IgnoreNullable(FetchedProduct.SubscriptionSettings::oneTimePurchasePriceFormatted),
+	AllowNullable(FetchedProduct.ShippingPreparationTime::pickupPreparationTimeForInStockItemInMinutes),
+	AllowNullable(FetchedProduct.ShippingPreparationTime::shippingPreparationTimeForInStockItemDays),
+	AllowNullable(FetchedProduct.ShippingPreparationTime::shippingPreparationTimeForOutOfStockItemDays),
+	AllowNullable(FetchedProduct.ShippingPreparationTime::localDeliveryPreparationTimeForInStockItemInMinutes),
+	AllowNullable(FetchedProduct.ProductOption.ChoiceBased::defaultChoice),
+	AllowNullable(FetchedProduct.ProductOption.CheckboxOption::defaultChoice),
+	AllowNullable(FetchedProduct::minPurchaseQuantity),
+	AllowNullable(FetchedProduct::maxPurchaseQuantity),
+	AllowNullable(FetchedProduct::locationInventory),
 )
