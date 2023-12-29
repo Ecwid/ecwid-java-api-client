@@ -18,7 +18,7 @@ fun FetchedCategory.toUpdated(): UpdatedCategory {
 		seoTitleTranslated = seoTitleTranslated,
 		seoDescription = seoDescription,
 		seoDescriptionTranslated = seoDescriptionTranslated,
-		imageAlt = imageAlt?.toUpdated()
+		alt = alt?.toUpdated()
 	)
 }
 

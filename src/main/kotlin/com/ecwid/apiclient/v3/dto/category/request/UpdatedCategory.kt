@@ -19,7 +19,7 @@ data class UpdatedCategory(
 	val seoTitleTranslated: LocalizedValueMap? = null,
 	val seoDescription: String? = null,
 	val seoDescriptionTranslated: LocalizedValueMap? = null,
-	val imageAlt: Alt? = null
+	val alt: Alt? = null
 ) : ApiUpdatedDTO {
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedCategory::class)
