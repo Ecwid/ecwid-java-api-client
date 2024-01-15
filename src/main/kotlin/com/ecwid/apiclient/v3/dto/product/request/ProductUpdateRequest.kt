@@ -10,6 +10,7 @@ data class ProductUpdateRequest(
 	val checkLowStockNotification: Boolean? = null,
 	val rebuildVariationsOnOptionsUpdate: Boolean? = null,
 	val keepOptionDisplaySettings: Boolean? = null,
+	val resetLocationInventory: Boolean? = null,
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
 		pathSegments = listOf(
@@ -27,6 +28,7 @@ data class ProductUpdateRequest(
 			checkLowStockNotification?.let { put("checkLowStockNotification", it.toString()) }
 			rebuildVariationsOnOptionsUpdate?.let { put("rebuildVariationsOnOptionsUpdate", it.toString()) }
 			keepOptionDisplaySettings?.let { put("keepOptionDisplaySettings", it.toString()) }
+			resetLocationInventory?.let { put("keepOptionDisplaySettings", it.toString()) }
 		}.toMap()
 	}
 }
