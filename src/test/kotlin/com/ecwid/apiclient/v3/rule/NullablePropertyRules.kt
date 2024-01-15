@@ -20,6 +20,7 @@ import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
 import com.ecwid.apiclient.v3.dto.storage.result.FetchedStorageData
 import com.ecwid.apiclient.v3.dto.variation.request.ProductVariationsRequest
+import com.ecwid.apiclient.v3.dto.variation.request.UpdateProductVariationRequest
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 import com.ecwid.apiclient.v3.rule.nullablepropertyrules.*
@@ -32,6 +33,7 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(ProductUpdateRequest::rebuildVariationsOnOptionsUpdate),
 	AllowNullable(ProductUpdateRequest::keepOptionDisplaySettings),
 	AllowNullable(ProductUpdateRequest::resetLocationInventory),
+	AllowNullable(UpdateProductVariationRequest::resetLocationInventory),
 
 	AllowNullable(StoreProfileRequest::lang),
 
