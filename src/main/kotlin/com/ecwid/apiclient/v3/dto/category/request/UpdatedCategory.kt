@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
+import com.ecwid.apiclient.v3.dto.common.UpdatedAlt
 
 data class UpdatedCategory(
 	val parentId: Int? = null,
@@ -19,13 +20,9 @@ data class UpdatedCategory(
 	val seoTitleTranslated: LocalizedValueMap? = null,
 	val seoDescription: String? = null,
 	val seoDescriptionTranslated: LocalizedValueMap? = null,
-	val alt: Alt? = null
+	val alt: UpdatedAlt? = null
 ) : ApiUpdatedDTO {
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedCategory::class)
 
-	data class Alt(
-		val main: String? = null,
-		val translated: LocalizedValueMap? = null
-	)
 }

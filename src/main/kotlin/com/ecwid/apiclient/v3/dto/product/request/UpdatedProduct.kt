@@ -373,13 +373,8 @@ data class UpdatedProduct(
 	data class ProductImage(
 		val id: String = "0",
 		val orderBy: Int = 0,
-		val alt: Alt? = null
-	) {
-		data class Alt(
-			val main: String? = null,
-			val translated: LocalizedValueMap? = null
-		)
-	}
+		val alt: UpdatedAlt? = null
+	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedProduct::class)
 }

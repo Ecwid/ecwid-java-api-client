@@ -99,8 +99,6 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct.ProductImage::image800pxUrl),
 	IgnoreNullable(FetchedProduct.ProductImage::imageOriginalUrl),
 	AllowNullable(FetchedProduct.ProductImage::alt),
-	AllowNullable(FetchedProduct.ProductImage.Alt::main),
-	AllowNullable(FetchedProduct.ProductImage.Alt::translated),
 	AllowNullable(FetchedProduct.ProductVideo::videoCoverId),
 	AllowNullable(FetchedProduct.ProductVideo::image160pxUrl),
 	AllowNullable(FetchedProduct.ProductVideo::image400pxUrl),
