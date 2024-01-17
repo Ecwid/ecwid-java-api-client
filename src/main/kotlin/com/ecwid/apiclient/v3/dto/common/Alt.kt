@@ -4,7 +4,7 @@ data class FetchedAlt(
 	val main: String? = null,
 	val translated: LocalizedValueMap? = null,
 ) {
-	fun toUpdated(): UpdatedAlt{
+	fun toUpdated(): UpdatedAlt {
 		return UpdatedAlt(
 			main = main,
 			translated = translated
