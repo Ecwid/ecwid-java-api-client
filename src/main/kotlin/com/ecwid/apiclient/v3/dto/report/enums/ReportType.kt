@@ -5,6 +5,7 @@ enum class ReportType {
 	allTraffic,
 	newVsReturningVisitors,
 	visitorsByDevice,
+	visitorsByCountry,
 
 	/** orders */
 	allOrders,
@@ -21,10 +22,6 @@ enum class ReportType {
 
 	/** conversions */
 	conversions,
-
-	/** addToCartConversion */
 	addToCartConversion,
 
-	/** visitorsByCountry */
-	visitorsByCountry,
 }
