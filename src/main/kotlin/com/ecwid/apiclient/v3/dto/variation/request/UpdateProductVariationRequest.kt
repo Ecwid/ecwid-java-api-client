@@ -20,7 +20,7 @@ data class UpdateProductVariationRequest(
 		),
 		params = listOfNotNull(
 			"checkLowStockNotification" to checkLowStockNotification.toString(),
-			resetLocationInventory?.let { "keepOptionDisplaySettings" to it.toString() }
+			resetLocationInventory?.let { "resetLocationInventory" to it.toString() }
 		).toMap(),
 		httpBody = HttpBody.JsonBody(
 			obj = variation
