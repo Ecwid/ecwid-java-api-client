@@ -46,9 +46,14 @@ data class FetchedReportResponse(
 			val ordersCount: Int = 0,
 		) : FetchedAdditionalData(AdditionalDataType.ORDERS)
 
+		data class AdditionalCustomerData(
+			val customerData: FetchedCustomerData,
+		) : FetchedAdditionalData(AdditionalDataType.CUSTOMERS)
+
 		enum class AdditionalDataType {
 			UTM,
-			ORDERS
+			ORDERS,
+			CUSTOMERS,
 		}
 	}
 
@@ -56,6 +61,13 @@ data class FetchedReportResponse(
 		val utmSource: String = "",
 		val utmMedium: String = "",
 		val utmCampaign: String = "",
+	)
+
+	data class FetchedCustomerData(
+		val customerId: Int? = null,
+		val customerEmail: String? = null,
+		val customerPhone: String? = null,
+		val customerName: String? = null,
 	)
 
 	override fun getModifyKind() = ApiFetchedDTO.ModifyKind.ReadOnly
