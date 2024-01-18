@@ -93,6 +93,10 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedReportResponse.FetchedDataset::comparePeriodEndTimeStamp),
 	AllowNullable(FetchedReportResponse.FetchedDataset::additionalData),
 
+	AllowNullable(FetchedReportResponse.FetchedCustomerData::customerId),
+	AllowNullable(FetchedReportResponse.FetchedCustomerData::customerEmail),
+	AllowNullable(FetchedReportResponse.FetchedCustomerData::customerPhone),
+
 	AllowNullable(CreateBatchRequest::groupId),
 	AllowNullable(CreateBatchRequestWithIds::groupId),
 

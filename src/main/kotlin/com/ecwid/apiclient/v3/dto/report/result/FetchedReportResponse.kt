@@ -47,7 +47,7 @@ data class FetchedReportResponse(
 		) : FetchedAdditionalData(AdditionalDataType.ORDERS)
 
 		data class AdditionalCustomerData(
-			val customerData: FetchedCustomerData,
+			val customerData: FetchedCustomerData = FetchedCustomerData(),
 		) : FetchedAdditionalData(AdditionalDataType.CUSTOMERS)
 
 		enum class AdditionalDataType {
@@ -67,7 +67,7 @@ data class FetchedReportResponse(
 		val customerId: Int? = null,
 		val customerEmail: String? = null,
 		val customerPhone: String? = null,
-		val customerName: String? = null,
+		val customerName: String = "",
 	)
 
 	override fun getModifyKind() = ApiFetchedDTO.ModifyKind.ReadOnly
