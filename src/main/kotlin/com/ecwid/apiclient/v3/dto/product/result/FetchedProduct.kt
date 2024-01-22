@@ -134,6 +134,10 @@ data class FetchedProduct(
 	val customsHsTariffCode: String? = null,
 	val minPurchaseQuantity: Int? = null,
 	val maxPurchaseQuantity: Int? = null,
+	val reviewsCollectingAllowed: Boolean? = null,
+	val rating: Double? = null,
+	val reviewsModerated: Int? = null,
+	val reviewsPublished: Int? = null,
 ) : ApiFetchedDTO, ApiResultDTO {
 
 	data class BorderInfo(
