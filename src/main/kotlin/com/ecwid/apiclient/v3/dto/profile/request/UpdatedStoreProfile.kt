@@ -102,6 +102,7 @@ data class UpdatedStoreProfile(
 		val openBagOnAddition: Boolean? = null,
 		val pinterestTagId: String? = null,
 		val productCondition: ProductCondition? = null,
+		val productReviewsFeatureEnabled: Boolean? = null,
 		val rootCategorySeoDescription: String? = null,
 		val rootCategorySeoDescriptionTranslated: LocalizedValueMap? = null,
 		val rootCategorySeoTitle: String? = null,
