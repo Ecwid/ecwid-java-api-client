@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
+import com.ecwid.apiclient.v3.dto.common.FetchedAlt
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
@@ -99,8 +100,8 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct.ProductImage::image800pxUrl),
 	IgnoreNullable(FetchedProduct.ProductImage::imageOriginalUrl),
 	AllowNullable(FetchedProduct.ProductImage::alt),
-	AllowNullable(FetchedProduct.ProductImage.Alt::main),
-	AllowNullable(FetchedProduct.ProductImage.Alt::translated),
+	AllowNullable(FetchedAlt::main),
+	AllowNullable(FetchedAlt::translated),
 	AllowNullable(FetchedProduct.ProductVideo::videoCoverId),
 	AllowNullable(FetchedProduct.ProductVideo::image160pxUrl),
 	AllowNullable(FetchedProduct.ProductVideo::image400pxUrl),

@@ -224,11 +224,6 @@ fun FetchedProduct.ProductImage.toUpdated() = UpdatedProduct.ProductImage(
 	alt = alt?.toUpdated()
 )
 
-fun FetchedProduct.ProductImage.Alt.toUpdated() = UpdatedProduct.ProductImage.Alt(
-	main = main,
-	translated = translated
-)
-
 fun FetchedProduct.TaxInfo.toUpdated() = UpdatedProduct.TaxInfo(
 	taxable = taxable,
 	enabledManualTaxes = enabledManualTaxes,
