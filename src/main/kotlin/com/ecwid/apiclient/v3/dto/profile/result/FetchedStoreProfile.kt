@@ -134,6 +134,7 @@ data class FetchedStoreProfile(
 		val orderCommentsRequired: Boolean? = null,
 		val pinterestTagId: String? = null,
 		val productCondition: ProductCondition = ProductCondition.NEW,
+		val productReviewsFeatureEnabled: Boolean? = null,
 		val rootCategorySeoDescription: String? = null,
 		val rootCategorySeoDescriptionTranslated: LocalizedValueMap? = null,
 		val rootCategorySeoTitle: String? = null,

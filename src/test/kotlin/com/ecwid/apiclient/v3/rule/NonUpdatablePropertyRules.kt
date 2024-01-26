@@ -65,6 +65,9 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedProduct::isGiftCard),
 	ReadOnly(FetchedProduct::hasFreeShipping),
 	ReadOnly(FetchedProduct::googleProductCategoryName),
+	ReadOnly(FetchedProduct::rating),
+	ReadOnly(FetchedProduct::reviewsModerated),
+	ReadOnly(FetchedProduct::reviewsPublished),
 
 	Ignored(FetchedCart::cartId),
 	Ignored(FetchedCart::email),

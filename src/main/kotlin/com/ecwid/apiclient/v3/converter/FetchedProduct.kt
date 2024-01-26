@@ -68,6 +68,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		customsHsTariffCode = customsHsTariffCode,
 		minPurchaseQuantity = minPurchaseQuantity,
 		maxPurchaseQuantity = maxPurchaseQuantity,
+		reviewsCollectingAllowed = reviewsCollectingAllowed,
 	)
 }
 
