@@ -8,8 +8,11 @@ import java.util.*
 data class FetchedProductReview(
 	val id: Long? = null,
 	val productId: Long? = null,
+	val productName: String? = null,
 	val customerId: Long? = null,
 	val orderId: Long? = null,
+	val orderNumber: String? = null,
+	val orderItemId: Long? = null,
 	val status: ProductReviewStatus? = null,
 	val rating: Int? = null,
 	val review: String? = null,

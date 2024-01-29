@@ -10,9 +10,9 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 data class ProductReviewsSearchRequest(
-	val reviewId: Int? = null,
-	val productId: Int? = null,
-	val orderId: Int? = null,
+	val reviewId: Long? = null,
+	val productId: Long? = null,
+	val orderId: Long? = null,
 	val status: ProductReviewStatus? = null,
 	val createdFrom: Date? = null,
 	val createdTo: Date? = null,
