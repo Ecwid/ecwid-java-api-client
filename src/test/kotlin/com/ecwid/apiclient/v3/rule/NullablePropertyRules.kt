@@ -14,6 +14,7 @@ import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductUpdateRequest
 import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult
 import com.ecwid.apiclient.v3.dto.product.result.ProductInventoryUpdateResult
+import com.ecwid.apiclient.v3.dto.productreview.request.UpdatedProductReviewStatus
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedLatestStats
 import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
@@ -101,6 +102,8 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(InstantSiteRedirectsSearchRequest::offset),
 
 	AllowNullable(InstantSiteRedirectsGetForExactPathRequest::exactPath),
+
+	AllowNullable(UpdatedProductReviewStatus::status),
 )
 
 val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
@@ -138,7 +141,9 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	otherNullablePropertyRules,
 	fetchedSlugInfoNullablePropertyRules,
 	fetchedSlugInfoClassesNullablePropertyRules,
-	slugInfoRequestNullablePropertyRules
+	slugInfoRequestNullablePropertyRules,
+	fetchedProductReviewNullablePropertyRules,
+	productReviewsSearchRequestNullablePropertyRules,
 ).flatten()
 
 sealed class NullablePropertyRule<T, R>(
