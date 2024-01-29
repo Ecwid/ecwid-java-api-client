@@ -86,8 +86,7 @@ open class ApiClient private constructor(
 	SubscriptionsApiClient by subscriptionsApiClient,
 	InstantSiteRedirectsApiClient by instantSiteRedirectsApiClient,
 	SlugInfoApiClient by slugInfoApiClient,
-	ProductReviewsApiClient by productReviewsApiClient
-{
+	ProductReviewsApiClient by productReviewsApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
