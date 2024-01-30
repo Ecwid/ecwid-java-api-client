@@ -28,7 +28,7 @@ data class ProductUpdateRequest(
 			checkLowStockNotification?.let { put("checkLowStockNotification", it.toString()) }
 			rebuildVariationsOnOptionsUpdate?.let { put("rebuildVariationsOnOptionsUpdate", it.toString()) }
 			keepOptionDisplaySettings?.let { put("keepOptionDisplaySettings", it.toString()) }
-			resetLocationInventory?.let { put("resetLocationInventory", it.toString()) }
+			resetLocationInventory?.let { put("keepOptionDisplaySettings", it.toString()) }
 		}.toMap()
 	}
 }
