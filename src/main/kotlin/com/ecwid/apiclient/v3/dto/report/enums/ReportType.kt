@@ -27,4 +27,7 @@ enum class ReportType {
 
 	/** visitorsByCountry */
 	visitorsByCountry,
+
+	/** checkoutSalesFunnel */
+	checkoutSalesFunnel,
 }
