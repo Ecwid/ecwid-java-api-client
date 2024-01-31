@@ -7,9 +7,8 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 data class UpdateProductVariationRequest(
 	val productId: Int = 0,
 	val variationId: Int = 0,
-	val variation: UpdatedVariation = UpdatedVariation(),
 	val checkLowStockNotification: Boolean = false,
-	val resetLocationInventory: Boolean? = null, // default is determined on server-side, consistent with ProductUpdateRequest
+	val variation: UpdatedVariation = UpdatedVariation()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPutRequest(
 		pathSegments = listOf(
@@ -18,10 +17,7 @@ data class UpdateProductVariationRequest(
 			"combinations",
 			"$variationId"
 		),
-		params = listOfNotNull(
-			"checkLowStockNotification" to checkLowStockNotification.toString(),
-			resetLocationInventory?.let { "resetLocationInventory" to it.toString() }
-		).toMap(),
+		params = mapOf("checkLowStockNotification" to checkLowStockNotification.toString()),
 		httpBody = HttpBody.JsonBody(
 			obj = variation
 		)
