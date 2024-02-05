@@ -9,6 +9,7 @@ val productReviewsSearchRequestNullablePropertyRules: List<NullablePropertyRule<
 	AllowNullable(ProductReviewsSearchRequest::createdTo),
 	AllowNullable(ProductReviewsSearchRequest::orderId),
 	AllowNullable(ProductReviewsSearchRequest::productId),
+	AllowNullable(ProductReviewsSearchRequest::rating),
 	AllowNullable(ProductReviewsSearchRequest::reviewId),
 	AllowNullable(ProductReviewsSearchRequest::sortBy),
 	AllowNullable(ProductReviewsSearchRequest::status),
