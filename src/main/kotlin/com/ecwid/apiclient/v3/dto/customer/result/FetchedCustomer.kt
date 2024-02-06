@@ -60,6 +60,7 @@ data class FetchedCustomer(
 		val createdDate: Date? = null,
 		val defaultAddress: Boolean? = null,
 		val orderBy: Int? = null,
+		val addressFormatted: String? = null,
 	)
 
 	data class CustomerStats(
