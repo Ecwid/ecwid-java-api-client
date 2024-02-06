@@ -3,7 +3,7 @@ package com.ecwid.apiclient.v3.dto.productreview.result
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.productreview.enums.ProductReviewStatus
-import java.util.*
+import java.time.Instant
 
 data class FetchedProductReview(
 	val id: Long? = null,
@@ -17,8 +17,8 @@ data class FetchedProductReview(
 	val rating: Int? = null,
 	val review: String? = null,
 	val reviewerInfo: FetchedProductReviewerInfo? = null,
-	val createDate: Date? = null,
-	val updateDate: Date? = null,
+	val createDate: Instant? = null,
+	val updateDate: Instant? = null,
 	val createTimestamp: Long? = null,
 	val updateTimestamp: Long? = null,
 ) : ApiFetchedDTO, ApiResultDTO {
