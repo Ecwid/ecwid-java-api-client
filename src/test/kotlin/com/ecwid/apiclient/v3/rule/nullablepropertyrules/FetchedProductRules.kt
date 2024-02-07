@@ -27,6 +27,13 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	AllowNullable(FetchedProduct::lowestPrice),
 	AllowNullable(FetchedProduct::defaultDisplayedLowestPrice),
 	AllowNullable(FetchedProduct::defaultDisplayedLowestPriceFormatted),
+	AllowNullable(FetchedProduct.LowestPriceSettings::manualLowestPrice),
+	AllowNullable(FetchedProduct.LowestPriceSettings::defaultDisplayedLowestPrice),
+	AllowNullable(FetchedProduct.LowestPriceSettings::defaultDisplayedLowestPriceFormatted),
+	AllowNullable(FetchedProduct.LowestPriceSettings::automaticLowestPrice),
+	AllowNullable(FetchedProduct.LowestPriceSettings::defaultDisplayedAutomaticLowestPrice),
+	AllowNullable(FetchedProduct.LowestPriceSettings::defaultDisplayedAutomaticLowestPriceFormatted),
+
 	AllowNullable(FetchedProduct::customsHsTariffCode),
 	IgnoreNullable(FetchedProduct::defaultCategoryId),
 	IgnoreNullable(FetchedProduct::defaultCombinationId),

@@ -86,6 +86,8 @@ data class FetchedProduct(
 	val defaultDisplayedLowestPrice: Double? = null,
 	val defaultDisplayedLowestPriceFormatted: String? = null,
 
+	val lowestPriceSettings: LowestPriceSettings = LowestPriceSettings(),
+
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
 	val volume: Double = 0.0,
@@ -380,4 +382,14 @@ data class FetchedProduct(
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedProduct::class)
+
+	data class LowestPriceSettings(
+		val lowestPriceEnabled: Boolean = false,
+		val manualLowestPrice: Double? = null,
+		val defaultDisplayedLowestPrice: Double? = null,
+		val defaultDisplayedLowestPriceFormatted: String? = null,
+		val automaticLowestPrice: Double? = null,
+		val defaultDisplayedAutomaticLowestPrice: Double? = null,
+		val defaultDisplayedAutomaticLowestPriceFormatted: String? = null,
+	)
 }
