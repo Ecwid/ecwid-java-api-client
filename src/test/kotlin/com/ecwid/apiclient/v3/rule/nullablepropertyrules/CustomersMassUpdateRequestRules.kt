@@ -18,6 +18,7 @@ val customersMassUpdatedRequestNullablePropertyRules: List<NullablePropertyRule<
 	AllowNullable(CustomersRequestFields::taxExempt),
 	AllowNullable(CustomersRequestFields::acceptMarketing),
 	AllowNullable(CustomersRequestFields::lang),
+	AllowNullable(CustomersRequestFields::checkOnlyCustomerId),
 
 	AllowNullable(MassUpdateCustomer::ids),
 	AllowNullable(MassUpdateCustomer::delete),

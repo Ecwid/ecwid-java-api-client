@@ -15,6 +15,7 @@ data class CustomersSearchRequest(
 	val maxOrderCount: Int? = null,
 	val minSalesValue: Int? = null,
 	val maxSalesValue: Int? = null,
+	val checkOnlyCustomerId: Boolean? = null,
 	val taxExempt: Boolean? = null,
 	val acceptMarketing: Boolean? = null,
 	val purchasedProductIds: String? = null,
@@ -68,6 +69,7 @@ data class CustomersSearchRequest(
 			request.maxOrderCount?.let { put("maxOrderCount", it.toString()) }
 			request.minSalesValue?.let { put("minSalesValue", it.toString()) }
 			request.maxSalesValue?.let { put("maxSalesValue", it.toString()) }
+			request.checkOnlyCustomerId?.let { put("checkOnlyCustomerId", it.toString()) }
 			request.createdFrom?.let { put("createdFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			request.createdTo?.let { put("createdTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			request.updatedFrom?.let { put("updatedFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
