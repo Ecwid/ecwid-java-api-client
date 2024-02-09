@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
+import com.ecwid.apiclient.v3.dto.common.FetchedAlt
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
@@ -26,6 +27,13 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	AllowNullable(FetchedProduct::lowestPrice),
 	AllowNullable(FetchedProduct::defaultDisplayedLowestPrice),
 	AllowNullable(FetchedProduct::defaultDisplayedLowestPriceFormatted),
+	AllowNullable(FetchedProduct.LowestPriceSettings::manualLowestPrice),
+	AllowNullable(FetchedProduct.LowestPriceSettings::defaultDisplayedLowestPrice),
+	AllowNullable(FetchedProduct.LowestPriceSettings::defaultDisplayedLowestPriceFormatted),
+	AllowNullable(FetchedProduct.LowestPriceSettings::automaticLowestPrice),
+	AllowNullable(FetchedProduct.LowestPriceSettings::defaultDisplayedAutomaticLowestPrice),
+	AllowNullable(FetchedProduct.LowestPriceSettings::defaultDisplayedAutomaticLowestPriceFormatted),
+
 	AllowNullable(FetchedProduct::customsHsTariffCode),
 	IgnoreNullable(FetchedProduct::defaultCategoryId),
 	IgnoreNullable(FetchedProduct::defaultCombinationId),
@@ -61,7 +69,11 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct::productClassId),
 	IgnoreNullable(FetchedProduct::quantity),
 	IgnoreNullable(FetchedProduct::outOfStockVisibilityBehaviour),
+	AllowNullable(FetchedProduct::rating),
 	IgnoreNullable(FetchedProduct::relatedProducts),
+	AllowNullable(FetchedProduct::reviewsCollectingAllowed),
+	AllowNullable(FetchedProduct::reviewsModerated),
+	AllowNullable(FetchedProduct::reviewsPublished),
 	IgnoreNullable(FetchedProduct::ribbon),
 	IgnoreNullable(FetchedProduct::ribbonTranslated),
 	IgnoreNullable(FetchedProduct::seoDescription),
@@ -99,8 +111,8 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct.ProductImage::image800pxUrl),
 	IgnoreNullable(FetchedProduct.ProductImage::imageOriginalUrl),
 	AllowNullable(FetchedProduct.ProductImage::alt),
-	AllowNullable(FetchedProduct.ProductImage.Alt::main),
-	AllowNullable(FetchedProduct.ProductImage.Alt::translated),
+	AllowNullable(FetchedAlt::main),
+	AllowNullable(FetchedAlt::translated),
 	AllowNullable(FetchedProduct.ProductVideo::videoCoverId),
 	AllowNullable(FetchedProduct.ProductVideo::image160pxUrl),
 	AllowNullable(FetchedProduct.ProductVideo::image400pxUrl),

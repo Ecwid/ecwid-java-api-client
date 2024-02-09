@@ -29,6 +29,7 @@ data class UpdatedProduct(
 	val wholesalePrices: List<WholesalePrice>? = null,
 	val compareToPrice: Double? = null,
 	val lowestPrice: Double? = null,
+	val lowestPriceSettings: LowestPriceSettings? = null,
 
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
@@ -68,6 +69,7 @@ data class UpdatedProduct(
 	val customsHsTariffCode: String? = null,
 	val minPurchaseQuantity: Int? = null,
 	val maxPurchaseQuantity: Int? = null,
+	val reviewsCollectingAllowed: Boolean? = null,
 ) : ApiUpdatedDTO {
 
 	data class Ribbon(
@@ -373,13 +375,13 @@ data class UpdatedProduct(
 	data class ProductImage(
 		val id: String = "0",
 		val orderBy: Int = 0,
-		val alt: Alt? = null
-	) {
-		data class Alt(
-			val main: String? = null,
-			val translated: LocalizedValueMap? = null
-		)
-	}
+		val alt: UpdatedAlt? = null
+	)
+
+	data class LowestPriceSettings(
+		val lowestPriceEnabled: Boolean? = null,
+		val manualLowestPrice: Double? = null,
+	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedProduct::class)
 }

@@ -109,6 +109,7 @@ fun FetchedStoreProfile.Settings.toUpdated(): UpdatedStoreProfile.Settings {
 		orderCommentsRequired = orderCommentsRequired,
 		pinterestTagId = pinterestTagId,
 		productCondition = productCondition,
+		productReviewsFeatureEnabled = productReviewsFeatureEnabled,
 		rootCategorySeoDescription = rootCategorySeoDescription,
 		rootCategorySeoDescriptionTranslated = rootCategorySeoDescriptionTranslated,
 		rootCategorySeoTitle = rootCategorySeoTitle,

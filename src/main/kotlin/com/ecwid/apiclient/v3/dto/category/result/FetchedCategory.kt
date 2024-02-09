@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.category.request.UpdatedCategory
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
+import com.ecwid.apiclient.v3.dto.common.FetchedAlt
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.PictureInfo
 
@@ -32,8 +33,10 @@ data class FetchedCategory(
 	val seoTitle: String? = null,
 	val seoTitleTranslated: LocalizedValueMap? = null,
 	val seoDescription: String? = null,
-	val seoDescriptionTranslated: LocalizedValueMap? = null
+	val seoDescriptionTranslated: LocalizedValueMap? = null,
+	val alt: FetchedAlt? = null
 ) : ApiFetchedDTO, ApiResultDTO {
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedCategory::class)
+
 }

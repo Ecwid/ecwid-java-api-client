@@ -86,6 +86,8 @@ data class FetchedProduct(
 	val defaultDisplayedLowestPrice: Double? = null,
 	val defaultDisplayedLowestPriceFormatted: String? = null,
 
+	val lowestPriceSettings: LowestPriceSettings = LowestPriceSettings(),
+
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
 	val volume: Double = 0.0,
@@ -134,6 +136,10 @@ data class FetchedProduct(
 	val customsHsTariffCode: String? = null,
 	val minPurchaseQuantity: Int? = null,
 	val maxPurchaseQuantity: Int? = null,
+	val reviewsCollectingAllowed: Boolean? = null,
+	val rating: Double? = null,
+	val reviewsModerated: Int? = null,
+	val reviewsPublished: Int? = null,
 ) : ApiFetchedDTO, ApiResultDTO {
 
 	data class BorderInfo(
@@ -345,13 +351,8 @@ data class FetchedProduct(
 		val image800pxUrl: String? = null,
 		val image1500pxUrl: String? = null,
 		val imageOriginalUrl: String? = null,
-		val alt: Alt? = null
-	) {
-		data class Alt(
-			val main: String? = null,
-			val translated: LocalizedValueMap? = null
-		)
-	}
+		val alt: FetchedAlt? = null
+	)
 
 	data class ProductVideo(
 		val id: String = "0",
@@ -381,4 +382,14 @@ data class FetchedProduct(
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedProduct::class)
+
+	data class LowestPriceSettings(
+		val lowestPriceEnabled: Boolean = false,
+		val manualLowestPrice: Double? = null,
+		val defaultDisplayedLowestPrice: Double? = null,
+		val defaultDisplayedLowestPriceFormatted: String? = null,
+		val automaticLowestPrice: Double? = null,
+		val defaultDisplayedAutomaticLowestPrice: Double? = null,
+		val defaultDisplayedAutomaticLowestPriceFormatted: String? = null,
+	)
 }

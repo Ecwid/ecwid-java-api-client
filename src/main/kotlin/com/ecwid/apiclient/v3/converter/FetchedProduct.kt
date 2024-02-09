@@ -29,6 +29,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		wholesalePrices = wholesalePrices?.map(FetchedProduct.WholesalePrice::toUpdated),
 		compareToPrice = compareToPrice,
 		lowestPrice = lowestPrice,
+		lowestPriceSettings = lowestPriceSettings.toUpdated(),
 
 		weight = weight,
 		dimensions = dimensions?.toUpdated(),
@@ -68,6 +69,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		customsHsTariffCode = customsHsTariffCode,
 		minPurchaseQuantity = minPurchaseQuantity,
 		maxPurchaseQuantity = maxPurchaseQuantity,
+		reviewsCollectingAllowed = reviewsCollectingAllowed,
 	)
 }
 
@@ -224,13 +226,13 @@ fun FetchedProduct.ProductImage.toUpdated() = UpdatedProduct.ProductImage(
 	alt = alt?.toUpdated()
 )
 
-fun FetchedProduct.ProductImage.Alt.toUpdated() = UpdatedProduct.ProductImage.Alt(
-	main = main,
-	translated = translated
-)
-
 fun FetchedProduct.TaxInfo.toUpdated() = UpdatedProduct.TaxInfo(
 	taxable = taxable,
 	enabledManualTaxes = enabledManualTaxes,
 	taxClassCode = taxClassCode,
+)
+
+fun FetchedProduct.LowestPriceSettings.toUpdated() = UpdatedProduct.LowestPriceSettings(
+	lowestPriceEnabled = lowestPriceEnabled,
+	manualLowestPrice = manualLowestPrice
 )

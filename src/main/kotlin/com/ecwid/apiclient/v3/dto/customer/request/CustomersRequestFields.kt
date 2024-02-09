@@ -8,6 +8,7 @@ data class CustomersRequestFields(
 	val maxOrderCount: Int? = null,
 	val minSalesValue: Int? = null,
 	val maxSalesValue: Int? = null,
+	val checkOnlyCustomerId: Boolean? = null,
 	val taxExempt: Boolean? = null,
 	val acceptMarketing: Boolean? = null,
 	val purchasedProductIds: String? = null,

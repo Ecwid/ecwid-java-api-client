@@ -281,6 +281,7 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.Settings::orderCommentsEnabled),
 	IgnoreNullable(FetchedStoreProfile.Settings::orderCommentsRequired),
 	IgnoreNullable(FetchedStoreProfile.Settings::pinterestTagId),
+	AllowNullable(FetchedStoreProfile.Settings::productReviewsFeatureEnabled),
 	IgnoreNullable(FetchedStoreProfile.Settings::salePrice),
 	IgnoreNullable(FetchedStoreProfile.Settings::showAcceptMarketingCheckbox),
 	IgnoreNullable(FetchedStoreProfile.Settings::snapPixelId),
