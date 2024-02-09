@@ -16,4 +16,5 @@ val customersIdsRequestNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	AllowNullable(CustomersRequestFields::taxExempt),
 	AllowNullable(CustomersRequestFields::acceptMarketing),
 	AllowNullable(CustomersRequestFields::lang),
+	AllowNullable(CustomersRequestFields::checkOnlyCustomerId),
 )

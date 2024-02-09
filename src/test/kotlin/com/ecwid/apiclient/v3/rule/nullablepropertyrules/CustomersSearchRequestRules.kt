@@ -24,4 +24,5 @@ val customersSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *>
 	AllowNullable(CustomersSearchRequest::taxExempt),
 	AllowNullable(CustomersSearchRequest::acceptMarketing),
 	AllowNullable(CustomersSearchRequest::lang),
+	AllowNullable(CustomersSearchRequest::checkOnlyCustomerId),
 )

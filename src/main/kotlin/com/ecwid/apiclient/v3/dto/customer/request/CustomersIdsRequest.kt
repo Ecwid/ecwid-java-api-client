@@ -24,6 +24,7 @@ data class CustomersIdsRequest(
 			request.maxOrderCount?.let { put("maxOrderCount", it.toString()) }
 			request.minSalesValue?.let { put("minSalesValue", it.toString()) }
 			request.maxSalesValue?.let { put("maxSalesValue", it.toString()) }
+			request.checkOnlyCustomerId?.let { put("checkOnlyCustomerId", it.toString()) }
 			request.taxExempt?.let { put("taxExempt", it.toString()) }
 			request.acceptMarketing?.let { put("acceptMarketing", it.toString()) }
 			request.purchasedProductIds?.let { put("purchasedProductIds", it) }
