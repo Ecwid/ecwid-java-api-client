@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.dto.variation.request
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
+import com.ecwid.apiclient.v3.dto.common.UpdatedAlt
 import com.ecwid.apiclient.v3.dto.common.UpdatedAttributeValue
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueAlias
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
@@ -41,6 +42,7 @@ data class UpdatedVariation(
 
 	val customsHsTariffCode: String? = null,
 	val subscriptionSettings: SubscriptionSettings? = null,
+	val alt: UpdatedAlt? = null,
 ) : ApiUpdatedDTO {
 
 	data class AttributeValue(

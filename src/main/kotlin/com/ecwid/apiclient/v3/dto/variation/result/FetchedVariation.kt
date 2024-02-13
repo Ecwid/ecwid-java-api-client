@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.variation.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.FetchedAlt
 import com.ecwid.apiclient.v3.dto.common.FetchedAttributeValue
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
@@ -56,6 +57,7 @@ data class FetchedVariation(
 
 	val customsHsTariffCode: String? = null,
 	val subscriptionSettings: SubscriptionSettings? = null,
+	val alt: FetchedAlt? = null,
 ) : ApiFetchedDTO {
 
 	data class AttributeValue(
