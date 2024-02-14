@@ -50,10 +50,19 @@ data class FetchedReportResponse(
 			val customerData: FetchedCustomerData = FetchedCustomerData(),
 		) : FetchedAdditionalData(AdditionalDataType.CUSTOMERS)
 
+		data class AdditionalInventoryData(
+			val productId: Int,
+			val sku: String? = null,
+			val imageUrl: String? = null,
+			val thumbnailUrl: String? = null,
+			val exampleOrder: String? = null,
+		) : FetchedAdditionalData(AdditionalDataType.PRODUCT)
+
 		enum class AdditionalDataType {
 			UTM,
 			ORDERS,
 			CUSTOMERS,
+			PRODUCT,
 		}
 	}
 

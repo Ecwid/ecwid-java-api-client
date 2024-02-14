@@ -530,6 +530,7 @@ private fun createAdditionalDataPolymorphicType(): PolymorphicType<FetchedReport
 			"utm" to FetchedReportResponse.FetchedAdditionalData.AdditionalUtmData::class.java,
 			"orders" to FetchedReportResponse.FetchedAdditionalData.AdditionalOrdersData::class.java,
 			"customers" to FetchedReportResponse.FetchedAdditionalData.AdditionalCustomerData::class.java,
+			"product" to FetchedReportResponse.FetchedAdditionalData.AdditionalInventoryData::class.java
 		)
 	)
 }
