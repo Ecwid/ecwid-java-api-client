@@ -94,6 +94,11 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedReportResponse.FetchedCustomerData::customerEmail),
 	AllowNullable(FetchedReportResponse.FetchedCustomerData::customerPhone),
 
+	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalInventoryData::sku),
+	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalInventoryData::imageUrl),
+	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalInventoryData::thumbnailUrl),
+	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalInventoryData::exampleOrder),
+
 	AllowNullable(CreateBatchRequest::groupId),
 	AllowNullable(CreateBatchRequestWithIds::groupId),
 
