@@ -75,6 +75,10 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(ReportRequest::timeScaleValue),
 	AllowNullable(ReportRequest::comparePeriod),
 	AllowNullable(ReportRequest::firstDayOfWeek),
+	AllowNullable(ReportRequest::orderByMetric),
+	AllowNullable(ReportRequest::orderDirection),
+	AllowNullable(ReportRequest::limit),
+	AllowNullable(ReportRequest::offset),
 
 	AllowNullable(FetchedReportResponse::timeScaleValue),
 	AllowNullable(FetchedReportResponse::comparePeriod),
