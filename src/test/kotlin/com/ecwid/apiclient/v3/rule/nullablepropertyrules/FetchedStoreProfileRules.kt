@@ -317,6 +317,8 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.ShippingOption::scheduledPickup),
 	IgnoreNullable(FetchedStoreProfile.ShippingOption::shippingCostMarkup),
 	IgnoreNullable(FetchedStoreProfile.ShippingOption::title),
+	AllowNullable(FetchedStoreProfile.ShippingOption::scheduled),
+	AllowNullable(FetchedStoreProfile.ShippingOption::scheduledTimePrecisionType),
 	IgnoreNullable(FetchedStoreProfile.ShippingOrigin::city),
 	IgnoreNullable(FetchedStoreProfile.ShippingOrigin::companyName),
 	IgnoreNullable(FetchedStoreProfile.ShippingOrigin::countryCode),

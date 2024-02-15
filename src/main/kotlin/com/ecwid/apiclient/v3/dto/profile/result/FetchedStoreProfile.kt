@@ -283,8 +283,16 @@ data class FetchedStoreProfile(
 		val pickupInstruction: String? = null,
 		val scheduledPickup: Boolean? = null,
 		val pickupPreparationTimeHours: Int? = null,
-		val pickupBusinessHours: String? = null
+		val pickupBusinessHours: String? = null,
+		val scheduled: Boolean? = null,
+		val scheduledTimePrecisionType: ScheduledTimePrecisionType? = null,
 	)
+
+	@Suppress("unused")
+	enum class ScheduledTimePrecisionType {
+		DATE,
+		DATE_AND_TIME_SLOT;
+	}
 
 	@Suppress("unused")
 	enum class FulfilmentType {
