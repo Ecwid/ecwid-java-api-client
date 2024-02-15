@@ -291,7 +291,7 @@ data class FetchedStoreProfile(
 	@Suppress("unused")
 	enum class ScheduledTimePrecisionType {
 		DATE,
-		DATE_AND_TIME_SLOT;
+		DATE_AND_TIME_SLOT
 	}
 
 	@Suppress("unused")
