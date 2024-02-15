@@ -16,6 +16,7 @@ data class FetchedReportResponse(
 	val orderDirection: String? = null,
 	val limit: Int? = null,
 	val offset: Int? = null,
+	val itemCount: Int? = null,
 	val aggregatedData: List<FetchedDataItem> = listOf(),
 	val dataset: List<FetchedDataset>? = null,
 	val comparePeriodAggregatedData: List<FetchedDataItem>? = null,
