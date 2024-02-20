@@ -25,6 +25,8 @@ import com.ecwid.apiclient.v3.dto.instantsite.redirects.request.*
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.result.*
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.*
+import com.ecwid.apiclient.v3.dto.productreview.request.*
+import com.ecwid.apiclient.v3.dto.productreview.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
 import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
@@ -64,6 +66,7 @@ open class ApiClient private constructor(
 	subscriptionsApiClient: SubscriptionsApiClientImpl,
 	instantSiteRedirectsApiClient: InstantSiteRedirectsApiClientImpl,
 	slugInfoApiClient: SlugInfoApiClientImpl,
+	productReviewsApiClient: ProductReviewsApiClientImpl,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	ProductsApiClient by productsApiClient,
@@ -82,7 +85,8 @@ open class ApiClient private constructor(
 	ReportsApiClient by reportsApiClient,
 	SubscriptionsApiClient by subscriptionsApiClient,
 	InstantSiteRedirectsApiClient by instantSiteRedirectsApiClient,
-	SlugInfoApiClient by slugInfoApiClient {
+	SlugInfoApiClient by slugInfoApiClient,
+	ProductReviewsApiClient by productReviewsApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -104,6 +108,7 @@ open class ApiClient private constructor(
 		subscriptionsApiClient = SubscriptionsApiClientImpl(apiClientHelper),
 		instantSiteRedirectsApiClient = InstantSiteRedirectsApiClientImpl(apiClientHelper),
 		slugInfoApiClient = SlugInfoApiClientImpl(apiClientHelper),
+		productReviewsApiClient = ProductReviewsApiClientImpl(apiClientHelper),
 	)
 
 	companion object {
@@ -290,4 +295,13 @@ interface InstantSiteRedirectsApiClient {
 
 interface SlugInfoApiClient {
 	fun getSlugInfo(request: SlugInfoRequest): FetchedSlugInfo
+}
+
+// Product reviews
+interface ProductReviewsApiClient {
+	fun searchProductReviews(request: ProductReviewsSearchRequest): ProductReviewSearchResult
+	fun searchProductReviewsAsSequence(request: ProductReviewsSearchRequest): Sequence<FetchedProductReview>
+	fun getProductReviewDetails(request: ProductReviewDetailsRequest): FetchedProductReview
+	fun updateProductReviewStatus(request: ProductReviewUpdateStatusRequest): ProductReviewUpdateStatusResult
+	fun deleteProductReview(request: ProductReviewDeleteRequest): ProductReviewDeleteResult
 }
