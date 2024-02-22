@@ -304,4 +304,5 @@ interface ProductReviewsApiClient {
 	fun getProductReviewDetails(request: ProductReviewDetailsRequest): FetchedProductReview
 	fun updateProductReviewStatus(request: ProductReviewUpdateStatusRequest): ProductReviewUpdateStatusResult
 	fun deleteProductReview(request: ProductReviewDeleteRequest): ProductReviewDeleteResult
+	fun massUpdateProductReview(request: ProductReviewMassUpdateRequest): ProductReviewMassUpdateResult
 }

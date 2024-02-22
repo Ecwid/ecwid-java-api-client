@@ -159,6 +159,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	fetchedSlugInfoClassesNullablePropertyRules,
 	slugInfoRequestNullablePropertyRules,
 	fetchedProductReviewNullablePropertyRules,
+	productReviewsMassUpdateRequestNullablePropertyRules,
 	productReviewsSearchRequestNullablePropertyRules,
 ).flatten()
 

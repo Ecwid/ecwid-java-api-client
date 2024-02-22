@@ -22,4 +22,7 @@ class ProductReviewsApiClientImpl(
 
 	override fun deleteProductReview(request: ProductReviewDeleteRequest) =
 		apiClientHelper.makeObjectResultRequest<ProductReviewDeleteResult>(request)
+
+	override fun massUpdateProductReview(request: ProductReviewMassUpdateRequest) =
+		apiClientHelper.makeObjectResultRequest<ProductReviewMassUpdateResult>(request)
 }
