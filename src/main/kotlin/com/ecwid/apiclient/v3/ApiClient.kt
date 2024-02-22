@@ -299,8 +299,8 @@ interface SlugInfoApiClient {
 
 // Product reviews
 interface ProductReviewsApiClient {
-	fun searchProductReviews(request: ProductReviewsSearchRequest): ProductReviewSearchResult
-	fun searchProductReviewsAsSequence(request: ProductReviewsSearchRequest): Sequence<FetchedProductReview>
+	fun searchProductReviews(request: ProductReviewSearchRequest): ProductReviewSearchResult
+	fun searchProductReviewsAsSequence(request: ProductReviewSearchRequest): Sequence<FetchedProductReview>
 	fun getProductReviewDetails(request: ProductReviewDetailsRequest): FetchedProductReview
 	fun updateProductReviewStatus(request: ProductReviewUpdateStatusRequest): ProductReviewUpdateStatusResult
 	fun deleteProductReview(request: ProductReviewDeleteRequest): ProductReviewDeleteResult

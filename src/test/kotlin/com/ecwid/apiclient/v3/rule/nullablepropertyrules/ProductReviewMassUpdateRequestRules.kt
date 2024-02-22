@@ -4,7 +4,7 @@ import com.ecwid.apiclient.v3.dto.productreview.request.ProductReviewMassUpdate
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 
-val productReviewsMassUpdateRequestNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
+val productReviewMassUpdateRequestNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(ProductReviewMassUpdate.Filters::createdFrom),
 	AllowNullable(ProductReviewMassUpdate.Filters::createdTo),
 	AllowNullable(ProductReviewMassUpdate.Filters::productId),

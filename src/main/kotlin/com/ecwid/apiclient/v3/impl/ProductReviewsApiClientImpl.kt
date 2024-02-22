@@ -8,10 +8,10 @@ import com.ecwid.apiclient.v3.dto.productreview.result.*
 class ProductReviewsApiClientImpl(
 	private val apiClientHelper: ApiClientHelper,
 ) : ProductReviewsApiClient {
-	override fun searchProductReviews(request: ProductReviewsSearchRequest) =
+	override fun searchProductReviews(request: ProductReviewSearchRequest) =
 		apiClientHelper.makeObjectResultRequest<ProductReviewSearchResult>(request)
 
-	override fun searchProductReviewsAsSequence(request: ProductReviewsSearchRequest) =
+	override fun searchProductReviewsAsSequence(request: ProductReviewSearchRequest) =
 		apiClientHelper.makeObjectResultRequest<Sequence<FetchedProductReview>>(request)
 
 	override fun getProductReviewDetails(request: ProductReviewDetailsRequest) =

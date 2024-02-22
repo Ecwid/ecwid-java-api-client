@@ -8,7 +8,7 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.responsefields.ResponseFields
 import java.time.Instant
 
-data class ProductReviewsSearchRequest(
+data class ProductReviewSearchRequest(
 	val reviewId: String? = null,
 	val productId: String? = null,
 	val orderId: String? = null,
@@ -22,7 +22,7 @@ data class ProductReviewsSearchRequest(
 	val limit: Int = 100,
 	override val offset: Int = 0,
 	val responseFields: ResponseFields = ResponseFields.All,
-) : ApiRequest, PagingRequest<ProductReviewsSearchRequest> {
+) : ApiRequest, PagingRequest<ProductReviewSearchRequest> {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 		pathSegments = listOf(
 			"reviews"
