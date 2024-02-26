@@ -17,6 +17,7 @@ enum class ReportType {
 	newOrdersVsRepeatOrders,
 	topOfCustomersByOrders,
 	inventory,
+	topOfShippingMethodsByOrders,
 
 	/** finance */
 	allRevenue,
