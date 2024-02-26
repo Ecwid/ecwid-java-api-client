@@ -15,6 +15,10 @@ data class ReportRequest(
 	val timeScaleValue: TimeScaleValue? = null,
 	val comparePeriod: ComparePeriod? = null,
 	val firstDayOfWeek: FirstDayOfWeek? = null,
+	val orderByMetric: String? = null,
+	val orderDirection: String? = null,
+	val limit: Int? = null,
+	val offset: Int? = null,
 	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 

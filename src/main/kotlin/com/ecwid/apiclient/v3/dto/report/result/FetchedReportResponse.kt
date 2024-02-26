@@ -11,6 +11,12 @@ data class FetchedReportResponse(
 	val endedAt: Long = 0,
 	val timeScaleValue: TimeScaleValue? = null,
 	val comparePeriod: ComparePeriod? = null,
+	val firstDayOfWeek: String? = null,
+	val orderByMetric: String? = null,
+	val orderDirection: String? = null,
+	val limit: Int? = null,
+	val offset: Int? = null,
+	val itemCount: Int? = null,
 	val aggregatedData: List<FetchedDataItem> = listOf(),
 	val dataset: List<FetchedDataset>? = null,
 	val comparePeriodAggregatedData: List<FetchedDataItem>? = null,
@@ -56,13 +62,14 @@ data class FetchedReportResponse(
 			val imageUrl: String? = null,
 			val thumbnailUrl: String? = null,
 			val exampleOrder: String? = null,
-		) : FetchedAdditionalData(AdditionalDataType.PRODUCT)
+		) : FetchedAdditionalData(AdditionalDataType.INVENTORY_PRODUCT)
 
 		enum class AdditionalDataType {
 			UTM,
 			ORDERS,
 			CUSTOMERS,
 			PRODUCT,
+			INVENTORY_PRODUCT,
 		}
 	}
 
