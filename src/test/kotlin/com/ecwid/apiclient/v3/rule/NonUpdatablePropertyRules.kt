@@ -216,6 +216,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrder.ShippingOption::shippingRateWithoutTax),
 	ReadOnly(FetchedOrder.ShippingOption::localizedLabel),
 	ReadOnly(FetchedOrder.ShippingOption::isShippingLimit),
+	ReadOnly(FetchedOrder.ShippingOption::scheduled),
+	ReadOnly(FetchedOrder.ShippingOption::scheduledTimePrecisionType),
 	ReadOnly(FetchedOrder.HandlingFee::valueWithoutTax),
 	ReadOnly(FetchedOrder.Surcharge::totalWithoutTax),
 	Ignored(FetchedOrder::refundedAmount),
