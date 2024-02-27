@@ -110,6 +110,11 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalInventoryData::thumbnailUrl),
 	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalInventoryData::exampleOrder),
 
+	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalProductData::productName),
+	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalProductData::productSmallThumbnailUrl),
+	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalProductData::productUrl),
+	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalProductData::productEditUrl),
+
 	AllowNullable(CreateBatchRequest::groupId),
 	AllowNullable(CreateBatchRequestWithIds::groupId),
 
