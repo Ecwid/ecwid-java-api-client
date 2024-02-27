@@ -64,6 +64,13 @@ data class FetchedReportResponse(
 			val exampleOrder: String? = null,
 		) : FetchedAdditionalData(AdditionalDataType.INVENTORY_PRODUCT)
 
+		data class AdditionalProductData(
+			val productName: String? = null,
+			val productSmallThumbnailUrl: String? = null,
+			val productUrl: String? = null,
+			val productEditUrl: String? = null,
+		) : FetchedAdditionalData(AdditionalDataType.PRODUCT)
+
 		enum class AdditionalDataType {
 			UTM,
 			ORDERS,
