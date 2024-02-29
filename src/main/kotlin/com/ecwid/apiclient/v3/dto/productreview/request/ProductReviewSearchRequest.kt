@@ -19,6 +19,7 @@ data class ProductReviewSearchRequest(
 	val createdTo: Instant? = null,
 	val updatedFrom: Instant? = null,
 	val updatedTo: Instant? = null,
+	val searchKeyword: String? = null,
 	val sortBy: ProductReviewSortOrder? = null,
 	val limit: Int = 100,
 	override val offset: Int = 0,
@@ -44,6 +45,7 @@ data class ProductReviewSearchRequest(
 			request.createdTo?.let { put("createdTo", TimeUnit.MILLISECONDS.toSeconds(it.toEpochMilli()).toString()) }
 			request.updatedFrom?.let { put("updatedFrom", TimeUnit.MILLISECONDS.toSeconds(it.toEpochMilli()).toString()) }
 			request.updatedTo?.let { put("updatedTo", TimeUnit.MILLISECONDS.toSeconds(it.toEpochMilli()).toString()) }
+			request.searchKeyword?.let { put("searchKeyword", it) }
 			request.sortBy?.let { put("sortBy", it.name) }
 			put("offset", request.offset.toString())
 			put("limit", request.limit.toString())
