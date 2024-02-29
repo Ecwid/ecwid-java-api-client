@@ -62,6 +62,13 @@ data class FetchedReportResponse(
 			val imageUrl: String? = null,
 			val thumbnailUrl: String? = null,
 			val exampleOrder: String? = null,
+		) : FetchedAdditionalData(AdditionalDataType.INVENTORY_PRODUCT)
+
+		data class AdditionalProductData(
+			val productName: String? = null,
+			val productSmallThumbnailUrl: String? = null,
+			val productUrl: String? = null,
+			val productEditUrl: String? = null,
 		) : FetchedAdditionalData(AdditionalDataType.PRODUCT)
 
 		enum class AdditionalDataType {
@@ -69,6 +76,7 @@ data class FetchedReportResponse(
 			ORDERS,
 			CUSTOMERS,
 			PRODUCT,
+			INVENTORY_PRODUCT,
 		}
 	}
 
