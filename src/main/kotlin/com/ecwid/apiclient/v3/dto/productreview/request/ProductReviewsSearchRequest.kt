@@ -7,6 +7,7 @@ import com.ecwid.apiclient.v3.dto.productreview.enums.ProductReviewStatus
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.responsefields.ResponseFields
 import java.time.Instant
+import java.util.concurrent.TimeUnit
 
 data class ProductReviewsSearchRequest(
 	val reviewId: String? = null,
@@ -39,10 +40,10 @@ data class ProductReviewsSearchRequest(
 			request.orderId?.let { put("orderId", it) }
 			request.status?.let { put("status", it.toString()) }
 			request.rating?.let { put("rating", it.toString()) }
-			request.createdFrom?.let { put("createdFrom", it.toString()) }
-			request.createdTo?.let { put("createdTo", it.toString()) }
-			request.updatedFrom?.let { put("updatedFrom", it.toString()) }
-			request.updatedTo?.let { put("updatedTo", it.toString()) }
+			request.createdFrom?.let { put("createdFrom", TimeUnit.MILLISECONDS.toSeconds(it.toEpochMilli()).toString()) }
+			request.createdTo?.let { put("createdTo", TimeUnit.MILLISECONDS.toSeconds(it.toEpochMilli()).toString()) }
+			request.updatedFrom?.let { put("updatedFrom", TimeUnit.MILLISECONDS.toSeconds(it.toEpochMilli()).toString()) }
+			request.updatedTo?.let { put("updatedTo", TimeUnit.MILLISECONDS.toSeconds(it.toEpochMilli()).toString()) }
 			request.sortBy?.let { put("sortBy", it.name) }
 			put("offset", request.offset.toString())
 			put("limit", request.limit.toString())
