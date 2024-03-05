@@ -72,7 +72,7 @@ data class FetchedReportResponse(
 		) : FetchedAdditionalData(AdditionalDataType.PRODUCT)
 
 		data class AdditionalCouponData(
-			var сouponName: String? = null,
+			val couponName: String? = null,
 		) : FetchedAdditionalData(AdditionalDataType.COUPONS)
 
 		enum class AdditionalDataType {
