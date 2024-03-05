@@ -115,6 +115,8 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalProductData::productUrl),
 	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalProductData::productEditUrl),
 
+	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalCouponData::сouponName),
+
 	AllowNullable(CreateBatchRequest::groupId),
 	AllowNullable(CreateBatchRequestWithIds::groupId),
 

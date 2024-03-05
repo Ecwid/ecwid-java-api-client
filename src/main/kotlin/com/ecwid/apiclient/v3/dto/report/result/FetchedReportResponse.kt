@@ -71,12 +71,17 @@ data class FetchedReportResponse(
 			val productEditUrl: String? = null,
 		) : FetchedAdditionalData(AdditionalDataType.PRODUCT)
 
+		data class AdditionalCouponData(
+			var сouponName: String? = null,
+		) : FetchedAdditionalData(AdditionalDataType.COUPONS)
+
 		enum class AdditionalDataType {
 			UTM,
 			ORDERS,
 			CUSTOMERS,
 			PRODUCT,
 			INVENTORY_PRODUCT,
+			COUPONS,
 		}
 	}
 
