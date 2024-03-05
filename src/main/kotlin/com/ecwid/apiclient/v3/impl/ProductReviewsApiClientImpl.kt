@@ -25,4 +25,8 @@ class ProductReviewsApiClientImpl(
 
 	override fun massUpdateProductReview(request: ProductReviewMassUpdateRequest) =
 		apiClientHelper.makeObjectResultRequest<ProductReviewMassUpdateResult>(request)
+
+	override fun getProductReviewsFiltersData(request: ProductReviewFiltersDataRequest) =
+		apiClientHelper.makeObjectResultRequest<ProductReviewFiltersDataResult>(request)
+
 }

@@ -305,4 +305,5 @@ interface ProductReviewsApiClient {
 	fun updateProductReviewStatus(request: ProductReviewUpdateStatusRequest): ProductReviewUpdateStatusResult
 	fun deleteProductReview(request: ProductReviewDeleteRequest): ProductReviewDeleteResult
 	fun massUpdateProductReview(request: ProductReviewMassUpdateRequest): ProductReviewMassUpdateResult
+	fun getProductReviewsFiltersData(request: ProductReviewFiltersDataRequest): ProductReviewFiltersDataResult
 }
