@@ -100,6 +100,7 @@ fun generateTestOrder(): UpdatedOrder {
 		shippingPerson = generatePersonInfo(),
 
 		shippingOption = UpdatedOrder.ShippingOption(
+			shippingMethodId = "MethodId " + randomAlphanumeric(8),
 			shippingCarrierName = "Carrier " + randomAlphanumeric(8),
 			shippingMethodName = "Method " + randomAlphanumeric(8),
 			shippingRate = randomPrice(),

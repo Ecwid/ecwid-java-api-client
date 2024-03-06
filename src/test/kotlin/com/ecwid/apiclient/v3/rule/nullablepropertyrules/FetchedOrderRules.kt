@@ -172,6 +172,7 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder.ShippingLabelInfo::commercialInvoiceUrl),
 	AllowNullable(FetchedOrder.ShippingLabelInfo::labelFileType),
 	AllowNullable(FetchedOrder.ShippingLabelInfo::labelUrl),
+	AllowNullable(FetchedOrder.ShippingOption::shippingMethodId),
 	IgnoreNullable(FetchedOrder.ShippingOption::estimatedTransitTime),
 	IgnoreNullable(FetchedOrder.ShippingOption::fulfillmentType),
 	IgnoreNullable(FetchedOrder.ShippingOption::isPickup),
