@@ -329,6 +329,8 @@ data class FetchedOrder(
 		val locationId: String? = null,
 		val localizedLabel: String? = null,
 		val isShippingLimit: Boolean? = null,
+		val scheduled: Boolean? = null,
+		val scheduledTimePrecisionType: ScheduledTimePrecisionType? = null,
 	)
 
 	data class HandlingFee(
