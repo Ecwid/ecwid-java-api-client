@@ -75,6 +75,10 @@ data class FetchedReportResponse(
 			val couponName: String? = null,
 		) : FetchedAdditionalData(AdditionalDataType.COUPONS)
 
+		data class AdditionalAbandonedCartData(
+			val autoAbandonedSalesRecovery: Boolean? = null,
+		) : FetchedAdditionalData(AdditionalDataType.ABANDONED_CARTS)
+
 		enum class AdditionalDataType {
 			UTM,
 			ORDERS,
@@ -82,6 +86,7 @@ data class FetchedReportResponse(
 			PRODUCT,
 			INVENTORY_PRODUCT,
 			COUPONS,
+			ABANDONED_CARTS,
 		}
 	}
 
