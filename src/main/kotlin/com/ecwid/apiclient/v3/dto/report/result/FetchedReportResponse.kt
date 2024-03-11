@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.report.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.order.enums.FulfillmentType
 import com.ecwid.apiclient.v3.dto.report.enums.ComparePeriod
 import com.ecwid.apiclient.v3.dto.report.enums.ReportType
 import com.ecwid.apiclient.v3.dto.report.enums.TimeScaleValue
@@ -79,6 +80,11 @@ data class FetchedReportResponse(
 			val autoAbandonedSalesRecovery: Boolean? = null,
 		) : FetchedAdditionalData(AdditionalDataType.ABANDONED_CARTS)
 
+		data class AdditionalShippingData(
+			val shippingMethodName: String? = null,
+			val fulfilmentType: FulfillmentType? = null,
+		) : FetchedAdditionalData(AdditionalDataType.SHIPPING)
+
 		enum class AdditionalDataType {
 			UTM,
 			ORDERS,
@@ -87,6 +93,7 @@ data class FetchedReportResponse(
 			INVENTORY_PRODUCT,
 			COUPONS,
 			ABANDONED_CARTS,
+			SHIPPING,
 		}
 	}
 
