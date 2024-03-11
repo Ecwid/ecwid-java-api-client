@@ -34,5 +34,6 @@ enum class ReportType {
 	conversions,
 	addToCartConversion,
 	checkoutSalesFunnel,
+	abandonedCarts,
 
 }
