@@ -534,6 +534,7 @@ private fun createAdditionalDataPolymorphicType(): PolymorphicType<FetchedReport
 			"product" to FetchedReportResponse.FetchedAdditionalData.AdditionalProductData::class.java,
 			"coupon" to FetchedReportResponse.FetchedAdditionalData.AdditionalCouponData::class.java,
 			"abandoned_cart" to FetchedReportResponse.FetchedAdditionalData.AdditionalAbandonedCartData::class.java,
+			"shipping" to FetchedReportResponse.FetchedAdditionalData.AdditionalShippingData::class.java,
 		)
 	)
 }

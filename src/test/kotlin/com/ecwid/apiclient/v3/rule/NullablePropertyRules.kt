@@ -119,6 +119,9 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 
 	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalAbandonedCartData::autoAbandonedSalesRecovery),
 
+	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalShippingData::shippingMethodName),
+	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalShippingData::fulfilmentType),
+
 	AllowNullable(CreateBatchRequest::groupId),
 	AllowNullable(CreateBatchRequestWithIds::groupId),
 
