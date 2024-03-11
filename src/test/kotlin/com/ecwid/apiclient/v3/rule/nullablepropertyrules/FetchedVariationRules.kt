@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
+import com.ecwid.apiclient.v3.dto.common.FetchedAlt
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
@@ -72,4 +73,7 @@ val fetchedVariationTypeNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	AllowNullable(FetchedVariation.SubscriptionSettings::oneTimePurchasePrice),
 	IgnoreNullable(FetchedVariation.SubscriptionSettings::oneTimePurchasePriceFormatted),
 	AllowNullable(FetchedVariation::locationInventory),
+	AllowNullable(FetchedVariation::alt),
+	AllowNullable(FetchedAlt::main),
+	AllowNullable(FetchedAlt::translated),
 )

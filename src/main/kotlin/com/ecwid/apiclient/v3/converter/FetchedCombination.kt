@@ -37,6 +37,7 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 
 		customsHsTariffCode = customsHsTariffCode,
 		subscriptionSettings = subscriptionSettings?.toUpdated(),
+		alt = alt?.toUpdated()
 	)
 }
 
