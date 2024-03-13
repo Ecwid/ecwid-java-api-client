@@ -14,10 +14,13 @@ data class ProductReviewMassUpdate(
 ) : ApiRequestDTO {
 
 	data class Filters(
+		val reviewId: String? = null,
 		val productId: String? = null,
+		val orderId: String? = null,
 		val status: ProductReviewStatus? = null,
 		val rating: Int? = null,
 		val createdFrom: Instant? = null,
 		val createdTo: Instant? = null,
-	)
+		val searchKeyword: String? = null,
+		)
 }
