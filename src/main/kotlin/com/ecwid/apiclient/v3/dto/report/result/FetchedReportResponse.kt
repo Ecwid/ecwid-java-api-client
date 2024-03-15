@@ -59,6 +59,7 @@ data class FetchedReportResponse(
 
 		data class AdditionalInventoryData(
 			val productId: Int = 0,
+			val combinationId: Int? = null,
 			val sku: String? = null,
 			val imageUrl: String? = null,
 			val thumbnailUrl: String? = null,
