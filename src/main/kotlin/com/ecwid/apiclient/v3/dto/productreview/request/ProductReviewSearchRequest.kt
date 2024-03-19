@@ -14,7 +14,7 @@ data class ProductReviewSearchRequest(
 	val productId: String? = null,
 	val orderId: String? = null,
 	val status: ProductReviewStatus? = null,
-	val rating: Int? = null,
+	val rating: String? = null,
 	val createdFrom: Instant? = null,
 	val createdTo: Instant? = null,
 	val updatedFrom: Instant? = null,
@@ -40,7 +40,7 @@ data class ProductReviewSearchRequest(
 			request.productId?.let { put("productId", it) }
 			request.orderId?.let { put("orderId", it) }
 			request.status?.let { put("status", it.toString()) }
-			request.rating?.let { put("rating", it.toString()) }
+			request.rating?.let { put("rating", it) }
 			request.createdFrom?.let { put("createdFrom", TimeUnit.MILLISECONDS.toSeconds(it.toEpochMilli()).toString()) }
 			request.createdTo?.let { put("createdTo", TimeUnit.MILLISECONDS.toSeconds(it.toEpochMilli()).toString()) }
 			request.updatedFrom?.let { put("updatedFrom", TimeUnit.MILLISECONDS.toSeconds(it.toEpochMilli()).toString()) }

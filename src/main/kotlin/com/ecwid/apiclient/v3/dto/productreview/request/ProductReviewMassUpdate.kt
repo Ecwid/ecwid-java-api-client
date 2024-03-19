@@ -18,7 +18,7 @@ data class ProductReviewMassUpdate(
 		val productId: String? = null,
 		val orderId: String? = null,
 		val status: ProductReviewStatus? = null,
-		val rating: Int? = null,
+		val rating: String? = null,
 		val createdFrom: Instant? = null,
 		val createdTo: Instant? = null,
 		val searchKeyword: String? = null,
