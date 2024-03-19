@@ -38,6 +38,10 @@ data class ReportRequest(
 			timeScaleValue?.let { put("timeScaleValue", it.toString()) }
 			comparePeriod?.let { put("comparePeriod", it.toString()) }
 			firstDayOfWeek?.let { put("firstDayOfWeek", it.toString()) }
+			orderByMetric?.let { put("orderByMetric", it) }
+			orderDirection?.let { put("orderDirection", it) }
+			limit?.let { put("limit", it.toString()) }
+			offset?.let { put("offset", it.toString()) }
 		}.toMap()
 	}
 
