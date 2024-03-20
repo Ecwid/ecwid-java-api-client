@@ -318,6 +318,7 @@ data class FetchedOrder(
 	)
 
 	data class ShippingOption(
+		val shippingMethodId: String? = null,
 		val shippingCarrierName: String? = null,
 		val shippingMethodName: String? = null,
 		val shippingRate: Double? = null,

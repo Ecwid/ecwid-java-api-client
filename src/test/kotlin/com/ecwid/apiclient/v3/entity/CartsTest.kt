@@ -164,6 +164,7 @@ class CartsTest : BaseEntityTest() {
 			testOrder.shippingOption?.shippingCarrierName,
 			cartDetailsResult.shippingOption?.shippingCarrierName
 		)
+		assertEquals(testOrder.shippingOption?.shippingMethodId, cartDetailsResult.shippingOption?.shippingMethodId)
 		assertEquals(testOrder.shippingOption?.shippingMethodName, cartDetailsResult.shippingOption?.shippingMethodName)
 		assertEquals(testOrder.shippingOption?.shippingRate, cartDetailsResult.shippingOption?.shippingRate)
 		assertEquals(

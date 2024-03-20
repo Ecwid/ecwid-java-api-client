@@ -163,6 +163,7 @@ val fetchedCartNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedCart.SelectionInfo::selectionModifier),
 	IgnoreNullable(FetchedCart.SelectionInfo::selectionModifierType),
 	IgnoreNullable(FetchedCart.SelectionInfo::selectionTitle),
+	AllowNullable(FetchedCart.ShippingOptionInfo::shippingMethodId),
 	IgnoreNullable(FetchedCart.ShippingOptionInfo::estimatedTransitTime),
 	IgnoreNullable(FetchedCart.ShippingOptionInfo::isPickup),
 	IgnoreNullable(FetchedCart.ShippingOptionInfo::pickupInstruction),

@@ -232,6 +232,7 @@ fun FetchedOrder.PersonInfo.toUpdated(): UpdatedOrder.PersonInfo {
 
 fun FetchedOrder.ShippingOption.toUpdated(): UpdatedOrder.ShippingOption {
 	return UpdatedOrder.ShippingOption(
+		shippingMethodId = shippingMethodId,
 		shippingCarrierName = shippingCarrierName,
 		shippingMethodName = shippingMethodName,
 		shippingRate = shippingRate,
