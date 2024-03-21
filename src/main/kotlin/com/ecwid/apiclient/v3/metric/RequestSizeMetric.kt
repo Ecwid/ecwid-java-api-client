@@ -5,7 +5,8 @@ import com.ecwid.apiclient.v3.httptransport.HttpRequest
 import com.ecwid.apiclient.v3.httptransport.HttpResponse
 import com.ecwid.apiclient.v3.httptransport.TransportHttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
-import io.prometheus.client.Histogram
+import io.prometheus.metrics.core.metrics.Histogram
+import io.prometheus.metrics.model.snapshots.Unit
 import java.util.concurrent.atomic.AtomicLong
 import java.util.logging.Level
 import java.util.logging.Logger
@@ -13,9 +14,11 @@ import java.util.logging.Logger
 private val log = Logger.getLogger(RequestSizeMetric::class.qualifiedName)
 
 object RequestSizeMetric {
-	private val metric: Histogram = Histogram
-		.build("ecwid_api_client_request_size_bytes", "Ecwid API client request size of parameters & body in bytes")
-		.buckets(
+	private val metric = Histogram.builder()
+		.name("ecwid_api_client_request_size_bytes")
+		.help("Ecwid API client request size of parameters & body in bytes")
+		.classicOnly()
+		.classicUpperBounds(
 			100.0,
 			500.0,
 			1_000.0,
@@ -32,6 +35,7 @@ object RequestSizeMetric {
 			100_000_000.0,
 		)
 		.labelNames("request_type", "path", "method", "status")
+		.unit(Unit.BYTES)
 		.register()
 
 	fun observeRequest(
@@ -41,7 +45,7 @@ object RequestSizeMetric {
 		httpResponse: HttpResponse,
 	) {
 		metric
-			.labels(
+			.labelValues(
 				apiRequest.javaClass.simpleName,
 				requestInfo.getFirstPathSegment(),
 				requestInfo.method.name,

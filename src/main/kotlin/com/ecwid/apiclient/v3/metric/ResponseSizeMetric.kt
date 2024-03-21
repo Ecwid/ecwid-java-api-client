@@ -3,12 +3,15 @@ package com.ecwid.apiclient.v3.metric
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.httptransport.HttpResponse
 import com.ecwid.apiclient.v3.impl.RequestInfo
-import io.prometheus.client.Histogram
+import io.prometheus.metrics.core.metrics.Histogram
+import io.prometheus.metrics.model.snapshots.Unit
 
 object ResponseSizeMetric {
-	private val metric: Histogram = Histogram
-		.build("ecwid_api_client_response_size_bytes", "Ecwid API client response size in bytes")
-		.buckets(
+	private val metric = Histogram.builder()
+		.name("ecwid_api_client_response_size_bytes")
+		.help("Ecwid API client response size in bytes")
+		.classicOnly()
+		.classicUpperBounds(
 			100.0,
 			500.0,
 			1_000.0,
@@ -25,6 +28,7 @@ object ResponseSizeMetric {
 			100_000_000.0,
 		)
 		.labelNames("request_type", "path", "method", "status")
+		.unit(Unit.BYTES)
 		.register()
 
 	fun observeResponse(
@@ -33,7 +37,7 @@ object ResponseSizeMetric {
 		httpResponse: HttpResponse,
 	) {
 		metric
-			.labels(
+			.labelValues(
 				apiRequest.javaClass.simpleName,
 				requestInfo.getFirstPathSegment(),
 				requestInfo.method.name,

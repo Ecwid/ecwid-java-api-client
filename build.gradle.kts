@@ -7,7 +7,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	java
 	signing
-	kotlin("jvm") version "1.9.21"
+	kotlin("jvm") version "1.9.23"
 	id("com.adarshr.test-logger") version "3.2.0"
 	id("nebula.release") version "17.1.0"
 	id("maven-publish")
@@ -26,7 +26,7 @@ dependencies {
 
 	api("com.google.code.gson:gson:2.10")
 	api("org.apache.httpcomponents:httpclient:4.5.13")
-	api("io.prometheus:simpleclient:0.16.0")
+	api("io.prometheus:prometheus-metrics-core:1.1.0")
 
 	testImplementation(kotlin("test"))
 	testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
