@@ -65,8 +65,8 @@ data class SubscriptionsSearchRequest(
 			orderTotal?.let { put("orderTotal", it.toString()) }
 			orderCreatedFrom?.let { put("orderCreatedFrom", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
 			orderCreatedTo?.let { put("orderCreatedTo", TimeUnit.MILLISECONDS.toSeconds(it.time).toString()) }
-			offset?.let { put("offset", it.toString()) }
-			limit?.let { put("limit", it.toString()) }
+			put("offset", offset.toString())
+			put("limit", limit.toString())
 			put("sortBy", sortBy.name)
 			lang?.let { put("lang", it) }
 		}.toMap()
