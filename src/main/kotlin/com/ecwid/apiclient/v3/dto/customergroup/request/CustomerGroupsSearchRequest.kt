@@ -25,7 +25,7 @@ data class CustomerGroupsSearchRequest(
 			put("offset", request.offset.toString())
 			put("limit", request.limit.toString())
 			if (!request.keyword.isNullOrBlank()) {
-				put("keyword", request.keyword.toString())
+				put("keyword", request.keyword)
 			}
 			if (!request.customerGroupIds.isNullOrEmpty()) {
 				put("customerGroupIds", request.customerGroupIds.joinToString(","))
