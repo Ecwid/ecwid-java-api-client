@@ -6,6 +6,8 @@ import com.ecwid.apiclient.v3.dto.common.EcwidApiError
 import com.ecwid.apiclient.v3.dto.common.PartialResult
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct.ProductOption
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
+import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse.FetchedAdditionalData.*
+import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse.FetchedAdditionalData.AdditionalDataType.*
 import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.httptransport.*
@@ -18,7 +20,9 @@ import com.ecwid.apiclient.v3.metric.RequestTimeMetric
 import com.ecwid.apiclient.v3.metric.ResponseSizeMetric
 import com.ecwid.apiclient.v3.responsefields.ResponseFields
 import com.ecwid.apiclient.v3.responsefields.responseFieldsOf
-import com.ecwid.apiclient.v3.util.*
+import com.ecwid.apiclient.v3.util.buildEndpointPath
+import com.ecwid.apiclient.v3.util.createSecurePatterns
+import com.ecwid.apiclient.v3.util.maskLogString
 import java.net.URI
 import java.util.*
 import java.util.logging.Level
@@ -527,14 +531,14 @@ private fun createAdditionalDataPolymorphicType(): PolymorphicType<FetchedReport
 		rootClass = FetchedReportResponse.FetchedAdditionalData::class.java,
 		jsonFieldName = "type",
 		childClasses = mapOf(
-			"utm" to FetchedReportResponse.FetchedAdditionalData.AdditionalUtmData::class.java,
-			"orders" to FetchedReportResponse.FetchedAdditionalData.AdditionalOrdersData::class.java,
-			"customers" to FetchedReportResponse.FetchedAdditionalData.AdditionalCustomerData::class.java,
-			"inventory_product" to FetchedReportResponse.FetchedAdditionalData.AdditionalInventoryData::class.java,
-			"product" to FetchedReportResponse.FetchedAdditionalData.AdditionalProductData::class.java,
-			"coupon" to FetchedReportResponse.FetchedAdditionalData.AdditionalCouponData::class.java,
-			"abandoned_cart" to FetchedReportResponse.FetchedAdditionalData.AdditionalAbandonedCartData::class.java,
-			"shipping" to FetchedReportResponse.FetchedAdditionalData.AdditionalShippingData::class.java,
+			UTM.name.lowercase() to AdditionalUtmData::class.java,
+			ORDERS.name.lowercase() to AdditionalOrdersData::class.java,
+			CUSTOMERS.name.lowercase() to AdditionalCustomerData::class.java,
+			INVENTORY_PRODUCT.name.lowercase() to AdditionalInventoryData::class.java,
+			PRODUCT.name.lowercase() to AdditionalProductData::class.java,
+			COUPONS.name.lowercase() to AdditionalCouponData::class.java,
+			ABANDONED_CARTS.name.lowercase() to AdditionalAbandonedCartData::class.java,
+			SHIPPING.name.lowercase() to AdditionalShippingData::class.java,
 		)
 	)
 }
