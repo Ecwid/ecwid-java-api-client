@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
+const val TEST_SEARCH_PHRASE = "Test"
+const val TEST_CUSTOMER_GROUP = "Customer group"
+
 class CustomerGroupsTest : BaseEntityTest() {
 
 	@BeforeEach
@@ -61,10 +64,11 @@ class CustomerGroupsTest : BaseEntityTest() {
 
 	@Test
 	fun testSearchPaging() {
-		// Create three customer groups additionally to always existing “General” group
-		repeat(3) {
+		// Create 6 customer groups to test paging
+		val customerGroups = generateSearchTestCustomerGroups()
+		repeat(customerGroups.size) {
 			val customerGroupCreateRequest = CustomerGroupCreateRequest(
-				newCustomerGroup = generateTestCustomerGroup()
+				newCustomerGroup = customerGroups[it]
 			)
 			val customerGroupCreateResult = apiClient.createCustomerGroup(customerGroupCreateRequest)
 			assertTrue(customerGroupCreateResult.id > 0)
@@ -73,19 +77,53 @@ class CustomerGroupsTest : BaseEntityTest() {
 		// Trying to request first page
 		val customerGroupsSearchRequest1 = CustomerGroupsSearchRequest(offset = 0, limit = 2)
 		val customerGroupsSearchResult1 = apiClient.searchCustomerGroups(customerGroupsSearchRequest1)
-		assertEquals(2 + 1, customerGroupsSearchResult1.count) // “General” group exists is on every page
-		assertEquals(3, customerGroupsSearchResult1.total)
+		assertEquals(2, customerGroupsSearchResult1.count) // “General” group exists only of first page
+		assertEquals(7, customerGroupsSearchResult1.total)
 
 		// Trying to request second and the last page
-		val customerGroupsSearchRequest2 = CustomerGroupsSearchRequest(offset = 2, limit = 2)
+		val customerGroupsSearchRequest2 = CustomerGroupsSearchRequest(offset = 6, limit = 2)
 		val customerGroupsSearchResult2 = apiClient.searchCustomerGroups(customerGroupsSearchRequest2)
-		assertEquals(1 + 1, customerGroupsSearchResult2.count) // “General” group exists is on every page
-		assertEquals(3, customerGroupsSearchResult2.total)
+		assertEquals(1, customerGroupsSearchResult2.count) // “General” group exists only of first page
+		assertEquals(7, customerGroupsSearchResult2.total)
+
+		// test by keyword "Customer group"
+		val customerGroupsSearchRequest3 = CustomerGroupsSearchRequest(
+			keyword = TEST_CUSTOMER_GROUP,
+		)
+		val customerGroupsSearchResult3 = apiClient.searchCustomerGroups(customerGroupsSearchRequest3)
+		assertEquals(true, customerGroupsSearchResult3.items.all { it.name.contains(TEST_CUSTOMER_GROUP) })
+
+		// test by keyword "Test"
+		val customerGroupsSearchRequest4 = CustomerGroupsSearchRequest(
+			keyword = TEST_SEARCH_PHRASE,
+		)
+		val customerGroupsSearchResult4 = apiClient.searchCustomerGroups(customerGroupsSearchRequest4)
+		assertEquals(true, customerGroupsSearchResult4.items.all { it.name.contains(TEST_SEARCH_PHRASE) })
+
+		val testGroupIds = customerGroupsSearchResult4.items.map { it.id }
+
+		// test by customerGroupIds
+		val customerGroupsSearchRequest5 = CustomerGroupsSearchRequest(
+			customerGroupIds = testGroupIds,
+		)
+		val customerGroupsSearchResult5 = apiClient.searchCustomerGroups(customerGroupsSearchRequest5)
+		assertEquals(testGroupIds.size, customerGroupsSearchResult5.total)
+		assertEquals(testGroupIds, customerGroupsSearchResult5.items.map { it.id })
+
 	}
 }
 
 private fun generateTestCustomerGroup(): UpdatedCustomerGroup {
 	return UpdatedCustomerGroup(
-		name = "Customer group " + randomAlphanumeric(8)
+		name = "$$TEST_CUSTOMER_GROUP " + randomAlphanumeric(8)
 	)
+}
+
+private fun generateSearchTestCustomerGroups(): List<UpdatedCustomerGroup> {
+	val result = mutableListOf<UpdatedCustomerGroup>()
+	repeat(3) {
+		result.add(UpdatedCustomerGroup("$TEST_CUSTOMER_GROUP $it"))
+		result.add(UpdatedCustomerGroup("$TEST_SEARCH_PHRASE $it"))
+	}
+	return result
 }

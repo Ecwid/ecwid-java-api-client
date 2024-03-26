@@ -6,6 +6,7 @@ import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
 import com.ecwid.apiclient.v3.dto.cart.result.CartUpdateResult
 import com.ecwid.apiclient.v3.dto.cart.result.ConvertCartToOrderResult
+import com.ecwid.apiclient.v3.dto.customergroup.request.CustomerGroupsSearchRequest
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.request.InstantSiteRedirectsGetForExactPathRequest
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.request.InstantSiteRedirectsSearchRequest
 import com.ecwid.apiclient.v3.dto.order.result.DeletedOrder
@@ -132,6 +133,9 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(InstantSiteRedirectsGetForExactPathRequest::exactPath),
 
 	AllowNullable(UpdatedProductReviewStatus::status),
+
+	AllowNullable(CustomerGroupsSearchRequest::keyword),
+	AllowNullable(CustomerGroupsSearchRequest::customerGroupIds),
 )
 
 val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
