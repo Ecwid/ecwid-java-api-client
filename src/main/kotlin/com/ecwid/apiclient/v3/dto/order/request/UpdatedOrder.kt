@@ -42,6 +42,7 @@ data class UpdatedOrder(
 
 	val customerId: Int? = null,
 	val customerGroup: String? = null,
+	val customerGroupId: Long? = null,
 	val acceptMarketing: Boolean? = null,
 
 	val total: Double? = null,

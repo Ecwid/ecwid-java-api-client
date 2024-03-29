@@ -11,6 +11,7 @@ data class OrderForCalculate(
 	val email: String? = null,
 	val ipAddress: String? = null,
 	val customerId: Int? = null,
+	val customerGroupId: Long? = null,
 	val customerTaxExempt: Boolean? = null,
 	val customerTaxId: String? = null,
 	val reversedTaxApplied: Boolean? = null,
