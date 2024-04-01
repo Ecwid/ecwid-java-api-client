@@ -107,7 +107,9 @@ data class UpdatedOrder(
 		val type: DiscountType? = null,
 		val base: DiscountBase? = null,
 		val orderTotal: Double? = null,
-		val description: String? = null
+		val description: String? = null,
+		val appliesToProducts: Set<Int?>? = null,
+		val appliesToItems: Set<Long>? = null,
 	)
 
 	data class DiscountCouponInfo(
