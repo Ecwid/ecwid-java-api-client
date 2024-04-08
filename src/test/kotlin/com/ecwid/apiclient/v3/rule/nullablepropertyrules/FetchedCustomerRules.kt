@@ -54,6 +54,7 @@ val fetchedCustomerNullablePropertyRules: List<NullablePropertyRule<*, *>> = lis
 	AllowNullable(FetchedCustomer.CustomerContact::handle),
 	AllowNullable(FetchedCustomer.CustomerContact::note),
 	AllowNullable(FetchedCustomer.CustomerContact::timestamp),
+	AllowNullable(FetchedCustomer.CustomerFavorite::addedTimestamp),
 
 	AllowNullable(CustomerFilterShippingAddress::street),
 	AllowNullable(CustomerFilterShippingAddress::city),
