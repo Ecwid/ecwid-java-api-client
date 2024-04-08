@@ -25,7 +25,7 @@ data class FetchedCustomer(
 	val lang: String? = null,
 	val stats: CustomerStats? = null,
 	val privateAdminNotes: String? = null,
-	var favorites: List<CustomerFavorite> = ArrayList(),
+	val favorites: List<CustomerFavorite> = ArrayList(),
 
 	@JsonFieldName("b2b_b2c")
 	val commercialRelationshipScheme: CommercialRelationshipScheme = CommercialRelationshipScheme.b2c,
