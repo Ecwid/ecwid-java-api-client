@@ -115,7 +115,7 @@ class CustomerGroupsTest : BaseEntityTest() {
 
 private fun generateTestCustomerGroup(): UpdatedCustomerGroup {
 	return UpdatedCustomerGroup(
-		name = "$$TEST_CUSTOMER_GROUP " + randomAlphanumeric(8)
+		name = "$TEST_CUSTOMER_GROUP " + randomAlphanumeric(8)
 	)
 }
 
