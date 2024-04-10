@@ -5,7 +5,7 @@ import java.util.*
 
 data class ApplicationTokenInfoResult(
 	val clientId: String? = null,
-	var permissions: List<String>? = null,
-	var created: Date? = null,
-	var expires: Date? = null,
+	val permissions: List<String>? = null,
+	val created: Date? = null,
+	val expires: Date? = null,
 ) : ApiResultDTO
