@@ -123,6 +123,8 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalShippingData::shippingMethodName),
 	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalShippingData::fulfilmentType),
 
+	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalLandingData::landingUrl),
+
 	AllowNullable(CreateBatchRequest::groupId),
 	AllowNullable(CreateBatchRequestWithIds::groupId),
 

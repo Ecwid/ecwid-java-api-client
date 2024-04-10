@@ -85,6 +85,10 @@ data class FetchedReportResponse(
 			val fulfilmentType: FulfillmentType? = null,
 		) : FetchedAdditionalData(AdditionalDataType.SHIPPING)
 
+		data class AdditionalLandingData(
+			val landingUrl: String? = null,
+		) : FetchedAdditionalData(AdditionalDataType.LANDING)
+
 		enum class AdditionalDataType {
 			UTM,
 			ORDERS,
@@ -94,6 +98,7 @@ data class FetchedReportResponse(
 			COUPONS,
 			ABANDONED_CARTS,
 			SHIPPING,
+			LANDING,
 		}
 	}
 
