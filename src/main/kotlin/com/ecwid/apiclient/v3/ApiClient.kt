@@ -4,7 +4,9 @@ import com.ecwid.apiclient.v3.config.ApiServerDomain
 import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.LoggingSettings
 import com.ecwid.apiclient.v3.dto.application.request.ApplicationDeleteRequest
+import com.ecwid.apiclient.v3.dto.application.request.ApplicationTokenRequest
 import com.ecwid.apiclient.v3.dto.application.result.ApplicationDeleteResult
+import com.ecwid.apiclient.v3.dto.application.result.ApplicationTokenResult
 import com.ecwid.apiclient.v3.dto.batch.request.CancelBatchGroupRequest
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequestWithIds
@@ -252,6 +254,7 @@ interface SalesChannelsApiClient {
 // https://developers.ecwid.com/api-documentation/application
 interface ApplicationApiClient {
 	fun deleteApplication(request: ApplicationDeleteRequest): ApplicationDeleteResult
+	fun getApplicationToken(request: ApplicationTokenRequest): ApplicationTokenResult
 }
 
 // Application storage
