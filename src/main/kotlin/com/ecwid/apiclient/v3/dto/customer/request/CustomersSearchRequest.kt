@@ -20,7 +20,12 @@ data class CustomersSearchRequest(
 	val acceptMarketing: Boolean? = null,
 	val purchasedProductIds: String? = null,
 	val customerGroupIds: String? = null,
+	val companyName: String? = null,
 	val countryCodes: String? = null,
+	val city: String? = null,
+	val postalCode: String? = null,
+	val stateOrProvinceCode: String? = null,
+	val phone: String? = null,
 	val createdFrom: Date? = null,
 	val createdTo: Date? = null,
 	val updatedFrom: Date? = null,
@@ -78,7 +83,12 @@ data class CustomersSearchRequest(
 			request.acceptMarketing?.let { put("acceptMarketing", it.toString()) }
 			request.purchasedProductIds?.let { put("purchasedProductIds", it) }
 			request.customerGroupIds?.let { put("customerGroupIds", it) }
+			request.companyName?.let { put("companyName", it) }
 			request.countryCodes?.let { put("countryCodes", it) }
+			request.city?.let { put("city", it) }
+			request.postalCode?.let { put("postalCode", it) }
+			request.stateOrProvinceCode?.let { put("stateOrProvinceCode", it) }
+			request.phone?.let { put("phone", it) }
 			request.lang?.let { put("lang", it) }
 			request.sortBy?.let { put("sortBy", it.name) }
 			put("offset", request.offset.toString())
