@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.ApplicationApiClient
 import com.ecwid.apiclient.v3.dto.application.request.ApplicationDeleteRequest
 import com.ecwid.apiclient.v3.dto.application.request.ApplicationTokenInfoRequest
 import com.ecwid.apiclient.v3.dto.application.result.ApplicationDeleteResult
-import com.ecwid.apiclient.v3.dto.application.result.ApplicationTokenInfoResult
+import com.ecwid.apiclient.v3.dto.application.result.ApplicationTokenResult
 
 class ApplicationApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -14,5 +14,5 @@ class ApplicationApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<ApplicationDeleteResult>(request)
 
 	override fun getApplicationTokenInfo(request: ApplicationTokenInfoRequest) =
-		apiClientHelper.makeObjectResultRequest<ApplicationTokenInfoResult>(request)
+		apiClientHelper.makeObjectResultRequest<ApplicationTokenResult>(request)
 }
