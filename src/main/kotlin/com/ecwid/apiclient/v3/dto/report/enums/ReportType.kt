@@ -11,6 +11,7 @@ enum class ReportType {
 	newVsReturningVisitors,
 	visitorsByDevice,
 	visitorsByCountry,
+	visitorsByLanguage,
 
 	/** orders */
 	allOrders,
