@@ -36,4 +36,5 @@ enum class ReportType {
 	checkoutSalesFunnel,
 	abandonedCarts,
 
+	topOfLandingPagesByVisitors,
 }
