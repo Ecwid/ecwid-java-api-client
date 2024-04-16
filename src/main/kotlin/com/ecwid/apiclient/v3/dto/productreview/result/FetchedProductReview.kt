@@ -9,6 +9,7 @@ data class FetchedProductReview(
 	val id: Long? = null,
 	val productId: Long? = null,
 	val productName: String? = null,
+	val productOptions: List<String>? = null,
 	val customerId: Long? = null,
 	val orderId: Long? = null,
 	val orderNumber: String? = null,

@@ -14,6 +14,7 @@ val fetchedProductReviewNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	AllowNullable(FetchedProductReview::orderNumber),
 	AllowNullable(FetchedProductReview::productId),
 	AllowNullable(FetchedProductReview::productName),
+	AllowNullable(FetchedProductReview::productOptions),
 	AllowNullable(FetchedProductReview::rating),
 	AllowNullable(FetchedProductReview::review),
 	AllowNullable(FetchedProductReview::reviewerInfo),
