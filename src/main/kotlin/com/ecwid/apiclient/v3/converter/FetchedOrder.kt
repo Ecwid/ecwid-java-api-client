@@ -90,6 +90,7 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 
 		orderExtraFields = orderExtraFields?.map(FetchedOrder.ExtraFieldsInfo::toUpdated),
 		paymentReference = paymentReference,
+		loyalty = loyalty?.toUpdated(),
 	)
 }
 
@@ -317,5 +318,20 @@ fun FetchedOrder.ExtraFieldsInfo.toUpdated(): UpdatedOrder.OrderExtraFields {
 		value = this.value,
 		orderDetailsDisplaySection = this.orderDetailsDisplaySection,
 		orderBy = this.orderBy
+	)
+}
+
+fun FetchedOrder.Loyalty.toUpdated(): UpdatedOrder.Loyalty {
+	return UpdatedOrder.Loyalty(
+		earned = this.earned,
+		redemption = this.redemption?.toUpdated(),
+		balance = this.balance,
+	)
+}
+
+fun FetchedOrder.LoyaltyRedemption.toUpdated(): UpdatedOrder.LoyaltyRedemption {
+	return UpdatedOrder.LoyaltyRedemption(
+		id = this.id,
+		amount = this.amount,
 	)
 }

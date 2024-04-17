@@ -94,6 +94,7 @@ data class UpdatedOrder(
 
 	val orderExtraFields: List<OrderExtraFields>? = null,
 	val paymentReference: String? = null,
+	val loyalty: Loyalty? = null,
 
 ) : ApiUpdatedDTO {
 
@@ -352,6 +353,16 @@ data class UpdatedOrder(
 		val value: String? = null,
 		val orderDetailsDisplaySection: String? = null,
 		val orderBy: String? = null
+	)
+	data class Loyalty(
+		val earned: Double? = null,
+		val redemption: LoyaltyRedemption? = null,
+		val balance: Double? = null
+	)
+
+	data class LoyaltyRedemption(
+		val id: String? = null,
+		val amount: Double? = null,
 	)
 
 	companion object {
