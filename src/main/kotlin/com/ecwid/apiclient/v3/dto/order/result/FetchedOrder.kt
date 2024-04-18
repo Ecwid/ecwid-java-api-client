@@ -112,6 +112,7 @@ data class FetchedOrder(
 	val externalOrderData: ExternalOrderData? = null,
 	val paymentReference: String? = null,
 	val shippingLabelAvailableForShipment: Boolean = false,
+	val loyalty: Loyalty? = null,
 
 	) : ApiFetchedDTO {
 
@@ -503,5 +504,16 @@ data class FetchedOrder(
 		val refererId: String? = null,
 		val platformSpecificFields: HashMap<String, String>? = null,
 		val refererChannel: String? = null
+	)
+
+	data class Loyalty(
+		val earned: Double? = null,
+		val redemption: LoyaltyRedemption? = null,
+		val balance: Double? = null
+	)
+
+	data class LoyaltyRedemption(
+		val id: String? = null,
+		val amount: Double? = null,
 	)
 }

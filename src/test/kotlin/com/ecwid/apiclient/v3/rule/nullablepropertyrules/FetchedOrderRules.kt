@@ -310,4 +310,10 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder.OrderItemAttributeValue::value),
 	AllowNullable(FetchedOrder.OrderItemAttributeValue::valueTranslated),
 	AllowNullable(FetchedOrder::paymentReference),
+	AllowNullable(FetchedOrder::loyalty),
+	AllowNullable(FetchedOrder.Loyalty::earned),
+	AllowNullable(FetchedOrder.Loyalty::balance),
+	AllowNullable(FetchedOrder.Loyalty::redemption),
+	AllowNullable(FetchedOrder.LoyaltyRedemption::id),
+	AllowNullable(FetchedOrder.LoyaltyRedemption::amount),
 )
