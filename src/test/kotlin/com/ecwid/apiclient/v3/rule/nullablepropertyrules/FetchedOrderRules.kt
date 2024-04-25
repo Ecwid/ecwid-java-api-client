@@ -43,6 +43,8 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	IgnoreNullable(FetchedOrder.DiscountInfo::orderTotal),
 	IgnoreNullable(FetchedOrder.DiscountInfo::type),
 	IgnoreNullable(FetchedOrder.DiscountInfo::value),
+	AllowNullable(FetchedOrder.DiscountInfo::appliesToProducts),
+	AllowNullable(FetchedOrder.DiscountInfo::appliesToItems),
 	AllowNullable(FetchedOrder.ExtraFieldsInfo::customerInputType),
 	AllowNullable(FetchedOrder.ExtraFieldsInfo::id),
 	AllowNullable(FetchedOrder.ExtraFieldsInfo::orderBy),

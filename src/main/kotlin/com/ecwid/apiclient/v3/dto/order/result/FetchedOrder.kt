@@ -1,7 +1,10 @@
 package com.ecwid.apiclient.v3.dto.order.result
 
-import com.ecwid.apiclient.v3.dto.common.*
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.ExtendedOrderTax
+import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
+import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import java.util.*
@@ -126,7 +129,9 @@ data class FetchedOrder(
 		val type: DiscountType? = null,
 		val base: DiscountBase? = null,
 		val orderTotal: Double? = null,
-		val description: String? = null
+		val description: String? = null,
+		val appliesToProducts: List<Int>? = null,
+		val appliesToItems: List<Long>? = null,
 	)
 
 	data class DiscountCouponInfo(

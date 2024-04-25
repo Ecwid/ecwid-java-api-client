@@ -52,6 +52,8 @@ val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = l
 	IgnoreNullable(OrderForCalculate.DiscountInfo::orderTotal),
 	IgnoreNullable(OrderForCalculate.DiscountInfo::type),
 	IgnoreNullable(OrderForCalculate.DiscountInfo::value),
+	AllowNullable(OrderForCalculate.DiscountInfo::appliesToProducts),
+	AllowNullable(OrderForCalculate.DiscountInfo::appliesToItems),
 	AllowNullable(OrderForCalculate.HandlingFee::description),
 	AllowNullable(OrderForCalculate.HandlingFee::name),
 	AllowNullable(OrderForCalculate.HandlingFee::taxes),

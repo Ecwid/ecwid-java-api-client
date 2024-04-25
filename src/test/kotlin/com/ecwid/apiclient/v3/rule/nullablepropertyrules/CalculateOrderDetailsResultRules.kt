@@ -26,6 +26,8 @@ val calculateOrderDetailsResultNullablePropertyRules: List<NullablePropertyRule<
 	IgnoreNullable(CalculateOrderDetailsResult.DiscountInfo::orderTotal),
 	IgnoreNullable(CalculateOrderDetailsResult.DiscountInfo::type),
 	IgnoreNullable(CalculateOrderDetailsResult.DiscountInfo::value),
+	AllowNullable(CalculateOrderDetailsResult.DiscountInfo::appliesToProducts),
+	AllowNullable(CalculateOrderDetailsResult.DiscountInfo::appliesToItems),
 	IgnoreNullable(CalculateOrderDetailsResult.HandlingFeeInfo::description),
 	IgnoreNullable(CalculateOrderDetailsResult.HandlingFeeInfo::name),
 	AllowNullable(CalculateOrderDetailsResult.HandlingFeeInfo::taxes),
