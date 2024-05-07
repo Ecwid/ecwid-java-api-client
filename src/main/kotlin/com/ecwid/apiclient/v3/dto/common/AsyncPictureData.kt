@@ -7,7 +7,7 @@ data class AsyncPictureData(
 	val alt: PictureAlt? = null
 )
 
-data class PictureAlt (
-	var main: String? = null,
-	var translated: Map<String, String>? = null
+data class PictureAlt(
+	val main: String? = null,
+	val translated: Map<String, String>? = null
 )
