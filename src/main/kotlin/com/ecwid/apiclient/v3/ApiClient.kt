@@ -17,6 +17,7 @@ import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
 import com.ecwid.apiclient.v3.dto.cart.request.*
 import com.ecwid.apiclient.v3.dto.cart.result.*
+import com.ecwid.apiclient.v3.dto.common.PartialResult
 import com.ecwid.apiclient.v3.dto.coupon.request.*
 import com.ecwid.apiclient.v3.dto.coupon.result.*
 import com.ecwid.apiclient.v3.dto.customer.request.*
@@ -47,6 +48,7 @@ import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
 import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
+import kotlin.reflect.KClass
 
 open class ApiClient private constructor(
 	protected val apiClientHelper: ApiClientHelper,
@@ -212,12 +214,26 @@ interface ProductVariationsApiClient {
 	fun uploadVariationImage(request: ProductVariationImageUploadRequest): ProductVariationImageUploadResult
 	fun uploadProductVariationImageAsync(request: ProductVariationImageAsyncUploadRequest): ProductVariationImageAsyncUploadResult
 	fun getAllProductVariations(request: ProductVariationsRequest): ProductVariationsResult
+	fun <Result> getAllProductVariations(request: ProductVariationsRequest, resultClass: KClass<Result>): List<Result>
+		where Result : PartialResult<FetchedVariation>
 	fun getProductVariation(request: ProductVariationDetailsRequest): FetchedVariation
+	fun <Result> getProductVariation(request: ProductVariationDetailsRequest, resultClass: KClass<Result>): Result
+		where Result : PartialResult<FetchedVariation>
 	fun updateProductVariation(request: UpdateProductVariationRequest): UpdateProductVariationResult
 	fun deleteProductVariation(request: DeleteProductVariationRequest): DeleteProductVariationsResult
 	fun deleteAllProductVariations(request: DeleteAllProductVariationsRequest): DeleteProductVariationsResult
 	fun adjustVariationInventory(request: AdjustVariationInventoryRequest): AdjustVariationInventoryResult
 	fun deleteVariationImage(request: ProductVariationImageDeleteRequest): ProductVariationImageDeleteResult
+}
+
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result : PartialResult<FetchedVariation>> ProductVariationsApiClient.getProductVariation(request: ProductVariationDetailsRequest): Result {
+	return getProductVariation(request, Result::class)
+}
+
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result : PartialResult<FetchedVariation>> ProductVariationsApiClient.getAllProductVariations(request: ProductVariationsRequest): List<Result> {
+	return getAllProductVariations(request, Result::class)
 }
 
 // Carts
