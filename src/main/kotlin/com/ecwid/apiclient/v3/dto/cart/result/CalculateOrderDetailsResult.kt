@@ -87,7 +87,7 @@ data class CalculateOrderDetailsResult(
 		val width: Double? = null,
 		val length: Double? = null,
 		val weight: Double? = null,
-		val declaredValue: Int? = null
+		val declaredValue: Double? = null
 	)
 
 	data class DiscountInfo(
