@@ -153,6 +153,7 @@ class CustomersTest : BaseEntityTest() {
 
 		// Trying to search by different fields
 
+		// would this fail?
 		assertCustomersSearch(
 			positiveCustomerId = customerCreateResult.id,
 			positiveSearchRequest = CustomersSearchRequest(keyword = customerCreateRequest.newCustomer.billingPerson?.name),
