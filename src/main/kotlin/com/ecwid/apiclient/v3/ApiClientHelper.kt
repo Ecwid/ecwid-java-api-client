@@ -128,6 +128,15 @@ class ApiClientHelper private constructor(
 		)
 	}
 
+	@Suppress("UNCHECKED_CAST")
+	fun <V : PartialResult<*>> makeObjectPartialResultRequestList(request: ApiRequest, resultClass: KClass<V>): List<V> {
+		return makeRequestInt(
+			request = request,
+			responseParser = ObjectResponseParser(jsonTransformer, resultClass.java.arrayType() as Class<Array<V>>),
+			responseFieldsOverride = responseFieldsOf(resultClass)
+		).toList()
+	}
+
 	@Suppress("unused")
 	fun <VBase : PartialResult<*>, VExt : PartialResult<*>> makeObjectPartialResultWithExtRequest(
 		request: ApiRequest,
