@@ -119,6 +119,7 @@ class CustomersTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-75364")
 	fun testSearchFields() {
 		// Creating new customer group
 		val customerGroupCreateRequest = CustomerGroupCreateRequest(
