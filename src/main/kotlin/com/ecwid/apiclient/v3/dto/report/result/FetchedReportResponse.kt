@@ -67,9 +67,11 @@ data class FetchedReportResponse(
 
 		data class AdditionalProductData(
 			val productName: String? = null,
-			val productSmallThumbnailUrl: String? = null,
 			val productUrl: String? = null,
 			val productEditUrl: String? = null,
+			val productSku: String? = null,
+			val productImageUrl: String? = null,
+			val productThumbnailUrl: String? = null,
 		) : FetchedAdditionalData(AdditionalDataType.PRODUCT)
 
 		data class AdditionalCouponData(
