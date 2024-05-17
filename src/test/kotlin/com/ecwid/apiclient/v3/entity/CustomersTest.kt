@@ -130,12 +130,13 @@ class CustomersTest : BaseEntityTest() {
 		val customerGroupCreateResult = apiClient.createCustomerGroup(customerGroupCreateRequest)
 		assertTrue(customerGroupCreateResult.id > 0)
 
+		val customerName = randomAlphanumeric(16)
 		// Creating new customer attached to this customer group
 		val customerCreateRequest = CustomerCreateRequest(
 			newCustomer = UpdatedCustomer(
 				email = randomEmail(),
 				billingPerson = UpdatedCustomer.BillingPerson(
-					name = randomAlphanumeric(16)
+					name = customerName,
 				),
 				customerGroupId = customerGroupCreateResult.id
 			)
@@ -146,7 +147,10 @@ class CustomersTest : BaseEntityTest() {
 		// Creating new order for this customer
 		val orderCreateRequest = OrderCreateRequest(
 			newOrder = UpdatedOrder(
-				email = customerCreateRequest.newCustomer.email
+				email = customerCreateRequest.newCustomer.email,
+				billingPerson = UpdatedOrder.PersonInfo(
+					name = customerName,
+				)
 			)
 		)
 		val orderCreateResult = apiClient.createOrder(orderCreateRequest)
