@@ -696,6 +696,7 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 					)
 				}
 			)
-		}
+		},
+		customerFiscalCode = null,
 	)
 }
