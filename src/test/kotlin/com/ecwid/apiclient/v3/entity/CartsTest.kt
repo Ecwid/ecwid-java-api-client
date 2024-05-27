@@ -697,6 +697,6 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 				}
 			)
 		},
-		customerFiscalCode = null,
+		customerFiscalCode = null, // ApiOrder has empty string instead of null
 	)
 }
