@@ -431,7 +431,8 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 		items = items?.mapIndexed { index, item ->
 			val requestItem = order.items?.get(index)
 			item.cleanupForComparison(requestItem)
-		}
+		},
+		customerFiscalCode = null, // ApiOrder has empty string instead of null
 	)
 }
 

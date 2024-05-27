@@ -91,6 +91,7 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 		orderExtraFields = orderExtraFields?.map(FetchedOrder.ExtraFieldsInfo::toUpdated),
 		paymentReference = paymentReference,
 		loyalty = loyalty?.toUpdated(),
+		customerFiscalCode = customerFiscalCode,
 	)
 }
 

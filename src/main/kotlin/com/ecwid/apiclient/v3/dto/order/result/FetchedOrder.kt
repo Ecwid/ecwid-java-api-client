@@ -116,6 +116,7 @@ data class FetchedOrder(
 	val paymentReference: String? = null,
 	val shippingLabelAvailableForShipment: Boolean = false,
 	val loyalty: Loyalty? = null,
+	val customerFiscalCode: String? = null,
 
 	) : ApiFetchedDTO {
 
