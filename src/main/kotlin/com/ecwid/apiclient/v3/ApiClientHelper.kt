@@ -549,6 +549,7 @@ private fun createAdditionalDataPolymorphicType(): PolymorphicType<FetchedReport
 			ABANDONED_CARTS.name.lowercase() to AdditionalAbandonedCartData::class.java,
 			SHIPPING.name.lowercase() to AdditionalShippingData::class.java,
 			LANDING.name.lowercase() to AdditionalLandingData::class.java,
+			CATEGORY.name.lowercase() to AdditionalCategoryData::class.java,
 		)
 	)
 }

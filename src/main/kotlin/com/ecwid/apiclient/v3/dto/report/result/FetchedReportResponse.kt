@@ -91,6 +91,10 @@ data class FetchedReportResponse(
 			val landingUrl: String? = null,
 		) : FetchedAdditionalData(AdditionalDataType.LANDING)
 
+		data class AdditionalCategoryData(
+			val categoryName: String? = null,
+		) : FetchedAdditionalData(AdditionalDataType.CATEGORY)
+
 		enum class AdditionalDataType {
 			UTM,
 			ORDERS,
@@ -101,6 +105,7 @@ data class FetchedReportResponse(
 			ABANDONED_CARTS,
 			SHIPPING,
 			LANDING,
+			CATEGORY,
 		}
 	}
 

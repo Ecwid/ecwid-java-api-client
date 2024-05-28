@@ -21,6 +21,7 @@ enum class ReportType {
 	topOfShippingMethodsByOrders,
 	topOfPaymentMethodsByOrders,
 	topOfCouponsByOrders,
+	topOfCategoriesByOrders,
 
 	/** finance */
 	allRevenue,
