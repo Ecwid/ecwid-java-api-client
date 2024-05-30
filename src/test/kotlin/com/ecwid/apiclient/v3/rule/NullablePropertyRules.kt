@@ -127,6 +127,8 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 
 	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalLandingData::landingUrl),
 
+	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalCategoryData::categoryName),
+
 	AllowNullable(CreateBatchRequest::groupId),
 	AllowNullable(CreateBatchRequestWithIds::groupId),
 
