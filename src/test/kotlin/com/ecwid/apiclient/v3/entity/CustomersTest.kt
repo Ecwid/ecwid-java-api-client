@@ -293,15 +293,15 @@ class CustomersTest : BaseEntityTest() {
 
 		assertCustomersSortBySearch(customerCreateResult1.id, SortOrder.UPDATED_DATE_ASC)
 		assertCustomersSortBySearch(customerCreateResult2.id, SortOrder.UPDATED_DATE_DESC)
- 		// TODO раскомментировать после выхода ECWID-115142
- 		// assertCustomersSortBySearch(customerCreateResult1.id, SortOrder.SALES_VALUE_ASC)
-      	// assertCustomersSortBySearch(customerCreateResult2.id, SortOrder.SALES_VALUE_DESC)
 
-		// assertCustomersSortBySearch(customerCreateResult1.id, SortOrder.FIRST_ORDER_DATE_ASC)
-		// assertCustomersSortBySearch(customerCreateResult2.id, SortOrder.FIRST_ORDER_DATE_DESC)
+ 		assertCustomersSortBySearch(customerCreateResult1.id, SortOrder.SALES_VALUE_ASC)
+      	assertCustomersSortBySearch(customerCreateResult2.id, SortOrder.SALES_VALUE_DESC)
 
-		// assertCustomersSortBySearch(customerCreateResult1.id, SortOrder.LAST_ORDER_DATE_ASC)
-		// assertCustomersSortBySearch(customerCreateResult2.id, SortOrder.LAST_ORDER_DATE_DESC)
+		assertCustomersSortBySearch(customerCreateResult1.id, SortOrder.FIRST_ORDER_DATE_ASC)
+		assertCustomersSortBySearch(customerCreateResult2.id, SortOrder.FIRST_ORDER_DATE_DESC)
+
+		assertCustomersSortBySearch(customerCreateResult1.id, SortOrder.LAST_ORDER_DATE_ASC)
+		assertCustomersSortBySearch(customerCreateResult2.id, SortOrder.LAST_ORDER_DATE_DESC)
 	}
 
 	@Test
