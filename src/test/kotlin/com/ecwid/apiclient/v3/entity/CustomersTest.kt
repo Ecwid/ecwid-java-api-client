@@ -268,14 +268,33 @@ class CustomersTest : BaseEntityTest() {
 		val customerCreateResult2 = apiClient.createCustomer(customerCreateRequest2)
 		assertTrue(customerCreateResult2.id > 0)
 
-		// Creating order for one of those customers
 		val orderCreateRequest = OrderCreateRequest(
 			newOrder = UpdatedOrder(
-				email = customerCreateRequest2.newCustomer.email
+				email = customerCreateRequest1.newCustomer.email,
+				total = 5.0
 			)
 		)
 		val orderCreateResult = apiClient.createOrder(orderCreateRequest)
 		assertTrue(orderCreateResult.id > 0)
+
+		val orderCreateRequest2 = OrderCreateRequest(
+			newOrder = UpdatedOrder(
+				email = customerCreateRequest2.newCustomer.email,
+				total = 5.0
+			)
+		)
+		val orderCreateResult2 = apiClient.createOrder(orderCreateRequest2)
+		assertTrue(orderCreateResult2.id > 0)
+
+
+		val orderCreateRequest3 = OrderCreateRequest(
+			newOrder = UpdatedOrder(
+				email = customerCreateRequest2.newCustomer.email,
+				total = 5.0
+			)
+		)
+		val orderCreateResult3 = apiClient.createOrder(orderCreateRequest3)
+		assertTrue(orderCreateResult3.id > 0)
 
 		// Trying to search using different sorts
 
