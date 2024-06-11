@@ -433,6 +433,11 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 			item.cleanupForComparison(requestItem)
 		},
 		customerFiscalCode = null, // ApiOrder has empty string instead of null
+		discountInfo = order.discountInfo?.map {
+			it.copy(
+				appliesToItems = null
+			)
+		}
 	)
 }
 
@@ -445,7 +450,11 @@ private fun UpdatedOrder.OrderItem.cleanupForComparison(orderItem: UpdatedOrder.
 		selectedOptions = selectedOptions?.mapIndexed { index, option ->
 			val requestOption = orderItem?.selectedOptions?.get(index)
 			option.cleanupForComparison(requestOption)
-		}
+		},
+		discounts = discounts?.mapIndexed { index, discount ->
+			val requestDiscount = orderItem?.discounts?.get(index)
+			discount.cleanupForComparison(requestDiscount)
+		},
 	)
 }
 
@@ -456,5 +465,13 @@ private fun UpdatedOrder.OrderItemSelectedOption.cleanupForComparison(orderItemS
 		selections = orderItemSelectedOption?.selections?.map { selectionInfo ->
 			selectionInfo.copy()
 		}
+	)
+}
+
+private fun UpdatedOrder.OrderItemDiscounts.cleanupForComparison(orderItemSelectedDiscount: UpdatedOrder.OrderItemDiscounts?): UpdatedOrder.OrderItemDiscounts {
+	return copy(
+		discountInfo = orderItemSelectedDiscount?.discountInfo?.copy(
+			appliesToItems = null
+		)
 	)
 }
