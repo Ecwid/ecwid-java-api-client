@@ -694,9 +694,21 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 					option.copy(
 						valueTranslated = order.items?.get(index)?.selectedOptions?.get(optIndex)?.valueTranslated
 					)
+				},
+				discounts = order.items?.get(index)?.discounts?.mapIndexed { discountIndex, discount ->
+					discount.copy(
+						discountInfo = order.items?.get(index)?.discounts?.get(discountIndex)?.discountInfo?.copy(
+							appliesToItems = null
+						)
+					)
 				}
 			)
 		},
 		customerFiscalCode = null, // ApiOrder has empty string instead of null
+		discountInfo = order.discountInfo?.map {
+			it.copy(
+				appliesToItems = null
+			)
+		}
 	)
 }
