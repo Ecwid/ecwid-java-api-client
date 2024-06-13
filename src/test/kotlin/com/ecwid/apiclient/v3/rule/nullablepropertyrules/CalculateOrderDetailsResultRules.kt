@@ -182,6 +182,7 @@ val calculateOrderDetailsResultNullablePropertyRules: List<NullablePropertyRule<
 	AllowNullable(CalculateOrderDetailsResult::giftCardDoubleSpending),
 	AllowNullable(CalculateOrderDetailsResult::giftCardCode),
 	AllowNullable(CalculateOrderDetailsResult::giftCardId),
+	AllowNullable(CalculateOrderDetailsResult::giftCardUuid),
 	AllowNullable(CalculateOrderDetailsResult::totalWithoutTax),
 	IgnoreNullable(CalculateOrderDetailsResult::usdTotal),
 	IgnoreNullable(CalculateOrderDetailsResult::volumeDiscount)

@@ -55,6 +55,7 @@ val fetchedCartNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedCart::giftCardCode),
 	AllowNullable(FetchedCart::giftCardDoubleSpending),
 	AllowNullable(FetchedCart::giftCardId),
+	AllowNullable(FetchedCart::giftCardUuid),
 	AllowNullable(FetchedCart::giftCardRedemption),
 	AllowNullable(FetchedCart::totalBeforeGiftCardRedemption),
 	IgnoreNullable(FetchedCart::utmData),

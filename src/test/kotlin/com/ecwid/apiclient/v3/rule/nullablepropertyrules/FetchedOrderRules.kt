@@ -244,6 +244,7 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder::giftCardCode),
 	AllowNullable(FetchedOrder::giftCardDoubleSpending),
 	AllowNullable(FetchedOrder::giftCardId),
+	AllowNullable(FetchedOrder::giftCardUuid),
 	AllowNullable(FetchedOrder::giftCardRedemption),
 	AllowNullable(FetchedOrder::globalReferer),
 	AllowNullable(FetchedOrder::handlingFee),

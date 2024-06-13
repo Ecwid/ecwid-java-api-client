@@ -25,6 +25,7 @@ data class OrderForCalculate(
 	val paymentOptionsDetails: PaymentOption? = null,
 	val giftCardCode: String? = null,
 	val giftCardId: Int? = null,
+	val giftCardUuid: String? = null,
 	val giftCardTransactionOrderId: Int? = null,
 	val giftCardRedemption: Double? = null,
 	val totalBeforeGiftCardRedemption: Double? = null,
