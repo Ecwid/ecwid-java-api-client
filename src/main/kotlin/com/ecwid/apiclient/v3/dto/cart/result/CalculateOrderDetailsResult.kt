@@ -36,6 +36,7 @@ data class CalculateOrderDetailsResult(
 	val giftCardDoubleSpending: Boolean? = null,
 	val giftCardCode: String? = null,
 	val giftCardId: Int? = null,
+	val giftCardUuid: String? = null,
 
 	val tax: Double? = null,
 	val taxesOnShipping: List<TaxOnShipping>? = null,

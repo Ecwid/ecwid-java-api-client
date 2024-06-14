@@ -47,6 +47,7 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 		giftCardDoubleSpending = giftCardDoubleSpending,
 		giftCardCode = giftCardCode,
 		giftCardId = giftCardId,
+		giftCardUuid = giftCardUuid,
 
 		tax = tax,
 		customerTaxExempt = customerTaxExempt,

@@ -49,6 +49,7 @@ data class FetchedCart(
 
 	val giftCardCode: String? = null,
 	val giftCardId: Int? = null,
+	val giftCardUuid: String? = null,
 	val giftCardRedemption: Double? = null,
 	val totalBeforeGiftCardRedemption: Double? = null,
 	val giftCardDoubleSpending: Boolean? = null,
