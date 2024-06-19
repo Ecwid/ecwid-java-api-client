@@ -337,5 +337,6 @@ fun FetchedOrder.LoyaltyRedemption.toUpdated(): UpdatedOrder.LoyaltyRedemption {
 	return UpdatedOrder.LoyaltyRedemption(
 		id = this.id,
 		amount = this.amount,
+		cancelled = this.cancelled,
 	)
 }

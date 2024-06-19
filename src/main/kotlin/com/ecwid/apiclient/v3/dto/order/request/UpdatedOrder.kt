@@ -358,6 +358,7 @@ data class UpdatedOrder(
 		val orderDetailsDisplaySection: String? = null,
 		val orderBy: String? = null
 	)
+
 	data class Loyalty(
 		val earned: Double? = null,
 		val redemption: LoyaltyRedemption? = null,
@@ -367,6 +368,7 @@ data class UpdatedOrder(
 	data class LoyaltyRedemption(
 		val id: String? = null,
 		val amount: Double? = null,
+		val cancelled: Boolean? = null,
 	)
 
 	companion object {
