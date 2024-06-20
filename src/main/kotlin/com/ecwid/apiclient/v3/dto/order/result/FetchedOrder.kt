@@ -522,5 +522,6 @@ data class FetchedOrder(
 	data class LoyaltyRedemption(
 		val id: String? = null,
 		val amount: Double? = null,
+		val cancelled: Boolean? = null,
 	)
 }
