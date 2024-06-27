@@ -15,6 +15,26 @@ apiHost=app.local.ecwid.com
 apiPort=8443
 ```
 
+#### Adding the Library to a Maven Project
+
+To add the current library to a Maven project, you need to add the following block of code to your project's `pom.xml` file inside the `<dependencies>` tag:
+
+```xml
+<dependency>
+    <groupId>com.ecwid.apiclient</groupId>
+    <artifactId>api-client</artifactId>
+    <version>0.326.0</version>
+</dependency>
+```
+
+#### Adding the Library to a Gradle Project
+
+To add the current library to a Gradle project, you need to add the following line to your project's `build.gradle` file inside the `dependencies` block:
+
+```groovy
+implementation 'com.ecwid.apiclient:api-client:0.326.0'
+```
+
 ## Examples
 
 #### Simple example:
