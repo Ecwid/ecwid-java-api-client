@@ -29,10 +29,10 @@ To add the current library to a Maven project, you need to add the following blo
 
 #### Adding the Library to a Gradle Project
 
-To add the current library to a Gradle project, you need to add the following line to your project's `build.gradle` file inside the `dependencies` block:
+To add the current library to a Gradle project using Kotlin DSL, you need to add the following line to your project's `build.gradle.kts` file inside the `dependencies` block:
 
-```groovy
-implementation 'com.ecwid.apiclient:api-client:0.326.0'
+```kotlin
+implementation("com.ecwid.apiclient:api-client:0.326.0")
 ```
 
 ## Examples
