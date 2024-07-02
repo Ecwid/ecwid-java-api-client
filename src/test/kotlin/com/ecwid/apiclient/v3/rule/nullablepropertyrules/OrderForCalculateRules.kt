@@ -17,6 +17,7 @@ val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = l
 	AllowNullable(OrderForCalculate::handlingFee),
 	AllowNullable(OrderForCalculate::giftCardCode),
 	AllowNullable(OrderForCalculate::giftCardId),
+	AllowNullable(OrderForCalculate::giftCardUuid),
 	AllowNullable(OrderForCalculate::giftCardTransactionOrderId),
 	AllowNullable(OrderForCalculate::giftCardRedemption),
 	AllowNullable(OrderForCalculate::totalBeforeGiftCardRedemption),

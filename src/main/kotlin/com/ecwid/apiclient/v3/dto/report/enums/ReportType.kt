@@ -12,6 +12,7 @@ enum class ReportType {
 	visitorsByDevice,
 	visitorsByCountry,
 	visitorsByLanguage,
+	topOfLandingPagesByVisitors,
 
 	/** orders */
 	allOrders,
@@ -37,6 +38,6 @@ enum class ReportType {
 	addToCartConversion,
 	checkoutSalesFunnel,
 	abandonedCarts,
+	topOfProductsByAddingToFavorites,
 
-	topOfLandingPagesByVisitors,
 }

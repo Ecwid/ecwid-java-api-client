@@ -47,6 +47,7 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 		giftCardDoubleSpending = giftCardDoubleSpending,
 		giftCardCode = giftCardCode,
 		giftCardId = giftCardId,
+		giftCardUuid = giftCardUuid,
 
 		tax = tax,
 		customerTaxExempt = customerTaxExempt,
@@ -336,5 +337,6 @@ fun FetchedOrder.LoyaltyRedemption.toUpdated(): UpdatedOrder.LoyaltyRedemption {
 	return UpdatedOrder.LoyaltyRedemption(
 		id = this.id,
 		amount = this.amount,
+		cancelled = this.cancelled,
 	)
 }
