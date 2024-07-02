@@ -151,6 +151,7 @@ interface OrdersApiClient {
 	fun deleteOrderItemOptionFiles(request: OrderItemOptionFilesDeleteRequest): OrderItemOptionFileDeleteResult
 	fun searchDeletedOrders(request: DeletedOrdersSearchRequest): DeletedOrdersSearchResult
 	fun searchDeletedOrdersAsSequence(request: DeletedOrdersSearchRequest): Sequence<DeletedOrder>
+	fun getRepeatOrderURL(request: RepeatOrderURLRequest): RepeatOrderURLResult
 }
 
 // Product types
@@ -245,6 +246,7 @@ interface CartsApiClient {
 	fun updateCart(request: CartUpdateRequest): CartUpdateResult
 	fun calculateOrderDetails(request: CalculateOrderDetailsRequest): CalculateOrderDetailsResult
 	fun convertCartToOrder(request: ConvertCartToOrderRequest): ConvertCartToOrderResult
+	fun getRepeatCartURL(request: RepeatCartURLRequest): RepeatCartURLResult
 }
 
 // Discount coupons

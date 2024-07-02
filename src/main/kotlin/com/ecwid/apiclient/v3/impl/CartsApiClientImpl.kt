@@ -36,4 +36,7 @@ internal data class CartsApiClientImpl(
 
 	override fun convertCartToOrder(request: ConvertCartToOrderRequest) =
 		apiClientHelper.makeObjectResultRequest<ConvertCartToOrderResult>(request)
+
+	override fun getRepeatCartURL(request: RepeatCartURLRequest) =
+		apiClientHelper.makeObjectResultRequest<RepeatCartURLResult>(request)
 }
