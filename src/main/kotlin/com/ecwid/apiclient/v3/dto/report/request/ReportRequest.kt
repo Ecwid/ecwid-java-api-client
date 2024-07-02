@@ -1,10 +1,7 @@
 package com.ecwid.apiclient.v3.dto.report.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
-import com.ecwid.apiclient.v3.dto.report.enums.ComparePeriod
-import com.ecwid.apiclient.v3.dto.report.enums.FirstDayOfWeek
-import com.ecwid.apiclient.v3.dto.report.enums.ReportType
-import com.ecwid.apiclient.v3.dto.report.enums.TimeScaleValue
+import com.ecwid.apiclient.v3.dto.report.enums.*
 import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
@@ -20,6 +17,7 @@ data class ReportRequest(
 	val limit: Int? = null,
 	val offset: Int? = null,
 	val responseFields: ResponseFields = ResponseFields.All,
+	val storefrontPlatform: StorefrontPlatform? = null,
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
@@ -42,6 +40,7 @@ data class ReportRequest(
 			orderDirection?.let { put("orderDirection", it) }
 			limit?.let { put("limit", it.toString()) }
 			offset?.let { put("offset", it.toString()) }
+			storefrontPlatform?.let { put("storefrontPlatform", it.toString()) }
 		}.toMap()
 	}
 

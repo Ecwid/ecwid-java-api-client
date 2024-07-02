@@ -81,6 +81,7 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(ReportRequest::orderDirection),
 	AllowNullable(ReportRequest::limit),
 	AllowNullable(ReportRequest::offset),
+	AllowNullable(ReportRequest::storefrontPlatform),
 
 	AllowNullable(FetchedReportResponse::timeScaleValue),
 	AllowNullable(FetchedReportResponse::comparePeriod),
