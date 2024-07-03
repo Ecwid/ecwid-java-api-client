@@ -55,6 +55,7 @@ data class UpdatedProduct(
 
 	val media: ProductMedia? = null,
 
+	val discountsAllowed: Boolean? = null,
 	val subtitle: String? = null,
 	val ribbon: Ribbon? = null,
 	val ribbonTranslated: LocalizedValueMap? = null,
