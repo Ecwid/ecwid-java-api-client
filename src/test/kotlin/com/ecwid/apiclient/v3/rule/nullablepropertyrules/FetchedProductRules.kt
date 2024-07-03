@@ -42,6 +42,7 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct::description),
 	IgnoreNullable(FetchedProduct::descriptionTranslated),
 	IgnoreNullable(FetchedProduct::dimensions),
+	AllowNullable(FetchedProduct::discountsAllowed),
 	IgnoreNullable(FetchedProduct::enabled),
 	IgnoreNullable(FetchedProduct::favorites),
 	IgnoreNullable(FetchedProduct::files),

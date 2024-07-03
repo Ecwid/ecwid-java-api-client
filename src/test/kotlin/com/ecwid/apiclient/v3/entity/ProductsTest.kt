@@ -429,7 +429,7 @@ class ProductsTest : BaseEntityTest() {
 
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
-			newProduct = generateTestProduct(categoryIds = categoryIds)
+			newProduct = generateTestProduct(categoryIds = categoryIds, discountsAllowed = true)
 		)
 		val productCreateResult = apiClient.createProduct(productCreateRequest)
 		assertTrue(productCreateResult.id > 0)
@@ -445,9 +445,8 @@ class ProductsTest : BaseEntityTest() {
 		// Completely updating newly created product
 		val productUpdateRequest = ProductUpdateRequest(
 			productId = productDetails1.id,
-			updatedProduct = generateTestProduct(categoryIds = categoryIds).withUnchangedShowOnFrontend(
-				productCreateRequest
-			)
+			updatedProduct = generateTestProduct(categoryIds = categoryIds, discountsAllowed = false)
+				.withUnchangedShowOnFrontend(productCreateRequest)
 		)
 		val productUpdateResult1 = apiClient.updateProduct(productUpdateRequest)
 		assertEquals(1, productUpdateResult1.updateCount)
@@ -1344,7 +1343,7 @@ private fun generateTestCategory(parentId: Int? = null): UpdatedCategory {
 	)
 }
 
-private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProduct {
+private fun generateTestProduct(categoryIds: List<Int> = listOf(), discountsAllowed: Boolean = true): UpdatedProduct {
 	val basePrice = randomPrice()
 	val enName = "Product " + randomAlphanumeric(8)
 	val enDescription = "Description " + randomAlphanumeric(16)
@@ -1420,6 +1419,7 @@ private fun generateTestProduct(categoryIds: List<Int> = listOf()): UpdatedProdu
 
 		tax = TaxInfo(),
 
+		discountsAllowed = discountsAllowed,
 		subtitle = "Subtitle sample",
 		ribbon = Ribbon(
 			"Ribbon",
