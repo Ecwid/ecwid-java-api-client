@@ -130,6 +130,15 @@ data class Webhook(
 
 		@SerializedName("promotion.updated")
 		PROMOTION_UPDATED,
+
+		@SerializedName("customer_group.created")
+		CUSTOMER_GROUP_CREATED,
+
+		@SerializedName("customer_group.updated")
+		CUSTOMER_GROUP_UPDATED,
+
+		@SerializedName("customer_group.deleted")
+		CUSTOMER_GROUP_DELETED,
 	}
 
 }
