@@ -89,6 +89,7 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	IgnoreNullable(FetchedProduct::tax),
 	IgnoreNullable(FetchedProduct::unlimited),
 	IgnoreNullable(FetchedProduct::url),
+	IgnoreNullable(FetchedProduct::customSlug),
 	IgnoreNullable(FetchedProduct::warningLimit),
 	IgnoreNullable(FetchedProduct::weight),
 	IgnoreNullable(FetchedProduct::wholesalePrices),
