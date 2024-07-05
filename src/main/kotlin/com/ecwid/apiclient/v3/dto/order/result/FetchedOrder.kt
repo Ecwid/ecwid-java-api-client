@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.order.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.ExtendedOrderTax
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
@@ -119,7 +120,7 @@ data class FetchedOrder(
 	val loyalty: Loyalty? = null,
 	val customerFiscalCode: String? = null,
 
-	) : ApiFetchedDTO {
+	) : ApiFetchedDTO, ApiResultDTO {
 
 	data class CreditCardStatus(
 		val avsMessage: String? = null,
