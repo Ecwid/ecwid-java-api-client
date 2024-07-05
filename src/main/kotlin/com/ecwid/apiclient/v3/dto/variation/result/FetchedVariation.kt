@@ -1,9 +1,7 @@
 package com.ecwid.apiclient.v3.dto.variation.result
 
-import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.*
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
-import com.ecwid.apiclient.v3.dto.common.FetchedAttributeValue
-import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.product.enums.AttributeValueLocation
 import com.ecwid.apiclient.v3.dto.product.enums.OutOfStockVisibilityBehaviour
 import com.ecwid.apiclient.v3.dto.product.enums.RecurringSubscriptionInterval
@@ -29,9 +27,14 @@ data class FetchedVariation(
 	val defaultDisplayedPriceFormatted: String? = null,
 	val costPrice: Double? = null,
 	val compareToPrice: Double? = null,
+	val lowestPrice: Double? = null,
+	val defaultDisplayedLowestPrice: Double? = null,
+	val defaultDisplayedLowestPriceFormatted: String? = null,
 	val wholesalePrices: List<WholesalePrice>? = null,
+	val lowestPriceSettings: LowestPriceSettings = LowestPriceSettings(),
 
 	val quantity: Int? = null,
+	val locationInventory: Map<String, Int>? = null,
 	val outOfStockVisibilityBehaviour: OutOfStockVisibilityBehaviour? = null,
 	val unlimited: Boolean? = null,
 	val inStock: Boolean? = null,
@@ -51,7 +54,8 @@ data class FetchedVariation(
 
 	val customsHsTariffCode: String? = null,
 	val subscriptionSettings: SubscriptionSettings? = null,
-) : ApiFetchedDTO {
+	val alt: FetchedAlt? = null,
+) : ApiFetchedDTO, ApiResultDTO {
 
 	data class AttributeValue(
 		override val id: Int? = null,
@@ -113,6 +117,16 @@ data class FetchedVariation(
 		val subscriptionPriceWithSignUpFeeFormatted: String? = null,
 		val signUpFee: Double? = null,
 		val signUpFeeFormatted: String? = null
+	)
+
+	data class LowestPriceSettings(
+		val lowestPriceEnabled: Boolean = false,
+		val manualLowestPrice: Double? = null,
+		val defaultDisplayedLowestPrice: Double? = null,
+		val defaultDisplayedLowestPriceFormatted: String? = null,
+		val automaticLowestPrice: Double? = null,
+		val defaultDisplayedAutomaticLowestPrice: Double? = null,
+		val defaultDisplayedAutomaticLowestPriceFormatted: String? = null,
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedVariation::class)

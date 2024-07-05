@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.profile.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
@@ -31,7 +32,7 @@ data class FetchedStoreProfile(
 	val orderInvoiceSettings: OrderInvoiceSettings? = null,
 	val giftCardSettings: GiftCardSettings? = null,
 	val registrationAnswers: RegistrationAnswers? = null,
-) : ApiFetchedDTO {
+) : ApiFetchedDTO, ApiResultDTO {
 
 	data class GeneralInfo(
 		val storeId: Int = 0,
@@ -45,11 +46,45 @@ data class FetchedStoreProfile(
 		val customDomain: String? = null,
 		val generatedUrl: String? = null,
 		val storeLogoUrl: String? = null,
-		val ecwidSubdomainSuffix: String? = null
+		val ecwidSubdomainSuffix: String? = null,
+		val slugsWithoutIdsEnabled: Boolean? = null,
 	)
 
+	@Suppress("unused")
 	enum class WebsitePlatform {
-		wix, wordpress, iframe, joomla, yola, unknown
+		unknown,
+
+		adobeMuse,
+		bitrix24,
+		blogger,
+		drupal,
+		duda,
+		etsy,
+		facebook,
+		godaddy,
+		google_sites,
+		iframe,
+		instagram,
+		instantsite,
+		jimdo,
+		joomla,
+		prestashop,
+		rapidWeaver,
+		shopify,
+		squarespace,
+		strikingly,
+		tilda,
+		tumblr,
+		typo3,
+		ucraft,
+		ukit,
+		webflow,
+		weblium,
+		weebly,
+		wix,
+		wordpress,
+		xara,
+		yola,
 	}
 
 	data class Account(
@@ -74,42 +109,45 @@ data class FetchedStoreProfile(
 	)
 
 	data class Settings(
+		val abandonedSales: AbandonedSalesSettings? = null,
+		val acceptMarketingCheckboxCustomText: String? = null,
+		val acceptMarketingCheckboxDefaultValue: Boolean? = null,
+		val askCompanyName: Boolean? = null,
+		val askConsentToTrackInStorefront: Boolean? = null,
 		val askTaxId: Boolean = false,
 		val closed: Boolean? = null,
-		val storeName: String? = null,
-		val storeDescription: String? = null,
-		val invoiceLogoUrl: String? = null,
-		val emailLogoUrl: String? = null,
-		val googleRemarketingEnabled: Boolean? = null,
-		val googleAnalyticsId: String? = null,
-		val fbPixelId: String? = null,
-		val orderCommentsEnabled: Boolean? = null,
-		val orderCommentsCaption: String? = null,
-		val orderCommentsRequired: Boolean? = null,
-		val hideOutOfStockProductsInStorefront: Boolean? = null,
-		val askCompanyName: Boolean? = null,
-		val favoritesEnabled: Boolean? = null,
 		val defaultProductSortOrder: ProductSortOrder? = null,
-		val abandonedSales: AbandonedSalesSettings? = null,
-		val salePrice: SalePriceSettings? = null,
-		val showAcceptMarketingCheckbox: Boolean? = null,
-		val acceptMarketingCheckboxDefaultValue: Boolean? = null,
-		val acceptMarketingCheckboxCustomText: String? = null,
-		val askConsentToTrackInStorefront: Boolean? = null,
-		val snapPixelId: String? = null,
-		val pinterestTagId: String? = null,
-		val googleTagId: String? = null,
+		val emailLogoUrl: String? = null,
+		val favoritesEnabled: Boolean? = null,
+		val fbPixelId: String? = null,
+		val googleAnalyticsId: String? = null,
 		val googleEventId: String? = null,
-		val showPricePerUnit: Boolean = false,
 		val googleProductCategory: Int? = null,
 		val googleProductCategoryName: String? = null,
+		val googleRemarketingEnabled: Boolean? = null,
+		val googleTagId: String? = null,
+		val hideOutOfStockProductsInStorefront: Boolean? = null,
+		val invoiceLogoUrl: String? = null,
+		val openBagOnAddition: Boolean = false,
+		val orderCommentsCaption: String? = null,
+		val orderCommentsEnabled: Boolean? = null,
+		val orderCommentsRequired: Boolean? = null,
+		val pinterestTagId: String? = null,
 		val productCondition: ProductCondition = ProductCondition.NEW,
-		val tikTokPixel: TikTokPixelSettings? = null,
-		val storeDescriptionTranslated: LocalizedValueMap? = null,
+		val productReviewsFeatureEnabled: Boolean? = null,
+		val rootCategorySeoDescription: String? = null,
+		val rootCategorySeoDescriptionTranslated: LocalizedValueMap? = null,
 		val rootCategorySeoTitle: String? = null,
 		val rootCategorySeoTitleTranslated: LocalizedValueMap? = null,
-		val rootCategorySeoDescription: String? = null,
-		val rootCategorySeoDescriptionTranslated: LocalizedValueMap? = null
+		val salePrice: SalePriceSettings? = null,
+		val showAcceptMarketingCheckbox: Boolean? = null,
+		val showPricePerUnit: Boolean = false,
+		val showRepeatOrderButton: Boolean = false,
+		val snapPixelId: String? = null,
+		val storeDescription: String? = null,
+		val storeDescriptionTranslated: LocalizedValueMap? = null,
+		val storeName: String? = null,
+		val tikTokPixel: TikTokPixelSettings? = null,
 	)
 
 	data class TikTokPixelSettings(
@@ -133,7 +171,8 @@ data class FetchedStoreProfile(
 	data class SalePriceSettings(
 		val displayOnProductList: Boolean? = null,
 		val oldPriceLabel: String? = null,
-		val displayDiscount: DisplayDiscount? = null
+		val displayDiscount: DisplayDiscount? = null,
+		val displayLowestPrice: Boolean? = null
 	) {
 
 		enum class DisplayDiscount {
@@ -244,12 +283,20 @@ data class FetchedStoreProfile(
 		val pickupInstruction: String? = null,
 		val scheduledPickup: Boolean? = null,
 		val pickupPreparationTimeHours: Int? = null,
-		val pickupBusinessHours: String? = null
+		val pickupBusinessHours: String? = null,
+		val scheduled: Boolean? = null,
+		val scheduledTimePrecisionType: ScheduledTimePrecisionType? = null,
 	)
 
 	@Suppress("unused")
+	enum class ScheduledTimePrecisionType {
+		DATE,
+		DATE_AND_TIME_SLOT
+	}
+
+	@Suppress("unused")
 	enum class FulfilmentType {
-		pickup, shipping
+		pickup, shipping, delivery
 	}
 
 	data class Zone(
@@ -396,18 +443,19 @@ data class FetchedStoreProfile(
 	)
 
 	data class PaymentOptionInfo(
-		val id: String? = null,
+		val appClientId: String? = null,
+		val appNamespace: String? = null,
+		val checkoutDescription: String? = null,
+		val checkoutTitle: String? = null,
 		val configured: Boolean? = null,
 		val enabled: Boolean? = null,
-		val checkoutTitle: String? = null,
-		val checkoutDescription: String? = null,
+		val id: String? = null,
+		val instructionsForCustomer: InstructionsForCustomerInfo? = null,
+		val methods: List<PaymentMethod>? = null,
+		val orderBy: Int? = null,
 		val paymentProcessorId: String? = null,
 		val paymentProcessorTitle: String? = null,
-		val orderBy: Int? = null,
-		val appClientId: String? = null,
-		val instructionsForCustomer: InstructionsForCustomerInfo? = null,
 		val shippingSettings: ShippingSettings? = null,
-		val methods: List<PaymentMethod>? = null,
 		val supportsSubtypes: Boolean? = null,
 	) : ApiFetchedDTO {
 		override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedPaymentOption::class)

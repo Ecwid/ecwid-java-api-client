@@ -25,6 +25,7 @@ data class FetchedProduct(
 
 	val enabled: Boolean? = null,
 	val quantity: Int? = null,
+	val locationInventory: Map<String, Int>? = null,
 	val outOfStockVisibilityBehaviour: OutOfStockVisibilityBehaviour? = null,
 	val unlimited: Boolean? = null,
 	val inStock: Boolean? = null,
@@ -43,11 +44,49 @@ data class FetchedProduct(
 	val wholesalePrices: List<WholesalePrice>? = null,
 
 	val compareToPrice: Double? = null,
+
+	@Deprecated(
+		message = "Use field 'defaultDisplayedCompareToPriceDiscount' instead",
+		replaceWith = ReplaceWith("defaultDisplayedCompareToPriceDiscount")
+	)
 	val compareToPriceDiscount: Double? = null, // TODO Figure out how to test
+
+	@Deprecated(
+		message = "Use field 'defaultDisplayedCompareToPriceDiscountFormatted' instead",
+		replaceWith = ReplaceWith("defaultDisplayedCompareToPriceDiscountFormatted")
+	)
 	val compareToPriceDiscountFormatted: String? = null, // TODO Figure out how to test
+
+	@Deprecated(
+		message = "Use field 'defaultDisplayedCompareToPriceDiscountPercent' instead",
+		replaceWith = ReplaceWith("defaultDisplayedCompareToPriceDiscountPercent")
+	)
 	val compareToPriceDiscountPercent: Double? = null, // TODO Figure out how to test
+
+	@Deprecated(
+		message = "Use field 'defaultDisplayedCompareToPriceDiscountPercentFormatted' instead",
+		replaceWith = ReplaceWith("defaultDisplayedCompareToPriceDiscountPercentFormatted")
+	)
 	val compareToPriceDiscountPercentFormatted: String? = null, // TODO Figure out how to test
+
+	@Deprecated(
+		message = "Use field 'defaultDisplayedCompareToPriceFormatted' instead",
+		replaceWith = ReplaceWith("defaultDisplayedCompareToPriceFormatted")
+	)
 	val compareToPriceFormatted: String? = null, // TODO Figure out how to test
+
+	val defaultDisplayedCompareToPrice: Double? = null,
+	val defaultDisplayedCompareToPriceFormatted: String? = null,
+	val defaultDisplayedCompareToPriceDiscount: Double? = null,
+	val defaultDisplayedCompareToPriceDiscountFormatted: String? = null,
+	val defaultDisplayedCompareToPriceDiscountPercent: Double? = null,
+	val defaultDisplayedCompareToPriceDiscountPercentFormatted: String? = null,
+
+	val lowestPrice: Double? = null,
+	val defaultDisplayedLowestPrice: Double? = null,
+	val defaultDisplayedLowestPriceFormatted: String? = null,
+
+	val lowestPriceSettings: LowestPriceSettings = LowestPriceSettings(),
 
 	val weight: Double? = null,
 	val dimensions: ProductDimensions? = null,
@@ -58,12 +97,15 @@ data class FetchedProduct(
 
 	val shipping: ShippingSettings? = null,
 	val isShippingRequired: Boolean? = null,
+	val hasFreeShipping: Boolean? = null,
 
 	val productClassId: Int? = null,
 	val attributes: List<AttributeValue>? = null,
 
 	val seoTitle: String? = null,
+	val seoTitleTranslated: LocalizedValueMap? = null,
 	val seoDescription: String? = null,
+	val seoDescriptionTranslated: LocalizedValueMap? = null,
 
 	val options: List<ProductOption>? = null,
 	val tax: TaxInfo? = null,
@@ -79,6 +121,7 @@ data class FetchedProduct(
 	val defaultCombinationId: Int? = null, // TODO implement combinations support
 	val combinations: List<FetchedVariation>? = null, // TODO implement combinations support
 	val isGiftCard: Boolean? = null, // TODO from ECWID-67826: this flag is read-only. API for creating gift cards in the plans (BACKLOG-4157)
+	val discountsAllowed: Boolean? = null,
 	val subtitle: String? = null,
 	val ribbon: Ribbon? = null,
 	val ribbonTranslated: LocalizedValueMap? = null,
@@ -94,7 +137,11 @@ data class FetchedProduct(
 	val customsHsTariffCode: String? = null,
 	val minPurchaseQuantity: Int? = null,
 	val maxPurchaseQuantity: Int? = null,
-) : ApiFetchedDTO {
+	val reviewsCollectingAllowed: Boolean? = null,
+	val rating: Double? = null,
+	val reviewsModerated: Int? = null,
+	val reviewsPublished: Int? = null,
+) : ApiFetchedDTO, ApiResultDTO {
 
 	data class BorderInfo(
 		val dominatingColor: Color = Color(),
@@ -292,7 +339,8 @@ data class FetchedProduct(
 	)
 
 	data class ProductMedia(
-		val images: List<ProductImage> = listOf()
+		val images: List<ProductImage> = listOf(),
+		val videos: List<ProductVideo> = listOf(),
 	)
 
 	data class ProductImage(
@@ -303,7 +351,22 @@ data class FetchedProduct(
 		val image400pxUrl: String? = null,
 		val image800pxUrl: String? = null,
 		val image1500pxUrl: String? = null,
-		val imageOriginalUrl: String? = null
+		val imageOriginalUrl: String? = null,
+		val alt: FetchedAlt? = null
+	)
+
+	data class ProductVideo(
+		val id: String = "0",
+		val url: String = "",
+		val embedHtml: String = "",
+		val videoCoverId: String? = null,
+		val image160pxUrl: String? = null,
+		val image400pxUrl: String? = null,
+		val image800pxUrl: String? = null,
+		val image1500pxUrl: String? = null,
+		val imageOriginalUrl: String? = null,
+		val providerName: String? = null,
+		val title: String? = null,
 	)
 
 	data class ProductFile(
@@ -320,4 +383,14 @@ data class FetchedProduct(
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedProduct::class)
+
+	data class LowestPriceSettings(
+		val lowestPriceEnabled: Boolean = false,
+		val manualLowestPrice: Double? = null,
+		val defaultDisplayedLowestPrice: Double? = null,
+		val defaultDisplayedLowestPriceFormatted: String? = null,
+		val automaticLowestPrice: Double? = null,
+		val defaultDisplayedAutomaticLowestPrice: Double? = null,
+		val defaultDisplayedAutomaticLowestPriceFormatted: String? = null,
+	)
 }

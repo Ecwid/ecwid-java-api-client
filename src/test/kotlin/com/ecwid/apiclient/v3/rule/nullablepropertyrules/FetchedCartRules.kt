@@ -2,7 +2,7 @@ package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
 import com.ecwid.apiclient.v3.dto.cart.result.FetchedCart
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
-import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
+import com.ecwid.apiclient.v3.rule.NullablePropertyRule.*
 
 val fetchedCartNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
     IgnoreNullable(FetchedCart::acceptMarketing),
@@ -48,9 +48,16 @@ val fetchedCartNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedCart::total),
 	IgnoreNullable(FetchedCart::totalAndMembershipBasedDiscount),
 	IgnoreNullable(FetchedCart::trackingNumber),
+	AllowNullable(FetchedCart::trackingUrl),
 	IgnoreNullable(FetchedCart::updateDate),
 	IgnoreNullable(FetchedCart::updateTimestamp),
 	IgnoreNullable(FetchedCart::usdTotal),
+	AllowNullable(FetchedCart::giftCardCode),
+	AllowNullable(FetchedCart::giftCardDoubleSpending),
+	AllowNullable(FetchedCart::giftCardId),
+	AllowNullable(FetchedCart::giftCardUuid),
+	AllowNullable(FetchedCart::giftCardRedemption),
+	AllowNullable(FetchedCart::totalBeforeGiftCardRedemption),
 	IgnoreNullable(FetchedCart::utmData),
 	IgnoreNullable(FetchedCart::volumeDiscount),
 	IgnoreNullable(FetchedCart.CreditCardStatus::avsMessage),
@@ -81,6 +88,7 @@ val fetchedCartNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedCart.OrderItem::categoryId),
 	IgnoreNullable(FetchedCart.OrderItem::couponAmount),
 	IgnoreNullable(FetchedCart.OrderItem::couponApplied),
+	AllowNullable(FetchedCart.OrderItem::giftCard),
 	IgnoreNullable(FetchedCart.OrderItem::digital),
 	IgnoreNullable(FetchedCart.OrderItem::dimensions),
 	IgnoreNullable(FetchedCart.OrderItem::discounts),
@@ -97,6 +105,7 @@ val fetchedCartNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedCart.OrderItem::quantity),
 	IgnoreNullable(FetchedCart.OrderItem::quantityInStock),
 	IgnoreNullable(FetchedCart.OrderItem::selectedOptions),
+	AllowNullable(FetchedCart.OrderItem::combinationId),
 	IgnoreNullable(FetchedCart.OrderItem::shipping),
 	IgnoreNullable(FetchedCart.OrderItem::shortDescription),
 	IgnoreNullable(FetchedCart.OrderItem::sku),
@@ -130,6 +139,7 @@ val fetchedCartNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedCart.OrderItemProductFile::productFileId),
 	IgnoreNullable(FetchedCart.OrderItemProductFile::remainingDownloads),
 	IgnoreNullable(FetchedCart.OrderItemProductFile::size),
+	AllowNullable(FetchedCart.OrderItemTax::taxType),
 	IgnoreNullable(FetchedCart.OrderItemTax::includeInPrice),
 	IgnoreNullable(FetchedCart.OrderItemTax::name),
 	IgnoreNullable(FetchedCart.OrderItemTax::taxOnDiscountedSubtotal),
@@ -154,6 +164,7 @@ val fetchedCartNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedCart.SelectionInfo::selectionModifier),
 	IgnoreNullable(FetchedCart.SelectionInfo::selectionModifierType),
 	IgnoreNullable(FetchedCart.SelectionInfo::selectionTitle),
+	AllowNullable(FetchedCart.ShippingOptionInfo::shippingMethodId),
 	IgnoreNullable(FetchedCart.ShippingOptionInfo::estimatedTransitTime),
 	IgnoreNullable(FetchedCart.ShippingOptionInfo::isPickup),
 	IgnoreNullable(FetchedCart.ShippingOptionInfo::pickupInstruction),

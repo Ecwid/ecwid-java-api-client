@@ -1,7 +1,9 @@
 package com.ecwid.apiclient.v3.dto.product.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
+import com.ecwid.apiclient.v3.dto.common.PagingRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
+import com.ecwid.apiclient.v3.responsefields.ResponseFields
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -9,6 +11,7 @@ sealed class ProductsSearchRequest : ApiRequest {
 
 	data class ByFilters(
 		val keyword: String? = null,
+		val searchMethod: SearchMethod? = null,
 		val externalReferenceId: String? = null,
 		val priceFrom: Double? = null,
 		val priceTo: Double? = null,
@@ -31,22 +34,26 @@ sealed class ProductsSearchRequest : ApiRequest {
 		val isCustomerSetPrice: Boolean? = null,
 		val baseUrl: String? = null,
 		val cleanUrls: Boolean? = null,
-		val offset: Int = 0,
+		val slugsWithoutIds: Boolean? = null,
+		override val offset: Int = 0,
 		val limit: Int = 100,
 		val lang: String? = null,
 		val visibleInStorefront: Boolean? = null,
-	) : ProductsSearchRequest() {
+		val responseFields: ResponseFields = ResponseFields.All,
+	) : ProductsSearchRequest(), PagingRequest<ByFilters> {
 		override fun toRequestInfo() = RequestInfo.createGetRequest(
 			pathSegments = listOf(
 				"products"
 			),
-			params = toParams()
+			params = toParams(),
+			responseFields = responseFields,
 		)
 
 		private fun toParams(): Map<String, String> {
 			val request = this
 			return mutableMapOf<String, String>().apply {
 				request.keyword?.let { put("keyword", it) }
+				request.searchMethod?.let { put("searchMethod", it.name) }
 				request.externalReferenceId?.let { put("externalReferenceId", it) }
 				request.sku?.let { put("sku", it) }
 				request.isGiftCard?.let { put("isGiftCard", it.toString()) }
@@ -76,6 +83,7 @@ sealed class ProductsSearchRequest : ApiRequest {
 				request.includeProductsFromSubcategories?.let { put("includeProductsFromSubcategories", it.toString()) }
 				request.baseUrl?.let { put("baseUrl", it) }
 				request.cleanUrls?.let { put("cleanUrls", it.toString()) }
+				request.slugsWithoutIds?.let { put("slugsWithoutIds", it.toString()) }
 				request.sortBy?.let { put("sortBy", it.name) }
 				put("offset", request.offset.toString())
 				put("limit", request.limit.toString())
@@ -83,20 +91,25 @@ sealed class ProductsSearchRequest : ApiRequest {
 				request.visibleInStorefront?.let { put("visibleInStorefront", it.toString()) }
 			}.toMap()
 		}
+
+		override fun copyWithOffset(offset: Int) = copy(offset = offset)
 	}
 
 	data class ByIds(
 		val productIds: List<Int> = listOf(),
 		val baseUrl: String? = null,
 		val cleanUrls: Boolean? = null,
+		val slugsWithoutIds: Boolean? = null,
 		val sortBy: SortOrder? = null,
 		val lang: String? = null,
+		val responseFields: ResponseFields = ResponseFields.All,
 	) : ProductsSearchRequest() {
 		override fun toRequestInfo() = RequestInfo.createGetRequest(
 			pathSegments = listOf(
 				"products"
 			),
-			params = toParams()
+			params = toParams(),
+			responseFields = responseFields,
 		)
 
 		@Suppress("unused")
@@ -108,6 +121,7 @@ sealed class ProductsSearchRequest : ApiRequest {
 				put("productId", request.productIds.joinToString(","))
 				request.baseUrl?.let { put("baseUrl", it) }
 				request.cleanUrls?.let { put("cleanUrls", it.toString()) }
+				request.slugsWithoutIds?.let { put("slugsWithoutIds", it.toString()) }
 				request.sortBy?.let { put("sortBy", it.name) }
 				request.lang?.let { put("lang", it) }
 			}.toMap()
@@ -130,6 +144,12 @@ sealed class ProductsSearchRequest : ApiRequest {
 		data class OptionValue(val name: String = "", val values: List<String> = listOf()) {
 			constructor(name: String, value: String) : this(name = name, values = listOf(value))
 		}
+	}
+
+	@Suppress("unused")
+	enum class SearchMethod {
+		STOREFRONT,
+		CP
 	}
 
 	@Suppress("unused")

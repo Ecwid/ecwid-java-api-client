@@ -32,11 +32,45 @@ data class UpdatedStoreProfile(
 
 	data class InstantSiteInfo(
 		val ecwidSubdomain: String? = null,
-		val customDomain: String? = null
+		val customDomain: String? = null,
+		val slugsWithoutIdsEnabled: Boolean? = null,
 	)
 
+	@Suppress("unused")
 	enum class WebsitePlatform {
-		wix, wordpress, iframe, joomla, yola, unknown
+		unknown,
+
+		adobeMuse,
+		bitrix24,
+		blogger,
+		drupal,
+		duda,
+		etsy,
+		facebook,
+		godaddy,
+		google_sites,
+		iframe,
+		instagram,
+		instantsite,
+		jimdo,
+		joomla,
+		prestashop,
+		rapidWeaver,
+		shopify,
+		squarespace,
+		strikingly,
+		tilda,
+		tumblr,
+		typo3,
+		ucraft,
+		ukit,
+		webflow,
+		weblium,
+		weebly,
+		wix,
+		wordpress,
+		xara,
+		yola,
 	}
 
 	data class Account(
@@ -46,39 +80,42 @@ data class UpdatedStoreProfile(
 	)
 
 	data class Settings(
+		val abandonedSales: AbandonedSalesSettings? = null,
+		val acceptMarketingCheckboxCustomText: String? = null,
+		val acceptMarketingCheckboxDefaultValue: Boolean? = null,
+		val askCompanyName: Boolean? = null,
+		val askConsentToTrackInStorefront: Boolean? = null,
 		val askTaxId: Boolean? = null,
 		val closed: Boolean? = null,
-		val storeName: String? = null,
-		val storeDescription: String? = null,
-		val googleRemarketingEnabled: Boolean? = null,
-		val googleAnalyticsId: String? = null,
-		val fbPixelId: String? = null,
-		val orderCommentsEnabled: Boolean? = null,
-		val orderCommentsCaption: String? = null,
-		val orderCommentsRequired: Boolean? = null,
-		val hideOutOfStockProductsInStorefront: Boolean? = null,
-		val askCompanyName: Boolean? = null,
-		val favoritesEnabled: Boolean? = null,
 		val defaultProductSortOrder: ProductSortOrder? = null,
-		val abandonedSales: AbandonedSalesSettings? = null,
-		val salePrice: SalePriceSettings? = null,
-		val showAcceptMarketingCheckbox: Boolean? = null,
-		val acceptMarketingCheckboxDefaultValue: Boolean? = null,
-		val acceptMarketingCheckboxCustomText: String? = null,
-		val askConsentToTrackInStorefront: Boolean? = null,
-		val snapPixelId: String? = null,
-		val pinterestTagId: String? = null,
-		val googleTagId: String? = null,
+		val favoritesEnabled: Boolean? = null,
+		val fbPixelId: String? = null,
+		val googleAnalyticsId: String? = null,
 		val googleEventId: String? = null,
-		val showPricePerUnit: Boolean? = null,
 		val googleProductCategory: Int? = null,
+		val googleRemarketingEnabled: Boolean? = null,
+		val googleTagId: String? = null,
+		val hideOutOfStockProductsInStorefront: Boolean? = null,
+		val orderCommentsCaption: String? = null,
+		val orderCommentsEnabled: Boolean? = null,
+		val orderCommentsRequired: Boolean? = null,
+		val openBagOnAddition: Boolean? = null,
+		val pinterestTagId: String? = null,
 		val productCondition: ProductCondition? = null,
-		val tikTokPixel: TikTokPixelSettings? = null,
-		val storeDescriptionTranslated: LocalizedValueMap? = null,
+		val productReviewsFeatureEnabled: Boolean? = null,
+		val rootCategorySeoDescription: String? = null,
+		val rootCategorySeoDescriptionTranslated: LocalizedValueMap? = null,
 		val rootCategorySeoTitle: String? = null,
 		val rootCategorySeoTitleTranslated: LocalizedValueMap? = null,
-		val rootCategorySeoDescription: String? = null,
-		val rootCategorySeoDescriptionTranslated: LocalizedValueMap? = null
+		val salePrice: SalePriceSettings? = null,
+		val showAcceptMarketingCheckbox: Boolean? = null,
+		val showPricePerUnit: Boolean? = null,
+		val showRepeatOrderButton: Boolean? = null,
+		val snapPixelId: String? = null,
+		val storeDescription: String? = null,
+		val storeDescriptionTranslated: LocalizedValueMap? = null,
+		val storeName: String? = null,
+		val tikTokPixel: TikTokPixelSettings? = null,
 	)
 
 	data class TikTokPixelSettings(
@@ -101,7 +138,8 @@ data class UpdatedStoreProfile(
 	data class SalePriceSettings(
 		val displayOnProductList: Boolean? = null,
 		val oldPriceLabel: String? = null,
-		val displayDiscount: DisplayDiscount? = null
+		val displayDiscount: DisplayDiscount? = null,
+		val displayLowestPrice: Boolean? = null
 	) {
 
 		enum class DisplayDiscount {

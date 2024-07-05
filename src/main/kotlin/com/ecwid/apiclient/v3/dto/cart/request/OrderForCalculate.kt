@@ -11,11 +11,25 @@ data class OrderForCalculate(
 	val email: String? = null,
 	val ipAddress: String? = null,
 	val customerId: Int? = null,
+	val customerTaxExempt: Boolean? = null,
+	val customerTaxId: String? = null,
+	val reversedTaxApplied: Boolean? = null,
 	val discountCoupon: DiscountCouponInfo? = null,
 	val items: List<OrderItem>? = null,
 	val billingPerson: PersonInfo? = null,
 	val shippingPerson: PersonInfo? = null,
-	val discountInfo: List<DiscountInfo>? = null
+	val discountInfo: List<DiscountInfo>? = null,
+	val customSurcharges: List<CustomSurcharge>? = null,
+	val shippingOption: ShippingOption? = null,
+	val handlingFee: HandlingFee? = null,
+	val paymentOptionsDetails: PaymentOption? = null,
+	val giftCardCode: String? = null,
+	val giftCardId: Int? = null,
+	val giftCardUuid: String? = null,
+	val giftCardTransactionOrderId: Int? = null,
+	val giftCardRedemption: Double? = null,
+	val totalBeforeGiftCardRedemption: Double? = null,
+	val giftCardDoubleSpending: Boolean? = null,
 ) : ApiRequestDTO {
 
 	data class DiscountInfo(
@@ -23,7 +37,9 @@ data class OrderForCalculate(
 		val type: DiscountType? = null,
 		val base: DiscountBase? = null,
 		val orderTotal: Double? = null,
-		val description: String? = null
+		val description: String? = null,
+		val appliesToProducts: List<Int>? = null,
+		val appliesToItems: List<Long>? = null,
 	)
 
 	data class OrderItemDiscountInfo(
@@ -62,6 +78,7 @@ data class OrderForCalculate(
 
 		val price: Double? = null,
 		val productPrice: Double? = null,
+		val needCalculateWholesalePrice: Boolean? = null,
 		val shipping: Double? = null,
 		val tax: Double? = null,
 		val fixedShippingRate: Double? = null,
@@ -80,8 +97,10 @@ data class OrderForCalculate(
 		val fixedShippingRateOnly: Boolean? = null,
 		val digital: Boolean? = null,
 		val couponApplied: Boolean? = null,
+		val giftCard: Boolean? = null,
 
 		val selectedOptions: List<OrderItemOption>? = null,
+		val combinationId: Int? = null,
 		val taxes: List<OrderItemTax>? = null,
 		val files: List<OrderItemProductFile>? = null,
 		val dimensions: ProductDimensions? = null,
@@ -174,9 +193,10 @@ data class OrderForCalculate(
 		override val name: String? = null,
 		override val value: Double? = null,
 		override val total: Double? = null,
+		val includeInPrice: Boolean? = null,
+		val taxType: OrderItemTaxType? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
-		val taxOnShipping: Double? = null,
-		val includeInPrice: Boolean? = null
+		val taxOnShipping: Double? = null
 	) : BaseOrderTax
 
 	data class OrderItemProductFile(
@@ -220,5 +240,38 @@ data class OrderForCalculate(
 		val stateOrProvinceCode: String? = null,
 		val stateOrProvinceName: String? = null,
 		val phone: String? = null
+	)
+
+	data class CustomSurcharge(
+		val id: String? = null,
+		val value: Double? = null,
+		val type: SurchargeType = SurchargeType.ABSOLUTE,
+		val description: String? = null,
+		val taxable: Boolean = false,
+	)
+
+	data class ShippingOption(
+		val shippingMethodId: String? = null,
+		val shippingMethodName: String? = null,
+		val shippingRate: Double? = null,
+		val pickupInstruction: String? = null,
+		val fulfillmentType: FulfillmentType = FulfillmentType.SHIPPING,
+	)
+
+	data class HandlingFee(
+		val name: String? = null,
+		val value: Double? = null,
+		val description: String? = null,
+		val taxes: List<HandlingFeeTax>? = null,
+	)
+
+	data class HandlingFeeTax(
+		val name: String? = null,
+		val value: Double? = null,
+		val total: Double? = null,
+	)
+
+	data class PaymentOption(
+		val paymentId: String? = null,
 	)
 }

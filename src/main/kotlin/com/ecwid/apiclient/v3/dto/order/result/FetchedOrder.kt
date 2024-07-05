@@ -1,7 +1,10 @@
 package com.ecwid.apiclient.v3.dto.order.result
 
-import com.ecwid.apiclient.v3.dto.common.*
+import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
+import com.ecwid.apiclient.v3.dto.common.ExtendedOrderTax
+import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
+import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import java.util.*
@@ -38,6 +41,7 @@ data class FetchedOrder(
 	val latestShipDate: Date? = null,
 	val latestDeliveryDate: Date? = null,
 	val trackingNumber: String? = null,
+	val trackingUrl: String? = null,
 	val pickupTime: Date? = null,
 
 	val paymentStatus: OrderPaymentStatus? = null,
@@ -62,6 +66,8 @@ data class FetchedOrder(
 	val totalBeforeGiftCardRedemption: Double? = null,
 	val giftCardDoubleSpending: Boolean? = null,
 	val giftCardCode: String? = null,
+	val giftCardId: Int? = null,
+	val giftCardUuid: String? = null,
 
 	val total: Double? = null,
 	val totalWithoutTax: Double? = null,
@@ -109,6 +115,9 @@ data class FetchedOrder(
 	val disableAllCustomerNotifications: Boolean? = null,
 	val externalOrderData: ExternalOrderData? = null,
 	val paymentReference: String? = null,
+	val shippingLabelAvailableForShipment: Boolean = false,
+	val loyalty: Loyalty? = null,
+	val customerFiscalCode: String? = null,
 
 	) : ApiFetchedDTO {
 
@@ -122,7 +131,9 @@ data class FetchedOrder(
 		val type: DiscountType? = null,
 		val base: DiscountBase? = null,
 		val orderTotal: Double? = null,
-		val description: String? = null
+		val description: String? = null,
+		val appliesToProducts: List<Int>? = null,
+		val appliesToItems: List<Long>? = null,
 	)
 
 	data class DiscountCouponInfo(
@@ -183,12 +194,13 @@ data class FetchedOrder(
 		val digital: Boolean? = null,
 		val productAvailable: Boolean? = null, // TODO Probably this field is always true
 		val couponApplied: Boolean? = null,
-		val isGiftCard: Boolean? = null,
+		val giftCard: Boolean? = null,
 
 		val recurringChargeSettings: RecurringChargeSettings? = null,
 		val subscriptionId: Long? = null,
 
 		val selectedOptions: List<OrderItemSelectedOption>? = null,
+		val combinationId: Int? = null,
 		val files: List<OrderItemProductFile>? = null,
 		val taxable: Boolean? = null,
 		val taxes: List<OrderItemTax>? = null,
@@ -314,6 +326,7 @@ data class FetchedOrder(
 	)
 
 	data class ShippingOption(
+		val shippingMethodId: String? = null,
 		val shippingCarrierName: String? = null,
 		val shippingMethodName: String? = null,
 		val shippingRate: Double? = null,
@@ -325,6 +338,8 @@ data class FetchedOrder(
 		val locationId: String? = null,
 		val localizedLabel: String? = null,
 		val isShippingLimit: Boolean? = null,
+		val scheduled: Boolean? = null,
+		val scheduledTimePrecisionType: ScheduledTimePrecisionType? = null,
 	)
 
 	data class HandlingFee(
@@ -496,5 +511,17 @@ data class FetchedOrder(
 		val refererId: String? = null,
 		val platformSpecificFields: HashMap<String, String>? = null,
 		val refererChannel: String? = null
+	)
+
+	data class Loyalty(
+		val earned: Double? = null,
+		val redemption: LoyaltyRedemption? = null,
+		val balance: Double? = null
+	)
+
+	data class LoyaltyRedemption(
+		val id: String? = null,
+		val amount: Double? = null,
+		val cancelled: Boolean? = null,
 	)
 }

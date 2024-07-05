@@ -40,8 +40,8 @@ class StoreProfileTest : BaseEntityTest() {
 			),
 			settings = UpdatedStoreProfile.Settings(
 				closed = true,
-				storeName = "The Shop",
-				storeDescription = "The Store Description",
+				storeName = "Test store for ecwid-java-api-client",
+				storeDescription = "Test Store Description for ecwid-java-api-client",
 				googleRemarketingEnabled = true,
 				googleAnalyticsId = "googleAnalyticsId",
 				fbPixelId = "fbPixelId",
@@ -229,8 +229,8 @@ class StoreProfileTest : BaseEntityTest() {
 		assertEquals(false, account.whiteLabel)
 
 		assertEquals(true, settings.closed)
-		assertEquals("The Shop", settings.storeName)
-		assertEquals("The Store Description", settings.storeDescription)
+		assertEquals("Test store for ecwid-java-api-client", settings.storeName)
+		assertEquals("Test Store Description for ecwid-java-api-client", settings.storeDescription)
 		assertEquals(true, settings.googleRemarketingEnabled)
 		assertEquals("googleAnalyticsId", settings.googleAnalyticsId)
 		assertEquals("fbPixelId", settings.fbPixelId)

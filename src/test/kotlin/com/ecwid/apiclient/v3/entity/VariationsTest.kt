@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.entity
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.common.AsyncPictureData
 import com.ecwid.apiclient.v3.dto.common.UploadFileData
+import com.ecwid.apiclient.v3.dto.product.enums.PriceModifierType
 import com.ecwid.apiclient.v3.dto.product.request.ProductCreateRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductDetailsRequest
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
@@ -193,6 +194,7 @@ class VariationsTest : BaseEntityTest() {
 		assertEquals("654321", firstVar.customsHsTariffCode)
 		assertEquals(create2ndVariationResult.id, secondVar.id)
 		assertEquals("second test Variation", secondVar.sku)
+		@Suppress("CommentWrapping")
 		assertEquals(5 /* = 9 - 4 */, secondVar.quantity)
 
 		// delete 1st variation
@@ -340,7 +342,7 @@ private fun generateProductSelectOption(name: String, values: List<String>): Upd
 private fun generateProductOptionChoice(value: String) = UpdatedProduct.ProductOptionChoice(
 	text = value,
 	priceModifier = randomModifier(),
-	priceModifierType = randomEnumValue()
+	priceModifierType = randomEnumValue<PriceModifierType>()
 )
 
 private fun generateProductRadioOption(name: String, values: List<String>): UpdatedProduct.ProductOption.RadioOption {

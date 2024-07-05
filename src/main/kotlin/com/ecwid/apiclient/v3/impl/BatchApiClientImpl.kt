@@ -2,9 +2,11 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.BatchApiClient
+import com.ecwid.apiclient.v3.dto.batch.request.CancelBatchGroupRequest
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequestWithIds
 import com.ecwid.apiclient.v3.dto.batch.request.GetEscapedBatchRequest
+import com.ecwid.apiclient.v3.dto.batch.result.CancelBatchGroupResult
 import com.ecwid.apiclient.v3.dto.batch.result.CreateBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
@@ -20,6 +22,9 @@ internal class BatchApiClientImpl(
 	override fun createBatch(request: CreateBatchRequest) =
 		apiClientHelper.makeObjectResultRequest<CreateBatchResult>(request)
 
+	override fun cancelBatchGroup(request: CancelBatchGroupRequest) =
+		apiClientHelper.makeObjectResultRequest<CancelBatchGroupResult>(request)
+
 	override fun getEscapedBatch(request: GetEscapedBatchRequest) =
 		apiClientHelper.makeObjectResultRequest<GetEscapedBatchResult>(request)
 
@@ -29,7 +34,13 @@ internal class BatchApiClientImpl(
 
 sealed class TypedBatchResponse<T> {
 	data class Ok<T>(val value: T) : TypedBatchResponse<T>()
-	data class ApiError<T>(val ecwidApiError: EcwidApiError) : TypedBatchResponse<T>()
+
+	data class ApiError<T>(
+		val httpStatusCode: Int,
+		val httpStatusText: String,
+		val ecwidApiError: EcwidApiError?,
+	) : TypedBatchResponse<T>()
+
 	data class ParseError<T>(val jsonDeserializationException: JsonDeserializationException) : TypedBatchResponse<T>()
 	class NotExecuted<T> : TypedBatchResponse<T>()
 }

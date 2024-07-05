@@ -29,6 +29,7 @@ data class UpdatedOrder(
 
 	val fulfillmentStatus: OrderFulfillmentStatus? = null,
 	val trackingNumber: String? = null,
+	val trackingUrl: String? = null,
 	val pickupTime: Date? = null,
 
 	val paymentStatus: OrderPaymentStatus? = null,
@@ -45,6 +46,13 @@ data class UpdatedOrder(
 
 	val total: Double? = null,
 	val subtotal: Double? = null,
+
+	val totalBeforeGiftCardRedemption: Double? = null,
+	val giftCardRedemption: Double? = null,
+	val giftCardDoubleSpending: Boolean? = null,
+	val giftCardCode: String? = null,
+	val giftCardId: Int? = null,
+	val giftCardUuid: String? = null,
 
 	val tax: Double? = null,
 	val customerTaxExempt: Boolean? = null,
@@ -87,6 +95,8 @@ data class UpdatedOrder(
 
 	val orderExtraFields: List<OrderExtraFields>? = null,
 	val paymentReference: String? = null,
+	val loyalty: Loyalty? = null,
+	val customerFiscalCode: String? = null,
 
 ) : ApiUpdatedDTO {
 
@@ -100,7 +110,9 @@ data class UpdatedOrder(
 		val type: DiscountType? = null,
 		val base: DiscountBase? = null,
 		val orderTotal: Double? = null,
-		val description: String? = null
+		val description: String? = null,
+		val appliesToProducts: List<Int>? = null,
+		val appliesToItems: List<Long>? = null,
 	)
 
 	data class DiscountCouponInfo(
@@ -123,6 +135,7 @@ data class UpdatedOrder(
 // 	)
 
 	data class OrderItem(
+		val id: Long? = null,
 		val productId: Int? = null,
 		val categoryId: Int? = null,
 
@@ -150,9 +163,10 @@ data class UpdatedOrder(
 		val fixedShippingRateOnly: Boolean? = null,
 		val digital: Boolean? = null,
 		val couponApplied: Boolean? = null,
-		val isGiftCard: Boolean? = null,
+		val giftCard: Boolean? = null,
 
 		val selectedOptions: List<OrderItemSelectedOption>? = null,
+		val combinationId: Int? = null,
 		val taxes: List<OrderItemTax>? = null,
 		val dimensions: ProductDimensions? = null,
 		val discountsAllowed: Boolean? = null,
@@ -285,6 +299,7 @@ data class UpdatedOrder(
 	)
 
 	data class ShippingOption(
+		val shippingMethodId: String? = null,
 		val shippingCarrierName: String? = null,
 		val shippingMethodName: String? = null,
 		val shippingRate: Double? = null,
@@ -342,6 +357,18 @@ data class UpdatedOrder(
 		val value: String? = null,
 		val orderDetailsDisplaySection: String? = null,
 		val orderBy: String? = null
+	)
+
+	data class Loyalty(
+		val earned: Double? = null,
+		val redemption: LoyaltyRedemption? = null,
+		val balance: Double? = null
+	)
+
+	data class LoyaltyRedemption(
+		val id: String? = null,
+		val amount: Double? = null,
+		val cancelled: Boolean? = null,
 	)
 
 	companion object {

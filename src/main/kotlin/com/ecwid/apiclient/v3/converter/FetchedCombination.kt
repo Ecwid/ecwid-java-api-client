@@ -9,6 +9,7 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 		sku = sku,
 
 		quantity = quantity,
+		locationInventory = locationInventory,
 		outOfStockVisibilityBehaviour = outOfStockVisibilityBehaviour,
 		unlimited = unlimited,
 		warningLimit = warningLimit,
@@ -19,6 +20,8 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 		costPrice = costPrice,
 		wholesalePrices = wholesalePrices?.map(FetchedVariation.WholesalePrice::toUpdated),
 		compareToPrice = compareToPrice,
+		lowestPrice = lowestPrice,
+		lowestPriceSettings = lowestPriceSettings.toUpdated(),
 
 		weight = weight,
 		dimensions = dimensions?.toUpdated(),
@@ -34,6 +37,7 @@ fun FetchedVariation.toUpdated(): UpdatedVariation {
 
 		customsHsTariffCode = customsHsTariffCode,
 		subscriptionSettings = subscriptionSettings?.toUpdated(),
+		alt = alt?.toUpdated()
 	)
 }
 
@@ -47,6 +51,7 @@ fun FetchedVariation.AttributeValue.toUpdated() = UpdatedVariation.AttributeValu
 	alias = type?.toAttributeValueAlias(),
 	value = value,
 	valueTranslated = valueTranslated,
+	show = show,
 )
 
 fun FetchedVariation.Option.toUpdated() = UpdatedVariation.Option(
@@ -74,3 +79,8 @@ private fun List<FetchedVariation.RecurringChargeSettings>.toUpdated() = map {
 		subscriptionPriceWithSignUpFee = it.subscriptionPriceWithSignUpFee
 	)
 }
+
+private fun FetchedVariation.LowestPriceSettings.toUpdated() = UpdatedVariation.LowestPriceSettings(
+	lowestPriceEnabled = lowestPriceEnabled,
+	manualLowestPrice = manualLowestPrice,
+)

@@ -2,8 +2,13 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.ProductsApiClient
+import com.ecwid.apiclient.v3.dto.common.PagingResult
+import com.ecwid.apiclient.v3.dto.common.PartialResult
+import com.ecwid.apiclient.v3.dto.common.fetchPagesAsItemSequence
 import com.ecwid.apiclient.v3.dto.product.request.*
 import com.ecwid.apiclient.v3.dto.product.result.*
+import com.ecwid.apiclient.v3.responsefields.AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+import kotlin.reflect.KClass
 
 internal class ProductsApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -16,7 +21,9 @@ internal class ProductsApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<ProductsSearchResult>(request)
 
 	override fun searchProductsAsSequence(request: ProductsSearchRequest.ByFilters) = sequence {
-		var offsetRequest = request
+		var offsetRequest = request.copy(
+			responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+		)
 		do {
 			val searchResult = searchProducts(offsetRequest)
 			yieldAll(searchResult.items)
@@ -87,7 +94,9 @@ internal class ProductsApiClientImpl(
 
 	override fun searchDeletedProductsAsSequence(request: DeletedProductsSearchRequest): Sequence<DeletedProduct> =
 		sequence {
-			var offsetRequest = request
+			var offsetRequest = request.copy(
+				responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+			)
 			do {
 				val searchResult = searchDeletedProducts(offsetRequest)
 				yieldAll(searchResult.items)
@@ -95,4 +104,22 @@ internal class ProductsApiClientImpl(
 			} while (searchResult.count >= searchResult.limit)
 		}
 
+	override fun <Result : PartialResult<FetchedProduct>> getProductDetails(request: ProductDetailsRequest, resultClass: KClass<Result>): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
+	}
+
+	override fun <Result : PartialResult<ProductsSearchResult>> searchProducts(request: ProductsSearchRequest.ByIds, resultClass: KClass<Result>): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
+	}
+
+	override fun <Result : PartialResult<ProductsSearchResult>> searchProducts(request: ProductsSearchRequest.ByFilters, resultClass: KClass<Result>): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
+	}
+
+	override fun <Result, Item> searchProductsAsSequence(
+		request: ProductsSearchRequest.ByFilters,
+		resultClass: KClass<Result>,
+	): Sequence<Item> where Result : PartialResult<ProductsSearchResult>, Result : PagingResult<Item> {
+		return fetchPagesAsItemSequence(request) { searchProducts(it, resultClass) }
+	}
 }

@@ -98,6 +98,7 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(orderItem.fixedShippingRateOnly, cartItem.fixedShippingRateOnly)
 			assertEquals(orderItem.digital, cartItem.digital)
 			assertEquals(orderItem.couponApplied, cartItem.couponApplied)
+			assertEquals(orderItem.giftCard, cartItem.giftCard)
 
 			assertEquals(orderItem.dimensions?.length, cartItem.dimensions?.length)
 			assertEquals(orderItem.dimensions?.width, cartItem.dimensions?.width)
@@ -111,6 +112,7 @@ class CartsTest : BaseEntityTest() {
 				assertEquals(orderSelectedOption.type, cartSelectedOptions.type)
 				// TODO Discover why after each create field `valuesArray` some times resets to null
 			}
+			assertEquals(orderItem.combinationId, cartItem.combinationId)
 
 			assertEquals(orderItem.taxes?.count(), cartItem.taxes?.count())
 			cartItem.taxes?.forEachIndexed { taxIndex, cartTaxes ->
@@ -122,6 +124,7 @@ class CartsTest : BaseEntityTest() {
 				assertEquals(orderTaxes.taxOnDiscountedSubtotal, cartTaxes.taxOnDiscountedSubtotal)
 				assertEquals(orderTaxes.taxOnShipping, cartTaxes.taxOnShipping)
 				assertEquals(orderTaxes.includeInPrice, cartTaxes.includeInPrice)
+				assertEquals(orderTaxes.taxType, cartTaxes.taxType)
 			}
 
 			assertEquals(orderItem.discounts?.count(), cartItem.discounts?.count())
@@ -161,6 +164,7 @@ class CartsTest : BaseEntityTest() {
 			testOrder.shippingOption?.shippingCarrierName,
 			cartDetailsResult.shippingOption?.shippingCarrierName
 		)
+		assertEquals(testOrder.shippingOption?.shippingMethodId, cartDetailsResult.shippingOption?.shippingMethodId)
 		assertEquals(testOrder.shippingOption?.shippingMethodName, cartDetailsResult.shippingOption?.shippingMethodName)
 		assertEquals(testOrder.shippingOption?.shippingRate, cartDetailsResult.shippingOption?.shippingRate)
 		assertEquals(
@@ -220,16 +224,18 @@ class CartsTest : BaseEntityTest() {
 			paymentStatus = OrderPaymentStatus.AWAITING_PAYMENT,
 			paymentMessage = null, // TODO Discover why after each create this field resets to null
 			items = testOrder.items?.mapIndexed { itemIndex, item ->
+				val createdOrderItem = createdOrder.items?.get(itemIndex)
 				val selectedOptions2 = item.selectedOptions?.mapIndexed { selectedOptionIndex, selectedOption ->
 					// TODO Discover why after create these two fields some times resets to null
 					val createdOptionSelectedOption =
-						createdOrder.items?.get(itemIndex)?.selectedOptions?.get(selectedOptionIndex)
+						createdOrderItem?.selectedOptions?.get(selectedOptionIndex)
 					selectedOption.copy(
 						valuesArray = createdOptionSelectedOption?.valuesArray,
 						selections = createdOptionSelectedOption?.selections
 					)
 				}
 				item.copy(
+					id = createdOrderItem?.id,
 					selectedOptions = selectedOptions2
 				)
 			}
@@ -252,10 +258,29 @@ class CartsTest : BaseEntityTest() {
 		assertEquals(orderForCalculate.email, calculatedOrder.email)
 		assertEquals(orderForCalculate.ipAddress, calculatedOrder.ipAddress)
 		assertEquals(orderForCalculate.customerId, calculatedOrder.customerId)
-		assertEquals(
-			null,
-			calculatedOrder.discountCoupon
-		) // TODO Discover why after each calculation this field resets to null
+
+		calculateOrderDetailsRequest.orderForCalculate.discountCoupon
+
+		val resultDiscountCoupon = calculatedOrder.discountCoupon
+		val requestDiscountCoupon = orderForCalculate.discountCoupon
+		requireNotNull(requestDiscountCoupon)
+		requireNotNull(resultDiscountCoupon)
+		assertEquals(requestDiscountCoupon.name, resultDiscountCoupon.name)
+		assertEquals(requestDiscountCoupon.code, resultDiscountCoupon.code)
+		assertEquals(requestDiscountCoupon.discountType, resultDiscountCoupon.discountType)
+		assertEquals(requestDiscountCoupon.status, resultDiscountCoupon.status)
+		assertEquals(requestDiscountCoupon.discount, resultDiscountCoupon.discount)
+		assertEquals(requestDiscountCoupon.launchDate, resultDiscountCoupon.launchDate)
+		assertEquals(requestDiscountCoupon.expirationDate, resultDiscountCoupon.expirationDate)
+		assertEquals(requestDiscountCoupon.totalLimit, resultDiscountCoupon.totalLimit)
+		assertEquals(requestDiscountCoupon.usesLimit, resultDiscountCoupon.usesLimit)
+		assertEquals(requestDiscountCoupon.applicationLimit, resultDiscountCoupon.applicationLimit)
+		assertNotNull(resultDiscountCoupon.creationDate)
+		assertEquals(requestDiscountCoupon.name, resultDiscountCoupon.name)
+		assertEquals(0, resultDiscountCoupon.orderCount)
+		requireNotNull(resultDiscountCoupon.catalogLimit)
+		assertEquals(requestDiscountCoupon.catalogLimit?.products, resultDiscountCoupon.catalogLimit?.products)
+		assertEquals(requestDiscountCoupon.catalogLimit?.categories, resultDiscountCoupon.catalogLimit?.categories)
 
 		assertEquals(orderForCalculate.items?.count(), calculatedOrder.items?.count())
 		calculatedOrder.items?.forEachIndexed { itemIndex, calculatedItem ->
@@ -266,7 +291,7 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(forCalculateItem.categoryId, calculatedItem.categoryId)
 			assertEquals(forCalculateItem.price, calculatedItem.price)
 			assertEquals(forCalculateItem.productPrice, calculatedItem.productPrice)
-			assertEquals(133.2, calculatedItem.shipping)
+			assertEquals(0.0, calculatedItem.shipping)
 			assertEquals(forCalculateItem.fixedShippingRate, calculatedItem.fixedShippingRate)
 			assertEquals(
 				null,
@@ -283,11 +308,14 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(forCalculateItem.fixedShippingRateOnly, calculatedItem.fixedShippingRateOnly)
 			assertEquals(forCalculateItem.digital, calculatedItem.digital)
 			assertEquals(false, calculatedItem.couponApplied)
+			assertEquals(false, calculatedItem.giftCard)
 
 			assertEquals(forCalculateItem.selectedOptions?.count(), calculatedItem.selectedOptions?.count())
 			calculatedItem.selectedOptions?.forEachIndexed { selectedOptionIndex, calculatedOrderItemOptions ->
 				val forCalculateItemOption = forCalculateItem.selectedOptions?.get(selectedOptionIndex)
-				requireNotNull(forCalculateItemOption) { "orderForCalculate.items[$itemIndex].selectedOptions[$selectedOptionIndex] not found" }
+				requireNotNull(forCalculateItemOption) {
+					"orderForCalculate.items[$itemIndex].selectedOptions[$selectedOptionIndex] not found"
+				}
 
 				assertEquals(forCalculateItemOption.name, calculatedOrderItemOptions.name)
 				assertEquals(forCalculateItemOption.type, calculatedOrderItemOptions.type)
@@ -297,6 +325,7 @@ class CartsTest : BaseEntityTest() {
 					calculatedOrderItemOptions.files?.count()
 				) // TODO Discover why after each calculation this field resets to null
 			}
+			assertEquals(forCalculateItem.combinationId, calculatedItem.combinationId)
 
 			assertEquals(forCalculateItem.files?.count(), calculatedItem.files?.count())
 			calculatedItem.files?.forEachIndexed { taxIndex, calculatedFile ->
@@ -462,6 +491,7 @@ class CartsTest : BaseEntityTest() {
 			fixedShippingRateOnly = true,
 			digital = true,
 			couponApplied = true,
+			giftCard = false,
 			selectedOptions = listOf(
 				generateChoiceSelectedOption(),
 				generateChoicesSelectedOption(),
@@ -469,6 +499,7 @@ class CartsTest : BaseEntityTest() {
 				generateDateSelectedOption(),
 				generateFilesSelectedOption()
 			),
+			combinationId = randomId(),
 			taxes = listOf(
 				generateTestOrderItemTax()
 			),
@@ -551,7 +582,8 @@ class CartsTest : BaseEntityTest() {
 			total = 22.6,
 			taxOnDiscountedSubtotal = 4.4,
 			taxOnShipping = 3.3,
-			includeInPrice = true
+			includeInPrice = true,
+			taxType = OrderItemTaxType.STATE
 		)
 	}
 
@@ -662,7 +694,20 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 					option.copy(
 						valueTranslated = order.items?.get(index)?.selectedOptions?.get(optIndex)?.valueTranslated
 					)
+				},
+				discounts = order.items?.get(index)?.discounts?.mapIndexed { discountIndex, discount ->
+					discount.copy(
+						discountInfo = order.items?.get(index)?.discounts?.get(discountIndex)?.discountInfo?.copy(
+							appliesToItems = null
+						)
+					)
 				}
+			)
+		},
+		customerFiscalCode = null, // ApiOrder has empty string instead of null
+		discountInfo = order.discountInfo?.map {
+			it.copy(
+				appliesToItems = null
 			)
 		}
 	)

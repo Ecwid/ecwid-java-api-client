@@ -12,6 +12,7 @@ data class CreateBatchRequestWithIds(
 	val requests: Map<String, ApiRequest> = emptyMap(),
 	val stopOnFirstFailure: Boolean = true,
 	val allowParallelMode: Boolean = false,
+	val groupId: String? = null,
 	val deduplicationKey: UUID = UUID.randomUUID(),
 ) : ApiRequest {
 
@@ -19,11 +20,12 @@ data class CreateBatchRequestWithIds(
 		pathSegments = listOf(
 			"batch"
 		),
-		params = mapOf(
-			"stopOnFirstFailure" to stopOnFirstFailure.toString(),
-			"allowParallelMode" to allowParallelMode.toString(),
-			"deduplicationKey" to deduplicationKey.toString(),
-		),
+		params = buildMap {
+			put("stopOnFirstFailure", stopOnFirstFailure.toString())
+			put("allowParallelMode", allowParallelMode.toString())
+			put("deduplicationKey", deduplicationKey.toString())
+			groupId?.let { put("groupId", it) }
+		},
 		httpBody = HttpBody.JsonBody(
 			obj = requests.map { (id, request) ->
 				SingleBatchRequest.create(id, request)
@@ -36,6 +38,7 @@ data class CreateBatchRequest(
 	val requests: List<ApiRequest> = emptyList(),
 	val stopOnFirstFailure: Boolean = true,
 	val allowParallelMode: Boolean = false,
+	val groupId: String? = null,
 	val deduplicationKey: UUID = UUID.randomUUID(),
 ) : ApiRequest {
 
@@ -43,11 +46,12 @@ data class CreateBatchRequest(
 		pathSegments = listOf(
 			"batch"
 		),
-		params = mapOf(
-			"stopOnFirstFailure" to stopOnFirstFailure.toString(),
-			"allowParallelMode" to allowParallelMode.toString(),
-			"deduplicationKey" to deduplicationKey.toString(),
-		),
+		params = buildMap {
+			put("stopOnFirstFailure", stopOnFirstFailure.toString())
+			put("allowParallelMode", allowParallelMode.toString())
+			put("deduplicationKey", deduplicationKey.toString())
+			groupId?.let { put("groupId", it) }
+		},
 		httpBody = HttpBody.JsonBody(
 			obj = requests.map(SingleBatchRequest.Companion::create)
 		)

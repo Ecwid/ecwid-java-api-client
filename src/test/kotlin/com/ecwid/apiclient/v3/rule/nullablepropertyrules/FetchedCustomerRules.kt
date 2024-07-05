@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
+import com.ecwid.apiclient.v3.dto.customer.result.CustomerFilterShippingAddress
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
@@ -11,6 +12,7 @@ val fetchedCustomerNullablePropertyRules: List<NullablePropertyRule<*, *>> = lis
 	IgnoreNullable(FetchedCustomer::customerGroupId),
 	IgnoreNullable(FetchedCustomer::customerGroupName),
 	AllowNullable(FetchedCustomer::lang),
+	AllowNullable(FetchedCustomer::privateAdminNotes),
 	IgnoreNullable(FetchedCustomer::registered),
 	IgnoreNullable(FetchedCustomer::shippingAddresses),
 	IgnoreNullable(FetchedCustomer::taxExempt),
@@ -39,5 +41,23 @@ val fetchedCustomerNullablePropertyRules: List<NullablePropertyRule<*, *>> = lis
 	IgnoreNullable(FetchedCustomer.ShippingAddress::postalCode),
 	IgnoreNullable(FetchedCustomer.ShippingAddress::stateOrProvinceCode),
 	IgnoreNullable(FetchedCustomer.ShippingAddress::stateOrProvinceName),
-	IgnoreNullable(FetchedCustomer.ShippingAddress::street)
+	IgnoreNullable(FetchedCustomer.ShippingAddress::street),
+	AllowNullable(FetchedCustomer.ShippingAddress::note),
+	AllowNullable(FetchedCustomer.ShippingAddress::createdDate),
+	AllowNullable(FetchedCustomer.ShippingAddress::defaultAddress),
+	AllowNullable(FetchedCustomer.ShippingAddress::orderBy),
+	AllowNullable(FetchedCustomer.ShippingAddress::addressFormatted),
+	AllowNullable(FetchedCustomer::stats),
+	AllowNullable(FetchedCustomer.CustomerStats::firstOrderDate),
+	AllowNullable(FetchedCustomer.CustomerStats::lastOrderDate),
+	AllowNullable(FetchedCustomer::contacts),
+	AllowNullable(FetchedCustomer.CustomerContact::handle),
+	AllowNullable(FetchedCustomer.CustomerContact::note),
+	AllowNullable(FetchedCustomer.CustomerContact::timestamp),
+	AllowNullable(FetchedCustomer.CustomerFavorite::addedTimestamp),
+
+	AllowNullable(CustomerFilterShippingAddress::street),
+	AllowNullable(CustomerFilterShippingAddress::city),
+	AllowNullable(CustomerFilterShippingAddress::countryCode),
+	AllowNullable(CustomerFilterShippingAddress::countryName),
 )

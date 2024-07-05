@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.OrdersApiClient
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.*
+import com.ecwid.apiclient.v3.responsefields.AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
 
 internal class OrdersApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -13,7 +14,9 @@ internal class OrdersApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<OrdersSearchResult>(request)
 
 	override fun searchOrdersAsSequence(request: OrdersSearchRequest) = sequence {
-		var offsetRequest = request
+		var offsetRequest = request.copy(
+			responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+		)
 		do {
 			val searchResult = searchOrders(offsetRequest)
 			yieldAll(searchResult.items)
@@ -48,7 +51,9 @@ internal class OrdersApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<DeletedOrdersSearchResult>(request)
 
 	override fun searchDeletedOrdersAsSequence(request: DeletedOrdersSearchRequest) = sequence {
-		var offsetRequest = request
+		var offsetRequest = request.copy(
+			responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+		)
 		do {
 			val searchResult = searchDeletedOrders(offsetRequest)
 			yieldAll(searchResult.items)

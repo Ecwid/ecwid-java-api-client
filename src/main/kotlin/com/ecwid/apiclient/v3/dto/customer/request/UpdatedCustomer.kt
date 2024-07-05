@@ -7,16 +7,18 @@ import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 
 data class UpdatedCustomer(
-	val email: String = "",
+	val email: String? = null,
 	val password: String? = null,
 	val customerGroupId: Int? = null,
 	val billingPerson: BillingPerson? = null,
 	val shippingAddresses: List<ShippingAddress>? = null,
+	val contacts: List<CustomerContact>? = null,
 	val taxId: String? = null,
 	val taxIdValid: Boolean? = null,
 	val taxExempt: Boolean? = null,
 	val acceptMarketing: Boolean? = null,
 	val lang: String? = null,
+	val privateAdminNotes: String? = null,
 
 	@JsonFieldName("b2b_b2c")
 	val commercialRelationshipScheme: CommercialRelationshipScheme? = null,
@@ -42,7 +44,20 @@ data class UpdatedCustomer(
 		val countryCode: String? = null,
 		val postalCode: String? = null,
 		val stateOrProvinceCode: String? = null,
-		val phone: String? = null
+		val phone: String? = null,
+		val note: String? = null,
+		val defaultAddress: Boolean? = null,
+		val orderBy: Int? = null,
+	)
+
+	data class CustomerContact(
+		val id: Long? = null,
+		val contact: String? = null,
+		val handle: String? = null,
+		val note: String? = null,
+		val type: String? = null,
+		val default: Boolean? = null,
+		val orderBy: Int? = null,
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedCustomer::class)

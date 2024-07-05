@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.dto.order.enums.OrderFulfillmentStatus
 import com.ecwid.apiclient.v3.dto.order.enums.OrderPaymentStatus
 import com.ecwid.apiclient.v3.impl.RequestInfo
+import com.ecwid.apiclient.v3.responsefields.ResponseFields
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -22,6 +23,7 @@ data class OrdersSearchRequest(
 	val customer: String? = null,
 	val customerId: Int? = null,
 	val email: String? = null,
+	val customerIdOrEmail: Boolean? = null,
 	val paymentMethod: String? = null,
 	val shippingMethod: String? = null,
 	val paymentStatus: List<OrderPaymentStatus>? = null,
@@ -31,13 +33,15 @@ data class OrdersSearchRequest(
 	val pickupTimeTo: Date? = null,
 	val paymentReference: String? = null,
 	val offset: Int = 0,
-	val limit: Int = 100
+	val limit: Int = 100,
+	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 		pathSegments = listOf(
 			"orders"
 		),
-		params = toParams()
+		params = toParams(),
+		responseFields = responseFields,
 	)
 
 	private fun toParams(): Map<String, String> {
@@ -57,6 +61,7 @@ data class OrdersSearchRequest(
 			request.customer?.let { put("customer", it) }
 			request.customerId?.let { put("customerId", it.toString()) }
 			request.email?.let { put("email", it) }
+			request.customerIdOrEmail?.let { put("customerIdOrEmail", it.toString()) }
 			request.paymentMethod?.let { put("paymentMethod", it) }
 			request.shippingMethod?.let { put("shippingMethod", it) }
 			request.paymentStatus?.let { put("paymentStatus", it.joinToString(",")) }

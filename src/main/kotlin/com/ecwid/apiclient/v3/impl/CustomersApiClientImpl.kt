@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.CustomersApiClient
 import com.ecwid.apiclient.v3.dto.customer.request.*
 import com.ecwid.apiclient.v3.dto.customer.result.*
+import com.ecwid.apiclient.v3.responsefields.AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
 
 internal data class CustomersApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -13,7 +14,9 @@ internal data class CustomersApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<CustomersSearchResult>(request)
 
 	override fun searchCustomersAsSequence(request: CustomersSearchRequest) = sequence {
-		var offsetRequest = request
+		var offsetRequest = request.copy(
+			responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+		)
 		do {
 			val searchResult = searchCustomers(offsetRequest)
 			yieldAll(searchResult.items)
@@ -37,11 +40,29 @@ internal data class CustomersApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<DeletedCustomersSearchResult>(request)
 
 	override fun searchDeletedCustomersAsSequence(request: DeletedCustomersSearchRequest) = sequence {
-		var offsetRequest = request
+		var offsetRequest = request.copy(
+			responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+		)
 		do {
 			val searchResult = searchDeletedCustomers(offsetRequest)
 			yieldAll(searchResult.items)
 			offsetRequest = offsetRequest.copy(offset = offsetRequest.offset + searchResult.count)
 		} while (searchResult.count >= searchResult.limit)
 	}
+
+	override fun searchCustomersProducts(request: CustomersProductsSearchRequest) =
+		apiClientHelper.makeObjectResultRequest<CustomersProductsSearchResult>(request)
+
+	override fun searchCustomersLocations(request: CustomersLocationsSearchRequest) =
+		apiClientHelper.makeObjectResultRequest<CustomersLocationsSearchResult>(request)
+
+	override fun searchCustomersFilters(request: CustomerFiltersDataSearchRequest) =
+		apiClientHelper.makeObjectResultRequest<CustomersFiltersDataSearchResult>(request)
+
+	override fun massUpdate(request: CustomersMassUpdateRequest) =
+		apiClientHelper.makeObjectResultRequest<CustomerUpdateResult>(request)
+
+	override fun getCustomersIds(request: CustomersIdsRequest) =
+		apiClientHelper.makeObjectResultRequest<CustomersIdsResult>(request)
+
 }

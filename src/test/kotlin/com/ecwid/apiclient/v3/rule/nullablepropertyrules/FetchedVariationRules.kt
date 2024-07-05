@@ -1,5 +1,6 @@
 package com.ecwid.apiclient.v3.rule.nullablepropertyrules
 
+import com.ecwid.apiclient.v3.dto.common.FetchedAlt
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
@@ -9,6 +10,15 @@ val fetchedVariationTypeNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	IgnoreNullable(FetchedVariation::attributes),
 	AllowNullable(FetchedVariation::borderInfo),
 	IgnoreNullable(FetchedVariation::compareToPrice),
+	IgnoreNullable(FetchedVariation::lowestPrice),
+	IgnoreNullable(FetchedVariation::defaultDisplayedLowestPrice),
+	IgnoreNullable(FetchedVariation::defaultDisplayedLowestPriceFormatted),
+	AllowNullable(FetchedVariation.LowestPriceSettings::manualLowestPrice),
+	AllowNullable(FetchedVariation.LowestPriceSettings::defaultDisplayedLowestPrice),
+	AllowNullable(FetchedVariation.LowestPriceSettings::defaultDisplayedLowestPriceFormatted),
+	AllowNullable(FetchedVariation.LowestPriceSettings::automaticLowestPrice),
+	AllowNullable(FetchedVariation.LowestPriceSettings::defaultDisplayedAutomaticLowestPrice),
+	AllowNullable(FetchedVariation.LowestPriceSettings::defaultDisplayedAutomaticLowestPriceFormatted),
 	AllowNullable(FetchedVariation::costPrice),
 	AllowNullable(FetchedVariation::customsHsTariffCode),
 	IgnoreNullable(FetchedVariation::defaultDisplayedPrice),
@@ -61,5 +71,9 @@ val fetchedVariationTypeNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	IgnoreNullable(FetchedVariation.SubscriptionSettings::displayedOneTimePurchaseMarkupPercent),
 	IgnoreNullable(FetchedVariation.SubscriptionSettings::displayedOneTimePurchaseMarkupPercentFormatted),
 	AllowNullable(FetchedVariation.SubscriptionSettings::oneTimePurchasePrice),
-	IgnoreNullable(FetchedVariation.SubscriptionSettings::oneTimePurchasePriceFormatted)
+	IgnoreNullable(FetchedVariation.SubscriptionSettings::oneTimePurchasePriceFormatted),
+	AllowNullable(FetchedVariation::locationInventory),
+	AllowNullable(FetchedVariation::alt),
+	AllowNullable(FetchedAlt::main),
+	AllowNullable(FetchedAlt::translated),
 )

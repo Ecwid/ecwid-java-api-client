@@ -24,6 +24,7 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 
 		fulfillmentStatus = fulfillmentStatus,
 		trackingNumber = trackingNumber,
+		trackingUrl = trackingUrl ?: "https://track.aftership.com/$trackingNumber",
 		pickupTime = pickupTime,
 
 		paymentStatus = paymentStatus,
@@ -40,6 +41,13 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 
 		total = total,
 		subtotal = subtotal,
+
+		totalBeforeGiftCardRedemption = totalBeforeGiftCardRedemption,
+		giftCardRedemption = giftCardRedemption,
+		giftCardDoubleSpending = giftCardDoubleSpending,
+		giftCardCode = giftCardCode,
+		giftCardId = giftCardId,
+		giftCardUuid = giftCardUuid,
 
 		tax = tax,
 		customerTaxExempt = customerTaxExempt,
@@ -83,6 +91,8 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 
 		orderExtraFields = orderExtraFields?.map(FetchedOrder.ExtraFieldsInfo::toUpdated),
 		paymentReference = paymentReference,
+		loyalty = loyalty?.toUpdated(),
+		customerFiscalCode = customerFiscalCode,
 	)
 }
 
@@ -99,7 +109,9 @@ fun FetchedOrder.DiscountInfo.toUpdated(): UpdatedOrder.DiscountInfo {
 		type = type,
 		base = base,
 		orderTotal = orderTotal,
-		description = description
+		description = description,
+		appliesToProducts = appliesToProducts,
+		appliesToItems = appliesToItems,
 	)
 }
 
@@ -120,6 +132,7 @@ fun FetchedOrder.DiscountCouponInfo.toUpdated(): UpdatedOrder.DiscountCouponInfo
 
 fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 	return UpdatedOrder.OrderItem(
+		id = id,
 		productId = if (productId == 0) null else productId,
 		categoryId = categoryId,
 
@@ -142,16 +155,17 @@ fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 		fixedShippingRateOnly = fixedShippingRateOnly,
 		digital = digital,
 		couponApplied = couponApplied,
+		giftCard = giftCard,
 
 		discountsAllowed = discountsAllowed,
 		isCustomerSetPrice = isCustomerSetPrice,
-		isGiftCard = isGiftCard,
 		nameTranslated = nameTranslated,
 		selectedPrice = selectedPrice?.toUpdated(),
 		shortDescriptionTranslated = shortDescriptionTranslated,
 		taxable = taxable,
 
 		selectedOptions = selectedOptions?.map(FetchedOrder.OrderItemSelectedOption::toUpdated),
+		combinationId = combinationId,
 		taxes = taxes?.map(FetchedOrder.OrderItemTax::toUpdated),
 		dimensions = dimensions?.toUpdated(),
 		discounts = discounts?.map(FetchedOrder.OrderItemDiscounts::toUpdated),
@@ -223,6 +237,7 @@ fun FetchedOrder.PersonInfo.toUpdated(): UpdatedOrder.PersonInfo {
 
 fun FetchedOrder.ShippingOption.toUpdated(): UpdatedOrder.ShippingOption {
 	return UpdatedOrder.ShippingOption(
+		shippingMethodId = shippingMethodId,
 		shippingCarrierName = shippingCarrierName,
 		shippingMethodName = shippingMethodName,
 		shippingRate = shippingRate,
@@ -307,5 +322,21 @@ fun FetchedOrder.ExtraFieldsInfo.toUpdated(): UpdatedOrder.OrderExtraFields {
 		value = this.value,
 		orderDetailsDisplaySection = this.orderDetailsDisplaySection,
 		orderBy = this.orderBy
+	)
+}
+
+fun FetchedOrder.Loyalty.toUpdated(): UpdatedOrder.Loyalty {
+	return UpdatedOrder.Loyalty(
+		earned = this.earned,
+		redemption = this.redemption?.toUpdated(),
+		balance = this.balance,
+	)
+}
+
+fun FetchedOrder.LoyaltyRedemption.toUpdated(): UpdatedOrder.LoyaltyRedemption {
+	return UpdatedOrder.LoyaltyRedemption(
+		id = this.id,
+		amount = this.amount,
+		cancelled = this.cancelled,
 	)
 }

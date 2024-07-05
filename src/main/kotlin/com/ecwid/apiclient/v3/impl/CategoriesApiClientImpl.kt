@@ -4,6 +4,11 @@ import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.CategoriesApiClient
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.result.*
+import com.ecwid.apiclient.v3.dto.common.PagingResult
+import com.ecwid.apiclient.v3.dto.common.PartialResult
+import com.ecwid.apiclient.v3.dto.common.fetchPagesAsItemSequence
+import com.ecwid.apiclient.v3.responsefields.AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+import kotlin.reflect.KClass
 
 internal class CategoriesApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -13,7 +18,9 @@ internal class CategoriesApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<CategoriesSearchResult>(request)
 
 	override fun searchCategoriesAsSequence(request: CategoriesSearchRequest) = sequence {
-		var offsetRequest = request
+		var offsetRequest = request.copy(
+			responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+		)
 		do {
 			val searchResult = searchCategories(offsetRequest)
 			yieldAll(searchResult.items)
@@ -25,7 +32,9 @@ internal class CategoriesApiClientImpl(
 		apiClientHelper.makeObjectResultRequest<CategoriesSearchResult>(request)
 
 	override fun searchCategoriesByPathAsSequence(request: CategoriesByPathRequest) = sequence {
-		var offsetRequest = request
+		var offsetRequest = request.copy(
+			responseFields = request.responseFields + AS_SEQUENCE_SEARCH_RESULT_REQUIRED_FIELDS
+		)
 		do {
 			val searchResult = searchCategoriesByPath(offsetRequest)
 			yieldAll(searchResult.items)
@@ -54,4 +63,53 @@ internal class CategoriesApiClientImpl(
 	override fun deleteCategoryImage(request: CategoryImageDeleteRequest) =
 		apiClientHelper.makeObjectResultRequest<CategoryImageDeleteResult>(request)
 
+	override fun assignProductsToCategory(request: AssignProductsToCategoryRequest): CategoryUpdateResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun unassignProductsFromCategory(request: UnassignProductsFromCategoryRequest): CategoryDeleteResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
+	override fun <Result : PartialResult<FetchedCategory>> getCategoryDetails(
+		request: CategoryDetailsRequest,
+		resultClass: KClass<Result>,
+	): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(
+			request = request,
+			resultClass = resultClass,
+		)
+	}
+
+	override fun <Result : PartialResult<CategoriesSearchResult>> searchCategories(
+		request: CategoriesSearchRequest,
+		resultClass: KClass<Result>
+	): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(
+			request = request,
+			resultClass = resultClass,
+		)
+	}
+
+	override fun <Result : PartialResult<CategoriesSearchResult>> searchCategoriesByPath(
+		request: CategoriesByPathRequest,
+		resultClass: KClass<Result>
+	): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(
+			request = request,
+			resultClass = resultClass,
+		)
+	}
+
+	override fun <Result, Item> searchCategoriesAsSequence(
+		request: CategoriesSearchRequest,
+		resultClass: KClass<Result>
+	): Sequence<Item> where Result : PartialResult<CategoriesSearchResult>, Result : PagingResult<Item> {
+		return fetchPagesAsItemSequence(request) { searchCategories(it, resultClass) }
+	}
+
+	override fun <Result, Item> searchCategoriesByPathAsSequence(
+		request: CategoriesByPathRequest,
+		resultClass: KClass<Result>,
+	): Sequence<Item> where Result : PartialResult<CategoriesSearchResult>, Result : PagingResult<Item> {
+		return fetchPagesAsItemSequence(request) { searchCategoriesByPath(it, resultClass) }
+	}
 }

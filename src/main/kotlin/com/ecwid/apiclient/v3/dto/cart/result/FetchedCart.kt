@@ -25,6 +25,7 @@ data class FetchedCart(
 	val additionalInfo: CartStringToStringMap? = null,
 	val orderComments: String? = null,
 	val trackingNumber: String? = null,
+	val trackingUrl: String? = null,
 
 	val paymentMethod: String? = null,
 	val paymentModule: String? = null,
@@ -45,6 +46,13 @@ data class FetchedCart(
 	val total: Double? = null,
 	val subtotal: Double? = null,
 	val usdTotal: Double? = null,
+
+	val giftCardCode: String? = null,
+	val giftCardId: Int? = null,
+	val giftCardUuid: String? = null,
+	val giftCardRedemption: Double? = null,
+	val totalBeforeGiftCardRedemption: Double? = null,
+	val giftCardDoubleSpending: Boolean? = null,
 
 	val tax: Double? = null,
 	val customerTaxExempt: Boolean? = null,
@@ -141,8 +149,10 @@ data class FetchedCart(
 		val fixedShippingRateOnly: Boolean? = null,
 		val digital: Boolean? = null,
 		val couponApplied: Boolean? = null,
+		val giftCard: Boolean? = null,
 
 		val selectedOptions: List<OrderItemOption>? = null,
+		val combinationId: Int? = null,
 		val taxes: List<OrderItemTax>? = null,
 		val files: List<OrderItemProductFile>? = null,
 		val dimensions: ProductDimensions? = null,
@@ -169,9 +179,10 @@ data class FetchedCart(
 		override val name: String? = null,
 		override val value: Double? = null,
 		override val total: Double? = null,
+		val taxType: OrderItemTaxType? = null,
+		val includeInPrice: Boolean? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
-		val taxOnShipping: Double? = null,
-		val includeInPrice: Boolean? = null
+		val taxOnShipping: Double? = null
 	) : BaseOrderTax
 
 	data class OrderItemProductFile(
@@ -220,6 +231,7 @@ data class FetchedCart(
 	)
 
 	data class ShippingOptionInfo(
+		val shippingMethodId: String? = null,
 		val shippingCarrierName: String? = null,
 		val shippingMethodName: String? = null,
 		val shippingRate: Double? = null,

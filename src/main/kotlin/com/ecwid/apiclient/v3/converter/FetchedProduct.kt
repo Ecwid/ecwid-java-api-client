@@ -15,6 +15,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 
 		enabled = enabled,
 		quantity = quantity,
+		locationInventory = locationInventory,
 		outOfStockVisibilityBehaviour = outOfStockVisibilityBehaviour,
 		unlimited = unlimited,
 		warningLimit = warningLimit,
@@ -27,6 +28,8 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		costPrice = costPrice,
 		wholesalePrices = wholesalePrices?.map(FetchedProduct.WholesalePrice::toUpdated),
 		compareToPrice = compareToPrice,
+		lowestPrice = lowestPrice,
+		lowestPriceSettings = lowestPriceSettings.toUpdated(),
 
 		weight = weight,
 		dimensions = dimensions?.toUpdated(),
@@ -42,7 +45,9 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		isSampleProduct = isSampleProduct,
 
 		seoTitle = seoTitle,
+		seoTitleTranslated = seoTitleTranslated,
 		seoDescription = seoDescription,
+		seoDescriptionTranslated = seoDescriptionTranslated,
 
 		options = options?.map(FetchedProduct.ProductOption::toUpdated),
 		tax = tax?.toUpdated(),
@@ -50,6 +55,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 
 		media = media?.toUpdated(),
 
+		discountsAllowed = discountsAllowed,
 		subtitle = subtitle,
 		ribbon = ribbon?.toUpdated(),
 		ribbonTranslated = ribbonTranslated,
@@ -64,6 +70,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		customsHsTariffCode = customsHsTariffCode,
 		minPurchaseQuantity = minPurchaseQuantity,
 		maxPurchaseQuantity = maxPurchaseQuantity,
+		reviewsCollectingAllowed = reviewsCollectingAllowed,
 	)
 }
 
@@ -183,6 +190,7 @@ fun FetchedProduct.AttributeValue.toUpdated() = UpdatedProduct.AttributeValue(
 	alias = type?.toAttributeValueAlias(),
 	value = value,
 	valueTranslated = valueTranslated,
+	show = show,
 )
 
 fun FetchedProduct.RelatedProducts.toUpdated() = UpdatedProduct.RelatedProducts(
@@ -215,11 +223,17 @@ fun FetchedProduct.ProductMedia.toUpdated() = UpdatedProduct.ProductMedia(
 
 fun FetchedProduct.ProductImage.toUpdated() = UpdatedProduct.ProductImage(
 	id = id,
-	orderBy = orderBy
+	orderBy = orderBy,
+	alt = alt?.toUpdated()
 )
 
 fun FetchedProduct.TaxInfo.toUpdated() = UpdatedProduct.TaxInfo(
 	taxable = taxable,
 	enabledManualTaxes = enabledManualTaxes,
 	taxClassCode = taxClassCode,
+)
+
+fun FetchedProduct.LowestPriceSettings.toUpdated() = UpdatedProduct.LowestPriceSettings(
+	lowestPriceEnabled = lowestPriceEnabled,
+	manualLowestPrice = manualLowestPrice
 )

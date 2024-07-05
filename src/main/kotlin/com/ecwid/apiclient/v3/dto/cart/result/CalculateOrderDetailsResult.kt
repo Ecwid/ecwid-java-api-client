@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.dto.cart.result
 import com.ecwid.apiclient.v3.dto.cart.CartStringToStringMap
 import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.BaseOrderTax
+import com.ecwid.apiclient.v3.dto.common.ExtendedOrderTax
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import java.util.*
 
@@ -18,10 +19,24 @@ data class CalculateOrderDetailsResult(
 	val paymentParams: CartStringToStringMap? = null,
 
 	val customerId: Int? = null,
+	val customerTaxExempt: Boolean? = null,
+	val customerTaxId: String? = null,
+	val customerTaxIdValid: Boolean? = null,
+	val pricesIncludeTax: Boolean? = null,
+	val reversedTaxApplied: Boolean? = null,
 
 	val total: Double? = null,
+	val totalWithoutTax: Double? = null,
 	val subtotal: Double? = null,
+	val subtotalWithoutTax: Double? = null,
 	val usdTotal: Double? = null,
+
+	val totalBeforeGiftCardRedemption: Double? = null,
+	val giftCardRedemption: Double? = null,
+	val giftCardDoubleSpending: Boolean? = null,
+	val giftCardCode: String? = null,
+	val giftCardId: Int? = null,
+	val giftCardUuid: String? = null,
 
 	val tax: Double? = null,
 	val taxesOnShipping: List<TaxOnShipping>? = null,
@@ -46,7 +61,9 @@ data class CalculateOrderDetailsResult(
 
 	val shippingOption: ShippingOptionInfo? = null,
 	val availableShippingOptions: List<ShippingOptionInfo>? = null,
-	val handlingFee: HandlingFeeInfo? = null
+	val handlingFee: HandlingFeeInfo? = null,
+
+	val customSurcharges: List<Surcharge>? = null,
 ) : ApiResultDTO {
 
 	data class TaxInfo(
@@ -71,7 +88,7 @@ data class CalculateOrderDetailsResult(
 		val width: Double? = null,
 		val length: Double? = null,
 		val weight: Double? = null,
-		val declaredValue: Int? = null
+		val declaredValue: Double? = null
 	)
 
 	data class DiscountInfo(
@@ -79,7 +96,9 @@ data class CalculateOrderDetailsResult(
 		val type: DiscountType? = null,
 		val base: DiscountBase? = null,
 		val orderTotal: Double? = null,
-		val description: String? = null
+		val description: String? = null,
+		val appliesToProducts: List<Int>? = null,
+		val appliesToItems: List<Long>? = null,
 	)
 
 	data class OrderItemDiscountInfo(
@@ -136,8 +155,10 @@ data class CalculateOrderDetailsResult(
 		val fixedShippingRateOnly: Boolean? = null,
 		val digital: Boolean? = null,
 		val couponApplied: Boolean? = null,
+		val giftCard: Boolean? = null,
 
 		val selectedOptions: List<OrderItemOption>? = null,
+		val combinationId: Int? = null,
 		val taxes: List<OrderItemTax>? = null,
 		val files: List<OrderItemProductFile>? = null,
 		val dimensions: ProductDimensions? = null,
@@ -163,9 +184,10 @@ data class CalculateOrderDetailsResult(
 		override val name: String? = null,
 		override val value: Double? = null,
 		override val total: Double? = null,
+		val includeInPrice: Boolean? = null,
+		val taxType: OrderItemTaxType? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
-		val taxOnShipping: Double? = null,
-		val includeInPrice: Boolean? = null
+		val taxOnShipping: Double? = null
 	) : BaseOrderTax
 
 	data class OrderItemProductFile(
@@ -223,12 +245,32 @@ data class CalculateOrderDetailsResult(
 	data class HandlingFeeInfo(
 		val name: String? = null,
 		val value: Double? = null,
-		val description: String? = null
+		val description: String? = null,
+		val taxes: List<HandlingFeeTax>? = null
 	)
+
+	data class HandlingFeeTax(
+		override val name: String? = null,
+		override val value: Double? = null,
+		override val total: Double? = null,
+		override val includeInPrice: Boolean? = null,
+	) : ExtendedOrderTax
 
 	data class TaxOnShipping(
 		override val name: String? = null,
 		override val value: Double? = null,
 		override val total: Double? = null
 	) : BaseOrderTax
+
+	data class Surcharge(
+		val id: String? = null,
+		val value: Double? = null,
+		val type: SurchargeType? = null,
+		val total: Double? = null,
+		val totalWithoutTax: Double? = null,
+		val description: String? = null,
+		val descriptionTranslated: String? = null,
+		val taxable: Boolean? = null,
+		val taxes: List<OrderItemTax>? = null
+	)
 }

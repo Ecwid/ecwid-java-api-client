@@ -7,13 +7,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	java
 	signing
-	kotlin("jvm") version "1.8.10"
+	kotlin("jvm") version "1.9.23"
 	id("com.adarshr.test-logger") version "3.2.0"
-	id("io.codearte.nexus-staging") version "0.30.0"
 	id("nebula.release") version "17.1.0"
 	id("maven-publish")
-	id("io.gitlab.arturbosch.detekt") version "1.22.0"
-	id("org.gradle.test-retry") version "1.4.1"
+	id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
+	id("io.gitlab.arturbosch.detekt") version "1.23.4"
+	id("org.gradle.test-retry") version "1.5.2"
 }
 
 repositories {
@@ -26,13 +26,14 @@ dependencies {
 
 	api("com.google.code.gson:gson:2.10")
 	api("org.apache.httpcomponents:httpclient:4.5.13")
-	api("io.prometheus:simpleclient:0.16.0")
+	api("io.prometheus:prometheus-metrics-core:1.1.0")
 
+	testImplementation(kotlin("test"))
 	testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
 	testImplementation("org.reflections:reflections:0.10.2")
 	testImplementation("uk.co.jemos.podam:podam:7.2.11.RELEASE")
 
-	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
+	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.4")
 }
 
 configure<JavaPluginConvention> {
@@ -70,6 +71,7 @@ tasks.withType<Detekt>().configureEach {
 
 val settingsProvider = SettingsProvider()
 
+
 tasks {
 	// All checks were already made by workflow "On pull request" => no checks here
 	if (gradle.startParameter.taskNames.contains("final")) {
@@ -78,16 +80,15 @@ tasks {
 		}
 	}
 
-	// Publish artifacts to Maven Central before pushing new git tag to repo
-	named("release").get().apply {
-		dependsOn(named("publish").get())
-	}
+	afterEvaluate {
+		// Publish artifacts to Maven Central before pushing new git tag to repo
+		named("release").get().apply {
+			dependsOn(named("publishToSonatype").get())
+		}
 
-	named("closeRepository").get().apply {
-		dependsOn(named("final").get())
-	}
-	named("releaseRepository").get().apply {
-		dependsOn(named("final").get())
+		named("closeAndReleaseStagingRepository").get().apply {
+			dependsOn(named("final").get())
+		}
 	}
 }
 
@@ -186,19 +187,6 @@ publishing {
 			}
 		}
 	}
-	repositories {
-		maven {
-			credentials {
-				username = settingsProvider.ossrhUsername
-				password = settingsProvider.ossrhPassword
-			}
-			url = if (project.isSnapshotVersion()) {
-				uri("https://oss.sonatype.org/content/repositories/snapshots/")
-			} else {
-				uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-			}
-		}
-	}
 }
 
 signing {
@@ -206,10 +194,16 @@ signing {
 	sign(publishing.publications["mavenJava"])
 }
 
-nexusStaging {
-	packageGroup = PublicationSettings.STAGING_PACKAGE_GROUP
-	username = settingsProvider.ossrhUsername
-	password = settingsProvider.ossrhPassword
+nexusPublishing {
+	repositories {
+		sonatype {
+			useStaging.set(!project.isSnapshotVersion())
+			packageGroup.set(PublicationSettings.STAGING_PACKAGE_GROUP)
+			stagingProfileId.set(PublicationSettings.STAGING_PROFILE_ID)
+			username.set(settingsProvider.ossrhUsername)
+			password.set(settingsProvider.ossrhPassword)
+		}
+	}
 }
 
 // We want to change SNAPSHOT versions format from:
@@ -298,12 +292,16 @@ class SettingsProvider {
 
 	fun validateGPGSecrets() = require(
 		value = !gpgSigningKey.isNullOrBlank() && !gpgSigningPassword.isNullOrBlank(),
-		lazyMessage = { "Both $GPG_SIGNING_KEY_PROPERTY and $GPG_SIGNING_PASSWORD_PROPERTY environment variables must not be empty" }
+		lazyMessage = {
+			"Both $GPG_SIGNING_KEY_PROPERTY and $GPG_SIGNING_PASSWORD_PROPERTY environment variables must not be empty"
+		}
 	)
 
 	fun validateOssrhCredentials() = require(
 		value = !ossrhUsername.isNullOrBlank() && !ossrhPassword.isNullOrBlank(),
-		lazyMessage = { "Both $OSSRH_USERNAME_PROPERTY and $OSSRH_PASSWORD_PROPERTY environment variables must not be empty" }
+		lazyMessage = {
+			"Both $OSSRH_USERNAME_PROPERTY and $OSSRH_PASSWORD_PROPERTY environment variables must not be empty"
+		}
 	)
 
 	companion object {
@@ -335,6 +333,7 @@ object PublicationSettings {
 	const val SCM_URL = "https://github.com/Ecwid/ecwid-java-api-client.git"
 
 	const val STAGING_PACKAGE_GROUP = "com.ecwid"
+	const val STAGING_PROFILE_ID = "42242535548c99"
 }
 
 object Consts {

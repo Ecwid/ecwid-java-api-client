@@ -8,6 +8,8 @@ fun generateTestOrder(): UpdatedOrder {
 	val externalOrderId = "Order #" + randomAlphanumeric(8)
 	val externalFulfillment = randomBoolean()
 	val refererId = "Referer " + randomAlphanumeric(8)
+	val totalPrice = randomPrice()
+	val trackingNumber = randomAlphanumeric(16)
 	return UpdatedOrder(
 		email = randomEmail(),
 		ipAddress = randomIp(),
@@ -28,7 +30,8 @@ fun generateTestOrder(): UpdatedOrder {
 		privateAdminNotes = "Private admin note " + randomAlphanumeric(16),
 
 		fulfillmentStatus = randomEnumValue<OrderFulfillmentStatus>(),
-		trackingNumber = randomAlphanumeric(16),
+		trackingNumber = trackingNumber,
+		trackingUrl = "https://track.aftership.com/$trackingNumber",
 
 		paymentStatus = randomEnumValue(OrderPaymentStatus.INCOMPLETE),
 		paymentMethod = "Payment method " + randomAlphanumeric(8),
@@ -49,8 +52,11 @@ fun generateTestOrder(): UpdatedOrder {
 		customerGroup = "Group " + randomAlphanumeric(8),
 		acceptMarketing = randomBoolean(),
 
-		total = randomPrice(),
+		total = totalPrice,
+		totalBeforeGiftCardRedemption = totalPrice,
 		subtotal = randomPrice(),
+		giftCardRedemption = 0.0,
+		giftCardDoubleSpending = false,
 
 		tax = randomPrice(),
 		customerTaxExempt = false, // TODO We cannot set this field to true, we should need update corresponding customer entity field first
@@ -94,6 +100,7 @@ fun generateTestOrder(): UpdatedOrder {
 		shippingPerson = generatePersonInfo(),
 
 		shippingOption = UpdatedOrder.ShippingOption(
+			shippingMethodId = "MethodId " + randomAlphanumeric(8),
 			shippingCarrierName = "Carrier " + randomAlphanumeric(8),
 			shippingMethodName = "Method " + randomAlphanumeric(8),
 			shippingRate = randomPrice(),
@@ -206,6 +213,7 @@ private fun generateTestOrderItem() = UpdatedOrder.OrderItem(
 	fixedShippingRateOnly = randomBoolean(),
 	digital = randomBoolean(),
 	couponApplied = randomBoolean(),
+	giftCard = false,
 	isCustomerSetPrice = randomBoolean(),
 	taxable = randomBoolean(),
 
@@ -216,6 +224,7 @@ private fun generateTestOrderItem() = UpdatedOrder.OrderItem(
 		generateDateSelectedOption(),
 		generateFilesSelectedOption()
 	),
+	combinationId = randomId(),
 	taxes = listOf(
 		generateTestOrderItemTax(),
 		generateTestOrderItemTax()

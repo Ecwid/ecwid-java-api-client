@@ -2,8 +2,10 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.ProductVariationsApiClient
+import com.ecwid.apiclient.v3.dto.common.PartialResult
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
+import kotlin.reflect.KClass
 
 internal class ProductVariationsApiClientImpl(
 	private val apiClientHelper: ApiClientHelper
@@ -23,8 +25,16 @@ internal class ProductVariationsApiClientImpl(
 	override fun getAllProductVariations(request: ProductVariationsRequest) =
 		apiClientHelper.makeObjectResultRequest<ProductVariationsResult>(request)
 
+	override fun <Result : PartialResult<FetchedVariation>> getAllProductVariations(request: ProductVariationsRequest, resultClass: KClass<Result>): List<Result> {
+		return apiClientHelper.makeObjectPartialResultRequestList(request, resultClass)
+	}
+
 	override fun getProductVariation(request: ProductVariationDetailsRequest) =
 		apiClientHelper.makeObjectResultRequest<FetchedVariation>(request)
+
+	override fun <Result : PartialResult<FetchedVariation>> getProductVariation(request: ProductVariationDetailsRequest, resultClass: KClass<Result>): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
+	}
 
 	override fun updateProductVariation(request: UpdateProductVariationRequest) =
 		apiClientHelper.makeObjectResultRequest<UpdateProductVariationResult>(request)

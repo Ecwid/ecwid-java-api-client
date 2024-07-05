@@ -5,5 +5,5 @@ enum class ComparePeriod {
 	similarPeriodInPreviousWeek,
 	similarPeriodInPreviousMonth,
 	similarPeriodInPreviousYear,
-	noComparePeriod;
+	noComparePeriod
 }

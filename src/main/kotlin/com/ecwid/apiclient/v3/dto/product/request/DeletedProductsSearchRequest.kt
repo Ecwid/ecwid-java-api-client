@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.dto.product.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
 import com.ecwid.apiclient.v3.impl.RequestInfo
+import com.ecwid.apiclient.v3.responsefields.ResponseFields
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -9,7 +10,8 @@ data class DeletedProductsSearchRequest(
 	val deletedFrom: Date? = null,
 	val deletedTo: Date? = null,
 	val offset: Int = 0,
-	val limit: Int = 100
+	val limit: Int = 100,
+	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
@@ -17,7 +19,8 @@ data class DeletedProductsSearchRequest(
 			"products",
 			"deleted"
 		),
-		params = toParams()
+		params = toParams(),
+		responseFields = responseFields,
 	)
 
 	private fun toParams(): Map<String, String> {

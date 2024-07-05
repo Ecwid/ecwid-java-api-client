@@ -4,42 +4,51 @@ import com.ecwid.apiclient.v3.config.ApiServerDomain
 import com.ecwid.apiclient.v3.config.ApiStoreCredentials
 import com.ecwid.apiclient.v3.config.LoggingSettings
 import com.ecwid.apiclient.v3.dto.application.request.ApplicationDeleteRequest
+import com.ecwid.apiclient.v3.dto.application.request.ApplicationTokenRequest
 import com.ecwid.apiclient.v3.dto.application.result.ApplicationDeleteResult
+import com.ecwid.apiclient.v3.dto.application.result.ApplicationTokenResult
+import com.ecwid.apiclient.v3.dto.batch.request.CancelBatchGroupRequest
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequest
 import com.ecwid.apiclient.v3.dto.batch.request.CreateBatchRequestWithIds
 import com.ecwid.apiclient.v3.dto.batch.request.GetEscapedBatchRequest
+import com.ecwid.apiclient.v3.dto.batch.result.CancelBatchGroupResult
 import com.ecwid.apiclient.v3.dto.batch.result.CreateBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
 import com.ecwid.apiclient.v3.dto.cart.request.*
 import com.ecwid.apiclient.v3.dto.cart.result.*
-import com.ecwid.apiclient.v3.dto.category.request.*
-import com.ecwid.apiclient.v3.dto.category.result.*
+import com.ecwid.apiclient.v3.dto.common.PartialResult
 import com.ecwid.apiclient.v3.dto.coupon.request.*
 import com.ecwid.apiclient.v3.dto.coupon.result.*
 import com.ecwid.apiclient.v3.dto.customer.request.*
 import com.ecwid.apiclient.v3.dto.customer.result.*
 import com.ecwid.apiclient.v3.dto.customergroup.request.*
 import com.ecwid.apiclient.v3.dto.customergroup.result.*
+import com.ecwid.apiclient.v3.dto.instantsite.redirects.request.*
+import com.ecwid.apiclient.v3.dto.instantsite.redirects.result.*
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.*
-import com.ecwid.apiclient.v3.dto.product.request.*
-import com.ecwid.apiclient.v3.dto.product.result.*
+import com.ecwid.apiclient.v3.dto.productreview.request.*
+import com.ecwid.apiclient.v3.dto.productreview.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
-import com.ecwid.apiclient.v3.dto.profile.request.*
-import com.ecwid.apiclient.v3.dto.profile.result.*
 import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
 import com.ecwid.apiclient.v3.dto.saleschannels.request.*
 import com.ecwid.apiclient.v3.dto.saleschannels.response.*
+import com.ecwid.apiclient.v3.dto.sluginfo.FetchedSlugInfo
+import com.ecwid.apiclient.v3.dto.sluginfo.SlugInfoRequest
 import com.ecwid.apiclient.v3.dto.storage.request.*
 import com.ecwid.apiclient.v3.dto.storage.result.*
+import com.ecwid.apiclient.v3.dto.subscriptions.request.SubscriptionsSearchRequest
+import com.ecwid.apiclient.v3.dto.subscriptions.result.FetchedSubscription
+import com.ecwid.apiclient.v3.dto.subscriptions.result.SubscriptionsSearchResult
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
 import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
+import kotlin.reflect.KClass
 
 open class ApiClient private constructor(
 	protected val apiClientHelper: ApiClientHelper,
@@ -58,6 +67,10 @@ open class ApiClient private constructor(
 	applicationApiClient: ApplicationApiClient,
 	applicationStorageApiClient: ApplicationStorageApiClient,
 	reportsApiClient: ReportsApiClientImpl,
+	subscriptionsApiClient: SubscriptionsApiClientImpl,
+	instantSiteRedirectsApiClient: InstantSiteRedirectsApiClientImpl,
+	slugInfoApiClient: SlugInfoApiClientImpl,
+	productReviewsApiClient: ProductReviewsApiClientImpl,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	ProductsApiClient by productsApiClient,
@@ -73,7 +86,11 @@ open class ApiClient private constructor(
 	SalesChannelsApiClient by salesChannelsApiClient,
 	ApplicationApiClient by applicationApiClient,
 	ApplicationStorageApiClient by applicationStorageApiClient,
-	ReportsApiClient by reportsApiClient {
+	ReportsApiClient by reportsApiClient,
+	SubscriptionsApiClient by subscriptionsApiClient,
+	InstantSiteRedirectsApiClient by instantSiteRedirectsApiClient,
+	SlugInfoApiClient by slugInfoApiClient,
+	ProductReviewsApiClient by productReviewsApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -92,6 +109,10 @@ open class ApiClient private constructor(
 		applicationApiClient = ApplicationApiClientImpl(apiClientHelper),
 		applicationStorageApiClient = ApplicationStorageApiClientImpl(apiClientHelper),
 		reportsApiClient = ReportsApiClientImpl(apiClientHelper),
+		subscriptionsApiClient = SubscriptionsApiClientImpl(apiClientHelper),
+		instantSiteRedirectsApiClient = InstantSiteRedirectsApiClientImpl(apiClientHelper),
+		slugInfoApiClient = SlugInfoApiClientImpl(apiClientHelper),
+		productReviewsApiClient = ProductReviewsApiClientImpl(apiClientHelper),
 	)
 
 	companion object {
@@ -113,82 +134,6 @@ open class ApiClient private constructor(
 			return ApiClient(apiClientHelper)
 		}
 	}
-}
-
-// Store-Profile
-// https://api-docs.ecwid.com/reference/store-profile
-interface StoreProfileApiClient {
-	fun getStoreProfile(request: StoreProfileRequest): FetchedStoreProfile
-	fun updateStoreProfile(request: StoreProfileUpdateRequest): StoreProfileUpdateResult
-	fun getLatestStats(request: LatestStatsRequest): FetchedLatestStats
-	fun getShippingOptions(request: ShippingOptionsRequest): ShippingOptionsResult
-
-	// 	fun addShippingOption()
-	// 	fun updateShippingOption()
-	fun getPaymentOptions(request: PaymentOptionsRequest): PaymentOptionsResult
-	fun createPaymentOption(request: PaymentOptionCreateRequest): PaymentOptionCreateResult
-	fun deletePaymentOption(request: PaymentOptionDeleteRequest): PaymentOptionDeleteResult
-	fun updatePaymentOption(request: PaymentOptionUpdateRequest): PaymentOptionUpdateResult
-
-	fun uploadStoreLogo(request: StoreLogoUploadRequest): StoreLogoUploadResult
-	fun removeStoreLogo(request: StoreLogoRemoveRequest): StoreLogoRemoveResult
-	fun uploadInvoiceLogo(request: InvoiceLogoUploadRequest): InvoiceLogoUploadResult
-	fun removeInvoiceLogo(request: InvoiceLogoRemoveRequest): InvoiceLogoRemoveResult
-	fun uploadEmailLogo(request: EmailLogoUploadRequest): EmailLogoUploadResult
-	fun removeEmailLogo(request: EmailLogoRemoveRequest): EmailLogoRemoveResult
-	fun searchExtrafieldConfigs(request: ExtrafieldConfigSearchRequest): ExtrafieldConfigSearchResult
-	fun getExtrafieldConfigDetails(request: ExtrafieldConfigDetailsRequest): FetchedExtrafieldConfig
-	fun createExtrafieldConfig(request: ExtrafieldConfigCreateRequest): ExtrafieldConfigCreateResult
-	fun updateExtrafieldConfig(request: ExtrafieldConfigUpdateRequest): ExtrafieldConfigUpdateResult
-	fun deleteExtrafieldConfig(request: ExtrafieldConfigDeleteRequest): ExtrafieldConfigDeleteResult
-	fun searchOrderStatusesSettings(request: OrderStatusSettingsSearchRequest): OrderStatusSettingsSearchResult
-	fun getOrderStatusSettingsDetails(request: OrderStatusSettingsDetailsRequest): FetchedOrderStatusSettings
-	fun updateOrderStatusSettings(request: OrderStatusSettingsUpdateRequest): OrderStatusSettingsUpdateResult
-}
-
-// Products
-// https://developers.ecwid.com/api-documentation/products
-interface ProductsApiClient {
-	fun searchProducts(request: ProductsSearchRequest.ByFilters): ProductsSearchResult
-	fun searchProducts(request: ProductsSearchRequest.ByIds): ProductsSearchResult
-	fun searchProductsAsSequence(request: ProductsSearchRequest.ByFilters): Sequence<FetchedProduct>
-	fun searchProductsAsSequence(request: ProductsSearchRequest.ByIds): Sequence<FetchedProduct>
-	fun getProductDetails(request: ProductDetailsRequest): FetchedProduct
-	fun createProduct(request: ProductCreateRequest): ProductCreateResult
-	fun updateProduct(request: ProductUpdateRequest): ProductUpdateResult
-	fun updateProductInventory(request: ProductInventoryUpdateRequest): ProductInventoryUpdateResult
-	fun getProductFilters(request: GetProductFiltersRequest): GetProductFiltersResult
-	fun deleteProduct(request: ProductDeleteRequest): ProductDeleteResult
-	fun uploadProductImage(request: ProductImageUploadRequest): ProductImageUploadResult
-	fun uploadProductImageAsync(request: ProductImageAsyncUploadRequest): ProductImageAsyncUploadResult
-	fun deleteProductImage(request: ProductImageDeleteRequest): ProductImageDeleteResult
-	fun uploadProductGalleryImage(request: ProductGalleryImageUploadRequest): ProductGalleryImageUploadResult
-	fun uploadProductGalleryImageAsync(request: ProductGalleryImageAsyncUploadRequest): ProductGalleryImageAsyncUploadResult
-	fun deleteProductGalleryImage(request: ProductGalleryImageDeleteRequest): ProductGalleryImageDeleteResult
-	fun deleteProductGalleryImages(request: ProductGalleryImagesDeleteRequest): ProductGalleryImagesDeleteResult
-	fun downloadProductFile(request: ProductFileDownloadRequest): ByteArray
-	fun uploadProductFile(request: ProductFileUploadRequest): ProductFileUploadResult
-	fun updateProductFile(request: ProductFileUpdateRequest): ProductFileUpdateResult
-	fun deleteProductFile(request: ProductFileDeleteRequest): ProductFileDeleteResult
-	fun deleteProductFiles(request: ProductFilesDeleteRequest): ProductFilesDeleteResult
-	fun searchDeletedProducts(request: DeletedProductsSearchRequest): DeletedProductsSearchResult
-	fun searchDeletedProductsAsSequence(request: DeletedProductsSearchRequest): Sequence<DeletedProduct>
-}
-
-// Categories
-// https://developers.ecwid.com/api-documentation/categories
-interface CategoriesApiClient {
-	fun searchCategories(request: CategoriesSearchRequest): CategoriesSearchResult
-	fun searchCategoriesAsSequence(request: CategoriesSearchRequest): Sequence<FetchedCategory>
-	fun searchCategoriesByPath(request: CategoriesByPathRequest): CategoriesSearchResult
-	fun searchCategoriesByPathAsSequence(request: CategoriesByPathRequest): Sequence<FetchedCategory>
-	fun getCategoryDetails(request: CategoryDetailsRequest): FetchedCategory
-	fun createCategory(request: CategoryCreateRequest): CategoryCreateResult
-	fun updateCategory(request: CategoryUpdateRequest): CategoryUpdateResult
-	fun deleteCategory(request: CategoryDeleteRequest): CategoryDeleteResult
-	fun uploadCategoryImage(request: CategoryImageUploadRequest): CategoryImageUploadResult
-	fun uploadCategoryImageAsync(request: CategoryImageAsyncUploadRequest): CategoryImageAsyncUploadResult
-	fun deleteCategoryImage(request: CategoryImageDeleteRequest): CategoryImageDeleteResult
 }
 
 // Orders
@@ -229,6 +174,11 @@ interface CustomersApiClient {
 	fun deleteCustomer(request: CustomerDeleteRequest): CustomerDeleteResult
 	fun searchDeletedCustomers(request: DeletedCustomersSearchRequest): DeletedCustomersSearchResult
 	fun searchDeletedCustomersAsSequence(request: DeletedCustomersSearchRequest): Sequence<DeletedCustomer>
+	fun searchCustomersProducts(request: CustomersProductsSearchRequest): CustomersProductsSearchResult
+	fun searchCustomersLocations(request: CustomersLocationsSearchRequest): CustomersLocationsSearchResult
+	fun searchCustomersFilters(request: CustomerFiltersDataSearchRequest): CustomersFiltersDataSearchResult
+	fun massUpdate(request: CustomersMassUpdateRequest): CustomerUpdateResult
+	fun getCustomersIds(request: CustomersIdsRequest): CustomersIdsResult
 }
 
 // Customer groups
@@ -247,6 +197,7 @@ interface CustomerGroupsApiClient {
 interface BatchApiClient {
 	fun createBatch(request: CreateBatchRequestWithIds): CreateBatchResult
 	fun createBatch(request: CreateBatchRequest): CreateBatchResult
+	fun cancelBatchGroup(request: CancelBatchGroupRequest): CancelBatchGroupResult
 	fun getTypedBatch(request: GetEscapedBatchRequest): GetTypedBatchResult
 	fun getEscapedBatch(request: GetEscapedBatchRequest): GetEscapedBatchResult
 }
@@ -263,12 +214,26 @@ interface ProductVariationsApiClient {
 	fun uploadVariationImage(request: ProductVariationImageUploadRequest): ProductVariationImageUploadResult
 	fun uploadProductVariationImageAsync(request: ProductVariationImageAsyncUploadRequest): ProductVariationImageAsyncUploadResult
 	fun getAllProductVariations(request: ProductVariationsRequest): ProductVariationsResult
+	fun <Result> getAllProductVariations(request: ProductVariationsRequest, resultClass: KClass<Result>): List<Result>
+		where Result : PartialResult<FetchedVariation>
 	fun getProductVariation(request: ProductVariationDetailsRequest): FetchedVariation
+	fun <Result> getProductVariation(request: ProductVariationDetailsRequest, resultClass: KClass<Result>): Result
+		where Result : PartialResult<FetchedVariation>
 	fun updateProductVariation(request: UpdateProductVariationRequest): UpdateProductVariationResult
 	fun deleteProductVariation(request: DeleteProductVariationRequest): DeleteProductVariationsResult
 	fun deleteAllProductVariations(request: DeleteAllProductVariationsRequest): DeleteProductVariationsResult
 	fun adjustVariationInventory(request: AdjustVariationInventoryRequest): AdjustVariationInventoryResult
 	fun deleteVariationImage(request: ProductVariationImageDeleteRequest): ProductVariationImageDeleteResult
+}
+
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result : PartialResult<FetchedVariation>> ProductVariationsApiClient.getProductVariation(request: ProductVariationDetailsRequest): Result {
+	return getProductVariation(request, Result::class)
+}
+
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result : PartialResult<FetchedVariation>> ProductVariationsApiClient.getAllProductVariations(request: ProductVariationsRequest): List<Result> {
+	return getAllProductVariations(request, Result::class)
 }
 
 // Carts
@@ -305,6 +270,7 @@ interface SalesChannelsApiClient {
 // https://developers.ecwid.com/api-documentation/application
 interface ApplicationApiClient {
 	fun deleteApplication(request: ApplicationDeleteRequest): ApplicationDeleteResult
+	fun getApplicationToken(request: ApplicationTokenRequest): ApplicationTokenResult
 }
 
 // Application storage
@@ -328,4 +294,35 @@ interface ApplicationStorageApiClient {
 // Report API
 interface ReportsApiClient {
 	fun fetchReport(request: ReportRequest): FetchedReportResponse
+}
+
+// Recurring subscriptions
+// https://api-docs.ecwid.com/reference/get-subscription
+interface SubscriptionsApiClient {
+	fun searchSubscriptions(request: SubscriptionsSearchRequest): SubscriptionsSearchResult
+	fun searchSubscriptionsAsSequence(request: SubscriptionsSearchRequest): Sequence<FetchedSubscription>
+}
+
+interface InstantSiteRedirectsApiClient {
+	fun searchInstantSiteRedirects(request: InstantSiteRedirectsSearchRequest): InstantSiteRedirectsSearchResult
+	fun getInstantSiteRedirectsForExactPath(request: InstantSiteRedirectsGetForExactPathRequest): InstantSiteRedirectsGetForExactPathResult
+	fun getInstantSiteRedirect(request: InstantSiteRedirectGetRequest): FetchedInstantSiteRedirect
+	fun updateInstantSiteRedirect(request: InstantSiteRedirectUpdateRequest): InstantSiteRedirectsUpdateResult
+	fun createInstantSiteRedirects(request: InstantSiteRedirectsCreateRequest): InstantSiteRedirectsCreateResult
+	fun deleteInstantSiteRedirect(request: InstantSiteRedirectDeleteRequest): InstantSiteRedirectsDeleteResult
+}
+
+interface SlugInfoApiClient {
+	fun getSlugInfo(request: SlugInfoRequest): FetchedSlugInfo
+}
+
+// Product reviews
+interface ProductReviewsApiClient {
+	fun searchProductReviews(request: ProductReviewSearchRequest): ProductReviewSearchResult
+	fun searchProductReviewsAsSequence(request: ProductReviewSearchRequest): Sequence<FetchedProductReview>
+	fun getProductReviewDetails(request: ProductReviewDetailsRequest): FetchedProductReview
+	fun updateProductReviewStatus(request: ProductReviewUpdateStatusRequest): ProductReviewUpdateStatusResult
+	fun deleteProductReview(request: ProductReviewDeleteRequest): ProductReviewDeleteResult
+	fun massUpdateProductReview(request: ProductReviewMassUpdateRequest): ProductReviewMassUpdateResult
+	fun getProductReviewsFiltersData(request: ProductReviewFiltersDataRequest): ProductReviewFiltersDataResult
 }

@@ -9,11 +9,13 @@ fun FetchedCustomer.toUpdated(): UpdatedCustomer {
 		customerGroupId = customerGroupId,
 		billingPerson = billingPerson?.toUpdated(),
 		shippingAddresses = shippingAddresses?.map(FetchedCustomer.ShippingAddress::toUpdated),
+		contacts = contacts?.map(FetchedCustomer.CustomerContact::toUpdated),
 		taxId = taxId,
 		taxIdValid = taxIdValid,
 		taxExempt = taxExempt,
 		acceptMarketing = acceptMarketing,
 		lang = lang,
+		privateAdminNotes = privateAdminNotes,
 		commercialRelationshipScheme = commercialRelationshipScheme,
 	)
 }
@@ -41,6 +43,21 @@ fun FetchedCustomer.ShippingAddress.toUpdated(): UpdatedCustomer.ShippingAddress
 		countryCode = countryCode,
 		postalCode = postalCode,
 		stateOrProvinceCode = stateOrProvinceCode,
-		phone = phone
+		phone = phone,
+		note = note,
+		defaultAddress = defaultAddress,
+		orderBy = orderBy,
+	)
+}
+
+fun FetchedCustomer.CustomerContact.toUpdated(): UpdatedCustomer.CustomerContact {
+	return UpdatedCustomer.CustomerContact(
+		id = id,
+		contact = contact,
+		handle = handle,
+		note = note,
+		type = type,
+		default = default,
+		orderBy = orderBy,
 	)
 }

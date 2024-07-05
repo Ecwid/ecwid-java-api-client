@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 import com.ecwid.apiclient.v3.dto.coupon.result.FetchedCoupon
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
 import com.ecwid.apiclient.v3.dto.customergroup.result.FetchedCustomerGroup
+import com.ecwid.apiclient.v3.dto.instantsite.redirects.result.FetchedInstantSiteRedirect
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.dto.producttype.result.FetchedProductType
@@ -33,6 +34,20 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedProduct::compareToPriceDiscountPercent),
 	Ignored(FetchedProduct::compareToPriceDiscountPercentFormatted),
 	Ignored(FetchedProduct::compareToPriceFormatted),
+	ReadOnly(FetchedProduct::defaultDisplayedCompareToPrice),
+	ReadOnly(FetchedProduct::defaultDisplayedCompareToPriceFormatted),
+	ReadOnly(FetchedProduct::defaultDisplayedCompareToPriceDiscount),
+	ReadOnly(FetchedProduct::defaultDisplayedCompareToPriceDiscountFormatted),
+	ReadOnly(FetchedProduct::defaultDisplayedCompareToPriceDiscountPercent),
+	ReadOnly(FetchedProduct::defaultDisplayedCompareToPriceDiscountPercentFormatted),
+	Ignored(FetchedProduct::lowestPrice),
+	ReadOnly(FetchedProduct::defaultDisplayedLowestPrice),
+	ReadOnly(FetchedProduct::defaultDisplayedLowestPriceFormatted),
+	ReadOnly(FetchedProduct.LowestPriceSettings::defaultDisplayedLowestPrice),
+	ReadOnly(FetchedProduct.LowestPriceSettings::defaultDisplayedLowestPriceFormatted),
+	ReadOnly(FetchedProduct.LowestPriceSettings::automaticLowestPrice),
+	ReadOnly(FetchedProduct.LowestPriceSettings::defaultDisplayedAutomaticLowestPrice),
+	ReadOnly(FetchedProduct.LowestPriceSettings::defaultDisplayedAutomaticLowestPriceFormatted),
 	Ignored(FetchedProduct.AttributeValue::name),
 	Ignored(FetchedProduct.AttributeValue::type),
 	Ignored(FetchedProduct.AttributeValue::show),
@@ -46,13 +61,18 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedProduct.ProductImage::image800pxUrl),
 	Ignored(FetchedProduct.ProductImage::image1500pxUrl),
 	Ignored(FetchedProduct.ProductImage::imageOriginalUrl),
+	ReadOnly(FetchedProduct.ProductMedia::videos),
 	ReadOnly(FetchedProduct.GalleryImage::borderInfo),
 	Ignored(FetchedProduct::files),
 	Ignored(FetchedProduct::favorites),
 	Ignored(FetchedProduct::defaultCombinationId),
 	Ignored(FetchedProduct::combinations),
 	Ignored(FetchedProduct::isGiftCard),
+	ReadOnly(FetchedProduct::hasFreeShipping),
 	ReadOnly(FetchedProduct::googleProductCategoryName),
+	ReadOnly(FetchedProduct::rating),
+	ReadOnly(FetchedProduct::reviewsModerated),
+	ReadOnly(FetchedProduct::reviewsPublished),
 
 	Ignored(FetchedCart::cartId),
 	Ignored(FetchedCart::email),
@@ -67,6 +87,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedCart::additionalInfo),
 	Ignored(FetchedCart::orderComments),
 	Ignored(FetchedCart::trackingNumber),
+	ReadOnly(FetchedCart::trackingUrl),
 	Ignored(FetchedCart::paymentMethod),
 	Ignored(FetchedCart::paymentModule),
 	Ignored(FetchedCart::paymentParams),
@@ -82,6 +103,12 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedCart::total),
 	Ignored(FetchedCart::subtotal),
 	Ignored(FetchedCart::usdTotal),
+	ReadOnly(FetchedCart::giftCardCode),
+	ReadOnly(FetchedCart::giftCardDoubleSpending),
+	ReadOnly(FetchedCart::giftCardId),
+	ReadOnly(FetchedCart::giftCardUuid),
+	ReadOnly(FetchedCart::giftCardRedemption),
+	ReadOnly(FetchedCart::totalBeforeGiftCardRedemption),
 	Ignored(FetchedCart::tax),
 	Ignored(FetchedCart::customerTaxExempt),
 	Ignored(FetchedCart::customerTaxId),
@@ -110,6 +137,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedCategory::originalImage),
 	Ignored(FetchedCategory::url),
 	Ignored(FetchedCategory::productCount),
+	ReadOnly(FetchedCategory::productCountWithoutSubcategories),
 	Ignored(FetchedCategory::enabledProductCount),
 
 	ReadOnly(FetchedCoupon::id),
@@ -126,6 +154,13 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedCustomer.BillingPerson::stateOrProvinceName),
 	Ignored(FetchedCustomer.ShippingAddress::countryName),
 	Ignored(FetchedCustomer.ShippingAddress::stateOrProvinceName),
+	ReadOnly(FetchedCustomer.ShippingAddress::createdDate),
+	ReadOnly(FetchedCustomer.ShippingAddress::addressFormatted),
+	ReadOnly(FetchedCustomer::stats),
+	ReadOnly(FetchedCustomer.CustomerContact::timestamp),
+	ReadOnly(FetchedCustomer::favorites),
+	ReadOnly(FetchedCustomer.CustomerFavorite::productId),
+	ReadOnly(FetchedCustomer.CustomerFavorite::addedTimestamp),
 
 	ReadOnly(FetchedCustomerGroup::id),
 
@@ -137,6 +172,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrder::orderExtraFields),
 	ReadOnly(FetchedOrder::giftCardCode),
 	ReadOnly(FetchedOrder::giftCardDoubleSpending),
+	ReadOnly(FetchedOrder::giftCardId),
+	ReadOnly(FetchedOrder::giftCardUuid),
 	ReadOnly(FetchedOrder::giftCardRedemption),
 	ReadOnly(FetchedOrder::totalBeforeGiftCardRedemption),
 	ReadOnly(FetchedOrder::totalWithoutTax),
@@ -184,12 +221,15 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrder.ShippingOption::shippingRateWithoutTax),
 	ReadOnly(FetchedOrder.ShippingOption::localizedLabel),
 	ReadOnly(FetchedOrder.ShippingOption::isShippingLimit),
+	ReadOnly(FetchedOrder.ShippingOption::scheduled),
+	ReadOnly(FetchedOrder.ShippingOption::scheduledTimePrecisionType),
 	ReadOnly(FetchedOrder.HandlingFee::valueWithoutTax),
 	ReadOnly(FetchedOrder.Surcharge::totalWithoutTax),
 	Ignored(FetchedOrder::refundedAmount),
 	Ignored(FetchedOrder::refunds),
 	ReadOnly(FetchedOrder.OrderItemTax::sourceTaxRateId),
 	ReadOnly(FetchedOrder.OrderItemTax::sourceTaxRateType),
+	ReadOnly(FetchedOrder::shippingLabelAvailableForShipment),
 
 	ReadOnly(FetchedProductType::id),
 	Ignored(FetchedProductType::googleTaxonomy),
@@ -223,6 +263,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedStoreProfile.Settings::googleProductCategoryName),
 	ReadOnly(FetchedStoreProfile.TikTokPixelSettings::code),
 	ReadOnly(FetchedStoreProfile.InstantSiteInfo::ecwidSubdomainSuffix),
+	ReadOnly(FetchedStoreProfile.InstantSiteInfo::slugsWithoutIdsEnabled),
 	ReadOnly(FetchedStoreProfile.PaymentOptionInfo::id),
 	ReadOnly(FetchedStoreProfile.PaymentOptionInfo::paymentProcessorTitle),
 
@@ -239,6 +280,14 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedVariation::defaultDisplayedPriceFormatted),
 	ReadOnly(FetchedVariation::inStock),
 	Ignored(FetchedVariation::borderInfo),
+	Ignored(FetchedVariation::lowestPrice),
+	ReadOnly(FetchedVariation::defaultDisplayedLowestPrice),
+	ReadOnly(FetchedVariation::defaultDisplayedLowestPriceFormatted),
+	ReadOnly(FetchedVariation.LowestPriceSettings::defaultDisplayedLowestPrice),
+	ReadOnly(FetchedVariation.LowestPriceSettings::defaultDisplayedLowestPriceFormatted),
+	ReadOnly(FetchedVariation.LowestPriceSettings::automaticLowestPrice),
+	ReadOnly(FetchedVariation.LowestPriceSettings::defaultDisplayedAutomaticLowestPrice),
+	ReadOnly(FetchedVariation.LowestPriceSettings::defaultDisplayedAutomaticLowestPriceFormatted),
 	Ignored(FetchedVariation.AttributeValue::name),
 	Ignored(FetchedVariation.AttributeValue::type),
 	Ignored(FetchedVariation.AttributeValue::show),
@@ -270,6 +319,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrderStatusSettings::orderStatusType),
 	ReadOnly(FetchedOrderStatusSettings::defaultStatus),
 	ReadOnly(FetchedOrderStatusSettings::lastNameChangeDate),
+
+	ReadOnly(FetchedInstantSiteRedirect::id),
 )
 
 sealed class NonUpdatablePropertyRule<T, R>(
