@@ -2,8 +2,6 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.OrdersApiClient
-import com.ecwid.apiclient.v3.dto.category.request.CategoriesSearchRequest
-import com.ecwid.apiclient.v3.dto.category.result.CategoriesSearchResult
 import com.ecwid.apiclient.v3.dto.common.PartialResult
 import com.ecwid.apiclient.v3.dto.order.request.*
 import com.ecwid.apiclient.v3.dto.order.result.*
