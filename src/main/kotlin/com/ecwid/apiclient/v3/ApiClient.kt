@@ -136,23 +136,6 @@ open class ApiClient private constructor(
 	}
 }
 
-// Orders
-// https://developers.ecwid.com/api-documentation/orders
-interface OrdersApiClient {
-	fun searchOrders(request: OrdersSearchRequest): OrdersSearchResult
-	fun searchOrdersAsSequence(request: OrdersSearchRequest): Sequence<FetchedOrder>
-	fun getOrderDetails(request: OrderDetailsRequest): FetchedOrder
-	fun getOrderInvoice(request: OrderInvoiceRequest): String
-	fun createOrder(request: OrderCreateRequest): OrderCreateResult
-	fun updateOrder(request: OrderUpdateRequest): OrderUpdateResult
-	fun deleteOrder(request: OrderDeleteRequest): OrderDeleteResult
-	fun uploadOrderItemOptionFile(request: OrderItemOptionFileUploadRequest): OrderItemOptionFileUploadResult
-	fun deleteOrderItemOptionFile(request: OrderItemOptionFileDeleteRequest): OrderItemOptionFileDeleteResult
-	fun deleteOrderItemOptionFiles(request: OrderItemOptionFilesDeleteRequest): OrderItemOptionFileDeleteResult
-	fun searchDeletedOrders(request: DeletedOrdersSearchRequest): DeletedOrdersSearchResult
-	fun searchDeletedOrdersAsSequence(request: DeletedOrdersSearchRequest): Sequence<DeletedOrder>
-}
-
 // Product types
 // https://developers.ecwid.com/api-documentation/product-types
 interface ProductTypesApiClient {

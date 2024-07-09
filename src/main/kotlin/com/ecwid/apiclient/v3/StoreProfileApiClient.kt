@@ -35,6 +35,8 @@ interface StoreProfileApiClient {
 	fun updateExtrafieldConfig(request: ExtrafieldConfigUpdateRequest): ExtrafieldConfigUpdateResult
 	fun deleteExtrafieldConfig(request: ExtrafieldConfigDeleteRequest): ExtrafieldConfigDeleteResult
 	fun searchOrderStatusesSettings(request: OrderStatusSettingsSearchRequest): OrderStatusSettingsSearchResult
+	fun <Result> searchOrderStatusesSettings(request: OrderStatusSettingsSearchRequest, resultClass: KClass<Result>): Result
+		where Result : PartialResult<OrderStatusSettingsSearchResult>
 	fun getOrderStatusSettingsDetails(request: OrderStatusSettingsDetailsRequest): FetchedOrderStatusSettings
 	fun updateOrderStatusSettings(request: OrderStatusSettingsUpdateRequest): OrderStatusSettingsUpdateResult
 }
@@ -42,4 +44,9 @@ interface StoreProfileApiClient {
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")
 inline fun <reified Result : PartialResult<FetchedStoreProfile>> StoreProfileApiClient.getStoreProfile(request: StoreProfileRequest): Result {
 	return getStoreProfile(request, Result::class)
+}
+
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+inline fun <reified Result : PartialResult<OrderStatusSettingsSearchResult>> StoreProfileApiClient.searchOrderStatusesSettings(request: OrderStatusSettingsSearchRequest): Result {
+	return searchOrderStatusesSettings(request, Result::class)
 }
