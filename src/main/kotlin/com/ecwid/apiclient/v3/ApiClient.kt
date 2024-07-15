@@ -32,7 +32,9 @@ import com.ecwid.apiclient.v3.dto.productreview.request.*
 import com.ecwid.apiclient.v3.dto.productreview.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
+import com.ecwid.apiclient.v3.dto.report.request.ReportAdviceRequest
 import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
+import com.ecwid.apiclient.v3.dto.report.result.FetchedReportAdviceResponse
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
 import com.ecwid.apiclient.v3.dto.saleschannels.request.*
 import com.ecwid.apiclient.v3.dto.saleschannels.response.*
@@ -277,6 +279,7 @@ interface ApplicationStorageApiClient {
 // Report API
 interface ReportsApiClient {
 	fun fetchReport(request: ReportRequest): FetchedReportResponse
+	fun getReportAdvice(request: ReportAdviceRequest): FetchedReportAdviceResponse
 }
 
 // Recurring subscriptions
