@@ -7,16 +7,16 @@ import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
 data class ReportAdviceRequest(
 	val reportType: ReportType = ReportType.allTraffic,
-): ApiRequest {
+) : ApiRequest {
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
-			pathSegments = listOf(
-				"reports",
-				reportType.toString(),
-				"tip"
-			),
-			params = emptyMap(),
-			responseFields = ResponseFields.All
-		)
+		pathSegments = listOf(
+			"reports",
+			reportType.toString(),
+			"tip"
+		),
+		params = emptyMap(),
+		responseFields = ResponseFields.All
+	)
 
 }
