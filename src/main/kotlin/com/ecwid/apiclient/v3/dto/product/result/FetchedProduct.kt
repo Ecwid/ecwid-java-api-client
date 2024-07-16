@@ -17,6 +17,7 @@ data class FetchedProduct(
 	val sku: String = "",
 	val isSampleProduct: Boolean? = null,
 	val url: String? = null,
+	val customSlug: String? = null,
 
 	val created: Date = Date(),
 	val createTimestamp: Int = 0,
