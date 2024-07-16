@@ -19,6 +19,7 @@ import com.ecwid.apiclient.v3.dto.productreview.request.UpdatedProductReviewStat
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedLatestStats
 import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
+import com.ecwid.apiclient.v3.dto.report.result.FetchedReportAdviceResponse
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
 import com.ecwid.apiclient.v3.dto.storage.result.FetchedStorageData
 import com.ecwid.apiclient.v3.dto.variation.request.ProductVariationsRequest
@@ -94,6 +95,8 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedReportResponse::comparePeriodAggregatedData),
 	AllowNullable(FetchedReportResponse::comparePeriodDataset),
 	AllowNullable(FetchedReportResponse::additionalData),
+
+	AllowNullable(FetchedReportAdviceResponse::tip),
 
 	AllowNullable(FetchedReportResponse.FetchedDataset::startTimeStamp),
 	AllowNullable(FetchedReportResponse.FetchedDataset::endTimeStamp),
