@@ -26,6 +26,7 @@ data class FetchedCustomer(
 	val stats: CustomerStats? = null,
 	val privateAdminNotes: String? = null,
 	val favorites: List<CustomerFavorite> = ArrayList(),
+	val extrafields: List<CustomerExtrafield>? = null,
 
 	@JsonFieldName("b2b_b2c")
 	val commercialRelationshipScheme: CommercialRelationshipScheme = CommercialRelationshipScheme.b2c,
@@ -87,6 +88,15 @@ data class FetchedCustomer(
 	data class CustomerFavorite(
 		val productId: Long = 0,
 		val addedTimestamp: Date? = null,
+	)
+
+	data class CustomerExtrafield(
+		val key: String? = null,
+		val title: String? = null,
+		val value: String? = null,
+		val orderBy: Int = 0,
+		val type: String? = null,
+		val entityTypes: List<String> = emptyList(),
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedCustomer::class)
