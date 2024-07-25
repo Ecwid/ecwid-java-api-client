@@ -3,8 +3,8 @@ package com.ecwid.apiclient.v3.dto.profile.result
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
+import com.ecwid.apiclient.v3.dto.extrafield.enums.ExtrafieldType
 import com.ecwid.apiclient.v3.dto.profile.enums.CheckoutDisplaySection
-import com.ecwid.apiclient.v3.dto.profile.enums.ExtrafieldType
 import com.ecwid.apiclient.v3.dto.profile.enums.OrderDetailsDisplaySection
 import com.ecwid.apiclient.v3.dto.profile.enums.SurchargeType
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedExtrafieldConfig
