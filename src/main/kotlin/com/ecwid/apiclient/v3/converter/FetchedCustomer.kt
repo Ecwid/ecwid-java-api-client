@@ -17,6 +17,7 @@ fun FetchedCustomer.toUpdated(): UpdatedCustomer {
 		lang = lang,
 		privateAdminNotes = privateAdminNotes,
 		commercialRelationshipScheme = commercialRelationshipScheme,
+		extrafields = extrafields?.map(FetchedCustomer.CustomerExtrafield::toUpdated)
 	)
 }
 
@@ -59,5 +60,14 @@ fun FetchedCustomer.CustomerContact.toUpdated(): UpdatedCustomer.CustomerContact
 		type = type,
 		default = default,
 		orderBy = orderBy,
+	)
+}
+
+fun FetchedCustomer.CustomerExtrafield.toUpdated(): UpdatedCustomer.CustomerExtrafield {
+	return UpdatedCustomer.CustomerExtrafield(
+		key = key,
+		title = title,
+		value = value,
+		type = type,
 	)
 }

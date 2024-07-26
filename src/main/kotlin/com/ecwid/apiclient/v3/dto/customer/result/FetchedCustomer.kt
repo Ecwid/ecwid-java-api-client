@@ -4,9 +4,10 @@ import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.customer.enums.CommercialRelationshipScheme
 import com.ecwid.apiclient.v3.dto.customer.request.UpdatedCustomer
+import com.ecwid.apiclient.v3.dto.extrafield.enums.ExtrafieldEntityType
+import com.ecwid.apiclient.v3.dto.extrafield.enums.ExtrafieldType
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 import java.util.*
-import kotlin.collections.ArrayList
 
 data class FetchedCustomer(
 	val id: Int = 0,
@@ -26,6 +27,7 @@ data class FetchedCustomer(
 	val stats: CustomerStats? = null,
 	val privateAdminNotes: String? = null,
 	val favorites: List<CustomerFavorite> = ArrayList(),
+	val extrafields: List<CustomerExtrafield>? = null,
 
 	@JsonFieldName("b2b_b2c")
 	val commercialRelationshipScheme: CommercialRelationshipScheme = CommercialRelationshipScheme.b2c,
@@ -87,6 +89,15 @@ data class FetchedCustomer(
 	data class CustomerFavorite(
 		val productId: Long = 0,
 		val addedTimestamp: Date? = null,
+	)
+
+	data class CustomerExtrafield(
+        val key: String? = null,
+        val title: String? = null,
+        val value: String? = null,
+        val orderBy: Int = 0,
+        val type: ExtrafieldType? = null,
+        val entityTypes: List<ExtrafieldEntityType> = emptyList(),
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedCustomer::class)

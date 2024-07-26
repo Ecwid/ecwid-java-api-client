@@ -73,6 +73,7 @@ open class ApiClient private constructor(
 	instantSiteRedirectsApiClient: InstantSiteRedirectsApiClientImpl,
 	slugInfoApiClient: SlugInfoApiClientImpl,
 	productReviewsApiClient: ProductReviewsApiClientImpl,
+	storeExtrafieldsApiClient: StoreExtrafieldsApiClientImpl,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	ProductsApiClient by productsApiClient,
@@ -92,7 +93,8 @@ open class ApiClient private constructor(
 	SubscriptionsApiClient by subscriptionsApiClient,
 	InstantSiteRedirectsApiClient by instantSiteRedirectsApiClient,
 	SlugInfoApiClient by slugInfoApiClient,
-	ProductReviewsApiClient by productReviewsApiClient {
+	ProductReviewsApiClient by productReviewsApiClient,
+	StoreExtrafieldsApiClient by storeExtrafieldsApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -115,6 +117,7 @@ open class ApiClient private constructor(
 		instantSiteRedirectsApiClient = InstantSiteRedirectsApiClientImpl(apiClientHelper),
 		slugInfoApiClient = SlugInfoApiClientImpl(apiClientHelper),
 		productReviewsApiClient = ProductReviewsApiClientImpl(apiClientHelper),
+		storeExtrafieldsApiClient = StoreExtrafieldsApiClientImpl(apiClientHelper),
 	)
 
 	companion object {

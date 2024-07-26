@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.customer.enums.CommercialRelationshipScheme
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
+import com.ecwid.apiclient.v3.dto.extrafield.enums.ExtrafieldType
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 
 data class UpdatedCustomer(
@@ -19,6 +20,7 @@ data class UpdatedCustomer(
 	val acceptMarketing: Boolean? = null,
 	val lang: String? = null,
 	val privateAdminNotes: String? = null,
+	val extrafields: List<CustomerExtrafield>? = null,
 
 	@JsonFieldName("b2b_b2c")
 	val commercialRelationshipScheme: CommercialRelationshipScheme? = null,
@@ -58,6 +60,13 @@ data class UpdatedCustomer(
 		val type: String? = null,
 		val default: Boolean? = null,
 		val orderBy: Int? = null,
+	)
+
+	data class CustomerExtrafield(
+		val key: String? = null,
+		val title: String? = null,
+		val value: String? = null,
+		val type: ExtrafieldType? = null,
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedCustomer::class)
