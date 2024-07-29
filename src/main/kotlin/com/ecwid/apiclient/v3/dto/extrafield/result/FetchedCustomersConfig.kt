@@ -9,7 +9,7 @@ import java.util.*
 data class FetchedCustomersConfig(
 	val key: String? = null,
 	val title: String? = null,
-	val entityTypes: ExtrafieldEntityType? = null,
+	val entityTypes: List<ExtrafieldEntityType>? = null,
 	val type: ExtrafieldType? = null,
 	val shownOnOrderDetails: Boolean? = null,
 	val createdDate: Date? = null,
