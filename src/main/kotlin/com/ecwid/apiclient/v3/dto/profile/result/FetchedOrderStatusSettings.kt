@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.profile.result
 
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO
+import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedOrderStatusSettings
 
@@ -13,6 +14,6 @@ data class FetchedOrderStatusSettings(
 	val nameTranslations: LocalizedValueMap? = null,
 	val sendNotificationWhenStatusIsAssigned: Boolean = true,
 	val lastNameChangeDate: String? = null,
-) : ApiFetchedDTO {
+) : ApiFetchedDTO, ApiResultDTO {
 	override fun getModifyKind() = ApiFetchedDTO.ModifyKind.ReadWrite(UpdatedOrderStatusSettings::class)
 }

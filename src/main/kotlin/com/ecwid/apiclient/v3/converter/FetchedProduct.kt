@@ -12,6 +12,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		description = description,
 		descriptionTranslated = descriptionTranslated,
 		sku = sku,
+		customSlug = customSlug,
 
 		enabled = enabled,
 		quantity = quantity,
@@ -55,6 +56,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 
 		media = media?.toUpdated(),
 
+		discountsAllowed = discountsAllowed,
 		subtitle = subtitle,
 		ribbon = ribbon?.toUpdated(),
 		ribbonTranslated = ribbonTranslated,

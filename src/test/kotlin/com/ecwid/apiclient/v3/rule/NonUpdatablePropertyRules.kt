@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.category.result.FetchedCategory
 import com.ecwid.apiclient.v3.dto.coupon.result.FetchedCoupon
 import com.ecwid.apiclient.v3.dto.customer.result.FetchedCustomer
 import com.ecwid.apiclient.v3.dto.customergroup.result.FetchedCustomerGroup
+import com.ecwid.apiclient.v3.dto.extrafield.result.FetchedCustomersConfig
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.result.FetchedInstantSiteRedirect
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
@@ -161,6 +162,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedCustomer::favorites),
 	ReadOnly(FetchedCustomer.CustomerFavorite::productId),
 	ReadOnly(FetchedCustomer.CustomerFavorite::addedTimestamp),
+	ReadOnly(FetchedCustomer.CustomerExtrafield::entityTypes),
+	ReadOnly(FetchedCustomer.CustomerExtrafield::orderBy),
 
 	ReadOnly(FetchedCustomerGroup::id),
 
@@ -321,6 +324,10 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrderStatusSettings::lastNameChangeDate),
 
 	ReadOnly(FetchedInstantSiteRedirect::id),
+
+	ReadOnly(FetchedCustomersConfig::entityTypes),
+	ReadOnly(FetchedCustomersConfig::createdDate),
+	ReadOnly(FetchedCustomersConfig::lastModifiedDate),
 )
 
 sealed class NonUpdatablePropertyRule<T, R>(

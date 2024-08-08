@@ -17,6 +17,7 @@ data class FetchedProduct(
 	val sku: String = "",
 	val isSampleProduct: Boolean? = null,
 	val url: String? = null,
+	val customSlug: String? = null,
 
 	val created: Date = Date(),
 	val createTimestamp: Int = 0,
@@ -121,6 +122,7 @@ data class FetchedProduct(
 	val defaultCombinationId: Int? = null, // TODO implement combinations support
 	val combinations: List<FetchedVariation>? = null, // TODO implement combinations support
 	val isGiftCard: Boolean? = null, // TODO from ECWID-67826: this flag is read-only. API for creating gift cards in the plans (BACKLOG-4157)
+	val discountsAllowed: Boolean? = null,
 	val subtitle: String? = null,
 	val ribbon: Ribbon? = null,
 	val ribbonTranslated: LocalizedValueMap? = null,

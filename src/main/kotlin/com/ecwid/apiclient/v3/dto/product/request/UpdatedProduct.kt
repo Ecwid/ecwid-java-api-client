@@ -11,6 +11,7 @@ data class UpdatedProduct(
 	val description: String? = null,
 	val descriptionTranslated: LocalizedValueMap? = null,
 	val sku: String? = null,
+	val customSlug: String? = null,
 	val isSampleProduct: Boolean? = null,
 
 	val enabled: Boolean? = null,
@@ -55,6 +56,7 @@ data class UpdatedProduct(
 
 	val media: ProductMedia? = null,
 
+	val discountsAllowed: Boolean? = null,
 	val subtitle: String? = null,
 	val ribbon: Ribbon? = null,
 	val ribbonTranslated: LocalizedValueMap? = null,

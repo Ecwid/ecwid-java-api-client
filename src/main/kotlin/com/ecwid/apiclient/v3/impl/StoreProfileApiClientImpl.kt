@@ -79,4 +79,11 @@ internal class StoreProfileApiClientImpl(
 	override fun <Result : PartialResult<FetchedStoreProfile>> getStoreProfile(request: StoreProfileRequest, resultClass: KClass<Result>): Result {
 		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
 	}
+
+	override fun <Result : PartialResult<OrderStatusSettingsSearchResult>> searchOrderStatusesSettings(
+		request: OrderStatusSettingsSearchRequest,
+		resultClass: KClass<Result>
+	): Result {
+		return apiClientHelper.makeObjectPartialResultRequest(request, resultClass)
+	}
 }

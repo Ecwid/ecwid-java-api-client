@@ -10,6 +10,7 @@ val customersSearchRequestNullablePropertyRules: List<NullablePropertyRule<*, *>
 	AllowNullable(CustomersSearchRequest::customerGroupId),
 	AllowNullable(CustomersSearchRequest::email),
 	AllowNullable(CustomersSearchRequest::keyword),
+	AllowNullable(CustomersSearchRequest::usePrecalculatedOrderCount),
 	AllowNullable(CustomersSearchRequest::maxOrderCount),
 	AllowNullable(CustomersSearchRequest::minOrderCount),
 	AllowNullable(CustomersSearchRequest::maxSalesValue),

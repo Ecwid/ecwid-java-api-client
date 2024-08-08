@@ -2,7 +2,9 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.ReportsApiClient
+import com.ecwid.apiclient.v3.dto.report.request.ReportAdviceRequest
 import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
+import com.ecwid.apiclient.v3.dto.report.result.FetchedReportAdviceResponse
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
 
 class ReportsApiClientImpl(
@@ -11,5 +13,8 @@ class ReportsApiClientImpl(
 
 	override fun fetchReport(request: ReportRequest) =
 		apiClientHelper.makeObjectResultRequest<FetchedReportResponse>(request)
+
+	override fun getReportAdvice(request: ReportAdviceRequest) =
+		apiClientHelper.makeObjectResultRequest<FetchedReportAdviceResponse>(request)
 
 }

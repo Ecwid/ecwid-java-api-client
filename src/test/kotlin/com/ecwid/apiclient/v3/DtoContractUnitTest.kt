@@ -151,7 +151,7 @@ class DtoContractUnitTest {
 			.filterNot { dtoClass -> dtoClass.isClassifiedDTOOrEnclosingClass(*dtoMarkerInterfaces) }
 		assertTrue(problemDtoClasses.isEmpty()) {
 			val interfacesStr = dtoMarkerInterfaces.joinToString(separator = ", ") { int -> int.simpleName }
-			"Some of top level DTO data classes does implement one of marker interfaces [$interfacesStr]:\n" +
+			"Some of top level DTO data classes do not implement any marker interfaces [$interfacesStr]:\n" +
 				classesToLoggableString(problemDtoClasses)
 		}
 	}

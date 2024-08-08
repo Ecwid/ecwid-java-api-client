@@ -32,7 +32,9 @@ import com.ecwid.apiclient.v3.dto.productreview.request.*
 import com.ecwid.apiclient.v3.dto.productreview.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
 import com.ecwid.apiclient.v3.dto.producttype.result.*
+import com.ecwid.apiclient.v3.dto.report.request.ReportAdviceRequest
 import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
+import com.ecwid.apiclient.v3.dto.report.result.FetchedReportAdviceResponse
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
 import com.ecwid.apiclient.v3.dto.saleschannels.request.*
 import com.ecwid.apiclient.v3.dto.saleschannels.response.*
@@ -71,6 +73,7 @@ open class ApiClient private constructor(
 	instantSiteRedirectsApiClient: InstantSiteRedirectsApiClientImpl,
 	slugInfoApiClient: SlugInfoApiClientImpl,
 	productReviewsApiClient: ProductReviewsApiClientImpl,
+	storeExtrafieldsApiClient: StoreExtrafieldsApiClientImpl,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	ProductsApiClient by productsApiClient,
@@ -90,7 +93,8 @@ open class ApiClient private constructor(
 	SubscriptionsApiClient by subscriptionsApiClient,
 	InstantSiteRedirectsApiClient by instantSiteRedirectsApiClient,
 	SlugInfoApiClient by slugInfoApiClient,
-	ProductReviewsApiClient by productReviewsApiClient {
+	ProductReviewsApiClient by productReviewsApiClient,
+	StoreExtrafieldsApiClient by storeExtrafieldsApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -113,6 +117,7 @@ open class ApiClient private constructor(
 		instantSiteRedirectsApiClient = InstantSiteRedirectsApiClientImpl(apiClientHelper),
 		slugInfoApiClient = SlugInfoApiClientImpl(apiClientHelper),
 		productReviewsApiClient = ProductReviewsApiClientImpl(apiClientHelper),
+		storeExtrafieldsApiClient = StoreExtrafieldsApiClientImpl(apiClientHelper),
 	)
 
 	companion object {
@@ -134,23 +139,6 @@ open class ApiClient private constructor(
 			return ApiClient(apiClientHelper)
 		}
 	}
-}
-
-// Orders
-// https://developers.ecwid.com/api-documentation/orders
-interface OrdersApiClient {
-	fun searchOrders(request: OrdersSearchRequest): OrdersSearchResult
-	fun searchOrdersAsSequence(request: OrdersSearchRequest): Sequence<FetchedOrder>
-	fun getOrderDetails(request: OrderDetailsRequest): FetchedOrder
-	fun getOrderInvoice(request: OrderInvoiceRequest): String
-	fun createOrder(request: OrderCreateRequest): OrderCreateResult
-	fun updateOrder(request: OrderUpdateRequest): OrderUpdateResult
-	fun deleteOrder(request: OrderDeleteRequest): OrderDeleteResult
-	fun uploadOrderItemOptionFile(request: OrderItemOptionFileUploadRequest): OrderItemOptionFileUploadResult
-	fun deleteOrderItemOptionFile(request: OrderItemOptionFileDeleteRequest): OrderItemOptionFileDeleteResult
-	fun deleteOrderItemOptionFiles(request: OrderItemOptionFilesDeleteRequest): OrderItemOptionFileDeleteResult
-	fun searchDeletedOrders(request: DeletedOrdersSearchRequest): DeletedOrdersSearchResult
-	fun searchDeletedOrdersAsSequence(request: DeletedOrdersSearchRequest): Sequence<DeletedOrder>
 }
 
 // Product types
@@ -294,6 +282,7 @@ interface ApplicationStorageApiClient {
 // Report API
 interface ReportsApiClient {
 	fun fetchReport(request: ReportRequest): FetchedReportResponse
+	fun getReportAdvice(request: ReportAdviceRequest): FetchedReportAdviceResponse
 }
 
 // Recurring subscriptions

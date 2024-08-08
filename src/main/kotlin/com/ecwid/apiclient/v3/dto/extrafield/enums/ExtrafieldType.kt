@@ -1,4 +1,4 @@
-package com.ecwid.apiclient.v3.dto.profile.enums
+package com.ecwid.apiclient.v3.dto.extrafield.enums
 
 enum class ExtrafieldType {
 	TEXT,

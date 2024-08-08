@@ -44,6 +44,15 @@ data class Webhook(
 		@SerializedName("customer.updated")
 		CUSTOMER_UPDATED,
 
+		@SerializedName("customer_group.created")
+		CUSTOMER_GROUP_CREATED,
+
+		@SerializedName("customer_group.updated")
+		CUSTOMER_GROUP_UPDATED,
+
+		@SerializedName("customer_group.deleted")
+		CUSTOMER_GROUP_DELETED,
+
 		@SerializedName("customer.personal_data_removal_request")
 		CUSTOMER_PERSONAL_DATA_REMOVAL_REQUEST,
 
