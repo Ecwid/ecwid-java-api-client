@@ -15,7 +15,6 @@ import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
-import com.ecwid.apiclient.v3.jsontransformer.gson.GsonTransformer
 import com.ecwid.apiclient.v3.metric.RequestSizeMetric
 import com.ecwid.apiclient.v3.metric.RequestTimeMetric
 import com.ecwid.apiclient.v3.metric.ResponseSizeMetric
@@ -24,7 +23,6 @@ import com.ecwid.apiclient.v3.responsefields.responseFieldsOf
 import com.ecwid.apiclient.v3.util.buildEndpointPath
 import com.ecwid.apiclient.v3.util.createSecurePatterns
 import com.ecwid.apiclient.v3.util.maskLogString
-import com.google.gson.Gson
 import java.net.URI
 import java.util.*
 import java.util.logging.Level
