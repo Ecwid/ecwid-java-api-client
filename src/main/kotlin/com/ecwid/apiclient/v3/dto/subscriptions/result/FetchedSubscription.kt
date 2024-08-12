@@ -102,7 +102,7 @@ data class FetchedSubscription(
 		val id: Int? = null,
 
 		val productId: Int? = null,
-		val categoryId: Int? = null,
+		val categoryId: Long? = null,
 
 		val price: Double? = null,
 		val productPrice: Double? = null,

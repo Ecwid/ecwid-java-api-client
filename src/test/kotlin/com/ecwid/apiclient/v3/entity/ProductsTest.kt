@@ -1334,7 +1334,7 @@ class ProductsTest : BaseEntityTest() {
 	}
 }
 
-private fun generateTestCategory(parentId: Int? = null): UpdatedCategory {
+private fun generateTestCategory(parentId: Long? = null): UpdatedCategory {
 	return UpdatedCategory(
 		name = "Category " + randomAlphanumeric(8),
 		description = "Description " + randomAlphanumeric(16),
@@ -1343,7 +1343,7 @@ private fun generateTestCategory(parentId: Int? = null): UpdatedCategory {
 	)
 }
 
-private fun generateTestProduct(categoryIds: List<Int> = listOf(), discountsAllowed: Boolean = true): UpdatedProduct {
+private fun generateTestProduct(categoryIds: List<Long> = listOf(), discountsAllowed: Boolean = true): UpdatedProduct {
 	val basePrice = randomPrice()
 	val enName = "Product " + randomAlphanumeric(8)
 	val enDescription = "Description " + randomAlphanumeric(16)

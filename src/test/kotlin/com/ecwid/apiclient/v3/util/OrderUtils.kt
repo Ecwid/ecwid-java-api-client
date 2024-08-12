@@ -192,7 +192,7 @@ private fun generateTestCustomDiscountInfo() = UpdatedOrder.DiscountInfo(
 private fun generateTestOrderItem() = UpdatedOrder.OrderItem(
 	// var id: Int? = null, // TODO readonly
 	// productId = com.ecwid.api.v3.randomId(), // TODO need to pass existing product id
-	categoryId = randomId(),
+	categoryId = randomLongId(),
 
 	price = randomPrice(),
 	productPrice = randomPrice(),

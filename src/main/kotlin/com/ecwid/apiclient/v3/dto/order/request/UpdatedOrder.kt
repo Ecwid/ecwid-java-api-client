@@ -131,13 +131,13 @@ data class UpdatedOrder(
 
 // 	data class DiscountCouponCatalogLimit(
 // 			val products: List<Int>? = null,
-// 			val categories: List<Int>? = null
+// 			val categories: List<Long>? = null
 // 	)
 
 	data class OrderItem(
 		val id: Long? = null,
 		val productId: Int? = null,
-		val categoryId: Int? = null,
+		val categoryId: Long? = null,
 
 		val price: Double? = null,
 		val productPrice: Double? = null,

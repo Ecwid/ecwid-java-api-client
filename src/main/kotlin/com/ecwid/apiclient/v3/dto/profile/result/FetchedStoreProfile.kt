@@ -122,7 +122,7 @@ data class FetchedStoreProfile(
 		val fbPixelId: String? = null,
 		val googleAnalyticsId: String? = null,
 		val googleEventId: String? = null,
-		val googleProductCategory: Int? = null,
+		val googleProductCategory: Long? = null,
 		val googleProductCategoryName: String? = null,
 		val googleRemarketingEnabled: Boolean? = null,
 		val googleTagId: String? = null,

@@ -7,7 +7,7 @@ import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.UpdatedAlt
 
 data class UpdatedCategory(
-	val parentId: Int? = null,
+	val parentId: Long? = null,
 	val orderBy: Int? = null,
 	val name: String? = null,
 	val isSampleCategory: Boolean? = null,

@@ -92,7 +92,7 @@ data class UpdatedStoreProfile(
 		val fbPixelId: String? = null,
 		val googleAnalyticsId: String? = null,
 		val googleEventId: String? = null,
-		val googleProductCategory: Int? = null,
+		val googleProductCategory: Long? = null,
 		val googleRemarketingEnabled: Boolean? = null,
 		val googleTagId: String? = null,
 		val hideOutOfStockProductsInStorefront: Boolean? = null,
