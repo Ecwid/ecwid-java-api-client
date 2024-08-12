@@ -15,6 +15,7 @@ import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
+import com.ecwid.apiclient.v3.jsontransformer.gson.GsonTransformer
 import com.ecwid.apiclient.v3.metric.RequestSizeMetric
 import com.ecwid.apiclient.v3.metric.RequestTimeMetric
 import com.ecwid.apiclient.v3.metric.ResponseSizeMetric
@@ -23,6 +24,7 @@ import com.ecwid.apiclient.v3.responsefields.responseFieldsOf
 import com.ecwid.apiclient.v3.util.buildEndpointPath
 import com.ecwid.apiclient.v3.util.createSecurePatterns
 import com.ecwid.apiclient.v3.util.maskLogString
+import com.google.gson.Gson
 import java.net.URI
 import java.util.*
 import java.util.logging.Level
@@ -196,7 +198,8 @@ class ApiClientHelper private constructor(
 				try {
 					val responseBody = responseBytes.asString()
 					logErrorResponseIfNeeded(requestId, requestTime, httpResponse.statusCode, responseBody)
-					val ecwidError = if (responseBody.isNotBlank()) {
+					// Because of a html-based balancer error we must check responseBody string to be an actual json object
+					val ecwidError = if (responseBody.isNotBlank() && responseBody.startsWith("{")) {
 						jsonTransformer.deserialize(responseBody, EcwidApiError::class.java)
 					} else {
 						null
