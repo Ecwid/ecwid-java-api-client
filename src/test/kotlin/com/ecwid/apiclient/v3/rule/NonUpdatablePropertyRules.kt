@@ -328,6 +328,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedCustomersConfig::entityTypes),
 	ReadOnly(FetchedCustomersConfig::createdDate),
 	ReadOnly(FetchedCustomersConfig::lastModifiedDate),
+
+	ReadOnly(FetchedStoreProfile.Settings::lowestPriceEnabled),
 )
 
 sealed class NonUpdatablePropertyRule<T, R>(
