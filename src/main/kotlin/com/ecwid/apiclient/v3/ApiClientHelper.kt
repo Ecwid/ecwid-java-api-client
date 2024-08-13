@@ -196,7 +196,7 @@ class ApiClientHelper private constructor(
 				try {
 					val responseBody = responseBytes.asString()
 					logErrorResponseIfNeeded(requestId, requestTime, httpResponse.statusCode, responseBody)
-					// Because of a html-based balancer error we must check responseBody string to be an actual json object
+					// Because of a html-based balancer error we should check responseBody string to be an actual json object
 					val ecwidError = if (responseBody.isNotBlank() && responseBody.startsWith("{")) {
 						jsonTransformer.deserialize(responseBody, EcwidApiError::class.java)
 					} else {
