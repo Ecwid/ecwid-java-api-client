@@ -19,6 +19,7 @@ val nonDuplicablePropertyRules: List<NonDuplicablePropertyRule<*, *>> = listOf(
 	WriteOnly(UpdatedVariation.AttributeValue::alias),
 	WriteOnly(UpdatedVariation.AttributeValue::name),
 	WriteOnly(UpdatedProduct.RelatedProducts::productSkus),
+	WriteOnly(UpdatedCustomer::primaryPhone), // contact becomes impossible to delete - rest4j replaces null with current value on writes
 
 )
 

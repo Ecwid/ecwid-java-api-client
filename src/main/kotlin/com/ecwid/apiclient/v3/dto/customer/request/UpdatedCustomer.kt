@@ -21,6 +21,7 @@ data class UpdatedCustomer(
 	val lang: String? = null,
 	val privateAdminNotes: String? = null,
 	val extrafields: List<CustomerExtrafield>? = null,
+	val primaryPhone: String? = null,
 
 	@JsonFieldName("b2b_b2c")
 	val commercialRelationshipScheme: CommercialRelationshipScheme? = null,
