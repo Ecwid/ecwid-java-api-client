@@ -62,6 +62,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedProduct.ProductImage::image800pxUrl),
 	Ignored(FetchedProduct.ProductImage::image1500pxUrl),
 	Ignored(FetchedProduct.ProductImage::imageOriginalUrl),
+	ReadOnly(FetchedProduct.ProductImage::externalId),
 	ReadOnly(FetchedProduct.ProductMedia::videos),
 	ReadOnly(FetchedProduct.GalleryImage::borderInfo),
 	Ignored(FetchedProduct::files),
@@ -140,6 +141,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedCategory::productCount),
 	ReadOnly(FetchedCategory::productCountWithoutSubcategories),
 	Ignored(FetchedCategory::enabledProductCount),
+	ReadOnly(FetchedCategory::imageExternalId),
 
 	ReadOnly(FetchedCoupon::id),
 	Ignored(FetchedCoupon::creationDate),
@@ -305,6 +307,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedVariation.SubscriptionSettings::oneTimePurchaseMarkupPercentFormatted),
 	ReadOnly(FetchedVariation.SubscriptionSettings::displayedOneTimePurchaseMarkupPercent),
 	ReadOnly(FetchedVariation.SubscriptionSettings::displayedOneTimePurchaseMarkupPercentFormatted),
+	ReadOnly(FetchedVariation::imageExternalId),
 
 	ReadOnly(FetchedProduct.RecurringChargeSettings::subscriptionPriceWithSignUpFeeFormatted),
 	ReadOnly(FetchedProduct.RecurringChargeSettings::signUpFee),

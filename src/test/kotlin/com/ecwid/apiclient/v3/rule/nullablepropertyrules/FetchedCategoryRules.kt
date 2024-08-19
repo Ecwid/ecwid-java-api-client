@@ -30,4 +30,5 @@ val fetchedCategoryNullablePropertyRules: List<NullablePropertyRule<*, *>> = lis
 	AllowNullable(FetchedCategory::alt),
 	AllowNullable(FetchedAlt::main),
 	AllowNullable(FetchedAlt::translated),
+	AllowNullable(FetchedCategory::imageExternalId),
 )
