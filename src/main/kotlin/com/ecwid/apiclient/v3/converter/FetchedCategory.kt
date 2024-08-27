@@ -19,5 +19,6 @@ fun FetchedCategory.toUpdated(): UpdatedCategory {
 		seoDescription = seoDescription,
 		seoDescriptionTranslated = seoDescriptionTranslated,
 		alt = alt?.toUpdated(),
+		customSlug = customSlug,
 	)
 }

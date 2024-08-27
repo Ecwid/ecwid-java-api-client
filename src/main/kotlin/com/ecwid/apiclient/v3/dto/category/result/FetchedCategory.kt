@@ -26,6 +26,7 @@ data class FetchedCategory(
 	val originalImageUrl: String? = null,
 	val originalImage: PictureInfo? = null,
 	val url: String? = null,
+	val customSlug: String? = null,
 	val productCount: Int? = null,
 	val productCountWithoutSubcategories: Int? = null,
 	val enabledProductCount: Int? = null,
