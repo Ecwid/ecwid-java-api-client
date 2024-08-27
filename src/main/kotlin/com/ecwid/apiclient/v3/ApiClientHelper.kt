@@ -23,7 +23,6 @@ import com.ecwid.apiclient.v3.responsefields.responseFieldsOf
 import com.ecwid.apiclient.v3.util.buildEndpointPath
 import com.ecwid.apiclient.v3.util.createSecurePatterns
 import com.ecwid.apiclient.v3.util.maskLogString
-import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
 import java.net.URI
