@@ -23,6 +23,9 @@ import com.ecwid.apiclient.v3.responsefields.responseFieldsOf
 import com.ecwid.apiclient.v3.util.buildEndpointPath
 import com.ecwid.apiclient.v3.util.createSecurePatterns
 import com.ecwid.apiclient.v3.util.maskLogString
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import com.google.gson.JsonSyntaxException
 import java.net.URI
 import java.util.*
 import java.util.logging.Level
@@ -197,7 +200,7 @@ class ApiClientHelper private constructor(
 					val responseBody = responseBytes.asString()
 					logErrorResponseIfNeeded(requestId, requestTime, httpResponse.statusCode, responseBody)
 					// Because of a html-based balancer error we should check responseBody string to be an actual json object
-					val ecwidError = if (responseBody.isNotBlank() && responseBody.startsWith("{")) {
+					val ecwidError = if (responseBody.isNotBlank() && isJsonObject(responseBody)) {
 						jsonTransformer.deserialize(responseBody, EcwidApiError::class.java)
 					} else {
 						null
@@ -553,4 +556,12 @@ private fun createAdditionalDataPolymorphicType(): PolymorphicType<FetchedReport
 			CATEGORY.name.lowercase() to AdditionalCategoryData::class.java,
 		)
 	)
+}
+
+private fun isJsonObject(input: String): Boolean {
+	return try {
+	    JsonParser.parseString(input).isJsonObject
+	} catch (_: JsonSyntaxException) {
+		return false
+	}
 }
