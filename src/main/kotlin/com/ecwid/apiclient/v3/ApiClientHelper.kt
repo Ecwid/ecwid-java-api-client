@@ -557,10 +557,10 @@ private fun createAdditionalDataPolymorphicType(): PolymorphicType<FetchedReport
 	)
 }
 
-private fun isJsonObject(input: String): Boolean {
+internal fun isJsonObject(input: String?): Boolean {
 	return try {
-	    JsonParser.parseString(input).isJsonObject
+		input?.let { JsonParser.parseString(it).isJsonObject } ?: false
 	} catch (_: JsonSyntaxException) {
-		return false
+		false
 	}
 }
