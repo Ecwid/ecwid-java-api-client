@@ -601,6 +601,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_details_position_product_price")
 		val productDetailsPositionProductPrice: Int? = null,
 
+		@JsonFieldName("product_details_position_product_loyalty")
+		val productDetailsPositionProductLoyalty: Int? = null,
+
 		@JsonFieldName("product_details_position_product_sku")
 		val productDetailsPositionProductSku: Int? = null,
 
@@ -666,6 +669,9 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("product_details_show_product_price")
 		val productDetailsShowProductPrice: Boolean? = null,
+
+		@JsonFieldName("product_details_show_product_loyalty")
+		val productDetailsShowProductLoyalty: Boolean? = null,
 
 		@JsonFieldName("product_details_show_product_sku")
 		val productDetailsShowProductSku: Boolean? = null,
