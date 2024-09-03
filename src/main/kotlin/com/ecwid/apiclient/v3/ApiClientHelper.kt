@@ -30,9 +30,8 @@ import java.util.logging.Logger
 import kotlin.random.Random
 import kotlin.reflect.KClass
 
-const val API_TOKEN_PARAM_NAME = "token"
-private const val APP_CLIENT_ID_PARAM_NAME = "appClientId"
-const val APP_CLIENT_SECRET_PARAM_NAME = "appSecretKey"
+private const val APP_CLIENT_ID_HEADER_NAME = "X-Ecwid-App-Client-Id"
+private const val APP_CLIENT_SECRET_HEADER_NAME = "X-Ecwid-App-Secret-Key"
 private const val RESPONSE_FIELDS_PARAM_NAME = "responseFields"
 private const val REQUEST_ID_HEADER_NAME = "X-Ecwid-Api-Request-Id"
 
@@ -238,7 +237,7 @@ class ApiClientHelper private constructor(
 			return
 		}
 
-		val securePatterns = createSecurePatterns(loggingSettings)
+		val securePatterns = createSecurePatterns()
 		logEntry(
 			prefix = "Request",
 			logLevel = Level.INFO,
@@ -259,10 +258,8 @@ class ApiClientHelper private constructor(
 	@PublishedApi
 	internal fun RequestInfo.toHttpRequest(requestId: String, responseFieldsOverride: ResponseFields?): HttpRequest {
 		val uri = createApiEndpointUri(pathSegments)
-		val params = params
-			.withCredentialsParams(credentials)
-			.let { if (responseFieldsOverride != null) it.withResponseFieldsParam(responseFieldsOverride) else it }
-		val headers = headers.withRequestId(requestId)
+		val params = if (responseFieldsOverride != null) params.withResponseFieldsParam(responseFieldsOverride) else params
+		val headers = headers.withRequestId(requestId).withCredentials(credentials)
 
 		return when (method) {
 			HttpMethod.GET -> HttpRequest.HttpGetRequest(
@@ -313,7 +310,7 @@ class ApiClientHelper private constructor(
 			return
 		}
 
-		val securePatterns = createSecurePatterns(loggingSettings)
+		val securePatterns = createSecurePatterns()
 		logEntry(
 			prefix = "Response",
 			logLevel = Level.INFO,
@@ -440,9 +437,9 @@ internal fun generateRequestId(): String {
 }
 
 @PublishedApi
-internal fun Map<String, String>.withCredentialsParams(credentials: ApiCredentials) = when (credentials) {
-	is ApiStoreCredentials -> this.withApiTokenParam(credentials.apiToken)
-	is ApiAppCredentials -> withAppCredentialsParams(credentials)
+internal fun Map<String, String>.withCredentials(credentials: ApiCredentials) = when (credentials) {
+	is ApiStoreCredentials -> this.withApiTokenHeader(credentials.apiToken)
+	is ApiAppCredentials -> withAppCredentialsHeaders(credentials)
 }
 
 internal fun Map<String, String>.withResponseFieldsParam(responseFields: ResponseFields): Map<String, String> {
@@ -454,20 +451,20 @@ internal fun Map<String, String>.withResponseFieldsParam(responseFields: Respons
 }
 
 @PublishedApi
-internal fun Map<String, String>.withApiTokenParam(apiToken: String): Map<String, String> {
+internal fun Map<String, String>.withApiTokenHeader(apiToken: String): Map<String, String> {
 	return toMutableMap()
 		.apply {
-			put(API_TOKEN_PARAM_NAME, apiToken)
+			put("Authorization", "Bearer $apiToken")
 		}
 		.toMap()
 }
 
 @PublishedApi
-internal fun Map<String, String>.withAppCredentialsParams(appCredentials: ApiAppCredentials): Map<String, String> {
+internal fun Map<String, String>.withAppCredentialsHeaders(appCredentials: ApiAppCredentials): Map<String, String> {
 	return toMutableMap()
 		.apply {
-			put(APP_CLIENT_ID_PARAM_NAME, appCredentials.clientId)
-			put(APP_CLIENT_SECRET_PARAM_NAME, appCredentials.clientSecret)
+			put(APP_CLIENT_ID_HEADER_NAME, appCredentials.clientId)
+			put(APP_CLIENT_SECRET_HEADER_NAME, appCredentials.clientSecret)
 		}
 		.toMap()
 }
