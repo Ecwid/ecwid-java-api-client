@@ -128,6 +128,7 @@ open class ApacheCommonsHttpClientTransport(
 			val httpClientBuilder = HttpClientBuilder.create()
 				.setConnectionManager(connectionManager)
 				.setDefaultRequestConfig(requestConfig)
+				.setRedirectStrategy(RemoveDisallowedHeadersRedirectStrategy())
 			// TODO .setRetryHandler()
 			// TODO .setServiceUnavailableRetryStrategy()
 			if (defaultHeaders.isNotEmpty()) {
@@ -137,3 +138,4 @@ open class ApacheCommonsHttpClientTransport(
 		}
 	}
 }
+
