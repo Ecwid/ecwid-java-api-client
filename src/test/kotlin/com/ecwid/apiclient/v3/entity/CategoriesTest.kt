@@ -504,7 +504,7 @@ class CategoriesTest : BaseEntityTest() {
 	}
 
 	private fun assertCategory(
-		desiredId: Int,
+		desiredId: Long,
 		desiredProductIds: List<Int>?,
 		categoriesSearchResult: CategoriesSearchResult
 	) {
@@ -569,7 +569,7 @@ private fun generateTestProduct(
 }
 
 private fun generateTestCategory(
-	parentCategoryId: Int? = null,
+	parentCategoryId: Long? = null,
 	productIds: List<Int> = listOf(),
 	enabled: Boolean = randomBoolean()
 ): UpdatedCategory {

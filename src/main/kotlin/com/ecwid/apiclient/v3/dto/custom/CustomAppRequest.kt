@@ -56,12 +56,12 @@ data class CustomAppRequest(
 		val productId: Int? = null,
 		val combinationId: Long? = null,
 		val name: String? = null,
-		val categoryId: Int? = null,
+		val categoryId: Long? = null,
 		val sku: String? = null,
 		val selectedOptions: List<OrderItemOption>? = null,
 		val dimensions: ProductDimensions? = null,
 		val productPrice: Double? = null,
-		val categoryIds: List<Int>? = null,
+		val categoryIds: List<Long>? = null,
 		val categories: List<Category>? = null,
 		val quantity: Int? = null,
 		val unlimited: Boolean? = null,
@@ -91,7 +91,7 @@ data class CustomAppRequest(
 		val originalImage: PictureInfo? = null,
 		val borderInfo: BorderInfo? = null,
 		val galleryImages: List<GalleryImage>? = null,
-		val defaultCategoryId: Int? = null,
+		val defaultCategoryId: Long? = null,
 		val seoTitle: String? = null,
 		val seoDescription: String? = null,
 		val favorites: FavoritesInfo? = null,
@@ -104,7 +104,7 @@ data class CustomAppRequest(
 	)
 
 	data class Category(
-		val id: Int? = null,
+		val id: Long? = null,
 		val enabled: Boolean? = null
 	)
 
@@ -155,7 +155,7 @@ data class CustomAppRequest(
 
 	data class RelatedCategory(
 		val enabled: Boolean? = null,
-		val categoryId: Int? = null,
+		val categoryId: Long? = null,
 		val productCount: Int? = null
 	)
 
@@ -241,7 +241,7 @@ data class CustomAppRequest(
 
 	data class DiscountCouponCatalogLimit(
 		val products: List<Int>? = null,
-		val categories: List<Int>? = null
+		val categories: List<Long>? = null
 	)
 
 	data class HandlingFeeInfo(

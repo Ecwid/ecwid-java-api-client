@@ -21,8 +21,8 @@ data class UpdatedProduct(
 	val unlimited: Boolean? = null,
 	val warningLimit: Int? = null,
 
-	val categoryIds: List<Int>? = null,
-	val defaultCategoryId: Int? = null,
+	val categoryIds: List<Long>? = null,
+	val defaultCategoryId: Long? = null,
 	val showOnFrontpage: Int? = null,
 
 	val price: Double? = null,
@@ -349,7 +349,7 @@ data class UpdatedProduct(
 
 	data class RelatedCategory(
 		val enabled: Boolean? = null,
-		val categoryId: Int? = null,
+		val categoryId: Long? = null,
 		val productCount: Int? = null
 	)
 

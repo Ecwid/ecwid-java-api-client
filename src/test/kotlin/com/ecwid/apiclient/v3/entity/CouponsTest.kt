@@ -214,7 +214,7 @@ class CouponsTest : BaseEntityTest() {
 		return apiClient.createCategory(categoryCreateRequest)
 	}
 
-	private fun generateTestCouponForCreate(existingProductId: Int, existingCategoryId: Int): UpdatedCoupon {
+	private fun generateTestCouponForCreate(existingProductId: Int, existingCategoryId: Long): UpdatedCoupon {
 		val launchDate = randomDateFrom(Date())
 		val expirationDate = randomDateFrom(launchDate)
 
@@ -240,7 +240,7 @@ class CouponsTest : BaseEntityTest() {
 		)
 	}
 
-	private fun generateTestCouponForUpdate(existingProductId: Int, existingCategoryId: Int): UpdatedCoupon {
+	private fun generateTestCouponForUpdate(existingProductId: Int, existingCategoryId: Long): UpdatedCoupon {
 		val launchDate = randomDateFrom(Date())
 		val expirationDate = randomDateFrom(launchDate)
 
