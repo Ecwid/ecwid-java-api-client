@@ -8,7 +8,7 @@ import com.ecwid.apiclient.v3.responsefields.ResponseFields
 data class CategoriesSearchRequest(
 	val keyword: String? = null,
 	val parentCategoryId: ParentCategory = ParentCategory.Any,
-	val categoryIds: List<Int>? = null,
+	val categoryIds: List<Long>? = null,
 	val hiddenCategories: Boolean? = null,
 	val returnProductIds: Boolean? = null,
 	val baseUrl: String? = null,
@@ -31,7 +31,7 @@ data class CategoriesSearchRequest(
 	sealed class ParentCategory {
 		object Any : ParentCategory()
 		object Root : ParentCategory()
-		data class WithId(val id: Int = 0) : ParentCategory()
+		data class WithId(val id: Long = 0L) : ParentCategory()
 	}
 
 	private fun toParams(): Map<String, String> {

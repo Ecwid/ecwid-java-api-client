@@ -115,7 +115,7 @@ private data class TestProduct(
 	val taxes: List<TaxInfo>,
 	val options: List<ProductOption>?,
 	val checkboxes: List<ProductOption.Checkbox>?,
-	val categoryIds: ArrayList<Int>,
+	val categoryIds: ArrayList<Long>,
 
 	val generic1: Simple1Generic<Int>,
 	val generic2: Simple2Generic<Int, Category>,

@@ -7,7 +7,7 @@ import com.ecwid.apiclient.v3.impl.MIME_TYPE_OCTET_STREAM
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class CategoryImageUploadRequest(
-	val categoryId: Int = 0,
+	val categoryId: Long = 0L,
 	val fileData: UploadFileData = UploadFileData.ExternalUrlData("")
 ) : ApiRequest {
 

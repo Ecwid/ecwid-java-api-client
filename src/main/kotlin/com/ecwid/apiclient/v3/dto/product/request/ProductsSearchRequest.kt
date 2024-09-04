@@ -15,7 +15,7 @@ sealed class ProductsSearchRequest : ApiRequest {
 		val externalReferenceId: String? = null,
 		val priceFrom: Double? = null,
 		val priceTo: Double? = null,
-		val categories: List<Int>? = null,
+		val categories: List<Long>? = null,
 		val includeProductsFromSubcategories: Boolean? = null,
 		val sortBy: SortOrder? = null,
 		val createdFrom: Date? = null,
