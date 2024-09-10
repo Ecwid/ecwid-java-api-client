@@ -84,10 +84,10 @@ class StoreProfileTest : BaseEntityTest() {
 				email = "email@example.com",
 				street = "street",
 				city = "city",
-				countryCode = "RU",
+				countryCode = "GE",
 				postalCode = "postalCode",
 				phone = "phone",
-				stateOrProvinceCode = "73"
+				stateOrProvinceCode = "TB"
 			),
 			formatsAndUnits = UpdatedStoreProfile.FormatsAndUnits(
 				currency = "currency",
@@ -148,8 +148,8 @@ class StoreProfileTest : BaseEntityTest() {
 				UpdatedStoreProfile.Zone(
 					id = "zoneId",
 					name = "Zone name",
-					countryCodes = listOf("RU", "UA"),
-					stateOrProvinceCodes = listOf("RU-73", "RU-77"),
+					countryCodes = listOf("GE", "UA"),
+					stateOrProvinceCodes = listOf("GE-AJ", "GE-TB"),
 					postCodes = listOf("123456", "654321")
 				)
 			),
