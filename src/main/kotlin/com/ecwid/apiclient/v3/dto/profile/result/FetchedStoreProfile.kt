@@ -607,6 +607,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_details_position_product_sku")
 		val productDetailsPositionProductSku: Int? = null,
 
+		@JsonFieldName("product_details_position_review_section")
+		val productDetailsPositionReviewSection: Int? = null,
+
 		@JsonFieldName("product_details_position_save_for_later")
 		val productDetailsPositionSaveForLater: Int? = null,
 
@@ -678,6 +681,15 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("product_details_show_qty")
 		val productDetailsShowQty: Boolean? = null,
+
+		@JsonFieldName("product_details_show_rating_section")
+		val productDetailsShowRatingSection: Boolean? = null,
+
+		@JsonFieldName("product_details_show_reviews_section")
+		val productDetailsShowReviewsSection: Boolean? = null,
+
+		@JsonFieldName("product_details_show_reviews_section_in_one_card_view")
+		val productDetailsShowReviewsSectionInOneCardView: Boolean? = null,
 
 		@JsonFieldName("product_details_show_sale_price")
 		val productDetailsShowSalePrice: Boolean? = null,
@@ -769,6 +781,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_list_price_behavior")
 		val productListPriceBehaviour: String? = null,
 
+		@JsonFieldName("product_list_rating_section_behavior")
+		val productListRatingSectionBehavior: String? = null,
+
 		@JsonFieldName("product_list_sku_behavior")
 		val productListSKUBehaviour: String? = null,
 
@@ -792,6 +807,15 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("product_list_show_product_images")
 		val productListShowProductImages: Boolean? = null,
+
+		@JsonFieldName("product_list_show_rating_in_one_star")
+		val productListShowRatingInOneStar: Boolean? = null,
+
+		@JsonFieldName("product_list_show_rating_number_in_five_stars_view")
+		val productListShowRatingNumberInFiveStarsView: Boolean? = null,
+
+		@JsonFieldName("product_list_show_reviews_count_in_five_stars_view")
+		val productListShowReviewsCountInFiveStarsView: Boolean? = null,
 
 		@JsonFieldName("show_signin_link")
 		val productListShowSignInLink: Boolean? = null,
