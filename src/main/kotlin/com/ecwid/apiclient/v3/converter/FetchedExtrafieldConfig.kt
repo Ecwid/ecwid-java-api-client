@@ -30,7 +30,8 @@ fun FetchedExtrafieldConfig.toUpdated(): UpdatedExtrafieldConfig {
 		titleTranslated = if (titleTranslated != null) LocalizedValueMap(titleTranslated) else null,
 		textPlaceholderTranslated = if (textPlaceholderTranslated != null) LocalizedValueMap(textPlaceholderTranslated) else null,
 		tipTranslated = if (tipTranslated != null) LocalizedValueMap(tipTranslated) else null,
-		valueTranslated = if (valueTranslated != null) LocalizedValueMap(valueTranslated) else null
+		valueTranslated = if (valueTranslated != null) LocalizedValueMap(valueTranslated) else null,
+		saveToCustomerProfile = saveToCustomerProfile,
 	)
 }
 
