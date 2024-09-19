@@ -23,7 +23,6 @@ enum class ReportType {
 	topOfPaymentMethodsByOrders,
 	topOfCouponsByOrders,
 	topOfCategoriesByOrders,
-	uniqueProductViews,
 
 	/** finance */
 	allRevenue,
@@ -40,5 +39,9 @@ enum class ReportType {
 	checkoutSalesFunnel,
 	abandonedCarts,
 	topOfProductsByAddingToFavorites,
+	uniqueProductViews,
+	uniqueProductInCart,
+	uniqueProductOnCheckout,
+	uniqueCompletedOrders,
 
 }
