@@ -36,11 +36,19 @@ class GsonTransformer(polymorphicTypes: List<PolymorphicType<*>>) : JsonTransfor
 		}
 	}
 
-	override fun <V> deserialize(json: String, clazz: Class<V>): V? {
+	override fun <V> deserialize(json: String, clazz: Class<V>): V {
 		try {
 			return gson.fromJson(json, clazz)
 		} catch (e: JsonParseException) {
 			throw JsonDeserializationException(e.message, e)
+		}
+	}
+
+	override fun <V> deserializeOrNull(json: String, clazz: Class<V>): V? {
+		return try {
+			return gson.fromJson(json, clazz)
+		} catch (e: JsonParseException) {
+			null
 		}
 	}
 }
