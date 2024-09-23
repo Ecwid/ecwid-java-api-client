@@ -39,9 +39,9 @@ enum class ReportType {
 	checkoutSalesFunnel,
 	abandonedCarts,
 	topOfProductsByAddingToFavorites,
-	uniqueProductViews,
-	uniqueProductInCart,
-	uniqueProductOnCheckout,
-	uniqueCompletedOrders,
+	uniqueVisitorsProductViews,
+	uniqueVisitorsProductInCart,
+	uniqueVisitorsCheckoutStart,
+	uniqueVisitorsPurchase,
 
 }
