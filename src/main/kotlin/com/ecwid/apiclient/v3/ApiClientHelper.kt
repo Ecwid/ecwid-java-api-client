@@ -196,7 +196,7 @@ class ApiClientHelper private constructor(
 					val responseBody = responseBytes.asString()
 					logErrorResponseIfNeeded(requestId, requestTime, httpResponse.statusCode, responseBody)
 					val ecwidError = if (responseBody.isNotBlank()) {
-						jsonTransformer.deserialize(responseBody, EcwidApiError::class.java)
+						jsonTransformer.deserializeOrNull(responseBody, EcwidApiError::class.java)
 					} else {
 						null
 					}
