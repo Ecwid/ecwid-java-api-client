@@ -547,6 +547,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("enable_catalog_on_one_page")
 		val enableCatalogOnOnePage: Boolean? = null,
 
+		@JsonFieldName("enable_catalog_seamless_product_list_view")
+		val enableCatalogSeamlessProductListView: Boolean? = null,
+
 		@JsonFieldName("enable_page_transitions")
 		val enablePageTransitions: Boolean? = null,
 
@@ -730,14 +733,23 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_details_two_columns_with_right_sidebar_show_product_description_on_sidebar")
 		val productDetailsTwoColumnsWithRightSidebarShowProductDescriptionOnSidebar: Boolean? = null,
 
+		@JsonFieldName("product_filters_opened_by_default_on_catalog_pages")
+		val productFiltersOpenedByDefaultOnCatalogPages: Boolean? = null,
+
 		@JsonFieldName("product_filters_opened_by_default_on_category_page")
 		val productFiltersOpenedByDefaultOnCategoryPage: Boolean? = null,
 
 		@JsonFieldName("product_filters_position_category_page")
 		val productFiltersPositionCategoryPage: String? = null,
 
+		@JsonFieldName("product_filters_position_on_catalog_pages")
+		val productFiltersPositionOnCatalogPages: String? = null,
+
 		@JsonFieldName("product_filters_position_search_page")
 		val productFiltersPositionSearchPage: String? = null,
+
+		@JsonFieldName("product_filters_visible_on_catalog_pages")
+		val productFiltersVisibleOnCatalogPages: Boolean? = null,
 
 		@JsonFieldName("product_list_buybutton_behavior")
 		val productListBuyNowBehaviour: String? = null,
