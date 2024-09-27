@@ -242,7 +242,9 @@ data class FetchedStoreProfile(
 	data class Shipping(
 		val handlingFee: HandlingFee? = null,
 		val shippingOrigin: ShippingOrigin? = null,
-		val shippingOptions: List<ShippingOption>? = null
+		val shippingOptions: List<ShippingOption>? = null,
+		val domesticShippingOnly: Boolean = false,
+		val euShippingOnly: Boolean = false,
 	)
 
 	data class HandlingFee(
