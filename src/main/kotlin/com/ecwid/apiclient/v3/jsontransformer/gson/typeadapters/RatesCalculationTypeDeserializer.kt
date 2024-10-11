@@ -13,6 +13,6 @@ class RatesCalculationTypeDeserializer : JsonDeserializer<RatesCalculationType> 
 		context: JsonDeserializationContext
 	): RatesCalculationType? {
 		val strValue = json.asString
-		return RatesCalculationType.entries.firstOrNull { it.toString() == strValue }
+		return RatesCalculationType.entries.firstOrNull { it.asApiString() == strValue }
 	}
 }

@@ -334,6 +334,10 @@ data class FetchedStoreProfile(
 		app;
 
 		override fun toString(): String {
+			return asApiString()
+		}
+
+		fun asApiString(): String {
 			return super.toString().replace("_", "-")
 		}
 	}
