@@ -18,6 +18,7 @@ import com.ecwid.apiclient.v3.dto.product.result.ProductInventoryUpdateResult
 import com.ecwid.apiclient.v3.dto.productreview.request.UpdatedProductReviewStatus
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedLatestStats
+import com.ecwid.apiclient.v3.dto.report.request.ReportAdviceRequest
 import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportAdviceResponse
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
@@ -83,6 +84,17 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(ReportRequest::limit),
 	AllowNullable(ReportRequest::offset),
 	AllowNullable(ReportRequest::storefrontPlatform),
+
+	AllowNullable(ReportAdviceRequest::startedFrom),
+	AllowNullable(ReportAdviceRequest::endedAt),
+	AllowNullable(ReportAdviceRequest::timeScaleValue),
+	AllowNullable(ReportAdviceRequest::comparePeriod),
+	AllowNullable(ReportAdviceRequest::firstDayOfWeek),
+	AllowNullable(ReportAdviceRequest::orderByMetric),
+	AllowNullable(ReportAdviceRequest::orderDirection),
+	AllowNullable(ReportAdviceRequest::limit),
+	AllowNullable(ReportAdviceRequest::offset),
+	AllowNullable(ReportAdviceRequest::storefrontPlatform),
 
 	AllowNullable(FetchedReportResponse::timeScaleValue),
 	AllowNullable(FetchedReportResponse::comparePeriod),
