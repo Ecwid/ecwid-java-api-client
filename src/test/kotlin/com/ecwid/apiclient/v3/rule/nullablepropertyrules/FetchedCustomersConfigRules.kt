@@ -10,6 +10,7 @@ val fetchedCustomersConfigNullablePropertyRules: List<NullablePropertyRule<*, *>
 	AllowNullable(FetchedCustomersConfig::entityTypes),
 	AllowNullable(FetchedCustomersConfig::type),
 	AllowNullable(FetchedCustomersConfig::shownOnOrderDetails),
+	AllowNullable(FetchedCustomersConfig::linkedWithCheckoutField),
 	AllowNullable(FetchedCustomersConfig::createdDate),
 	AllowNullable(FetchedCustomersConfig::lastModifiedDate),
 )

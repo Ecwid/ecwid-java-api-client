@@ -12,6 +12,7 @@ data class FetchedCustomersConfig(
 	val entityTypes: List<ExtrafieldEntityType>? = null,
 	val type: ExtrafieldType? = null,
 	val shownOnOrderDetails: Boolean? = null,
+	val linkedWithCheckoutField: Boolean? = null,
 	val createdDate: Date? = null,
 	val lastModifiedDate: Date? = null,
 ) : ApiFetchedDTO {
