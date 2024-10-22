@@ -326,6 +326,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedInstantSiteRedirect::id),
 
 	ReadOnly(FetchedCustomersConfig::entityTypes),
+	ReadOnly(FetchedCustomersConfig::linkedWithCheckoutField),
 	ReadOnly(FetchedCustomersConfig::createdDate),
 	ReadOnly(FetchedCustomersConfig::lastModifiedDate),
 )
