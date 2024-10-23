@@ -29,4 +29,7 @@ class ProductReviewsApiClientImpl(
 	override fun getProductReviewsFiltersData(request: ProductReviewFiltersDataRequest) =
 		apiClientHelper.makeObjectResultRequest<ProductReviewFiltersDataResult>(request)
 
+	override fun updateProductReviewCounters(request: ProductReviewCountersUpdateRequest) =
+		apiClientHelper.makeObjectResultRequest<ProductReviewUpdateCountersResult>(request)
+
 }
