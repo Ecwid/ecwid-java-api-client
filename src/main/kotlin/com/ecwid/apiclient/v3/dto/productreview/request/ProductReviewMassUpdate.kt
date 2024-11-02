@@ -11,6 +11,7 @@ data class ProductReviewMassUpdate(
 	val delete: Boolean = false,
 	val newStatus: ProductReviewStatus? = null,
 	val filters: Filters? = null,
+	val sendUpdateToReviewsService: Boolean? = null,
 ) : ApiRequestDTO {
 
 	data class Filters(
@@ -22,5 +23,5 @@ data class ProductReviewMassUpdate(
 		val createdFrom: Instant? = null,
 		val createdTo: Instant? = null,
 		val searchKeyword: String? = null,
-		)
+	)
 }
