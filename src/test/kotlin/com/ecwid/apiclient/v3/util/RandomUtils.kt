@@ -18,6 +18,8 @@ internal fun randomByte() = Random.nextBytes(1)[0] + 128
 
 internal fun randomId() = randomInt(10000, 1000000)
 
+internal fun randomLongId() = randomLong(10000L, 1000000L)
+
 internal fun <T> randomIndex(collection: Collection<T>) = randomInt(0, collection.size - 1)
 
 internal fun randomPrice() = Random
@@ -80,6 +82,8 @@ internal fun <V> randomOf(vararg options: V): V {
 internal fun randomFileName(prefix: String, extension: String) = "$prefix-${Random.nextInt()}.$extension"
 
 internal fun randomInt(min: Int, max: Int) = Random.nextInt(min, max)
+
+internal fun randomLong(min: Long, max: Long) = Random.nextLong(min, max)
 
 internal fun randomDouble(min: Double, max: Double) = Random.nextDouble(min, max)
 

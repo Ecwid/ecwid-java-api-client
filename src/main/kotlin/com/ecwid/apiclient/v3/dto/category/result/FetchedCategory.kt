@@ -9,8 +9,8 @@ import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.PictureInfo
 
 data class FetchedCategory(
-	val id: Int = 0,
-	val parentId: Int? = null,
+	val id: Long = 0L,
+	val parentId: Long? = null,
 	val orderBy: Int? = null,
 	val name: String = "",
 	val isSampleCategory: Boolean? = null,

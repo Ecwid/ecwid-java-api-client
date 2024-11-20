@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
 data class CategoryDetailsRequest(
-	val categoryId: Int = 0,
+	val categoryId: Long = 0L,
 	val baseUrl: String? = null,
 	val cleanUrls: Boolean? = null,
 	val slugsWithoutIds: Boolean? = null,
