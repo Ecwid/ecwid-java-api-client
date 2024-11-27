@@ -97,6 +97,7 @@ data class UpdatedOrder(
 	val paymentReference: String? = null,
 	val loyalty: Loyalty? = null,
 	val customerFiscalCode: String? = null,
+	val lang: String? = null,
 
 ) : ApiUpdatedDTO {
 
