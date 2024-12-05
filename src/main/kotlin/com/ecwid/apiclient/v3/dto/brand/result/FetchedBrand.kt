@@ -7,6 +7,6 @@ data class FetchedBrand(
 	val name: String = "",
 	val nameTranslated: Map<String, String>? = null,
 	val productsFilteredByBrandUrl: String? = null,
-): ApiFetchedDTO, ApiResultDTO {
+) : ApiFetchedDTO, ApiResultDTO {
 	override fun getModifyKind() = ApiFetchedDTO.ModifyKind.ReadOnly
 }

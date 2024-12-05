@@ -324,5 +324,5 @@ interface ProductReviewsApiClient {
 interface BrandsApiClient {
 	fun searchBrands(request: BrandsSearchRequest.ByFilters): BrandsSearchResult
 	fun <Result> searchBrands(request: BrandsSearchRequest.ByFilters, resultClass: KClass<Result>): Result
-		where Result: PartialResult<BrandsSearchResult>
+		where Result : PartialResult<BrandsSearchResult>
 }

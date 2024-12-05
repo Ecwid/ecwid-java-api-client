@@ -9,7 +9,7 @@ import kotlin.reflect.KClass
 
 internal class BrandsApiClientImpl(
 	private val apiClientHelper: ApiClientHelper,
-): BrandsApiClient {
+) : BrandsApiClient {
 
 	override fun searchBrands(request: BrandsSearchRequest.ByFilters) =
 		apiClientHelper.makeObjectResultRequest<BrandsSearchResult>(request)
