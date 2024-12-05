@@ -15,6 +15,8 @@ import com.ecwid.apiclient.v3.dto.batch.result.CancelBatchGroupResult
 import com.ecwid.apiclient.v3.dto.batch.result.CreateBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetEscapedBatchResult
 import com.ecwid.apiclient.v3.dto.batch.result.GetTypedBatchResult
+import com.ecwid.apiclient.v3.dto.brand.request.BrandsSearchRequest
+import com.ecwid.apiclient.v3.dto.brand.result.BrandsSearchResult
 import com.ecwid.apiclient.v3.dto.cart.request.*
 import com.ecwid.apiclient.v3.dto.cart.result.*
 import com.ecwid.apiclient.v3.dto.common.PartialResult
@@ -26,8 +28,6 @@ import com.ecwid.apiclient.v3.dto.customergroup.request.*
 import com.ecwid.apiclient.v3.dto.customergroup.result.*
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.request.*
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.result.*
-import com.ecwid.apiclient.v3.dto.order.request.*
-import com.ecwid.apiclient.v3.dto.order.result.*
 import com.ecwid.apiclient.v3.dto.productreview.request.*
 import com.ecwid.apiclient.v3.dto.productreview.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
@@ -55,6 +55,7 @@ import kotlin.reflect.KClass
 open class ApiClient private constructor(
 	protected val apiClientHelper: ApiClientHelper,
 	storeProfileApiClient: StoreProfileApiClient,
+	brandsApiClient: BrandsApiClient,
 	productsApiClient: ProductsApiClient,
 	categoriesApiClient: CategoriesApiClient,
 	ordersApiClient: OrdersApiClient,
@@ -76,6 +77,7 @@ open class ApiClient private constructor(
 	storeExtrafieldsApiClient: StoreExtrafieldsApiClientImpl,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
+	BrandsApiClient by brandsApiClient,
 	ProductsApiClient by productsApiClient,
 	CategoriesApiClient by categoriesApiClient,
 	OrdersApiClient by ordersApiClient,
@@ -99,6 +101,7 @@ open class ApiClient private constructor(
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
 		storeProfileApiClient = StoreProfileApiClientImpl(apiClientHelper),
+		brandsApiClient = BrandsApiClientImpl(apiClientHelper),
 		productsApiClient = ProductsApiClientImpl(apiClientHelper),
 		categoriesApiClient = CategoriesApiClientImpl(apiClientHelper),
 		ordersApiClient = OrdersApiClientImpl(apiClientHelper),
@@ -314,4 +317,12 @@ interface ProductReviewsApiClient {
 	fun deleteProductReview(request: ProductReviewDeleteRequest): ProductReviewDeleteResult
 	fun massUpdateProductReview(request: ProductReviewMassUpdateRequest): ProductReviewMassUpdateResult
 	fun getProductReviewsFiltersData(request: ProductReviewFiltersDataRequest): ProductReviewFiltersDataResult
+}
+
+// Brands
+// https://api-docs.ecwid.com/reference/search-product-brands
+interface BrandsApiClient {
+	fun searchBrands(request: BrandsSearchRequest.ByFilters): BrandsSearchResult
+	fun <Result> searchBrands(request: BrandsSearchRequest.ByFilters, resultClass: KClass<Result>): Result
+		where Result: PartialResult<BrandsSearchResult>
 }

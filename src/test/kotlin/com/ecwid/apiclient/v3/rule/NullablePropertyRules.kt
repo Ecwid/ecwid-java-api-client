@@ -200,6 +200,8 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	productReviewMassUpdateRequestNullablePropertyRules,
 	productReviewSearchRequestNullablePropertyRules,
 	fetchedCustomersConfigNullablePropertyRules,
+	brandsSearchRequestNullablePropertyRules,
+	fetchedBrandNullablePropertyRules,
 ).flatten()
 
 sealed class NullablePropertyRule<T, R>(
