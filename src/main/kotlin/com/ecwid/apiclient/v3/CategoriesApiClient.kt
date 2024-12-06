@@ -1,5 +1,7 @@
 package com.ecwid.apiclient.v3
 
+import com.ecwid.apiclient.v3.dto.brand.request.BrandsSearchRequest
+import com.ecwid.apiclient.v3.dto.brand.result.BrandsSearchResult
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.result.*
 import com.ecwid.apiclient.v3.dto.common.PagingResult
@@ -37,6 +39,8 @@ interface CategoriesApiClient {
 	fun deleteCategoryImage(request: CategoryImageDeleteRequest): CategoryImageDeleteResult
 	fun assignProductsToCategory(request: AssignProductsToCategoryRequest): CategoryUpdateResult
 	fun unassignProductsFromCategory(request: UnassignProductsFromCategoryRequest): CategoryDeleteResult
+
+	fun getBrands(request: BrandsSearchRequest): BrandsSearchResult
 }
 
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")

@@ -2,6 +2,8 @@ package com.ecwid.apiclient.v3.impl
 
 import com.ecwid.apiclient.v3.ApiClientHelper
 import com.ecwid.apiclient.v3.CategoriesApiClient
+import com.ecwid.apiclient.v3.dto.brand.request.BrandsSearchRequest
+import com.ecwid.apiclient.v3.dto.brand.result.BrandsSearchResult
 import com.ecwid.apiclient.v3.dto.category.request.*
 import com.ecwid.apiclient.v3.dto.category.result.*
 import com.ecwid.apiclient.v3.dto.common.PagingResult
@@ -112,4 +114,7 @@ internal class CategoriesApiClientImpl(
 	): Sequence<Item> where Result : PartialResult<CategoriesSearchResult>, Result : PagingResult<Item> {
 		return fetchPagesAsItemSequence(request) { searchCategoriesByPath(it, resultClass) }
 	}
+
+	override fun getBrands(request: BrandsSearchRequest) =
+		apiClientHelper.makeObjectResultRequest<BrandsSearchResult>(request)
 }
