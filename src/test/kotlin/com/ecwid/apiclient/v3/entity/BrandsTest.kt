@@ -52,7 +52,7 @@ class BrandsTest : BaseEntityTest() {
 
 			val productCreateRequest = ProductCreateRequest(
 				newProduct = UpdatedProduct(
-					name = "Product ${randomAlphanumeric(8)}",
+					name = "Product $i ${randomAlphanumeric(8)}",
 					sku = randomSku,
 					price = price,
 					compareToPrice = 2 * price,
@@ -60,7 +60,6 @@ class BrandsTest : BaseEntityTest() {
 					quantity = 10,
 					attributes = listOf(
 						AttributeValue.createBrandAttributeValue(randomBrand),
-						AttributeValue.createUpcAttributeValue("UPC ${randomAlphanumeric(8)}")
 					),
 					options = listOf(
 						ProductOption.createSelectOption(
