@@ -14,7 +14,7 @@ interface BrandsApiClient {
 }
 
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")
-inline fun <reified Result: PartialResult<BrandsSearchResult>> BrandsApiClient.searchBrands(
+inline fun <reified Result : PartialResult<BrandsSearchResult>> BrandsApiClient.searchBrands(
 	request: BrandsSearchRequest
 ): Result {
 	return searchBrands(request, resultClass = Result::class)
