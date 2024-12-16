@@ -11,11 +11,11 @@ internal class BrandsApiClientImpl(
 	private val apiClientHelper: ApiClientHelper,
 ) : BrandsApiClient {
 
-	override fun searchBrands(request: BrandsSearchRequest.ByFilters) =
+	override fun searchBrands(request: BrandsSearchRequest) =
 		apiClientHelper.makeObjectResultRequest<BrandsSearchResult>(request)
 
 	override fun <Result : PartialResult<BrandsSearchResult>> searchBrands(
-		request: BrandsSearchRequest.ByFilters,
+		request: BrandsSearchRequest,
 		resultClass: KClass<Result>
 	): Result {
 		return apiClientHelper.makeObjectPartialResultRequest(

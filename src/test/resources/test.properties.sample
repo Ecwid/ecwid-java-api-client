@@ -1,5 +1,5 @@
 # don't use id of store that contains valuable and useful data! tests can modify or even delete store data
-storeId=
-apiToken=
-apiHost=app.ecwid.com
+storeId=1754
+apiToken=secret_ZVk1LmWMfv8cnFy6bgQrvnyZSpBGjwsz
+apiHost=app.local.ecwid.com
 apiPort=443

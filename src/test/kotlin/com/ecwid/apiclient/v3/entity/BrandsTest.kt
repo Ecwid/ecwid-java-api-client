@@ -34,7 +34,7 @@ class BrandsTest : BaseEntityTest() {
 			)
 		}
 
-		val result = apiClient.getBrands(BrandsSearchRequest.ByFilters())
+		val result = apiClient.searchBrands(BrandsSearchRequest.ByFilters())
 		assertEquals(
 			brandedProductsCreateResult.brandNames,
 			result.items.map { it.name }
