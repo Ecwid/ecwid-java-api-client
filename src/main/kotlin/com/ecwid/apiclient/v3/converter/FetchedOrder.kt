@@ -93,6 +93,7 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 		paymentReference = paymentReference,
 		loyalty = loyalty?.toUpdated(),
 		customerFiscalCode = customerFiscalCode,
+		lang = lang,
 	)
 }
 

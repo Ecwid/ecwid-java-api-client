@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.entity
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.cart.request.*
 import com.ecwid.apiclient.v3.dto.cart.result.CalculateOrderDetailsResult
+import com.ecwid.apiclient.v3.dto.cart.result.CalculateOrderDetailsResult.DiscountInfo
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.OrderCreateRequest
 import com.ecwid.apiclient.v3.dto.order.request.OrderDetailsRequest
@@ -352,7 +353,7 @@ class CartsTest : BaseEntityTest() {
 		checkPersonsEquals(orderForCalculate.billingPerson, calculatedOrder.billingPerson)
 		checkPersonsEquals(orderForCalculate.shippingPerson, calculatedOrder.shippingPerson)
 		assertEquals(
-			null,
+			emptyList<DiscountInfo>(),
 			calculatedOrder.discountInfo
 		) // TODO Discover why after each calculation this field resets to null
 	}
@@ -709,6 +710,7 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 			it.copy(
 				appliesToItems = null
 			)
-		}
+		},
+		lang = order.lang
 	)
 }

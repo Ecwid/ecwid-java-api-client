@@ -437,7 +437,8 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 			it.copy(
 				appliesToItems = null
 			)
-		}
+		},
+		lang = order.lang
 	)
 }
 
