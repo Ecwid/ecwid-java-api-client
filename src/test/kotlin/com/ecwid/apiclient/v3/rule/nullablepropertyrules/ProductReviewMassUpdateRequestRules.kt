@@ -17,4 +17,5 @@ val productReviewMassUpdateRequestNullablePropertyRules: List<NullablePropertyRu
 	AllowNullable(ProductReviewMassUpdate::newStatus),
 	AllowNullable(ProductReviewMassUpdate::reviewIds),
 	AllowNullable(ProductReviewMassUpdate::selectMode),
+	AllowNullable(ProductReviewMassUpdate::sendUpdateToReviewsService),
 )
