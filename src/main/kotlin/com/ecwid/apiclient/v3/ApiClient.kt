@@ -43,6 +43,8 @@ import com.ecwid.apiclient.v3.dto.storage.result.*
 import com.ecwid.apiclient.v3.dto.subscriptions.request.SubscriptionsSearchRequest
 import com.ecwid.apiclient.v3.dto.subscriptions.result.FetchedSubscription
 import com.ecwid.apiclient.v3.dto.subscriptions.result.SubscriptionsSearchResult
+import com.ecwid.apiclient.v3.dto.swatches.request.RecentSwatchColorsGetRequest
+import com.ecwid.apiclient.v3.dto.swatches.result.FetchedSwatchColor
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
@@ -73,6 +75,7 @@ open class ApiClient private constructor(
 	slugInfoApiClient: SlugInfoApiClientImpl,
 	productReviewsApiClient: ProductReviewsApiClientImpl,
 	storeExtrafieldsApiClient: StoreExtrafieldsApiClientImpl,
+	swatchesApiClient: SwatchesApiClientImpl,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	BrandsApiClient by brandsApiClient,
@@ -94,7 +97,8 @@ open class ApiClient private constructor(
 	InstantSiteRedirectsApiClient by instantSiteRedirectsApiClient,
 	SlugInfoApiClient by slugInfoApiClient,
 	ProductReviewsApiClient by productReviewsApiClient,
-	StoreExtrafieldsApiClient by storeExtrafieldsApiClient {
+	StoreExtrafieldsApiClient by storeExtrafieldsApiClient,
+	SwatchesApiClient by swatchesApiClient {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -119,6 +123,7 @@ open class ApiClient private constructor(
 		slugInfoApiClient = SlugInfoApiClientImpl(apiClientHelper),
 		productReviewsApiClient = ProductReviewsApiClientImpl(apiClientHelper),
 		storeExtrafieldsApiClient = StoreExtrafieldsApiClientImpl(apiClientHelper),
+		swatchesApiClient = SwatchesApiClientImpl(apiClientHelper),
 	)
 
 	companion object {
@@ -315,4 +320,9 @@ interface ProductReviewsApiClient {
 	fun deleteProductReview(request: ProductReviewDeleteRequest): ProductReviewDeleteResult
 	fun massUpdateProductReview(request: ProductReviewMassUpdateRequest): ProductReviewMassUpdateResult
 	fun getProductReviewsFiltersData(request: ProductReviewFiltersDataRequest): ProductReviewFiltersDataResult
+}
+
+// Swatches
+interface SwatchesApiClient {
+	fun getRecentSwatchColors(request: RecentSwatchColorsGetRequest): Sequence<FetchedSwatchColor>
 }
