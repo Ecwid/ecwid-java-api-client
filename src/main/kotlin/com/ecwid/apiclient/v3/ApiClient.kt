@@ -44,7 +44,7 @@ import com.ecwid.apiclient.v3.dto.subscriptions.request.SubscriptionsSearchReque
 import com.ecwid.apiclient.v3.dto.subscriptions.result.FetchedSubscription
 import com.ecwid.apiclient.v3.dto.subscriptions.result.SubscriptionsSearchResult
 import com.ecwid.apiclient.v3.dto.swatches.request.RecentSwatchColorsGetRequest
-import com.ecwid.apiclient.v3.dto.swatches.result.FetchedSwatchColor
+import com.ecwid.apiclient.v3.dto.swatches.result.FetchedSwatchColorsResult
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
@@ -324,5 +324,5 @@ interface ProductReviewsApiClient {
 
 // Swatches
 interface SwatchesApiClient {
-	fun getRecentSwatchColors(request: RecentSwatchColorsGetRequest): Sequence<FetchedSwatchColor>
+	fun getRecentSwatchColors(request: RecentSwatchColorsGetRequest): FetchedSwatchColorsResult
 }
