@@ -39,6 +39,9 @@ internal class OrdersApiClientImpl(
 	override fun getOrderDetails(request: OrderDetailsRequest) =
 		apiClientHelper.makeObjectResultRequest<FetchedOrder>(request)
 
+	override fun getLastOrderDetails(request: LastOrderDetailsRequest) =
+		apiClientHelper.makeObjectResultRequest<FetchedOrder>(request)
+
 	override fun getOrderInvoice(request: OrderInvoiceRequest) = apiClientHelper.makeStringResultRequest(request)
 
 	override fun createOrder(request: OrderCreateRequest) =
