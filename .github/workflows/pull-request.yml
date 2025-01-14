@@ -24,7 +24,9 @@ jobs:
           cache: 'gradle'
 
       - name: Build, run tests and upload dev snapshot to Maven Central with Gradle
-        run: ./gradlew devSnapshot printDevSnapshotReleaseNote
+        run: |
+          ./gradlew devSnapshot printDevSnapshotReleaseNote printSanitizedVersion
+          cat sanitized_version.md >> $GITHUB_STEP_SUMMARY
         env:
           STORE_ID: ${{ secrets.STORE_ID }}
           API_TOKEN: ${{ secrets.API_TOKEN }}
@@ -34,6 +36,7 @@ jobs:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
 
       - name: Upload artifacts with checks results
         uses: actions/upload-artifact@v3

@@ -127,6 +127,12 @@ tasks.register(Tasks.PRINT_DEV_SNAPSHOT_RELEASE_NOTE_TASK_NAME) {
 	dependsOn(tasks.getByName("devSnapshot"))
 }
 
+tasks.register(Tasks.PRINT_SUMMARY_SANITIZED_TASK_NAME) {
+	doLast {
+		printSanitizedVersion(project.sanitizeVersion())
+	}
+}
+
 detekt {
 	allRules = false
 	basePath = "$projectDir"
@@ -210,15 +216,16 @@ nexusPublishing {
 // 		<major>.<minor>.<patch>-dev.#+<branchname>.<hash> (local branch)
 // 		<major>.<minor>.<patch>-dev.#+<hash> (github pull request)
 // to:
-// 		<major>.<minor>.<patch>-dev+<branchname>-SNAPSHOT
+// 		<major>.<minor>.<patch>-dev+<branchname>_<hash>-SNAPSHOT
 fun Project.sanitizeVersion(): String {
 	val version = version.toString()
 	return if (project.isSnapshotVersion()) {
 		val githubHeadRef = settingsProvider.githubHeadRef
+		val githubHeadSHA = settingsProvider.githubHeadSHA?.take(Consts.MAX_HEAD_SHA_LENGTH)
 		if (githubHeadRef != null) {
 			// github pull request
 			version
-				.replace(Regex("-dev\\.\\d+\\+[a-f0-9]+$"), "-dev+$githubHeadRef-SNAPSHOT")
+				.replace(Regex("-dev\\.\\d+\\+[a-f0-9]+$"), "-dev+${githubHeadRef}_$githubHeadSHA-SNAPSHOT")
 		} else {
 			// local branch
 			version
@@ -273,6 +280,16 @@ fun printDevSnapshotReleaseNote(groupId: String, artifactId: String, sanitizedVe
 	println()
 }
 
+fun printSanitizedVersion(sanitizedVersion: String) {
+	val markdownMessage = """
+        |## Sanitized Version
+        |
+        |**Version:** $sanitizedVersion
+        |
+    """.trimMargin()
+	File("sanitized_version.md").writeText(markdownMessage)
+}
+
 class SettingsProvider {
 
 	val gpgSigningKey: String?
@@ -289,6 +306,9 @@ class SettingsProvider {
 
 	val githubHeadRef: String?
 		get() = System.getenv(GITHUB_HEAD_REF_PROPERTY)
+
+	val githubHeadSHA: String?
+		get() = System.getenv(GITHUB_HEAD_SHA_PROPERTY)
 
 	fun validateGPGSecrets() = require(
 		value = !gpgSigningKey.isNullOrBlank() && !gpgSigningPassword.isNullOrBlank(),
@@ -310,6 +330,7 @@ class SettingsProvider {
 		private const val OSSRH_USERNAME_PROPERTY = "OSSRH_USERNAME"
 		private const val OSSRH_PASSWORD_PROPERTY = "OSSRH_PASSWORD"
 		private const val GITHUB_HEAD_REF_PROPERTY = "GITHUB_HEAD_REF"
+		private const val GITHUB_HEAD_SHA_PROPERTY = "GITHUB_HEAD_SHA"
 	}
 }
 
@@ -339,9 +360,11 @@ object PublicationSettings {
 object Consts {
 	const val SLOW_TESTS_LOGGING_THRESHOLD_MS = 30_000L
 	const val MAX_TEST_RETRIES_COUNT = 3
+	const val MAX_HEAD_SHA_LENGTH = 8
 }
 
 object Tasks {
 	const val PRINT_FINAL_RELEASE_NOTE_TASK_NAME = "printFinalReleaseNote"
 	const val PRINT_DEV_SNAPSHOT_RELEASE_NOTE_TASK_NAME = "printDevSnapshotReleaseNote"
+	const val PRINT_SUMMARY_SANITIZED_TASK_NAME = "printDevSanitizedVersion"
 }
