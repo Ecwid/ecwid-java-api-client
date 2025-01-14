@@ -16,7 +16,7 @@ interface StoreProfileApiClient {
 	fun getLatestStats(request: LatestStatsRequest): FetchedLatestStats
 	fun getShippingOptions(request: ShippingOptionsRequest): ShippingOptionsResult
 
-	// 	fun addShippingOption()
+	// 	fun addShippingOption() dummy comment
 	// 	fun updateShippingOption()
 	fun getPaymentOptions(request: PaymentOptionsRequest): PaymentOptionsResult
 	fun createPaymentOption(request: PaymentOptionCreateRequest): PaymentOptionCreateResult
