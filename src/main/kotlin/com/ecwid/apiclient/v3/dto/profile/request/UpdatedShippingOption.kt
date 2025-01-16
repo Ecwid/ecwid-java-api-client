@@ -37,6 +37,7 @@ data class UpdatedShippingOption(
 }
 
 data class Zone(
+	val id: String? = null,
 	val name: String? = null,
 	val countryCodes: List<String>? = null,
 	val stateOrProvinceCodes: List<String>? = null,
@@ -49,9 +50,9 @@ data class GeoPolygons(
 )
 
 data class BlackoutDates(
-	var fromDate: Date? = null,
-	var toDate: Date? = null,
-	var repeatedAnnually: Boolean? = null,
+	val fromDate: Date? = null,
+	val toDate: Date? = null,
+	val repeatedAnnually: Boolean? = null,
 )
 
 data class FlatRate(

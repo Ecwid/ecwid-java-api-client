@@ -309,7 +309,12 @@ data class FetchedStoreProfile(
 		val name: String? = null,
 		val countryCodes: List<String>? = null,
 		val stateOrProvinceCodes: List<String>? = null,
-		val postCodes: List<String>? = null
+		val postCodes: List<String>? = null,
+		val geoPolygons: List<GeoPolygons>? = null,
+	)
+
+	data class GeoPolygons(
+		val coordinates: List<List<Double>>? = null,
 	)
 
 	data class CarrierMethod(
