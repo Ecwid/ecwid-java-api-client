@@ -55,6 +55,9 @@ internal class StoreProfileApiClientImpl(
 	override fun getShippingOptions(request: ShippingOptionsRequest): ShippingOptionsResult =
 		apiClientHelper.makeObjectResultRequest(request)
 
+	override fun updateShippingOption(request: ShippingOptionUpdateRequest): ShippingOptionUpdateResult =
+		apiClientHelper.makeObjectResultRequest(request)
+
 	override fun getPaymentOptions(request: PaymentOptionsRequest): PaymentOptionsResult =
 		apiClientHelper.makeObjectResultRequest(request)
 

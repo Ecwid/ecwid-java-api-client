@@ -7,6 +7,7 @@ import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
 import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedPaymentOption
+import com.ecwid.apiclient.v3.dto.profile.request.UpdatedShippingOption
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 import java.util.*
@@ -286,7 +287,11 @@ data class FetchedStoreProfile(
 		val pickupBusinessHours: String? = null,
 		val scheduled: Boolean? = null,
 		val scheduledTimePrecisionType: ScheduledTimePrecisionType? = null,
-	)
+	) : ApiFetchedDTO {
+		override fun getModifyKind(): ModifyKind {
+			return ModifyKind.ReadWrite(UpdatedShippingOption::class)
+		}
+	}
 
 	@Suppress("unused")
 	enum class ScheduledTimePrecisionType {
