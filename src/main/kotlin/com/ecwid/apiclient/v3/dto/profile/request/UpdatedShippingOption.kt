@@ -54,7 +54,7 @@ data class UpdatedShippingOption(
 	)
 
 	data class FlatRate(
-		val rateType: String? = null,
+		val rateType: RateType? = null,
 		val rate: Double? = null,
 	)
 
