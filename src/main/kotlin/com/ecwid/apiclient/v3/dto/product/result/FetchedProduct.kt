@@ -191,7 +191,8 @@ data class FetchedProduct(
 
 	data class CategoryInfo(
 		val id: Int = 0,
-		val enabled: Boolean = true
+		val enabled: Boolean = true,
+		val name: String = "",
 	)
 
 	data class TaxInfo(
