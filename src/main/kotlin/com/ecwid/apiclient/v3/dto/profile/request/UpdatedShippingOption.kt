@@ -31,7 +31,7 @@ data class UpdatedShippingOption(
 	val carrier: String? = null,
 	val carrierMethods: List<CarrierMethod>? = null,
 	val carrierSettings: CarrierSettings? = null,
-	val businessHours: BusinessHours? = null,
+	val businessHours: String? = null,
 	val businessHoursLimitationType: ApiBusinessHoursLimitationType? = null,
 	val allowSameDayDelivery: Boolean? = null,
 	val deliveryTimeDays: String? = null,
@@ -121,5 +121,3 @@ data class UpdatedShippingOption(
 		return ApiUpdatedDTO.ModifyKind.ReadWrite(FetchedShippingOption::class)
 	}
 }
-
-typealias BusinessHours = Map<String, List<List<String>>>
