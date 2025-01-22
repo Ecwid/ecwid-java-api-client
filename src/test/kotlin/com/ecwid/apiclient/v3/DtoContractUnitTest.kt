@@ -195,10 +195,11 @@ class DtoContractUnitTest {
 	@Test
 	@Order(5)
 	fun `test no new exclusions added to file NullablePropertyRules`() {
+		val expectedNullablePropertiesCount = 931
 		val ignoreNullablePropertiesCount = nullablePropertyRules
 			.filterIsInstance<IgnoreNullable<*, *>>()
 			.size
-		assertEquals(976, ignoreNullablePropertiesCount) {
+		assertEquals(expectedNullablePropertiesCount, ignoreNullablePropertiesCount) {
 			"You MUST NOT add exclusion with type IgnoreNullable() which is used only for old fields until they are fixed.\n" +
 				"Please make added property non-nullable if possible.\n" +
 				"If Ecwid API sometimes return null as value for this property you CAN add it to as `AllowNullable()` exclusion type instead."
