@@ -1,6 +1,6 @@
 package com.ecwid.apiclient.v3.jsontransformer.gson.typeadapters
 
-import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile.RatesCalculationType
+import com.ecwid.apiclient.v3.dto.profile.enums.RatesCalculationType
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement

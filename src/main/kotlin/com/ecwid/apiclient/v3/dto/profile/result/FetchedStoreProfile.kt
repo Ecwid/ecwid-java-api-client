@@ -242,7 +242,7 @@ data class FetchedStoreProfile(
 	data class Shipping(
 		val handlingFee: HandlingFee? = null,
 		val shippingOrigin: ShippingOrigin? = null,
-		val shippingOptions: List<ShippingOption>? = null
+		val shippingOptions: List<FetchedShippingOption>? = null
 	)
 
 	data class HandlingFee(
@@ -262,130 +262,12 @@ data class FetchedStoreProfile(
 		val phone: String? = null
 	)
 
-	data class ShippingOption(
-		val id: String? = null,
-		val title: String? = null,
-		val enabled: Boolean? = null,
-		val orderBy: Int? = null,
-		val fulfilmentType: FulfilmentType? = null,
-		val destinationZone: Zone? = null,
-		val deliveryTimeDays: String? = null,
-		val description: String? = null,
-		val carrier: String? = null,
-		val carrierMethods: List<CarrierMethod>? = null,
-		val carrierSettings: CarrierSettings? = null,
-		val ratesCalculationType: RatesCalculationType? = null,
-		val shippingCostMarkup: Double? = null,
-		val flatRate: FlatRate? = null,
-		val ratesTable: TableRatesDetails? = null,
-		val appClientId: String? = null,
-		val locationId: String? = null,
-		val pickupInstruction: String? = null,
-		val scheduledPickup: Boolean? = null,
-		val pickupPreparationTimeHours: Int? = null,
-		val pickupBusinessHours: String? = null,
-		val scheduled: Boolean? = null,
-		val scheduledTimePrecisionType: ScheduledTimePrecisionType? = null,
-	)
-
-	@Suppress("unused")
-	enum class ScheduledTimePrecisionType {
-		DATE,
-		DATE_AND_TIME_SLOT
-	}
-
-	@Suppress("unused")
-	enum class FulfilmentType {
-		pickup, shipping, delivery
-	}
-
 	data class Zone(
 		val id: String? = null,
 		val name: String? = null,
 		val countryCodes: List<String>? = null,
 		val stateOrProvinceCodes: List<String>? = null,
 		val postCodes: List<String>? = null
-	)
-
-	data class CarrierMethod(
-		val id: String? = null,
-		val name: String? = null,
-		val enabled: Boolean? = null,
-		val orderBy: Int? = null
-	)
-
-	data class CarrierSettings(
-		val defaultCarrierAccountEnabled: Boolean? = null,
-		val defaultPostageDimensions: DefaultPostageDimensions? = null
-	)
-
-	data class DefaultPostageDimensions(
-		val length: Double? = null,
-		val width: Double? = null,
-		val height: Double? = null
-	)
-
-	@Suppress("unused")
-	enum class RatesCalculationType {
-
-		carrier_calculated,
-		table,
-		flat,
-		app;
-
-		override fun toString(): String {
-			return asApiString()
-		}
-
-		fun asApiString(): String {
-			return super.toString().replace("_", "-")
-		}
-	}
-
-	data class FlatRate(
-		val rateType: RateType? = null,
-		val rate: Double? = null
-	) {
-
-		@Suppress("unused")
-		enum class RateType {
-			ABSOLUTE,
-			PERCENT
-		}
-	}
-
-	data class TableRatesDetails(
-		val tableBasedOn: RateBase? = null,
-		val rates: List<TableRate>? = null
-	) {
-
-		@Suppress("unused")
-		enum class RateBase {
-			subtotal,
-			discountedSubtotal,
-			weight
-		}
-	}
-
-	data class TableRate(
-		val tableRateConditions: TableRateConditions? = null,
-		val rate: TableRateDetails? = null
-	)
-
-	data class TableRateConditions(
-		val weightFrom: Double? = null,
-		val weightTo: Double? = null,
-		val subtotalFrom: Double? = null,
-		val subtotalTo: Double? = null,
-		val discountedSubtotalFrom: Double? = null,
-		val discountedSubtotalTo: Double? = null
-	)
-
-	data class TableRateDetails(
-		val perOrderAbs: Double? = null,
-		val perOrderPercent: Double? = null,
-		val perItem: Double? = null,
-		val perWeightUnitRate: Double? = null
 	)
 
 	data class TaxSettings(
