@@ -32,9 +32,9 @@ data class FetchedProduct(
 	val inStock: Boolean? = null,
 	val warningLimit: Int? = null,
 
-	val categoryIds: List<Int>? = null,
+	val categoryIds: List<Long>? = null,
 	val categories: List<CategoryInfo>? = null,
-	val defaultCategoryId: Int? = null,
+	val defaultCategoryId: Long? = null,
 	val showOnFrontpage: Int? = null,
 
 	val price: Double? = null,
@@ -190,7 +190,7 @@ data class FetchedProduct(
 	)
 
 	data class CategoryInfo(
-		val id: Int = 0,
+		val id: Long = 0L,
 		val enabled: Boolean = true
 	)
 
@@ -302,7 +302,7 @@ data class FetchedProduct(
 
 	data class RelatedCategory(
 		val enabled: Boolean? = null,
-		val categoryId: Int? = null,
+		val categoryId: Long? = null,
 		val productCount: Int? = null
 	)
 

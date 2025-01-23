@@ -473,7 +473,7 @@ class CartsTest : BaseEntityTest() {
 		return OrderForCalculate.OrderItem(
 			id = randomId(),
 			productId = randomId(),
-			categoryId = randomId(),
+			categoryId = randomLongId(),
 			price = 22.2,
 			productPrice = 33.3,
 			shipping = 44.4,

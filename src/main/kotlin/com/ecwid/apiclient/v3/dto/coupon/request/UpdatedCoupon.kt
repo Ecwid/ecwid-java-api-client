@@ -27,7 +27,7 @@ data class UpdatedCoupon(
 
 	data class DiscountCouponCatalogLimit(
 		val products: List<Int>? = null,
-		val categories: List<Int>? = null
+		val categories: List<Long>? = null
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedCoupon::class)

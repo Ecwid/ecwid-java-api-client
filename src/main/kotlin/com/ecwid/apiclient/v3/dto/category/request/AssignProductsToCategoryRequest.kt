@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class AssignProductsToCategoryRequest(
-	val categoryId: Int = 0,
+	val categoryId: Long = 0L,
 	val productIds: List<Int> = emptyList()
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createPostRequest(
