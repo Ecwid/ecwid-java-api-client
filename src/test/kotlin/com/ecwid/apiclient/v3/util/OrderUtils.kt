@@ -73,7 +73,10 @@ fun generateTestOrder(): UpdatedOrder {
 			generateTestOnTotalDiscountInfo(),
 			generateTestOnMembershipDiscountInfo(),
 			generateTestOnTotalAndMembershipDiscountInfo(),
-			generateTestCustomDiscountInfo()
+			generateTestCustomDiscountInfo(),
+			generateTestItemDiscountInfo(),
+			generateTestShippingDiscountInfo(),
+			generateTestSubtotalDiscountInfo()
 		),
 
 		// TODO Pass real discount coupon code when API client will support this
@@ -188,6 +191,27 @@ private fun generateTestCustomDiscountInfo() = UpdatedOrder.DiscountInfo(
 	base = DiscountBase.CUSTOM,
 	orderTotal = randomPrice(),
 	description = "Custom discount " + randomAlphanumeric(8)
+)
+
+private fun generateTestItemDiscountInfo() = UpdatedOrder.DiscountInfo(
+	value = randomPrice(),
+	type = randomEnumValue<DiscountType>(),
+	base = DiscountBase.ITEM,
+	description = "On item discount " + randomAlphanumeric(8)
+)
+
+private fun generateTestShippingDiscountInfo() = UpdatedOrder.DiscountInfo(
+	value = randomPrice(),
+	type = randomEnumValue<DiscountType>(),
+	base = DiscountBase.SHIPPING,
+	description = "On shipping discount " + randomAlphanumeric(8)
+)
+
+private fun generateTestSubtotalDiscountInfo() = UpdatedOrder.DiscountInfo(
+	value = randomPrice(),
+	type = randomEnumValue<DiscountType>(),
+	base = DiscountBase.SUBTOTAL,
+	description = "On subtotal discount " + randomAlphanumeric(8)
 )
 
 private fun generateTestOrderItem() = UpdatedOrder.OrderItem(
