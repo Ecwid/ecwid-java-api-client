@@ -197,6 +197,7 @@ private fun generateTestItemDiscountInfo() = UpdatedOrder.DiscountInfo(
 	value = randomPrice(),
 	type = randomEnumValue<DiscountType>(),
 	base = DiscountBase.ITEM,
+	orderTotal = randomPrice(),
 	description = "On item discount " + randomAlphanumeric(8)
 )
 
@@ -204,6 +205,7 @@ private fun generateTestShippingDiscountInfo() = UpdatedOrder.DiscountInfo(
 	value = randomPrice(),
 	type = randomEnumValue<DiscountType>(),
 	base = DiscountBase.SHIPPING,
+	orderTotal = randomPrice(),
 	description = "On shipping discount " + randomAlphanumeric(8)
 )
 
@@ -211,6 +213,7 @@ private fun generateTestSubtotalDiscountInfo() = UpdatedOrder.DiscountInfo(
 	value = randomPrice(),
 	type = randomEnumValue<DiscountType>(),
 	base = DiscountBase.SUBTOTAL,
+	orderTotal = randomPrice(),
 	description = "On subtotal discount " + randomAlphanumeric(8)
 )
 
