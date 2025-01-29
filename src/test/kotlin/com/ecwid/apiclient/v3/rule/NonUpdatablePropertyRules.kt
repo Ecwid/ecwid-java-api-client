@@ -269,6 +269,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedStoreProfile.InstantSiteInfo::slugsWithoutIdsEnabled),
 	ReadOnly(FetchedStoreProfile.PaymentOptionInfo::id),
 	ReadOnly(FetchedStoreProfile.PaymentOptionInfo::paymentProcessorTitle),
+	ReadOnly(FetchedStoreProfile.Shipping::domesticShippingOnly),
+	ReadOnly(FetchedStoreProfile.Shipping::euShippingOnly),
 
 	ReadOnly(FetchedVariation::id),
 	Ignored(FetchedVariation::combinationNumber),
