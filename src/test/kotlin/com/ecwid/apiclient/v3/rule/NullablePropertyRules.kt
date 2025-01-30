@@ -183,6 +183,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	fetchedOrderNullablePropertyRules,
 	fetchedProductNullablePropertyRules,
 	fetchedProductTypeNullablePropertyRules,
+	fetchedShippingOptionNullablePropertyRules,
 	fetchedStoreProfileNullablePropertyRules,
 	fetchedVariationTypeNullablePropertyRules,
 	getProductFiltersRequestNullablePropertyRules,

@@ -1,7 +1,7 @@
 package com.ecwid.apiclient.v3.jsontransformer.gson
 
 import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult.ProductFilters
-import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile.RatesCalculationType
+import com.ecwid.apiclient.v3.dto.profile.enums.RatesCalculationType
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.impl.ParsedResponseWithExt
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
