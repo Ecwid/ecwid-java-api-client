@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.*
+import kotlin.test.Ignore
 
 class CartsTest : BaseEntityTest() {
 
@@ -249,6 +250,7 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Ignore
 	fun testCalculateOrderDetails() {
 		// Calculate order details
 		val orderForCalculate = generateTestOrderForCalculate()

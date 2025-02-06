@@ -177,6 +177,27 @@ private fun generateTestOnMembershipDiscountInfo() = UpdatedOrder.DiscountInfo(
 	description = "On membership discount " + randomAlphanumeric(8)
 )
 
+private fun generateTestItemDiscountInfo() = UpdatedOrder.DiscountInfo(
+	value = randomPrice(),
+	type = randomEnumValue<DiscountType>(),
+	base = DiscountBase.ITEM,
+	description = "On membership discount " + randomAlphanumeric(8)
+)
+
+private fun generateTestShippingDiscountInfo() = UpdatedOrder.DiscountInfo(
+	value = randomPrice(),
+	type = randomEnumValue<DiscountType>(),
+	base = DiscountBase.SHIPPING,
+	description = "On membership discount " + randomAlphanumeric(8)
+)
+
+private fun generateTestSubtotalDiscountInfo() = UpdatedOrder.DiscountInfo(
+	value = randomPrice(),
+	type = randomEnumValue<DiscountType>(),
+	base = DiscountBase.SUBTOTAL,
+	description = "On membership discount " + randomAlphanumeric(8)
+)
+
 private fun generateTestOnTotalAndMembershipDiscountInfo() = UpdatedOrder.DiscountInfo(
 	value = randomPrice(),
 	type = randomEnumValue<DiscountType>(),
