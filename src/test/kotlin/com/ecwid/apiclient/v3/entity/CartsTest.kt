@@ -706,6 +706,9 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 			)
 		},
 		customerFiscalCode = null, // ApiOrder has empty string instead of null
+		electronicInvoicePecEmail = null,
+		electronicInvoiceSdiCode = null,
+		commercialRelationshipScheme = null,
 		discountInfo = order.discountInfo?.map {
 			it.copy(
 				appliesToItems = null

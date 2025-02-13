@@ -93,6 +93,9 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 		paymentReference = paymentReference,
 		loyalty = loyalty?.toUpdated(),
 		customerFiscalCode = customerFiscalCode,
+		electronicInvoicePecEmail = electronicInvoicePecEmail,
+		electronicInvoiceSdiCode = electronicInvoiceSdiCode,
+		commercialRelationshipScheme = commercialRelationshipScheme,
 		lang = lang,
 	)
 }
