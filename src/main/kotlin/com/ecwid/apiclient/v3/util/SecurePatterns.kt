@@ -3,17 +3,20 @@ package com.ecwid.apiclient.v3.util
 private const val PARAM_VALUE_PATTERN = "([^;,)]+)"
 
 private val GLOBAL_SECURE_PATTERNS = listOf(
-	createKeyValueSecurePattern("email"),
-	createKeyValueSecurePattern("token"),
-	createJsonSecurePattern("email"),
-	createJsonSecurePattern("token"),
-	createJsonSecurePattern("name"),
-	createJsonSecurePattern("firstName"),
-	createJsonSecurePattern("lastName"),
-	createJsonSecurePattern("street"),
-	createJsonSecurePattern("city"),
-	createJsonSecurePattern("postalCode"),
-	createJsonSecurePattern("phone"),
+	createSecurePatterns("email"),
+	createSecurePatterns("token"),
+	createSecurePatterns("name"),
+	createSecurePatterns("firstName"),
+	createSecurePatterns("lastName"),
+	createSecurePatterns("street"),
+	createSecurePatterns("city"),
+	createSecurePatterns("postalCode"),
+	createSecurePatterns("phone"),
+).flatten()
+
+fun createSecurePatterns(paramName: String): List<SecurePattern> = listOf(
+	createKeyValueSecurePattern(paramName),
+	createJsonSecurePattern(paramName),
 )
 
 fun createKeyValueSecurePattern(paramName: String) = SecurePattern(
@@ -26,6 +29,4 @@ fun createJsonSecurePattern(paramName: String) = SecurePattern(
 	unmaskedLength = 6
 )
 
-fun createSecurePatterns() = mutableListOf<SecurePattern>().apply {
-	addAll(GLOBAL_SECURE_PATTERNS)
-}.toList()
+fun createSecurePatterns() = GLOBAL_SECURE_PATTERNS.toMutableList()
