@@ -123,6 +123,7 @@ fun FetchedStoreProfile.Settings.toUpdated(): UpdatedStoreProfile.Settings {
 		storeDescriptionTranslated = storeDescriptionTranslated,
 		storeName = storeName,
 		tikTokPixel = tikTokPixel?.toUpdated(),
+		askAgeConfirmationInStorefront = askAgeConfirmationInStorefront,
 	)
 }
 
