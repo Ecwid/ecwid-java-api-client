@@ -6,8 +6,10 @@ import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.ExtendedOrderTax
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
+import com.ecwid.apiclient.v3.dto.customer.enums.CommercialRelationshipScheme
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
+import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 import java.util.*
 
 data class FetchedOrder(
@@ -119,6 +121,10 @@ data class FetchedOrder(
 	val shippingLabelAvailableForShipment: Boolean = false,
 	val loyalty: Loyalty? = null,
 	val customerFiscalCode: String? = null,
+	val electronicInvoicePecEmail: String? = "",
+	val electronicInvoiceSdiCode: String? = "",
+	@JsonFieldName("b2b_b2c")
+	val commercialRelationshipScheme: CommercialRelationshipScheme? = CommercialRelationshipScheme.b2c,
 	val lang: String? = null,
 
 	) : ApiFetchedDTO, ApiResultDTO {

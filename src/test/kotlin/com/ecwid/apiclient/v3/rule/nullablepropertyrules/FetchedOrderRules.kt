@@ -321,5 +321,8 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder.LoyaltyRedemption::amount),
 	AllowNullable(FetchedOrder.LoyaltyRedemption::cancelled),
 	AllowNullable(FetchedOrder::customerFiscalCode),
+	AllowNullable(FetchedOrder::electronicInvoicePecEmail),
+	AllowNullable(FetchedOrder::electronicInvoiceSdiCode),
+	AllowNullable(FetchedOrder::commercialRelationshipScheme),
 	AllowNullable(FetchedOrder::lang),
 )
