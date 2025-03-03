@@ -181,7 +181,9 @@ data class CustomAppRequest(
 	)
 
 	enum class DiscountType {
-		ABS, PERCENT
+		ABS,
+		PERCENT,
+		FIXED_PRICE,
 	}
 
 	enum class DiscountBase {
