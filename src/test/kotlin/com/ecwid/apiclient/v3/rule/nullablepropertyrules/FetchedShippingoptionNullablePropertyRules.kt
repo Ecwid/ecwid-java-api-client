@@ -25,6 +25,7 @@ val fetchedShippingOptionNullablePropertyRules: List<NullablePropertyRule<*, *>>
 	AllowNullable(FetchedShippingOption::pickupInstructionTranslated),
 	AllowNullable(FetchedShippingOption::pickupBusinessHours),
 	AllowNullable(FetchedShippingOption::pickupPreparationTimeHours),
+	AllowNullable(FetchedShippingOption::pickupPrecisionType),
 	AllowNullable(FetchedShippingOption::type),
 	AllowNullable(FetchedShippingOption::carrier),
 	AllowNullable(FetchedShippingOption::carrierSettings),

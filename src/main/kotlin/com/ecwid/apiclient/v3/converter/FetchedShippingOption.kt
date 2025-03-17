@@ -27,6 +27,7 @@ fun FetchedShippingOption.toUpdated(): UpdatedShippingOption {
 		pickupInstruction = pickupInstruction,
 		pickupInstructionTranslated = pickupInstructionTranslated,
 		scheduledPickup = scheduledPickup,
+		pickupPrecisionType = pickupPrecisionType,
 		type = type,
 		carrier = carrier,
 		carrierSettings = carrierSettings?.toUpdate(),
