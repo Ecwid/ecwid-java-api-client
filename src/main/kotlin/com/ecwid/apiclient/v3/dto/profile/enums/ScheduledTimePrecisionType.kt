@@ -9,5 +9,5 @@ enum class ScheduledTimePrecisionType {
 @Suppress("unused")
 enum class PickupPrecisionType {
 	DATE_ONLY,
-	DATE_AND_TIME;
+	DATE_AND_TIME,
 }
