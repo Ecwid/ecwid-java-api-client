@@ -109,7 +109,7 @@ fun generateTestOrder(): UpdatedOrder {
 			shippingRate = randomPrice(),
 			estimatedTransitTime = "Estimates " + randomAlphanumeric(8),
 			isPickup = true,
-			pickupInstruction = "Instruction " + randomAlphanumeric(64),
+			pickupInstruction = null, // can not be set now without matching owner.newShippingSettings entry ECWID-153335
 			fulfillmentType = FulfillmentType.PICKUP
 		),
 		taxesOnShipping = listOf(),
