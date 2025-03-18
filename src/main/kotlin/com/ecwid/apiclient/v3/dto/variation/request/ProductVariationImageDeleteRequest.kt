@@ -5,7 +5,7 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class ProductVariationImageDeleteRequest(
 	val productId: Int = 0,
-	val variationId: Int = 0
+	val variationId: Long = 0
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createDeleteRequest(
 		pathSegments = listOf(
