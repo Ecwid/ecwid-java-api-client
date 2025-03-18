@@ -180,7 +180,6 @@ data class UpdatedStoreProfile(
 		val dateFormat: String? = null,
 		val timeFormat: String? = null,
 		val timezone: String? = null,
-		val timezoneOffsetInMinutes: Int? = null,
 		val dimensionsUnit: DimensionUnit? = null,
 		val volumeUnit: VolumeUnit? = null,
 		val orderNumberPrefix: String? = null,

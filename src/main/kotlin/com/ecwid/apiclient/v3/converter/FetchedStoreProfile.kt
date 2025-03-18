@@ -204,7 +204,6 @@ fun FetchedStoreProfile.FormatsAndUnits.toUpdated(): UpdatedStoreProfile.Formats
 		dateFormat = dateFormat,
 		timeFormat = timeFormat,
 		timezone = timezone,
-		timezoneOffsetInMinutes = timezoneOffsetInMinutes,
 		dimensionsUnit = dimensionsUnit?.toUpdated(),
 		volumeUnit = volumeUnit.toUpdated(),
 		orderNumberPrefix = orderNumberPrefix,

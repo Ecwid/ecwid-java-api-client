@@ -193,7 +193,6 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.FormatsAndUnits::orderNumberSuffix),
 	IgnoreNullable(FetchedStoreProfile.FormatsAndUnits::timeFormat),
 	IgnoreNullable(FetchedStoreProfile.FormatsAndUnits::timezone),
-	AllowNullable(FetchedStoreProfile.FormatsAndUnits::timezoneOffsetInMinutes),
 	IgnoreNullable(FetchedStoreProfile.FormatsAndUnits::weightDecimalSeparator),
 	IgnoreNullable(FetchedStoreProfile.FormatsAndUnits::weightGroupSeparator),
 	IgnoreNullable(FetchedStoreProfile.FormatsAndUnits::weightPrecision),

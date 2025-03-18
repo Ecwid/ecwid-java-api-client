@@ -105,7 +105,6 @@ class StoreProfileTest : BaseEntityTest() {
 				dateFormat = "yyyy/MM/dd",
 				timeFormat = "HH:mm:ss",
 				timezone = "timezone",
-				timezoneOffsetInMinutes = 1234567,
 				dimensionsUnit = UpdatedStoreProfile.DimensionUnit.MM,
 				volumeUnit = UpdatedStoreProfile.VolumeUnit.L,
 				orderNumberPrefix = "orderNumberPrefix",

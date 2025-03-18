@@ -187,7 +187,6 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder.ShippingOption::localizedLabel),
 	AllowNullable(FetchedOrder.ShippingOption::scheduled),
 	AllowNullable(FetchedOrder.ShippingOption::scheduledTimePrecisionType),
-	AllowNullable(FetchedOrder.ShippingOption::timeSlotLengthInMinutes),
 	AllowNullable(FetchedOrder.ShippingServiceInfo::carrier),
 	AllowNullable(FetchedOrder.ShippingServiceInfo::carrierName),
 	AllowNullable(FetchedOrder.ShippingServiceInfo::carrierServiceCode),
