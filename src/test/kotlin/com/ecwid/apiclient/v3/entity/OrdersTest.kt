@@ -29,7 +29,6 @@ class OrdersTest : BaseEntityTest() {
 	}
 
 	@Test
-	@Disabled("temporarily disabled, enable before merge")
 	fun testOrderLifecycle() {
 		// Creating new order
 		val orderCreateRequest = OrderCreateRequest(
