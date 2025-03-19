@@ -20,6 +20,7 @@ data class CategoriesSearchRequest(
 	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest, PagingRequest<CategoriesSearchRequest> {
 
+
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 		pathSegments = listOf(
 			"categories"
