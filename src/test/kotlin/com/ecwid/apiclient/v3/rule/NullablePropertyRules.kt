@@ -23,6 +23,7 @@ import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportAdviceResponse
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
 import com.ecwid.apiclient.v3.dto.storage.result.FetchedStorageData
+import com.ecwid.apiclient.v3.dto.swatches.result.FetchedSwatchColor
 import com.ecwid.apiclient.v3.dto.variation.request.ProductVariationsRequest
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
@@ -144,6 +145,8 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalLandingData::landingUrl),
 
 	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalCategoryData::categoryName),
+
+	AllowNullable(FetchedSwatchColor::translations),
 
 	AllowNullable(CreateBatchRequest::groupId),
 	AllowNullable(CreateBatchRequestWithIds::groupId),
