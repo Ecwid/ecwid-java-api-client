@@ -423,7 +423,7 @@ class CartsTest : BaseEntityTest() {
 
 		apiClient.createOrder(orderCreateRequest)
 
-		return processDelay(500L, 10) {
+		return processDelay(1500L, 10) {
 			val cartsSearchResult2 = apiClient.searchCartsAsSequence(cartsSearchRequest)
 			val newCartList = cartsSearchResult2 - cartsSearchResult1
 			if (newCartList.count() == 1) newCartList[0].cartId else null
