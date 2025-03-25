@@ -342,6 +342,7 @@ data class FetchedOrder(
 		val estimatedTransitTime: String? = null,
 		val isPickup: Boolean? = null,
 		val pickupInstruction: String? = null,
+		val pickupPrecisionType: PickupPrecisionType? = null,
 		val fulfillmentType: FulfillmentType? = null,
 		val locationId: String? = null,
 		val localizedLabel: String? = null,

@@ -27,6 +27,7 @@ data class FetchedShippingOption(
 	val pickupPreparationTimeHours: Int? = null,
 	val pickupBusinessHours: String? = null,
 	val scheduledPickup: Boolean? = null,
+	val pickupPrecisionType: PickupPrecisionType? = null,
 	val type: String? = null,
 	val carrier: String? = null,
 	val carrierMethods: List<CarrierMethod>? = null,
