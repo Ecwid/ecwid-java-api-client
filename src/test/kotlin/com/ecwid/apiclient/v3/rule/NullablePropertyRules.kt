@@ -200,6 +200,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	fetchedProductReviewNullablePropertyRules,
 	productReviewMassUpdateRequestNullablePropertyRules,
 	productReviewSearchRequestNullablePropertyRules,
+	productReviewCountersUpdateRequestNullablePropertyRules,
 	fetchedCustomersConfigNullablePropertyRules,
 	brandsSearchRequestNullablePropertyRules,
 	fetchedBrandNullablePropertyRules,

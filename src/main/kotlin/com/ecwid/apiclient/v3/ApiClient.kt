@@ -320,6 +320,7 @@ interface ProductReviewsApiClient {
 	fun deleteProductReview(request: ProductReviewDeleteRequest): ProductReviewDeleteResult
 	fun massUpdateProductReview(request: ProductReviewMassUpdateRequest): ProductReviewMassUpdateResult
 	fun getProductReviewsFiltersData(request: ProductReviewFiltersDataRequest): ProductReviewFiltersDataResult
+	fun updateProductReviewCounters(request: ProductReviewCountersUpdateRequest): ProductReviewUpdateCountersResult
 }
 
 // Swatches
