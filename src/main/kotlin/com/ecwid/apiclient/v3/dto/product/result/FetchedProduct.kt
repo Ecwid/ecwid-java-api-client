@@ -287,12 +287,14 @@ data class FetchedProduct(
 		abstract val textTranslated: LocalizedValueMap?
 		abstract val priceModifier: Double
 		abstract val priceModifierType: PriceModifierType
+		abstract val type: ProductOptionChoiceType
 
 		data class SelectChoice(
 			override val text: String = "",
 			override val textTranslated: LocalizedValueMap? = null,
 			override val priceModifier: Double = 0.0,
 			override val priceModifierType: PriceModifierType = PriceModifierType.ABSOLUTE,
+			override val type: ProductOptionChoiceType = ProductOptionChoiceType.SELECT,
 		) : ProductOptionChoice()
 
 		data class SwatchChoice(
@@ -300,6 +302,7 @@ data class FetchedProduct(
 			override val textTranslated: LocalizedValueMap? = null,
 			override val priceModifier: Double = 0.0,
 			override val priceModifierType: PriceModifierType = PriceModifierType.ABSOLUTE,
+			override val type: ProductOptionChoiceType = ProductOptionChoiceType.SWATCH,
 			val hexCodes: List<String> = emptyList(),
 			val imageId: String? = null,
 		) : ProductOptionChoice()

@@ -1,5 +1,7 @@
 package com.ecwid.apiclient.v3.jsontransformer.gson
 
+import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
+import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult.ProductFilters
 import com.ecwid.apiclient.v3.dto.profile.enums.RatesCalculationType
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
@@ -22,6 +24,8 @@ class GsonTransformer(polymorphicTypes: List<PolymorphicType<*>>) : JsonTransfor
 			gsonBuilder.registerTypeAdapter(ParsedResponseWithExt::class.java, ParsedResponseWithExtDeserializer())
 			gsonBuilder.registerTypeAdapterFactory(GsonNullableUpdatedValueTypeAdapterFactory)
 			gsonBuilder.registerTypeAdapter(RatesCalculationType::class.java, RatesCalculationTypeDeserializer())
+			gsonBuilder.registerTypeAdapter(FetchedProduct.ProductOptionChoice::class.java, FetchedProductOptionChoiceDeserializer())
+			gsonBuilder.registerTypeAdapter(UpdatedProduct.ProductOptionChoice::class.java, UpdatedProductOptionChoiceDeserializer())
 		}
 		.create()
 
