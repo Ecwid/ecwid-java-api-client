@@ -78,10 +78,10 @@ class ProductsTest : BaseEntityTest() {
 					ProductOption.createSelectOption(
 						name = "Color",
 						choices = listOf(
-							ProductOptionChoice("Black"),
-							ProductOptionChoice("White"),
-							ProductOptionChoice("Yellow"),
-							ProductOptionChoice("Red")
+							ProductOptionChoice.SelectChoice("Black"),
+							ProductOptionChoice.SelectChoice("White"),
+							ProductOptionChoice.SelectChoice("Yellow"),
+							ProductOptionChoice.SelectChoice("Red")
 						),
 						defaultChoice = 0,
 						required = true
@@ -610,8 +610,8 @@ class ProductsTest : BaseEntityTest() {
 					ProductOption.createSelectOption(
 						name = "Color",
 						choices = listOf(
-							ProductOptionChoice("Red"),
-							ProductOptionChoice("Green"),
+							ProductOptionChoice.SelectChoice("Red"),
+							ProductOptionChoice.SelectChoice("Green"),
 						)
 					)
 				),
@@ -634,8 +634,8 @@ class ProductsTest : BaseEntityTest() {
 					ProductOption.createSelectOption(
 						name = "Color",
 						choices = listOf(
-							ProductOptionChoice("Yellow"),
-							ProductOptionChoice("Green"),
+							ProductOptionChoice.SelectChoice("Yellow"),
+							ProductOptionChoice.SelectChoice("Green"),
 						)
 					)
 				),
@@ -1563,9 +1563,9 @@ private fun generateProductFilesOption(): ProductOption.FilesOption {
 	)
 }
 
-private fun generateProductOptionChoice(): ProductOptionChoice {
+private fun generateProductOptionChoice(): ProductOptionChoice.SelectChoice {
 	val enText = "Option choice " + randomAlphanumeric(8)
-	return ProductOptionChoice(
+	return ProductOptionChoice.SelectChoice(
 		text = enText,
 		textTranslated = LocalizedValueMap(
 			"ru" to "Выбор опции " + randomAlphanumeric(8),
