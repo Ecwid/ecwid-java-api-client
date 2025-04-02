@@ -224,6 +224,22 @@ data class UpdatedProduct(
 				required = required
 			)
 
+			fun createSwatchOption(
+				name: String = "",
+				nameTranslated: LocalizedValueMap? = null,
+				choices: List<ProductOptionChoice.SwatchChoice> = listOf(),
+				defaultChoice: Int? = null,
+				required: Boolean? = null,
+				useImageAsSwatchSelector: Boolean = false,
+			) = SwatchesOption(
+				name = name,
+				nameTranslated = nameTranslated,
+				choices = choices,
+				defaultChoice = defaultChoice,
+				required = required,
+				useImageAsSwatchSelector = useImageAsSwatchSelector,
+			)
+
 			fun createCheckboxOption(
 				name: String = "",
 				nameTranslated: LocalizedValueMap? = null,
