@@ -146,6 +146,7 @@ fun FetchedProduct.ProductOption.SwatchesOption.toUpdated() = UpdatedProduct.Pro
 	choices = choices.map { it.toUpdated() },
 	defaultChoice = defaultChoice,
 	required = required,
+	useImageAsSwatchSelector = useImageAsSwatchSelector,
 )
 
 fun FetchedProduct.ProductOption.CheckboxOption.toUpdated() = UpdatedProduct.ProductOption.CheckboxOption(
