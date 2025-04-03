@@ -240,6 +240,15 @@ data class FetchedProduct(
 			override val required: Boolean = false
 		) : ProductOption(ProductOptionType.RADIO), ChoiceBased
 
+		data class SwatchesOption(
+			override val name: String = "",
+			override val nameTranslated: LocalizedValueMap? = null,
+			override val choices: List<ProductOptionChoice> = listOf(),
+			override val defaultChoice: Int = 0,
+			override val required: Boolean = false,
+			val useImageAsSwatchSelector: Boolean = false,
+		) : ProductOption(ProductOptionType.SWATCHES), ChoiceBased
+
 		data class CheckboxOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
@@ -273,12 +282,31 @@ data class FetchedProduct(
 		) : ProductOption(ProductOptionType.FILES)
 	}
 
-	data class ProductOptionChoice(
-		val text: String = "",
-		val textTranslated: LocalizedValueMap? = null,
-		val priceModifier: Double = 0.0,
-		val priceModifierType: PriceModifierType = PriceModifierType.ABSOLUTE
-	)
+	sealed class ProductOptionChoice {
+		abstract val text: String
+		abstract val textTranslated: LocalizedValueMap?
+		abstract val priceModifier: Double
+		abstract val priceModifierType: PriceModifierType
+		abstract val type: ProductOptionChoiceType
+
+		data class SelectChoice(
+			override val text: String = "",
+			override val textTranslated: LocalizedValueMap? = null,
+			override val priceModifier: Double = 0.0,
+			override val priceModifierType: PriceModifierType = PriceModifierType.ABSOLUTE,
+			override val type: ProductOptionChoiceType = ProductOptionChoiceType.SELECT,
+		) : ProductOptionChoice()
+
+		data class SwatchChoice(
+			override val text: String = "",
+			override val textTranslated: LocalizedValueMap? = null,
+			override val priceModifier: Double = 0.0,
+			override val priceModifierType: PriceModifierType = PriceModifierType.ABSOLUTE,
+			override val type: ProductOptionChoiceType = ProductOptionChoiceType.SWATCH,
+			val hexCodes: List<String> = emptyList(),
+			val imageId: String? = null,
+		) : ProductOptionChoice()
+	}
 
 	data class ShippingSettings(
 		val type: ShippingSettingsType? = null,

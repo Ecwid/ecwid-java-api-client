@@ -139,6 +139,15 @@ data class UpdatedProduct(
 			override val required: Boolean? = null
 		) : ProductOption(ProductOptionType.RADIO), ChoiceBased
 
+		data class SwatchesOption(
+			override val name: String = "",
+			override val nameTranslated: LocalizedValueMap? = null,
+			override val choices: List<ProductOptionChoice> = listOf(),
+			override val defaultChoice: Int? = null,
+			override val required: Boolean? = null,
+			val useImageAsSwatchSelector: Boolean = false,
+		) : ProductOption(ProductOptionType.SWATCHES), ChoiceBased
+
 		data class CheckboxOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
@@ -176,7 +185,7 @@ data class UpdatedProduct(
 			fun createSelectOption(
 				name: String = "",
 				nameTranslated: LocalizedValueMap? = null,
-				choices: List<ProductOptionChoice> = listOf(),
+				choices: List<ProductOptionChoice.SelectChoice> = listOf(),
 				defaultChoice: Int? = null,
 				required: Boolean? = null
 			) = SelectOption(
@@ -190,7 +199,7 @@ data class UpdatedProduct(
 			fun createSizeOption(
 				name: String = "",
 				nameTranslated: LocalizedValueMap? = null,
-				choices: List<ProductOptionChoice> = listOf(),
+				choices: List<ProductOptionChoice.SelectChoice> = listOf(),
 				defaultChoice: Int? = null,
 				required: Boolean? = null
 			) = SizeOption(
@@ -204,7 +213,7 @@ data class UpdatedProduct(
 			fun createRadioOption(
 				name: String = "",
 				nameTranslated: LocalizedValueMap? = null,
-				choices: List<ProductOptionChoice> = listOf(),
+				choices: List<ProductOptionChoice.SelectChoice> = listOf(),
 				defaultChoice: Int? = null,
 				required: Boolean? = null
 			) = RadioOption(
@@ -215,10 +224,26 @@ data class UpdatedProduct(
 				required = required
 			)
 
+			fun createSwatchOption(
+				name: String = "",
+				nameTranslated: LocalizedValueMap? = null,
+				choices: List<ProductOptionChoice.SwatchChoice> = listOf(),
+				defaultChoice: Int? = null,
+				required: Boolean? = null,
+				useImageAsSwatchSelector: Boolean = false,
+			) = SwatchesOption(
+				name = name,
+				nameTranslated = nameTranslated,
+				choices = choices,
+				defaultChoice = defaultChoice,
+				required = required,
+				useImageAsSwatchSelector = useImageAsSwatchSelector,
+			)
+
 			fun createCheckboxOption(
 				name: String = "",
 				nameTranslated: LocalizedValueMap? = null,
-				choices: List<ProductOptionChoice> = listOf(),
+				choices: List<ProductOptionChoice.SelectChoice> = listOf(),
 				defaultChoice: Int? = null,
 				required: Boolean? = null
 			) = CheckboxOption(
@@ -271,12 +296,31 @@ data class UpdatedProduct(
 		}
 	}
 
-	data class ProductOptionChoice(
-		val text: String = "",
-		val textTranslated: LocalizedValueMap? = null,
-		val priceModifier: Double? = null,
-		val priceModifierType: PriceModifierType? = null,
-	)
+	sealed class ProductOptionChoice {
+		abstract val text: String
+		abstract val textTranslated: LocalizedValueMap?
+		abstract val priceModifier: Double?
+		abstract val priceModifierType: PriceModifierType?
+		abstract val type: ProductOptionChoiceType
+
+		data class SelectChoice(
+			override val text: String = "",
+			override val textTranslated: LocalizedValueMap? = null,
+			override val priceModifier: Double? = null,
+			override val priceModifierType: PriceModifierType? = null,
+			override val type: ProductOptionChoiceType = ProductOptionChoiceType.SELECT
+		) : ProductOptionChoice()
+
+		data class SwatchChoice(
+			override val text: String = "",
+			override val textTranslated: LocalizedValueMap? = null,
+			override val priceModifier: Double? = null,
+			override val priceModifierType: PriceModifierType? = null,
+			override val type: ProductOptionChoiceType = ProductOptionChoiceType.SWATCH,
+			val hexCodes: List<String> = emptyList(),
+			val imageId: String? = null,
+		) : ProductOptionChoice()
+	}
 
 	data class ShippingSettings(
 		val type: ShippingSettingsType? = null,

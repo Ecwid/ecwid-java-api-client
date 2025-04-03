@@ -527,7 +527,8 @@ private fun createProductOptionsPolymorphicType(): PolymorphicType<ProductOption
 			"textfield" to ProductOption.TextFieldOption::class.java,
 			"textarea" to ProductOption.TextAreaOption::class.java,
 			"date" to ProductOption.DateOption::class.java,
-			"files" to ProductOption.FilesOption::class.java
+			"files" to ProductOption.FilesOption::class.java,
+			"swatches" to ProductOption.SwatchesOption::class.java,
 		)
 	)
 }

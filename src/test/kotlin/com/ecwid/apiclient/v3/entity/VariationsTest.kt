@@ -339,7 +339,7 @@ private fun generateProductSelectOption(name: String, values: List<String>): Upd
 	)
 }
 
-private fun generateProductOptionChoice(value: String) = UpdatedProduct.ProductOptionChoice(
+private fun generateProductOptionChoice(value: String) = UpdatedProduct.ProductOptionChoice.SelectChoice(
 	text = value,
 	priceModifier = randomModifier(),
 	priceModifierType = randomEnumValue<PriceModifierType>()

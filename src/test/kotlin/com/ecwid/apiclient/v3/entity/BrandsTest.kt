@@ -65,10 +65,10 @@ class BrandsTest : BaseEntityTest() {
 						ProductOption.createSelectOption(
 							name = "Color",
 							choices = listOf(
-								ProductOptionChoice("Black"),
-								ProductOptionChoice("White"),
-								ProductOptionChoice("Yellow"),
-								ProductOptionChoice("Red")
+								ProductOptionChoice.SelectChoice("Black"),
+								ProductOptionChoice.SelectChoice("White"),
+								ProductOptionChoice.SelectChoice("Yellow"),
+								ProductOptionChoice.SelectChoice("Red")
 							),
 							defaultChoice = 0,
 							required = true
