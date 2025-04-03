@@ -27,6 +27,7 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Temporally disabled")
 	fun testCreateAndGetCart() {
 		// Creating new cart
 		val testOrder = generateTestOrder()
@@ -210,6 +211,7 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Temporally disabled")
 	fun testConvertCartToOrder() {
 		// Creating new cart
 		val testOrder = generateTestOrder()

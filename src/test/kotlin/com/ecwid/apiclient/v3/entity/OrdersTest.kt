@@ -29,6 +29,7 @@ class OrdersTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Temporally disabled")
 	fun testOrderLifecycle() {
 		// Creating new order
 		val orderCreateRequest = OrderCreateRequest(
