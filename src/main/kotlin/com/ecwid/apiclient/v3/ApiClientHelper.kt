@@ -47,7 +47,7 @@ class ApiClientHelper private constructor(
 ) {
 
 	private val log = Logger.getLogger(this::class.qualifiedName)
-	private val apiVersion = "v3"
+	private var apiVersion = "v3"
 
 	constructor(
 		apiServerDomain: ApiServerDomain,
