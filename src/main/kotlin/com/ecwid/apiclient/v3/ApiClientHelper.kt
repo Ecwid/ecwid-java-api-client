@@ -47,6 +47,7 @@ class ApiClientHelper private constructor(
 ) {
 
 	private val log = Logger.getLogger(this::class.qualifiedName)
+	private var apiVersion = "v3"
 
 	constructor(
 		apiServerDomain: ApiServerDomain,
@@ -423,8 +424,8 @@ class ApiClientHelper private constructor(
 	}
 
 	private fun buildBaseEndpointPath(credentials: ApiCredentials) = when (credentials) {
-		is ApiStoreCredentials -> "/api/v3/${credentials.storeId}"
-		is ApiAppCredentials -> "/api/v3"
+		is ApiStoreCredentials -> "/api/$apiVersion/${credentials.storeId}"
+		is ApiAppCredentials -> "/api/$apiVersion"
 	}
 }
 
