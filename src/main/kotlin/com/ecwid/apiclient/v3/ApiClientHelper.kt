@@ -423,8 +423,8 @@ class ApiClientHelper private constructor(
 	}
 
 	private fun buildBaseEndpointPath(credentials: ApiCredentials) = when (credentials) {
-		is ApiStoreCredentials -> "/api/v3/${credentials.storeId}"
-		is ApiAppCredentials -> "/api/v3"
+		is ApiStoreCredentials -> "/api/v1/${credentials.storeId}"
+		is ApiAppCredentials -> "/api/v1"
 	}
 }
 
