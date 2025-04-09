@@ -108,6 +108,7 @@ fun FetchedProduct.ProductOption.toUpdated() = when (this) {
 	is FetchedProduct.ProductOption.SelectOption -> toUpdated()
 	is FetchedProduct.ProductOption.SizeOption -> toUpdated()
 	is FetchedProduct.ProductOption.RadioOption -> toUpdated()
+	is FetchedProduct.ProductOption.SwatchesOption -> toUpdated()
 	is FetchedProduct.ProductOption.CheckboxOption -> toUpdated()
 	is FetchedProduct.ProductOption.TextFieldOption -> toUpdated()
 	is FetchedProduct.ProductOption.TextAreaOption -> toUpdated()
@@ -137,6 +138,15 @@ fun FetchedProduct.ProductOption.RadioOption.toUpdated() = UpdatedProduct.Produc
 	choices = choices.map { it.toUpdated() },
 	defaultChoice = defaultChoice,
 	required = required
+)
+
+fun FetchedProduct.ProductOption.SwatchesOption.toUpdated() = UpdatedProduct.ProductOption.SwatchesOption(
+	name = name,
+	nameTranslated = nameTranslated,
+	choices = choices.map { it.toSwatchChoiceUpdated() },
+	defaultChoice = defaultChoice,
+	required = required,
+	useImageAsSwatchSelector = useImageAsSwatchSelector,
 )
 
 fun FetchedProduct.ProductOption.CheckboxOption.toUpdated() = UpdatedProduct.ProductOption.CheckboxOption(
@@ -176,6 +186,15 @@ fun FetchedProduct.ProductOptionChoice.toUpdated() = UpdatedProduct.ProductOptio
 	textTranslated = textTranslated,
 	priceModifier = priceModifier,
 	priceModifierType = priceModifierType
+)
+
+fun FetchedProduct.ProductOptionChoice.toSwatchChoiceUpdated() = UpdatedProduct.ProductOptionChoice(
+	text = text,
+	textTranslated = textTranslated,
+	priceModifier = priceModifier,
+	priceModifierType = priceModifierType,
+	hexCodes = hexCodes ?: emptyList(),
+	imageId = imageId,
 )
 
 fun FetchedProduct.ShippingSettings.toUpdated() = UpdatedProduct.ShippingSettings(
