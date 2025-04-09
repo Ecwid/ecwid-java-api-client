@@ -143,7 +143,7 @@ fun FetchedProduct.ProductOption.RadioOption.toUpdated() = UpdatedProduct.Produc
 fun FetchedProduct.ProductOption.SwatchesOption.toUpdated() = UpdatedProduct.ProductOption.SwatchesOption(
 	name = name,
 	nameTranslated = nameTranslated,
-	choices = choices.map { it.toSwatchChoiceUpdated() },
+	choices = choices.map { it.toUpdated() },
 	defaultChoice = defaultChoice,
 	required = required,
 	useImageAsSwatchSelector = useImageAsSwatchSelector,
@@ -185,15 +185,8 @@ fun FetchedProduct.ProductOptionChoice.toUpdated() = UpdatedProduct.ProductOptio
 	text = text,
 	textTranslated = textTranslated,
 	priceModifier = priceModifier,
-	priceModifierType = priceModifierType
-)
-
-fun FetchedProduct.ProductOptionChoice.toSwatchChoiceUpdated() = UpdatedProduct.ProductOptionChoice(
-	text = text,
-	textTranslated = textTranslated,
-	priceModifier = priceModifier,
 	priceModifierType = priceModifierType,
-	hexCodes = hexCodes ?: emptyList(),
+	hexCodes = hexCodes,
 	imageId = imageId,
 )
 
