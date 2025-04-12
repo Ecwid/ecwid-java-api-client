@@ -204,7 +204,8 @@ class ApiClientHelper private constructor(
 						statusCode = httpResponse.statusCode,
 						reasonPhrase = httpResponse.reasonPhrase,
 						code = ecwidError?.errorCode,
-						message = ecwidError?.errorMessage
+						message = ecwidError?.errorMessage,
+						args = ecwidError?.args,
 					)
 				} catch (e: JsonDeserializationException) {
 					throw EcwidApiException(
