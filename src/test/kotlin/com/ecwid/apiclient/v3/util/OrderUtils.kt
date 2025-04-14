@@ -104,7 +104,7 @@ fun generateTestOrder(): UpdatedOrder {
 
 		shippingOption = UpdatedOrder.ShippingOption(
 			shippingMethodId = "MethodId " + randomAlphanumeric(8),
-			shippingCarrierName = "Carrier " + randomAlphanumeric(8),
+			shippingCarrierName = null, // not saved for pickup, see ECWID-153335
 			shippingMethodName = "Method " + randomAlphanumeric(8),
 			shippingRate = randomPrice(),
 			estimatedTransitTime = "Estimates " + randomAlphanumeric(8),
