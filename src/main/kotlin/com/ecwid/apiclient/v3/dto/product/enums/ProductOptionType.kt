@@ -8,5 +8,6 @@ enum class ProductOptionType {
 	TEXTAREA,
 	DATE,
 	FILES,
-	SIZE
+	SIZE,
+	SWATCHES,
 }

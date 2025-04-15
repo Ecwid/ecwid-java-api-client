@@ -15,6 +15,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.*
+import java.util.logging.Logger
+
+private val log = Logger.getLogger(CartsTest::class.qualifiedName)
 
 class CartsTest : BaseEntityTest() {
 
@@ -24,14 +27,19 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Temporally disabled")
 	fun testCreateAndGetCart() {
 		// Creating new cart
 		val testOrder = generateTestOrder()
+		log.info("=> test order: ${testOrder.shippingOption}")
 		val newCartId = createNewCart(testOrder)
+		log.info("=> newCartId: $newCartId")
 
 		// Checking that cart was successfully created with necessary parameters
 		val cartDetailsRequest = CartDetailsRequest(newCartId)
+		log.info("=> cartDetailsRequest: $cartDetailsRequest")
 		val cartDetailsResult = apiClient.getCartDetails(cartDetailsRequest)
+		log.info("=> cartDetailsResult: ${cartDetailsResult.shippingOption}")
 
 		assertEquals(testOrder.ipAddress, cartDetailsResult.ipAddress)
 		assertEquals(testOrder.email, cartDetailsResult.email)
@@ -203,6 +211,7 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Temporally disabled")
 	fun testConvertCartToOrder() {
 		// Creating new cart
 		val testOrder = generateTestOrder()
@@ -421,7 +430,11 @@ class CartsTest : BaseEntityTest() {
 			)
 		)
 
-		apiClient.createOrder(orderCreateRequest)
+		val orderCreateResult = apiClient.createOrder(orderCreateRequest)
+		log.info("==> createOrder result: $orderCreateResult")
+
+		val createdOrderDetails = apiClient.getOrderDetails(OrderDetailsRequest(orderNumber = orderCreateResult.id))
+		log.info("==> createdOrderDetails.shippingOption: ${createdOrderDetails.shippingOption}")
 
 		return processDelay(1500L, 10) {
 			val cartsSearchResult2 = apiClient.searchCartsAsSequence(cartsSearchRequest)

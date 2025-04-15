@@ -22,7 +22,7 @@ data class FetchedReportResponse(
 	val dataset: List<FetchedDataset>? = null,
 	val comparePeriodAggregatedData: List<FetchedDataItem>? = null,
 	val comparePeriodDataset: List<FetchedDataset>? = null,
-	val additionalData: FetchedAdditionalData? = null,
+	val additionalData: FetchedAdditionalData? = null,	// test comment
 ) : ApiFetchedDTO {
 
 	data class FetchedDataset(
