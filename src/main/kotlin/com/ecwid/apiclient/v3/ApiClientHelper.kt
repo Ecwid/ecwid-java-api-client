@@ -524,6 +524,7 @@ private fun createProductOptionsPolymorphicType(): PolymorphicType<ProductOption
 			"select" to ProductOption.SelectOption::class.java,
 			"size" to ProductOption.SizeOption::class.java,
 			"radio" to ProductOption.RadioOption::class.java,
+			"swatches" to ProductOption.SwatchesOption::class.java,
 			"checkbox" to ProductOption.CheckboxOption::class.java,
 			"textfield" to ProductOption.TextFieldOption::class.java,
 			"textarea" to ProductOption.TextAreaOption::class.java,
