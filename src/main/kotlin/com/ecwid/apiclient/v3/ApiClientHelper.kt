@@ -43,7 +43,8 @@ class ApiClientHelper private constructor(
 	private val credentials: ApiCredentials,
 	private val loggingSettings: LoggingSettings,
 	val httpTransport: HttpTransport,
-	val jsonTransformer: JsonTransformer
+	val jsonTransformer: JsonTransformer,
+	private val requestKind: RequestKind? = null,
 ) {
 
 	private val log = Logger.getLogger(this::class.qualifiedName)
@@ -74,6 +75,22 @@ class ApiClientHelper private constructor(
 		loggingSettings = loggingSettings,
 		httpTransport = httpTransport,
 		jsonTransformer = jsonTransformerProvider.build(createPolymorphicTypeList())
+	)
+
+	constructor(
+		apiServerDomain: ApiServerDomain,
+		credentials: ApiCredentials,
+		loggingSettings: LoggingSettings,
+		httpTransport: HttpTransport,
+		jsonTransformerProvider: JsonTransformerProvider,
+		requestKind: RequestKind?,
+	) : this(
+		apiServerDomain = apiServerDomain,
+		credentials = credentials,
+		loggingSettings = loggingSettings,
+		httpTransport = httpTransport,
+		jsonTransformer = jsonTransformerProvider.build(createPolymorphicTypeList()),
+		requestKind = requestKind,
 	)
 
 	@PublishedApi
@@ -260,7 +277,12 @@ class ApiClientHelper private constructor(
 	internal fun RequestInfo.toHttpRequest(requestId: String, responseFieldsOverride: ResponseFields?): HttpRequest {
 		val uri = createApiEndpointUri(pathSegments)
 		val params = if (responseFieldsOverride != null) params.withResponseFieldsParam(responseFieldsOverride) else params
-		val headers = headers.withRequestId(requestId).withCredentials(credentials)
+		val headers = headers.withRequestId(requestId)
+		if (requestKind != null) {
+			headers.withRequestKind(requestKind)
+		} else {
+			headers.withCredentials(credentials)
+		}
 
 		return when (method) {
 			HttpMethod.GET -> HttpRequest.HttpGetRequest(
@@ -302,7 +324,12 @@ class ApiClientHelper private constructor(
 			null,
 			null
 		)
-		val encodedPath = buildBaseEndpointPath(credentials) + "/" + buildEndpointPath(pathSegments)
+
+		val encodedPath = if (requestKind != null) {
+			requestKind.buildBaseEndpointPath() + "/" + buildEndpointPath(pathSegments)
+		} else {
+			buildBaseEndpointPath(credentials) + "/" + buildEndpointPath(pathSegments)
+		}
 		return uri.toString() + encodedPath
 	}
 
@@ -441,6 +468,11 @@ internal fun generateRequestId(): String {
 internal fun Map<String, String>.withCredentials(credentials: ApiCredentials) = when (credentials) {
 	is ApiStoreCredentials -> this.withApiTokenHeader(credentials.apiToken)
 	is ApiAppCredentials -> withAppCredentialsHeaders(credentials)
+}
+
+@PublishedApi
+internal fun Map<String, String>.withRequestKind(requestKind: RequestKind) = toMutableMap().apply {
+	putAll(requestKind.buildHeaders())
 }
 
 internal fun Map<String, String>.withResponseFieldsParam(responseFields: ResponseFields): Map<String, String> {
