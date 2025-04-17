@@ -277,13 +277,13 @@ class ApiClientHelper private constructor(
 	internal fun RequestInfo.toHttpRequest(requestId: String, responseFieldsOverride: ResponseFields?): HttpRequest {
 		val uri = createApiEndpointUri(pathSegments)
 		val params = if (responseFieldsOverride != null) params.withResponseFieldsParam(responseFieldsOverride) else params
-		val headers = headers.withRequestId(requestId)
-		if (requestKind != null) {
-			headers.withRequestKind(requestKind)
-		} else {
-			headers.withCredentials(credentials)
+		val headers = headers.withRequestId(requestId).let {
+			if (requestKind != null) {
+				it.withRequestKind(requestKind)
+			} else {
+				it.withCredentials(credentials)
+			}
 		}
-
 		return when (method) {
 			HttpMethod.GET -> HttpRequest.HttpGetRequest(
 				uri = uri,
