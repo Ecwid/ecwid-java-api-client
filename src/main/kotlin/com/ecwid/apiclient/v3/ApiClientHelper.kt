@@ -40,7 +40,7 @@ private val REQUEST_ID_CHARACTERS = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 
 class ApiClientHelper private constructor(
 	private val apiServerDomain: ApiServerDomain,
-	private val credentials: ApiCredentials,
+	private val credentials: ApiCredentials?,
 	private val loggingSettings: LoggingSettings,
 	val httpTransport: HttpTransport,
 	val jsonTransformer: JsonTransformer,
@@ -51,7 +51,7 @@ class ApiClientHelper private constructor(
 
 	constructor(
 		apiServerDomain: ApiServerDomain,
-		storeCredentials: ApiStoreCredentials,
+		storeCredentials: ApiStoreCredentials?,
 		loggingSettings: LoggingSettings,
 		httpTransport: HttpTransport,
 		jsonTransformerProvider: JsonTransformerProvider
@@ -65,7 +65,7 @@ class ApiClientHelper private constructor(
 
 	constructor(
 		apiServerDomain: ApiServerDomain,
-		credentials: ApiCredentials,
+		credentials: ApiCredentials?,
 		loggingSettings: LoggingSettings,
 		httpTransport: HttpTransport,
 		jsonTransformerProvider: JsonTransformerProvider
@@ -79,7 +79,7 @@ class ApiClientHelper private constructor(
 
 	constructor(
 		apiServerDomain: ApiServerDomain,
-		credentials: ApiCredentials,
+		credentials: ApiCredentials?,
 		loggingSettings: LoggingSettings,
 		httpTransport: HttpTransport,
 		jsonTransformerProvider: JsonTransformerProvider,
@@ -281,7 +281,11 @@ class ApiClientHelper private constructor(
 			if (requestKind != null) {
 				it.withRequestKind(requestKind)
 			} else {
-				it.withCredentials(credentials)
+				if (credentials != null) {
+					it.withCredentials(credentials)
+				} else {
+					it
+				}
 			}
 		}
 		return when (method) {
@@ -328,7 +332,7 @@ class ApiClientHelper private constructor(
 		val encodedPath = if (requestKind != null) {
 			requestKind.buildBaseEndpointPath() + "/" + buildEndpointPath(pathSegments)
 		} else {
-			buildBaseEndpointPath(credentials) + "/" + buildEndpointPath(pathSegments)
+			credentials?.let { buildBaseEndpointPath(it) } + "/" + buildEndpointPath(pathSegments)
 		}
 		return uri.toString() + encodedPath
 	}
