@@ -40,7 +40,7 @@ private val REQUEST_ID_CHARACTERS = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 
 class ApiClientHelper private constructor(
 	private val apiServerDomain: ApiServerDomain,
-	private val credentials: ApiCredentials? = null,
+	private val credentials: ApiCredentials?,
 	private val loggingSettings: LoggingSettings,
 	val httpTransport: HttpTransport,
 	val jsonTransformer: JsonTransformer,
@@ -51,7 +51,7 @@ class ApiClientHelper private constructor(
 
 	constructor(
 		apiServerDomain: ApiServerDomain,
-		storeCredentials: ApiStoreCredentials?,
+		storeCredentials: ApiStoreCredentials? = null,
 		loggingSettings: LoggingSettings,
 		httpTransport: HttpTransport,
 		jsonTransformerProvider: JsonTransformerProvider
@@ -65,7 +65,7 @@ class ApiClientHelper private constructor(
 
 	constructor(
 		apiServerDomain: ApiServerDomain,
-		credentials: ApiCredentials?,
+		credentials: ApiCredentials? = null,
 		loggingSettings: LoggingSettings,
 		httpTransport: HttpTransport,
 		jsonTransformerProvider: JsonTransformerProvider
@@ -79,7 +79,7 @@ class ApiClientHelper private constructor(
 
 	constructor(
 		apiServerDomain: ApiServerDomain,
-		credentials: ApiCredentials?,
+		credentials: ApiCredentials? = null,
 		loggingSettings: LoggingSettings,
 		httpTransport: HttpTransport,
 		jsonTransformerProvider: JsonTransformerProvider,
