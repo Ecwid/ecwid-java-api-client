@@ -240,6 +240,15 @@ data class FetchedProduct(
 			override val required: Boolean = false
 		) : ProductOption(ProductOptionType.RADIO), ChoiceBased
 
+		data class SwatchesOption(
+			override val name: String = "",
+			override val nameTranslated: LocalizedValueMap? = null,
+			override val choices: List<ProductOptionChoice> = listOf(),
+			override val defaultChoice: Int = 0,
+			override val required: Boolean = false,
+			val useImageAsSwatchSelector: Boolean = false,
+		) : ProductOption(ProductOptionType.SWATCHES), ChoiceBased
+
 		data class CheckboxOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
@@ -277,7 +286,9 @@ data class FetchedProduct(
 		val text: String = "",
 		val textTranslated: LocalizedValueMap? = null,
 		val priceModifier: Double = 0.0,
-		val priceModifierType: PriceModifierType = PriceModifierType.ABSOLUTE
+		val priceModifierType: PriceModifierType = PriceModifierType.ABSOLUTE,
+		val hexCodes: List<String>? = null,
+		val imageId: String? = null,
 	)
 
 	data class ShippingSettings(
