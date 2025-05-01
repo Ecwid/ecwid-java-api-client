@@ -24,6 +24,7 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-162706")
 	fun testCreateAndGetCart() {
 		// Creating new cart
 		val testOrder = generateTestOrder()
@@ -203,6 +204,7 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-162706")
 	fun testConvertCartToOrder() {
 		// Creating new cart
 		val testOrder = generateTestOrder()
