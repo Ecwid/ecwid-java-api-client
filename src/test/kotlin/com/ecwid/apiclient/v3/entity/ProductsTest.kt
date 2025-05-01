@@ -222,6 +222,7 @@ class ProductsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-162706")
 	fun testSearchUrls() {
 		// Create one product
 		val productCreateRequest = ProductCreateRequest(

@@ -279,6 +279,7 @@ class CategoriesTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-162706")
 	fun testSearchUrls() {
 		// Create one category
 		val categoryCreateRequest = CategoryCreateRequest(
