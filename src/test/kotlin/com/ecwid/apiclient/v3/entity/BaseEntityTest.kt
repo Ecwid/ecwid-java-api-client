@@ -70,9 +70,7 @@ abstract class BaseEntityTest {
 
 	protected fun initStoreProfile() {
 		val expectedProfile = UpdatedStoreProfile(
-			generalInfo = UpdatedStoreProfile.GeneralInfo(
-				storeUrl = ""
-			),
+			generalInfo = UpdatedStoreProfile.GeneralInfo(),
 			formatsAndUnits = UpdatedStoreProfile.FormatsAndUnits(
 				orderNumberPrefix = "",
 				orderNumberSuffix = ""
