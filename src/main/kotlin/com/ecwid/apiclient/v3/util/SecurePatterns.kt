@@ -4,8 +4,10 @@ private const val PARAM_VALUE_PATTERN = "([^;,)]+)"
 
 private val GLOBAL_SECURE_PATTERNS = listOf(
 	createKeyValueSecurePattern("email"),
+	createKeyValueSecurePattern("customerEmail"),
 	createKeyValueSecurePattern("token"),
 	createJsonSecurePattern("email"),
+	createJsonSecurePattern("customerEmail"),
 	createJsonSecurePattern("token"),
 	createJsonSecurePattern("name"),
 	createJsonSecurePattern("firstName"),
