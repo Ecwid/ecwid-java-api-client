@@ -8,6 +8,7 @@ private val GLOBAL_SECURE_PATTERNS = listOf(
 	createKeyValueSecurePattern("token"),
 	createJsonSecurePattern("email"),
 	createJsonSecurePattern("customerEmail"),
+	createJsonSecurePattern("customerTaxId"),
 	createJsonSecurePattern("token"),
 	createJsonSecurePattern("name"),
 	createJsonSecurePattern("firstName"),
