@@ -40,4 +40,9 @@ enum class ReportType {
 	abandonedCarts,
 	topOfProductsByAddingToFavorites,
 
+	/** activity */
+	siteEmailActivity,
+	sitePhoneActivity,
+	siteAddressActivity,
+	siteLocationMapActivity,
 }
