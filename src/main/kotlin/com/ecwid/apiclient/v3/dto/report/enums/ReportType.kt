@@ -45,4 +45,5 @@ enum class ReportType {
 	sitePhoneActivity,
 	siteAddressActivity,
 	siteLocationMapActivity,
+	siteContactWidgetActivity,
 }
