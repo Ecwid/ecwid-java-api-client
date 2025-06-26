@@ -74,6 +74,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedProduct::rating),
 	ReadOnly(FetchedProduct::reviewsModerated),
 	ReadOnly(FetchedProduct::reviewsPublished),
+	ReadOnly(FetchedProduct::compositeComponents),
 
 	Ignored(FetchedCart::cartId),
 	Ignored(FetchedCart::email),

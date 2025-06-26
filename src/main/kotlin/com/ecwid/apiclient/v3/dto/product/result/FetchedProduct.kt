@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.common.*
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.product.enums.*
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
+import com.ecwid.apiclient.v3.dto.productcomponent.result.FetchedProductComponent
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 import java.util.*
@@ -142,6 +143,7 @@ data class FetchedProduct(
 	val rating: Double? = null,
 	val reviewsModerated: Int? = null,
 	val reviewsPublished: Int? = null,
+	val compositeComponents: List<FetchedProductComponent>? = null,
 ) : ApiFetchedDTO, ApiResultDTO {
 
 	data class BorderInfo(
