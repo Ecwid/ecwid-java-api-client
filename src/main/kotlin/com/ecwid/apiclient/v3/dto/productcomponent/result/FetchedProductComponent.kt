@@ -7,7 +7,7 @@ data class FetchedProductComponent(
 	val productId: Long = 0L,
 	val combinationId: Long? = null,
 	val quantity: Int = 0,
-): ApiFetchedDTO, ApiResultDTO {
+) : ApiFetchedDTO, ApiResultDTO {
 
 	override fun getModifyKind() = ApiFetchedDTO.ModifyKind.ReadOnly
 
