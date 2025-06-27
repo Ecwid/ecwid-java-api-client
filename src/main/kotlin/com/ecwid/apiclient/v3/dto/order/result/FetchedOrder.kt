@@ -9,6 +9,7 @@ import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
 import com.ecwid.apiclient.v3.dto.customer.enums.CommercialRelationshipScheme
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
+import com.ecwid.apiclient.v3.dto.productcomponent.result.FetchedProductComponent
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 import java.util.*
 
@@ -217,7 +218,8 @@ data class FetchedOrder(
 		val discounts: List<OrderItemDiscounts>? = null,
 		val externalReferenceId: String? = null,
 		val isPreorder: Boolean? = null,
-		val attributes: List<OrderItemAttributeValue>? = null
+		val attributes: List<OrderItemAttributeValue>? = null,
+		val compositeComponents: List<FetchedProductComponent>? = null,
 	)
 
 	data class RecurringChargeSettings(
