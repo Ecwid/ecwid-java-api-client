@@ -180,6 +180,7 @@ data class UpdatedOrder(
 		val discounts: List<OrderItemDiscounts>? = null,
 		val externalReferenceId: String? = null,
 		val isPreorder: Boolean? = null,
+		var taxClassCode: String? = null,
 	)
 
 	data class OrderItemSelectedOption(
