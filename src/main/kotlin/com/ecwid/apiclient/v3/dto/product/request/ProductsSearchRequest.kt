@@ -149,7 +149,8 @@ sealed class ProductsSearchRequest : ApiRequest {
 	@Suppress("unused")
 	enum class SearchMethod {
 		STOREFRONT,
-		CP
+		CP,
+		LINKUP,
 	}
 
 	@Suppress("unused")
