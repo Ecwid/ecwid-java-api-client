@@ -175,6 +175,7 @@ fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 		discounts = discounts?.map(FetchedOrder.OrderItemDiscounts::toUpdated),
 		externalReferenceId = externalReferenceId,
 		isPreorder = isPreorder,
+		taxClassCode = taxClassCode,
 	)
 }
 
