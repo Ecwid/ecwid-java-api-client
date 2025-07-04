@@ -217,7 +217,8 @@ data class FetchedOrder(
 		val discounts: List<OrderItemDiscounts>? = null,
 		val externalReferenceId: String? = null,
 		val isPreorder: Boolean? = null,
-		val attributes: List<OrderItemAttributeValue>? = null
+		val attributes: List<OrderItemAttributeValue>? = null,
+		val taxClassCode: String? = null
 	)
 
 	data class RecurringChargeSettings(

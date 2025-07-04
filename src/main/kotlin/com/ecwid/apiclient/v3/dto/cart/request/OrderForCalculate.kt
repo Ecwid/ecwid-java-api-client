@@ -104,7 +104,8 @@ data class OrderForCalculate(
 		val taxes: List<OrderItemTax>? = null,
 		val files: List<OrderItemProductFile>? = null,
 		val dimensions: ProductDimensions? = null,
-		val discounts: List<OrderItemDiscounts>? = null
+		val discounts: List<OrderItemDiscounts>? = null,
+		val taxClassCode: String? = null
 	)
 
 	data class OrderItemOption(
