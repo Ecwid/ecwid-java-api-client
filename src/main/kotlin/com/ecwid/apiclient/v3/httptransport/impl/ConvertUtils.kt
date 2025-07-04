@@ -32,7 +32,7 @@ internal fun HttpRequest.toHttpUriRequest(): ClassicHttpRequest {
 	}
 
 	return requestBuilder
-		.apply updated@ {
+		.apply updated@{
 			this@updated.charset = Charsets.UTF_8
 			this@toHttpUriRequest.params.forEach(this@updated::addParameter)
 			this@toHttpUriRequest.headers.forEach(this@updated::addHeader)
