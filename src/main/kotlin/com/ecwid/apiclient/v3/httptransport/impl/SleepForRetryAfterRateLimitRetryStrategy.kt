@@ -3,8 +3,8 @@ package com.ecwid.apiclient.v3.httptransport.impl
 import com.ecwid.apiclient.v3.httptransport.HttpRequest
 import com.ecwid.apiclient.v3.httptransport.HttpResponse
 import com.ecwid.apiclient.v3.httptransport.TransportHttpBody
-import org.apache.http.client.HttpClient
-import org.apache.http.client.methods.HttpUriRequest
+import org.apache.hc.client5.http.classic.HttpClient
+import org.apache.hc.core5.http.ClassicHttpRequest
 import java.io.IOException
 
 class SleepForRetryAfterRateLimitRetryStrategy(
@@ -24,12 +24,12 @@ class SleepForRetryAfterRateLimitRetryStrategy(
 		}
 	}
 
-	private fun executeWithoutRetry(httpClient: HttpClient, request: HttpUriRequest) =
+	private fun executeWithoutRetry(httpClient: HttpClient, request: ClassicHttpRequest) =
 		httpClient.execute(request) { response ->
 			response.toApiResponse()
 		}
 
-	private fun executeWithRetryOnRateLimited(httpClient: HttpClient, request: HttpUriRequest): HttpResponse {
+	private fun executeWithRetryOnRateLimited(httpClient: HttpClient, request: ClassicHttpRequest): HttpResponse {
 		return try {
 			RateLimitedHttpClientWrapper(
                 httpClient,

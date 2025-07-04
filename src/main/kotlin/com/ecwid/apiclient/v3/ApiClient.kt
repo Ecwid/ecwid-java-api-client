@@ -50,6 +50,7 @@ import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
 import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
+import java.io.Closeable
 import kotlin.reflect.KClass
 
 open class ApiClient private constructor(
@@ -98,7 +99,8 @@ open class ApiClient private constructor(
 	SlugInfoApiClient by slugInfoApiClient,
 	ProductReviewsApiClient by productReviewsApiClient,
 	StoreExtrafieldsApiClient by storeExtrafieldsApiClient,
-	SwatchesApiClient by swatchesApiClient {
+	SwatchesApiClient by swatchesApiClient,
+	Closeable {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
@@ -125,6 +127,10 @@ open class ApiClient private constructor(
 		storeExtrafieldsApiClient = StoreExtrafieldsApiClientImpl(apiClientHelper),
 		swatchesApiClient = SwatchesApiClientImpl(apiClientHelper),
 	)
+
+	override fun close() {
+		apiClientHelper.httpTransport.close()
+	}
 
 	companion object {
 

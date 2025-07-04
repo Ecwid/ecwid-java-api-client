@@ -3,55 +3,49 @@ package com.ecwid.apiclient.v3.httptransport.impl
 import com.ecwid.apiclient.v3.httptransport.HttpRequest
 import com.ecwid.apiclient.v3.httptransport.HttpResponse
 import com.ecwid.apiclient.v3.httptransport.TransportHttpBody
-import org.apache.http.Consts
-import org.apache.http.HttpEntity
-import org.apache.http.HttpStatus
-import org.apache.http.client.methods.HttpUriRequest
-import org.apache.http.client.methods.RequestBuilder
-import org.apache.http.entity.*
-import org.apache.http.message.BasicNameValuePair
-import org.apache.http.util.EntityUtils
+import org.apache.hc.core5.http.ClassicHttpRequest
+import org.apache.hc.core5.http.ClassicHttpResponse
+import org.apache.hc.core5.http.ContentType
+import org.apache.hc.core5.http.HttpEntity
+import org.apache.hc.core5.http.HttpStatus
+import org.apache.hc.core5.http.io.entity.*
+import org.apache.hc.core5.http.io.support.ClassicRequestBuilder
 
-internal fun HttpRequest.toHttpUriRequest(): HttpUriRequest {
+internal fun HttpRequest.toHttpUriRequest(): ClassicHttpRequest {
 	val requestBuilder = when (this) {
 		is HttpRequest.HttpGetRequest -> {
-			RequestBuilder.get(uri)
+			ClassicRequestBuilder.get(uri)
 		}
 		is HttpRequest.HttpPostRequest -> {
-			RequestBuilder
+			ClassicRequestBuilder
 				.post(uri)
 				.setEntity(transportHttpBody.toEntity())
 		}
 		is HttpRequest.HttpPutRequest -> {
-			RequestBuilder
+			ClassicRequestBuilder
 				.put(uri)
 				.setEntity(transportHttpBody.toEntity())
 		}
 		is HttpRequest.HttpDeleteRequest -> {
-			RequestBuilder.delete(uri)
+			ClassicRequestBuilder.delete(uri)
 		}
 	}
 
 	return requestBuilder
-		.apply {
-			charset = Charsets.UTF_8
-			params.map { (name, value) ->
-				BasicNameValuePair(name, value)
-			}.forEach(this::addParameter)
-			headers.map { (name, value) ->
-				BasicNameValuePair(name, value)
-			}.forEach { header -> this.addHeader(header.name, header.value) }
+		.apply updated@{
+			this@updated.charset = Charsets.UTF_8
+			this@toHttpUriRequest.params.forEach(this@updated::addParameter)
+			this@toHttpUriRequest.headers.forEach(this@updated::addHeader)
 		}
 		.build()
 }
 
-internal fun org.apache.http.HttpResponse.toApiResponse(): HttpResponse {
-	val statusLine = statusLine
+internal fun ClassicHttpResponse.toApiResponse(): HttpResponse {
 	val responseBytes = EntityUtils.toByteArray(entity)
-	return if (statusLine.statusCode == HttpStatus.SC_OK) {
+	return if (code == HttpStatus.SC_OK) {
 		HttpResponse.Success(responseBytes)
 	} else {
-		HttpResponse.Error(statusLine.statusCode, statusLine.reasonPhrase, responseBytes)
+		HttpResponse.Error(code, reasonPhrase, responseBytes)
 	}
 }
 
@@ -66,4 +60,4 @@ private fun TransportHttpBody.toEntity(): HttpEntity? = when (this) {
 		FileEntity(file, mimeType.toContentType())
 }
 
-private fun String.toContentType(): ContentType = ContentType.create(this, Consts.UTF_8)
+private fun String.toContentType(): ContentType = ContentType.create(this, Charsets.UTF_8)
