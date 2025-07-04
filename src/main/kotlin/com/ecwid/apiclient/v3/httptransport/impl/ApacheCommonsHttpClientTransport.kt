@@ -9,6 +9,7 @@ import org.apache.hc.client5.http.config.RequestConfig
 import org.apache.hc.client5.http.impl.classic.HttpClients
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder
 import org.apache.hc.core5.http.Header
+import java.io.Closeable
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
@@ -105,6 +106,12 @@ open class ApacheCommonsHttpClientTransport(
 			rateLimitRetryStrategy.makeHttpRequest(httpClient, httpRequest)
 		} catch (e: IOException) {
 			HttpResponse.TransportError(e)
+		}
+	}
+
+	override fun close() {
+		if (httpClient is Closeable) {
+			httpClient.close()
 		}
 	}
 
