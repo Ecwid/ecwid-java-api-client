@@ -1,11 +1,11 @@
 package com.ecwid.apiclient.v3.httptransport.impl
 
 import com.ecwid.apiclient.v3.metric.RequestRetrySleepMetric
-import org.apache.http.HttpResponse
-import org.apache.http.client.HttpClient
-import org.apache.http.client.ResponseHandler
-import org.apache.http.client.methods.HttpUriRequest
-import org.apache.http.util.EntityUtils
+import org.apache.hc.client5.http.classic.HttpClient
+import org.apache.hc.core5.http.ClassicHttpRequest
+import org.apache.hc.core5.http.ClassicHttpResponse
+import org.apache.hc.core5.http.io.HttpClientResponseHandler
+import org.apache.hc.core5.http.io.entity.EntityUtils
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 import java.util.logging.Logger
@@ -28,25 +28,25 @@ open class RateLimitedHttpClientWrapper(
 ) {
 
 	@Throws(IOException::class)
-	fun <T> execute(request: HttpUriRequest, responseHandler: ResponseHandler<T>): T {
+	fun <T> execute(request: ClassicHttpRequest, responseHandler: HttpClientResponseHandler<T>): T {
 		return executeWithRetry(request, totalAttempts, responseHandler)
 	}
 
 	private fun <T> executeWithRetry(
-		request: HttpUriRequest,
+		request: ClassicHttpRequest,
 		attemptsLeft: Int,
-		responseHandler: ResponseHandler<T>
+		responseHandler: HttpClientResponseHandler<T>
 	): T {
 		beforeEachRequestAttempt()
 		return httpClient.execute(request) { response ->
-			if (response.statusLine.statusCode == SC_TOO_MANY_REQUESTS && attemptsLeft > 0) {
+			if (response.code == SC_TOO_MANY_REQUESTS && attemptsLeft > 0) {
 				process429(
 					request,
 					response,
 					attemptsLeft - 1, // decrement attempts reminder
 					responseHandler
 				)
-			} else if (response.statusLine.statusCode == SC_TOO_MANY_REQUESTS && attemptsLeft <= 0) {
+			} else if (response.code == SC_TOO_MANY_REQUESTS && attemptsLeft <= 0) {
 				log.warning("Request ${request.uri.path} rate-limited: no more attempts.")
 				responseHandler.handleResponse(response)
 			} else {
@@ -56,10 +56,10 @@ open class RateLimitedHttpClientWrapper(
 	}
 
 	private fun <T> process429(
-		request: HttpUriRequest,
-		response: HttpResponse,
+		request: ClassicHttpRequest,
+		response: ClassicHttpResponse,
 		attemptsLeft: Int,
-		responseHandler: ResponseHandler<T>
+		responseHandler: HttpClientResponseHandler<T>
 	): T {
 		// server must inform how long to wait
 		val waitInterval = response.getFirstHeader("Retry-After")?.value?.toLong()
