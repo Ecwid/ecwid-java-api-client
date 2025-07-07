@@ -206,6 +206,8 @@ nexusPublishing {
 			useStaging.set(!project.isSnapshotVersion())
 			packageGroup.set(PublicationSettings.STAGING_PACKAGE_GROUP)
 			stagingProfileId.set(PublicationSettings.STAGING_PROFILE_ID)
+			nexusUrl.set(uri("https://ossrh-staging-api.central.sonatype.com/service/local/"))
+			snapshotRepositoryUrl.set(uri("https://central.sonatype.com/repository/maven-snapshots/"))
 			username.set(settingsProvider.ossrhUsername)
 			password.set(settingsProvider.ossrhPassword)
 		}
