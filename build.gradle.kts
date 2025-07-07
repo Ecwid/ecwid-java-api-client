@@ -26,6 +26,7 @@ dependencies {
 
 	api("com.google.code.gson:gson:2.10")
 	api("org.apache.httpcomponents:httpclient:4.5.13")
+	api("org.apache.httpcomponents.client5:httpclient5:5.5")
 	api("io.prometheus:prometheus-metrics-core:1.1.0")
 
 	testImplementation(kotlin("test"))
