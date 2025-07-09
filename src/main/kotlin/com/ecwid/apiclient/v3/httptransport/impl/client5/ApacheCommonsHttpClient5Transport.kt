@@ -1,17 +1,19 @@
-package com.ecwid.apiclient.v3.httptransport.impl
+package com.ecwid.apiclient.v3.httptransport.impl.client5
 
 import com.ecwid.apiclient.v3.httptransport.HttpRequest
 import com.ecwid.apiclient.v3.httptransport.HttpResponse
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
-import org.apache.http.Header
-import org.apache.http.client.HttpClient
-import org.apache.http.client.config.RequestConfig
-import org.apache.http.impl.client.HttpClientBuilder
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager
+import org.apache.hc.client5.http.classic.HttpClient
+import org.apache.hc.client5.http.config.ConnectionConfig
+import org.apache.hc.client5.http.config.RequestConfig
+import org.apache.hc.client5.http.impl.classic.HttpClients
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder
+import org.apache.hc.core5.http.Header
 import java.io.Closeable
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 
-private const val DEFAULT_CONNECTION_TIMEOUT = 10_000 // 10 sec
+private const val DEFAULT_CONNECTION_TIMEOUT = 10_000L // 10 sec
 private const val DEFAULT_READ_TIMEOUT = 60_000 // 1 min
 
 private const val DEFAULT_MAX_CONNECTIONS = 10
@@ -34,8 +36,7 @@ internal const val MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 60L
 val EMPTY_WAITING_REACTION: (Long) -> Unit = { }
 val EMPTY_BEFORE_REQUEST_ACTION: () -> Unit = { }
 
-@Deprecated("Use ApacheCommonsHttpClientTransport from client5 package")
-open class ApacheCommonsHttpClientTransport(
+open class ApacheCommonsHttpClient5Transport(
 	private val httpClient: HttpClient = buildHttpClient(),
 	private val rateLimitRetryStrategy: RateLimitRetryStrategy = SleepForRetryAfterRateLimitRetryStrategy(),
 ) : HttpTransport {
@@ -59,7 +60,7 @@ open class ApacheCommonsHttpClientTransport(
 	)
 
 	constructor(
-		defaultConnectionTimeout: Int = DEFAULT_CONNECTION_TIMEOUT,
+		defaultConnectionTimeout: Long = DEFAULT_CONNECTION_TIMEOUT,
 		defaultReadTimeout: Int = DEFAULT_READ_TIMEOUT,
 		defaultMaxConnections: Int = DEFAULT_MAX_CONNECTIONS,
 		defaultHeaders: List<Header> = emptyList(),
@@ -75,7 +76,7 @@ open class ApacheCommonsHttpClientTransport(
 	)
 
 	constructor(
-		defaultConnectionTimeout: Int = DEFAULT_CONNECTION_TIMEOUT,
+		defaultConnectionTimeout: Long = DEFAULT_CONNECTION_TIMEOUT,
 		defaultReadTimeout: Int = DEFAULT_READ_TIMEOUT,
 		defaultMaxConnections: Int = DEFAULT_MAX_CONNECTIONS,
 		defaultRateLimitAttempts: Int = DEFAULT_RATE_LIMIT_ATTEMPTS,
@@ -117,23 +118,27 @@ open class ApacheCommonsHttpClientTransport(
 	companion object {
 
 		private fun buildHttpClient(
-			defaultConnectionTimeout: Int = DEFAULT_CONNECTION_TIMEOUT,
+			defaultConnectionTimeout: Long = DEFAULT_CONNECTION_TIMEOUT,
 			defaultReadTimeout: Int = DEFAULT_READ_TIMEOUT,
 			defaultMaxConnections: Int = DEFAULT_MAX_CONNECTIONS,
 			defaultHeaders: List<Header> = emptyList(),
 		): HttpClient {
-			val connectionManager = PoolingHttpClientConnectionManager().apply {
-				maxTotal = defaultMaxConnections
-				defaultMaxPerRoute = defaultMaxConnections
-			}
-
-			val requestConfig = RequestConfig.custom()
-				.setConnectTimeout(defaultConnectionTimeout)
-				.setConnectionRequestTimeout(defaultConnectionTimeout)
-				.setSocketTimeout(defaultReadTimeout)
+			val connectionConfig = ConnectionConfig.custom()
+				.setConnectTimeout(defaultConnectionTimeout, TimeUnit.SECONDS)
+				.setSocketTimeout(defaultReadTimeout, TimeUnit.SECONDS)
 				.build()
 
-			val httpClientBuilder = HttpClientBuilder.create()
+			val connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
+				.setMaxConnTotal(defaultMaxConnections)
+				.setMaxConnPerRoute(defaultMaxConnections)
+				.setDefaultConnectionConfig(connectionConfig)
+				.build()
+
+			val requestConfig = RequestConfig.custom()
+				.setConnectionRequestTimeout(defaultConnectionTimeout, TimeUnit.SECONDS)
+				.build()
+
+			val httpClientBuilder = HttpClients.custom()
 				.setConnectionManager(connectionManager)
 				.setDefaultRequestConfig(requestConfig)
 				.setRedirectStrategy(RemoveDisallowedHeadersRedirectStrategy())
