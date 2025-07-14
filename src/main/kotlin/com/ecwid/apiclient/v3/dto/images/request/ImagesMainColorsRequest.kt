@@ -1,6 +1,7 @@
 package com.ecwid.apiclient.v3.dto.images.request
 
 import com.ecwid.apiclient.v3.dto.ApiRequest
+import com.ecwid.apiclient.v3.dto.common.ApiRequestDTO
 import com.ecwid.apiclient.v3.httptransport.HttpBody
 import com.ecwid.apiclient.v3.impl.RequestInfo
 
@@ -23,4 +24,4 @@ data class ImagesMainColorsRequest(
 data class ImagesMainColorsRequestBody(
 	val imageUrls: List<String> = emptyList(),
 	val colorsCount: Int = 5,
-)
+) : ApiRequestDTO
