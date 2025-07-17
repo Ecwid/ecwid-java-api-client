@@ -172,7 +172,7 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	AllowNullable(FetchedStoreProfile.DesignSettings::showSigninLinkWithUnifiedAccountPage),
 	AllowNullable(FetchedStoreProfile.DesignSettings::swatchesProductOptionShape),
 	AllowNullable(FetchedStoreProfile.DesignSettings::swatchesProductOptionSize),
-	AllowNullable(FetchedStoreProfile.DesignSettings::productDetailsShowAltTextAsDescription),
+	AllowNullable(FetchedStoreProfile.DesignSettings::productDetailsShowAltTextAsVisibleAsDescription),
 	IgnoreNullable(FetchedStoreProfile.FBMessengerSettings::enabled),
 	IgnoreNullable(FetchedStoreProfile.FBMessengerSettings::fbMessengerMessageUsButtonColor),
 	IgnoreNullable(FetchedStoreProfile.FBMessengerSettings::fbMessengerPageId),

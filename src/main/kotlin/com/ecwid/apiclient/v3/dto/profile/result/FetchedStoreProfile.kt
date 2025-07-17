@@ -759,7 +759,7 @@ data class FetchedStoreProfile(
 		val swatchesProductOptionSize: String? = null,
 
 		@JsonFieldName("product_details_show_image_alt_text_as_visible_description")
-		val productDetailsShowAltTextAsDescription: Boolean? = null,
+		val productDetailsShowAltTextAsVisibleAsDescription: Boolean? = null,
 	)
 
 	data class ProductFilterItem(
