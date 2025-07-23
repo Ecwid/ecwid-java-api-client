@@ -206,6 +206,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	fetchedCustomersConfigNullablePropertyRules,
 	brandsSearchRequestNullablePropertyRules,
 	fetchedBrandNullablePropertyRules,
+	fetchedProductComponentNullablePropertyRules,
 ).flatten()
 
 sealed class NullablePropertyRule<T, R>(
