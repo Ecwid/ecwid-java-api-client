@@ -26,6 +26,7 @@ dependencies {
 
 	api("com.google.code.gson:gson:2.10")
 	api("org.apache.httpcomponents:httpclient:4.5.13")
+	api("org.apache.httpcomponents.client5:httpclient5:5.5")
 	api("io.prometheus:prometheus-metrics-core:1.1.0")
 
 	testImplementation(kotlin("test"))
@@ -206,6 +207,8 @@ nexusPublishing {
 			useStaging.set(!project.isSnapshotVersion())
 			packageGroup.set(PublicationSettings.STAGING_PACKAGE_GROUP)
 			stagingProfileId.set(PublicationSettings.STAGING_PROFILE_ID)
+			nexusUrl.set(uri("https://ossrh-staging-api.central.sonatype.com/service/local/"))
+			snapshotRepositoryUrl.set(uri("https://central.sonatype.com/repository/maven-snapshots/"))
 			username.set(settingsProvider.ossrhUsername)
 			password.set(settingsProvider.ossrhPassword)
 		}
@@ -251,12 +254,6 @@ fun printFinalReleaseNote(groupId: String, artifactId: String, sanitizedVersion:
 	println("Discover on Maven Central:")
 	println("	https://repo1.maven.org/maven2/${groupId.replace('.', '/')}/$artifactId/")
 	println()
-	println("Edit or delete artifacts on OSS Nexus Repository Manager:")
-	println("	https://oss.sonatype.org/#nexus-search;gav~$groupId~~~~")
-	println()
-	println("Control staging repositories on OSS Nexus Repository Manager:")
-	println("	https://oss.sonatype.org/#stagingRepositories")
-	println()
 	println("========================================================")
 	println()
 }
@@ -271,10 +268,7 @@ fun printDevSnapshotReleaseNote(groupId: String, artifactId: String, sanitizedVe
 	println("	version: $sanitizedVersion")
 	println()
 	println("Discover on Maven Central:")
-	println("	https://oss.sonatype.org/content/groups/public/${groupId.replace('.', '/')}/$artifactId/")
-	println()
-	println("Edit or delete artifacts on OSS Nexus Repository Manager:")
-	println("	https://oss.sonatype.org/#nexus-search;gav~$groupId~~~~")
+	println("	https://central.sonatype.com/repository/maven-snapshots/${groupId.replace('.', '/')}/$artifactId/$sanitizedVersion/maven-metadata.xml")
 	println()
 	println("========================================================")
 	println()

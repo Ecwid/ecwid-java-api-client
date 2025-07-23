@@ -751,6 +751,15 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("show_signin_link_with_unified_account_page")
 		val showSigninLinkWithUnifiedAccountPage: Boolean? = null,
+
+		@JsonFieldName("swatches_product_option_shape")
+		val swatchesProductOptionShape: String? = null,
+
+		@JsonFieldName("swatches_product_option_size")
+		val swatchesProductOptionSize: String? = null,
+
+		@JsonFieldName("product_details_show_image_alt_text_as_visible_description")
+		val productDetailsShowAltTextAsVisibleAsDescription: Boolean? = null,
 	)
 
 	data class ProductFilterItem(

@@ -219,6 +219,7 @@ data class FetchedOrder(
 		val externalReferenceId: String? = null,
 		val isPreorder: Boolean? = null,
 		val attributes: List<OrderItemAttributeValue>? = null,
+		val taxClassCode: String? = null,
 		val compositeComponents: List<FetchedProductComponent>? = null,
 	)
 
