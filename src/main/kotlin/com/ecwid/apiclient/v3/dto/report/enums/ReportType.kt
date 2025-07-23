@@ -41,6 +41,7 @@ enum class ReportType {
 	topOfProductsByAddingToFavorites,
 
 	/** activity */
+	siteActivity,
 	siteEmailActivity,
 	sitePhoneActivity,
 	siteAddressActivity,
