@@ -24,6 +24,8 @@ import com.ecwid.apiclient.v3.dto.customer.request.*
 import com.ecwid.apiclient.v3.dto.customer.result.*
 import com.ecwid.apiclient.v3.dto.customergroup.request.*
 import com.ecwid.apiclient.v3.dto.customergroup.result.*
+import com.ecwid.apiclient.v3.dto.images.request.ImagesMainColorsRequest
+import com.ecwid.apiclient.v3.dto.images.result.FetchedImagesMainColorsResult
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.request.*
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.result.*
 import com.ecwid.apiclient.v3.dto.productreview.request.*
@@ -77,6 +79,7 @@ open class ApiClient private constructor(
 	productReviewsApiClient: ProductReviewsApiClientImpl,
 	storeExtrafieldsApiClient: StoreExtrafieldsApiClientImpl,
 	swatchesApiClient: SwatchesApiClientImpl,
+	imagesApiClient: ImagesApiClientImpl,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	BrandsApiClient by brandsApiClient,
@@ -100,6 +103,7 @@ open class ApiClient private constructor(
 	ProductReviewsApiClient by productReviewsApiClient,
 	StoreExtrafieldsApiClient by storeExtrafieldsApiClient,
 	SwatchesApiClient by swatchesApiClient,
+	ImagesApiClient by imagesApiClient,
 	Closeable {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
@@ -126,6 +130,7 @@ open class ApiClient private constructor(
 		productReviewsApiClient = ProductReviewsApiClientImpl(apiClientHelper),
 		storeExtrafieldsApiClient = StoreExtrafieldsApiClientImpl(apiClientHelper),
 		swatchesApiClient = SwatchesApiClientImpl(apiClientHelper),
+		imagesApiClient = ImagesApiClientImpl(apiClientHelper),
 	)
 
 	override fun close() {
@@ -331,4 +336,8 @@ interface ProductReviewsApiClient {
 // Swatches
 interface SwatchesApiClient {
 	fun getRecentSwatchColors(request: RecentSwatchColorsGetRequest): FetchedSwatchColorsResult
+}
+
+interface ImagesApiClient {
+	fun getImagesMainColors(request: ImagesMainColorsRequest): FetchedImagesMainColorsResult
 }
