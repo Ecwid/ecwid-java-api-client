@@ -42,11 +42,6 @@ enum class ReportType {
 
 	/** activity */
 	siteActivity,
-	siteEmailActivity,
-	sitePhoneActivity,
-	siteAddressActivity,
-	siteLocationMapActivity,
-	siteContactWidgetActivity,
 	siteSocialActivity,
 	siteAggregatedActivity,
 }
