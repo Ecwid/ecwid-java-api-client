@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.common.*
 import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.product.enums.*
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
+import com.ecwid.apiclient.v3.dto.productcomponent.result.FetchedProductComponent
 import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 import java.util.*
@@ -142,6 +143,7 @@ data class FetchedProduct(
 	val rating: Double? = null,
 	val reviewsModerated: Int? = null,
 	val reviewsPublished: Int? = null,
+	val compositeComponents: List<FetchedProductComponent>? = null,
 ) : ApiFetchedDTO, ApiResultDTO {
 
 	data class BorderInfo(
@@ -191,7 +193,9 @@ data class FetchedProduct(
 
 	data class CategoryInfo(
 		val id: Int = 0,
-		val enabled: Boolean = true
+		val enabled: Boolean = true,
+		val name: String = "",
+		val nameTranslated: String = "",
 	)
 
 	data class TaxInfo(
@@ -238,6 +242,15 @@ data class FetchedProduct(
 			override val required: Boolean = false
 		) : ProductOption(ProductOptionType.RADIO), ChoiceBased
 
+		data class SwatchesOption(
+			override val name: String = "",
+			override val nameTranslated: LocalizedValueMap? = null,
+			override val choices: List<ProductOptionChoice> = listOf(),
+			override val defaultChoice: Int = 0,
+			override val required: Boolean = false,
+			val useImageAsSwatchSelector: Boolean = false,
+		) : ProductOption(ProductOptionType.SWATCHES), ChoiceBased
+
 		data class CheckboxOption(
 			override val name: String = "",
 			override val nameTranslated: LocalizedValueMap? = null,
@@ -275,7 +288,9 @@ data class FetchedProduct(
 		val text: String = "",
 		val textTranslated: LocalizedValueMap? = null,
 		val priceModifier: Double = 0.0,
-		val priceModifierType: PriceModifierType = PriceModifierType.ABSOLUTE
+		val priceModifierType: PriceModifierType = PriceModifierType.ABSOLUTE,
+		val hexCodes: List<String>? = null,
+		val imageId: String? = null,
 	)
 
 	data class ShippingSettings(

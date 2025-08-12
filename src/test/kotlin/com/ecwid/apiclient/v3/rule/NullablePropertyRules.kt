@@ -18,10 +18,12 @@ import com.ecwid.apiclient.v3.dto.product.result.ProductInventoryUpdateResult
 import com.ecwid.apiclient.v3.dto.productreview.request.UpdatedProductReviewStatus
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedLatestStats
+import com.ecwid.apiclient.v3.dto.report.request.ReportAdviceRequest
 import com.ecwid.apiclient.v3.dto.report.request.ReportRequest
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportAdviceResponse
 import com.ecwid.apiclient.v3.dto.report.result.FetchedReportResponse
 import com.ecwid.apiclient.v3.dto.storage.result.FetchedStorageData
+import com.ecwid.apiclient.v3.dto.swatches.result.FetchedSwatchColor
 import com.ecwid.apiclient.v3.dto.variation.request.ProductVariationsRequest
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
@@ -84,6 +86,17 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(ReportRequest::offset),
 	AllowNullable(ReportRequest::storefrontPlatform),
 
+	AllowNullable(ReportAdviceRequest::startedFrom),
+	AllowNullable(ReportAdviceRequest::endedAt),
+	AllowNullable(ReportAdviceRequest::timeScaleValue),
+	AllowNullable(ReportAdviceRequest::comparePeriod),
+	AllowNullable(ReportAdviceRequest::firstDayOfWeek),
+	AllowNullable(ReportAdviceRequest::orderByMetric),
+	AllowNullable(ReportAdviceRequest::orderDirection),
+	AllowNullable(ReportAdviceRequest::limit),
+	AllowNullable(ReportAdviceRequest::offset),
+	AllowNullable(ReportAdviceRequest::storefrontPlatform),
+
 	AllowNullable(FetchedReportResponse::timeScaleValue),
 	AllowNullable(FetchedReportResponse::comparePeriod),
 	AllowNullable(FetchedReportResponse::firstDayOfWeek),
@@ -133,6 +146,8 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 
 	AllowNullable(FetchedReportResponse.FetchedAdditionalData.AdditionalCategoryData::categoryName),
 
+	AllowNullable(FetchedSwatchColor::translations),
+
 	AllowNullable(CreateBatchRequest::groupId),
 	AllowNullable(CreateBatchRequestWithIds::groupId),
 
@@ -171,6 +186,7 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	fetchedOrderNullablePropertyRules,
 	fetchedProductNullablePropertyRules,
 	fetchedProductTypeNullablePropertyRules,
+	fetchedShippingOptionNullablePropertyRules,
 	fetchedStoreProfileNullablePropertyRules,
 	fetchedVariationTypeNullablePropertyRules,
 	getProductFiltersRequestNullablePropertyRules,
@@ -188,6 +204,9 @@ val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	productReviewMassUpdateRequestNullablePropertyRules,
 	productReviewSearchRequestNullablePropertyRules,
 	fetchedCustomersConfigNullablePropertyRules,
+	brandsSearchRequestNullablePropertyRules,
+	fetchedBrandNullablePropertyRules,
+	fetchedProductComponentNullablePropertyRules,
 ).flatten()
 
 sealed class NullablePropertyRule<T, R>(

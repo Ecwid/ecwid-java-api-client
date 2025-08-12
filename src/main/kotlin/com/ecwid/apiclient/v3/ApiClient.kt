@@ -24,10 +24,10 @@ import com.ecwid.apiclient.v3.dto.customer.request.*
 import com.ecwid.apiclient.v3.dto.customer.result.*
 import com.ecwid.apiclient.v3.dto.customergroup.request.*
 import com.ecwid.apiclient.v3.dto.customergroup.result.*
+import com.ecwid.apiclient.v3.dto.images.request.ImagesMainColorsRequest
+import com.ecwid.apiclient.v3.dto.images.result.FetchedImagesMainColorsResult
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.request.*
 import com.ecwid.apiclient.v3.dto.instantsite.redirects.result.*
-import com.ecwid.apiclient.v3.dto.order.request.*
-import com.ecwid.apiclient.v3.dto.order.result.*
 import com.ecwid.apiclient.v3.dto.productreview.request.*
 import com.ecwid.apiclient.v3.dto.productreview.result.*
 import com.ecwid.apiclient.v3.dto.producttype.request.*
@@ -45,16 +45,20 @@ import com.ecwid.apiclient.v3.dto.storage.result.*
 import com.ecwid.apiclient.v3.dto.subscriptions.request.SubscriptionsSearchRequest
 import com.ecwid.apiclient.v3.dto.subscriptions.result.FetchedSubscription
 import com.ecwid.apiclient.v3.dto.subscriptions.result.SubscriptionsSearchResult
+import com.ecwid.apiclient.v3.dto.swatches.request.RecentSwatchColorsGetRequest
+import com.ecwid.apiclient.v3.dto.swatches.result.FetchedSwatchColorsResult
 import com.ecwid.apiclient.v3.dto.variation.request.*
 import com.ecwid.apiclient.v3.dto.variation.result.*
 import com.ecwid.apiclient.v3.httptransport.HttpTransport
 import com.ecwid.apiclient.v3.impl.*
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformerProvider
+import java.io.Closeable
 import kotlin.reflect.KClass
 
 open class ApiClient private constructor(
 	protected val apiClientHelper: ApiClientHelper,
 	storeProfileApiClient: StoreProfileApiClient,
+	brandsApiClient: BrandsApiClient,
 	productsApiClient: ProductsApiClient,
 	categoriesApiClient: CategoriesApiClient,
 	ordersApiClient: OrdersApiClient,
@@ -74,8 +78,11 @@ open class ApiClient private constructor(
 	slugInfoApiClient: SlugInfoApiClientImpl,
 	productReviewsApiClient: ProductReviewsApiClientImpl,
 	storeExtrafieldsApiClient: StoreExtrafieldsApiClientImpl,
+	swatchesApiClient: SwatchesApiClientImpl,
+	imagesApiClient: ImagesApiClientImpl,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
+	BrandsApiClient by brandsApiClient,
 	ProductsApiClient by productsApiClient,
 	CategoriesApiClient by categoriesApiClient,
 	OrdersApiClient by ordersApiClient,
@@ -94,11 +101,15 @@ open class ApiClient private constructor(
 	InstantSiteRedirectsApiClient by instantSiteRedirectsApiClient,
 	SlugInfoApiClient by slugInfoApiClient,
 	ProductReviewsApiClient by productReviewsApiClient,
-	StoreExtrafieldsApiClient by storeExtrafieldsApiClient {
+	StoreExtrafieldsApiClient by storeExtrafieldsApiClient,
+	SwatchesApiClient by swatchesApiClient,
+	ImagesApiClient by imagesApiClient,
+	Closeable {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
 		apiClientHelper = apiClientHelper,
 		storeProfileApiClient = StoreProfileApiClientImpl(apiClientHelper),
+		brandsApiClient = BrandsApiClientImpl(apiClientHelper),
 		productsApiClient = ProductsApiClientImpl(apiClientHelper),
 		categoriesApiClient = CategoriesApiClientImpl(apiClientHelper),
 		ordersApiClient = OrdersApiClientImpl(apiClientHelper),
@@ -118,7 +129,13 @@ open class ApiClient private constructor(
 		slugInfoApiClient = SlugInfoApiClientImpl(apiClientHelper),
 		productReviewsApiClient = ProductReviewsApiClientImpl(apiClientHelper),
 		storeExtrafieldsApiClient = StoreExtrafieldsApiClientImpl(apiClientHelper),
+		swatchesApiClient = SwatchesApiClientImpl(apiClientHelper),
+		imagesApiClient = ImagesApiClientImpl(apiClientHelper),
 	)
+
+	override fun close() {
+		apiClientHelper.httpTransport.close()
+	}
 
 	companion object {
 
@@ -314,4 +331,13 @@ interface ProductReviewsApiClient {
 	fun deleteProductReview(request: ProductReviewDeleteRequest): ProductReviewDeleteResult
 	fun massUpdateProductReview(request: ProductReviewMassUpdateRequest): ProductReviewMassUpdateResult
 	fun getProductReviewsFiltersData(request: ProductReviewFiltersDataRequest): ProductReviewFiltersDataResult
+}
+
+// Swatches
+interface SwatchesApiClient {
+	fun getRecentSwatchColors(request: RecentSwatchColorsGetRequest): FetchedSwatchColorsResult
+}
+
+interface ImagesApiClient {
+	fun getImagesMainColors(request: ImagesMainColorsRequest): FetchedImagesMainColorsResult
 }

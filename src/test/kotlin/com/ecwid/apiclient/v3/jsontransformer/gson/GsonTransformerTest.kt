@@ -230,6 +230,13 @@ internal class GsonTransformerTest {
 		)
 	}
 
+	@Test
+	fun `deserializeOrNull of broken ParsedResponseWithExt`() {
+		val json = "'testField': {'baseField': 'base', 'extField': 'ext'}}"
+		val deserializedValue = transformer.deserializeOrNull(json, TestParsedResponseWithExt::class.java)
+		assertEquals(null, deserializedValue)
+	}
+
 }
 
 private fun assertJsonEquals(expected: String, actual: String) {

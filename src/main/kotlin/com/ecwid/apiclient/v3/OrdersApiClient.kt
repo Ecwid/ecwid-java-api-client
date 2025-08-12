@@ -13,6 +13,7 @@ interface OrdersApiClient {
 		where Result : PartialResult<OrdersSearchResult>
 	fun searchOrdersAsSequence(request: OrdersSearchRequest): Sequence<FetchedOrder>
 	fun getOrderDetails(request: OrderDetailsRequest): FetchedOrder
+	fun getLastOrderDetails(request: LastOrderDetailsRequest): FetchedOrder
 	fun getOrderInvoice(request: OrderInvoiceRequest): String
 	fun createOrder(request: OrderCreateRequest): OrderCreateResult
 	fun updateOrder(request: OrderUpdateRequest): OrderUpdateResult

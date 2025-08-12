@@ -5,8 +5,10 @@ import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.BaseOrderTax
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
+import com.ecwid.apiclient.v3.dto.customer.enums.CommercialRelationshipScheme
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.result.FetchedOrder
+import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -97,6 +99,11 @@ data class UpdatedOrder(
 	val paymentReference: String? = null,
 	val loyalty: Loyalty? = null,
 	val customerFiscalCode: String? = null,
+	val electronicInvoicePecEmail: String? = null,
+	val electronicInvoiceSdiCode: String? = null,
+	@JsonFieldName("b2b_b2c")
+	val commercialRelationshipScheme: CommercialRelationshipScheme? = null,
+	val lang: String? = null,
 
 ) : ApiUpdatedDTO {
 
@@ -173,6 +180,7 @@ data class UpdatedOrder(
 		val discounts: List<OrderItemDiscounts>? = null,
 		val externalReferenceId: String? = null,
 		val isPreorder: Boolean? = null,
+		val taxClassCode: String? = null,
 	)
 
 	data class OrderItemSelectedOption(

@@ -181,11 +181,19 @@ data class CustomAppRequest(
 	)
 
 	enum class DiscountType {
-		ABS, PERCENT
+		ABS,
+		PERCENT,
+		FIXED_PRICE,
 	}
 
 	enum class DiscountBase {
-		ON_TOTAL, ON_MEMBERSHIP, ON_TOTAL_AND_MEMBERSHIP, CUSTOM
+		ON_TOTAL,
+		ON_MEMBERSHIP,
+		ON_TOTAL_AND_MEMBERSHIP,
+		SHIPPING,
+		ITEM,
+		SUBTOTAL,
+		CUSTOM,
 	}
 
 	data class FavoritesInfo(

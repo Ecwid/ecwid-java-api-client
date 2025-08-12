@@ -26,6 +26,7 @@ dependencies {
 
 	api("com.google.code.gson:gson:2.10")
 	api("org.apache.httpcomponents:httpclient:4.5.13")
+	api("org.apache.httpcomponents.client5:httpclient5:5.5")
 	api("io.prometheus:prometheus-metrics-core:1.1.0")
 
 	testImplementation(kotlin("test"))
@@ -127,6 +128,12 @@ tasks.register(Tasks.PRINT_DEV_SNAPSHOT_RELEASE_NOTE_TASK_NAME) {
 	dependsOn(tasks.getByName("devSnapshot"))
 }
 
+tasks.register(Tasks.PRINT_SUMMARY_SANITIZED_TASK_NAME) {
+	doLast {
+		printSanitizedVersion(project.sanitizeVersion())
+	}
+}
+
 detekt {
 	allRules = false
 	basePath = "$projectDir"
@@ -200,6 +207,8 @@ nexusPublishing {
 			useStaging.set(!project.isSnapshotVersion())
 			packageGroup.set(PublicationSettings.STAGING_PACKAGE_GROUP)
 			stagingProfileId.set(PublicationSettings.STAGING_PROFILE_ID)
+			nexusUrl.set(uri("https://ossrh-staging-api.central.sonatype.com/service/local/"))
+			snapshotRepositoryUrl.set(uri("https://central.sonatype.com/repository/maven-snapshots/"))
 			username.set(settingsProvider.ossrhUsername)
 			password.set(settingsProvider.ossrhPassword)
 		}
@@ -210,15 +219,16 @@ nexusPublishing {
 // 		<major>.<minor>.<patch>-dev.#+<branchname>.<hash> (local branch)
 // 		<major>.<minor>.<patch>-dev.#+<hash> (github pull request)
 // to:
-// 		<major>.<minor>.<patch>-dev+<branchname>-SNAPSHOT
+// 		<major>.<minor>.<patch>-dev+<branchname>_<hash>-SNAPSHOT
 fun Project.sanitizeVersion(): String {
 	val version = version.toString()
 	return if (project.isSnapshotVersion()) {
 		val githubHeadRef = settingsProvider.githubHeadRef
+		val githubHeadSHA = settingsProvider.githubHeadSHA?.take(Consts.MAX_HEAD_SHA_LENGTH)
 		if (githubHeadRef != null) {
 			// github pull request
 			version
-				.replace(Regex("-dev\\.\\d+\\+[a-f0-9]+$"), "-dev+$githubHeadRef-SNAPSHOT")
+				.replace(Regex("-dev\\.\\d+\\+[a-f0-9]+$"), "-dev+${githubHeadRef}_$githubHeadSHA-SNAPSHOT")
 		} else {
 			// local branch
 			version
@@ -244,12 +254,6 @@ fun printFinalReleaseNote(groupId: String, artifactId: String, sanitizedVersion:
 	println("Discover on Maven Central:")
 	println("	https://repo1.maven.org/maven2/${groupId.replace('.', '/')}/$artifactId/")
 	println()
-	println("Edit or delete artifacts on OSS Nexus Repository Manager:")
-	println("	https://oss.sonatype.org/#nexus-search;gav~$groupId~~~~")
-	println()
-	println("Control staging repositories on OSS Nexus Repository Manager:")
-	println("	https://oss.sonatype.org/#stagingRepositories")
-	println()
 	println("========================================================")
 	println()
 }
@@ -264,13 +268,20 @@ fun printDevSnapshotReleaseNote(groupId: String, artifactId: String, sanitizedVe
 	println("	version: $sanitizedVersion")
 	println()
 	println("Discover on Maven Central:")
-	println("	https://oss.sonatype.org/content/groups/public/${groupId.replace('.', '/')}/$artifactId/")
-	println()
-	println("Edit or delete artifacts on OSS Nexus Repository Manager:")
-	println("	https://oss.sonatype.org/#nexus-search;gav~$groupId~~~~")
+	println("	https://central.sonatype.com/repository/maven-snapshots/${groupId.replace('.', '/')}/$artifactId/$sanitizedVersion/maven-metadata.xml")
 	println()
 	println("========================================================")
 	println()
+}
+
+fun printSanitizedVersion(sanitizedVersion: String) {
+	val markdownMessage = """
+        |## Sanitized Version
+        |
+        |**Version:** $sanitizedVersion
+        |
+    """.trimMargin()
+	File("sanitized_version.md").writeText(markdownMessage)
 }
 
 class SettingsProvider {
@@ -289,6 +300,9 @@ class SettingsProvider {
 
 	val githubHeadRef: String?
 		get() = System.getenv(GITHUB_HEAD_REF_PROPERTY)
+
+	val githubHeadSHA: String?
+		get() = System.getenv(GITHUB_HEAD_SHA_PROPERTY)
 
 	fun validateGPGSecrets() = require(
 		value = !gpgSigningKey.isNullOrBlank() && !gpgSigningPassword.isNullOrBlank(),
@@ -310,6 +324,7 @@ class SettingsProvider {
 		private const val OSSRH_USERNAME_PROPERTY = "OSSRH_USERNAME"
 		private const val OSSRH_PASSWORD_PROPERTY = "OSSRH_PASSWORD"
 		private const val GITHUB_HEAD_REF_PROPERTY = "GITHUB_HEAD_REF"
+		private const val GITHUB_HEAD_SHA_PROPERTY = "GITHUB_HEAD_SHA"
 	}
 }
 
@@ -339,9 +354,11 @@ object PublicationSettings {
 object Consts {
 	const val SLOW_TESTS_LOGGING_THRESHOLD_MS = 30_000L
 	const val MAX_TEST_RETRIES_COUNT = 3
+	const val MAX_HEAD_SHA_LENGTH = 8
 }
 
 object Tasks {
 	const val PRINT_FINAL_RELEASE_NOTE_TASK_NAME = "printFinalReleaseNote"
 	const val PRINT_DEV_SNAPSHOT_RELEASE_NOTE_TASK_NAME = "printDevSnapshotReleaseNote"
+	const val PRINT_SUMMARY_SANITIZED_TASK_NAME = "printDevSanitizedVersion"
 }

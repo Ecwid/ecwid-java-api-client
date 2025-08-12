@@ -6,8 +6,11 @@ import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.ExtendedOrderTax
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToListStringMap
 import com.ecwid.apiclient.v3.dto.common.OrderedStringToStringMap
+import com.ecwid.apiclient.v3.dto.customer.enums.CommercialRelationshipScheme
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
+import com.ecwid.apiclient.v3.dto.productcomponent.result.FetchedProductComponent
+import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
 import java.util.*
 
 data class FetchedOrder(
@@ -119,6 +122,11 @@ data class FetchedOrder(
 	val shippingLabelAvailableForShipment: Boolean = false,
 	val loyalty: Loyalty? = null,
 	val customerFiscalCode: String? = null,
+	val electronicInvoicePecEmail: String? = "",
+	val electronicInvoiceSdiCode: String? = "",
+	@JsonFieldName("b2b_b2c")
+	val commercialRelationshipScheme: CommercialRelationshipScheme? = CommercialRelationshipScheme.b2c,
+	val lang: String? = null,
 
 	) : ApiFetchedDTO, ApiResultDTO {
 
@@ -210,7 +218,9 @@ data class FetchedOrder(
 		val discounts: List<OrderItemDiscounts>? = null,
 		val externalReferenceId: String? = null,
 		val isPreorder: Boolean? = null,
-		val attributes: List<OrderItemAttributeValue>? = null
+		val attributes: List<OrderItemAttributeValue>? = null,
+		val taxClassCode: String? = null,
+		val compositeComponents: List<FetchedProductComponent>? = null,
 	)
 
 	data class RecurringChargeSettings(
@@ -335,12 +345,14 @@ data class FetchedOrder(
 		val estimatedTransitTime: String? = null,
 		val isPickup: Boolean? = null,
 		val pickupInstruction: String? = null,
+		val pickupPrecisionType: PickupPrecisionType? = null,
 		val fulfillmentType: FulfillmentType? = null,
 		val locationId: String? = null,
 		val localizedLabel: String? = null,
 		val isShippingLimit: Boolean? = null,
 		val scheduled: Boolean? = null,
 		val scheduledTimePrecisionType: ScheduledTimePrecisionType? = null,
+		val timeSlotLengthInMinutes: Int? = null,
 	)
 
 	data class HandlingFee(

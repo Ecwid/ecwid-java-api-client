@@ -8,6 +8,7 @@ import org.apache.http.client.HttpClient
 import org.apache.http.client.config.RequestConfig
 import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager
+import java.io.Closeable
 import java.io.IOException
 
 private const val DEFAULT_CONNECTION_TIMEOUT = 10_000 // 10 sec
@@ -33,6 +34,7 @@ internal const val MAX_RATE_LIMIT_RETRY_INTERVAL_SECONDS = 60L
 val EMPTY_WAITING_REACTION: (Long) -> Unit = { }
 val EMPTY_BEFORE_REQUEST_ACTION: () -> Unit = { }
 
+@Deprecated("Use ApacheCommonsHttpClientTransport from client5 package")
 open class ApacheCommonsHttpClientTransport(
 	private val httpClient: HttpClient = buildHttpClient(),
 	private val rateLimitRetryStrategy: RateLimitRetryStrategy = SleepForRetryAfterRateLimitRetryStrategy(),
@@ -106,6 +108,12 @@ open class ApacheCommonsHttpClientTransport(
 		}
 	}
 
+	override fun close() {
+		if (httpClient is Closeable) {
+			httpClient.close()
+		}
+	}
+
 	companion object {
 
 		private fun buildHttpClient(
@@ -128,6 +136,7 @@ open class ApacheCommonsHttpClientTransport(
 			val httpClientBuilder = HttpClientBuilder.create()
 				.setConnectionManager(connectionManager)
 				.setDefaultRequestConfig(requestConfig)
+				.setRedirectStrategy(RemoveDisallowedHeadersRedirectStrategy())
 			// TODO .setRetryHandler()
 			// TODO .setServiceUnavailableRetryStrategy()
 			if (defaultHeaders.isNotEmpty()) {
@@ -137,3 +146,4 @@ open class ApacheCommonsHttpClientTransport(
 		}
 	}
 }
+

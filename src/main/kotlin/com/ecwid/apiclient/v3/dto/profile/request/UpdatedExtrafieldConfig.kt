@@ -34,7 +34,8 @@ data class UpdatedExtrafieldConfig(
     val titleTranslated: LocalizedValueMap? = null,
     val textPlaceholderTranslated: LocalizedValueMap? = null,
     val tipTranslated: LocalizedValueMap? = null,
-    val valueTranslated: LocalizedValueMap? = null
+    val valueTranslated: LocalizedValueMap? = null,
+	val saveToCustomerProfile: Boolean? = null,
 ) : ApiUpdatedDTO {
 
 	data class UpdatedExtrafieldOptionConfig(

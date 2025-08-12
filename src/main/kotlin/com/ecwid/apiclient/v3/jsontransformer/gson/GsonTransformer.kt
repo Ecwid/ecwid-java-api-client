@@ -1,14 +1,12 @@
 package com.ecwid.apiclient.v3.jsontransformer.gson
 
 import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult.ProductFilters
+import com.ecwid.apiclient.v3.dto.profile.enums.RatesCalculationType
 import com.ecwid.apiclient.v3.exception.JsonDeserializationException
 import com.ecwid.apiclient.v3.impl.ParsedResponseWithExt
 import com.ecwid.apiclient.v3.jsontransformer.JsonTransformer
 import com.ecwid.apiclient.v3.jsontransformer.PolymorphicType
-import com.ecwid.apiclient.v3.jsontransformer.gson.typeadapters.GsonNullableUpdatedValueTypeAdapterFactory
-import com.ecwid.apiclient.v3.jsontransformer.gson.typeadapters.GsonPolymorphicDeserializer
-import com.ecwid.apiclient.v3.jsontransformer.gson.typeadapters.GsonProductFiltersDeserializer
-import com.ecwid.apiclient.v3.jsontransformer.gson.typeadapters.ParsedResponseWithExtDeserializer
+import com.ecwid.apiclient.v3.jsontransformer.gson.typeadapters.*
 import com.google.gson.*
 
 class GsonTransformer(polymorphicTypes: List<PolymorphicType<*>>) : JsonTransformer {
@@ -23,6 +21,7 @@ class GsonTransformer(polymorphicTypes: List<PolymorphicType<*>>) : JsonTransfor
 			gsonBuilder.registerTypeAdapter(ProductFilters::class.java, GsonProductFiltersDeserializer())
 			gsonBuilder.registerTypeAdapter(ParsedResponseWithExt::class.java, ParsedResponseWithExtDeserializer())
 			gsonBuilder.registerTypeAdapterFactory(GsonNullableUpdatedValueTypeAdapterFactory)
+			gsonBuilder.registerTypeAdapter(RatesCalculationType::class.java, RatesCalculationTypeDeserializer())
 		}
 		.create()
 
@@ -36,11 +35,19 @@ class GsonTransformer(polymorphicTypes: List<PolymorphicType<*>>) : JsonTransfor
 		}
 	}
 
-	override fun <V> deserialize(json: String, clazz: Class<V>): V? {
+	override fun <V> deserialize(json: String, clazz: Class<V>): V {
 		try {
 			return gson.fromJson(json, clazz)
 		} catch (e: JsonParseException) {
 			throw JsonDeserializationException(e.message, e)
+		}
+	}
+
+	override fun <V> deserializeOrNull(json: String, clazz: Class<V>): V? {
+		return try {
+			return gson.fromJson(json, clazz)
+		} catch (e: JsonParseException) {
+			null
 		}
 	}
 }

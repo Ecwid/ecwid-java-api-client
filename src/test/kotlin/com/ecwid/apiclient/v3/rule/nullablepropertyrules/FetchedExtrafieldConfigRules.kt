@@ -27,6 +27,7 @@ val fetchedExtrafieldConfigNullablePropertyRules: List<NullablePropertyRule<*, *
 	AllowNullable(FetchedExtrafieldConfig::textPlaceholderTranslated),
 	AllowNullable(FetchedExtrafieldConfig::tipTranslated),
 	AllowNullable(FetchedExtrafieldConfig::valueTranslated),
+	AllowNullable(FetchedExtrafieldConfig::saveToCustomerProfile),
 
 	AllowNullable(FetchedExtrafieldConfig.FetchedExtrafieldOptionConfig::subtitle),
 	AllowNullable(FetchedExtrafieldConfig.FetchedExtrafieldOptionConfig::subtitleTranslated),

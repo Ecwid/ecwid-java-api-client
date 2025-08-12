@@ -116,6 +116,7 @@ data class UpdatedStoreProfile(
 		val storeDescriptionTranslated: LocalizedValueMap? = null,
 		val storeName: String? = null,
 		val tikTokPixel: TikTokPixelSettings? = null,
+		val askAgeConfirmationInStorefront: Boolean? = null,
 	)
 
 	data class TikTokPixelSettings(

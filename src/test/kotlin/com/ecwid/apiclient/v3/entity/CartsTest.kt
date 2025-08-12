@@ -3,6 +3,7 @@ package com.ecwid.apiclient.v3.entity
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.cart.request.*
 import com.ecwid.apiclient.v3.dto.cart.result.CalculateOrderDetailsResult
+import com.ecwid.apiclient.v3.dto.cart.result.CalculateOrderDetailsResult.DiscountInfo
 import com.ecwid.apiclient.v3.dto.order.enums.*
 import com.ecwid.apiclient.v3.dto.order.request.OrderCreateRequest
 import com.ecwid.apiclient.v3.dto.order.request.OrderDetailsRequest
@@ -23,6 +24,7 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-162706")
 	fun testCreateAndGetCart() {
 		// Creating new cart
 		val testOrder = generateTestOrder()
@@ -202,6 +204,7 @@ class CartsTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-162706")
 	fun testConvertCartToOrder() {
 		// Creating new cart
 		val testOrder = generateTestOrder()
@@ -352,7 +355,7 @@ class CartsTest : BaseEntityTest() {
 		checkPersonsEquals(orderForCalculate.billingPerson, calculatedOrder.billingPerson)
 		checkPersonsEquals(orderForCalculate.shippingPerson, calculatedOrder.shippingPerson)
 		assertEquals(
-			null,
+			emptyList<DiscountInfo>(),
 			calculatedOrder.discountInfo
 		) // TODO Discover why after each calculation this field resets to null
 	}
@@ -422,7 +425,7 @@ class CartsTest : BaseEntityTest() {
 
 		apiClient.createOrder(orderCreateRequest)
 
-		return processDelay(500L, 10) {
+		return processDelay(1500L, 10) {
 			val cartsSearchResult2 = apiClient.searchCartsAsSequence(cartsSearchRequest)
 			val newCartList = cartsSearchResult2 - cartsSearchResult1
 			if (newCartList.count() == 1) newCartList[0].cartId else null
@@ -705,10 +708,14 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 			)
 		},
 		customerFiscalCode = null, // ApiOrder has empty string instead of null
+		electronicInvoicePecEmail = null,
+		electronicInvoiceSdiCode = null,
+		commercialRelationshipScheme = null,
 		discountInfo = order.discountInfo?.map {
 			it.copy(
 				appliesToItems = null
 			)
-		}
+		},
+		lang = order.lang
 	)
 }

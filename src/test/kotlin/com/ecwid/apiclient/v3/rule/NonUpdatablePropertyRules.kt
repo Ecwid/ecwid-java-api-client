@@ -74,6 +74,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedProduct::rating),
 	ReadOnly(FetchedProduct::reviewsModerated),
 	ReadOnly(FetchedProduct::reviewsPublished),
+	ReadOnly(FetchedProduct::compositeComponents),
 
 	Ignored(FetchedCart::cartId),
 	Ignored(FetchedCart::email),
@@ -206,6 +207,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrder.OrderItem::priceWithoutTax),
 	ReadOnly(FetchedOrder.OrderItem::files),
 	ReadOnly(FetchedOrder.OrderItem::attributes),
+	ReadOnly(FetchedOrder.OrderItem::compositeComponents),
 	Ignored(FetchedOrder.OrderItem::imageUrl),
 	Ignored(FetchedOrder.OrderItem::smallThumbnailUrl),
 	Ignored(FetchedOrder.OrderItem::hdThumbnailUrl),
@@ -226,6 +228,8 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrder.ShippingOption::isShippingLimit),
 	ReadOnly(FetchedOrder.ShippingOption::scheduled),
 	ReadOnly(FetchedOrder.ShippingOption::scheduledTimePrecisionType),
+	ReadOnly(FetchedOrder.ShippingOption::timeSlotLengthInMinutes),
+	ReadOnly(FetchedOrder.ShippingOption::pickupPrecisionType),
 	ReadOnly(FetchedOrder.HandlingFee::valueWithoutTax),
 	ReadOnly(FetchedOrder.Surcharge::totalWithoutTax),
 	Ignored(FetchedOrder::refundedAmount),
@@ -326,6 +330,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedInstantSiteRedirect::id),
 
 	ReadOnly(FetchedCustomersConfig::entityTypes),
+	ReadOnly(FetchedCustomersConfig::linkedWithCheckoutField),
 	ReadOnly(FetchedCustomersConfig::createdDate),
 	ReadOnly(FetchedCustomersConfig::lastModifiedDate),
 )

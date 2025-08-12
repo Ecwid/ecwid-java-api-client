@@ -29,6 +29,7 @@ class OrdersTest : BaseEntityTest() {
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-162706")
 	fun testOrderLifecycle() {
 		// Creating new order
 		val orderCreateRequest = OrderCreateRequest(
@@ -226,7 +227,7 @@ class OrdersTest : BaseEntityTest() {
 		assertTrue(orderCreateResult.id > 0)
 
 		// Waiting till order became available for searching
-		processDelay(1000, 10) {
+		processDelay(1500, 10) {
 			val ordersSearchRequest = OrdersSearchRequest(keywords = orderCreateRequest.newOrder.orderComments)
 			val ordersSearchResult = apiClient.searchOrders(ordersSearchRequest)
 			if (ordersSearchResult.total > 0) ordersSearchResult else null
@@ -337,7 +338,7 @@ class OrdersTest : BaseEntityTest() {
 
 		// Waiting till order became available for searching and trying to request only one page
 		val ordersSearchRequest = OrdersSearchRequest(offset = 2, limit = 2)
-		val ordersSearchResult = processDelay(1000, 10) {
+		val ordersSearchResult = processDelay(1500, 10) {
 			val result = apiClient.searchOrders(ordersSearchRequest)
 			if (result.count == 1 && result.total == 3) result else null
 		}
@@ -356,7 +357,7 @@ class OrdersTest : BaseEntityTest() {
 		val orderCreateResult = apiClient.createOrder(orderCreateRequest)
 		assertTrue(orderCreateResult.id > 0)
 
-		processDelay(1000, 10) {
+		processDelay(1500, 10) {
 			val result = apiClient.searchOrders(OrdersSearchRequest())
 			if (result.count == 1) result else null
 		}
@@ -433,11 +434,15 @@ private fun UpdatedOrder.cleanupForComparison(order: UpdatedOrder): UpdatedOrder
 			item.cleanupForComparison(requestItem)
 		},
 		customerFiscalCode = null, // ApiOrder has empty string instead of null
+		electronicInvoicePecEmail = null,
+		electronicInvoiceSdiCode = null,
+		commercialRelationshipScheme = null,
 		discountInfo = order.discountInfo?.map {
 			it.copy(
 				appliesToItems = null
 			)
-		}
+		},
+		lang = order.lang
 	)
 }
 

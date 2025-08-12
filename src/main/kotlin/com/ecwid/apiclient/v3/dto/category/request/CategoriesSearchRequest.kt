@@ -8,8 +8,10 @@ import com.ecwid.apiclient.v3.responsefields.ResponseFields
 data class CategoriesSearchRequest(
 	val keyword: String? = null,
 	val parentCategoryId: ParentCategory = ParentCategory.Any,
+	val parentCategoryIds: List<Long>? = null,
 	val categoryIds: List<Int>? = null,
 	val hiddenCategories: Boolean? = null,
+	val withSubcategories: Boolean = false,
 	val returnProductIds: Boolean? = null,
 	val baseUrl: String? = null,
 	val cleanUrls: Boolean? = null,
@@ -19,6 +21,7 @@ data class CategoriesSearchRequest(
 	val lang: String? = null,
 	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest, PagingRequest<CategoriesSearchRequest> {
+
 
 	override fun toRequestInfo() = RequestInfo.createGetRequest(
 		pathSegments = listOf(
@@ -48,8 +51,10 @@ data class CategoriesSearchRequest(
 		return mutableMapOf<String, String>().apply {
 			request.keyword?.let { put("keyword", it) }
 			parentCategoryId?.let { put("parent", it.toString()) }
+			request.parentCategoryIds?.let { put("parentIds", it.joinToString(",")) }
 			request.categoryIds?.let { put("categoryIds", it.joinToString(",")) }
 			request.hiddenCategories?.let { put("hidden_categories", it.toString()) }
+			put("withSubcategories", request.withSubcategories.toString())
 			request.returnProductIds?.let { put("productIds", it.toString()) }
 			request.baseUrl?.let { put("baseUrl", it) }
 			request.cleanUrls?.let { put("cleanUrls", it.toString()) }

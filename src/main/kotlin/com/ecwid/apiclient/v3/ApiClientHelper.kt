@@ -30,9 +30,8 @@ import java.util.logging.Logger
 import kotlin.random.Random
 import kotlin.reflect.KClass
 
-const val API_TOKEN_PARAM_NAME = "token"
-private const val APP_CLIENT_ID_PARAM_NAME = "appClientId"
-const val APP_CLIENT_SECRET_PARAM_NAME = "appSecretKey"
+private const val APP_CLIENT_ID_HEADER_NAME = "X-Ecwid-App-Client-Id"
+private const val APP_CLIENT_SECRET_HEADER_NAME = "X-Ecwid-App-Secret-Key"
 private const val RESPONSE_FIELDS_PARAM_NAME = "responseFields"
 private const val REQUEST_ID_HEADER_NAME = "X-Ecwid-Api-Request-Id"
 
@@ -41,17 +40,18 @@ private val REQUEST_ID_CHARACTERS = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 
 class ApiClientHelper private constructor(
 	private val apiServerDomain: ApiServerDomain,
-	private val credentials: ApiCredentials,
+	private val credentials: ApiCredentials?,
 	private val loggingSettings: LoggingSettings,
 	val httpTransport: HttpTransport,
-	val jsonTransformer: JsonTransformer
+	val jsonTransformer: JsonTransformer,
+	private val requestKind: RequestKind? = null,
 ) {
 
 	private val log = Logger.getLogger(this::class.qualifiedName)
 
 	constructor(
 		apiServerDomain: ApiServerDomain,
-		storeCredentials: ApiStoreCredentials,
+		storeCredentials: ApiStoreCredentials? = null,
 		loggingSettings: LoggingSettings,
 		httpTransport: HttpTransport,
 		jsonTransformerProvider: JsonTransformerProvider
@@ -65,7 +65,7 @@ class ApiClientHelper private constructor(
 
 	constructor(
 		apiServerDomain: ApiServerDomain,
-		credentials: ApiCredentials,
+		credentials: ApiCredentials? = null,
 		loggingSettings: LoggingSettings,
 		httpTransport: HttpTransport,
 		jsonTransformerProvider: JsonTransformerProvider
@@ -75,6 +75,22 @@ class ApiClientHelper private constructor(
 		loggingSettings = loggingSettings,
 		httpTransport = httpTransport,
 		jsonTransformer = jsonTransformerProvider.build(createPolymorphicTypeList())
+	)
+
+	constructor(
+		apiServerDomain: ApiServerDomain,
+		credentials: ApiCredentials? = null,
+		loggingSettings: LoggingSettings,
+		httpTransport: HttpTransport,
+		jsonTransformerProvider: JsonTransformerProvider,
+		requestKind: RequestKind?,
+	) : this(
+		apiServerDomain = apiServerDomain,
+		credentials = credentials,
+		loggingSettings = loggingSettings,
+		httpTransport = httpTransport,
+		jsonTransformer = jsonTransformerProvider.build(createPolymorphicTypeList()),
+		requestKind = requestKind,
 	)
 
 	@PublishedApi
@@ -197,7 +213,7 @@ class ApiClientHelper private constructor(
 					val responseBody = responseBytes.asString()
 					logErrorResponseIfNeeded(requestId, requestTime, httpResponse.statusCode, responseBody)
 					val ecwidError = if (responseBody.isNotBlank()) {
-						jsonTransformer.deserialize(responseBody, EcwidApiError::class.java)
+						jsonTransformer.deserializeOrNull(responseBody, EcwidApiError::class.java)
 					} else {
 						null
 					}
@@ -205,7 +221,8 @@ class ApiClientHelper private constructor(
 						statusCode = httpResponse.statusCode,
 						reasonPhrase = httpResponse.reasonPhrase,
 						code = ecwidError?.errorCode,
-						message = ecwidError?.errorMessage
+						message = ecwidError?.errorMessage,
+						args = ecwidError?.args,
 					)
 				} catch (e: JsonDeserializationException) {
 					throw EcwidApiException(
@@ -238,7 +255,7 @@ class ApiClientHelper private constructor(
 			return
 		}
 
-		val securePatterns = createSecurePatterns(loggingSettings)
+		val securePatterns = createSecurePatterns()
 		logEntry(
 			prefix = "Request",
 			logLevel = Level.INFO,
@@ -259,11 +276,18 @@ class ApiClientHelper private constructor(
 	@PublishedApi
 	internal fun RequestInfo.toHttpRequest(requestId: String, responseFieldsOverride: ResponseFields?): HttpRequest {
 		val uri = createApiEndpointUri(pathSegments)
-		val params = params
-			.withCredentialsParams(credentials)
-			.let { if (responseFieldsOverride != null) it.withResponseFieldsParam(responseFieldsOverride) else it }
-		val headers = headers.withRequestId(requestId)
-
+		val params = if (responseFieldsOverride != null) params.withResponseFieldsParam(responseFieldsOverride) else params
+		val headers = headers.withRequestId(requestId).let {
+			if (requestKind != null) {
+				it.withRequestKind(requestKind)
+			} else {
+				if (credentials != null) {
+					it.withCredentials(credentials)
+				} else {
+					it
+				}
+			}
+		}
 		return when (method) {
 			HttpMethod.GET -> HttpRequest.HttpGetRequest(
 				uri = uri,
@@ -304,7 +328,12 @@ class ApiClientHelper private constructor(
 			null,
 			null
 		)
-		val encodedPath = buildBaseEndpointPath(credentials) + "/" + buildEndpointPath(pathSegments)
+
+		val encodedPath = if (requestKind != null) {
+			requestKind.buildBaseEndpointPath() + "/" + buildEndpointPath(pathSegments)
+		} else {
+			credentials?.let { buildBaseEndpointPath(it) } + "/" + buildEndpointPath(pathSegments)
+		}
 		return uri.toString() + encodedPath
 	}
 
@@ -313,7 +342,7 @@ class ApiClientHelper private constructor(
 			return
 		}
 
-		val securePatterns = createSecurePatterns(loggingSettings)
+		val securePatterns = createSecurePatterns()
 		logEntry(
 			prefix = "Response",
 			logLevel = Level.INFO,
@@ -440,9 +469,14 @@ internal fun generateRequestId(): String {
 }
 
 @PublishedApi
-internal fun Map<String, String>.withCredentialsParams(credentials: ApiCredentials) = when (credentials) {
-	is ApiStoreCredentials -> this.withApiTokenParam(credentials.apiToken)
-	is ApiAppCredentials -> withAppCredentialsParams(credentials)
+internal fun Map<String, String>.withCredentials(credentials: ApiCredentials) = when (credentials) {
+	is ApiStoreCredentials -> this.withApiTokenHeader(credentials.apiToken)
+	is ApiAppCredentials -> withAppCredentialsHeaders(credentials)
+}
+
+@PublishedApi
+internal fun Map<String, String>.withRequestKind(requestKind: RequestKind) = toMutableMap().apply {
+	putAll(requestKind.buildHeaders())
 }
 
 internal fun Map<String, String>.withResponseFieldsParam(responseFields: ResponseFields): Map<String, String> {
@@ -454,20 +488,20 @@ internal fun Map<String, String>.withResponseFieldsParam(responseFields: Respons
 }
 
 @PublishedApi
-internal fun Map<String, String>.withApiTokenParam(apiToken: String): Map<String, String> {
+internal fun Map<String, String>.withApiTokenHeader(apiToken: String): Map<String, String> {
 	return toMutableMap()
 		.apply {
-			put(API_TOKEN_PARAM_NAME, apiToken)
+			put("Authorization", "Bearer $apiToken")
 		}
 		.toMap()
 }
 
 @PublishedApi
-internal fun Map<String, String>.withAppCredentialsParams(appCredentials: ApiAppCredentials): Map<String, String> {
+internal fun Map<String, String>.withAppCredentialsHeaders(appCredentials: ApiAppCredentials): Map<String, String> {
 	return toMutableMap()
 		.apply {
-			put(APP_CLIENT_ID_PARAM_NAME, appCredentials.clientId)
-			put(APP_CLIENT_SECRET_PARAM_NAME, appCredentials.clientSecret)
+			put(APP_CLIENT_ID_HEADER_NAME, appCredentials.clientId)
+			put(APP_CLIENT_SECRET_HEADER_NAME, appCredentials.clientSecret)
 		}
 		.toMap()
 }
@@ -526,6 +560,7 @@ private fun createProductOptionsPolymorphicType(): PolymorphicType<ProductOption
 			"select" to ProductOption.SelectOption::class.java,
 			"size" to ProductOption.SizeOption::class.java,
 			"radio" to ProductOption.RadioOption::class.java,
+			"swatches" to ProductOption.SwatchesOption::class.java,
 			"checkbox" to ProductOption.CheckboxOption::class.java,
 			"textfield" to ProductOption.TextFieldOption::class.java,
 			"textarea" to ProductOption.TextAreaOption::class.java,

@@ -5,5 +5,6 @@ data class EcwidApiException(
 	val reasonPhrase: String? = null,
 	val code: String? = null,
 	override val message: String? = null,
-	override val cause: Throwable? = null
+	val args: Map<String, String>? = null,
+	override val cause: Throwable? = null,
 ) : Exception(message, cause)

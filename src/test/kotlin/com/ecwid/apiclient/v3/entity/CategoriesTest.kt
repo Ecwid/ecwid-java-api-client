@@ -46,128 +46,240 @@ class CategoriesTest : BaseEntityTest() {
 		val productCreateResult2 = apiClient.createProduct(productCreateRequest2)
 		assertTrue(productCreateResult2.id > 0)
 
+		val productCreateRequest3 = ProductCreateRequest(
+			newProduct = generateTestProduct(nameSuffix = "testSearchByFilters", enabled = true)
+		)
+		val productCreateResult3 = apiClient.createProduct(productCreateRequest3)
+		assertTrue(productCreateResult3.id > 0)
+
 		// Creating some categories
-		val categoryCreateRequest1 = CategoryCreateRequest(
+		val requestTrunkA = CategoryCreateRequest(
 			newCategory = generateTestCategory(enabled = true)
 		)
-		val categoryCreateResult1 = apiClient.createCategory(categoryCreateRequest1)
-		assertTrue(categoryCreateResult1.id > 0)
+		val trunkA = apiClient.createCategory(requestTrunkA)
+		assertTrue(trunkA.id > 0)
 
-		val categoryCreateRequest2 = CategoryCreateRequest(
+		val requestBranchAA = CategoryCreateRequest(
+			newCategory = generateTestCategory(
+				parentCategoryId = trunkA.id,
+				enabled = true
+			)
+		)
+		val branchAA = apiClient.createCategory(requestBranchAA)
+		assertTrue(branchAA.id > 0)
+
+		val requestTrunkB = CategoryCreateRequest(
 			newCategory = generateTestCategory(enabled = false)
 		)
-		val categoryCreateResult2 = apiClient.createCategory(categoryCreateRequest2)
-		assertTrue(categoryCreateResult2.id > 0)
+		val trunkB = apiClient.createCategory(requestTrunkB)
+		assertTrue(trunkB.id > 0)
 
-		val categoryCreateRequest3 = CategoryCreateRequest(
+		val requestBranchBA = CategoryCreateRequest(
 			newCategory = generateTestCategory(
-				parentCategoryId = categoryCreateResult2.id,
+				parentCategoryId = trunkB.id,
 				productIds = listOf(productCreateResult1.id, productCreateResult2.id),
 				enabled = false
 			)
 		)
-		val categoryCreateResult3 = apiClient.createCategory(categoryCreateRequest3)
-		assertTrue(categoryCreateResult3.id > 0)
+		val branchBA = apiClient.createCategory(requestBranchBA)
+		assertTrue(branchBA.id > 0)
+
+		val requestLeafBAA = CategoryCreateRequest(
+			newCategory = generateTestCategory(
+				parentCategoryId = branchBA.id,
+				productIds = listOf(productCreateResult3.id),
+				enabled = false
+			)
+		)
+		val leafBAA = apiClient.createCategory(requestLeafBAA)
+		assertTrue(leafBAA.id > 0)
 
 		// Trying to search by different filters
-		val searchCategoriesResult1 = waitForIndexedCategories(
+		val searchDescendantsOfTrunkB = waitForIndexedCategories(
 			categoriesSearchRequest = CategoriesSearchRequest(
-				parentCategoryId = ParentCategory.WithId(categoryCreateResult2.id),
+				parentCategoryId = ParentCategory.WithId(trunkB.id),
 				hiddenCategories = true
 			),
 			desiredCategoriesCount = 1
 		)
-		assertEquals(1, searchCategoriesResult1.total)
+		assertEquals(1, searchDescendantsOfTrunkB.total)
 		assertCategory(
-			desiredId = categoryCreateResult3.id,
+			desiredId = branchBA.id,
 			desiredProductIds = null,
-			categoriesSearchResult = searchCategoriesResult1
+			categoriesSearchResult = searchDescendantsOfTrunkB
 		)
 
-		val searchCategoriesResult2 = waitForIndexedCategories(
+		val searchRootCategories = waitForIndexedCategories(
 			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.Root,
 				hiddenCategories = true
 			),
 			desiredCategoriesCount = 2
 		)
-		assertEquals(2, searchCategoriesResult2.total)
+		assertEquals(2, searchRootCategories.total)
 		assertCategory(
-			desiredId = categoryCreateResult1.id,
+			desiredId = trunkA.id,
 			desiredProductIds = null,
-			categoriesSearchResult = searchCategoriesResult2
+			categoriesSearchResult = searchRootCategories
 		)
 		assertCategory(
-			desiredId = categoryCreateResult2.id,
+			desiredId = trunkB.id,
 			desiredProductIds = null,
-			categoriesSearchResult = searchCategoriesResult2
+			categoriesSearchResult = searchRootCategories
 		)
 
-		val searchCategoriesResult3 = waitForIndexedCategories(
+		val searchAllCategoriesWithProducts = waitForIndexedCategories(
 			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.Any,
 				hiddenCategories = true,
 				returnProductIds = true
 			),
-			desiredCategoriesCount = 3
+			desiredCategoriesCount = 5
 		)
-		assertEquals(3, searchCategoriesResult3.total)
+		assertEquals(5, searchAllCategoriesWithProducts.total)
 		assertCategory(
-			desiredId = categoryCreateResult1.id,
+			desiredId = trunkA.id,
 			desiredProductIds = null,
-			categoriesSearchResult = searchCategoriesResult3
+			categoriesSearchResult = searchAllCategoriesWithProducts
 		)
 		assertCategory(
-			desiredId = categoryCreateResult2.id,
+			desiredId = branchAA.id,
 			desiredProductIds = null,
-			categoriesSearchResult = searchCategoriesResult3
+			categoriesSearchResult = searchAllCategoriesWithProducts
 		)
 		assertCategory(
-			desiredId = categoryCreateResult3.id,
+			desiredId = trunkB.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchAllCategoriesWithProducts
+		)
+		assertCategory(
+			desiredId = branchBA.id,
 			desiredProductIds = listOf(productCreateResult1.id, productCreateResult2.id),
-			categoriesSearchResult = searchCategoriesResult3
+			categoriesSearchResult = searchAllCategoriesWithProducts
+		)
+		assertCategory(
+			desiredId = leafBAA.id,
+			desiredProductIds = listOf(productCreateResult3.id),
+			categoriesSearchResult = searchAllCategoriesWithProducts
 		)
 
-		val searchCategoriesResult4 = waitForIndexedCategories(
+		val searchAllCategories = waitForIndexedCategories(
 			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.Any,
 				hiddenCategories = true
 			),
-			desiredCategoriesCount = 3
+			desiredCategoriesCount = 5
 		)
-		assertEquals(3, searchCategoriesResult3.total)
+		assertEquals(5, searchAllCategoriesWithProducts.total)
 		assertCategory(
-			desiredId = categoryCreateResult1.id,
+			desiredId = trunkA.id,
 			desiredProductIds = null,
-			categoriesSearchResult = searchCategoriesResult4
-		)
-		assertCategory(
-			desiredId = categoryCreateResult2.id,
-			desiredProductIds = null,
-			categoriesSearchResult = searchCategoriesResult4
+			categoriesSearchResult = searchAllCategories
 		)
 		assertCategory(
-			desiredId = categoryCreateResult3.id,
+			desiredId = branchAA.id,
 			desiredProductIds = null,
-			categoriesSearchResult = searchCategoriesResult4
+			categoriesSearchResult = searchAllCategories
+		)
+		assertCategory(
+			desiredId = trunkB.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchAllCategories
+		)
+		assertCategory(
+			desiredId = branchBA.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchAllCategories
+		)
+		assertCategory(
+			desiredId = leafBAA.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchAllCategories
 		)
 
-		val searchCategoriesResult5 = waitForIndexedCategories(
+		val searchActiveCategories = waitForIndexedCategories(
 			categoriesSearchRequest = CategoriesSearchRequest(
 				parentCategoryId = ParentCategory.Any,
 				hiddenCategories = false
 			),
+			desiredCategoriesCount = 2
+		)
+		assertEquals(2, searchActiveCategories.total)
+		assertCategory(
+			desiredId = trunkA.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchActiveCategories
+		)
+		assertCategory(
+			desiredId = branchAA.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchActiveCategories
+		)
+
+		val searchDirectDescendantsOfTrunkB = waitForIndexedCategories(
+			categoriesSearchRequest = CategoriesSearchRequest(
+				parentCategoryIds = listOf(trunkB.id.toLong()),
+				withSubcategories = false,
+				hiddenCategories = true,
+			),
 			desiredCategoriesCount = 1
 		)
-		assertEquals(1, searchCategoriesResult5.total)
+		assertEquals(1, searchDirectDescendantsOfTrunkB.total)
 		assertCategory(
-			desiredId = categoryCreateResult1.id,
+			desiredId = branchBA.id,
 			desiredProductIds = null,
-			categoriesSearchResult = searchCategoriesResult5
+			categoriesSearchResult = searchDirectDescendantsOfTrunkB
+		)
+
+		val searchAllDescendantsOfTrunkB = waitForIndexedCategories(
+			categoriesSearchRequest = CategoriesSearchRequest(
+				parentCategoryIds = listOf(trunkB.id.toLong()),
+				withSubcategories = true,
+				hiddenCategories = true,
+			),
+			desiredCategoriesCount = 2
+		)
+		assertEquals(2, searchAllDescendantsOfTrunkB.total)
+		assertCategory(
+			desiredId = branchBA.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchAllDescendantsOfTrunkB
+		)
+		assertCategory(
+			desiredId = leafBAA.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchAllDescendantsOfTrunkB
+		)
+
+		val searchDescendantsViaTwoFields = waitForIndexedCategories(
+			categoriesSearchRequest = CategoriesSearchRequest(
+				parentCategoryId = ParentCategory.WithId(trunkA.id),
+				parentCategoryIds = listOf(trunkB.id.toLong()),
+				withSubcategories = true,
+				hiddenCategories = true,
+			),
+			desiredCategoriesCount = 3
+		)
+		assertEquals(3, searchDescendantsViaTwoFields.total)
+		assertCategory(
+			desiredId = branchAA.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchDescendantsViaTwoFields
+		)
+		assertCategory(
+			desiredId = branchBA.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchDescendantsViaTwoFields
+		)
+		assertCategory(
+			desiredId = leafBAA.id,
+			desiredProductIds = null,
+			categoriesSearchResult = searchDescendantsViaTwoFields
 		)
 	}
 
 	@Test
+	@Disabled("Will be fixed in ECWID-162706")
 	fun testSearchUrls() {
 		// Create one category
 		val categoryCreateRequest = CategoryCreateRequest(

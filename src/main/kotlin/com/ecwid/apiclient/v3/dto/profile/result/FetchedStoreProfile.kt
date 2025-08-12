@@ -148,6 +148,7 @@ data class FetchedStoreProfile(
 		val storeDescriptionTranslated: LocalizedValueMap? = null,
 		val storeName: String? = null,
 		val tikTokPixel: TikTokPixelSettings? = null,
+		val askAgeConfirmationInStorefront: Boolean = false,
 	)
 
 	data class TikTokPixelSettings(
@@ -242,7 +243,7 @@ data class FetchedStoreProfile(
 	data class Shipping(
 		val handlingFee: HandlingFee? = null,
 		val shippingOrigin: ShippingOrigin? = null,
-		val shippingOptions: List<ShippingOption>? = null
+		val shippingOptions: List<FetchedShippingOption>? = null
 	)
 
 	data class HandlingFee(
@@ -262,126 +263,12 @@ data class FetchedStoreProfile(
 		val phone: String? = null
 	)
 
-	data class ShippingOption(
-		val id: String? = null,
-		val title: String? = null,
-		val enabled: Boolean? = null,
-		val orderBy: Int? = null,
-		val fulfilmentType: FulfilmentType? = null,
-		val destinationZone: Zone? = null,
-		val deliveryTimeDays: String? = null,
-		val description: String? = null,
-		val carrier: String? = null,
-		val carrierMethods: List<CarrierMethod>? = null,
-		val carrierSettings: CarrierSettings? = null,
-		val ratesCalculationType: RatesCalculationType? = null,
-		val shippingCostMarkup: Double? = null,
-		val flatRate: FlatRate? = null,
-		val ratesTable: TableRatesDetails? = null,
-		val appClientId: String? = null,
-		val locationId: String? = null,
-		val pickupInstruction: String? = null,
-		val scheduledPickup: Boolean? = null,
-		val pickupPreparationTimeHours: Int? = null,
-		val pickupBusinessHours: String? = null,
-		val scheduled: Boolean? = null,
-		val scheduledTimePrecisionType: ScheduledTimePrecisionType? = null,
-	)
-
-	@Suppress("unused")
-	enum class ScheduledTimePrecisionType {
-		DATE,
-		DATE_AND_TIME_SLOT
-	}
-
-	@Suppress("unused")
-	enum class FulfilmentType {
-		pickup, shipping, delivery
-	}
-
 	data class Zone(
 		val id: String? = null,
 		val name: String? = null,
 		val countryCodes: List<String>? = null,
 		val stateOrProvinceCodes: List<String>? = null,
 		val postCodes: List<String>? = null
-	)
-
-	data class CarrierMethod(
-		val id: String? = null,
-		val name: String? = null,
-		val enabled: Boolean? = null,
-		val orderBy: Int? = null
-	)
-
-	data class CarrierSettings(
-		val defaultCarrierAccountEnabled: Boolean? = null,
-		val defaultPostageDimensions: DefaultPostageDimensions? = null
-	)
-
-	data class DefaultPostageDimensions(
-		val length: Double? = null,
-		val width: Double? = null,
-		val height: Double? = null
-	)
-
-	@Suppress("unused")
-	enum class RatesCalculationType {
-
-		carrier_calculated,
-		table,
-		flat,
-		app;
-
-		override fun toString(): String {
-			return super.toString().replace("_", "-")
-		}
-	}
-
-	data class FlatRate(
-		val rateType: RateType? = null,
-		val rate: Double? = null
-	) {
-
-		@Suppress("unused")
-		enum class RateType {
-			ABSOLUTE,
-			PERCENT
-		}
-	}
-
-	data class TableRatesDetails(
-		val tableBasedOn: RateBase? = null,
-		val rates: List<TableRate>? = null
-	) {
-
-		@Suppress("unused")
-		enum class RateBase {
-			subtotal,
-			discountedSubtotal,
-			weight
-		}
-	}
-
-	data class TableRate(
-		val tableRateConditions: TableRateConditions? = null,
-		val rate: TableRateDetails? = null
-	)
-
-	data class TableRateConditions(
-		val weightFrom: Double? = null,
-		val weightTo: Double? = null,
-		val subtotalFrom: Double? = null,
-		val subtotalTo: Double? = null,
-		val discountedSubtotalFrom: Double? = null,
-		val discountedSubtotalTo: Double? = null
-	)
-
-	data class TableRateDetails(
-		val perOrderAbs: Double? = null,
-		val perOrderPercent: Double? = null,
-		val perItem: Double? = null,
-		val perWeightUnitRate: Double? = null
 	)
 
 	data class TaxSettings(
@@ -547,6 +434,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("enable_catalog_on_one_page")
 		val enableCatalogOnOnePage: Boolean? = null,
 
+		@JsonFieldName("enable_catalog_seamless_product_list_view")
+		val enableCatalogSeamlessProductListView: Boolean? = null,
+
 		@JsonFieldName("enable_page_transitions")
 		val enablePageTransitions: Boolean? = null,
 
@@ -606,6 +496,9 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("product_details_position_product_sku")
 		val productDetailsPositionProductSku: Int? = null,
+
+		@JsonFieldName("product_details_position_review_section")
+		val productDetailsPositionReviewSection: Int? = null,
 
 		@JsonFieldName("product_details_position_save_for_later")
 		val productDetailsPositionSaveForLater: Int? = null,
@@ -679,6 +572,15 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_details_show_qty")
 		val productDetailsShowQty: Boolean? = null,
 
+		@JsonFieldName("product_details_show_rating_section")
+		val productDetailsShowRatingSection: Boolean? = null,
+
+		@JsonFieldName("product_details_show_reviews_section")
+		val productDetailsShowReviewsSection: Boolean? = null,
+
+		@JsonFieldName("product_details_show_reviews_section_in_one_card_view")
+		val productDetailsShowReviewsSectionInOneCardView: Boolean? = null,
+
 		@JsonFieldName("product_details_show_sale_price")
 		val productDetailsShowSalePrice: Boolean? = null,
 
@@ -718,14 +620,23 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_details_two_columns_with_right_sidebar_show_product_description_on_sidebar")
 		val productDetailsTwoColumnsWithRightSidebarShowProductDescriptionOnSidebar: Boolean? = null,
 
+		@JsonFieldName("product_filters_opened_by_default_on_catalog_pages")
+		val productFiltersOpenedByDefaultOnCatalogPages: Boolean? = null,
+
 		@JsonFieldName("product_filters_opened_by_default_on_category_page")
 		val productFiltersOpenedByDefaultOnCategoryPage: Boolean? = null,
 
 		@JsonFieldName("product_filters_position_category_page")
 		val productFiltersPositionCategoryPage: String? = null,
 
+		@JsonFieldName("product_filters_position_on_catalog_pages")
+		val productFiltersPositionOnCatalogPages: String? = null,
+
 		@JsonFieldName("product_filters_position_search_page")
 		val productFiltersPositionSearchPage: String? = null,
+
+		@JsonFieldName("product_filters_visible_on_catalog_pages")
+		val productFiltersVisibleOnCatalogPages: Boolean? = null,
 
 		@JsonFieldName("product_list_buybutton_behavior")
 		val productListBuyNowBehaviour: String? = null,
@@ -769,6 +680,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_list_price_behavior")
 		val productListPriceBehaviour: String? = null,
 
+		@JsonFieldName("product_list_rating_section_behavior")
+		val productListRatingSectionBehavior: String? = null,
+
 		@JsonFieldName("product_list_sku_behavior")
 		val productListSKUBehaviour: String? = null,
 
@@ -792,6 +706,15 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("product_list_show_product_images")
 		val productListShowProductImages: Boolean? = null,
+
+		@JsonFieldName("product_list_show_rating_in_one_star")
+		val productListShowRatingInOneStar: Boolean? = null,
+
+		@JsonFieldName("product_list_show_rating_number_in_five_stars_view")
+		val productListShowRatingNumberInFiveStarsView: Boolean? = null,
+
+		@JsonFieldName("product_list_show_reviews_count_in_five_stars_view")
+		val productListShowReviewsCountInFiveStarsView: Boolean? = null,
 
 		@JsonFieldName("show_signin_link")
 		val productListShowSignInLink: Boolean? = null,
@@ -828,6 +751,15 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("show_signin_link_with_unified_account_page")
 		val showSigninLinkWithUnifiedAccountPage: Boolean? = null,
+
+		@JsonFieldName("swatches_product_option_shape")
+		val swatchesProductOptionShape: String? = null,
+
+		@JsonFieldName("swatches_product_option_size")
+		val swatchesProductOptionSize: String? = null,
+
+		@JsonFieldName("product_details_show_image_alt_text_as_visible_description")
+		val productDetailsShowAltTextAsVisibleAsDescription: Boolean? = null,
 	)
 
 	data class ProductFilterItem(

@@ -73,7 +73,10 @@ fun generateTestOrder(): UpdatedOrder {
 			generateTestOnTotalDiscountInfo(),
 			generateTestOnMembershipDiscountInfo(),
 			generateTestOnTotalAndMembershipDiscountInfo(),
-			generateTestCustomDiscountInfo()
+			generateTestCustomDiscountInfo(),
+			generateTestItemDiscountInfo(),
+			generateTestShippingDiscountInfo(),
+			generateTestSubtotalDiscountInfo()
 		),
 
 		// TODO Pass real discount coupon code when API client will support this
@@ -101,13 +104,13 @@ fun generateTestOrder(): UpdatedOrder {
 
 		shippingOption = UpdatedOrder.ShippingOption(
 			shippingMethodId = "MethodId " + randomAlphanumeric(8),
-			shippingCarrierName = "Carrier " + randomAlphanumeric(8),
+			shippingCarrierName = null, // not saved for pickup, see ECWID-153335
 			shippingMethodName = "Method " + randomAlphanumeric(8),
 			shippingRate = randomPrice(),
 			estimatedTransitTime = "Estimates " + randomAlphanumeric(8),
-			isPickup = false,
-			pickupInstruction = "Instruction " + randomAlphanumeric(64),
-			fulfillmentType = FulfillmentType.SHIPPING
+			isPickup = true,
+			pickupInstruction = null, // can not be set now without matching owner.newShippingSettings entry ECWID-153335
+			fulfillmentType = FulfillmentType.PICKUP
 		),
 		taxesOnShipping = listOf(),
 		handlingFee = UpdatedOrder.HandlingFee(
@@ -137,6 +140,7 @@ fun generateTestOrder(): UpdatedOrder {
 			),
 			refererChannel = "Referer channel " + randomAlphanumeric(8),
 		),
+		lang = "en",
 		orderExtraFields = listOf(
 			UpdatedOrder.OrderExtraFields(
 				customerInputType = "TEXT",
@@ -187,6 +191,30 @@ private fun generateTestCustomDiscountInfo() = UpdatedOrder.DiscountInfo(
 	base = DiscountBase.CUSTOM,
 	orderTotal = randomPrice(),
 	description = "Custom discount " + randomAlphanumeric(8)
+)
+
+private fun generateTestItemDiscountInfo() = UpdatedOrder.DiscountInfo(
+	value = randomPrice(),
+	type = randomEnumValue<DiscountType>(),
+	base = DiscountBase.ITEM,
+	orderTotal = randomPrice(),
+	description = "On item discount " + randomAlphanumeric(8)
+)
+
+private fun generateTestShippingDiscountInfo() = UpdatedOrder.DiscountInfo(
+	value = randomPrice(),
+	type = randomEnumValue<DiscountType>(),
+	base = DiscountBase.SHIPPING,
+	orderTotal = randomPrice(),
+	description = "On shipping discount " + randomAlphanumeric(8)
+)
+
+private fun generateTestSubtotalDiscountInfo() = UpdatedOrder.DiscountInfo(
+	value = randomPrice(),
+	type = randomEnumValue<DiscountType>(),
+	base = DiscountBase.SUBTOTAL,
+	orderTotal = randomPrice(),
+	description = "On subtotal discount " + randomAlphanumeric(8)
 )
 
 private fun generateTestOrderItem() = UpdatedOrder.OrderItem(
