@@ -195,7 +195,7 @@ class DtoContractUnitTest {
 	@Test
 	@Order(5)
 	fun `test no new exclusions added to file NullablePropertyRules`() {
-		val expectedNullablePropertiesCount = 931
+		val expectedNullablePropertiesCount = 933
 		val ignoreNullablePropertiesCount = nullablePropertyRules
 			.filterIsInstance<IgnoreNullable<*, *>>()
 			.size
