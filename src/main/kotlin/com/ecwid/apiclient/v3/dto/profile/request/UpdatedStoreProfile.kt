@@ -117,10 +117,17 @@ data class UpdatedStoreProfile(
 		val storeName: String? = null,
 		val tikTokPixel: TikTokPixelSettings? = null,
 		val askAgeConfirmationInStorefront: Boolean? = null,
+		val fbMessengerSettings: FbMessengerSettings? = null,
 	)
 
 	data class TikTokPixelSettings(
 		val advancedMatching: Boolean? = null
+	)
+
+	data class FbMessengerSettings(
+		val fbMessengerPageId: String? = null,
+		val fbMessengerThemeColor: String? = null,
+		val fbMessengerMessageUsButtonColor: String? = null,
 	)
 
 	enum class ProductSortOrder {
