@@ -51,6 +51,7 @@ val calculateOrderDetailsResultNullablePropertyRules: List<NullablePropertyRule<
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItem::isShippingRequired),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItem::name),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItem::price),
+	IgnoreNullable(CalculateOrderDetailsResult.OrderItem::priceWithoutTax),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItem::productId),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItem::productPrice),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItem::quantity),

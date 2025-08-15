@@ -136,6 +136,7 @@ data class CalculateOrderDetailsResult(
 		val categoryId: Int? = null,
 
 		val price: Double? = null,
+		val priceWithoutTax: Double? = null,
 		val productPrice: Double? = null,
 		val shipping: Double? = null,
 		val tax: Double? = null,
