@@ -14,6 +14,7 @@ data class OrderForCalculate(
 	val customerTaxExempt: Boolean? = null,
 	val customerTaxId: String? = null,
 	val reversedTaxApplied: Boolean? = null,
+	val taxAlreadyDeductedFromPrice: Boolean? = null,
 	val discountCoupon: DiscountCouponInfo? = null,
 	val items: List<OrderItem>? = null,
 	val billingPerson: PersonInfo? = null,
