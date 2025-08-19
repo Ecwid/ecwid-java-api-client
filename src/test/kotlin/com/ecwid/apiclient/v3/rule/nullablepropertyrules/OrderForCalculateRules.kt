@@ -26,6 +26,7 @@ val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = l
 	IgnoreNullable(OrderForCalculate::items),
 	AllowNullable(OrderForCalculate::paymentOptionsDetails),
 	AllowNullable(OrderForCalculate::reversedTaxApplied),
+	AllowNullable(OrderForCalculate::taxAlreadyDeductedFromPrice),
 	AllowNullable(OrderForCalculate::shippingOption),
 	IgnoreNullable(OrderForCalculate::shippingPerson),
 	AllowNullable(OrderForCalculate.CustomSurcharge::description),
