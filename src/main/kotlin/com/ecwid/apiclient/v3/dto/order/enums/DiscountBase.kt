@@ -7,5 +7,6 @@ enum class DiscountBase {
 	SHIPPING,
 	ITEM,
 	SUBTOTAL,
-	CUSTOM
+	CUSTOM,
+	PRICE_BOOK
 }
