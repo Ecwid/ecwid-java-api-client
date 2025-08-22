@@ -79,6 +79,7 @@ data class OrderForCalculate(
 
 		val price: Double? = null,
 		val productPrice: Double? = null,
+		val taxAlreadyDeductedFromPrice: Boolean? = null,
 		val needCalculateWholesalePrice: Boolean? = null,
 		val isCustomerSetPrice: Boolean? = null,
 		val selectedPrice: SelectedPrice? = null,
