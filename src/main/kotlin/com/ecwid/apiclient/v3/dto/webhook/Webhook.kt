@@ -139,6 +139,16 @@ data class Webhook(
 
 		@SerializedName("promotion.updated")
 		PROMOTION_UPDATED,
+
+		@SerializedName("size_chart.created")
+		SIZE_CHART_CREATED,
+
+		@SerializedName("size_chart.deleted")
+		SIZE_CHART_DELETED,
+
+		@SerializedName("size_chart.updated")
+		SIZE_CHART_UPDATED,
+
 	}
 
 }
