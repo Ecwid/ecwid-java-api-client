@@ -124,12 +124,21 @@ fun FetchedStoreProfile.Settings.toUpdated(): UpdatedStoreProfile.Settings {
 		storeName = storeName,
 		tikTokPixel = tikTokPixel?.toUpdated(),
 		askAgeConfirmationInStorefront = askAgeConfirmationInStorefront,
+		fbMessengerSettings = fbMessengerSettings?.toUpdated(),
 	)
 }
 
 fun FetchedStoreProfile.TikTokPixelSettings.toUpdated(): UpdatedStoreProfile.TikTokPixelSettings {
 	return UpdatedStoreProfile.TikTokPixelSettings(
 		advancedMatching = advancedMatching
+	)
+}
+
+fun FetchedStoreProfile.FbMessengerSettings.toUpdated(): UpdatedStoreProfile.FbMessengerSettings {
+	return UpdatedStoreProfile.FbMessengerSettings(
+		fbMessengerPageId = fbMessengerPageId,
+		fbMessengerThemeColor = fbMessengerThemeColor,
+		fbMessengerMessageUsButtonColor = fbMessengerMessageUsButtonColor
 	)
 }
 
