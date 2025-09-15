@@ -304,6 +304,8 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	IgnoreNullable(FetchedStoreProfile.Shipping::handlingFee),
 	IgnoreNullable(FetchedStoreProfile.Shipping::shippingOptions),
 	IgnoreNullable(FetchedStoreProfile.Shipping::shippingOrigin),
+	IgnoreNullable(FetchedStoreProfile.Shipping::showOutlets),
+	IgnoreNullable(FetchedStoreProfile.Shipping::showProductsQuantity),
 	IgnoreNullable(FetchedStoreProfile.ShippingOrigin::city),
 	IgnoreNullable(FetchedStoreProfile.ShippingOrigin::companyName),
 	IgnoreNullable(FetchedStoreProfile.ShippingOrigin::countryCode),
