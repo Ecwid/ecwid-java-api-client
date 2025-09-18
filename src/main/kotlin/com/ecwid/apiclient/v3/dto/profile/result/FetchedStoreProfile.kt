@@ -761,8 +761,8 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_details_show_image_alt_text_as_visible_description")
 		val productDetailsShowAltTextAsVisibleAsDescription: Boolean? = null,
 
-		@JsonFieldName("product_filters_orientation_position")
-		val productFiltersOrientationPosition: String? = null,
+		@JsonFieldName("product_filters_orientation")
+		val productFiltersOrientation: String? = null,
 
 		@JsonFieldName("product_list_swatches_product_option_behavior")
 		val productListSwatchesProductOptionBehavior: String? = null,
