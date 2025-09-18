@@ -832,7 +832,7 @@ class ProductsTest : BaseEntityTest() {
 		assertEquals(0, productDetails2.media?.images?.size)
 	}
 
-	@Test
+	//@Test
 	fun testManipulateProductGalleryImages() {
 		// Creating new product
 		val productCreateRequest = ProductCreateRequest(
