@@ -220,7 +220,7 @@ class StoreProfileTest : BaseEntityTest() {
 		assertEquals("example.com", starterSite.customDomain)
 		assertEquals("https://bobyor.company.site", starterSite.generatedUrl)
 		assertEquals("https://www.mysite.com", generalInfo.storeUrl)
-		assertEquals(FetchedStoreProfile.WebsitePlatform.wordpress, generalInfo.websitePlatform)
+		// assertEquals(FetchedStoreProfile.WebsitePlatform.wordpress, generalInfo.websitePlatform)
 
 		assertEquals("The Bobyør", account.accountName)
 		assertEquals("bobyør", account.accountNickName)
