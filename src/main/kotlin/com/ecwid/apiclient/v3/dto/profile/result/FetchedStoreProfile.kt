@@ -446,6 +446,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("feedback_message_position")
 		val feedbackMessagePosition: String? = null,
 
+		@JsonFieldName("hide_category_block_show_all_enabled_products")
+		val hideCategoryBlockShowAllEnabledProducts: Boolean? = null,
+
 		@JsonFieldName("legal_pages_show_page_links")
 		val legalPagesShowPageLinks: Boolean? = null,
 
