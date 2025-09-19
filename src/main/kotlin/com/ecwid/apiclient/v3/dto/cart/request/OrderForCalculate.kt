@@ -31,6 +31,7 @@ data class OrderForCalculate(
 	val giftCardRedemption: Double? = null,
 	val totalBeforeGiftCardRedemption: Double? = null,
 	val giftCardDoubleSpending: Boolean? = null,
+	val fromOE: Boolean? = false,
 ) : ApiRequestDTO {
 
 	data class DiscountInfo(
