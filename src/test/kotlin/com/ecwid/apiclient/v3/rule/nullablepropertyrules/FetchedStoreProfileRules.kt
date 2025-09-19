@@ -68,6 +68,7 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	AllowNullable(FetchedStoreProfile.DesignSettings::enablePageTransitions),
 	AllowNullable(FetchedStoreProfile.DesignSettings::enableSimpleCategoryList),
 	AllowNullable(FetchedStoreProfile.DesignSettings::feedbackMessagePosition),
+	AllowNullable(FetchedStoreProfile.DesignSettings::hideCategoryBlockShowAllEnabledProducts),
 	AllowNullable(FetchedStoreProfile.DesignSettings::legalPagesShowPageLinks),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productDetailsAdditionalImagesHasShadow),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productDetailsAdditionalImagesPreviewOnClick),
