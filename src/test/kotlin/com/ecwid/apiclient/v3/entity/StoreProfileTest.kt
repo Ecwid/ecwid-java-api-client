@@ -73,7 +73,12 @@ class StoreProfileTest : BaseEntityTest() {
 				productCondition = ProductCondition.USED,
 				tikTokPixel = UpdatedStoreProfile.TikTokPixelSettings(
 					advancedMatching = true
-				)
+				),
+				fbMessengerSettings = UpdatedStoreProfile.FbMessengerSettings(
+					fbMessengerPageId = "fbMessengerPageId",
+					fbMessengerThemeColor = "#000000",
+					fbMessengerMessageUsButtonColor = "#FFFFFF",
+				),
 			),
 			mailNotifications = UpdatedStoreProfile.MailNotifications(
 				adminNotificationEmails = listOf("admin@example.com", "admin2@example.com"),
