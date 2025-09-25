@@ -801,7 +801,8 @@ data class FetchedStoreProfile(
 
 	data class GiftCardSettings(
 		val products: List<GiftCardProducts>? = null,
-		val displayLocation: String? = null
+		val displayLocation: String? = null,
+		val omniGiftCardsEnabled: Boolean = false,
 	)
 
 	data class GiftCardProducts(
