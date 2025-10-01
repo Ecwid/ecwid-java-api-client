@@ -113,6 +113,7 @@ data class FetchedReportResponse(
 		val utmSource: String = "",
 		val utmMedium: String = "",
 		val utmCampaign: String = "",
+		val cartOrigin: String = "",
 	)
 
 	data class FetchedCustomerData(
