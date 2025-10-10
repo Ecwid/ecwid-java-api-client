@@ -35,10 +35,23 @@ class MaskUtilsUnitTest {
 	@Test
 	fun testMaskLogKeyValueStringWithNameParameter() {
 		val logString =
-			"UpdatedProduct(name={unmasked}, attributes=[AttributeValue(name={unmasked})], options=[RadioOption(name={unmasked})], billingPerson=BillingPerson(name={unmasked}), shippingAddresses=[ShippingAddress(name={unmasked}), ShippingAddress(name={unmasked})], personInfo=PersonInfo(name={unmasked}))"
+			"UpdatedProduct(name={unmasked}, " +
+				"attributes=[AttributeValue(name={unmasked})], " +
+				"options=[RadioOption(name={unmasked})], " +
+				"billingPerson=BillingPerson(name={unmasked}), " +
+				"shippingAddresses=[ShippingAddress(name={unmasked}), " +
+				"ShippingAddress(name={unmasked})], " +
+				"personInfo=PersonInfo(name={unmasked}))"
 		val securePatterns = createSecurePatterns()
 		val maskedLogString = logString.maskLogString(securePatterns)
-		val expectedMaskedLogString = "UpdatedProduct(name={unmasked}, attributes=[AttributeValue(name={unmasked})], options=[RadioOption(name={unmasked})], billingPerson=BillingPerson(name={u***ed}), shippingAddresses=[ShippingAddress(name={u***ed}), ShippingAddress(name={u***ed})], personInfo=PersonInfo(name={u***ed}))"
+		val expectedMaskedLogString =
+			"UpdatedProduct(name={unmasked}, " +
+				"attributes=[AttributeValue(name={unmasked})], " +
+				"options=[RadioOption(name={unmasked})], " +
+				"billingPerson=BillingPerson(name={u***ed}), " +
+				"shippingAddresses=[ShippingAddress(name={u***ed}), " +
+				"ShippingAddress(name={u***ed})], " +
+				"personInfo=PersonInfo(name={u***ed}))"
 		assertEquals(expectedMaskedLogString, maskedLogString)
 	}
 
