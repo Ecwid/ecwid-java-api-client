@@ -100,6 +100,7 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder.OrderItem::isPreorder),
 	AllowNullable(FetchedOrder.OrderItem::attributes),
 	AllowNullable(FetchedOrder.OrderItem::taxClassCode),
+	AllowNullable(FetchedOrder.OrderItem::compositeComponents),
 	IgnoreNullable(FetchedOrder.OrderItemDiscounts::discountInfo),
 	IgnoreNullable(FetchedOrder.OrderItemDiscounts::total),
 	AllowNullable(FetchedOrder.OrderItemOptionFile::id),

@@ -14,6 +14,7 @@ data class OrderForCalculate(
 	val customerTaxExempt: Boolean? = null,
 	val customerTaxId: String? = null,
 	val reversedTaxApplied: Boolean? = null,
+	val taxAlreadyDeductedFromShipping: Boolean? = null,
 	val discountCoupon: DiscountCouponInfo? = null,
 	val items: List<OrderItem>? = null,
 	val billingPerson: PersonInfo? = null,
@@ -78,7 +79,10 @@ data class OrderForCalculate(
 
 		val price: Double? = null,
 		val productPrice: Double? = null,
+		val taxAlreadyDeductedFromPrice: Boolean? = null,
 		val needCalculateWholesalePrice: Boolean? = null,
+		val isCustomerSetPrice: Boolean? = null,
+		val selectedPrice: SelectedPrice? = null,
 		val shipping: Double? = null,
 		val tax: Double? = null,
 		val fixedShippingRate: Double? = null,
@@ -274,5 +278,9 @@ data class OrderForCalculate(
 
 	data class PaymentOption(
 		val paymentId: String? = null,
+	)
+
+	data class SelectedPrice(
+		val value: Double? = null
 	)
 }
