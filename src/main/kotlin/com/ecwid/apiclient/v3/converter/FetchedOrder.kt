@@ -116,6 +116,7 @@ fun FetchedOrder.DiscountInfo.toUpdated(): UpdatedOrder.DiscountInfo {
 		description = description,
 		appliesToProducts = appliesToProducts,
 		appliesToItems = appliesToItems,
+		membershipId = membershipId,
 	)
 }
 
