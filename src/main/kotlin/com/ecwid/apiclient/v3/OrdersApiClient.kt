@@ -23,6 +23,7 @@ interface OrdersApiClient {
 	fun deleteOrderItemOptionFiles(request: OrderItemOptionFilesDeleteRequest): OrderItemOptionFileDeleteResult
 	fun searchDeletedOrders(request: DeletedOrdersSearchRequest): DeletedOrdersSearchResult
 	fun searchDeletedOrdersAsSequence(request: DeletedOrdersSearchRequest): Sequence<DeletedOrder>
+	fun previewOrdersTaxInvoice(request: OrderTaxInvoicePreviewRequest): String
 }
 
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")
