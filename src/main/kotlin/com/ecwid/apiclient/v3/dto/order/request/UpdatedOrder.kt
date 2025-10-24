@@ -120,6 +120,7 @@ data class UpdatedOrder(
 		val description: String? = null,
 		val appliesToProducts: List<Int>? = null,
 		val appliesToItems: List<Long>? = null,
+		val membershipId: Int? = null
 	)
 
 	data class DiscountCouponInfo(
