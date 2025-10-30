@@ -509,6 +509,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_details_position_share_buttons")
 		val productDetailsPositionShareButtons: Int? = null,
 
+		@JsonFieldName("product_details_position_size_chart")
+		val productDetailsPositionSizeChart: Int? = null,
+
 		@JsonFieldName("product_details_position_subtitle")
 		val productDetailsPositionSubtitle: Int? = null,
 
