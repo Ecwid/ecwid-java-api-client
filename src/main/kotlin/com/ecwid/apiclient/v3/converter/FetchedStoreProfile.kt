@@ -363,6 +363,7 @@ fun FetchedStoreProfile.DesignSettings.toUpdated(): UpdatedStoreProfile.DesignSe
 		productDetailsPositionReviewSection = productDetailsPositionReviewSection,
 		productDetailsPositionSaveForLater = productDetailsPositionSaveForLater,
 		productDetailsPositionShareButtons = productDetailsPositionShareButtons,
+		productDetailsPositionSizeChart = productDetailsPositionSizeChart,
 		productDetailsPositionSubtitle = productDetailsPositionSubtitle,
 		productDetailsPositionWholesalePrices = productDetailsPositionWholesalePrices,
 		productDetailsShowAttributes = productDetailsShowAttributes,
