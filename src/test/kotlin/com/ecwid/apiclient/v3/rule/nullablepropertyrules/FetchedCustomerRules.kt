@@ -7,6 +7,7 @@ import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 
 val fetchedCustomerNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
+	AllowNullable(FetchedCustomer::externalReferenceId),
 	IgnoreNullable(FetchedCustomer::acceptMarketing),
 	IgnoreNullable(FetchedCustomer::billingPerson),
 	IgnoreNullable(FetchedCustomer::customerGroupId),
