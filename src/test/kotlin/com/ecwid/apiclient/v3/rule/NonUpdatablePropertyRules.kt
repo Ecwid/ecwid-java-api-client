@@ -147,6 +147,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedCoupon::updateDate),
 
 	ReadOnly(FetchedCustomer::id),
+	ReadOnly(FetchedCustomer::externalReferenceId),
 	Ignored(FetchedCustomer::registered),
 	Ignored(FetchedCustomer::updated),
 	Ignored(FetchedCustomer::customerGroupName),
