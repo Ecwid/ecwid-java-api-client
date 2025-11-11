@@ -354,6 +354,7 @@ data class FetchedOrder(
 		val scheduled: Boolean? = null,
 		val scheduledTimePrecisionType: ScheduledTimePrecisionType? = null,
 		val timeSlotLengthInMinutes: Int? = null,
+		val discountedShippingRate: Double? = null,
 	)
 
 	data class HandlingFee(
