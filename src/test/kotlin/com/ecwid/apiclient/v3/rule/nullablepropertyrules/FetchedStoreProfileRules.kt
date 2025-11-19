@@ -89,6 +89,7 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	AllowNullable(FetchedStoreProfile.DesignSettings::productDetailsPositionReviewSection),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productDetailsPositionSaveForLater),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productDetailsPositionShareButtons),
+	AllowNullable(FetchedStoreProfile.DesignSettings::productDetailsPositionSizeChart),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productDetailsPositionSubtitle),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productDetailsPositionWholesalePrices),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productDetailsShowAttributes),
