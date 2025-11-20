@@ -10,6 +10,7 @@ data class CustomersSearchRequest(
 	val keyword: String? = null,
 	val name: String? = null,
 	val email: String? = null,
+	val useExactEmailMatch: Boolean? = null,
 	val customerGroupId: Int? = null,
 	val usePrecalculatedOrderCount: Boolean? = null,
 	val minOrderCount: Int? = null,
