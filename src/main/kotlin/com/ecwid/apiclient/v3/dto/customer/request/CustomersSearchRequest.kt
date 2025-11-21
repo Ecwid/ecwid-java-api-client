@@ -71,6 +71,7 @@ data class CustomersSearchRequest(
 			request.keyword?.let { put("keyword", it) }
 			request.name?.let { put("name", it) }
 			request.email?.let { put("email", it) }
+			request.useExactEmailMatch?.let { put("useExactEmailMatch", it.toString()) }
 			request.customerGroupId?.let { put("customerGroup", it.toString()) }
 			request.usePrecalculatedOrderCount?.let { put("usePrecalculatedOrderCount", it.toString()) }
 			request.minOrderCount?.let { put("minOrderCount", it.toString()) }
