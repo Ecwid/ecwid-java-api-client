@@ -143,6 +143,7 @@ data class FetchedOrder(
 		val description: String? = null,
 		val appliesToProducts: List<Int>? = null,
 		val appliesToItems: List<Long>? = null,
+		val membershipId: Int? = null
 	)
 
 	data class DiscountCouponInfo(
@@ -353,6 +354,7 @@ data class FetchedOrder(
 		val scheduled: Boolean? = null,
 		val scheduledTimePrecisionType: ScheduledTimePrecisionType? = null,
 		val timeSlotLengthInMinutes: Int? = null,
+		val discountedShippingRate: Double? = null,
 	)
 
 	data class HandlingFee(

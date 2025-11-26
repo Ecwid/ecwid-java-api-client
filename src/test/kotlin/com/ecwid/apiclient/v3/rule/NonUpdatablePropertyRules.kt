@@ -147,6 +147,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedCoupon::updateDate),
 
 	ReadOnly(FetchedCustomer::id),
+	ReadOnly(FetchedCustomer::externalReferenceId),
 	Ignored(FetchedCustomer::registered),
 	Ignored(FetchedCustomer::updated),
 	Ignored(FetchedCustomer::customerGroupName),
@@ -230,6 +231,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrder.ShippingOption::scheduledTimePrecisionType),
 	ReadOnly(FetchedOrder.ShippingOption::timeSlotLengthInMinutes),
 	ReadOnly(FetchedOrder.ShippingOption::pickupPrecisionType),
+	ReadOnly(FetchedOrder.ShippingOption::discountedShippingRate),
 	ReadOnly(FetchedOrder.HandlingFee::valueWithoutTax),
 	ReadOnly(FetchedOrder.Surcharge::totalWithoutTax),
 	Ignored(FetchedOrder::refundedAmount),

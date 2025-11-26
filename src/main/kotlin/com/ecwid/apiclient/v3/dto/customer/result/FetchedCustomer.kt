@@ -11,6 +11,7 @@ import java.util.*
 
 data class FetchedCustomer(
 	val id: Int = 0,
+	val externalReferenceId: String? = null,
 	val email: String = "",
 	val registered: Date? = null,
 	val updated: Date? = null,
