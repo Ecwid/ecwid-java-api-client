@@ -16,5 +16,8 @@ enum class AttributeType {
 	EXTERNAL_ISBN,
 	EXTERNAL_ITF,
 	EXTERNAL_JAN,
-	EXTERNAL_CUSTOM
+	EXTERNAL_CUSTOM,
+	EXTERNAL_UPC,
+	TAGS, // External for promo sync
+	SUPPLIER, // External for promo sync
 }
