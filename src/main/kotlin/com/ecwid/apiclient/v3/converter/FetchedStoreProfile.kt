@@ -410,6 +410,7 @@ fun FetchedStoreProfile.DesignSettings.toUpdated(): UpdatedStoreProfile.DesignSe
 		productFiltersVisibleOnCatalogPages = productFiltersVisibleOnCatalogPages,
 		productListBuyNowBehaviour = productListBuyNowBehaviour,
 		productListCardLayout = productListCardLayout,
+		productListCardSpacingType = productListCardSpacingType,
 		productListCategoryCellSpacing = productListCategoryCellSpacing,
 		productListCategoryImageLayout = productListCategoryImageLayout,
 		productListCategoryImagePosition = productListCategoryImagePosition,
