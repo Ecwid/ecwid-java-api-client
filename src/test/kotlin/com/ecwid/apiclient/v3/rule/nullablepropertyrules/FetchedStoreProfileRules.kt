@@ -136,6 +136,7 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	AllowNullable(FetchedStoreProfile.DesignSettings::productFiltersVisibleOnCatalogPages),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productListBuyNowBehaviour),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productListCardLayout),
+	AllowNullable(FetchedStoreProfile.DesignSettings::productListCardSpacingType),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productListCategoryCellSpacing),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productListCategoryImageLayout),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productListCategoryImagePosition),
