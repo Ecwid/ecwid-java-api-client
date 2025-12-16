@@ -50,5 +50,5 @@ enum class ReportType {
 	siteGroupActivityReturn,
 	siteUniqueNewVisitorsByGroup,
 	sitePotentialLeads,
-	siteGroupEngagedSources,
+	siteGroupEngagedActivity,
 }
