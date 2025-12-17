@@ -127,6 +127,7 @@ data class FetchedStoreProfile(
 		val googleRemarketingEnabled: Boolean? = null,
 		val googleTagId: String? = null,
 		val hideOutOfStockProductsInStorefront: Boolean? = null,
+		val highlightCompositeProductsOnStorefront: Boolean = false,
 		val invoiceLogoUrl: String? = null,
 		val openBagOnAddition: Boolean = false,
 		val orderCommentsCaption: String? = null,

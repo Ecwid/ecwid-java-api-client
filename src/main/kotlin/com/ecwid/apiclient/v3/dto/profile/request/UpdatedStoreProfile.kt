@@ -98,6 +98,7 @@ data class UpdatedStoreProfile(
 		val googleRemarketingEnabled: Boolean? = null,
 		val googleTagId: String? = null,
 		val hideOutOfStockProductsInStorefront: Boolean? = null,
+		val highlightCompositeProductsOnStorefront: Boolean? = null,
 		val orderCommentsCaption: String? = null,
 		val orderCommentsEnabled: Boolean? = null,
 		val orderCommentsRequired: Boolean? = null,

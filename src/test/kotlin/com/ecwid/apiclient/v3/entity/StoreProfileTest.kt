@@ -49,6 +49,7 @@ class StoreProfileTest : BaseEntityTest() {
 				orderCommentsCaption = "orderCommentsCaption",
 				orderCommentsRequired = true,
 				hideOutOfStockProductsInStorefront = true,
+				highlightCompositeProductsOnStorefront = true,
 				askCompanyName = true,
 				favoritesEnabled = true,
 				defaultProductSortOrder = UpdatedStoreProfile.ProductSortOrder.NAME_ASC,
