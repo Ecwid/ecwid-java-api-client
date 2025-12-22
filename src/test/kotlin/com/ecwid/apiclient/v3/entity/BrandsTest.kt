@@ -23,7 +23,6 @@ class BrandsTest : BaseEntityTest() {
 		removeAllProducts()
 	}
 
-	@Disabled("The test is temporarily disabled")
 	@Test
 	fun getBrands() {
 		val brandedProductsCreateResult = createProductsWithBrands()
