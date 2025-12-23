@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
+import com.ecwid.apiclient.v3.dto.profile.enums.HighlightCompositeProductsOnStorefront
 import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedPaymentOption
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
@@ -127,7 +128,7 @@ data class FetchedStoreProfile(
 		val googleRemarketingEnabled: Boolean? = null,
 		val googleTagId: String? = null,
 		val hideOutOfStockProductsInStorefront: Boolean? = null,
-		val highlightCompositeProductsOnStorefront: Boolean = false,
+		val highlightCompositeProductsOnStorefront: HighlightCompositeProductsOnStorefront = HighlightCompositeProductsOnStorefront.DISABLED,
 		val invoiceLogoUrl: String? = null,
 		val openBagOnAddition: Boolean = false,
 		val orderCommentsCaption: String? = null,
