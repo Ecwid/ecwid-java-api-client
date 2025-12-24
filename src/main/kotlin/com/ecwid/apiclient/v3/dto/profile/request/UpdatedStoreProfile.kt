@@ -551,6 +551,9 @@ data class UpdatedStoreProfile(
 		@JsonFieldName("product_list_product_info_layout")
 		val productListCardLayout: String? = null,
 
+		@JsonFieldName("product_list_card_spacing_type")
+		val productListCardSpacingType: String? = null,
+
 		@JsonFieldName("product_list_category_cell_spacing")
 		val productListCategoryCellSpacing: Int? = null,
 
