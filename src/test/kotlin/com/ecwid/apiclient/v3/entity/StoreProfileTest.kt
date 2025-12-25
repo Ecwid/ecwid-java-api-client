@@ -2,6 +2,7 @@ package com.ecwid.apiclient.v3.entity
 
 import com.ecwid.apiclient.v3.converter.toUpdated
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
+import com.ecwid.apiclient.v3.dto.profile.enums.HighlightCompositeProductsOnStorefront
 import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileRequest
 import com.ecwid.apiclient.v3.dto.profile.request.StoreProfileUpdateRequest
@@ -49,7 +50,7 @@ class StoreProfileTest : BaseEntityTest() {
 				orderCommentsCaption = "orderCommentsCaption",
 				orderCommentsRequired = true,
 				hideOutOfStockProductsInStorefront = true,
-				highlightCompositeProductsOnStorefront = true,
+				highlightCompositeProductsOnStorefront = HighlightCompositeProductsOnStorefront.ENABLED,
 				askCompanyName = true,
 				favoritesEnabled = true,
 				defaultProductSortOrder = UpdatedStoreProfile.ProductSortOrder.NAME_ASC,
