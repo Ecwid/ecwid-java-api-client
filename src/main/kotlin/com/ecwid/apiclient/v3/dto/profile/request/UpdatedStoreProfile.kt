@@ -4,6 +4,7 @@ import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO
 import com.ecwid.apiclient.v3.dto.common.ApiUpdatedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
+import com.ecwid.apiclient.v3.dto.profile.enums.HighlightCompositeProductsOnStorefront
 import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
 import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 import com.ecwid.apiclient.v3.jsontransformer.JsonFieldName
@@ -98,7 +99,7 @@ data class UpdatedStoreProfile(
 		val googleRemarketingEnabled: Boolean? = null,
 		val googleTagId: String? = null,
 		val hideOutOfStockProductsInStorefront: Boolean? = null,
-		val highlightCompositeProductsOnStorefront: Boolean? = null,
+		val highlightCompositeProductsOnStorefront: HighlightCompositeProductsOnStorefront? = null,
 		val orderCommentsCaption: String? = null,
 		val orderCommentsEnabled: Boolean? = null,
 		val orderCommentsRequired: Boolean? = null,
