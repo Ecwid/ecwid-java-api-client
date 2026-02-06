@@ -424,6 +424,7 @@ fun FetchedStoreProfile.DesignSettings.toUpdated(): UpdatedStoreProfile.DesignSe
 		productListImageSize = productListImageSize,
 		productListNameBehaviour = productListNameBehaviour,
 		productListPriceBehaviour = productListPriceBehaviour,
+		productListShowPriceRanges = productListShowPriceRanges,
 		productListRatingSectionBehavior = productListRatingSectionBehavior,
 		productListSKUBehaviour = productListSKUBehaviour,
 		productListShowAdditionalImage = productListShowAdditionalImage,

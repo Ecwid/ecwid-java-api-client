@@ -691,6 +691,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_list_price_behavior")
 		val productListPriceBehaviour: String? = null,
 
+		@JsonFieldName("product_list_show_price_ranges")
+		val productListShowPriceRanges: Boolean? = null,
+
 		@JsonFieldName("product_list_rating_section_behavior")
 		val productListRatingSectionBehavior: String? = null,
 
