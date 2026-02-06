@@ -149,6 +149,7 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	AllowNullable(FetchedStoreProfile.DesignSettings::productListImageSize),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productListNameBehaviour),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productListPriceBehaviour),
+	AllowNullable(FetchedStoreProfile.DesignSettings::productListShowPriceRanges),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productListRatingSectionBehavior),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productListSKUBehaviour),
 	AllowNullable(FetchedStoreProfile.DesignSettings::productListShowAdditionalImage),
