@@ -44,8 +44,11 @@ enum class ReportType {
 	siteActivity,
 	siteSocialActivity,
 	siteAggregatedActivity,
+	siteAggregatedActivityNewAndReturn,
 	siteGroupActivity,
 	siteGroupActivityNew,
 	siteGroupActivityReturn,
 	siteUniqueNewVisitorsByGroup,
+	sitePotentialLeads,
+	siteGroupEngagedActivity,
 }

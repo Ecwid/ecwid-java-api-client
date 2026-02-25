@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.common.ApiFetchedDTO.ModifyKind
 import com.ecwid.apiclient.v3.dto.common.ApiResultDTO
 import com.ecwid.apiclient.v3.dto.common.LocalizedValueMap
 import com.ecwid.apiclient.v3.dto.common.ProductCondition
+import com.ecwid.apiclient.v3.dto.profile.enums.HighlightCompositeProductsOnStorefront
 import com.ecwid.apiclient.v3.dto.profile.enums.ProductFilterType
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedPaymentOption
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
@@ -127,6 +128,7 @@ data class FetchedStoreProfile(
 		val googleRemarketingEnabled: Boolean? = null,
 		val googleTagId: String? = null,
 		val hideOutOfStockProductsInStorefront: Boolean? = null,
+		val highlightCompositeProductsOnStorefront: HighlightCompositeProductsOnStorefront = HighlightCompositeProductsOnStorefront.DISABLED,
 		val invoiceLogoUrl: String? = null,
 		val openBagOnAddition: Boolean = false,
 		val orderCommentsCaption: String? = null,
@@ -650,6 +652,9 @@ data class FetchedStoreProfile(
 		@JsonFieldName("product_list_product_info_layout")
 		val productListCardLayout: String? = null,
 
+		@JsonFieldName("product_list_card_spacing_type")
+		val productListCardSpacingType: String? = null,
+
 		@JsonFieldName("product_list_category_cell_spacing")
 		val productListCategoryCellSpacing: Int? = null,
 
@@ -685,6 +690,9 @@ data class FetchedStoreProfile(
 
 		@JsonFieldName("product_list_price_behavior")
 		val productListPriceBehaviour: String? = null,
+
+		@JsonFieldName("product_list_show_price_ranges")
+		val productListShowPriceRanges: Boolean? = null,
 
 		@JsonFieldName("product_list_rating_section_behavior")
 		val productListRatingSectionBehavior: String? = null,

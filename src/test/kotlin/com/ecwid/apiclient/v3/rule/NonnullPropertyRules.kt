@@ -5,6 +5,7 @@ import com.ecwid.apiclient.v3.dto.coupon.request.UpdatedCoupon
 import com.ecwid.apiclient.v3.dto.customergroup.request.UpdatedCustomerGroup
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.ecwid.apiclient.v3.dto.profile.request.UpdatedStoreProfile
+import com.ecwid.apiclient.v3.dto.profile.result.FetchedStoreProfile
 import com.ecwid.apiclient.v3.dto.storage.request.UpdatedStorageData
 import com.ecwid.apiclient.v3.dto.variation.request.UpdatedVariation
 import com.ecwid.apiclient.v3.rule.NonnullPropertyRule.AllowNonnull
@@ -56,6 +57,7 @@ val nonnullPropertyRules: List<NonnullPropertyRule<*, *>> = listOf(
 	AllowNonnull(UpdatedStoreProfile.ProductFiltersSettings::filterSections),
 	AllowNonnull(UpdatedVariation.RecurringChargeSettings::recurringInterval),
 	AllowNonnull(UpdatedVariation.RecurringChargeSettings::recurringIntervalCount),
+	AllowNonnull(FetchedStoreProfile.Settings::highlightCompositeProductsOnStorefront),
 )
 
 sealed class NonnullPropertyRule<T, R>(
