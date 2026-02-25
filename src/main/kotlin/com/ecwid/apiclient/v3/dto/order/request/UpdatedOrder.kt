@@ -104,6 +104,7 @@ data class UpdatedOrder(
 	@JsonFieldName("b2b_b2c")
 	val commercialRelationshipScheme: CommercialRelationshipScheme? = null,
 	val lang: String? = null,
+	val storeCredit: StoreCredit? = null,
 
 ) : ApiUpdatedDTO {
 
@@ -375,6 +376,17 @@ data class UpdatedOrder(
 	)
 
 	data class LoyaltyRedemption(
+		val id: String? = null,
+		val amount: Double? = null,
+		val cancelled: Boolean? = null,
+	)
+
+	data class StoreCredit(
+		val redemption: StoreCreditRedemption? = null,
+		val balance: Double? = null
+	)
+
+	data class StoreCreditRedemption(
 		val id: String? = null,
 		val amount: Double? = null,
 		val cancelled: Boolean? = null,

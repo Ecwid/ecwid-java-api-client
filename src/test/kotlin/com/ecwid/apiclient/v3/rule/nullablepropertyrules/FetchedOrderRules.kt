@@ -331,4 +331,10 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder::electronicInvoiceSdiCode),
 	AllowNullable(FetchedOrder::commercialRelationshipScheme),
 	AllowNullable(FetchedOrder::lang),
+	AllowNullable(FetchedOrder::storeCredit),
+	AllowNullable(FetchedOrder.StoreCredit::balance),
+	AllowNullable(FetchedOrder.StoreCredit::redemption),
+	AllowNullable(FetchedOrder.StoreCreditRedemption::id),
+	AllowNullable(FetchedOrder.StoreCreditRedemption::amount),
+	AllowNullable(FetchedOrder.StoreCreditRedemption::cancelled),
 )
