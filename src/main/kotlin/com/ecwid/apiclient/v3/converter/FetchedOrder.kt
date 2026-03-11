@@ -97,6 +97,7 @@ fun FetchedOrder.toUpdated(): UpdatedOrder {
 		electronicInvoiceSdiCode = electronicInvoiceSdiCode,
 		commercialRelationshipScheme = commercialRelationshipScheme,
 		lang = lang,
+		storeCredit = storeCredit?.toUpdated(),
 	)
 }
 
@@ -341,6 +342,21 @@ fun FetchedOrder.Loyalty.toUpdated(): UpdatedOrder.Loyalty {
 
 fun FetchedOrder.LoyaltyRedemption.toUpdated(): UpdatedOrder.LoyaltyRedemption {
 	return UpdatedOrder.LoyaltyRedemption(
+		id = this.id,
+		amount = this.amount,
+		cancelled = this.cancelled,
+	)
+}
+
+fun FetchedOrder.StoreCredit.toUpdated(): UpdatedOrder.StoreCredit {
+	return UpdatedOrder.StoreCredit(
+		redemption = this.redemption?.toUpdated(),
+		balance = this.balance,
+	)
+}
+
+fun FetchedOrder.StoreCreditRedemption.toUpdated(): UpdatedOrder.StoreCreditRedemption {
+	return UpdatedOrder.StoreCreditRedemption(
 		id = this.id,
 		amount = this.amount,
 		cancelled = this.cancelled,
