@@ -144,6 +144,7 @@ val fetchedCartNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	IgnoreNullable(FetchedCart.OrderItemTax::name),
 	IgnoreNullable(FetchedCart.OrderItemTax::taxOnDiscountedSubtotal),
 	IgnoreNullable(FetchedCart.OrderItemTax::taxOnShipping),
+	AllowNullable(FetchedCart.OrderItemTax::taxOnHandlingFee),
 	IgnoreNullable(FetchedCart.OrderItemTax::total),
 	IgnoreNullable(FetchedCart.OrderItemTax::value),
 	IgnoreNullable(FetchedCart.PersonInfo::city),

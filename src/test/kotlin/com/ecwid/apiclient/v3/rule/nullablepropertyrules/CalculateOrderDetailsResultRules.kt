@@ -96,6 +96,7 @@ val calculateOrderDetailsResultNullablePropertyRules: List<NullablePropertyRule<
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItemTax::name),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItemTax::taxOnDiscountedSubtotal),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItemTax::taxOnShipping),
+	AllowNullable(CalculateOrderDetailsResult.OrderItemTax::taxOnHandlingFee),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItemTax::total),
 	IgnoreNullable(CalculateOrderDetailsResult.OrderItemTax::value),
 	IgnoreNullable(CalculateOrderDetailsResult.PersonInfo::city),

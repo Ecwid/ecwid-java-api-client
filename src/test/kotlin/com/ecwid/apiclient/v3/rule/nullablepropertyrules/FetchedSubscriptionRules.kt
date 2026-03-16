@@ -90,6 +90,7 @@ val fetchedSubscriptionsNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	AllowNullable(FetchedSubscription.Taxes::total),
 	AllowNullable(FetchedSubscription.Taxes::taxOnDiscountedSubtotal),
 	AllowNullable(FetchedSubscription.Taxes::taxOnShipping),
+	AllowNullable(FetchedSubscription.Taxes::taxOnHandlingFee),
 	AllowNullable(FetchedSubscription.Taxes::includeInPrice),
 
 	AllowNullable(FetchedSubscription.Dimensions::length),

@@ -182,7 +182,8 @@ data class FetchedCart(
 		val taxType: OrderItemTaxType? = null,
 		val includeInPrice: Boolean? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
-		val taxOnShipping: Double? = null
+		val taxOnShipping: Double? = null,
+		val taxOnHandlingFee: Double? = null,
 	) : BaseOrderTax
 
 	data class OrderItemProductFile(

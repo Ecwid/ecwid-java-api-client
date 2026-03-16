@@ -264,6 +264,7 @@ data class FetchedOrder(
 		override val total: Double? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
 		val taxOnShipping: Double? = null,
+		val taxOnHandlingFee: Double? = null,
 		override val includeInPrice: Boolean? = null,
 		val sourceTaxRateId: Int? = null,
 		val sourceTaxRateType: RateType? = null,

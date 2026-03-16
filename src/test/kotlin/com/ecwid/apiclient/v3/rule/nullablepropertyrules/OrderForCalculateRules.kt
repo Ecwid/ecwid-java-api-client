@@ -127,6 +127,7 @@ val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = l
 	IgnoreNullable(OrderForCalculate.OrderItemTax::name),
 	IgnoreNullable(OrderForCalculate.OrderItemTax::taxOnDiscountedSubtotal),
 	IgnoreNullable(OrderForCalculate.OrderItemTax::taxOnShipping),
+	AllowNullable(OrderForCalculate.OrderItemTax::taxOnHandlingFee),
 	IgnoreNullable(OrderForCalculate.OrderItemTax::total),
 	IgnoreNullable(OrderForCalculate.OrderItemTax::value),
 	AllowNullable(OrderForCalculate.PaymentOption::paymentId),

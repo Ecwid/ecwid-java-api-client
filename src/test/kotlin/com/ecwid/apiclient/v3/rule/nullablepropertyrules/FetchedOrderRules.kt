@@ -133,6 +133,7 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	IgnoreNullable(FetchedOrder.OrderItemTax::name),
 	IgnoreNullable(FetchedOrder.OrderItemTax::taxOnDiscountedSubtotal),
 	IgnoreNullable(FetchedOrder.OrderItemTax::taxOnShipping),
+	AllowNullable(FetchedOrder.OrderItemTax::taxOnHandlingFee),
 	IgnoreNullable(FetchedOrder.OrderItemTax::total),
 	IgnoreNullable(FetchedOrder.OrderItemTax::value),
 	IgnoreNullable(FetchedOrder.OrderItemTax::sourceTaxRateId),
