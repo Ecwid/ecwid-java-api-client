@@ -90,6 +90,7 @@ val orderForCalculateNullablePropertyRules: List<NullablePropertyRule<*, *>> = l
 	IgnoreNullable(OrderForCalculate.OrderItem::selectedOptions),
 	AllowNullable(OrderForCalculate.OrderItem::combinationId),
 	IgnoreNullable(OrderForCalculate.OrderItem::shipping),
+	AllowNullable(OrderForCalculate.OrderItem::handlingFee),
 	IgnoreNullable(OrderForCalculate.OrderItem::shortDescription),
 	IgnoreNullable(OrderForCalculate.OrderItem::sku),
 	IgnoreNullable(OrderForCalculate.OrderItem::tax),

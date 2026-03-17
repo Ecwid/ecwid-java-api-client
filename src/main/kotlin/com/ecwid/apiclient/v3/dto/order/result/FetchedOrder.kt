@@ -183,6 +183,7 @@ data class FetchedOrder(
 		val selectedPrice: SelectedPrice? = null,
 		val priceWithoutTax: Double? = null,
 		val shipping: Double? = null,
+		val handlingFee: Double? = null,
 		val tax: Double? = null,
 		val fixedShippingRate: Double? = null,
 		val couponAmount: Double? = null,

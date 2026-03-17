@@ -132,6 +132,7 @@ data class FetchedCart(
 		val price: Double? = null,
 		val productPrice: Double? = null,
 		val shipping: Double? = null,
+		val handlingFee: Double? = null,
 		val tax: Double? = null,
 		val fixedShippingRate: Double? = null,
 		val couponAmount: Double? = null,

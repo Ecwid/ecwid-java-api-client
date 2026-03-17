@@ -145,6 +145,7 @@ fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 		price = price,
 		productPrice = productPrice,
 		shipping = shipping,
+		handlingFee = handlingFee,
 		tax = tax,
 		fixedShippingRate = fixedShippingRate,
 		couponAmount = couponAmount,

@@ -107,6 +107,7 @@ data class FetchedSubscription(
 		val price: Double? = null,
 		val productPrice: Double? = null,
 		val shipping: Double? = null,
+		val handlingFee: Double? = null,
 		val tax: Double? = null,
 		val fixedShippingRate: Double? = null,
 

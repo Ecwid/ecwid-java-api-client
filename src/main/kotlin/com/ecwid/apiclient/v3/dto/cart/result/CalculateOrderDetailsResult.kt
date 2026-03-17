@@ -140,6 +140,7 @@ data class CalculateOrderDetailsResult(
 		val priceWithoutTax: Double? = null,
 		val productPrice: Double? = null,
 		val shipping: Double? = null,
+		val handlingFee: Double? = null,
 		val tax: Double? = null,
 		val fixedShippingRate: Double? = null,
 		val couponAmount: Double? = null,

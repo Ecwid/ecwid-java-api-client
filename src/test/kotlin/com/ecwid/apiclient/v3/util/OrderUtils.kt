@@ -225,6 +225,7 @@ private fun generateTestOrderItem() = UpdatedOrder.OrderItem(
 	price = randomPrice(),
 	productPrice = randomPrice(),
 	shipping = randomPrice(),
+	handlingFee = randomPrice(),
 	tax = randomPrice(),
 	fixedShippingRate = randomPrice(),
 	couponAmount = randomPrice(),
