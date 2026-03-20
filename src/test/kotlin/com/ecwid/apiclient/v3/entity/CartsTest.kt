@@ -11,6 +11,7 @@ import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -86,6 +87,7 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(orderItem.price, cartItem.price)
 			assertEquals(orderItem.productPrice, cartItem.productPrice)
 			assertEquals(orderItem.shipping, cartItem.shipping)
+			assertEquals(orderItem.handlingFee, cartItem.handlingFee)
 			assertEquals(orderItem.tax, cartItem.tax)
 			assertEquals(orderItem.fixedShippingRate, cartItem.fixedShippingRate)
 			assertEquals(orderItem.couponAmount, cartItem.couponAmount)
@@ -125,6 +127,7 @@ class CartsTest : BaseEntityTest() {
 				assertEquals(orderTaxes.total, cartTaxes.total)
 				assertEquals(orderTaxes.taxOnDiscountedSubtotal, cartTaxes.taxOnDiscountedSubtotal)
 				assertEquals(orderTaxes.taxOnShipping, cartTaxes.taxOnShipping)
+				assertEquals(orderTaxes.taxOnHandlingFee, cartTaxes.taxOnHandlingFee)
 				assertEquals(orderTaxes.includeInPrice, cartTaxes.includeInPrice)
 				assertEquals(orderTaxes.taxType, cartTaxes.taxType)
 			}
@@ -295,6 +298,7 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(forCalculateItem.price, calculatedItem.price)
 			assertEquals(forCalculateItem.productPrice, calculatedItem.productPrice)
 			assertEquals(0.0, calculatedItem.shipping)
+			assertNull(calculatedItem.handlingFee)
 			assertEquals(forCalculateItem.fixedShippingRate, calculatedItem.fixedShippingRate)
 			assertEquals(
 				null,
@@ -479,6 +483,7 @@ class CartsTest : BaseEntityTest() {
 			price = 22.2,
 			productPrice = 33.3,
 			shipping = 44.4,
+			handlingFee = 77.7,
 			tax = 55.5,
 			fixedShippingRate = 66.6,
 			couponAmount = 15.0,

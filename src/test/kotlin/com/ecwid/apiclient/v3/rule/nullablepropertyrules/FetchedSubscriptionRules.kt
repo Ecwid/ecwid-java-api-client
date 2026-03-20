@@ -52,6 +52,7 @@ val fetchedSubscriptionsNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	AllowNullable(FetchedSubscription.OrderItem::price),
 	AllowNullable(FetchedSubscription.OrderItem::productPrice),
 	AllowNullable(FetchedSubscription.OrderItem::shipping),
+	AllowNullable(FetchedSubscription.OrderItem::handlingFee),
 	AllowNullable(FetchedSubscription.OrderItem::tax),
 	AllowNullable(FetchedSubscription.OrderItem::fixedShippingRate),
 	AllowNullable(FetchedSubscription.OrderItem::sku),
@@ -90,6 +91,7 @@ val fetchedSubscriptionsNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	AllowNullable(FetchedSubscription.Taxes::total),
 	AllowNullable(FetchedSubscription.Taxes::taxOnDiscountedSubtotal),
 	AllowNullable(FetchedSubscription.Taxes::taxOnShipping),
+	AllowNullable(FetchedSubscription.Taxes::taxOnHandlingFee),
 	AllowNullable(FetchedSubscription.Taxes::includeInPrice),
 
 	AllowNullable(FetchedSubscription.Dimensions::length),
