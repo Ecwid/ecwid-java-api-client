@@ -12,6 +12,7 @@ import com.ecwid.apiclient.v3.util.randomOf
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class ProductTypesTest : BaseEntityTest() {
@@ -97,6 +98,7 @@ class ProductTypesTest : BaseEntityTest() {
 		assertEquals(productTypeCreateRequest.newProductType, cleanedDetails)
 	}
 
+	@Disabled("ECOM-11851 - disabled due to error 500")
 	@Test
 	fun testProductTypeLifecycle() {
 		// Creating new product type
