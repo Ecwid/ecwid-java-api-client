@@ -311,8 +311,10 @@ data class FetchedStoreProfile(
 		val type: Type? = null,
 		val enabled: Boolean? = null,
 		val title: String? = null,
+		val titleTranslated: Map<String, String>? = null,
 		val display: Display? = null,
 		val text: String? = null,
+		val textTranslated: Map<String, String>? = null,
 		val externalUrl: String? = null
 	) {
 		enum class Type {
