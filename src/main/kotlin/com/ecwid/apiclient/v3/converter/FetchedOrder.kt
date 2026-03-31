@@ -145,6 +145,7 @@ fun FetchedOrder.OrderItem.toUpdated(): UpdatedOrder.OrderItem {
 		price = price,
 		productPrice = productPrice,
 		shipping = shipping,
+		handlingFee = handlingFee,
 		tax = tax,
 		fixedShippingRate = fixedShippingRate,
 		couponAmount = couponAmount,
@@ -209,6 +210,7 @@ fun FetchedOrder.OrderItemTax.toUpdated(): UpdatedOrder.OrderItemTax {
 		total = total,
 		taxOnDiscountedSubtotal = taxOnDiscountedSubtotal,
 		taxOnShipping = taxOnShipping,
+		taxOnHandlingFee = taxOnHandlingFee,
 		includeInPrice = includeInPrice,
 		taxType = taxType,
 	)

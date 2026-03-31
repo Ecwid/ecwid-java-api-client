@@ -153,6 +153,7 @@ data class UpdatedOrder(
 		val isCustomerSetPrice: Boolean? = null,
 		val selectedPrice: SelectedPrice? = null,
 		val shipping: Double? = null,
+		val handlingFee: Double? = null,
 		val tax: Double? = null,
 		val taxable: Boolean? = null,
 		val fixedShippingRate: Double? = null,
@@ -276,6 +277,7 @@ data class UpdatedOrder(
 		override val total: Double? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
 		val taxOnShipping: Double? = null,
+		val taxOnHandlingFee: Double? = null,
 		val includeInPrice: Boolean? = null,
 		val taxType: OrderItemTaxType? = null,
 	) : BaseOrderTax

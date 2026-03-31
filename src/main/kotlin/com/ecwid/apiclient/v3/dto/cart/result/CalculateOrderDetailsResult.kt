@@ -140,6 +140,7 @@ data class CalculateOrderDetailsResult(
 		val priceWithoutTax: Double? = null,
 		val productPrice: Double? = null,
 		val shipping: Double? = null,
+		val handlingFee: Double? = null,
 		val tax: Double? = null,
 		val fixedShippingRate: Double? = null,
 		val couponAmount: Double? = null,
@@ -189,7 +190,8 @@ data class CalculateOrderDetailsResult(
 		val includeInPrice: Boolean? = null,
 		val taxType: OrderItemTaxType? = null,
 		val taxOnDiscountedSubtotal: Double? = null,
-		val taxOnShipping: Double? = null
+		val taxOnShipping: Double? = null,
+		val taxOnHandlingFee: Double? = null,
 	) : BaseOrderTax
 
 	data class OrderItemProductFile(
