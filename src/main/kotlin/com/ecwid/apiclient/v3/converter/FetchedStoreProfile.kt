@@ -462,8 +462,10 @@ fun FetchedStoreProfile.LegalPagesInfo.toUpdated(): UpdatedStoreProfile.LegalPag
 		type = type?.toUpdated(),
 		enabled = enabled,
 		title = title,
+		titleTranslated = titleTranslated,
 		display = display?.toUpdated(),
 		text = text,
+		textTranslated = textTranslated,
 		externalUrl = externalUrl
 	)
 }
