@@ -73,7 +73,7 @@ data class OrderForCalculate(
 	)
 
 	data class OrderItem(
-		val id: Int? = null,
+		val id: Long? = null,
 
 		val productId: Int? = null,
 		val categoryId: Int? = null,
