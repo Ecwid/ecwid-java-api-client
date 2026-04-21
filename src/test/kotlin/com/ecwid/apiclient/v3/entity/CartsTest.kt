@@ -477,7 +477,7 @@ class CartsTest : BaseEntityTest() {
 
 	private fun generateTestItem(): OrderForCalculate.OrderItem {
 		return OrderForCalculate.OrderItem(
-			id = randomId(),
+			id = randomId().toLong(),
 			productId = randomId(),
 			categoryId = randomId(),
 			price = 22.2,

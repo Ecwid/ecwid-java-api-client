@@ -131,7 +131,7 @@ data class CalculateOrderDetailsResult(
 	)
 
 	data class OrderItem(
-		val id: Int? = null,
+		val id: Long? = null,
 
 		val productId: Int? = null,
 		val categoryId: Int? = null,
