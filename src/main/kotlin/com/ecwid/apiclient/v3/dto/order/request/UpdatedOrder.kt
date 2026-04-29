@@ -385,7 +385,8 @@ data class UpdatedOrder(
 
 	data class StoreCredit(
 		val redemption: StoreCreditRedemption? = null,
-		val balance: Double? = null
+		val balance: Double? = null,
+		val refund: Double? = null,
 	)
 
 	data class StoreCreditRedemption(
