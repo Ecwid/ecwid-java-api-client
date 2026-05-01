@@ -354,6 +354,7 @@ fun FetchedOrder.StoreCredit.toUpdated(): UpdatedOrder.StoreCredit {
 	return UpdatedOrder.StoreCredit(
 		redemption = this.redemption?.toUpdated(),
 		balance = this.balance,
+		refund = this.refund,
 	)
 }
 
