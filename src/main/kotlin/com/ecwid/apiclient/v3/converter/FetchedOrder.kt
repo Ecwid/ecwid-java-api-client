@@ -213,6 +213,7 @@ fun FetchedOrder.OrderItemTax.toUpdated(): UpdatedOrder.OrderItemTax {
 		taxOnHandlingFee = taxOnHandlingFee,
 		includeInPrice = includeInPrice,
 		taxType = taxType,
+		sourceTaxRateType = sourceTaxRateType,
 	)
 }
 
