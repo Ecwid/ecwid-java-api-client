@@ -268,16 +268,9 @@ data class FetchedOrder(
 		val taxOnHandlingFee: Double? = null,
 		override val includeInPrice: Boolean? = null,
 		val sourceTaxRateId: Int? = null,
-		val sourceTaxRateType: RateType? = null,
+		val sourceTaxRateType: TaxRateType? = null,
 		val taxType: OrderItemTaxType? = null,
-	) : ExtendedOrderTax {
-		enum class RateType {
-			AUTO,
-			MANUAL,
-			CUSTOM,
-			LEGACY
-		}
-	}
+	) : ExtendedOrderTax
 
 
 	data class HandlingFeeTax(
