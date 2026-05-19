@@ -13,6 +13,7 @@ import com.ecwid.apiclient.v3.dto.order.result.DeletedOrder
 import com.ecwid.apiclient.v3.dto.payment.PaymentAppRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductInventoryUpdateRequest
 import com.ecwid.apiclient.v3.dto.product.request.ProductUpdateRequest
+import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct.CategoryInfo
 import com.ecwid.apiclient.v3.dto.product.result.GetProductFiltersResult
 import com.ecwid.apiclient.v3.dto.product.result.ProductInventoryUpdateResult
 import com.ecwid.apiclient.v3.dto.productreview.request.UpdatedProductReviewStatus
@@ -161,6 +162,8 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 
 	AllowNullable(CustomerGroupsSearchRequest::keyword),
 	AllowNullable(CustomerGroupsSearchRequest::customerGroupIds),
+
+	AllowNullable(CategoryInfo::ancestorIds)
 )
 
 val nullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(

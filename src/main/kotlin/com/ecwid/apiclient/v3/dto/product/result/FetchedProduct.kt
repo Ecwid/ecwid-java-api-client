@@ -196,6 +196,7 @@ data class FetchedProduct(
 		val enabled: Boolean = true,
 		val name: String = "",
 		val nameTranslated: String = "",
+		val ancestorIds: List<Long>? = null,
 	)
 
 	data class TaxInfo(
