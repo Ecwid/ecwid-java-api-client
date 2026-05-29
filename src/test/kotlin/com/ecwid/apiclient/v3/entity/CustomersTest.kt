@@ -13,6 +13,7 @@ import com.ecwid.apiclient.v3.exception.EcwidApiException
 import com.ecwid.apiclient.v3.util.randomAlphanumeric
 import com.ecwid.apiclient.v3.util.randomBoolean
 import com.ecwid.apiclient.v3.util.randomEmail
+import com.ecwid.apiclient.v3.util.randomNumeric
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
@@ -419,7 +420,7 @@ private fun generateTestCustomerForCreate(customerGroupId: Int?): UpdatedCustome
 			generateShippingAddress(),
 			generateShippingAddress()
 		),
-		taxId = randomAlphanumeric(8),
+		taxId = randomNumeric(8),
 		taxIdValid = randomBoolean(),
 		taxExempt = randomBoolean(),
 		acceptMarketing = randomBoolean(),
@@ -444,7 +445,7 @@ private fun generateTestCustomerForUpdate(
 			generateShippingAddress(oldShippingAddresses?.get(2)?.id),
 			generateShippingAddress(oldShippingAddresses?.get(3)?.id)
 		),
-		taxId = randomAlphanumeric(8),
+		taxId = randomNumeric(8),
 		taxIdValid = randomBoolean(),
 		taxExempt = randomBoolean(),
 		acceptMarketing = randomBoolean(),

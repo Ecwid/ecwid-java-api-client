@@ -62,6 +62,14 @@ internal fun randomAlphanumeric(size: Int): String {
 		.joinToString("")
 }
 
+internal fun randomNumeric(size: Int): String {
+	val digits = ('0'..'9').toList()
+	return (1..size)
+		.map { Random.nextInt(0, digits.size) }
+		.map(digits::get)
+		.joinToString("")
+}
+
 internal inline fun <reified E : Enum<E>> randomEnumValue(vararg exclude: E): E {
 	return E::class.java.enumConstants
 		.toSortedSet()

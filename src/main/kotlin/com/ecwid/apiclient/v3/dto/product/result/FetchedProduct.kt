@@ -140,6 +140,7 @@ data class FetchedProduct(
 	val minPurchaseQuantity: Int? = null,
 	val maxPurchaseQuantity: Int? = null,
 	val reviewsCollectingAllowed: Boolean? = null,
+	val batteryIncluded: Boolean? = null,
 	val rating: Double? = null,
 	val reviewsModerated: Int? = null,
 	val reviewsPublished: Int? = null,

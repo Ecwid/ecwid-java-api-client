@@ -72,6 +72,7 @@ data class UpdatedProduct(
 	val minPurchaseQuantity: Int? = null,
 	val maxPurchaseQuantity: Int? = null,
 	val reviewsCollectingAllowed: Boolean? = null,
+	val batteryIncluded: Boolean? = null,
 ) : ApiUpdatedDTO {
 
 	data class Ribbon(
