@@ -72,6 +72,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		minPurchaseQuantity = minPurchaseQuantity,
 		maxPurchaseQuantity = maxPurchaseQuantity,
 		reviewsCollectingAllowed = reviewsCollectingAllowed,
+		batteryIncluded = batteryIncluded,
 	)
 }
 
