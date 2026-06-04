@@ -202,6 +202,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedOrder.DiscountCouponInfo::orderCount),
 	Ignored(FetchedOrder.DiscountCouponInfo::catalogLimit),
 	Ignored(FetchedOrder.DiscountCouponInfo::applicationLimit),
+	ReadOnly(FetchedOrder.DiscountCouponInfo::shippingLimit),
 	ReadOnly(FetchedOrder.BaseOrderItemTax::includeInPrice),
 	ReadOnly(FetchedOrder.HandlingFeeTax::includeInPrice),
 	Ignored(FetchedOrder.OrderItem::id),

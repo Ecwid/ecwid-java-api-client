@@ -38,6 +38,8 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	IgnoreNullable(FetchedOrder.DiscountCouponInfo::totalLimit),
 	IgnoreNullable(FetchedOrder.DiscountCouponInfo::updateDate),
 	IgnoreNullable(FetchedOrder.DiscountCouponInfo::usesLimit),
+	AllowNullable(FetchedOrder.DiscountCouponInfo::shippingLimit),
+	AllowNullable(FetchedOrder.DiscountCouponShippingLimit::shippingMethods),
 	IgnoreNullable(FetchedOrder.DiscountInfo::base),
 	IgnoreNullable(FetchedOrder.DiscountInfo::description),
 	IgnoreNullable(FetchedOrder.DiscountInfo::orderTotal),
