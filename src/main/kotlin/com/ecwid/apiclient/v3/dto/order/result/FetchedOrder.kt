@@ -163,7 +163,12 @@ data class FetchedOrder(
 		val updateDate: Date? = null,
 		val orderCount: Int? = null, // TODO Figure out how to test
 		val catalogLimit: DiscountCouponCatalogLimit? = null, // TODO Figure out how to test
-		val applicationLimit: DiscountCouponApplicationLimit? = null // TODO Add to docs?
+		val applicationLimit: DiscountCouponApplicationLimit? = null, // TODO Add to docs?
+		val shippingLimit: DiscountCouponShippingLimit? = null
+	)
+
+	data class DiscountCouponShippingLimit(
+		val shippingMethods: List<String>? = null
 	)
 
 	data class DiscountCouponCatalogLimit(
