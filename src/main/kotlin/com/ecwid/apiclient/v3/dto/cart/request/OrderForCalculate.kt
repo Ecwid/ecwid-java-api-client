@@ -64,7 +64,12 @@ data class OrderForCalculate(
 		val applicationLimit: DiscountCouponApplicationLimit? = null,
 		val creationDate: Date? = null,
 		val orderCount: Int? = null,
-		val catalogLimit: DiscountCouponCatalogLimit? = null
+		val catalogLimit: DiscountCouponCatalogLimit? = null,
+		val shippingLimit: DiscountCouponShippingLimit? = null
+	)
+
+	data class DiscountCouponShippingLimit(
+		val shippingMethods: List<String>? = null
 	)
 
 	data class DiscountCouponCatalogLimit(
