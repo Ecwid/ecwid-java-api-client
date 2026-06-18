@@ -240,6 +240,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrder.OrderItemTax::sourceTaxRateId),
 	ReadOnly(FetchedOrder.OrderItemTax::sourceTaxRateType),
 	ReadOnly(FetchedOrder::shippingLabelAvailableForShipment),
+	ReadOnly(FetchedOrder::isWithdrawalRequested),
 
 	ReadOnly(FetchedProductType::id),
 	Ignored(FetchedProductType::googleTaxonomy),
