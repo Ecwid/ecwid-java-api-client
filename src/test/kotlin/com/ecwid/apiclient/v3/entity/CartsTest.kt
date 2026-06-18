@@ -11,7 +11,6 @@ import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import com.ecwid.apiclient.v3.util.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -298,7 +297,7 @@ class CartsTest : BaseEntityTest() {
 			assertEquals(forCalculateItem.price, calculatedItem.price)
 			assertEquals(forCalculateItem.productPrice, calculatedItem.productPrice)
 			assertEquals(0.0, calculatedItem.shipping)
-			assertNull(calculatedItem.handlingFee)
+			assertEquals(0.0, calculatedItem.handlingFee)
 			assertEquals(forCalculateItem.fixedShippingRate, calculatedItem.fixedShippingRate)
 			assertEquals(
 				null,
