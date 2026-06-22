@@ -342,4 +342,5 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder.StoreCreditRedemption::id),
 	AllowNullable(FetchedOrder.StoreCreditRedemption::amount),
 	AllowNullable(FetchedOrder.StoreCreditRedemption::cancelled),
+	AllowNullable(FetchedOrder::withdrawalRequested),
 )

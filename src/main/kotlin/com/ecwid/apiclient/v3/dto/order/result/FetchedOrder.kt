@@ -128,6 +128,7 @@ data class FetchedOrder(
 	val commercialRelationshipScheme: CommercialRelationshipScheme? = CommercialRelationshipScheme.b2c,
 	val lang: String? = null,
 	val storeCredit: StoreCredit? = null,
+	val withdrawalRequested: Boolean? = null,
 
 	) : ApiFetchedDTO, ApiResultDTO {
 
