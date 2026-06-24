@@ -33,6 +33,7 @@ data class FetchedStoreProfile(
 	val orderInvoiceSettings: OrderInvoiceSettings? = null,
 	val giftCardSettings: GiftCardSettings? = null,
 	val registrationAnswers: RegistrationAnswers? = null,
+	val verticalSettings: VerticalSettings? = null,
 ) : ApiFetchedDTO, ApiResultDTO {
 
 	data class GeneralInfo(
@@ -821,6 +822,13 @@ data class FetchedStoreProfile(
 		val id: Int? = null,
 		val name: String? = null,
 		val url: String? = null
+	)
+
+	data class VerticalSettings(
+		val vertical: String? = null,
+		val primarySubvertical: String? = null,
+		val subverticals: List<String>? = null,
+		val productTypes: List<String>? = null,
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedStoreProfile::class)

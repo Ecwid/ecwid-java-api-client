@@ -39,6 +39,7 @@ val otherNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
 	AllowNullable(ProductUpdateRequest::keepOptionDisplaySettings),
 
 	AllowNullable(StoreProfileRequest::lang),
+	AllowNullable(StoreProfileRequest::getStoreVertical),
 
 	AllowNullable(ProductVariationsRequest::lang),
 
