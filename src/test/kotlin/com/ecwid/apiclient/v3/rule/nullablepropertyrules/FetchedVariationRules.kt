@@ -76,4 +76,5 @@ val fetchedVariationTypeNullablePropertyRules: List<NullablePropertyRule<*, *>> 
 	AllowNullable(FetchedVariation::alt),
 	AllowNullable(FetchedAlt::main),
 	AllowNullable(FetchedAlt::translated),
+	AllowNullable(FetchedVariation::imageExternalId),
 )
