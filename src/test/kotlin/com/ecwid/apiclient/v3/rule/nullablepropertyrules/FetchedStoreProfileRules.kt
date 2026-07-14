@@ -343,4 +343,9 @@ val fetchedStoreProfileNullablePropertyRules: List<NullablePropertyRule<*, *>> =
 	AllowNullable(FetchedStoreProfile.Settings::googleProductCategoryName),
 	AllowNullable(FetchedStoreProfile.InstantSiteInfo::ecwidSubdomainSuffix),
 	AllowNullable(FetchedStoreProfile.InstantSiteInfo::slugsWithoutIdsEnabled),
+	AllowNullable(FetchedStoreProfile::verticalSettings),
+	AllowNullable(FetchedStoreProfile.VerticalSettings::vertical),
+	AllowNullable(FetchedStoreProfile.VerticalSettings::primarySubvertical),
+	AllowNullable(FetchedStoreProfile.VerticalSettings::subverticals),
+	AllowNullable(FetchedStoreProfile.VerticalSettings::productTypes),
 )
