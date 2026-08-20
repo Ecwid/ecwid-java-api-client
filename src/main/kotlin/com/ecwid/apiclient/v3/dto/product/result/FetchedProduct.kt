@@ -145,6 +145,7 @@ data class FetchedProduct(
 	val reviewsModerated: Int? = null,
 	val reviewsPublished: Int? = null,
 	val compositeComponents: List<FetchedProductComponent>? = null,
+	val euGuaranteeLabelSettings: EuGuaranteeLabelSettings? = null,
 ) : ApiFetchedDTO, ApiResultDTO {
 
 	data class BorderInfo(
@@ -410,5 +411,13 @@ data class FetchedProduct(
 		val automaticLowestPrice: Double? = null,
 		val defaultDisplayedAutomaticLowestPrice: Double? = null,
 		val defaultDisplayedAutomaticLowestPriceFormatted: String? = null,
+	)
+
+	data class EuGuaranteeLabelSettings(
+		val modelNumber: String? = null,
+		val brand: String? = null,
+		val guaranteeYears: Double? = null,
+		val acknowledged: Boolean? = null,
+		val enabled: Boolean? = null
 	)
 }

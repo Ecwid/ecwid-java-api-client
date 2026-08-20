@@ -73,6 +73,7 @@ fun FetchedProduct.toUpdated(): UpdatedProduct {
 		maxPurchaseQuantity = maxPurchaseQuantity,
 		reviewsCollectingAllowed = reviewsCollectingAllowed,
 		batteryIncluded = batteryIncluded,
+		euGuaranteeLabelSettings = euGuaranteeLabelSettings?.toUpdated(),
 	)
 }
 
@@ -250,4 +251,12 @@ fun FetchedProduct.TaxInfo.toUpdated() = UpdatedProduct.TaxInfo(
 fun FetchedProduct.LowestPriceSettings.toUpdated() = UpdatedProduct.LowestPriceSettings(
 	lowestPriceEnabled = lowestPriceEnabled,
 	manualLowestPrice = manualLowestPrice
+)
+
+fun FetchedProduct.EuGuaranteeLabelSettings.toUpdated() = UpdatedProduct.EuGuaranteeLabelSettings(
+	modelNumber = modelNumber,
+	brand = brand,
+	guaranteeYears = guaranteeYears,
+	acknowledged = acknowledged,
+	enabled = enabled
 )
