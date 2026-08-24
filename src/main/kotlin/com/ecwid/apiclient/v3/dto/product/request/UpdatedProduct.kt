@@ -73,6 +73,7 @@ data class UpdatedProduct(
 	val maxPurchaseQuantity: Int? = null,
 	val reviewsCollectingAllowed: Boolean? = null,
 	val batteryIncluded: Boolean? = null,
+	val euGuaranteeLabelSettings: EuGuaranteeLabelSettings? = null,
 ) : ApiUpdatedDTO {
 
 	data class Ribbon(
@@ -412,6 +413,14 @@ data class UpdatedProduct(
 	data class LowestPriceSettings(
 		val lowestPriceEnabled: Boolean? = null,
 		val manualLowestPrice: Double? = null,
+	)
+
+	data class EuGuaranteeLabelSettings(
+		val modelNumber: String? = null,
+		val brand: String? = null,
+		val guaranteeYears: Double? = null,
+		val acknowledged: Boolean? = null,
+		val enabled: Boolean? = null
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(FetchedProduct::class)
