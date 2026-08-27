@@ -80,6 +80,7 @@ open class ApiClient private constructor(
 	storeExtrafieldsApiClient: StoreExtrafieldsApiClientImpl,
 	swatchesApiClient: SwatchesApiClientImpl,
 	imagesApiClient: ImagesApiClientImpl,
+	customFromEmailSettingsApiClient: CustomFromEmailSettingsApiClient,
 ) :
 	StoreProfileApiClient by storeProfileApiClient,
 	BrandsApiClient by brandsApiClient,
@@ -104,6 +105,7 @@ open class ApiClient private constructor(
 	StoreExtrafieldsApiClient by storeExtrafieldsApiClient,
 	SwatchesApiClient by swatchesApiClient,
 	ImagesApiClient by imagesApiClient,
+	CustomFromEmailSettingsApiClient by customFromEmailSettingsApiClient,
 	Closeable {
 
 	constructor(apiClientHelper: ApiClientHelper) : this(
@@ -131,6 +133,7 @@ open class ApiClient private constructor(
 		storeExtrafieldsApiClient = StoreExtrafieldsApiClientImpl(apiClientHelper),
 		swatchesApiClient = SwatchesApiClientImpl(apiClientHelper),
 		imagesApiClient = ImagesApiClientImpl(apiClientHelper),
+		customFromEmailSettingsApiClient = CustomFromEmailSettingsApiClient(apiClientHelper),
 	)
 
 	override fun close() {
