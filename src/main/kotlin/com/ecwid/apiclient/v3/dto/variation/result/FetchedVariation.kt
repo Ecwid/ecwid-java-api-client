@@ -55,6 +55,7 @@ data class FetchedVariation(
 	val customsHsTariffCode: String? = null,
 	val subscriptionSettings: SubscriptionSettings? = null,
 	val alt: FetchedAlt? = null,
+	val imageExternalId: String? = null,
 ) : ApiFetchedDTO, ApiResultDTO {
 
 	data class AttributeValue(
