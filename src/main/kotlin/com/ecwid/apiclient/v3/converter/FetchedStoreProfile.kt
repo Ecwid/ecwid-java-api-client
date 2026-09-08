@@ -477,6 +477,7 @@ fun FetchedStoreProfile.LegalPagesInfo.Type.toUpdated(): UpdatedStoreProfile.Leg
 		FetchedStoreProfile.LegalPagesInfo.Type.REVOCATION_TERMS -> UpdatedStoreProfile.LegalPagesInfo.Type.REVOCATION_TERMS
 		FetchedStoreProfile.LegalPagesInfo.Type.TERMS -> UpdatedStoreProfile.LegalPagesInfo.Type.TERMS
 		FetchedStoreProfile.LegalPagesInfo.Type.PRIVACY_STATEMENT -> UpdatedStoreProfile.LegalPagesInfo.Type.PRIVACY_STATEMENT
+		FetchedStoreProfile.LegalPagesInfo.Type.EU_GUARANTEE_NOTICE -> UpdatedStoreProfile.LegalPagesInfo.Type.EU_GUARANTEE_NOTICE
 	}
 }
 
