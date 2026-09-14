@@ -218,7 +218,7 @@ data class FetchedOrder(
 		val subscriptionId: Long? = null,
 
 		val selectedOptions: List<OrderItemSelectedOption>? = null,
-		val combinationId: Int? = null,
+		val combinationId: Long? = null,
 		val files: List<OrderItemProductFile>? = null,
 		val taxable: Boolean? = null,
 		val taxes: List<OrderItemTax>? = null,

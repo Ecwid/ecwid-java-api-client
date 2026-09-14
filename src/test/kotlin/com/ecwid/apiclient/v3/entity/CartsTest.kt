@@ -506,7 +506,7 @@ class CartsTest : BaseEntityTest() {
 				generateDateSelectedOption(),
 				generateFilesSelectedOption()
 			),
-			combinationId = randomId(),
+			combinationId = randomId().toLong(),
 			taxes = listOf(
 				generateTestOrderItemTax()
 			),

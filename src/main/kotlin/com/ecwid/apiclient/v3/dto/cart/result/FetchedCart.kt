@@ -153,7 +153,7 @@ data class FetchedCart(
 		val giftCard: Boolean? = null,
 
 		val selectedOptions: List<OrderItemOption>? = null,
-		val combinationId: Int? = null,
+		val combinationId: Long? = null,
 		val taxes: List<OrderItemTax>? = null,
 		val files: List<OrderItemProductFile>? = null,
 		val dimensions: ProductDimensions? = null,
