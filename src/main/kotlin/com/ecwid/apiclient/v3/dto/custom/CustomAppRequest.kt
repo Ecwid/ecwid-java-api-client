@@ -82,7 +82,7 @@ data class CustomAppRequest(
 		val updated: String? = null,
 		val createTimestamp: Long? = null,
 		val updateTimestamp: Long? = null,
-		val defaultCombinationId: Int? = null,
+		val defaultCombinationId: Long? = null,
 		val imageUrl: String? = null,
 		val thumbnailUrl: String? = null,
 		val smallThumbnailUrl: String? = null,
