@@ -253,7 +253,8 @@ private fun generateTestOrderItem() = UpdatedOrder.OrderItem(
 		generateDateSelectedOption(),
 		generateFilesSelectedOption()
 	),
-	combinationId = randomLongId(),
+	// TODO change to randomLongId() after API server changes
+	combinationId = randomId().toLong(),
 	taxes = listOf(
 		generateTestOrderItemTax(),
 		generateTestOrderItemTax()
