@@ -6,7 +6,7 @@ import com.ecwid.apiclient.v3.impl.RequestInfo
 
 data class UpdateProductVariationRequest(
 	val productId: Int = 0,
-	val variationId: Int = 0,
+	val variationId: Long = 0,
 	val checkLowStockNotification: Boolean = false,
 	val variation: UpdatedVariation = UpdatedVariation()
 ) : ApiRequest {
