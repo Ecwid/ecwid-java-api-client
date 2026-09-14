@@ -253,7 +253,7 @@ private fun generateTestOrderItem() = UpdatedOrder.OrderItem(
 		generateDateSelectedOption(),
 		generateFilesSelectedOption()
 	),
-	combinationId = randomId().toLong(),
+	combinationId = randomLongId(),
 	taxes = listOf(
 		generateTestOrderItemTax(),
 		generateTestOrderItemTax()

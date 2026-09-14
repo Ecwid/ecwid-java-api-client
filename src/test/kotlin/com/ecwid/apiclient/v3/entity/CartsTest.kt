@@ -476,7 +476,7 @@ class CartsTest : BaseEntityTest() {
 
 	private fun generateTestItem(): OrderForCalculate.OrderItem {
 		return OrderForCalculate.OrderItem(
-			id = randomId().toLong(),
+			id = randomLongId(),
 			productId = randomId(),
 			categoryId = randomId(),
 			price = 22.2,
@@ -506,7 +506,7 @@ class CartsTest : BaseEntityTest() {
 				generateDateSelectedOption(),
 				generateFilesSelectedOption()
 			),
-			combinationId = randomId().toLong(),
+			combinationId = randomLongId(),
 			taxes = listOf(
 				generateTestOrderItemTax()
 			),
