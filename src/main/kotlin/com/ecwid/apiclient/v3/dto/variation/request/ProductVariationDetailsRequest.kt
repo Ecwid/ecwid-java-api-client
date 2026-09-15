@@ -6,7 +6,7 @@ import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
 data class ProductVariationDetailsRequest(
 	val productId: Int = 0,
-	val variationId: Int = 0,
+	val variationId: Long = 0,
 	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 	override fun toRequestInfo() = RequestInfo.createGetRequest(

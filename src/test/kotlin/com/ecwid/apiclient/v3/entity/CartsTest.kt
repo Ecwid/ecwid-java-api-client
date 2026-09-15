@@ -476,6 +476,7 @@ class CartsTest : BaseEntityTest() {
 
 	private fun generateTestItem(): OrderForCalculate.OrderItem {
 		return OrderForCalculate.OrderItem(
+			// TODO change to randomLongId() after API server changes
 			id = randomId().toLong(),
 			productId = randomId(),
 			categoryId = randomId(),
@@ -506,7 +507,8 @@ class CartsTest : BaseEntityTest() {
 				generateDateSelectedOption(),
 				generateFilesSelectedOption()
 			),
-			combinationId = randomId(),
+			// TODO change to randomLongId() after API server changes
+			combinationId = randomId().toLong(),
 			taxes = listOf(
 				generateTestOrderItemTax()
 			),
