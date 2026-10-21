@@ -176,7 +176,7 @@ data class UpdatedOrder(
 		val giftCard: Boolean? = null,
 
 		val selectedOptions: List<OrderItemSelectedOption>? = null,
-		val combinationId: Int? = null,
+		val combinationId: Long? = null,
 		val taxes: List<OrderItemTax>? = null,
 		val dimensions: ProductDimensions? = null,
 		val discountsAllowed: Boolean? = null,
@@ -279,6 +279,7 @@ data class UpdatedOrder(
 		val taxOnShipping: Double? = null,
 		val taxOnHandlingFee: Double? = null,
 		val includeInPrice: Boolean? = null,
+		val sourceTaxRateType: TaxRateType? = null,
 		val taxType: OrderItemTaxType? = null,
 	) : BaseOrderTax
 
@@ -385,7 +386,8 @@ data class UpdatedOrder(
 
 	data class StoreCredit(
 		val redemption: StoreCreditRedemption? = null,
-		val balance: Double? = null
+		val balance: Double? = null,
+		val refund: Double? = null,
 	)
 
 	data class StoreCreditRedemption(

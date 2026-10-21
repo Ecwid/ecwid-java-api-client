@@ -3,10 +3,12 @@ package com.ecwid.apiclient.v3.jsontransformer.gson
 import com.ecwid.apiclient.v3.dto.common.NullableUpdatedValue
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
+import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
 import com.ecwid.apiclient.v3.impl.ParsedResponseWithExt
 import com.google.gson.JsonParser
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlin.test.assertNull
 
 internal class GsonTransformerTest {
 
@@ -228,6 +230,23 @@ internal class GsonTransformerTest {
 			),
 			deserializedValue
 		)
+	}
+
+	@Test
+	fun `test deserialization of FetchedProduct CategoryInfo with ancestorIds`() {
+		val json = """{"categories": [{"id": 42, "enabled": true, "name": "Cat", "nameTranslated": "", "ancestorIds": [1, 7]}]}"""
+		val product = transformer.deserialize(json, FetchedProduct::class.java)
+		assertEquals(
+			listOf(FetchedProduct.CategoryInfo(id = 42, enabled = true, name = "Cat", nameTranslated = "", ancestorIds = listOf(1L, 7L))),
+			product.categories
+		)
+	}
+
+	@Test
+	fun `test deserialization of FetchedProduct CategoryInfo without ancestorIds defaults to null`() {
+		val json = """{"categories": [{"id": 42, "enabled": true, "name": "Cat", "nameTranslated": ""}]}"""
+		val product = transformer.deserialize(json, FetchedProduct::class.java)
+		assertNull(product.categories?.first()?.ancestorIds)
 	}
 
 	@Test

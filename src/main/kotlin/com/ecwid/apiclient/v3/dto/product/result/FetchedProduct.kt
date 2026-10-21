@@ -120,7 +120,7 @@ data class FetchedProduct(
 	val files: List<ProductFile>? = null,
 	val favorites: FavoritesStats? = null, // TODO Figure out how to test
 
-	val defaultCombinationId: Int? = null, // TODO implement combinations support
+	val defaultCombinationId: Long? = null, // TODO implement combinations support
 	val combinations: List<FetchedVariation>? = null, // TODO implement combinations support
 	val isGiftCard: Boolean? = null, // TODO from ECWID-67826: this flag is read-only. API for creating gift cards in the plans (BACKLOG-4157)
 	val discountsAllowed: Boolean? = null,
@@ -140,10 +140,12 @@ data class FetchedProduct(
 	val minPurchaseQuantity: Int? = null,
 	val maxPurchaseQuantity: Int? = null,
 	val reviewsCollectingAllowed: Boolean? = null,
+	val batteryIncluded: Boolean? = null,
 	val rating: Double? = null,
 	val reviewsModerated: Int? = null,
 	val reviewsPublished: Int? = null,
 	val compositeComponents: List<FetchedProductComponent>? = null,
+	val euGuaranteeLabelSettings: EuGuaranteeLabelSettings? = null,
 ) : ApiFetchedDTO, ApiResultDTO {
 
 	data class BorderInfo(
@@ -196,6 +198,7 @@ data class FetchedProduct(
 		val enabled: Boolean = true,
 		val name: String = "",
 		val nameTranslated: String = "",
+		val ancestorIds: List<Long>? = null,
 	)
 
 	data class TaxInfo(
@@ -408,5 +411,13 @@ data class FetchedProduct(
 		val automaticLowestPrice: Double? = null,
 		val defaultDisplayedAutomaticLowestPrice: Double? = null,
 		val defaultDisplayedAutomaticLowestPriceFormatted: String? = null,
+	)
+
+	data class EuGuaranteeLabelSettings(
+		val modelNumber: String? = null,
+		val brand: String? = null,
+		val guaranteeYears: Double? = null,
+		val acknowledged: Boolean? = null,
+		val enabled: Boolean? = null
 	)
 }

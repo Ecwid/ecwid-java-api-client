@@ -9,7 +9,7 @@ import com.ecwid.apiclient.v3.dto.producttype.enums.AttributeType
 import com.ecwid.apiclient.v3.dto.variation.request.UpdatedVariation
 
 data class FetchedVariation(
-	val id: Int = 0,
+	val id: Long = 0,
 	val sku: String? = null,
 
 	val combinationNumber: Int = 0,

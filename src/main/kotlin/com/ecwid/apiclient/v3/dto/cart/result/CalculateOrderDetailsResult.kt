@@ -122,7 +122,12 @@ data class CalculateOrderDetailsResult(
 		val applicationLimit: DiscountCouponApplicationLimit? = null,
 		val creationDate: Date? = null,
 		val orderCount: Int? = null,
-		val catalogLimit: DiscountCouponCatalogLimit? = null
+		val catalogLimit: DiscountCouponCatalogLimit? = null,
+		val shippingLimit: DiscountCouponShippingLimit? = null
+	)
+
+	data class DiscountCouponShippingLimit(
+		val shippingMethods: List<String>? = null
 	)
 
 	data class DiscountCouponCatalogLimit(
@@ -131,7 +136,7 @@ data class CalculateOrderDetailsResult(
 	)
 
 	data class OrderItem(
-		val id: Int? = null,
+		val id: Long? = null,
 
 		val productId: Int? = null,
 		val categoryId: Int? = null,
@@ -161,7 +166,7 @@ data class CalculateOrderDetailsResult(
 		val giftCard: Boolean? = null,
 
 		val selectedOptions: List<OrderItemOption>? = null,
-		val combinationId: Int? = null,
+		val combinationId: Long? = null,
 		val taxes: List<OrderItemTax>? = null,
 		val files: List<OrderItemProductFile>? = null,
 		val dimensions: ProductDimensions? = null,
@@ -192,6 +197,7 @@ data class CalculateOrderDetailsResult(
 		val taxOnDiscountedSubtotal: Double? = null,
 		val taxOnShipping: Double? = null,
 		val taxOnHandlingFee: Double? = null,
+		val sourceTaxRateType: TaxRateType? = null,
 	) : BaseOrderTax
 
 	data class OrderItemProductFile(

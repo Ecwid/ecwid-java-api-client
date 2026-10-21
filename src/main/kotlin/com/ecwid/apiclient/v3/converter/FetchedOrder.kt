@@ -213,6 +213,7 @@ fun FetchedOrder.OrderItemTax.toUpdated(): UpdatedOrder.OrderItemTax {
 		taxOnHandlingFee = taxOnHandlingFee,
 		includeInPrice = includeInPrice,
 		taxType = taxType,
+		sourceTaxRateType = sourceTaxRateType,
 	)
 }
 
@@ -354,6 +355,7 @@ fun FetchedOrder.StoreCredit.toUpdated(): UpdatedOrder.StoreCredit {
 	return UpdatedOrder.StoreCredit(
 		redemption = this.redemption?.toUpdated(),
 		balance = this.balance,
+		refund = this.refund,
 	)
 }
 

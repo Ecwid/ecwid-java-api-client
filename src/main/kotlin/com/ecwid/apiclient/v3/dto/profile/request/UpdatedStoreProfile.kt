@@ -272,7 +272,7 @@ data class UpdatedStoreProfile(
 		val externalUrl: String? = null
 	) {
 		enum class Type {
-			LEGAL_INFO, SHIPPING_COST_PAYMENT_INFO, REVOCATION_TERMS, TERMS, PRIVACY_STATEMENT
+			LEGAL_INFO, SHIPPING_COST_PAYMENT_INFO, REVOCATION_TERMS, TERMS, PRIVACY_STATEMENT, EU_GUARANTEE_NOTICE
 		}
 
 		enum class Display {

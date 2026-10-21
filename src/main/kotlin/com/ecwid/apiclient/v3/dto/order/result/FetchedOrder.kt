@@ -128,6 +128,7 @@ data class FetchedOrder(
 	val commercialRelationshipScheme: CommercialRelationshipScheme? = CommercialRelationshipScheme.b2c,
 	val lang: String? = null,
 	val storeCredit: StoreCredit? = null,
+	val withdrawalRequested: Boolean? = null,
 
 	) : ApiFetchedDTO, ApiResultDTO {
 
@@ -163,7 +164,12 @@ data class FetchedOrder(
 		val updateDate: Date? = null,
 		val orderCount: Int? = null, // TODO Figure out how to test
 		val catalogLimit: DiscountCouponCatalogLimit? = null, // TODO Figure out how to test
-		val applicationLimit: DiscountCouponApplicationLimit? = null // TODO Add to docs?
+		val applicationLimit: DiscountCouponApplicationLimit? = null, // TODO Add to docs?
+		val shippingLimit: DiscountCouponShippingLimit? = null
+	)
+
+	data class DiscountCouponShippingLimit(
+		val shippingMethods: List<String>? = null
 	)
 
 	data class DiscountCouponCatalogLimit(
@@ -212,7 +218,7 @@ data class FetchedOrder(
 		val subscriptionId: Long? = null,
 
 		val selectedOptions: List<OrderItemSelectedOption>? = null,
-		val combinationId: Int? = null,
+		val combinationId: Long? = null,
 		val files: List<OrderItemProductFile>? = null,
 		val taxable: Boolean? = null,
 		val taxes: List<OrderItemTax>? = null,
@@ -268,16 +274,9 @@ data class FetchedOrder(
 		val taxOnHandlingFee: Double? = null,
 		override val includeInPrice: Boolean? = null,
 		val sourceTaxRateId: Int? = null,
-		val sourceTaxRateType: RateType? = null,
+		val sourceTaxRateType: TaxRateType? = null,
 		val taxType: OrderItemTaxType? = null,
-	) : ExtendedOrderTax {
-		enum class RateType {
-			AUTO,
-			MANUAL,
-			CUSTOM,
-			LEGACY
-		}
-	}
+	) : ExtendedOrderTax
 
 
 	data class HandlingFeeTax(
@@ -545,7 +544,8 @@ data class FetchedOrder(
 
 	data class StoreCredit(
 		val redemption: StoreCreditRedemption? = null,
-		val balance: Double? = null
+		val balance: Double? = null,
+		val refund: Double? = null,
 	)
 
 	data class StoreCreditRedemption(

@@ -73,6 +73,8 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	AllowNullable(FetchedProduct::rating),
 	IgnoreNullable(FetchedProduct::relatedProducts),
 	AllowNullable(FetchedProduct::reviewsCollectingAllowed),
+	AllowNullable(FetchedProduct::batteryIncluded),
+	AllowNullable(FetchedProduct::euGuaranteeLabelSettings),
 	AllowNullable(FetchedProduct::reviewsModerated),
 	AllowNullable(FetchedProduct::reviewsPublished),
 	IgnoreNullable(FetchedProduct::ribbon),
@@ -173,4 +175,9 @@ val fetchedProductNullablePropertyRules: List<NullablePropertyRule<*, *>> = list
 	AllowNullable(FetchedProduct::maxPurchaseQuantity),
 	AllowNullable(FetchedProduct::locationInventory),
 	AllowNullable(FetchedProduct::compositeComponents),
+	AllowNullable(FetchedProduct.EuGuaranteeLabelSettings::modelNumber),
+	AllowNullable(FetchedProduct.EuGuaranteeLabelSettings::brand),
+	AllowNullable(FetchedProduct.EuGuaranteeLabelSettings::guaranteeYears),
+	AllowNullable(FetchedProduct.EuGuaranteeLabelSettings::acknowledged),
+	AllowNullable(FetchedProduct.EuGuaranteeLabelSettings::enabled),
 )

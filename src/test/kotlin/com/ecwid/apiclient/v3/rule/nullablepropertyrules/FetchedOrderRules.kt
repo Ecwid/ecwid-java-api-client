@@ -38,6 +38,8 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	IgnoreNullable(FetchedOrder.DiscountCouponInfo::totalLimit),
 	IgnoreNullable(FetchedOrder.DiscountCouponInfo::updateDate),
 	IgnoreNullable(FetchedOrder.DiscountCouponInfo::usesLimit),
+	AllowNullable(FetchedOrder.DiscountCouponInfo::shippingLimit),
+	AllowNullable(FetchedOrder.DiscountCouponShippingLimit::shippingMethods),
 	IgnoreNullable(FetchedOrder.DiscountInfo::base),
 	IgnoreNullable(FetchedOrder.DiscountInfo::description),
 	IgnoreNullable(FetchedOrder.DiscountInfo::orderTotal),
@@ -336,7 +338,9 @@ val fetchedOrderNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf
 	AllowNullable(FetchedOrder::storeCredit),
 	AllowNullable(FetchedOrder.StoreCredit::balance),
 	AllowNullable(FetchedOrder.StoreCredit::redemption),
+	AllowNullable(FetchedOrder.StoreCredit::refund),
 	AllowNullable(FetchedOrder.StoreCreditRedemption::id),
 	AllowNullable(FetchedOrder.StoreCreditRedemption::amount),
 	AllowNullable(FetchedOrder.StoreCreditRedemption::cancelled),
+	AllowNullable(FetchedOrder::withdrawalRequested),
 )

@@ -33,6 +33,7 @@ data class FetchedStoreProfile(
 	val orderInvoiceSettings: OrderInvoiceSettings? = null,
 	val giftCardSettings: GiftCardSettings? = null,
 	val registrationAnswers: RegistrationAnswers? = null,
+	val verticalSettings: VerticalSettings? = null,
 ) : ApiFetchedDTO, ApiResultDTO {
 
 	data class GeneralInfo(
@@ -318,7 +319,7 @@ data class FetchedStoreProfile(
 		val externalUrl: String? = null
 	) {
 		enum class Type {
-			LEGAL_INFO, SHIPPING_COST_PAYMENT_INFO, REVOCATION_TERMS, TERMS, PRIVACY_STATEMENT
+			LEGAL_INFO, SHIPPING_COST_PAYMENT_INFO, REVOCATION_TERMS, TERMS, PRIVACY_STATEMENT, EU_GUARANTEE_NOTICE
 		}
 
 		enum class Display {
@@ -821,6 +822,13 @@ data class FetchedStoreProfile(
 		val id: Int? = null,
 		val name: String? = null,
 		val url: String? = null
+	)
+
+	data class VerticalSettings(
+		val vertical: String? = null,
+		val primarySubvertical: String? = null,
+		val subverticals: List<String>? = null,
+		val productTypes: List<String>? = null,
 	)
 
 	override fun getModifyKind() = ModifyKind.ReadWrite(UpdatedStoreProfile::class)

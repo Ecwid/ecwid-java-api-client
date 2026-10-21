@@ -6,6 +6,7 @@ import com.ecwid.apiclient.v3.responsefields.ResponseFields
 
 data class StoreProfileRequest(
 	val lang: String? = null,
+	val getStoreVertical: Boolean? = null,
 	val responseFields: ResponseFields = ResponseFields.All,
 ) : ApiRequest {
 
@@ -21,6 +22,7 @@ data class StoreProfileRequest(
 		val request = this
 		return mutableMapOf<String, String>().apply {
 			request.lang?.let { put("lang", it) }
+			request.getStoreVertical?.let { put("getStoreVertical", it.toString()) }
 		}.toMap()
 	}
 }

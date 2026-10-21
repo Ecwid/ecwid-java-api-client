@@ -202,6 +202,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedOrder.DiscountCouponInfo::orderCount),
 	Ignored(FetchedOrder.DiscountCouponInfo::catalogLimit),
 	Ignored(FetchedOrder.DiscountCouponInfo::applicationLimit),
+	ReadOnly(FetchedOrder.DiscountCouponInfo::shippingLimit),
 	ReadOnly(FetchedOrder.BaseOrderItemTax::includeInPrice),
 	ReadOnly(FetchedOrder.HandlingFeeTax::includeInPrice),
 	Ignored(FetchedOrder.OrderItem::id),
@@ -239,6 +240,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	ReadOnly(FetchedOrder.OrderItemTax::sourceTaxRateId),
 	ReadOnly(FetchedOrder.OrderItemTax::sourceTaxRateType),
 	ReadOnly(FetchedOrder::shippingLabelAvailableForShipment),
+	ReadOnly(FetchedOrder::withdrawalRequested),
 
 	ReadOnly(FetchedProductType::id),
 	Ignored(FetchedProductType::googleTaxonomy),
@@ -269,6 +271,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 	Ignored(FetchedStoreProfile::designSettings),
 	Ignored(FetchedStoreProfile::fbMessengerSettings),
 	Ignored(FetchedStoreProfile::giftCardSettings),
+	ReadOnly(FetchedStoreProfile::verticalSettings),
 	ReadOnly(FetchedStoreProfile.Settings::googleProductCategoryName),
 	ReadOnly(FetchedStoreProfile.TikTokPixelSettings::code),
 	ReadOnly(FetchedStoreProfile.InstantSiteInfo::ecwidSubdomainSuffix),
