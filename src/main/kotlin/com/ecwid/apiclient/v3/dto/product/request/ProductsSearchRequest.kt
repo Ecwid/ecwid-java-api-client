@@ -163,6 +163,7 @@ sealed class ProductsSearchRequest : ApiRequest {
 		PRICE_ASC,
 		PRICE_DESC,
 		UPDATED_TIME_ASC,
-		UPDATED_TIME_DESC
+		UPDATED_TIME_DESC,
+		PURCHASE_QUANTITY_DESC
 	}
 }
