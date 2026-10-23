@@ -269,6 +269,7 @@ interface SalesChannelsApiClient {
 	fun getYahooShoppingFeedConfig(request: YahooShoppingFeedConfigGetRequest): FetchedYahooShoppingFeedConfig
 	fun getYandexMarketFeedConfig(request: YandexMarketFeedConfigGetRequest): FetchedYandexMarketFeedConfig
 	fun getYandexMarketDbsFeedConfig(request: YandexMarketDbsFeedConfigGetRequest): FetchedYandexMarketDbsFeedConfig
+	fun getMetaOpenCatalogFeedConfig(request: MetaOpenCatalogFeedConfigGetRequest): FetchedMetaOpenCatalogFeedConfig
 }
 
 // Application

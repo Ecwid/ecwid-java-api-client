@@ -23,4 +23,7 @@ class SalesChannelsApiClientImpl(
 
 	override fun getYandexMarketDbsFeedConfig(request: YandexMarketDbsFeedConfigGetRequest) =
 		apiClientHelper.makeObjectResultRequest<FetchedYandexMarketDbsFeedConfig>(request)
+
+	override fun getMetaOpenCatalogFeedConfig(request: MetaOpenCatalogFeedConfigGetRequest) =
+		apiClientHelper.makeObjectResultRequest<FetchedMetaOpenCatalogFeedConfig>(request)
 }
