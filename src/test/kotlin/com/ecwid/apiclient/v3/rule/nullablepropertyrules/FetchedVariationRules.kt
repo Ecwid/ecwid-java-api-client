@@ -7,6 +7,7 @@ import com.ecwid.apiclient.v3.rule.NullablePropertyRule.AllowNullable
 import com.ecwid.apiclient.v3.rule.NullablePropertyRule.IgnoreNullable
 
 val fetchedVariationTypeNullablePropertyRules: List<NullablePropertyRule<*, *>> = listOf(
+	AllowNullable(FetchedVariation::orderBy),
 	IgnoreNullable(FetchedVariation::attributes),
 	AllowNullable(FetchedVariation::borderInfo),
 	IgnoreNullable(FetchedVariation::compareToPrice),
