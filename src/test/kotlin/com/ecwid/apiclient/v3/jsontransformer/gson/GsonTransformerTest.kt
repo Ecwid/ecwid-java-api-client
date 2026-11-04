@@ -4,10 +4,13 @@ import com.ecwid.apiclient.v3.dto.common.NullableUpdatedValue
 import com.ecwid.apiclient.v3.dto.order.request.UpdatedOrder
 import com.ecwid.apiclient.v3.dto.product.request.UpdatedProduct
 import com.ecwid.apiclient.v3.dto.product.result.FetchedProduct
+import com.ecwid.apiclient.v3.dto.variation.result.FetchedVariation
 import com.ecwid.apiclient.v3.impl.ParsedResponseWithExt
 import com.google.gson.JsonParser
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import kotlin.test.assertNull
 
 internal class GsonTransformerTest {
@@ -247,6 +250,30 @@ internal class GsonTransformerTest {
 		val json = """{"categories": [{"id": 42, "enabled": true, "name": "Cat", "nameTranslated": ""}]}"""
 		val product = transformer.deserialize(json, FetchedProduct::class.java)
 		assertNull(product.categories?.first()?.ancestorIds)
+	}
+
+	@Test
+	fun `test deserialization of FetchedVariation with orderBy`() {
+		val json = """{"id": 123, "combinationNumber": 4, "orderBy": 2}"""
+
+		val variation = transformer.deserialize(json, FetchedVariation::class.java)
+
+		assertEquals(2, variation.orderBy)
+		assertEquals(4, variation.combinationNumber)
+	}
+
+	@ParameterizedTest
+	@ValueSource(
+		strings = [
+			"""{"id": 123, "combinationNumber": 4}""",
+			"""{"id": 123, "combinationNumber": 4, "orderBy": null}""",
+		]
+	)
+	fun `test deserialization of FetchedVariation without orderBy defaults to null`(json: String) {
+		val variation = transformer.deserialize(json, FetchedVariation::class.java)
+
+		assertNull(variation.orderBy)
+		assertEquals(4, variation.combinationNumber)
 	}
 
 	@Test

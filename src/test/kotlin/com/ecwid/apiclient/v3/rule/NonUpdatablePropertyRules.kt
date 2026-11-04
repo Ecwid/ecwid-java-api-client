@@ -281,6 +281,7 @@ val nonUpdatablePropertyRules: List<NonUpdatablePropertyRule<*, *>> = listOf(
 
 	ReadOnly(FetchedVariation::id),
 	Ignored(FetchedVariation::combinationNumber),
+	ReadOnly(FetchedVariation::orderBy),
 	Ignored(FetchedVariation.Option::nameTranslated),
 	Ignored(FetchedVariation.Option::valueTranslated),
 	Ignored(FetchedVariation::smallThumbnailUrl),
